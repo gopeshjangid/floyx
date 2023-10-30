@@ -17,13 +17,16 @@
     "@mui/material": "latest",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "@reduxjs/toolkit": "1.9.5",
+    "react-redux": "8.1.0"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "eslint": "latest",
+     "@types/redux-logger": "3.0.9",
     "eslint-config-next": "latest",
     "typescript": "latest"
   }
