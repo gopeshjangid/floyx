@@ -16,18 +16,22 @@
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "next": "latest",
+    "node-sass": "^9.0.0",
     "react": "latest",
     "react-dom": "latest",
     "@reduxjs/toolkit": "1.9.5",
     "react-redux": "8.1.0",
-    "redux-persist": "6.0.0"
+    "redux-persist": "6.0.0",
+    "sass": "^1.69.5"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/redux-logger": "3.0.9",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
     "eslint": "latest",
-     "@types/redux-logger": "3.0.9",
     "eslint-config-next": "latest",
     "typescript": "latest"
   }

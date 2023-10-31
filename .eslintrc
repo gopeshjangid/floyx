@@ -1,0 +1,71 @@
+{
+    "extends": ["airbnb-base", "react-app", "plugin:prettier/recommended"],
+    "settings": {
+      "react": {
+        "version": "detect"
+      },
+      "import/resolver": {
+        "babel-module": {}
+      }
+    },
+    "rules": {
+      "arrow-body-style": "off",
+      "no-shadow": "off",
+      "no-plusplus": "off",
+      "no-param-reassign": "off",
+      "no-case-declarations": "off",
+      "no-unneeded-ternary": "off",
+      "no-else-return": ["warn", { "allowElseIf": true }],
+      "arrow-parens": 0,
+      "camelcase": "off",
+      "jsx-a11y/anchor-is-valid": "off",
+      "jsx-a11y/href-no-hash": "off",
+      "import/prefer-default-export": "off",
+      "consistent-return": "warn",
+      "prefer-promise-reject-errors": "off",
+      "no-underscore-dangle": "off",
+      "no-nested-ternary": "warn",
+      "react/sort-prop-types": "warn",
+      "no-useless-concat": [0],
+      "import/no-cycle": ["off"],
+      "import/no-extraneous-dependencies": "warn",
+      "import/no-nodejs-modules": "off",
+      "react/forbid-prop-types": ["warn", { "forbid": [] }],
+      "no-unused-vars": "warn",
+      "react/no-unused-prop-types": "warn",
+      "linebreak-style": "off",
+      "react/prop-types": [
+        "warn",
+        {
+          "ignore": ["match", "history", "location", "classes"]
+        }
+      ],
+      "class-methods-use-this": [
+        "warn",
+        {
+          "exceptMethods": [
+            "componentDidMount",
+            "componentDidUpdate",
+            "componentWillUnmount",
+            "render"
+          ]
+        }
+      ],
+      "prefer-destructuring": [
+        "warn",
+        {
+          "object": true,
+          "array": false
+        }
+      ],
+      "no-console": [
+        "warn",
+        {
+          "allow": ["error", "info"]
+        }
+      ],
+      "no-mixed-spaces-and-tabs": [0],
+      "no-tabs": [0],
+      "eqeqeq": "off"
+    }
+  }
