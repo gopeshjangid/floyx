@@ -1,0 +1,47 @@
+:root {
+  --gradient-color: linear-gradient(
+    86.55deg,
+    #ab59ff 0%,
+    #858fff 57.35%,
+    #4d9aff 100.99%
+  );
+}
+
+.gradient-background {
+  background: var(--gradient-color) !important;
+  color: #000 !important;
+}
+
+.dark-theme {
+  .gradient-text {
+    background: var(--gradient-color) !important;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .active-link {
+    background: var(--gradient-color) !important;
+    color: #000 !important;
+  }
+  .active-link svg {
+    fill: #000;
+  }
+}
+
+.light-theme {
+  .gradient-text {
+    background: var(--gradient-color) !important;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .active-link {
+    background: var(--gradient-color) !important;
+    color: #fff !important;
+  }
+  .active-link svg {
+    fill: #fff;
+  }
+}
