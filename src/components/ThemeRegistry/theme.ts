@@ -1,25 +1,24 @@
-"use client";
-import { Roboto } from "next/font/google";
-import { createTheme, ThemeOptions } from "@mui/material/styles";
-import { PaletteMode } from "@mui/material";
+'use client';
+import { Roboto } from 'next/font/google';
+import { createTheme, ThemeOptions } from '@mui/material/styles';
+import { PaletteMode } from '@mui/material';
 
 const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 const getThemeObject = (theme: PaletteMode): ThemeOptions => {
-  const isLightTheme = theme === "light";
-
+  const isLightTheme = theme === 'light';
   return createTheme({
     palette: {
       mode: theme,
       primary: {
-        main: "#fff",
+        main: '#fff',
       },
       secondary: {
-        main: "#5798FF",
+        main: '#5798FF',
       },
     },
     typography: {
@@ -81,18 +80,18 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
       MuiButton: {
         styleOverrides: {
           root: {
-            "&.MuiButton-containedPrimary": {
-              background: "var(--gradient-color) !important",
+            '&.MuiButton-containedPrimary': {
+              background: 'var(--gradient-color) !important',
               ...(isLightTheme
                 ? {
-                    color: "#fff",
+                    color: '#fff',
                   }
                 : {}),
             },
-            "&.MuiButton-containedSecondary": {
+            '&.MuiButton-containedSecondary': {
               ...(isLightTheme
                 ? {
-                    color: "#fff",
+                    color: '#fff',
                   }
                 : {}),
             },
