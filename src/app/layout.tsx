@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -50,12 +50,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  const [selectedTheme, setTheme] = useState("light")
   const pathname = usePathname();
-  const selectedTheme = localStorage.getItem('theme');
+  
   const onChangeTheme = (theme: string) => {
     localStorage.setItem('theme', theme);
     window.location.reload();
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem('theme')){
+      setTheme(localStorage.getItem('theme'));
+    }
+     
+  },[]);
 
   return (
     <html lang="en">

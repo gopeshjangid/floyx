@@ -3,8 +3,7 @@ import { useStore } from '../lib/redux/store';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { AppProps, Co } from 'next/app';
-
+import { AppProps } from 'next/app';
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   const store = useStore(pageProps.initialReduxState);
   const persistor = persistStore(store, {}, () => {
