@@ -29,7 +29,7 @@ import LightMode from '@mui/icons-material/Brightness7';
 
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 
-import '../index.scss';
+import '../../index.scss';
 
 const DRAWER_WIDTH = 240;
 
@@ -53,7 +53,7 @@ export default function RootLayout({
 
   const [selectedTheme, setTheme] = useState("light")
   const pathname = usePathname();
-  
+
   const onChangeTheme = (theme: string) => {
     localStorage.setItem('theme', theme);
     window.location.reload();
@@ -63,7 +63,7 @@ export default function RootLayout({
     if(localStorage.getItem('theme')){
       setTheme(localStorage.getItem('theme'));
     }
-     
+
   },[]);
 
   return (
