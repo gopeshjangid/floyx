@@ -1,5 +1,5 @@
 'use client';
-import { Roboto } from 'next/font/google';
+import { Roboto, Poppins } from 'next/font/google';
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 
@@ -76,12 +76,30 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
         fontWeight: 400,
       },
     },
+    breakpoints: {
+      values: {
+        xs: 300, // phone
+        sm: 680, // tablets
+        md: 900, // small laptop
+        lg: 1200, // desktop
+        xl: 1536, // large screens
+      },
+    },
     components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            margin: 0,
+            padding: 0,
+          },
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
             '&.MuiButton-containedPrimary': {
-              background: 'var(--gradient-color) !important',
+              borderRadius: '10px',
+              background: 'var(--gradient-color)',
               ...(isLightTheme
                 ? {
                     color: '#fff',

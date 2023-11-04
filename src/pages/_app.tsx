@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { AppProps } from 'next/app';
+import '../index.scss';
+
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   const store = useStore(pageProps.initialReduxState);
   const persistor = persistStore(store, {}, () => {
