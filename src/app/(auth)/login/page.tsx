@@ -18,6 +18,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { signIn } from 'next-auth/react';
 
 import LoginImage from '../social-login/components/LoginImage';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
@@ -26,11 +27,24 @@ import { allRoutes } from '@/constants/allRoutes';
 const Login: FC = () => {
   const { palette } = useTheme();
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await signIn('credentials', {
+      email: 'brijeshthakkar1785@gmail.com',
+      password: 'vv!bKqZMGY5e@TD',
+      remember: false,
+      redirect: true,
+      callbackUrl: allRoutes.home,
+    });
+
+    console.log(response);
+  };
+
   return (
     <Box sx={{ background: '#0B081F' }}>
       <Grid container>
         <LoginImage />
-        <Grid md={6} sm={12} zIndex="1">
+        <Grid item md={6} sm={12} zIndex="1">
           <Box
             textAlign="center"
             padding={{ md: '113px 15px 40px', xs: '38px 25px 38px' }}
@@ -78,6 +92,7 @@ const Login: FC = () => {
               </Typography>
               <Box
                 component="form"
+                onSubmit={handleSubmit}
                 m={0}
                 noValidate
                 sx={{

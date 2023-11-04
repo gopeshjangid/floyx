@@ -1,11 +1,21 @@
 import React from 'react';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import { Box, Button, useTheme } from '@mui/material';
 
 import { iconFacebook } from '@/assets/images';
+import { allRoutes } from '@/constants/allRoutes';
 
 const SignInFacebook = () => {
   const { palette } = useTheme();
+
+  const handleFacebookLogin = async () => {
+    const response = await signIn('facebook', {
+      callbackUrl: allRoutes.home,
+    });
+
+    console.log(response);
+  };
 
   return (
     <Box
@@ -29,6 +39,7 @@ const SignInFacebook = () => {
       <Button
         variant="contained"
         startIcon={<Image src={iconFacebook} alt="google" />}
+        onClick={handleFacebookLogin}
       >
         Sign in with Facebook
       </Button>

@@ -15,7 +15,7 @@ const SocialLogin: FC = () => {
     <Box sx={{ background: '#0B081F' }}>
       <Grid container minHeight="100vh">
         <LoginImage />
-        <Grid md={6} sm={12}>
+        <Grid item md={6} sm={12}>
           <Box
             textAlign="center"
             padding={{ md: '113px 15px 40px', xs: '38px 25px 38px' }}
