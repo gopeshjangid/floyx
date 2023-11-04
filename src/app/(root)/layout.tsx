@@ -49,7 +49,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [selectedTheme, setTheme] = useState('light');
+  const [selectedTheme, setTheme] = useState<string>('light');
   const pathname = usePathname();
 
   const onChangeTheme = (theme: string) => {
@@ -59,7 +59,7 @@ export default function RootLayout({
 
   useEffect(() => {
     if (localStorage.getItem('theme')) {
-      setTheme(localStorage.getItem('theme'));
+      setTheme(localStorage.getItem('theme')!);
     }
   }, []);
 

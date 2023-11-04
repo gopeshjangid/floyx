@@ -1,7 +1,6 @@
 'use client';
 
 import React, { FC } from 'react';
-import { useTheme } from '@emotion/react';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
@@ -17,11 +16,12 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from '@mui/material';
 
-import { AllRoutes } from '@/lib/constant/AllRoutes';
 import LoginImage from '../social-login/components/LoginImage';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
+import { allRoutes } from '@/constants/allRoutes';
 
 const Login: FC = () => {
   const { palette } = useTheme();
@@ -236,7 +236,7 @@ const Login: FC = () => {
                   },
                 }}
               >
-                <Link href={AllRoutes.socialLogin}>
+                <Link href={allRoutes.socialLogin}>
                   <SVGArrowLeft />
                   <span className="gradient-text">Back to social login</span>
                 </Link>

@@ -1,7 +1,6 @@
 import React from 'react';
-import { useTheme } from '@emotion/react';
 import Image from 'next/image';
-import { Box, Button } from '@mui/material';
+import { Box, Button, useTheme } from '@mui/material';
 
 import { iconFacebook } from '@/assets/images';
 
