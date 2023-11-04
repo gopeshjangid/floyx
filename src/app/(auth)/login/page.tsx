@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { signIn } from 'next-auth/react';
 
-import LoginImage from '../social-login/components/LoginImage';
+import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
 

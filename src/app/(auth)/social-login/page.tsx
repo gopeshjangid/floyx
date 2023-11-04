@@ -4,9 +4,9 @@ import React, { FC } from 'react';
 import Link from 'next/link';
 import { Box, Button, Grid, Stack, Typography, useTheme } from '@mui/material';
 
-import LoginImage from './components/LoginImage';
-import SignInGoogle from './components/SignInGoogle';
-import SignInFacebook from './components/SignInFacebook';
+import LoginImage from './components/login-image';
+import SignInGoogle from './components/sign-in-google';
+import SignInFacebook from './components/sign-in-facbook';
 
 const SocialLogin: FC = () => {
   const { palette } = useTheme();
