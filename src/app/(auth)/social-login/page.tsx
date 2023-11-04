@@ -1,9 +1,8 @@
 'use client';
 
 import React, { FC } from 'react';
-import { useTheme } from '@emotion/react';
 import Link from 'next/link';
-import { Box, Button, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Grid, Stack, Typography, useTheme } from '@mui/material';
 
 import LoginImage from './components/LoginImage';
 import SignInGoogle from './components/SignInGoogle';

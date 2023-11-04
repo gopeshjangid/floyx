@@ -1,10 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useTheme } from '@emotion/react';
-import styled from '@emotion/styled';
 import Image from 'next/image';
-import { Box, Grid, Theme, Typography } from '@mui/material';
+import { Box, Grid, Theme, Typography, styled, useTheme } from '@mui/material';
 
 import { iconLogo, imgLogin, imgLoginBG } from '@/assets/images';
 
@@ -15,6 +13,7 @@ const ImageLogin = styled(Box)(({ theme }: { theme: Theme }) => ({
     '& img': { height: 'auto' },
   },
 }));
+
 const LoginImage = () => {
   const { palette } = useTheme();
 

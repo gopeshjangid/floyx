@@ -1,5 +1,5 @@
 'use client';
-import { Roboto, Poppins } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 

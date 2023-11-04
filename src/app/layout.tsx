@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
-
 import '../index.scss';
 
 export default function RootLayout({
@@ -14,7 +13,7 @@ export default function RootLayout({
 
   useEffect(() => {
     if (localStorage.getItem('theme')) {
-      setTheme(localStorage.getItem('theme'));
+      setTheme(localStorage.getItem('theme')!);
     }
   }, []);
 
