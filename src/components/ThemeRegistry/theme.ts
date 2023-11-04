@@ -116,6 +116,32 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
           },
         },
       },
+      MuiTabs: {
+        styleOverrides: {
+          root: {
+            '& .MuiTabs-flexContainer': {
+              gap: '24px',
+            },
+            '& .MuiTabs-indicator': {
+              background:
+                'linear-gradient(87deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
+            },
+          },
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          root: {
+            padding: '0',
+            minWidth: 'fit-content',
+            textTransform: 'capitalize',
+            fontSize: '16px',
+            fontFamily: 'Poppins',
+            fontWeight: '400',
+            color: 'rgba(255, 255, 255, 0.30)',
+          },
+        },
+      },
     },
   });
 };
