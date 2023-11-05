@@ -9,14 +9,14 @@ import {
   Stack,
   Theme,
   Typography,
+  styled,
   useTheme,
 } from '@mui/material';
-
 import { useRouter } from 'next/navigation';
+
 import LoginImage from './components/login-image';
 import SignInGoogle from './components/sign-in-google';
 import SignInFacebook from './components/sign-in-facebook';
-import styled from '@emotion/styled';
 import { allRoutes } from '@/constants/allRoutes';
 
 const SocialLoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({

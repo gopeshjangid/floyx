@@ -17,6 +17,7 @@ import {
   TextField,
   Theme,
   Typography,
+  styled,
   useTheme,
 } from '@mui/material';
 import { signIn } from 'next-auth/react';
@@ -24,7 +25,6 @@ import { signIn } from 'next-auth/react';
 import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
-import styled from '@emotion/styled';
 
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   background: '#0B081F',
@@ -115,7 +115,7 @@ const Login: FC = () => {
               >
                 Login to your account
               </Typography>
-              <Box component="form" m={0} noValidate>
+              <Box component="form" m={0} noValidate onSubmit={handleSubmit}>
                 <FormControl>
                   <FormLabel>Username or email </FormLabel>
                   <TextField
