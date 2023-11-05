@@ -1,8 +1,8 @@
 import { imgUser } from '@/assets/images';
 import styled from '@emotion/styled';
 import {
-  Avatar,
   Box,
+  Button,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -10,6 +10,9 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import UserAvatar from '../../../../components/UserAvatar';
+
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
   gap: '10px',
@@ -19,41 +22,22 @@ const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   '& .MuiListItemText-root': {
     margin: '0',
   },
-  '& .MuiListItemAvatar-root': {
-    position: 'relative',
-    '& .MuiAvatar-root': {
-      border: '1px solid  #A561FF',
-      width: '50px',
-      height: '50px',
-      background: 'rgba(194, 148, 255, 0.38)',
-    },
-  },
   [theme.breakpoints.up('md')]: {
     gap: '18px',
-
-    '& .MuiListItemAvatar-root': {
-      '& .MuiAvatar-root': {
-        width: '59px',
-        height: '59px',
-      },
-      '& span': {
-        right: '-7px',
-        bottom: '0',
-        width: '27px',
-        height: '27px',
-        '& img': {
-          width: '19px',
-          height: '19px',
-        },
-      },
-    },
   },
 }));
 const ChatHeader = () => {
   return (
     <ChatWrapper>
       <ListItemAvatar>
-        <Avatar alt="Travis Howard" src={imgUser} />
+        <UserAvatar
+          alt="Travis Howard"
+          src={imgUser}
+          sx={{
+            width: { md: '59px', xs: '50px' },
+            height: { md: '59px', xs: '50px' },
+          }}
+        />
       </ListItemAvatar>
       <ListItemText
         primary={
@@ -83,17 +67,14 @@ const ChatHeader = () => {
                 @Jaco
               </Typography>
             </Box>
-            <Typography
-              sx={{ display: 'inline' }}
-              component="span"
-              variant="body2"
-              color="#85838F"
-              font-family="Poppins"
-              fontSize={{ md: '16px', xs: '14px' }}
-              fontWeight={500}
+
+            <Button
+              size="small"
+              sx={{ color: '#FA6B7C' }}
+              startIcon={<DeleteIcon />}
             >
               Delete
-            </Typography>
+            </Button>
           </Box>
         }
         secondary={

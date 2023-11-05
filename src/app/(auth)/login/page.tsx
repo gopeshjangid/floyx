@@ -15,6 +15,7 @@ import {
   InputAdornment,
   Stack,
   TextField,
+  Theme,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -23,7 +24,43 @@ import { signIn } from 'next-auth/react';
 import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
+import styled from '@emotion/styled';
 
+const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
+  background: '#0B081F',
+  '& .outline-btn': {
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    color: '#D1D0D5',
+    fontSize: '16px',
+    fontWeight: '400',
+    padding: '14px',
+    width: '100%',
+    borderRadius: '10px',
+  },
+  '& .social-login': {
+    color: '#A85CFF',
+    fontSize: '16px',
+    fontWeight: '400',
+    lineHeight: '24px',
+    textTransform: 'capitalize',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+  },
+  '& .login-service': {
+    '& a': {
+      fontSize: '15px',
+      fontWeight: '400',
+      lineHeight: '22.5px',
+      color: theme.palette.secondary.main,
+    },
+  },
+  [theme.breakpoints.up('md')]: {
+    '& .outline-btn': {
+      padding: '14px 83px',
+    },
+  },
+}));
 const Login: FC = () => {
   const { palette } = useTheme();
 
@@ -41,13 +78,13 @@ const Login: FC = () => {
   };
 
   return (
-    <Box sx={{ background: '#0B081F' }}>
-      <Grid container>
+    <LoginWrapper>
+      <Grid container minHeight="100vh">
         <LoginImage />
         <Grid item md={6} sm={12} zIndex="1">
           <Box
             textAlign="center"
-            padding={{ md: '113px 15px 40px', xs: '38px 25px 38px' }}
+            padding={{ md: '47px 15px 40px', xs: '38px 25px 38px' }}
           >
             <Typography
               variant="h5"
@@ -61,23 +98,11 @@ const Login: FC = () => {
               display="flex"
               flexDirection="column"
               gap="24px"
-              maxWidth="400px"
+              maxWidth="360px"
               marginInline="auto"
             >
               <Box mb="3px">
-                <Button
-                  variant="outlined"
-                  sx={{
-                    borderColor: 'rgba(255, 255, 255, 0.15)',
-                    color: '#D1D0D5',
-                    fontSize: '16px',
-                    fontWeight: '400',
-                    textTransform: 'capitalize',
-                    padding: { md: '14px 83px', xs: '14px' },
-                    width: { md: 'fit-content', xs: '100%' },
-                    borderRadius: '10px',
-                  }}
-                >
+                <Button variant="outlined" className="outline-btn">
                   Use username or email
                 </Button>
               </Box>
@@ -108,7 +133,6 @@ const Login: FC = () => {
                     }}
                   />
                 </FormControl>
-
                 <FormControl>
                   <Box
                     display="flex"
@@ -168,7 +192,6 @@ const Login: FC = () => {
                   />
                 </FormControl>
               </Box>
-              FormControl
               <Box mt="3px">
                 <Typography
                   variant="h6"
@@ -184,23 +207,8 @@ const Login: FC = () => {
                   including <Link href="/"> Cookie Use.</Link>
                 </Typography>
               </Box>
-              <Box
-                mt="20px"
-                textAlign="left"
-                sx={{
-                  '& a': {
-                    color: '#A85CFF',
-                    fontSize: '16px',
-                    fontWeight: '400',
-                    lineHeight: '24px',
-                    textTransform: 'capitalize',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                  },
-                }}
-              >
-                <Link href={allRoutes.socialLogin}>
+              <Box mt="20px" textAlign="left">
+                <Link href={allRoutes.socialLogin} className="social-login">
                   <SVGArrowLeft />
                   <span className="gradient-text">Back to social login</span>
                 </Link>
@@ -213,14 +221,7 @@ const Login: FC = () => {
                   xs: '20px',
                 }}
                 mb="13px"
-                sx={{
-                  '& a': {
-                    fontSize: '15px',
-                    fontWeight: '400',
-                    lineHeight: '22.5px',
-                    color: palette.secondary.main,
-                  },
-                }}
+                className="login-service"
                 direction="row"
                 justifyContent="center"
               >
@@ -242,7 +243,7 @@ const Login: FC = () => {
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </LoginWrapper>
   );
 };
 

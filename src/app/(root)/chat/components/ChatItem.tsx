@@ -1,7 +1,7 @@
 import { imgUser } from '@/assets/images';
+import UserAvatar from '@/components/UserAvatar';
 import styled from '@emotion/styled';
 import {
-  Avatar,
   Box,
   ListItem,
   ListItemAvatar,
@@ -10,7 +10,9 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FC } from 'react';
-
+type ChatCardProps = {
+  active?: boolean;
+};
 const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
   gap: '10px',
@@ -19,36 +21,11 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   '& .MuiListItemText-root': {
     margin: '0',
   },
-  '& .MuiListItemAvatar-root': {
-    position: 'relative',
-    '& .MuiAvatar-root': {
-      border: '1px solid  #A561FF',
-      width: '50px',
-      height: '50px',
-      background: 'rgba(194, 148, 255, 0.38)',
-    },
-  },
   [theme.breakpoints.up('md')]: {
     gap: '18px',
-    '& .MuiListItemAvatar-root': {
-      '& .MuiAvatar-root': {
-        width: '59px',
-        height: '59px',
-      },
-      '& span': {
-        right: '-7px',
-        bottom: '0',
-        width: '27px',
-        height: '27px',
-        '& img': {
-          width: '19px',
-          height: '19px',
-        },
-      },
-    },
   },
 }));
-const ChatCard: FC = ({ active }) => {
+const ChatCard: FC = ({ active }: ChatCardProps) => {
   return (
     <ListItemItem
       sx={{
@@ -56,7 +33,14 @@ const ChatCard: FC = ({ active }) => {
       }}
     >
       <ListItemAvatar>
-        <Avatar alt="Travis Howard" src={imgUser} />
+        <UserAvatar
+          src={imgUser}
+          alt="Travis Howard"
+          sx={{
+            width: { md: '59px', xs: '50px' },
+            height: { md: '59px', xs: '50px' },
+          }}
+        />
       </ListItemAvatar>
       <ListItemText
         primary={
@@ -109,7 +93,7 @@ const ChatCard: FC = ({ active }) => {
             fontSize={{ md: '16px', xs: '14px' }}
             fontWeight={500}
           >
-            Hey, how's your day....{' '}
+            {` Hey, how's your day....`}
           </Typography>
         }
       />

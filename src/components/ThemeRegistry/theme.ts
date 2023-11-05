@@ -85,6 +85,7 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
         xl: 1536, // large screens
       },
     },
+
     components: {
       MuiCssBaseline: {
         styleOverrides: {
@@ -97,6 +98,7 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
       MuiButton: {
         styleOverrides: {
           root: {
+            textTransform: 'capitalize',
             '&.MuiButton-containedPrimary': {
               borderRadius: '10px',
               background: 'var(--gradient-color)',
@@ -171,10 +173,29 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
           root: {
             borderRadius: '10px !important',
             background: '#1B1830',
+            overflow: 'hidden',
+            '&.MuiInputBase-adornedStart': { paddingLeft: '20px !important' },
+            '&.MuiInputBase-adornedEnd': { paddingRight: '20px !important' },
             '& .MuiInputBase-input': {
-              padding: '13px 25px',
+              padding: '13px 25px 13px 10px',
               height: 'fit-content',
               color: '#D1D0D5',
+              borderRadius: '0',
+            },
+            '& .MuiInputAdornment-root': {
+              margin: '0',
+              '& .MuiIconButton-edgeEnd': { margin: '0' },
+            },
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          input: {
+            '&:-webkit-autofill': {
+              '-webkit-box-shadow': '0 0 0 100px #1B1830 inset',
+              '-webkit-text-fill-color': '#D1D0D5',
+              borderRadius: '0',
             },
           },
         },
@@ -182,13 +203,11 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
       MuiFormControlLabel: {
         styleOverrides: {
           root: {
-            '& label': {
-              margin: '0',
-              '& .MuiTypography-root': {
-                color: '#D1D0D5',
-                fontSize: '16px',
-                fontWeight: '400',
-              },
+            margin: '0',
+            '& .MuiTypography-root': {
+              color: '#D1D0D5',
+              fontSize: '16px',
+              fontWeight: '400',
             },
           },
         },
@@ -200,6 +219,14 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
             '&.Mui-checked': {
               color: '#A85CFF',
             },
+          },
+        },
+      },
+      MuiAvatar: {
+        styleOverrides: {
+          root: {
+            border: '1px solid  #A561FF',
+            background: 'rgba(194, 148, 255, 0.38)',
           },
         },
       },

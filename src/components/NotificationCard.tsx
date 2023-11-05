@@ -1,7 +1,6 @@
 import { iconUserGradient, imgUser } from '@/assets/images';
 import styled from '@emotion/styled';
 import {
-  Avatar,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -10,6 +9,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import React, { FC } from 'react';
+import UserAvatar from './UserAvatar';
 
 const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
@@ -21,12 +21,6 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   },
   '& .MuiListItemAvatar-root': {
     position: 'relative',
-    '& .MuiAvatar-root': {
-      border: '1px solid  #A561FF',
-      width: '50px',
-      height: '50px',
-      background: 'rgba(194, 148, 255, 0.38)',
-    },
     '& span': {
       position: 'absolute',
       right: '0',
@@ -49,10 +43,6 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
 
     '&:not(:last-child)': { marginBottom: '28px' },
     '& .MuiListItemAvatar-root': {
-      '& .MuiAvatar-root': {
-        width: '59px',
-        height: '59px',
-      },
       '& span': {
         right: '-7px',
         bottom: '0',
@@ -70,7 +60,14 @@ const NotificationCard: FC = () => {
   return (
     <ListItemItem>
       <ListItemAvatar>
-        <Avatar alt="Travis Howard" src={imgUser} />
+        <UserAvatar
+          src={imgUser}
+          alt="Travis Howard"
+          sx={{
+            width: { md: '59px', xs: '50px' },
+            height: { md: '59px', xs: '50px' },
+          }}
+        />
         <span>
           <Image src={iconUserGradient} alt="icon" />
           {/*

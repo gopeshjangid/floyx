@@ -1,19 +1,20 @@
 'use client';
+
+import React from 'react';
+import Image from 'next/image';
 import {
   Box,
-  FormControl,
   Grid,
   IconButton,
   InputAdornment,
   Paper,
   TextField,
 } from '@mui/material';
-import React from 'react';
+
 import ChatItem from './components/ChatItem';
+import { iconSearch } from '@/assets/images';
 import ChatInput from './components/ChatInput';
 import ChatHeader from './components/ChatHeader';
-import { iconSearch } from '@/assets/images';
-import Image from 'next/image';
 
 const Chat = () => {
   return (
@@ -31,22 +32,20 @@ const Chat = () => {
               borderBottom="1px solid rgba(255, 255, 255, 0.15)"
               padding="18px 20px 15px"
             >
-              <FormControl>
-                <TextField
-                  fullWidth
-                  hiddenLabel
-                  placeholder="Search people..."
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton edge="end" color="primary">
-                          <Image src={iconSearch} alt="" />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </FormControl>
+              <TextField
+                fullWidth
+                hiddenLabel
+                placeholder="Search people..."
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton edge="end" color="primary">
+                        <Image src={iconSearch} alt="" />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </Box>
 
             <Box>

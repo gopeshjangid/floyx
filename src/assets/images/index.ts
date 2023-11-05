@@ -9,6 +9,9 @@ import iconLinkGradient from './icons/like-gradient.svg';
 import iconTelegramGradient from './icons/telegram-gradient.svg';
 import iconLinkMessage from './icons/message-gradient.svg';
 import iconSearch from './icons/search.svg';
+import iconPaperPlane from './icons/paper-plane.svg';
+import iconSmile from './icons/smile.svg';
+
 
 // Images
 import imgLogin from './login.png';
@@ -33,5 +36,8 @@ export {
   iconLinkGradient,
   iconLinkMessage,
   iconTelegramGradient,
-  imgUser,iconSearch
+  imgUser,
+  iconSearch,
+  iconPaperPlane,
+  iconSmile,
 };
