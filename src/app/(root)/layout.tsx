@@ -140,7 +140,7 @@ export default function RootLayout({
           bgcolor: 'background.default',
           ml: `${DRAWER_WIDTH}px`,
           mt: ['48px', '56px', '64px'],
-          p: 3,
+          p: {md:3,xs:'14px'},
         }}
       >
         {children}

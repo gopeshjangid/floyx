@@ -53,7 +53,7 @@ const ChatCard: FC = ({ active }: ChatCardProps) => {
             <Box>
               <Typography
                 color="#fff"
-                font-family="Poppins"
+                fontFamily="Poppins"
                 fontSize="16px"
                 fontWeight={500}
                 component="span"
@@ -61,7 +61,7 @@ const ChatCard: FC = ({ active }: ChatCardProps) => {
                 Nora{' '}
               </Typography>
               <Typography
-                font-family="Poppins"
+                fontFamily="Poppins"
                 fontSize="14px"
                 fontWeight={400}
                 component="span"
@@ -75,7 +75,7 @@ const ChatCard: FC = ({ active }: ChatCardProps) => {
               component="span"
               variant="body2"
               color="#85838F"
-              font-family="Poppins"
+              fontFamily="Poppins"
               fontSize={{ md: '16px', xs: '14px' }}
               fontWeight={500}
             >
@@ -89,7 +89,7 @@ const ChatCard: FC = ({ active }: ChatCardProps) => {
             component="span"
             variant="body2"
             color="#85838F"
-            font-family="Poppins"
+            fontFamily="Poppins"
             fontSize={{ md: '16px', xs: '14px' }}
             fontWeight={500}
           >

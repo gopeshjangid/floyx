@@ -115,6 +115,9 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
                   }
                 : {}),
             },
+            '&.MuiButton-text': {
+              padding: '0',
+            },
           },
         },
       },

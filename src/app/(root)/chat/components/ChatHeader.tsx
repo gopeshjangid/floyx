@@ -16,13 +16,13 @@ import UserAvatar from '../../../../components/UserAvatar';
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
   gap: '10px',
-  padding: '12px 26px',
+  padding: '12px 14px',
   borderBottom: '1px solid rgba(255, 255, 255, 0.15)',
-  '&:not(:last-child)': { marginBottom: '20px' },
   '& .MuiListItemText-root': {
     margin: '0',
   },
   [theme.breakpoints.up('md')]: {
+    padding: '12px 26px',
     gap: '18px',
   },
 }));
@@ -50,21 +50,21 @@ const ChatHeader = () => {
             <Box>
               <Typography
                 color="#fff"
-                font-family="Poppins"
+                fontFamily="Poppins"
                 fontSize="16px"
                 fontWeight={500}
                 component="span"
               >
-                Nora
+                Michele
               </Typography>
               <Typography
-                font-family="Poppins"
+                fontFamily="Poppins"
                 fontSize="14px"
                 fontWeight={400}
                 component="span"
                 className="gradient-text"
               >
-                @Jaco
+                @mich23
               </Typography>
             </Box>
 
@@ -83,11 +83,11 @@ const ChatHeader = () => {
             component="span"
             variant="body2"
             color="#85838F"
-            font-family="Poppins"
+            fontFamily="Poppins"
             fontSize={{ md: '16px', xs: '14px' }}
             fontWeight={500}
           >
-            Hey, how s your day....
+            Last seen 1 hour ago
           </Typography>
         }
       />

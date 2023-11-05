@@ -6,19 +6,58 @@ import {
   InputAdornment,
   Paper,
   TextField,
+  Theme,
 } from '@mui/material';
 
 import { iconPaperPlane, iconSmile, imgUser } from '@/assets/images';
 import UserAvatar from '@/components/UserAvatar';
+import styled from '@emotion/styled';
+const ChatInputWrapper = styled(Paper)(({ theme }: { theme: Theme }) => ({
+  borderRadius: '10px',
+  border: ' 1px solid  rgba(255, 255, 255, 0.15)',
+  background: '#0B081F',
+  padding: '30px 14px 29px',
+  '& .form-control': {
+    '& .MuiFormControl-root': {
+      marginBottom: '0',
+      borderRadius: '5px',
+      overflow: 'hidden',
+      '& .MuiInputBase-adornedEnd': { paddingRight: '13px !important' },
+      '& input': {
+        padding: '16px 13px',
+      },
+    },
+  },
+  '& .chat-send-icon': {
+    borderRadius: '5px',
+    background:
+      'linear-gradient(92deg, #A561FF 1.76%, #9881FE 33.15%, #5798FF 98.75%)',
+    width: '45px',
+    height: '45px',
+  },
+  [theme.breakpoints.up('md')]: {
+    padding: '27px 25px',
+    '& .MuiFormControl-root': {
+      '& .MuiInputBase-adornedEnd': { paddingRight: '20px !important' },
 
+      '& input': {
+        padding: '16px 25px',
+      },
+    },
+    '& .chat-send-icon': {
+      width: '55px',
+      height: '55px',
+    },
+  },
+}));
 const ChatInput = () => {
   return (
-    <Paper
+    <ChatInputWrapper
       sx={{
         borderRadius: '10px',
         border: ' 1px solid  rgba(255, 255, 255, 0.15)',
         background: '#0B081F',
-        padding: '27px 25px ',
+        padding: { md: '27px 25px', xs: '30px 14px 29px' },
       }}
     >
       <Box
@@ -31,21 +70,9 @@ const ChatInput = () => {
         <UserAvatar
           src={imgUser}
           alt="user"
-          sx={{ width: '49px', height: '49px' }}
+          sx={{ width: '49px', height: '45px' }}
         />
-        <Box
-          flex={1}
-          sx={{
-            '& .MuiFormControl-root': {
-              marginBottom: '0',
-              borderRadius: '5px',
-              overflow: 'hidden',
-              '& input': {
-                padding: '16px 25px',
-              },
-            },
-          }}
-        >
+        <Box flex={1} className="form-control">
           <TextField
             fullWidth
             hiddenLabel
@@ -61,19 +88,11 @@ const ChatInput = () => {
             }}
           />
         </Box>
-        <IconButton
-          sx={{
-            borderRadius: '5px',
-            background:
-              'linear-gradient(92deg, #A561FF 1.76%, #9881FE 33.15%, #5798FF 98.75%)',
-            width: '55px',
-            height: '55px',
-          }}
-        >
+        <IconButton className="chat-send-icon">
           <Image src={iconPaperPlane} alt="paper plane icon" />
         </IconButton>
       </Box>
-    </Paper>
+    </ChatInputWrapper>
   );
 };
 

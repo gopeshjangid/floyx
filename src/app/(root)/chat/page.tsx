@@ -9,12 +9,15 @@ import {
   InputAdornment,
   Paper,
   TextField,
+  Typography,
 } from '@mui/material';
 
 import ChatItem from './components/ChatItem';
 import { iconSearch } from '@/assets/images';
 import ChatInput from './components/ChatInput';
 import ChatHeader from './components/ChatHeader';
+import ChatSenderCard from './components/ChatSenderCard';
+import ChatReceiverCard from './components/ChatReceiverCard';
 
 const Chat = () => {
   return (
@@ -48,9 +51,13 @@ const Chat = () => {
               />
             </Box>
 
-            <Box>
+            <Box sx={{ height: '620px', overflowY: 'auto', pr: 1 }}>
               <ChatItem />
               <ChatItem active />
+              <ChatItem />
+              <ChatItem />
+              <ChatItem />
+              <ChatItem />
               <ChatItem />
               <ChatItem />
             </Box>
@@ -66,7 +73,68 @@ const Chat = () => {
             }}
           >
             <ChatHeader />
-            paper
+            <Box padding={{ md: '13px 25px', xs: '13px 15px' }}>
+              <Typography
+                textAlign="center"
+                color="#878D9A"
+                fontSize="13px"
+                fontWeight="400"
+              >
+                Today
+              </Typography>
+              <Box
+                sx={{
+                  height: '460px',
+                  overflowY: 'auto',
+                  pr: 1,
+                }}
+                width="100%"
+              >
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="flex-end"
+                  gap={2}
+                >
+                  <ChatReceiverCard
+                    id="1"
+                    message="Hey! just working How about you?"
+                  />
+                  <ChatSenderCard
+                    id="1"
+                    message="Hi! What have you been up to?"
+                  />
+                  <ChatReceiverCard
+                    id="2"
+                    message="I've been keeping busy too. Any exciting plans?"
+                  />
+                  <ChatReceiverCard
+                    id="1"
+                    message="Hey! just working How about you?"
+                  />
+                  <ChatSenderCard
+                    id="1"
+                    message="Hi! What have you been up to?"
+                  />
+                  <ChatReceiverCard
+                    id="2"
+                    message="I've been keeping busy too. Any exciting plans?"
+                  />
+                  <ChatReceiverCard
+                    id="1"
+                    message="Hey! just working How about you?"
+                  />
+                  <ChatSenderCard
+                    id="1"
+                    message="Hi! What have you been up to?"
+                  />
+                  <ChatReceiverCard
+                    id="2"
+                    message="I've been keeping busy too. Any exciting plans?"
+                  />
+                </Box>
+              </Box>
+            </Box>
           </Paper>
           <ChatInput />
         </Grid>

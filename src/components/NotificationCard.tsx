@@ -83,7 +83,7 @@ const NotificationCard: FC = () => {
         primary={
           <Typography
             color="#fff"
-            font-family="Poppins"
+            fontFamily="Poppins"
             fontSize="16px"
             fontWeight={400}
           >
@@ -96,7 +96,7 @@ const NotificationCard: FC = () => {
             component="span"
             variant="body2"
             color="#85838F"
-            font-family="Poppins"
+            fontFamily="Poppins"
             fontSize={{ md: '16px', xs: '14px' }}
             fontWeight={500}
           >
