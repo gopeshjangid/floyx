@@ -13,13 +13,55 @@ import {
 } from '@mui/material';
 
 import ChatItem from './components/ChatItem';
-import { iconSearch } from '@/assets/images';
+import { iconSearch, imgUser } from '@/assets/images';
 import ChatInput from './components/ChatInput';
 import ChatHeader from './components/ChatHeader';
 import ChatSenderCard from './components/ChatSenderCard';
 import ChatReceiverCard from './components/ChatReceiverCard';
 
-const Chat = () => {
+const Messages = () => {
+  const messagesUserData = [
+    {
+      id: '1',
+      img: imgUser,
+      username: 'Nora',
+      userId: 'Jaco',
+      date: '1 hours ago',
+      description: "Good to see you! What's...",
+    },
+    {
+      id: '2',
+      img: imgUser,
+      username: 'Nora',
+      userId: 'Jaco',
+      date: '1 hours ago',
+      description: "Good to see you! What's...",
+    },
+    {
+      id: '3',
+      img: imgUser,
+      username: 'Nora',
+      userId: 'Jaco',
+      date: '1 hours ago',
+      description: "Good to see you! What's...",
+    },
+    {
+      id: '4',
+      img: imgUser,
+      username: 'Nora',
+      userId: 'Jaco',
+      date: '1 hours ago',
+      description: "Good to see you! What's...",
+    },
+    {
+      id: '5',
+      img: imgUser,
+      username: 'Nora',
+      userId: 'Jaco',
+      date: '1 hours ago',
+      description: "Good to see you! What's...",
+    },
+  ];
   return (
     <Box>
       <Grid container spacing={2}>
@@ -52,14 +94,9 @@ const Chat = () => {
             </Box>
 
             <Box sx={{ height: '620px', overflowY: 'auto', pr: 1 }}>
-              <ChatItem />
-              <ChatItem active />
-              <ChatItem />
-              <ChatItem />
-              <ChatItem />
-              <ChatItem />
-              <ChatItem />
-              <ChatItem />
+              {messagesUserData?.map((chats: ChatItemType) => {
+                return <ChatItem key={chats.id} {...chats} />;
+              })}
             </Box>
           </Paper>
         </Grid>
@@ -143,4 +180,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default Messages;

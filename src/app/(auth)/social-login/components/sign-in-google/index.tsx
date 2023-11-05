@@ -20,11 +20,10 @@ const SignInGoogle = () => {
       sx={{
         '& .MuiButton-root': {
           background: '#4285F4 !important',
-          padding: { md: '13px 100px', xs: '14px' },
           width: '100%',
           fontSize: '16px',
           fontWeight: '400',
-          color: palette.primary.main,
+          color: palette.text.primary,
           textTransform: 'capitalize',
           '& .MuiButton-startIcon': {
             margin: '0',

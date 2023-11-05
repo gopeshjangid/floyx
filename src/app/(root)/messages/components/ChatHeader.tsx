@@ -1,47 +1,48 @@
 import { imgUser } from '@/assets/images';
-import UserAvatar from '@/components/UserAvatar';
 import styled from '@emotion/styled';
 import {
   Box,
+  Button,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Theme,
   Typography,
 } from '@mui/material';
-import React, { FC } from 'react';
-type ChatCardProps = {
-  active?: boolean;
-};
-const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
+import React from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import UserAvatar from '../../../../components/UserAvatar';
+import Link from 'next/link';
+import { allRoutes } from '@/constants/allRoutes';
+
+const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
   gap: '10px',
-  padding: '15px 23px',
-  '&:not(:last-child)': { marginBottom: '20px' },
+  padding: '12px 14px',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.15)',
   '& .MuiListItemText-root': {
     margin: '0',
   },
   [theme.breakpoints.up('md')]: {
+    padding: '12px 26px',
     gap: '18px',
   },
 }));
-const ChatCard: FC = ({ active }: ChatCardProps) => {
+const ChatHeader = () => {
   return (
-    <ListItemItem
-      sx={{
-        background: active ? '#131B3C' : '',
-      }}
-    >
-      <ListItemAvatar>
-        <UserAvatar
-          src={imgUser}
-          alt="Travis Howard"
-          sx={{
-            width: { md: '59px', xs: '50px' },
-            height: { md: '59px', xs: '50px' },
-          }}
-        />
-      </ListItemAvatar>
+    <ChatWrapper>
+      <Link href={allRoutes.messages}>
+        <ListItemAvatar>
+          <UserAvatar
+            alt="Travis Howard"
+            src={imgUser}
+            sx={{
+              width: { md: '59px', xs: '50px' },
+              height: { md: '59px', xs: '50px' },
+            }}
+          />
+        </ListItemAvatar>
+      </Link>
       <ListItemText
         primary={
           <Box
@@ -50,7 +51,7 @@ const ChatCard: FC = ({ active }: ChatCardProps) => {
             justifyContent="space-between"
             flexWrap="wrap"
           >
-            <Box>
+            <Link href={allRoutes.messages}>
               <Typography
                 color="#fff"
                 fontFamily="Poppins"
@@ -58,7 +59,7 @@ const ChatCard: FC = ({ active }: ChatCardProps) => {
                 fontWeight={500}
                 component="span"
               >
-                Nora{' '}
+                Michele
               </Typography>
               <Typography
                 fontFamily="Poppins"
@@ -67,20 +68,17 @@ const ChatCard: FC = ({ active }: ChatCardProps) => {
                 component="span"
                 className="gradient-text"
               >
-                @Jaco
+                @mich23
               </Typography>
-            </Box>
-            <Typography
-              sx={{ display: 'inline' }}
-              component="span"
-              variant="body2"
-              color="#85838F"
-              fontFamily="Poppins"
-              fontSize={{ md: '16px', xs: '14px' }}
-              fontWeight={500}
+            </Link>
+
+            <Button
+              size="small"
+              sx={{ color: '#FA6B7C' }}
+              startIcon={<DeleteIcon />}
             >
-              2 hours ago
-            </Typography>{' '}
+              Delete
+            </Button>
           </Box>
         }
         secondary={
@@ -93,12 +91,12 @@ const ChatCard: FC = ({ active }: ChatCardProps) => {
             fontSize={{ md: '16px', xs: '14px' }}
             fontWeight={500}
           >
-            {` Hey, how's your day....`}
+            Last seen 1 hour ago
           </Typography>
         }
       />
-    </ListItemItem>
+    </ChatWrapper>
   );
 };
 
-export default ChatCard;
+export default ChatHeader;

@@ -27,7 +27,7 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-const Notification = () => {
+const Notifications = () => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -89,7 +89,7 @@ const Notification = () => {
         </Box>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Box mb={{md:'34px',xs:'20px'}} component="div">
+        <Box mb={{ md: '34px', xs: '20px' }} component="div">
           <Typography
             fontSize="16px"
             fontWeight="500"
@@ -128,4 +128,4 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default Notifications;
