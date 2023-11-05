@@ -22,7 +22,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { signIn } from 'next-auth/react';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
@@ -99,7 +99,7 @@ const Login: FC = () => {
       setLoading(false);
 
       if (response?.ok) {
-        redirect(allRoutes.home);
+        router.replace(allRoutes.home);
       } else {
         // TODO: show toast
         console.log(response?.error || 'Something went wrong!');
