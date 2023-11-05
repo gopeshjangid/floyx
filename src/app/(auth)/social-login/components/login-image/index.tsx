@@ -34,7 +34,12 @@ const LoginImage = () => {
           },
         }}
       >
-        <Image src={imgLoginBG} alt="login bg" className="img-overlay" />
+        <Image
+          src={imgLoginBG}
+          alt="login bg"
+          className="img-overlay"
+          priority
+        />
         <Box
           position="relative"
           padding={{ md: '110px 15px 10px', xs: '38px 15px 0' }}
@@ -43,7 +48,7 @@ const LoginImage = () => {
             textAlign="center"
             sx={{
               '& .MuiTypography-h5': {
-                color: palette.primary.main,
+                color: palette.text.primary,
                 fontFamily: 'Poppins',
                 fontSize: '20px',
                 fontStyle: 'normal',

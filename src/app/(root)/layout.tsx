@@ -34,8 +34,6 @@ const DRAWER_WIDTH = 240;
 
 const LINKS = [
   { text: 'Home', href: allRoutes.home, icon: HomeIcon },
-  { text: 'Notification', href: allRoutes.notification, icon: StarIcon },
-  { text: 'Chat', href: allRoutes.chat, icon: StarIcon },
   { text: 'Starred', href: '/starred', icon: ChecklistIcon },
   { text: 'Tasks', href: '/tasks', icon: ChecklistIcon },
 ];

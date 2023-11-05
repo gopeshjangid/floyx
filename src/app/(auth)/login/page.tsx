@@ -17,6 +17,7 @@ import {
   TextField,
   Theme,
   Typography,
+  styled,
   useTheme,
 } from '@mui/material';
 import { signIn } from 'next-auth/react';
@@ -24,16 +25,15 @@ import { signIn } from 'next-auth/react';
 import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
-import styled from '@emotion/styled';
+import { useRouter } from 'next/navigation';
 
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
-  background: '#0B081F',
+  background: theme.palette.background.default,
   '& .outline-btn': {
     borderColor: 'rgba(255, 255, 255, 0.15)',
     color: '#D1D0D5',
     fontSize: '16px',
-    fontWeight: '400',
-    padding: '14px',
+    textTransform: 'initial',
     width: '100%',
     borderRadius: '10px',
   },
@@ -52,17 +52,13 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
       fontSize: '15px',
       fontWeight: '400',
       lineHeight: '22.5px',
-      color: theme.palette.secondary.main,
-    },
-  },
-  [theme.breakpoints.up('md')]: {
-    '& .outline-btn': {
-      padding: '14px 83px',
+      color: theme.palette.primary.main,
     },
   },
 }));
 const Login: FC = () => {
   const { palette } = useTheme();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,7 +85,7 @@ const Login: FC = () => {
             <Typography
               variant="h5"
               fontSize="16px"
-              color={palette.primary.main}
+              color={palette.text.primary}
               marginBottom="26px"
             >
               Join for free today and keep your data safe in the digital Space{' '}
@@ -102,20 +98,24 @@ const Login: FC = () => {
               marginInline="auto"
             >
               <Box mb="3px">
-                <Button variant="outlined" className="outline-btn">
-                  Use username or email
+                <Button
+                  variant="outlined"
+                  className="outline-btn"
+                  onClick={() => router.push(allRoutes.register)}
+                >
+                  Create an account{' '}
                 </Button>
               </Box>
               <Typography
                 variant="h3"
                 fontSize="24px"
                 fontWeight="600"
-                color={palette.primary.main}
+                color={palette.text.primary}
                 textAlign="left"
               >
-                Login to your account
+                Login to your account{' '}
               </Typography>
-              <Box component="form" m={0} noValidate>
+              <Box component="form" m={0} noValidate onSubmit={handleSubmit}>
                 <FormControl>
                   <FormLabel>Username or email </FormLabel>
                   <TextField
@@ -145,7 +145,7 @@ const Login: FC = () => {
                     <Typography
                       fontSize="16px"
                       fontWeight="400"
-                      sx={{ '& a': { color: palette.secondary.main } }}
+                      sx={{ '& a': { color: palette.primary.main} }}
                     >
                       <Link href={allRoutes.login}>
                         Forgotten your password?
@@ -176,7 +176,7 @@ const Login: FC = () => {
                     sx={{
                       textTransform: 'capitalize',
                       padding: '12px 29px',
-                      color: '#0B081F',
+                      color: palette.background.default,
                       fontSize: '16px',
                       fontWeight: '400',
                     }}
@@ -199,7 +199,7 @@ const Login: FC = () => {
                   fontWeight="400"
                   lineHeight="24px"
                   color="#CECED2"
-                  sx={{ '& a': { color: palette.secondary.main } }}
+                  sx={{ '& a': { color: palette.primary.main } }}
                 >
                   By signing up,you agree to
                   <Link href="/"> Terms of Service </Link> and
@@ -224,6 +224,7 @@ const Login: FC = () => {
                 className="login-service"
                 direction="row"
                 justifyContent="center"
+                flexWrap='wrap'
               >
                 <Link href="/"> Terms of service</Link>
                 <Link href="/"> Privacy Policy</Link>
@@ -235,7 +236,7 @@ const Login: FC = () => {
                 fontWeight="400"
                 lineHeight="24px"
                 color="#85838F"
-                sx={{ '& a': { color: palette.secondary.main } }}
+                sx={{ '& a': { color: palette.primary.main} }}
               >
                 © 2022 Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>
               </Typography>

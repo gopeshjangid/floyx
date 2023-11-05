@@ -1,9 +1,6 @@
 export const allRoutes = {
-  home:'/',
-  socialLogin: '/social-login',
+  home: '/',
   login: '/login',
   register: '/register',
-  home: '/',
-  chat: '/chat',
-  notification: '/notification',
+  socialLogin: '/social-login',
 };
