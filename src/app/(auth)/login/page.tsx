@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
@@ -26,6 +26,7 @@ import { useRouter } from 'next/navigation';
 import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
+import { EMAIL } from '@/constants';
 
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   background: theme.palette.background.default,
@@ -59,22 +60,94 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   },
 }));
 
+interface ILogin {
+  email: string;
+  password: string;
+  remember: boolean;
+}
+
+interface IFormError {
+  email?: string;
+  password?: string;
+  remember?: string;
+}
+
 const Login: FC = () => {
   const { palette } = useTheme();
   const router = useRouter();
 
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log('login ~ e:', e);
-    e.preventDefault();
-    const response = await signIn('credentials', {
-      email: 'brijeshthakkar1785@gmail.com',
-      password: 'vv!bKqZMGY5e@TD',
-      remember: false,
-      redirect: true,
-      callbackUrl: allRoutes.home,
-    });
+  const [formData, setFormData] = useState<ILogin>({
+    email: '',
+    password: '',
+    remember: false,
+  });
+  const [formError, setFormError] = useState<IFormError>({});
 
-    console.log(response);
+  const login = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const isValid: boolean = validateForm();
+
+    if (isValid) {
+      try {
+        await signIn('credentials', {
+          email: formData.email,
+          password: formData.password,
+          remember: formData.remember,
+          callbackUrl: allRoutes.home,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name === 'remember') {
+      const copy = { ...formData };
+
+      if (event.target.checked) {
+        copy.remember = true;
+      } else {
+        copy.remember = false;
+      }
+
+      setFormData(copy);
+    } else {
+      setFormData(() => ({
+        ...formData,
+        [event.target.name]: event.target.value,
+      }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const err: IFormError = {
+      email: '',
+      password: '',
+      remember: '',
+    };
+
+    if (formData.email === '') {
+      err.email = 'Email required!';
+    } else {
+      const regex = EMAIL;
+      if (!regex.test(formData.email)) {
+        err.email = 'Email  not valid!';
+      }
+    }
+
+    if (formData.password === '') {
+      err.password = 'Password is required!';
+    } else {
+      if (formData.password.length < 6) {
+        err.password = 'Password should greater than 6 characters!';
+      }
+    }
+    console.log('validateForm ~ err:', err);
+
+    setFormError({ ...err });
+
+    return Object.values(err).every(value => value === '');
   };
 
   return (
@@ -119,7 +192,7 @@ const Login: FC = () => {
               >
                 Login to your account
               </Typography>
-              <Box component="form" m={0} noValidate>
+              <Box component="form" m={0} noValidate onSubmit={login}>
                 <FormControl>
                   <FormLabel>Username or email </FormLabel>
                   <TextField
@@ -127,6 +200,9 @@ const Login: FC = () => {
                     fullWidth
                     hiddenLabel
                     placeholder="Ex. Dustin Max"
+                    onChange={onChangeHandler}
+                    error={!!formError.email}
+                    helperText={formError.email}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="end">
@@ -146,7 +222,7 @@ const Login: FC = () => {
                     sx={{ '& label': { marginBottom: '0 !important' } }}
                     mb={1.5}
                   >
-                    <FormLabel>Password </FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <Typography
                       fontSize="16px"
                       fontWeight="400"
@@ -162,6 +238,10 @@ const Login: FC = () => {
                     hiddenLabel
                     placeholder="************"
                     type="password"
+                    name="password"
+                    onChange={onChangeHandler}
+                    error={!!formError.password}
+                    helperText={formError.password}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="end">
@@ -192,7 +272,12 @@ const Login: FC = () => {
                 <FormControl sx={{ marginBottom: '0 !important' }}>
                   <FormControlLabel
                     name="remember"
-                    control={<Checkbox defaultChecked={false} />}
+                    control={
+                      <Checkbox
+                        defaultChecked={false}
+                        onChange={onChangeHandler}
+                      />
+                    }
                     label="Remember me"
                   />
                 </FormControl>
