@@ -7,6 +7,7 @@ import Link from 'next/link';
 import {
   Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -21,7 +22,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
@@ -75,7 +76,7 @@ interface IFormError {
 const Login: FC = () => {
   const { palette } = useTheme();
   const router = useRouter();
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<ILogin>({
     email: '',
     password: '',
@@ -88,15 +89,20 @@ const Login: FC = () => {
     const isValid: boolean = validateForm();
 
     if (isValid) {
-      try {
-        await signIn('credentials', {
-          email: formData.email,
-          password: formData.password,
-          remember: formData.remember,
-          callbackUrl: allRoutes.home,
-        });
-      } catch (error) {
-        console.log(error);
+      setLoading(true);
+      const response = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        remember: formData.remember,
+        redirect: false,
+      });
+      setLoading(false);
+
+      if (response?.ok) {
+        redirect(allRoutes.home);
+      } else {
+        // TODO: show toast
+        console.log(response?.error || 'Something went wrong!');
       }
     }
   };
@@ -143,7 +149,6 @@ const Login: FC = () => {
         err.password = 'Password should greater than 6 characters!';
       }
     }
-    console.log('validateForm ~ err:', err);
 
     setFormError({ ...err });
 
@@ -266,7 +271,14 @@ const Login: FC = () => {
                       fontWeight: '400',
                     }}
                   >
-                    Submit
+                    {loading ? (
+                      <>
+                        <CircularProgress size={24} color="inherit" />
+                        Submit
+                      </>
+                    ) : (
+                      'Submit'
+                    )}
                   </Button>
                 </FormControl>
                 <FormControl sx={{ marginBottom: '0 !important' }}>
