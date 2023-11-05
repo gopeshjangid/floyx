@@ -14,7 +14,7 @@ const ChatSenderCard = ({ id, message }: ChatSenderCardProps) => {
           background:
             'linear-gradient(87deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
         }}
-        padding={{md:"12px 23px",xs:'12px 15px'}}
+        padding={{ md: '12px 23px', xs: '12px 15px' }}
         borderRadius="10px 0px 10px 10px"
       >
         <Typography
@@ -22,7 +22,7 @@ const ChatSenderCard = ({ id, message }: ChatSenderCardProps) => {
           color="#0B081F"
           fontSize="15px"
           fontWeight="400"
-          lineHeight={{md:"28px",xs:'24px'}}
+          lineHeight={{ md: '28px', xs: '24px' }}
         >
           {message}
         </Typography>

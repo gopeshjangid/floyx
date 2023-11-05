@@ -1,6 +1,5 @@
 import UserAvatar from '@/components/UserAvatar';
 import { allRoutes } from '@/constants/allRoutes';
-import styled from '@emotion/styled';
 import {
   Box,
   ListItem,
@@ -8,10 +7,10 @@ import {
   ListItemText,
   Theme,
   Typography,
+  styled,
 } from '@mui/material';
-import { StaticImageData } from 'next/image';
 import Link from 'next/link';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   padding: '0',
@@ -31,6 +30,7 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
     },
   },
 }));
+
 const ChatCard: FC = ({
   img,
   username,

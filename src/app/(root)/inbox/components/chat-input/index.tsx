@@ -7,11 +7,12 @@ import {
   Paper,
   TextField,
   Theme,
+  styled,
 } from '@mui/material';
 
 import { iconPaperPlane, iconSmile, imgUser } from '@/assets/images';
 import UserAvatar from '@/components/UserAvatar';
-import styled from '@emotion/styled';
+
 const ChatInputWrapper = styled(Paper)(({ theme }: { theme: Theme }) => ({
   borderRadius: '10px',
   border: ' 1px solid  rgba(255, 255, 255, 0.15)',
@@ -50,6 +51,7 @@ const ChatInputWrapper = styled(Paper)(({ theme }: { theme: Theme }) => ({
     },
   },
 }));
+
 const ChatInput = () => {
   return (
     <ChatInputWrapper

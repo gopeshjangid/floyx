@@ -1,5 +1,3 @@
-import { imgUser } from '@/assets/images';
-import styled from '@emotion/styled';
 import {
   Box,
   Button,
@@ -8,12 +6,15 @@ import {
   ListItemText,
   Theme,
   Typography,
+  styled,
 } from '@mui/material';
 import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import UserAvatar from '../../../../components/UserAvatar';
 import Link from 'next/link';
+
 import { allRoutes } from '@/constants/allRoutes';
+import UserAvatar from '@/components/UserAvatar';
+import { imgUser } from '@/assets/images';
 
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
@@ -28,6 +29,7 @@ const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
     gap: '18px',
   },
 }));
+
 const ChatHeader = () => {
   return (
     <ChatWrapper>
