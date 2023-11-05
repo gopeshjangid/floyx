@@ -21,11 +21,11 @@ import {
   useTheme,
 } from '@mui/material';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
-import { useRouter } from 'next/navigation';
 
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   background: theme.palette.background.default,
@@ -34,6 +34,8 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
     color: '#D1D0D5',
     fontSize: '16px',
     textTransform: 'initial',
+    fontWeight: '400',
+    padding: '14px',
     width: '100%',
     borderRadius: '10px',
   },
@@ -56,11 +58,13 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
     },
   },
 }));
+
 const Login: FC = () => {
   const { palette } = useTheme();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const login = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log('login ~ e:', e);
     e.preventDefault();
     const response = await signIn('credentials', {
       email: 'brijeshthakkar1785@gmail.com',
@@ -103,7 +107,7 @@ const Login: FC = () => {
                   className="outline-btn"
                   onClick={() => router.push(allRoutes.register)}
                 >
-                  Create an account{' '}
+                  Create an account
                 </Button>
               </Box>
               <Typography
@@ -113,12 +117,13 @@ const Login: FC = () => {
                 color={palette.text.primary}
                 textAlign="left"
               >
-                Login to your account{' '}
+                Login to your account
               </Typography>
-              <Box component="form" m={0} noValidate onSubmit={handleSubmit}>
+              <Box component="form" m={0} noValidate>
                 <FormControl>
                   <FormLabel>Username or email </FormLabel>
                   <TextField
+                    name="email"
                     fullWidth
                     hiddenLabel
                     placeholder="Ex. Dustin Max"
@@ -145,7 +150,7 @@ const Login: FC = () => {
                     <Typography
                       fontSize="16px"
                       fontWeight="400"
-                      sx={{ '& a': { color: palette.primary.main} }}
+                      sx={{ '& a': { color: palette.primary.main } }}
                     >
                       <Link href={allRoutes.login}>
                         Forgotten your password?
@@ -186,7 +191,7 @@ const Login: FC = () => {
                 </FormControl>
                 <FormControl sx={{ marginBottom: '0 !important' }}>
                   <FormControlLabel
-                    name="Remember me"
+                    name="remember"
                     control={<Checkbox defaultChecked={false} />}
                     label="Remember me"
                   />
@@ -224,7 +229,7 @@ const Login: FC = () => {
                 className="login-service"
                 direction="row"
                 justifyContent="center"
-                flexWrap='wrap'
+                flexWrap="wrap"
               >
                 <Link href="/"> Terms of service</Link>
                 <Link href="/"> Privacy Policy</Link>
@@ -236,7 +241,7 @@ const Login: FC = () => {
                 fontWeight="400"
                 lineHeight="24px"
                 color="#85838F"
-                sx={{ '& a': { color: palette.primary.main} }}
+                sx={{ '& a': { color: palette.primary.main } }}
               >
                 © 2022 Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>
               </Typography>
