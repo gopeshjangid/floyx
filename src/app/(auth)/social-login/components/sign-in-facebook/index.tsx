@@ -21,11 +21,10 @@ const SignInFacebook = () => {
     <Box
       sx={{
         '& .MuiButton-root': {
-          padding: { md: '13px 80px 13px 100px', xs: '14px' },
           width: '100%',
           background: '#4267B2 !important',
           fontSize: '16px',
-          color: palette.primary.main,
+          color: palette.text.primary,
           fontWeight: '400',
           textTransform: 'capitalize',
           '& .MuiButton-startIcon': {

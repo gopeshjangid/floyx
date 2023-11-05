@@ -263,7 +263,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           input: {
             '&:-webkit-autofill': {
-              '-webkit-box-shadow': '0 0 0 100px #1B1830 inset',
+              '-webkit-box-shadow':
+                'inset 0 0 0px 100px #1B1830, inset 0 0 0px 100px #1B1830, inset 0 0 0px 100px #1B1830, inset 0 0 0px 100px #1B1830',
               '-webkit-text-fill-color': '#D1D0D5',
               borderRadius: '0',
             },
