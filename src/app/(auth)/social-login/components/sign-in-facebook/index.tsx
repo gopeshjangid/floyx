@@ -10,11 +10,9 @@ const SignInFacebook = () => {
   const { palette } = useTheme();
 
   const handleFacebookLogin = async () => {
-    const response = await signIn('facebook', {
+    await signIn('facebook', {
       callbackUrl: allRoutes.home,
     });
-
-    console.log(response);
   };
 
   return (
