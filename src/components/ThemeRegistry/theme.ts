@@ -304,7 +304,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiButton: {
         styleOverrides: {
           // Assuming "primary" is your default color for the button
-          root: { height: 'fit-content !important' },
+          root: {
+            height: 'fit-content !important',
+            textTransform: 'capitalize',
+          },
           containedPrimary: {
             color: 'white', // Assuming you want white text for the button
             borderRadius: '10px',
