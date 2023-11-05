@@ -30,7 +30,7 @@ const Login: FC = () => {
     <Box sx={{ background: '#0B081F' }}>
       <Grid container>
         <LoginImage />
-        <Grid md={6} sm={12} zIndex="1">
+        <Grid item md={6} sm={12} zIndex="1">
           <Box
             textAlign="center"
             padding={{ md: '113px 15px 40px', xs: '38px 25px 38px' }}
@@ -60,7 +60,7 @@ const Login: FC = () => {
                     fontWeight: '400',
                     textTransform: 'capitalize',
                     padding: { md: '14px 83px', xs: '14px' },
-                    width: { md: '0', xs: '100%' },
+                    width: { md: 'fit-content', xs: '100%' },
                     borderRadius: '10px',
                   }}
                 >
@@ -76,56 +76,7 @@ const Login: FC = () => {
               >
                 Login to your account
               </Typography>
-              <Box
-                component="form"
-                m={0}
-                noValidate
-                sx={{
-                  '& .MuiFormControl-root': {
-                    marginBottom: '10px',
-                    width: '100%',
-                    '& .MuiInputBase-root': {
-                      '& .MuiIconButton-root': {
-                        padding: '0',
-                      },
-                      paddingLeft: '20px',
-                    },
-                    '& label': {
-                      marginBottom: '12px',
-                      color: '#D1D0D5',
-                      fontSize: '16px',
-                      fontWeight: '400',
-                      textAlign: 'left',
-                    },
-                    '& .MuiFormControl-root': {
-                      borderRadius: '10px',
-                      background: '#1B1830',
-
-                      '& .MuiInputBase-input': {
-                        padding: '13px 25px',
-                        height: 'fit-content',
-                        color: '#D1D0D5',
-                      },
-                    },
-                  },
-                  '& .checkbox-wrapper': {
-                    '& label': {
-                      margin: '0',
-                      '& .MuiCheckbox-root': {
-                        color: 'rgba(255, 255, 255, 0.15)',
-                        '&.Mui-checked': {
-                          color: '#A85CFF',
-                        },
-                      },
-                      '& .MuiTypography-root': {
-                        color: '#D1D0D5',
-                        fontSize: '16px',
-                        fontWeight: '400',
-                      },
-                    },
-                  },
-                }}
-              >
+              <Box component="form" m={0} noValidate>
                 <FormControl>
                   <FormLabel>Username or email </FormLabel>
                   <TextField
@@ -154,11 +105,13 @@ const Login: FC = () => {
                   >
                     <FormLabel>Password </FormLabel>
                     <Typography
-                      color={palette.secondary.main}
                       fontSize="16px"
                       fontWeight="400"
+                      sx={{ '& a': { color: palette.secondary.main } }}
                     >
-                      Forgotten your password?
+                      <Link href={allRoutes.login}>
+                        Forgotten your password?
+                      </Link>
                     </Typography>
                   </Box>
                   <TextField
@@ -193,10 +146,7 @@ const Login: FC = () => {
                     Submit
                   </Button>
                 </FormControl>
-                <FormControl
-                  className="checkbox-wrapper"
-                  sx={{ marginBottom: '0 !important' }}
-                >
+                <FormControl sx={{ marginBottom: '0 !important' }}>
                   <FormControlLabel
                     name="Remember me"
                     control={<Checkbox defaultChecked={false} />}

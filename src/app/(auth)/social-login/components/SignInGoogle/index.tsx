@@ -13,7 +13,7 @@ const SignInGoogle = () => {
         '& .MuiButton-root': {
           background: '#4285F4 !important',
           padding: { md: '13px 100px', xs: '14px' },
-          width: { md: '0', xs: '100%' },
+          width: { md: 'fit-content', xs: '100%' },
           fontSize: '16px',
           fontWeight: '400',
           color: palette.primary.main,

@@ -7,15 +7,17 @@ import { Box, Button, Grid, Stack, Typography, useTheme } from '@mui/material';
 import LoginImage from './components/LoginImage';
 import SignInGoogle from './components/SignInGoogle';
 import SignInFacebook from './components/SignInFacebook';
+import { useRouter } from 'next/navigation';
+import { allRoutes } from '@/constants/allRoutes';
 
 const SocialLogin: FC = () => {
   const { palette } = useTheme();
-
+  const router = useRouter();
   return (
     <Box sx={{ background: '#0B081F' }}>
       <Grid container minHeight="100vh">
         <LoginImage />
-        <Grid md={6} sm={12}>
+        <Grid item md={6} sm={12}>
           <Box
             textAlign="center"
             padding={{ md: '113px 15px 40px', xs: '38px 25px 38px' }}
@@ -43,13 +45,13 @@ const SocialLogin: FC = () => {
                     color: '#D1D0D5',
                     fontSize: '16px',
                     fontWeight: '400',
-                    textTransform: 'capitalize',
+                    textTransform: 'inherit',
                     padding: { md: '14px 83px', xs: '14px' },
-                    width: { md: '0', xs: '100%' },
+                    width: { md: 'fit-content', xs: '100%' },
                     borderRadius: '10px',
                   }}
                 >
-                  Use username or email
+                  Create an account{' '}
                 </Button>
               </Box>
               <Typography
@@ -71,11 +73,12 @@ const SocialLogin: FC = () => {
                     color: '#D1D0D5',
                     fontSize: '16px',
                     fontWeight: '400',
-                    textTransform: 'capitalize',
+                    textTransform: 'inherit',
                     padding: { md: '14px 83px', xs: '14px' },
-                    width: { md: '0', xs: '100%' },
+                    width: { md: 'fit-content', xs: '100%' },
                     borderRadius: '10px',
                   }}
+                  onClick={() => router.push(allRoutes.login)}
                 >
                   Use username or email
                 </Button>

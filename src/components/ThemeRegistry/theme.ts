@@ -142,6 +142,67 @@ const getThemeObject = (theme: PaletteMode): ThemeOptions => {
           },
         },
       },
+      MuiFormControl: {
+        styleOverrides: {
+          root: {
+            marginBottom: '10px',
+            width: '100%',
+
+            '& .MuiIconButton-root': {
+              padding: '0',
+            },
+            '& fieldset': { display: 'none' },
+          },
+        },
+      },
+      MuiFormLabel: {
+        styleOverrides: {
+          root: {
+            marginBottom: '12px',
+            color: '#D1D0D5',
+            fontSize: '16px',
+            fontWeight: '400',
+            textAlign: 'left',
+          },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            borderRadius: '10px !important',
+            background: '#1B1830',
+            '& .MuiInputBase-input': {
+              padding: '13px 25px',
+              height: 'fit-content',
+              color: '#D1D0D5',
+            },
+          },
+        },
+      },
+      MuiFormControlLabel: {
+        styleOverrides: {
+          root: {
+            '& label': {
+              margin: '0',
+              '& .MuiTypography-root': {
+                color: '#D1D0D5',
+                fontSize: '16px',
+                fontWeight: '400',
+              },
+            },
+          },
+        },
+      },
+      MuiCheckbox: {
+        styleOverrides: {
+          root: {
+            color: 'rgba(255, 255, 255, 0.15)',
+            '&.Mui-checked': {
+              color: '#A85CFF',
+            },
+          },
+        },
+      },
     },
   });
 };

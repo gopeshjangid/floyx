@@ -1,20 +1,20 @@
-import { iconUserGradient, imgUser } from '@/assets/images';
+import { imgUser } from '@/assets/images';
 import styled from '@emotion/styled';
 import {
   Avatar,
+  Box,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Theme,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
-import React, { FC } from 'react';
-
-const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
+import React from 'react';
+const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
   gap: '10px',
-  padding: '0',
+  padding: '12px 26px',
+  borderBottom: '1px solid rgba(255, 255, 255, 0.15)',
   '&:not(:last-child)': { marginBottom: '20px' },
   '& .MuiListItemText-root': {
     margin: '0',
@@ -27,27 +27,10 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
       height: '50px',
       background: 'rgba(194, 148, 255, 0.38)',
     },
-    '& span': {
-      position: 'absolute',
-      right: '0',
-      bottom: '-3px',
-      borderRadius: '100%',
-      width: '25px',
-      height: '25px',
-      background: '#fff',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      '& img': {
-        width: '18px',
-        height: '18px',
-      },
-    },
   },
   [theme.breakpoints.up('md')]: {
     gap: '18px',
 
-    '&:not(:last-child)': { marginBottom: '28px' },
     '& .MuiListItemAvatar-root': {
       '& .MuiAvatar-root': {
         width: '59px',
@@ -66,32 +49,52 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
     },
   },
 }));
-const NotificationCard: FC = () => {
+const ChatHeader = () => {
   return (
-    <ListItemItem>
+    <ChatWrapper>
       <ListItemAvatar>
         <Avatar alt="Travis Howard" src={imgUser} />
-        <span>
-          <Image src={iconUserGradient} alt="icon" />
-          {/*
-          // TODO: All User Icon 🔝
-          iconUserGradient,
-        iconLinkGradient,
-        iconLinkMessage,
-        iconTelegramGradient
-        */}
-        </span>
       </ListItemAvatar>
       <ListItemText
         primary={
-          <Typography
-            color="#fff"
-            font-family="Poppins"
-            fontSize="16px"
-            fontWeight={400}
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            flexWrap="wrap"
           >
-            Nora Jacob commented on the post you shared{' '}
-          </Typography>
+            <Box>
+              <Typography
+                color="#fff"
+                font-family="Poppins"
+                fontSize="16px"
+                fontWeight={500}
+                component="span"
+              >
+                Nora
+              </Typography>
+              <Typography
+                font-family="Poppins"
+                fontSize="14px"
+                fontWeight={400}
+                component="span"
+                className="gradient-text"
+              >
+                @Jaco
+              </Typography>
+            </Box>
+            <Typography
+              sx={{ display: 'inline' }}
+              component="span"
+              variant="body2"
+              color="#85838F"
+              font-family="Poppins"
+              fontSize={{ md: '16px', xs: '14px' }}
+              fontWeight={500}
+            >
+              Delete
+            </Typography>
+          </Box>
         }
         secondary={
           <Typography
@@ -103,12 +106,12 @@ const NotificationCard: FC = () => {
             fontSize={{ md: '16px', xs: '14px' }}
             fontWeight={500}
           >
-            2 hours ago
+            Hey, how s your day....
           </Typography>
         }
       />
-    </ListItemItem>
+    </ChatWrapper>
   );
 };
 
-export default NotificationCard;
+export default ChatHeader;

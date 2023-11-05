@@ -8,6 +8,7 @@ import iconUserGradient from './icons/user-gradient.svg';
 import iconLinkGradient from './icons/like-gradient.svg';
 import iconTelegramGradient from './icons/telegram-gradient.svg';
 import iconLinkMessage from './icons/message-gradient.svg';
+import iconSearch from './icons/search.svg';
 
 // Images
 import imgLogin from './login.png';
@@ -32,5 +33,5 @@ export {
   iconLinkGradient,
   iconLinkMessage,
   iconTelegramGradient,
-  imgUser
+  imgUser,iconSearch
 };

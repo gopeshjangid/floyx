@@ -18,7 +18,7 @@ const LoginImage = () => {
   const { palette } = useTheme();
 
   return (
-    <Grid md={6} sm={12} width="100%">
+    <Grid item md={6} sm={12} width="100%">
       <Box
         height="100%"
         width="100%"

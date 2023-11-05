@@ -12,7 +12,7 @@ const SignInFacebook = () => {
       sx={{
         '& .MuiButton-root': {
           padding: { md: '13px 80px 13px 100px', xs: '14px' },
-          width: { md: '0', xs: '100%' },
+          width: { md: 'fit-content', xs: '100%' },
           background: '#4267B2 !important',
           fontSize: '16px',
           color: palette.primary.main,

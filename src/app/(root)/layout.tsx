@@ -26,14 +26,16 @@ import SupportIcon from '@mui/icons-material/Support';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DarkMode from '@mui/icons-material/DarkMode';
 import LightMode from '@mui/icons-material/Brightness7';
+import { allRoutes } from '@/constants/allRoutes';
 
 // import '../../index.scss';
 
 const DRAWER_WIDTH = 240;
 
 const LINKS = [
-  { text: 'Home', href: '/', icon: HomeIcon },
-  { text: 'Notification', href: '/notification', icon: StarIcon },
+  { text: 'Home', href: allRoutes.home, icon: HomeIcon },
+  { text: 'Notification', href: allRoutes.notification, icon: StarIcon },
+  { text: 'Chat', href: allRoutes.chat, icon: StarIcon },
   { text: 'Starred', href: '/starred', icon: ChecklistIcon },
   { text: 'Tasks', href: '/tasks', icon: ChecklistIcon },
 ];
