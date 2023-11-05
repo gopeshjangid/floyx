@@ -23,6 +23,7 @@ const SocialLoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   background: '#0B081F',
   '& .outline-btn': {
     borderColor: 'rgba(255, 255, 255, 0.15)',
+    textTransform: 'initial',
     color: '#D1D0D5',
     fontSize: '16px',
     fontWeight: '400',
@@ -73,7 +74,11 @@ const SocialLogin: FC = () => {
               marginInline="auto"
             >
               <Box mb="3px">
-                <Button variant="outlined" className="outline-btn">
+                <Button
+                  variant="outlined"
+                  className="outline-btn"
+                  onClick={() => router.push(allRoutes.register)}
+                >
                   Create an account
                 </Button>
               </Box>

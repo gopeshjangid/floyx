@@ -25,6 +25,7 @@ import { signIn } from 'next-auth/react';
 import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
+import { useRouter } from 'next/navigation';
 
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   background: '#0B081F',
@@ -32,6 +33,7 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
     borderColor: 'rgba(255, 255, 255, 0.15)',
     color: '#D1D0D5',
     fontSize: '16px',
+    textTransform:"initial",
     fontWeight: '400',
     padding: '14px',
     width: '100%',
@@ -63,6 +65,7 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
 }));
 const Login: FC = () => {
   const { palette } = useTheme();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -102,8 +105,12 @@ const Login: FC = () => {
               marginInline="auto"
             >
               <Box mb="3px">
-                <Button variant="outlined" className="outline-btn">
-                  Use username or email
+                <Button
+                  variant="outlined"
+                  className="outline-btn"
+                  onClick={() => router.push(allRoutes.register)}
+                >
+                  Create an account{' '}
                 </Button>
               </Box>
               <Typography
@@ -113,7 +120,7 @@ const Login: FC = () => {
                 color={palette.primary.main}
                 textAlign="left"
               >
-                Login to your account
+                Login to your account{' '}
               </Typography>
               <Box component="form" m={0} noValidate onSubmit={handleSubmit}>
                 <FormControl>
