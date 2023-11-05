@@ -67,9 +67,10 @@ export default function HomePage() {
       >
         <List sx={{ px: 2 }}>
           <ListItem disablePadding>
-            <Typography variant="overline" sx={{ fontWeight: 500 }}>
+            <Typography variant="overline" color="textPrimary">
               On this page
             </Typography>
+            <Button variant="outlined">Hello button</Button>
           </ListItem>
         </List>
       </Drawer>

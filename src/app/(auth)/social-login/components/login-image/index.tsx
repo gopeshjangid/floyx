@@ -48,7 +48,7 @@ const LoginImage = () => {
             textAlign="center"
             sx={{
               '& .MuiTypography-h5': {
-                color: palette.primary.main,
+                color: palette.text.primary,
                 fontFamily: 'Poppins',
                 fontSize: '20px',
                 fontStyle: 'normal',
