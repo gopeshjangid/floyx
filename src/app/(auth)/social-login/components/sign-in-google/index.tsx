@@ -1,11 +1,19 @@
 import React from 'react';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import { Box, Button, useTheme } from '@mui/material';
 
 import { iconGoogle } from '@/assets/images';
+import { allRoutes } from '@/constants/allRoutes';
 
 const SignInGoogle = () => {
   const { palette } = useTheme();
+
+  const handleGoogleLogin = async () => {
+    await signIn('google', {
+      callbackUrl: allRoutes.home,
+    });
+  };
 
   return (
     <Box
@@ -29,6 +37,7 @@ const SignInGoogle = () => {
       <Button
         variant="contained"
         startIcon={<Image src={iconGoogle} alt="google" />}
+        onClick={handleGoogleLogin}
       >
         Sign in with Google
       </Button>

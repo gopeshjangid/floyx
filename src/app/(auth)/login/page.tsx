@@ -18,13 +18,27 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { signIn } from 'next-auth/react';
 
-import LoginImage from '../social-login/components/LoginImage';
+import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
 
 const Login: FC = () => {
   const { palette } = useTheme();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await signIn('credentials', {
+      email: 'brijeshthakkar1785@gmail.com',
+      password: 'vv!bKqZMGY5e@TD',
+      remember: false,
+      redirect: true,
+      callbackUrl: allRoutes.home,
+    });
+
+    console.log(response);
+  };
 
   return (
     <Box sx={{ background: '#0B081F' }}>

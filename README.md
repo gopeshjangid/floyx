@@ -43,3 +43,42 @@ To learn more about this example:
 
 You now have a working example project.
 You can head back to the documentation and continue by browsing the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+
+## env file example
+
+```
+BACKEND_BASE_DEV_URL=https://beta.floyx.com
+BACKEND_BASE_URL=https://www.floyx.com
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=HBgBGs3QXQ7Efmu/FFyzXcKGnhbipvw0ArDme0SYD2o=
+GOOGLE_CLIENT_ID=247852025445-u2ju43kc4e5ngm5g876p5ka0h99v0etm.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+FACEBOOK_CLIENT_ID=697910902025227
+FACEBOOK_CLIENT_SECRET=875e5700c058afb6164d20b04a09b1db
+```
+
+## Facebook auth setup
+
+For facebook
+go to https://developers.facebook.com/
+create a new app, go to app settings, basic
+put app id as ```FACEBOOK_CLIENT_ID``` and App secret as ```FACEBOOK_CLIENT_SECRET```
+go to use cases, make sure you have Facebook Login, email, public_profile access
+you can set site url and stuff there when you are in production
+
+## Google auth setup
+
+for google
+go to https://console.cloud.google.com/
+go to api and services
+go to oauth consent screen
+enter app name and email and add domains
+in scopes, select userinfo.email, userinfo.profile and openid
+save and continue
+go to credentials tab
+create new credential with oauth client id
+choose app type as web
+
+redirect url to setup if you need any
+redirect url : http://localhost:3000/api/auth/callback/google
+or http://localhost:3000/api/auth/callback/facebook

@@ -1,8 +1,9 @@
 'use client';
+import React, { useState } from 'react';
+import { Box, Button, List, Tab, Tabs, Typography } from '@mui/material';
+
 import { SVGCheck } from '@/assets/images';
 import NotificationCard from '@/components/NotificationCard';
-import { Box, Button, List, Tab, Tabs, Typography } from '@mui/material';
-import React, { useState } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
