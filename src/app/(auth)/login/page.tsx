@@ -28,6 +28,7 @@ import LoginImage from '../social-login/components/login-image';
 import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
 import { EMAIL } from '@/constants';
+import { useToast } from '@/components/Toast/useToast';
 
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   background: theme.palette.background.default,
@@ -74,6 +75,7 @@ interface IFormError {
 }
 
 const Login: FC = () => {
+  const toast = useToast();
   const session = useSession();
   const { palette } = useTheme();
   const router = useRouter();
@@ -101,8 +103,9 @@ const Login: FC = () => {
 
       if (response?.ok) {
         router.replace(allRoutes.home);
+        toast.success('Login successfully!');
       } else {
-        // TODO: show toast
+        toast.error(response?.error || 'Something went wrong!');
         console.log(response?.error || 'Something went wrong!');
       }
     }
