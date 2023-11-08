@@ -9,10 +9,10 @@ const MUIThemeProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState(getThemeObject('dark'));
 
   useEffect(() => {
+    if(!resolvedTheme) return;
     const theme = getThemeObject(resolvedTheme)
     setCurrentTheme(theme)
   }, [resolvedTheme]);
-console.log({currentTheme}, "resolvedTheme: ", resolvedTheme)
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline/>
