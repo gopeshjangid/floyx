@@ -133,13 +133,7 @@ const Login: FC = () => {
 
     if (formData.email === '') {
       err.email = 'Email required!';
-    } else {
-      const regex = EMAIL;
-      if (!regex.test(formData.email)) {
-        err.email = 'Email  not valid!';
-      }
     }
-
     if (formData.password === '') {
       err.password = 'Password is required!';
     } else {
@@ -254,7 +248,7 @@ const Login: FC = () => {
                         startAdornment: (
                           <InputAdornment position="end">
                             <IconButton edge="end" color="primary">
-                              <SVGLock/>
+                              <SVGLock />
                             </IconButton>
                           </InputAdornment>
                         ),
