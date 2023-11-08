@@ -1,41 +1,46 @@
 'use client';
 
-import React, { FC } from 'react';
-import Image from 'next/image';
+import React, { FC, useState } from 'react';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
 import {
   Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   FormLabel,
   Grid,
   IconButton,
   InputAdornment,
-  Stack,
   TextField,
   Theme,
   Typography,
   styled,
   useTheme,
 } from '@mui/material';
-import { signIn } from 'next-auth/react';
-import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
-
-import LoginImage from '../social-login/components/login-image';
-import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
-import { allRoutes } from '@/constants/allRoutes';
-import CloseIcon from '@mui/icons-material/Close';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
+import { EMAIL } from '@/constants';
+import { allRoutes } from '@/constants/allRoutes';
+import { useToast } from '@/components/Toast/useToast';
+import LoginImage from '../social-login/components/login-image';
+import { SVGArrowLeft, SVGLock, SVGUser } from '@/assets/images';
+import LoginFooter from '../social-login/components/login-footer';
+
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
-  background: theme.palette.background.default,
+  background:
+    theme.palette?.mode === 'light' ? '#fff' : theme.palette.background.default,
   '& .outline-btn': {
-    borderColor: 'rgba(255, 255, 255, 0.15)',
-    color: '#D1D0D5',
+    border: `1.5px solid ${
+      theme.palette?.mode === 'light' ? '#E3E7F4' : 'rgba(255, 255, 255, 0.15)'
+    }`,
+    color: theme.palette.primary[100],
     fontSize: '16px',
     textTransform: 'initial',
+    fontWeight: '400',
+    padding: '14px',
     width: '100%',
     borderRadius: '10px',
   },
@@ -49,63 +54,111 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
     alignItems: 'center',
     gap: '5px',
   },
-  '& .login-service': {
-    '& a': {
-      fontSize: '15px',
-      fontWeight: '400',
-      lineHeight: '22.5px',
-      color: theme.palette.primary.main,
-    },
-  },
 }));
 
-interface State extends SnackbarOrigin {
-  open: boolean;
+interface ILogin {
+  email: string;
+  password: string;
+  remember: boolean;
 }
+
+interface IFormError {
+  email?: string;
+  password?: string;
+  remember?: string;
+}
+
 const Login: FC = () => {
+  const toast = useToast();
+  const session = useSession();
   const { palette } = useTheme();
   const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const response = await signIn('credentials', {
-      email: 'brijeshthakkar1785@gmail.com',
-      password: 'vv!bKqZMGY5e@TD',
-      remember: false,
-      redirect: true,
-      callbackUrl: allRoutes.home,
-    });
-
-    console.log(response);
-  };
-  const [state, setState] = React.useState<State>({
-    open: false,
-    vertical: 'top',
-    horizontal: 'center',
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<ILogin>({
+    email: '',
+    password: '',
+    remember: false,
   });
-  const { vertical, horizontal, open } = state;
+  const [formError, setFormError] = useState<IFormError>({});
 
-  const handleClick = (newState: SnackbarOrigin) => () => {
-    setState({ ...newState, open: true });
+  const login = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const isValid: boolean = validateForm();
+
+    if (isValid) {
+      setLoading(true);
+      const response = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        remember: formData.remember,
+        redirect: false,
+      });
+      setLoading(false);
+
+      if (response?.ok) {
+        router.replace(allRoutes.home);
+        toast.success('Login successfully!');
+      } else {
+        toast.error(response?.error || 'Something went wrong!');
+        console.log(response?.error || 'Something went wrong!');
+      }
+    }
   };
 
-  const handleClose = () => {
-    setState({ ...state, open: false });
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name === 'remember') {
+      const copy = { ...formData };
+
+      if (event.target.checked) {
+        copy.remember = true;
+      } else {
+        copy.remember = false;
+      }
+
+      setFormData(copy);
+    } else {
+      setFormData(() => ({
+        ...formData,
+        [event.target.name]: event.target.value,
+      }));
+    }
   };
-  const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
+
+  const validateForm = (): boolean => {
+    const err: IFormError = {
+      email: '',
+      password: '',
+      remember: '',
+    };
+
+    if (formData.email === '') {
+      err.email = 'Email required!';
+    } else {
+      const regex = EMAIL;
+      if (!regex.test(formData.email)) {
+        err.email = 'Email  not valid!';
+      }
+    }
+
+    if (formData.password === '') {
+      err.password = 'Password is required!';
+    } else {
+      if (formData.password.length < 6) {
+        err.password = 'Password should greater than 6 characters!';
+      }
+    }
+
+    setFormError({ ...err });
+
+    return Object.values(err).every(value => value === '');
+  };
+
+  if (session.status === 'authenticated') {
+    router.replace(allRoutes.home);
+  }
+
   return (
-    <>
+    session.status === 'unauthenticated' && (
       <LoginWrapper>
         <Grid container minHeight="100vh">
           <LoginImage />
@@ -120,7 +173,7 @@ const Login: FC = () => {
                 color={palette.text.primary}
                 marginBottom="26px"
               >
-                Join for free today and keep your data safe in the digital Space
+                Join for free today and keep your data safe in the digital Space{' '}
               </Typography>
               <Box
                 display="flex"
@@ -133,13 +186,9 @@ const Login: FC = () => {
                   <Button
                     variant="outlined"
                     className="outline-btn"
-                    // onClick={() => router.push(allRoutes.login)}
-                    onClick={handleClick({
-                      vertical: 'top',
-                      horizontal: 'right',
-                    })}
+                    onClick={() => router.push(allRoutes.register)}
                   >
-                    Use username or email
+                    Create an account
                   </Button>
                 </Box>
                 <Typography
@@ -151,18 +200,22 @@ const Login: FC = () => {
                 >
                   Login to your account
                 </Typography>
-                <Box component="form" m={0} noValidate>
+                <Box component="form" m={0} noValidate onSubmit={login}>
                   <FormControl>
                     <FormLabel>Username or email </FormLabel>
                     <TextField
+                      name="email"
                       fullWidth
                       hiddenLabel
                       placeholder="Ex. Dustin Max"
+                      onChange={onChangeHandler}
+                      error={!!formError.email}
+                      helperText={formError.email}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="end">
                             <IconButton edge="end" color="primary">
-                              <Image src={iconUser} alt="" />
+                              <SVGUser />
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -177,11 +230,11 @@ const Login: FC = () => {
                       sx={{ '& label': { marginBottom: '0 !important' } }}
                       mb={1.5}
                     >
-                      <FormLabel>Password </FormLabel>
+                      <FormLabel>Password</FormLabel>
                       <Typography
                         fontSize="16px"
                         fontWeight="400"
-                        sx={{ '& a': { color: palette.primary.main } }}
+                        sx={{ '& a': { color: '#5798FF' } }}
                       >
                         <Link href={allRoutes.login}>
                           Forgotten your password?
@@ -193,11 +246,15 @@ const Login: FC = () => {
                       hiddenLabel
                       placeholder="************"
                       type="password"
+                      name="password"
+                      onChange={onChangeHandler}
+                      error={!!formError.password}
+                      helperText={formError.password}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="end">
                             <IconButton edge="end" color="primary">
-                              <Image src={iconLock} alt="" />
+                              <SVGLock/>
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -217,13 +274,25 @@ const Login: FC = () => {
                         fontWeight: '400',
                       }}
                     >
-                      Submit
+                      {loading ? (
+                        <>
+                          <CircularProgress size={24} color="inherit" />
+                          Submit
+                        </>
+                      ) : (
+                        'Submit'
+                      )}
                     </Button>
                   </FormControl>
                   <FormControl sx={{ marginBottom: '0 !important' }}>
                     <FormControlLabel
-                      name="Remember me"
-                      control={<Checkbox defaultChecked={false} />}
+                      name="remember"
+                      control={
+                        <Checkbox
+                          defaultChecked={false}
+                          onChange={onChangeHandler}
+                        />
+                      }
                       label="Remember me"
                     />
                   </FormControl>
@@ -234,8 +303,8 @@ const Login: FC = () => {
                     fontSize="16px"
                     fontWeight="400"
                     lineHeight="24px"
-                    color="#CECED2"
-                    sx={{ '& a': { color: palette.primary.main } }}
+                    color={palette.primary[200]}
+                    sx={{ '& a': { color: '#5798FF' } }}
                   >
                     By signing up,you agree to
                     <Link href="/"> Terms of Service </Link> and
@@ -250,45 +319,12 @@ const Login: FC = () => {
                   </Link>
                 </Box>
               </Box>
-              <Box mt="54px">
-                <Stack
-                  spacing={{
-                    md: '42px',
-                    xs: '20px',
-                  }}
-                  mb="13px"
-                  className="login-service"
-                  direction="row"
-                  justifyContent="center"
-                >
-                  <Link href="/"> Terms of service</Link>
-                  <Link href="/"> Privacy Policy</Link>
-                  <Link href="/"> Cookie use</Link>
-                </Stack>
-                <Typography
-                  variant="h6"
-                  fontSize="16px"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  color="#85838F"
-                  sx={{ '& a': { color: palette.primary.main } }}
-                >
-                  © 2022 Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>
-                </Typography>
-              </Box>
+              <LoginFooter />
             </Box>
           </Grid>
         </Grid>
       </LoginWrapper>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        message="I love snacks"
-        key={vertical + horizontal}
-        action={action}
-      />
-    </>
+    )
   );
 };
 
