@@ -27,6 +27,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import DarkMode from '@mui/icons-material/DarkMode';
 import LightMode from '@mui/icons-material/Brightness7';
 import { allRoutes } from '@/constants/allRoutes';
+import { Button } from '@mui/material';
 
 // import '../../index.scss';
 
@@ -77,11 +78,14 @@ export default function RootLayout({
               </Typography>
             </Grid>
 
-            {selectedTheme === 'dark' ? (
-              <DarkMode onClick={() => onChangeTheme('light')}></DarkMode>
-            ) : (
-              <LightMode onClick={() => onChangeTheme('dark')}></LightMode>
-            )}
+            <Button variant="contained">
+              {' '}
+              {selectedTheme === 'dark' ? (
+                <DarkMode onClick={() => onChangeTheme('light')}></DarkMode>
+              ) : (
+                <LightMode onClick={() => onChangeTheme('dark')}></LightMode>
+              )}
+            </Button>
           </Grid>
         </Toolbar>
       </AppBar>
