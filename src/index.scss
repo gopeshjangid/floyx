@@ -39,6 +39,7 @@ body {
 }
 
 .light-theme {
+  .MuiTabs-root .MuiTab-root.Mui-selected,
   .gradient-text {
     background: var(--gradient-color);
     background-clip: text;

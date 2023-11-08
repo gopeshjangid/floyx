@@ -4,20 +4,14 @@ import ChatHeader from '@/app/(root)/inbox/components/chat-header';
 import ChatInput from '@/app/(root)/inbox/components/chat-input';
 import ChatReceiverCard from '@/app/(root)/inbox/components/chat-receiver-card';
 import ChatSenderCard from '@/app/(root)/inbox/components/chat-sender-card';
-import { Box, Paper, Typography } from '@mui/material';
+import Wrapper from '@/components/wrapper';
+import { Box, Typography } from '@mui/material';
 import React from 'react';
 
 const Page = () => {
   return (
     <>
-      <Paper
-        sx={{
-          borderRadius: '10px',
-          border: ' 1px solid  rgba(255, 255, 255, 0.15)',
-          background: '#0B081F',
-          marginBottom: 2,
-        }}
-      >
+      <Wrapper mb={2}>
         <ChatHeader />
         <Box padding={{ md: '13px 25px', xs: '13px 15px' }}>
           <Typography
@@ -72,7 +66,7 @@ const Page = () => {
             </Box>
           </Box>
         </Box>
-      </Paper>
+      </Wrapper>
       <ChatInput />
     </>
   );

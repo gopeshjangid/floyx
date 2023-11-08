@@ -1,16 +1,12 @@
 'use client';
 
 import { iconSearch, imgUser } from '@/assets/images';
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  Paper,
-  TextField,
-} from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import ChatCard from './components/chat-item';
+import Wrapper from '@/components/wrapper';
+import { useTheme } from '@emotion/react';
 
 const messagesUserData = [
   {
@@ -18,7 +14,7 @@ const messagesUserData = [
     img: imgUser,
     username: 'Nora',
     userId: 'Jaco',
-    date: '1 hours ago',
+    hour: '1 hours ago',
     description: "Good to see you! What's...",
   },
   {
@@ -26,7 +22,7 @@ const messagesUserData = [
     img: imgUser,
     username: 'Nora',
     userId: 'Jaco',
-    date: '1 hours ago',
+    hour: '1 hours ago',
     description: "Good to see you! What's...",
   },
   {
@@ -34,7 +30,7 @@ const messagesUserData = [
     img: imgUser,
     username: 'Nora',
     userId: 'Jaco',
-    date: '1 hours ago',
+    hour: '1 hours ago',
     description: "Good to see you! What's...",
   },
   {
@@ -42,7 +38,7 @@ const messagesUserData = [
     img: imgUser,
     username: 'Nora',
     userId: 'Jaco',
-    date: '1 hours ago',
+    hour: '1 hours ago',
     description: "Good to see you! What's...",
   },
   {
@@ -50,22 +46,19 @@ const messagesUserData = [
     img: imgUser,
     username: 'Nora',
     userId: 'Jaco',
-    date: '1 hours ago',
+    hour: '1 hours ago',
     description: "Good to see you! What's...",
   },
 ];
 
-const Defalut = () => {
+const Default = () => {
+  const { palette } = useTheme();
   return (
-    <Paper
-      sx={{
-        borderRadius: '10px',
-        border: ' 1px solid  rgba(255, 255, 255, 0.15)',
-        background: '#0B081F',
-      }}
-    >
+    <Wrapper>
       <Box
-        borderBottom="1px solid rgba(255, 255, 255, 0.15)"
+        borderBottom={`1px solid ${
+          palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+        }`}
         padding="18px 20px 15px"
       >
         <TextField
@@ -89,8 +82,8 @@ const Defalut = () => {
           return <ChatCard key={chats.id} {...chats} />;
         })}
       </Box>
-    </Paper>
+    </Wrapper>
   );
 };
 
-export default Defalut;
+export default Default;

@@ -19,7 +19,6 @@ import ListItemText from '@mui/material/ListItemText';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HomeIcon from '@mui/icons-material/Home';
-import StarIcon from '@mui/icons-material/Star';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SupportIcon from '@mui/icons-material/Support';
@@ -78,11 +77,11 @@ export default function RootLayout({
               </Typography>
             </Grid>
 
-            {selectedTheme === 'dark' ? (
-              <DarkMode onClick={() => onChangeTheme('light')}></DarkMode>
-            ) : (
-              <LightMode onClick={() => onChangeTheme('dark')}></LightMode>
-            )}
+              {selectedTheme === 'dark' ? (
+                <DarkMode onClick={() => onChangeTheme('light')} sx={{background:'red'}}></DarkMode>
+              ) : (
+                <LightMode onClick={() => onChangeTheme('dark')} sx={{background:'red'}}></LightMode>
+              )}
           </Grid>
         </Toolbar>
       </AppBar>

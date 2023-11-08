@@ -1,9 +1,50 @@
-import React from 'react'
+import { Alert, Snackbar, SnackbarProps } from '@mui/material';
+import * as React from 'react';
+import { FC } from 'react';
+import { ToastMessage } from './useToast';
 
-const Toast = () => {
+export type ToastStyle = Omit<
+  SnackbarProps,
+  'TransitionProps' | 'onClose' | 'open' | 'children' | 'message'
+>;
+
+export type ToastProps = {
+  message: ToastMessage;
+  onExited: () => void;
+} & ToastStyle;
+
+export const Toast: FC<ToastProps> = ({
+  message,
+  onExited,
+  autoHideDuration,
+  ...props
+}) => {
+  const [open, setOpen] = React.useState(true);
+
+  const handleClose = (
+    _event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
-    <div>Toast</div>
-  )
-}
-
-export default Toast
+    <Snackbar
+      key={message.key}
+      open={open}
+      onClose={handleClose}
+      TransitionProps={{ onExited }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      autoHideDuration={autoHideDuration ?? 5000}
+      {...props}
+      sx={{ zIndex: 9999 }}
+    >
+      <Alert severity={message.severity} onClose={handleClose}>
+        {message.message}
+      </Alert>
+    </Snackbar>
+  );
+};

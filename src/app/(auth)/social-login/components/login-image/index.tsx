@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Box, Grid, Theme, Typography, styled, useTheme } from '@mui/material';
+import { Box, Grid, Theme, Typography, styled } from '@mui/material';
 
 import { iconLogo, imgLogin, imgLoginBG } from '@/assets/images';
 
@@ -15,8 +15,6 @@ const ImageLogin = styled(Box)(({ theme }: { theme: Theme }) => ({
 }));
 
 const LoginImage = () => {
-  const { palette } = useTheme();
-
   return (
     <Grid item md={6} sm={12} width="100%">
       <Box
@@ -48,8 +46,7 @@ const LoginImage = () => {
             textAlign="center"
             sx={{
               '& .MuiTypography-h5': {
-                color: palette.text.primary,
-                fontFamily: 'Poppins',
+                color: '#fff',
                 fontSize: '20px',
                 fontStyle: 'normal',
                 fontWeight: '500',
@@ -59,7 +56,7 @@ const LoginImage = () => {
             }}
           >
             <Image src={iconLogo} alt="logo" loading="lazy" />
-            <Typography variant="h5" fontWeight="500" fontFamily="Poppins">
+            <Typography variant="h5" fontWeight="500">
               No <span className="gradient-text">censorship </span> & Strong{' '}
               <span className="gradient-text">Security</span>
             </Typography>

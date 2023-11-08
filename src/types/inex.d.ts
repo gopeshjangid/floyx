@@ -3,6 +3,14 @@ interface ChatItemType {
   img?: string | StaticImageData;
   username?: string;
   userId?: string;
-  date?: string;
+  hour?: string;
   description?: string;
 }
+
+type NotificationCardType = {
+  id: string;
+  title: string;
+  hour: string;
+  img: StaticImageData;
+  icon: StaticImageData;
+};

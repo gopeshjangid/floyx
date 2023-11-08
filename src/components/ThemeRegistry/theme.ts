@@ -23,13 +23,15 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             primary: {
               main: '#2F2E41', // Topic Text
               // You can also define light, dark and contrastText if necessary
+              100: '#777D88',
+              200: '#777D88',
             },
             secondary: {
               main: '#ADB3C6', // Text Guide
               // You can also define light, dark and contrastText if necessary
             },
             text: {
-              primary: '#7C93AE', // Body Text
+              primary: '#2F2E41', // Body Text
               // Define other text colors like 'secondary', 'disabled', etc., if necessary
             },
             background: {
@@ -41,6 +43,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             primary: {
               main: '#5798FF', // Primary Blue
               // Define light, dark, and contrastText if necessary
+              100: '#D1D0D5',
+              200: '#CECED2',
             },
             secondary: {
               main: '#A75FFF', // Primary Purple
@@ -165,29 +169,6 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
         },
       },
-      // MuiButton: {
-      //   styleOverrides: {
-      //     root: {
-      //       textTransform: 'capitalize',
-      //       '&.MuiButton-containedPrimary': {
-      //         borderRadius: '10px',
-      //         background: 'var(--gradient-color)',
-      //         ...(isLightTheme
-      //           ? {
-      //               color: '#fff',
-      //             }
-      //           : {}),
-      //       },
-      //       '&.MuiButton-containedSecondary': {
-      //         ...(isLightTheme
-      //           ? {
-      //               color: '#fff',
-      //             }
-      //           : {}),
-      //       },
-      //     },
-      //   },
-      // },
       MuiTabs: {
         styleOverrides: {
           root: {
@@ -208,9 +189,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             minWidth: 'fit-content',
             textTransform: 'capitalize',
             fontSize: '16px',
-            fontFamily: 'Poppins',
             fontWeight: '400',
-            color: 'rgba(255, 255, 255, 0.30)',
+            color: isLightTheme ? '#7C93AE' : 'rgba(255, 255, 255, 0.30)',
           },
         },
       },
@@ -231,7 +211,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           root: {
             marginBottom: '12px',
-            color: '#D1D0D5',
+            color: isLightTheme ? '#777D88' : '#D1D0D5',
             fontSize: '16px',
             fontWeight: '400',
             textAlign: 'left',
@@ -242,19 +222,27 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           root: {
             borderRadius: '10px !important',
-            background: '#1B1830',
+            ...(isLightTheme
+              ? { background: '#F9FBFC', border: '1px solid #EFF1F7' }
+              : { background: '#1B1830', border: '1px solid #1B1830' }),
             overflow: 'hidden',
             '&.MuiInputBase-adornedStart': { paddingLeft: '20px !important' },
             '&.MuiInputBase-adornedEnd': { paddingRight: '20px !important' },
             '& .MuiInputBase-input': {
               padding: '13px 25px 13px 10px',
               height: 'fit-content',
-              color: '#D1D0D5',
+              WebkitTextFillColor: isLightTheme
+                ? '#ADB3C6'
+                : 'rgba(255, 255, 255, 0.30)',
               borderRadius: '0',
+              '&::placeholder': { opacity: '1' },
             },
             '& .MuiInputAdornment-root': {
               margin: '0',
-              '& .MuiIconButton-edgeEnd': { margin: '0' },
+              '& .MuiIconButton-edgeEnd': {
+                margin: '0',
+                color: isLightTheme ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
+              },
             },
           },
         },
@@ -263,9 +251,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           input: {
             '&:-webkit-autofill': {
-              '-webkit-box-shadow':
-                'inset 0 0 0px 100px #1B1830, inset 0 0 0px 100px #1B1830, inset 0 0 0px 100px #1B1830, inset 0 0 0px 100px #1B1830',
-              '-webkit-text-fill-color': '#D1D0D5',
+              '-webkit-box-shadow': `0 0 0 100px ${
+                isLightTheme ? '#F9FBFC' : '#1B1830'
+              } inset`,
+              WebkitTextFillColor: isLightTheme ? '#ADB3C6' : '#D1D0D5',
               borderRadius: '0',
             },
           },
@@ -276,7 +265,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           root: {
             margin: '0',
             '& .MuiTypography-root': {
-              color: '#D1D0D5',
+              color: isLightTheme ? '#777D88' : '#D1D0D5',
               fontSize: '16px',
               fontWeight: '400',
             },
@@ -286,7 +275,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiCheckbox: {
         styleOverrides: {
           root: {
-            color: 'rgba(255, 255, 255, 0.15)',
+            color: isLightTheme ? '#ADB3C6' : '#1B1830',
             '&.Mui-checked': {
               color: '#A85CFF',
             },
@@ -296,7 +285,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiAvatar: {
         styleOverrides: {
           root: {
-            border: '1px solid  #A561FF',
+            border: '2px solid  #A561FF',
             background: 'rgba(194, 148, 255, 0.38)',
           },
         },

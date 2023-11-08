@@ -1,5 +1,7 @@
-import { iconUserGradient, imgUser } from '@/assets/images';
+import React from 'react';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import Image from 'next/image';
 import {
   ListItem,
   ListItemAvatar,
@@ -7,9 +9,7 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
-import React, { FC } from 'react';
-import UserAvatar from './UserAvatar';
+import UserAvatar from '../UserAvatar';
 
 const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
@@ -32,10 +32,6 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      '& img': {
-        width: '18px',
-        height: '18px',
-      },
     },
   },
   [theme.breakpoints.up('md')]: {
@@ -48,20 +44,17 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
         bottom: '0',
         width: '27px',
         height: '27px',
-        '& img': {
-          width: '19px',
-          height: '19px',
-        },
       },
     },
   },
 }));
-const NotificationCard: FC = () => {
+const NotificationCard = ({ title, hour, img, icon }: NotificationCardType) => {
+  const { palette } = useTheme();
   return (
     <ListItemItem>
       <ListItemAvatar>
         <UserAvatar
-          src={imgUser}
+          src={img}
           alt="Travis Howard"
           sx={{
             width: { md: '59px', xs: '50px' },
@@ -69,25 +62,17 @@ const NotificationCard: FC = () => {
           }}
         />
         <span>
-          <Image src={iconUserGradient} alt="icon" />
-          {/*
-          // TODO: All User Icon 🔝
-          iconUserGradient,
-        iconLinkGradient,
-        iconLinkMessage,
-        iconTelegramGradient
-        */}
+          <Image src={icon} alt="icon" />
         </span>
       </ListItemAvatar>
       <ListItemText
         primary={
           <Typography
-            color="#fff"
-            fontFamily="Poppins"
+            color={palette?.mode === 'light' ? '#2F2E41' : '#fff'}
             fontSize="16px"
             fontWeight={400}
           >
-            Nora Jacob commented on the post you shared{' '}
+            {title}{' '}
           </Typography>
         }
         secondary={
@@ -95,12 +80,11 @@ const NotificationCard: FC = () => {
             sx={{ display: 'inline' }}
             component="span"
             variant="body2"
-            color="#85838F"
-            fontFamily="Poppins"
-            fontSize={{ md: '16px', xs: '14px' }}
+            color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
+            fontSize="14px"
             fontWeight={500}
           >
-            2 hours ago
+            {hour}
           </Typography>
         }
       />
