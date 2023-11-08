@@ -1,5 +1,6 @@
 import UserAvatar from '@/components/UserAvatar';
 import { allRoutes } from '@/constants/allRoutes';
+import { useTheme } from '@emotion/react';
 import {
   Box,
   ListItem,
@@ -35,9 +36,11 @@ const ChatCard: FC = ({
   img,
   username,
   userId,
-  date,
+  hour,
   description,
 }: ChatItemType) => {
+  const { palette } = useTheme();
+
   return (
     <ListItemItem
     // sx={{
@@ -65,8 +68,7 @@ const ChatCard: FC = ({
             >
               <Box>
                 <Typography
-                  color="#fff"
-                  fontFamily="Poppins"
+                  color={palette?.mode === 'light' ? '#2F2E41' : '#fff'}
                   fontSize="16px"
                   fontWeight={500}
                   component="span"
@@ -74,7 +76,6 @@ const ChatCard: FC = ({
                   {username}
                 </Typography>
                 <Typography
-                  fontFamily="Poppins"
                   fontSize="14px"
                   fontWeight={400}
                   component="span"
@@ -87,12 +88,11 @@ const ChatCard: FC = ({
                 sx={{ display: 'inline' }}
                 component="span"
                 variant="body2"
-                color="#85838F"
-                fontFamily="Poppins"
-                fontSize={{ md: '16px', xs: '14px' }}
+                color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
+                fontSize='14px'
                 fontWeight={500}
               >
-                {date}
+                {hour}
               </Typography>{' '}
             </Box>
           }
@@ -101,8 +101,7 @@ const ChatCard: FC = ({
               sx={{ display: 'inline' }}
               component="span"
               variant="body2"
-              color="#85838F"
-              fontFamily="Poppins"
+              color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
               fontSize={{ md: '16px', xs: '14px' }}
               fontWeight={500}
             >

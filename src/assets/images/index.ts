@@ -10,6 +10,7 @@ import iconLinkMessage from './icons/message-gradient.svg';
 import iconSearch from './icons/search.svg';
 import iconPaperPlane from './icons/paper-plane.svg';
 import iconSmile from './icons/smile.svg';
+import iconTrash from './icons/trash.svg';
 
 // Images
 import imgLogin from './login.png';
@@ -40,4 +41,5 @@ export {
   iconSmile,
   SVGUser,
   SVGLock,
+  iconTrash,
 };

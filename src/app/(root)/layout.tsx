@@ -19,7 +19,6 @@ import ListItemText from '@mui/material/ListItemText';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HomeIcon from '@mui/icons-material/Home';
-import StarIcon from '@mui/icons-material/Star';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SupportIcon from '@mui/icons-material/Support';
@@ -27,7 +26,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import DarkMode from '@mui/icons-material/DarkMode';
 import LightMode from '@mui/icons-material/Brightness7';
 import { allRoutes } from '@/constants/allRoutes';
-import { Button } from '@mui/material';
 
 // import '../../index.scss';
 
@@ -79,14 +77,11 @@ export default function RootLayout({
               </Typography>
             </Grid>
 
-            <Button variant="contained">
-              {' '}
               {selectedTheme === 'dark' ? (
-                <DarkMode onClick={() => onChangeTheme('light')}></DarkMode>
+                <DarkMode onClick={() => onChangeTheme('light')} sx={{background:'red'}}></DarkMode>
               ) : (
-                <LightMode onClick={() => onChangeTheme('dark')}></LightMode>
+                <LightMode onClick={() => onChangeTheme('dark')} sx={{background:'red'}}></LightMode>
               )}
-            </Button>
           </Grid>
         </Toolbar>
       </AppBar>

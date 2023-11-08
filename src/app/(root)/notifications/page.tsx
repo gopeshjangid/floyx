@@ -1,12 +1,43 @@
 'use client';
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Box, Button, List, Tab, Tabs, Typography } from '@mui/material';
 
-import { SVGCheck } from '@/assets/images';
-import NotificationCard from '@/components/NotificationCard';
+import {
+  SVGCheck,
+  iconLinkMessage,
+  iconTelegramGradient,
+  iconUserGradient,
+  imgUser,
+} from '@/assets/images';
+import NotificationCard from '@/components/notification-card';
+import { useTheme } from '@emotion/react';
+import Wrapper from '@/components/wrapper';
 
+const fakeData = [
+  {
+    id: '1',
+    title: 'Nora Jacob commented on the post you shared',
+    hour: '2 hours ago',
+    img: imgUser,
+    icon: iconLinkMessage,
+  },
+  {
+    id: '2',
+    title: 'Mike Egon followed you',
+    hour: '2 hours ago',
+    img: imgUser,
+    icon: iconUserGradient,
+  },
+  {
+    id: '3',
+    title: 'Michele Reena shared your video',
+    hour: '2 hours ago',
+    img: imgUser,
+    icon: iconTelegramGradient,
+  },
+];
 interface TabPanelProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   index: number;
   value: number;
 }
@@ -28,6 +59,7 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const Notifications = () => {
+  const { palette } = useTheme();
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -35,18 +67,13 @@ const Notifications = () => {
   };
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        borderRadius: '10px',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
-        bgcolor: '#0B081F',
-      }}
-    >
+    <Wrapper>
       <Box
         sx={{
           borderBottom: 1,
-          borderColor: 'rgba(255, 255, 255, 0.15)',
+          border: `1px solid ${
+            palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+          }`,
           px: { md: '32px', xs: '20px' },
         }}
       >
@@ -93,15 +120,15 @@ const Notifications = () => {
           <Typography
             fontSize="16px"
             fontWeight="500"
-            color="#D9D9D9"
+            color={palette?.mode === 'light' ? '#2F2E41' : '#D9D9D9'}
             marginBottom="23px"
             variant="h3"
           >
             New
           </Typography>
           <List sx={{ width: '100%' }} component="ul">
-            {new Array(4).fill('').map(item => (
-              <NotificationCard key={item} />
+            {fakeData?.map((item: NotificationCardType, index: number) => (
+              <NotificationCard key={index} {...item} />
             ))}
           </List>
         </Box>
@@ -109,22 +136,24 @@ const Notifications = () => {
           <Typography
             fontSize="16px"
             fontWeight="500"
-            color="#D9D9D9"
+            color={palette?.mode === 'light' ? '#2F2E41' : '#D9D9D9'}
             marginBottom="23px"
           >
             Earlier
           </Typography>
           <List sx={{ width: '100%' }}>
-            {new Array(2).fill('').map(item => (
-              <NotificationCard key={item} />
-            ))}
+            {fakeData
+              .slice(1)
+              ?.map((item: NotificationCardType, index: number) => (
+                <NotificationCard key={index} {...item} />
+              ))}
           </List>
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two
       </CustomTabPanel>
-    </Box>
+    </Wrapper>
   );
 };
 

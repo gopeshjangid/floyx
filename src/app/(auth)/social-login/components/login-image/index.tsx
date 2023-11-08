@@ -56,7 +56,7 @@ const LoginImage = () => {
             }}
           >
             <Image src={iconLogo} alt="logo" loading="lazy" />
-            <Typography variant="h5" fontWeight="500" fontFamily="Poppins">
+            <Typography variant="h5" fontWeight="500">
               No <span className="gradient-text">censorship </span> & Strong{' '}
               <span className="gradient-text">Security</span>
             </Typography>

@@ -169,29 +169,6 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
         },
       },
-      // MuiButton: {
-      //   styleOverrides: {
-      //     root: {
-      //       textTransform: 'capitalize',
-      //       '&.MuiButton-containedPrimary': {
-      //         borderRadius: '10px',
-      //         background: 'var(--gradient-color)',
-      //         ...(isLightTheme
-      //           ? {
-      //               color: '#fff',
-      //             }
-      //           : {}),
-      //       },
-      //       '&.MuiButton-containedSecondary': {
-      //         ...(isLightTheme
-      //           ? {
-      //               color: '#fff',
-      //             }
-      //           : {}),
-      //       },
-      //     },
-      //   },
-      // },
       MuiTabs: {
         styleOverrides: {
           root: {
@@ -212,9 +189,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             minWidth: 'fit-content',
             textTransform: 'capitalize',
             fontSize: '16px',
-            fontFamily: 'Poppins',
             fontWeight: '400',
-            color: 'rgba(255, 255, 255, 0.30)',
+            color: isLightTheme ? '#7C93AE' : 'rgba(255, 255, 255, 0.30)',
           },
         },
       },
@@ -309,7 +285,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiAvatar: {
         styleOverrides: {
           root: {
-            border: '1px solid  #A561FF',
+            border: '2px solid  #A561FF',
             background: 'rgba(194, 148, 255, 0.38)',
           },
         },

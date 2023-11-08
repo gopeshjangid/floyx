@@ -14,13 +14,17 @@ import Link from 'next/link';
 
 import { allRoutes } from '@/constants/allRoutes';
 import UserAvatar from '@/components/UserAvatar';
-import { imgUser } from '@/assets/images';
+import { iconTrash, imgUser } from '@/assets/images';
+import { useTheme } from '@emotion/react';
+import Image from 'next/image';
 
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
   gap: '10px',
   padding: '12px 14px',
-  borderBottom: '1px solid rgba(255, 255, 255, 0.15)',
+  borderBottom: `1px solid ${
+    theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+  }`,
   '& .MuiListItemText-root': {
     margin: '0',
   },
@@ -31,6 +35,7 @@ const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
 }));
 
 const ChatHeader = () => {
+  const { palette } = useTheme();
   return (
     <ChatWrapper>
       <Link href={allRoutes.messages}>
@@ -55,8 +60,7 @@ const ChatHeader = () => {
           >
             <Link href={allRoutes.messages}>
               <Typography
-                color="#fff"
-                fontFamily="Poppins"
+                color={palette?.mode === 'light' ? '#2F2E41' : '#fff'}
                 fontSize="16px"
                 fontWeight={500}
                 component="span"
@@ -64,7 +68,6 @@ const ChatHeader = () => {
                 Michele
               </Typography>
               <Typography
-                fontFamily="Poppins"
                 fontSize="14px"
                 fontWeight={400}
                 component="span"
@@ -76,8 +79,12 @@ const ChatHeader = () => {
 
             <Button
               size="small"
-              sx={{ color: '#FA6B7C' }}
-              startIcon={<DeleteIcon />}
+              sx={{
+                color: '#FA6B7C',
+                fontWeight: 500,
+                alignItems: 'flex-start',
+              }}
+              startIcon={<Image src={iconTrash} alt="trash" />}
             >
               Delete
             </Button>
@@ -88,9 +95,8 @@ const ChatHeader = () => {
             sx={{ display: 'inline' }}
             component="span"
             variant="body2"
-            color="#85838F"
-            fontFamily="Poppins"
-            fontSize={{ md: '16px', xs: '14px' }}
+            color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
+            fontSize="14px"
             fontWeight={500}
           >
             Last seen 1 hour ago

@@ -4,7 +4,6 @@ import {
   Box,
   IconButton,
   InputAdornment,
-  Paper,
   TextField,
   Theme,
   styled,
@@ -13,10 +12,12 @@ import {
 import { iconPaperPlane, iconSmile, imgUser } from '@/assets/images';
 import UserAvatar from '@/components/UserAvatar';
 
-const ChatInputWrapper = styled(Paper)(({ theme }: { theme: Theme }) => ({
+const ChatInputWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   borderRadius: '10px',
-  border: ' 1px solid  rgba(255, 255, 255, 0.15)',
-  background: '#0B081F',
+  background: theme.palette?.mode === 'light' ? '#fff' : '#0B081F',
+  border: `1px solid ${
+    theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+  }`,
   padding: '30px 14px 29px',
   '& .form-control': {
     '& .MuiFormControl-root': {
@@ -54,14 +55,7 @@ const ChatInputWrapper = styled(Paper)(({ theme }: { theme: Theme }) => ({
 
 const ChatInput = () => {
   return (
-    <ChatInputWrapper
-      sx={{
-        borderRadius: '10px',
-        border: ' 1px solid  rgba(255, 255, 255, 0.15)',
-        background: '#0B081F',
-        padding: { md: '27px 25px', xs: '30px 14px 29px' },
-      }}
-    >
+    <ChatInputWrapper>
       <Box
         display="flex"
         alignItems="center"
@@ -72,7 +66,7 @@ const ChatInput = () => {
         <UserAvatar
           src={imgUser}
           alt="user"
-          sx={{ width: '49px', height: '45px' }}
+          sx={{ width: '49px', height: '49px' }}
         />
         <Box flex={1} className="form-control">
           <TextField
