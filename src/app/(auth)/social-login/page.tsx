@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Grid,
-  Stack,
   Theme,
   Typography,
   styled,
@@ -19,24 +18,20 @@ import LoginImage from './components/login-image';
 import SignInGoogle from './components/sign-in-google';
 import SignInFacebook from './components/sign-in-facebook';
 import { allRoutes } from '@/constants/allRoutes';
+import LoginFooter from './components/login-footer';
 
 const SocialLoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
-  background: theme.palette.background.default,
+  background:
+    theme.palette?.mode === 'light' ? '#fff' : theme.palette.background.default,
   '& .outline-btn': {
-    borderColor: 'rgba(255, 255, 255, 0.15)',
+    border: `1.5px solid ${
+      theme.palette?.mode === 'light' ? '#E3E7F4' : 'rgba(255, 255, 255, 0.15)'
+    }`,
+    color: theme.palette.primary[100],
     textTransform: 'initial',
-    color: '#D1D0D5',
     fontSize: '16px',
     width: '100%',
     borderRadius: '10px',
-  },
-  '& .login-service': {
-    '& a': {
-      fontSize: '15px',
-      fontWeight: '400',
-      lineHeight: '22.5px',
-      color: theme.palette.primary.main,
-    },
   },
 }));
 
@@ -109,8 +104,8 @@ const SocialLogin: FC = () => {
                     fontSize="16px"
                     fontWeight="400"
                     lineHeight="24px"
-                    color="#CECED2"
-                    sx={{ '& a': { color: palette.primary.main } }}
+                    color={palette.primary[200]}
+                    sx={{ '& a': { color: '#5798FF' } }}
                   >
                     By signing up,you agree to
                     <Link href="/"> Terms of Service </Link> and
@@ -119,33 +114,7 @@ const SocialLogin: FC = () => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mt="54px">
-                <Stack
-                  spacing={{
-                    md: '42px',
-                    xs: '20px',
-                  }}
-                  mb="13px"
-                  className="login-service"
-                  direction="row"
-                  justifyContent="center"
-                  flexWrap="wrap"
-                >
-                  <Link href="/"> Terms of service</Link>
-                  <Link href="/"> Privacy Policy</Link>
-                  <Link href="/"> Cookie use</Link>
-                </Stack>
-                <Typography
-                  variant="h6"
-                  fontSize="16px"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  color="#85838F"
-                  sx={{ '& a': { color: palette.primary.main } }}
-                >
-                  © 2022 Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>
-                </Typography>
-              </Box>
+              <LoginFooter />
             </Box>
           </Grid>
         </Grid>

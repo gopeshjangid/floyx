@@ -22,7 +22,7 @@ const SignInFacebook = () => {
           width: '100%',
           background: '#4267B2 !important',
           fontSize: '16px',
-          color: palette.text.primary,
+          color: '#fff',
           fontWeight: '400',
           textTransform: 'capitalize',
           '& .MuiButton-startIcon': {
