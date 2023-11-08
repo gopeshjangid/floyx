@@ -70,9 +70,23 @@ export default function HomePage() {
             <Typography variant="overline" color="textPrimary">
               On this page
             </Typography>
-            <Button variant="outlined">Hello button</Button>
+            <Button variant="contained">Primary Button</Button>
+            
+          </ListItem>
+          <ListItem>
+               <Button  variant="outlined">Secondary</Button>
+              
+          </ListItem>
+          <ListItem>
+               <Button variant="contained">Tertary button</Button>
           </ListItem>
         </List>
+
+        <Box >
+              <Typography variant="h5" color="textPrimary">
+              this box
+            </Typography>
+        </Box>
       </Drawer>
     </Box>
   );
