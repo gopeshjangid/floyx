@@ -26,6 +26,7 @@ import SupportIcon from '@mui/icons-material/Support';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DarkMode from '@mui/icons-material/DarkMode';
 import LightMode from '@mui/icons-material/Brightness7';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 
@@ -37,6 +38,7 @@ const LINKS = [
   { text: 'Home', href: '/', icon: HomeIcon },
   { text: 'Starred', href: '/starred', icon: StarIcon },
   { text: 'Tasks', href: '/tasks', icon: ChecklistIcon },
+  { text: 'Articles', href: '/articles', icon: ArticleOutlinedIcon },
 ];
 
 const PLACEHOLDER_LINKS = [
@@ -50,20 +52,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
+  
   const [selectedTheme, setTheme] = useState("light")
   const pathname = usePathname();
-  
+
   const onChangeTheme = (theme: string) => {
     localStorage.setItem('theme', theme);
     window.location.reload();
   };
 
   useEffect(()=>{
-    if(localStorage.getItem('theme')){
-      setTheme(localStorage.getItem('theme'));
+    const themeType = localStorage.getItem('theme');
+    if(themeType){
+      setTheme(themeType || '');
     }
-     
+  
   },[]);
 
   return (
