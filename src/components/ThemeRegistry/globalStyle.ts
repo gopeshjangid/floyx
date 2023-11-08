@@ -7,14 +7,12 @@ export const DEFAULT_THEME: AllowedTheme = "light";
 export const globalStyles = css`
   :root {
     body {
-      background-color: #fff;
-      color: #121212;
+      background-color: #F9FBFC;
     }
   }
   [data-theme="dark"] {
     body {
-      background-color: #0B081F;
-      color: #fff;
+      background-color: #F9FBFC;
     }
   }
 `;
