@@ -31,8 +31,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               // Define other text colors like 'secondary', 'disabled', etc., if necessary
             },
             background: {
-              default: '#F9FBFC', // Light - Background
-              paper: '#F9FBFF', // Light - Background 2
+              default: '#F9FBFF', // Light - Background
+              paper: '#F9FBFC', // Light - Background 2
             },
           }
         : {
@@ -45,8 +45,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               // Define light, dark, and contrastText if necessary
             },
             background: {
-              default: '#0B081F', // Dark - Background
-              paper: '#1B1830', // Dark - Background 2
+              default: '#1B1830', // Dark - Background
+              paper: '#0B081F', // Dark - Background 2
             },
             // Define other palette properties like error, warning, info, success, etc., if necessary
             // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds

@@ -1,9 +1,8 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import PageProvider from '@/components/ThemeRegistry/PageProvider';
 import Container from '@mui/material/Container';
-
 export default function RootLayout({
   children,
 }: {
