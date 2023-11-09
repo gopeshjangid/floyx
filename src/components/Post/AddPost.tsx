@@ -1,57 +1,26 @@
 "use client"
 
 import { Box, Card, CardContent, Tab, Tabs, Typography } from "@mui/material"
-import { SyntheticEvent, useState } from "react"
+import { SyntheticEvent, useEffect, useRef, useState } from "react"
 import { userDetail } from "../../constant/payload"
 import Avatar from "@mui/material/Avatar"
 import PersonIcon from "@mui/icons-material/Person"
 import { MentionsInput, Mention } from "react-mentions"
-import CropOriginalIcon from "@mui/icons-material/CropOriginal";
-import VideoCameraBackOutlinedIcon from '@mui/icons-material/VideoCameraBackOutlined';
-import { alpha, styled } from "@mui/material/styles"
+import CropOriginalIcon from "@mui/icons-material/CropOriginal"
+import VideoCameraBackOutlinedIcon from "@mui/icons-material/VideoCameraBackOutlined"
+import { PostBox } from "./styledPostBox"
 
-const PostBox = styled(Box)(({ theme }) => ({
-  border: `1px solid ${theme.palette.text.secondary}`,
-  borderRadius: "5px",
-  "& .upload-media": {
-    width: "100%",
-    borderBottomLeftRadius: "5px",
-    borderBottomRightRadius : "5px",
-    display: 'flex',
-    backgroundColor: theme.palette.background.paper,
-    padding: "1rem 2rem",
-    "& .file-imput": {
-      display: 'none',
-    },
-    "& .image-upload": {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItem: 'center',
-      marginRight: '1rem',
-      "& h6": {
-        marginLeft: "8px",
-      }
-    }
-  },
-  "& .styled-imput-container": {
-    padding: "2.5rem 2rem",
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    "& textarea": {
-      padding: "0.5rem"
-    },
-    "& .mention-input-container": {
-      width: "90%",
-      backgroundColor: theme.palette.background.paper
-    },
-    
-  }
-}))
 
 export default function AddPost({}) {
-  const [value, setValue] = useState(0)
-  const [postText, setPostText] = useState("")
+  const imageFileInput = useRef<HTMLInputElement>(null)
+  const videoFileInput = useRef<HTMLInputElement>(null)
+  const [value, setValue] = useState(0);
+  const [isAuthorizedUser, setIsAuthorizedUser] = useState<Boolean>(false);
+  const [postObj, setPostObj] = useState({
+    postText: '',
+    postTextLeft: 280,
+    publishButtonDisabled: false,
+  })
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(
     null
   )
@@ -75,8 +44,30 @@ export default function AddPost({}) {
     }
   }
 
-  const handlePostText = () => {}
+  const handlePostText = (e: any, newValue: any, newPlainTextValue: any, mentions: any) => {
+    const text = e.target.value
 
+    setPostObj({
+      postText: text,
+      postTextLeft: 280 - calulcateLength(newPlainTextValue),
+      publishButtonDisabled: !isAuthorizedUser ? true : 280 - calulcateLength(newPlainTextValue) < 0
+    })
+  }
+
+  const calulcateLength = (str: string) => {
+    const output = str.replace(/([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2694-\u2697]|\uD83E[\uDD10-\uDD5D])/g, '')
+    const total = fancyCount(str) - fancyCount(output) + fancyCount(output)
+    return total
+  }
+
+  const fancyCount = (str: any) => {
+    return Array.from(str.split(/[\ufe00-\ufe0f]/).join('')).length
+  }
+
+  useEffect(() => {
+    // userDetailsService.refresh();
+
+  }, [])
   return (
     <PostBox>
       <Tabs
@@ -91,14 +82,15 @@ export default function AddPost({}) {
           href="/articles/add-edit"
         />
       </Tabs>
-      <Box className="styled-imput-container">
+      <Box className={`input-container ${postObj.postTextLeft < 0 ? 'danger-text' : postObj.postTextLeft < 30 ? 'warning-text' : ''}`}>
+        <Box className="styled-input-container">
         <Avatar>
           <PersonIcon />
         </Avatar>
         <MentionsInput
           className="mention-input-container"
           singleLine={false}
-          value={postText}
+          value={postObj.postText}
           onChange={handlePostText}
           placeholder={
             userDetail.sharedPost && !userDetail.sharedEvent
@@ -114,6 +106,18 @@ export default function AddPost({}) {
             appendSpaceOnAdd={true}
           />
         </MentionsInput>
+        </Box>
+        {postObj.postTextLeft < 30 && (
+          <div className="post__warning">
+            <span>
+              {postObj.postTextLeft > 0
+                ? 'You are getting close to the maximum character limit.'
+                : 'You have exceeded the maximum character limit.'}
+            </span>
+            <span className="post__count">{postObj.postTextLeft}</span>
+          </div>
+        )}
+        {imagePreview && <img src={imagePreview} />}
       </Box>
       <Box className="upload-media">
         <Box>
@@ -121,11 +125,14 @@ export default function AddPost({}) {
             className="file-imput"
             type="file"
             onChange={handleImg}
+            ref={videoFileInput}
             accept="image/x-png,image/gif,image/jpeg"
           />
-          <label className="image-upload">
-            <CropOriginalIcon />
-            <Typography variant="subtitle1">Image</Typography>
+          <label className="image-upload"  onClick={() => {
+              videoFileInput?.current?.click()
+            }}>
+            <VideoCameraBackOutlinedIcon />
+            <Typography variant="subtitle1">Video</Typography>
           </label>
         </Box>
         <Box>
@@ -134,10 +141,16 @@ export default function AddPost({}) {
             type="file"
             onChange={handleImg}
             accept="image/x-png,image/gif,image/jpeg"
+            ref={imageFileInput}
           />
-          <label className="image-upload">
-            <VideoCameraBackOutlinedIcon  />
-            <Typography variant="subtitle1">Video</Typography>
+          <label
+            className="image-upload"
+            onClick={() => {
+              imageFileInput?.current?.click()
+            }}
+          >
+            <CropOriginalIcon />
+            <Typography variant="subtitle1">Image</Typography>
           </label>
         </Box>
       </Box>

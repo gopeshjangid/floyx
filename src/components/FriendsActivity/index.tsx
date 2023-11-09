@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { styled } from '@mui/material/styles';
+import UserCard from "../UserCard";
 
   const FriendActivitySection = styled(Box)(({ theme }) => ({
     marginLeft: '10px',
@@ -23,16 +24,6 @@ import { styled } from '@mui/material/styles';
     '& .card-button': {
       padding: '10px 0px ',
     },
-    '& .card': {
-      display: 'flex',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      padding: '20px 0px',
-      '& .display-flex': {
-        display: 'flex',
-        alignItems: 'center',
-      },
-    },
   }));
 
   const ACTIVITY_CARD = [
@@ -40,14 +31,14 @@ import { styled } from '@mui/material/styles';
       name: 'Michele rene',
       userName: 'Mrene',
       displayPicture: '',
-      postTime: 1,
+      postTime: 1698823670000,
       activity: 'Michele added 4 Arcticles in the last 24 hour',
     },
     {
       name: 'John Wick',
       userName: 'Jwick',
       displayPicture: '',
-      postTime: 2,
+      postTime: 1696743654000,
       activity: 'John added 4 Arcticles in the last 48 hour',
     },
   ];
@@ -72,28 +63,12 @@ export default function FriendsActivity({}) {
       <FriendActivityMainSection>
         {friendActivity && friendActivity.map(card => (
           <>
-            <Box className="card">
-              <Box>
-                <Avatar
-                  alt={card.name}
-                  src={card.displayPicture}
-                  sx={{ width: 50, height: 50, marginRight: '10px' }}
-                />
-              </Box>
-              <Box>
-                <Box className="display-flex">
-                  <Typography variant="h5" marginRight={1}>{card.name}</Typography>
-                  <Typography variant="body2" className="card-username">
-                    @{card.userName}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant="caption">
-                    {card.postTime} hour ago
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
+            <UserCard
+              name={card.name}
+              username={card.userName}
+              timestamp={card.postTime}
+              displayPicture={card.displayPicture}
+            />
             <Box>
               <Typography variant="body1">{card.activity}</Typography>
             </Box>
