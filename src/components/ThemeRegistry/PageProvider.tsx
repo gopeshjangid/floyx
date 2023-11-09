@@ -1,3 +1,4 @@
+"use client"
 import { ThemeProvider as PreferredThemeProvider } from "next-themes";
 import Head from "next/head";
 import { FC } from "react";

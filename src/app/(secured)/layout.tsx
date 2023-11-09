@@ -1,31 +1,29 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-
-import { usePathname } from 'next/navigation';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Grid from '@mui/material/Grid';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import { useTheme } from 'next-themes';
+import React from 'react';
 import PageProvider from '@/components/ThemeRegistry/PageProvider';
-import ThemeSwitch from '@/components/ThemeSwitcher';
-import DrawerAppBar from './sidebar';
+import DrawerAppBar from './drawer';
+import Toolbar from '@mui/material/Toolbar';
+import Container from '@mui/material/Container';
+import { getMetaData } from '@/lib/SEO';
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
-  const { theme } = useTheme();
-
   return (
     <html lang="en">
-      <body className={`${theme}-theme`}>
+      <body className={`data-theme`}>
         <PageProvider>
-          <DrawerAppBar>{children}</DrawerAppBar>
+          <DrawerAppBar/>
+          <Container fixed maxWidth='sm'>
+           <Toolbar />
+            {children}
+          </Container>
         </PageProvider>
       </body>
     </html>
   );
 }
+
+
+export const metadata =  getMetaData({title: "Floyx | Decentralized World", description: "Floyx | Decentralized World"});

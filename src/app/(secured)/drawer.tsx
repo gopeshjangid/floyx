@@ -1,8 +1,8 @@
+"use client"
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Container from '@mui/material/Container';
+
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -10,23 +10,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
+
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FloyxImage from "@/images/floyxIcon";
 import { useTheme } from '@emotion/react';
-
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  children: string | React.ReactElement | React.ReactElement[] | React.ReactNode;
-}
+import ThemeSwitch from '@/components/ThemeSwitcher';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = ['Home', 'Notifications', 'Messages', 'Search', 'Earnings', 'Profile', 'More'];
 
-export default function DrawerAppBar(props: Props) {
+export default function DrawerAppBar() {
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -35,17 +28,18 @@ export default function DrawerAppBar(props: Props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{textAlign: 'center' }}>
-    <Box sx={{padding: 1,background: 'inherit'}}>
+    <Box sx={{textAlign: 'center' }}>
+    <Box sx={{padding: 1,background: 'inherit', paddingBottom: 2}}>
         <FloyxImage fill={theme.palette.primary[theme.palette.mode]}/>
     </Box>
       <List>
+       <ListItem component="a" href="#customized-list">
+          <ThemeSwitch />
+        </ListItem>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <ListItemText primary={item} />
             </ListItemButton>
-          </ListItem>
         ))}
       </List>
     </Box>
@@ -80,17 +74,14 @@ export default function DrawerAppBar(props: Props) {
             display: { xs: !mobileOpen && 'none', sm: !mobileOpen && 'block' },
             '& .MuiDrawer-paper': {
               borderWidth:0,
-              backgroundColor: theme.palette.mode ==='light' ? '#fff' :theme.palette.background.default,
+              backgroundColor: theme.palette.mode ==='light' ? '#fff' : theme.palette.background.paper,
               boxSizing: 'border-box', width: drawerWidth },
           }}
         >
           {drawer}
         </Drawer>
       </nav>
-      <Container fixed maxWidth='sm'>
-        <Toolbar />
-        <Paper elevation={0}>{props.children}</Paper>
-      </Container>
+      
     </>
   );
 }
