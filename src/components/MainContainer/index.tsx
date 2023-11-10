@@ -24,7 +24,7 @@ function MainContainer ({
         {isHeaderVisble && <Header />}
         {content}
       </Box>
-      {/* <Box sx={{ width: '30%' }}>{rightContent}</Box> */}
+      <Box sx={{ width: '30%' }}>{rightContent}</Box>
     </Container>
   );
 }

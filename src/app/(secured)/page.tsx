@@ -20,12 +20,12 @@ export default function HomePage() {
                 <PostList />
               </Box>
             }
-            // rightContent={
-            //   <Box>
-            //     <FriendsActivity />
-            //     <PopularToday />
-            //   </Box>
-            // }
+            rightContent={
+              <Box>
+                <FriendsActivity />
+                <PopularToday />
+              </Box>
+            }
           />
         </Grid>
       </Grid>
