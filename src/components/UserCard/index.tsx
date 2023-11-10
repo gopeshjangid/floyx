@@ -45,29 +45,40 @@ export default function UserCard({
                 {name}
               </StyledTypography>
             </Link>}
-
           {username &&
             <Typography
               variant="body2"
               className="card-username"
               color={"primary"}
               marginRight={1}
+              marginBottom={1.5}
+              display={"block"}
+              width="max-content"
             >
               @{username}
             </Typography>}
           {shared && (
             <>
-              <StyledTypography variant="subtitle1" marginRight={1}>
+              <StyledTypography
+                variant="subtitle1"
+                marginRight={1}
+                marginBottom={1.5}
+                display={"block"}
+                width="max-content"
+              >
                 shared a
               </StyledTypography>
               <Link href="#" underline="none" >
-                <Typography variant="subtitle1">
+                <Typography
+                  variant="subtitle1"
+                  marginBottom={1}
+                >
                   post
                 </Typography>
               </Link>
               </>
-          )}
-        </Box>
+            )}
+          </Box>
         {timestamp &&
           <Box>
             <DateParser date={timestamp} />

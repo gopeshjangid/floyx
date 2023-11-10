@@ -8,7 +8,7 @@ function MainContainer ({
   isHeaderVisble,
 }: {
   content: React.ReactNode;
-  rightContent: React.ReactNode;
+  rightContent?: React.ReactNode;
   isHeaderVisble?: Boolean | false;
 }) {
   return (
@@ -20,11 +20,11 @@ function MainContainer ({
         p: 0,
       }}
     >
-      <Box sx={{ width: '70%', pr: 1 }}>
+      <Box sx={{ width: '100%' }}>
         {isHeaderVisble && <Header />}
         {content}
       </Box>
-      <Box sx={{ width: '30%' }}>{rightContent}</Box>
+      {/* <Box sx={{ width: '30%' }}>{rightContent}</Box> */}
     </Container>
   );
 }
