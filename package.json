@@ -20,6 +20,7 @@
     "axios": "^1.6.0",
     "moment": "^2.29.4",
     "next": "latest",
+    "next-themes": "^0.2.1",
     "node-sass": "^9.0.0",
     "react": "latest",
     "react-dom": "latest",

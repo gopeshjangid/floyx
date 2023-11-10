@@ -11,11 +11,9 @@ const poppins = Poppins({
 
 
 const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
-
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
   const isLightTheme = mode === 'light';
-  return createTheme({
-    palette: {
+  const palette = {
       mode,
       ...(mode === 'light'
         ? {
@@ -29,11 +27,12 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             },
             text: {
               primary: '#7C93AE', // Body Text
+              secondary: '#777D88'
               // Define other text colors like 'secondary', 'disabled', etc., if necessary
             },
             background: {
-              default: '#F9FBFC', // Light - Background
-              paper: '#F9FBFF', // Light - Background 2
+              default: '#F9FBFF', // Light - Background
+              paper: '#F9FBFC', // Light - Background 2
             },
           }
         : {
@@ -46,8 +45,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               // Define light, dark, and contrastText if necessary
             },
             background: {
-              default: '#0B081F', // Dark - Background
-              paper: '#1B1830', // Dark - Background 2
+              default: '#1B1830', // Dark - Background
+              paper: '#0B081F', // Dark - Background 2
             },
             // Define other palette properties like error, warning, info, success, etc., if necessary
             // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
@@ -56,7 +55,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
             },
           }),
-    },
+    };
+  return createTheme({
+    palette,
     typography: {
       fontFamily: [
         poppins.style.fontFamily, // You can put your desired font here
@@ -146,6 +147,28 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       },
     },
     components: {
+       MuiLink: {
+      styleOverrides: {
+        root: {
+          color: palette.primary.main, // Use the dynamic color for links
+          textDecoration: 'none',
+          '&:hover': {
+            textDecoration: 'underline',
+          },
+        },
+      }},
+      MuiTypography: {
+      styleOverrides: {
+        root: {
+          // Apply bottom margin to all Typography components
+          marginBottom: '0.35em', // Adjust the value to your preference
+        },
+        // If you want to apply it conditionally based on the `gutterBottom` prop:
+        gutterBottom: {
+          marginBottom: '0.35em', // Adjust the value to match the theme's spacing
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         // Assuming "primary" is your default color for the button
