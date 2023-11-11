@@ -1,7 +1,6 @@
 'use client';
 
 import React, { FC, useState } from 'react';
-import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
 import {
@@ -14,7 +13,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  Stack,
   TextField,
   Theme,
   Typography,
@@ -24,17 +22,21 @@ import {
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-import LoginImage from '../social-login/components/login-image';
-import { SVGArrowLeft, iconLock, iconUser } from '@/assets/images';
-import { allRoutes } from '@/constants/allRoutes';
 import { EMAIL } from '@/constants';
+import { allRoutes } from '@/constants/allRoutes';
 import { useToast } from '@/components/Toast/useToast';
+import LoginImage from '../social-login/components/login-image';
+import { SVGArrowLeft, SVGLock, SVGUser } from '@/assets/images';
+import LoginFooter from '../social-login/components/login-footer';
 
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
-  background: theme.palette.background.default,
+  background:
+    theme.palette?.mode === 'light' ? '#fff' : theme.palette.background.default,
   '& .outline-btn': {
-    borderColor: 'rgba(255, 255, 255, 0.15)',
-    color: '#D1D0D5',
+    border: `1.5px solid ${
+      theme.palette?.mode === 'light' ? '#E3E7F4' : 'rgba(255, 255, 255, 0.15)'
+    }`,
+    color: theme.palette.primary[100],
     fontSize: '16px',
     textTransform: 'initial',
     fontWeight: '400',
@@ -51,14 +53,6 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: 'flex',
     alignItems: 'center',
     gap: '5px',
-  },
-  '& .login-service': {
-    '& a': {
-      fontSize: '15px',
-      fontWeight: '400',
-      lineHeight: '22.5px',
-      color: theme.palette.primary.main,
-    },
   },
 }));
 
@@ -139,13 +133,7 @@ const Login: FC = () => {
 
     if (formData.email === '') {
       err.email = 'Email required!';
-    } else {
-      const regex = EMAIL;
-      if (!regex.test(formData.email)) {
-        err.email = 'Email  not valid!';
-      }
     }
-
     if (formData.password === '') {
       err.password = 'Password is required!';
     } else {
@@ -221,7 +209,7 @@ const Login: FC = () => {
                         startAdornment: (
                           <InputAdornment position="end">
                             <IconButton edge="end" color="primary">
-                              <Image src={iconUser} alt="" />
+                              <SVGUser />
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -240,7 +228,7 @@ const Login: FC = () => {
                       <Typography
                         fontSize="16px"
                         fontWeight="400"
-                        sx={{ '& a': { color: palette.primary.main } }}
+                        sx={{ '& a': { color: '#5798FF' } }}
                       >
                         <Link href={allRoutes.login}>
                           Forgotten your password?
@@ -260,7 +248,7 @@ const Login: FC = () => {
                         startAdornment: (
                           <InputAdornment position="end">
                             <IconButton edge="end" color="primary">
-                              <Image src={iconLock} alt="" />
+                              <SVGLock />
                             </IconButton>
                           </InputAdornment>
                         ),
@@ -309,8 +297,8 @@ const Login: FC = () => {
                     fontSize="16px"
                     fontWeight="400"
                     lineHeight="24px"
-                    color="#CECED2"
-                    sx={{ '& a': { color: palette.primary.main } }}
+                    color={palette.primary[200]}
+                    sx={{ '& a': { color: '#5798FF' } }}
                   >
                     By signing up,you agree to
                     <Link href="/"> Terms of Service </Link> and
@@ -325,33 +313,7 @@ const Login: FC = () => {
                   </Link>
                 </Box>
               </Box>
-              <Box mt="54px">
-                <Stack
-                  spacing={{
-                    md: '42px',
-                    xs: '20px',
-                  }}
-                  mb="13px"
-                  className="login-service"
-                  direction="row"
-                  justifyContent="center"
-                  flexWrap="wrap"
-                >
-                  <Link href="/"> Terms of service</Link>
-                  <Link href="/"> Privacy Policy</Link>
-                  <Link href="/"> Cookie use</Link>
-                </Stack>
-                <Typography
-                  variant="h6"
-                  fontSize="16px"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  color="#85838F"
-                  sx={{ '& a': { color: palette.primary.main } }}
-                >
-                  © 2022 Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>
-                </Typography>
-              </Box>
+              <LoginFooter />
             </Box>
           </Grid>
         </Grid>
