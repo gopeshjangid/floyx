@@ -7,16 +7,16 @@ import {
   Theme,
   Typography,
   styled,
+  useTheme,
 } from '@mui/material';
 import React from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import DeleteIcon from '@mui/icons-material/Delete';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { allRoutes } from '@/constants/allRoutes';
 import UserAvatar from '@/components/UserAvatar';
 import { iconTrash, imgUser } from '@/assets/images';
-import { useTheme } from '@emotion/react';
-import Image from 'next/image';
 
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
@@ -36,6 +36,7 @@ const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
 
 const ChatHeader = () => {
   const { palette } = useTheme();
+
   return (
     <ChatWrapper>
       <Link href={allRoutes.messages}>
