@@ -215,7 +215,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             textTransform: 'capitalize',
             fontSize: '16px',
             fontWeight: '400',
-            color: isLightTheme ? '#7C93AE' : 'rgba(255, 255, 255, 0.30)',
+            color:
+              palette.mode === 'light'
+                ? '#7C93AE'
+                : 'rgba(255, 255, 255, 0.30)',
           },
         },
       },
