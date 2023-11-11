@@ -23,7 +23,7 @@ const SignInGoogle = () => {
           width: '100%',
           fontSize: '16px',
           fontWeight: '400',
-          color: palette.text.primary,
+          color: '#fff',
           textTransform: 'capitalize',
           '& .MuiButton-startIcon': {
             margin: '0',
