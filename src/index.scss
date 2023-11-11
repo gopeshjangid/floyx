@@ -6,15 +6,24 @@
     #4d9aff 100.99%
   );
 }
-
+body {
+  margin: 0;
+  a {
+    text-decoration: none;
+  }
+  align-self: {
+    text-decoration: none;
+  }
+}
 .gradient-background {
   background: var(--gradient-color) !important;
   color: #000 !important;
 }
 
 .dark-theme {
+  .MuiTabs-root .MuiTab-root.Mui-selected,
   .gradient-text {
-    background: var(--gradient-color) !important;
+    background: var(--gradient-color);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -31,7 +40,7 @@
 
 .light-theme {
   .gradient-text {
-    background: var(--gradient-color) !important;
+    background: var(--gradient-color);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
