@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 //const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
-const gradientBorder = ({ color1, color2, color3, width }) => {
+const gradientBorder = ({ color1, color2, color3, width }: any) => {
   return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
 };
 
