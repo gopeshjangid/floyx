@@ -7,6 +7,9 @@ const nextConfig = {
       transform: '@mui/icons-material/{{member}}',
     },
   },
+  compiler: {
+    emotion: true,
+  },
   images: {
     remotePatterns: [
       {

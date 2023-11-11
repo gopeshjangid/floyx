@@ -1,12 +1,11 @@
 'use client';
 
 import { iconSearch, imgUser } from '@/assets/images';
-import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import ChatCard from './components/chat-item';
 import Wrapper from '@/components/wrapper';
-import { useTheme } from '@emotion/react';
 
 const messagesUserData = [
   {

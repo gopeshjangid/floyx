@@ -1,16 +1,9 @@
 'use client';
 import React, { ReactNode, useState } from 'react';
-import { Box, Button, List, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, List, Tab, Tabs, Typography, useTheme } from '@mui/material';
 
-import {
-  SVGCheck,
-  iconLinkMessage,
-  iconTelegramGradient,
-  iconUserGradient,
-  imgUser,
-} from '@/assets/images';
+import { SVGCheck, iconLinkMessage, iconTelegramGradient, iconUserGradient, imgUser } from '@/assets/images';
 import NotificationCard from '@/components/notification-card';
-import { useTheme } from '@emotion/react';
 import Wrapper from '@/components/wrapper';
 
 const fakeData = [
@@ -46,13 +39,7 @@ function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && <Box sx={{ p: { md: 4, xs: 2 } }}>{children}</Box>}
     </div>
   );
@@ -71,24 +58,12 @@ const Notifications = () => {
       <Box
         sx={{
           borderBottom: 1,
-          border: `1px solid ${
-            palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
-          }`,
+          border: `1px solid ${palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`,
           px: { md: '32px', xs: '20px' },
         }}
       >
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          flexWrap="wrap"
-          gap="10px"
-        >
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
+        <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="10px">
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="All" />
             <Tab label="Unread" />
           </Tabs>
@@ -133,20 +108,13 @@ const Notifications = () => {
           </List>
         </Box>
         <Box>
-          <Typography
-            fontSize="16px"
-            fontWeight="500"
-            color={palette?.mode === 'light' ? '#2F2E41' : '#D9D9D9'}
-            marginBottom="23px"
-          >
+          <Typography fontSize="16px" fontWeight="500" color={palette?.mode === 'light' ? '#2F2E41' : '#D9D9D9'} marginBottom="23px">
             Earlier
           </Typography>
           <List sx={{ width: '100%' }}>
-            {fakeData
-              .slice(1)
-              ?.map((item: NotificationCardType, index: number) => (
-                <NotificationCard key={index} {...item} />
-              ))}
+            {fakeData.slice(1)?.map((item: NotificationCardType, index: number) => (
+              <NotificationCard key={index} {...item} />
+            ))}
           </List>
         </Box>
       </CustomTabPanel>

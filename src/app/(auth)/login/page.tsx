@@ -22,7 +22,6 @@ import {
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-import { EMAIL } from '@/constants';
 import { allRoutes } from '@/constants/allRoutes';
 import { useToast } from '@/components/Toast/useToast';
 import LoginImage from '../social-login/components/login-image';
@@ -30,12 +29,9 @@ import { SVGArrowLeft, SVGLock, SVGUser } from '@/assets/images';
 import LoginFooter from '../social-login/components/login-footer';
 
 const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
-  background:
-    theme.palette?.mode === 'light' ? '#fff' : theme.palette.background.default,
+  background: theme.palette?.mode === 'light' ? '#fff' : theme.palette.background.default,
   '& .outline-btn': {
-    border: `1.5px solid ${
-      theme.palette?.mode === 'light' ? '#E3E7F4' : 'rgba(255, 255, 255, 0.15)'
-    }`,
+    border: `1.5px solid ${theme.palette?.mode === 'light' ? '#E3E7F4' : 'rgba(255, 255, 255, 0.15)'}`,
     color: theme.palette.primary[100],
     fontSize: '16px',
     textTransform: 'initial',
@@ -157,41 +153,17 @@ const Login: FC = () => {
         <Grid container minHeight="100vh">
           <LoginImage />
           <Grid item md={6} sm={12} zIndex="1">
-            <Box
-              textAlign="center"
-              padding={{ md: '47px 15px 40px', xs: '38px 25px 38px' }}
-            >
-              <Typography
-                variant="h5"
-                fontSize="16px"
-                color={palette.text.primary}
-                marginBottom="26px"
-              >
+            <Box textAlign="center" padding={{ md: '47px 15px 40px', xs: '38px 25px 38px' }}>
+              <Typography variant="h5" fontSize="16px" color={palette.text.primary} marginBottom="26px">
                 Join for free today and keep your data safe in the digital Space{' '}
               </Typography>
-              <Box
-                display="flex"
-                flexDirection="column"
-                gap="24px"
-                maxWidth="360px"
-                marginInline="auto"
-              >
+              <Box display="flex" flexDirection="column" gap="24px" maxWidth="360px" marginInline="auto">
                 <Box mb="3px">
-                  <Button
-                    variant="outlined"
-                    className="outline-btn"
-                    onClick={() => router.push(allRoutes.register)}
-                  >
+                  <Button variant="outlined" className="outline-btn" onClick={() => router.push(allRoutes.register)}>
                     Create an account
                   </Button>
                 </Box>
-                <Typography
-                  variant="h3"
-                  fontSize="24px"
-                  fontWeight="600"
-                  color={palette.text.primary}
-                  textAlign="left"
-                >
+                <Typography variant="h3" fontSize="24px" fontWeight="600" color={palette.text.primary} textAlign="left">
                   Login to your account
                 </Typography>
                 <Box component="form" m={0} noValidate onSubmit={login}>
@@ -225,14 +197,8 @@ const Login: FC = () => {
                       mb={1.5}
                     >
                       <FormLabel>Password</FormLabel>
-                      <Typography
-                        fontSize="16px"
-                        fontWeight="400"
-                        sx={{ '& a': { color: '#5798FF' } }}
-                      >
-                        <Link href={allRoutes.login}>
-                          Forgotten your password?
-                        </Link>
+                      <Typography fontSize="16px" fontWeight="400" sx={{ '& a': { color: '#5798FF' } }}>
+                        <Link href={allRoutes.login}>Forgotten your password?</Link>
                       </Typography>
                     </Box>
                     <TextField
@@ -281,12 +247,7 @@ const Login: FC = () => {
                   <FormControl sx={{ marginBottom: '0 !important' }}>
                     <FormControlLabel
                       name="remember"
-                      control={
-                        <Checkbox
-                          defaultChecked={false}
-                          onChange={onChangeHandler}
-                        />
-                      }
+                      control={<Checkbox defaultChecked={false} onChange={onChangeHandler} />}
                       label="Remember me"
                     />
                   </FormControl>

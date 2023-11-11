@@ -1,9 +1,9 @@
 'use client';
 
-import ChatHeader from '@/app/(root)/inbox/components/chat-header';
-import ChatInput from '@/app/(root)/inbox/components/chat-input';
-import ChatReceiverCard from '@/app/(root)/inbox/components/chat-receiver-card';
-import ChatSenderCard from '@/app/(root)/inbox/components/chat-sender-card';
+import ChatHeader from '@/app/(secured)/inbox/components/chat-header';
+import ChatInput from '@/app/(secured)/inbox/components/chat-input';
+import ChatReceiverCard from '@/app/(secured)/inbox/components/chat-receiver-card';
+import ChatSenderCard from '@/app/(secured)/inbox/components/chat-sender-card';
 import Wrapper from '@/components/wrapper';
 import { Box, Typography } from '@mui/material';
 import React from 'react';

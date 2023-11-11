@@ -1,7 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useTheme } from 'next-themes';
 
-import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
+import PageProvider from '@/components/ThemeRegistry/PageProvider';
 import '../index.scss';
 import AuthProvider from './context/AuthProvider';
 import { ToastProvider } from '@/components/Toast/useToast';
@@ -11,20 +12,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [selectedTheme, setTheme] = useState('light');
-
-  useEffect(() => {
-    if (localStorage.getItem('theme')) {
-      setTheme(localStorage.getItem('theme')!);
-    }
-  }, []);
-
+  const { theme } = useTheme();
   return (
     <html lang="en">
-      <body className={`${selectedTheme}-theme`}>
+      <body className={`${theme}-theme`}>
         <ToastProvider>
           <AuthProvider>
-            <ThemeRegistry>{children}</ThemeRegistry>
+            <PageProvider>{children}</PageProvider>
           </AuthProvider>
         </ToastProvider>
       </body>
