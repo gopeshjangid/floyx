@@ -4,7 +4,8 @@ import DrawerAppBar from './drawer';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import { getMetaData } from '@/lib/SEO';
-
+import AuthProvider from '@/app/context/AuthProvider';
+import { ToastProvider } from '@/components/Toast/useToast';
 export default function RootLayout({
   children,
 }: {
@@ -17,7 +18,11 @@ export default function RootLayout({
           <DrawerAppBar/>
           <Container fixed maxWidth='sm'>
            <Toolbar />
-            {children}
+            <ToastProvider>
+                <AuthProvider>
+                   {children}
+                </AuthProvider>
+            </ToastProvider>
           </Container>
         </PageProvider>
       </body>

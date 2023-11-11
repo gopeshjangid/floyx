@@ -19,6 +19,7 @@
     "axios": "^1.6.0",
     "next": "latest",
     "next-themes": "^0.2.1",
+    "next-auth": "^4.24.4",
     "node-sass": "^9.0.0",
     "react": "latest",
     "react-dom": "latest",
