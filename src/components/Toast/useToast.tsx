@@ -1,3 +1,4 @@
+"use client";
 import { AlertColor } from '@mui/material';
 import { createContext, FC, ReactNode, useContext, useState } from 'react';
 

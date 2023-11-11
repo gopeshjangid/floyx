@@ -9,59 +9,61 @@ const poppins = Poppins({
   display: 'swap',
 });
 
+//const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
 const gradientBorder = ({ color1, color2, color3, width }) => {
   return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
 };
 
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
-  const isLightTheme = mode === 'light';
+  const palette = {
+    mode,
+    ...(mode === 'light'
+      ? {
+          primary: {
+            main: '#2F2E41', // Topic Text
+            // You can also define light, dark and contrastText if necessary
+            100: '#777D88',
+            200: '#777D88',
+          },
+          secondary: {
+            main: '#ADB3C6', // Text Guide
+            // You can also define light, dark and contrastText if necessary
+          },
+          text: {
+            primary: '#7C93AE', // Body Text
+            secondary: '#777D88',
+            // Define other text colors like 'secondary', 'disabled', etc., if necessary
+          },
+          background: {
+            default: '#F9FBFF', // Light - Background
+            paper: '#F9FBFC', // Light - Background 2
+          },
+        }
+      : {
+          primary: {
+            main: '#5798FF', // Primary Blue
+            // Define light, dark, and contrastText if necessary
+            100: '#D1D0D5',
+            200: '#CECED2',
+          },
+          secondary: {
+            main: '#A75FFF', // Primary Purple
+            // Define light, dark, and contrastText if necessary
+          },
+          background: {
+            default: '#1B1830', // Dark - Background
+            paper: '#0B081F', // Dark - Background 2
+          },
+          // Define other palette properties like error, warning, info, success, etc., if necessary
+          // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
+          text: {
+            primary: '#ffffff', // Assuming white text for dark mode for better readability
+            secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
+          },
+        }),
+  };
   return createTheme({
-    palette: {
-      mode,
-      ...(mode === 'light'
-        ? {
-            primary: {
-              main: '#2F2E41', // Topic Text
-              // You can also define light, dark and contrastText if necessary
-              100: '#777D88',
-              200: '#777D88',
-            },
-            secondary: {
-              main: '#ADB3C6', // Text Guide
-              // You can also define light, dark and contrastText if necessary
-            },
-            text: {
-              primary: '#2F2E41', // Body Text
-              // Define other text colors like 'secondary', 'disabled', etc., if necessary
-            },
-            background: {
-              default: '#F9FBFC', // Light - Background
-              paper: '#F9FBFF', // Light - Background 2
-            },
-          }
-        : {
-            primary: {
-              main: '#5798FF', // Primary Blue
-              // Define light, dark, and contrastText if necessary
-              100: '#D1D0D5',
-              200: '#CECED2',
-            },
-            secondary: {
-              main: '#A75FFF', // Primary Purple
-              // Define light, dark, and contrastText if necessary
-            },
-            background: {
-              default: '#0B081F', // Dark - Background
-              paper: '#1B1830', // Dark - Background 2
-            },
-            // Define other palette properties like error, warning, info, success, etc., if necessary
-            // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
-            text: {
-              primary: '#ffffff', // Assuming white text for dark mode for better readability
-              secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
-            },
-          }),
-    },
+    palette,
     typography: {
       fontFamily: [
         poppins.style.fontFamily, // You can put your desired font here
@@ -161,6 +163,29 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
     },
 
     components: {
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            // Apply bottom margin to all Typography components
+            marginBottom: '0.35em', // Adjust the value to your preference
+          },
+          // If you want to apply it conditionally based on the `gutterBottom` prop:
+          gutterBottom: {
+            marginBottom: '0.35em', // Adjust the value to match the theme's spacing
+          },
+        },
+      },
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            color: palette.primary.main, // Use the dynamic color for links
+            textDecoration: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
+            },
+          },
+        },
+      },
       MuiCssBaseline: {
         styleOverrides: {
           body: {
@@ -211,7 +236,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           root: {
             marginBottom: '12px',
-            color: isLightTheme ? '#777D88' : '#D1D0D5',
+            color: palette.primary[100],
             fontSize: '16px',
             fontWeight: '400',
             textAlign: 'left',
@@ -222,18 +247,19 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           root: {
             borderRadius: '10px !important',
-            ...(isLightTheme
-              ? { background: '#F9FBFC', border: '1px solid #EFF1F7' }
-              : { background: '#1B1830', border: '1px solid #1B1830' }),
+            // ...(isLightTheme
+            //   ? { background: '#F9FBFC', border: '1px solid #EFF1F7' }
+            //   : { background: '#1B1830', border: '1px solid #1B1830' }),
+            background: palette.background.paper,
+            border: `1px solid ${palette.background.paper}`,
             overflow: 'hidden',
             '&.MuiInputBase-adornedStart': { paddingLeft: '20px !important' },
             '&.MuiInputBase-adornedEnd': { paddingRight: '20px !important' },
             '& .MuiInputBase-input': {
               padding: '13px 25px 13px 10px',
               height: 'fit-content',
-              WebkitTextFillColor: isLightTheme
-                ? '#ADB3C6'
-                : 'rgba(255, 255, 255, 0.30)',
+              WebkitTextFillColor:
+                mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
               borderRadius: '0',
               '&::placeholder': { opacity: '1' },
             },
@@ -241,7 +267,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               margin: '0',
               '& .MuiIconButton-edgeEnd': {
                 margin: '0',
-                color: isLightTheme ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
+                color:
+                  mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
               },
             },
           },
@@ -252,9 +279,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           input: {
             '&:-webkit-autofill': {
               '-webkit-box-shadow': `0 0 0 100px ${
-                isLightTheme ? '#F9FBFC' : '#1B1830'
+                mode === 'light' ? '#F9FBFC' : '#1B1830'
               } inset`,
-              WebkitTextFillColor: isLightTheme ? '#ADB3C6' : '#D1D0D5',
+              WebkitTextFillColor: mode === 'light' ? '#ADB3C6' : '#D1D0D5',
               borderRadius: '0',
             },
           },
@@ -265,7 +292,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           root: {
             margin: '0',
             '& .MuiTypography-root': {
-              color: isLightTheme ? '#777D88' : '#D1D0D5',
+              color: mode === 'light' ? '#777D88' : '#D1D0D5',
               fontSize: '16px',
               fontWeight: '400',
             },
@@ -275,7 +302,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiCheckbox: {
         styleOverrides: {
           root: {
-            color: isLightTheme ? '#ADB3C6' : '#1B1830',
+            color: mode === 'light' ? '#ADB3C6' : '#1B1830',
             '&.Mui-checked': {
               color: '#A85CFF',
             },
