@@ -96,7 +96,6 @@ const Login: FC = () => {
         toast.success('Login successfully!');
       } else {
         toast.error(response?.error || 'Something went wrong!');
-        console.log(response?.error || 'Something went wrong!');
       }
     }
   };

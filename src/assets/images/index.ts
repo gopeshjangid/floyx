@@ -11,6 +11,7 @@ import iconSearch from './icons/search.svg';
 import iconPaperPlane from './icons/paper-plane.svg';
 import iconSmile from './icons/smile.svg';
 import iconTrash from './icons/trash.svg';
+import iconFloyx from './icons/floyx.ico';
 
 // Images
 import imgLogin from './login.png';
@@ -42,4 +43,5 @@ export {
   SVGUser,
   SVGLock,
   iconTrash,
+  iconFloyx,
 };

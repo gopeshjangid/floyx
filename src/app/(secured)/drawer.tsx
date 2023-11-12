@@ -15,6 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import FloyxImage from '@/images/floyxIcon';
 import { useTheme } from '@emotion/react';
 import ThemeSwitch from '@/components/ThemeSwitcher';
+import Link from 'next/link';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Notifications', 'Messages', 'Search', 'Earnings', 'Profile', 'More'];
@@ -33,11 +34,11 @@ export default function DrawerAppBar() {
         <FloyxImage fill={theme.palette.primary[theme.palette.mode]} />
       </Box>
       <List>
-        <ListItem component="a" href="#customized-list">
+        <ListItem>
           <ThemeSwitch />
         </ListItem>
         {navItems.map(item => (
-          <ListItemButton sx={{ textAlign: 'center' }}>
+          <ListItemButton sx={{ textAlign: 'center' }} key={item} LinkComponent={Link} href={item.toLowerCase()}>
             <ListItemText primary={item} />
           </ListItemButton>
         ))}

@@ -1,34 +1,18 @@
 'use client';
-import React, { ReactNode, useState } from 'react';
-import { Box, Button, List, Tab, Tabs, Typography, useTheme } from '@mui/material';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { Box, Button, CircularProgress, Skeleton, Tab, Tabs, useTheme } from '@mui/material';
 
-import { SVGCheck, iconLinkMessage, iconTelegramGradient, iconUserGradient, imgUser } from '@/assets/images';
-import NotificationCard from '@/components/notification-card';
 import Wrapper from '@/components/wrapper';
+import { tokenService } from '@/lib/services/new/tokenService';
+import { messageService } from '@/lib/services/new/messageService';
+import { authService } from '@/lib/services/new/authService';
+import NotificationList from './components/NotificationList';
+import { SVGCheck } from '@/assets/images';
+import { notificationService } from '@/lib/services/new/notificationService';
+import { INotification, INotificationData } from './types';
+import { useToast } from '@/components/Toast/useToast';
+import NotificationLoader from './components/NotificationLoader';
 
-const fakeData = [
-  {
-    id: '1',
-    title: 'Nora Jacob commented on the post you shared',
-    hour: '2 hours ago',
-    img: imgUser,
-    icon: iconLinkMessage,
-  },
-  {
-    id: '2',
-    title: 'Mike Egon followed you',
-    hour: '2 hours ago',
-    img: imgUser,
-    icon: iconUserGradient,
-  },
-  {
-    id: '3',
-    title: 'Michele Reena shared your video',
-    hour: '2 hours ago',
-    img: imgUser,
-    icon: iconTelegramGradient,
-  },
-];
 interface TabPanelProps {
   children?: ReactNode;
   index: number;
@@ -46,11 +30,113 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const Notifications = () => {
+  const toast = useToast();
   const { palette } = useTheme();
   const [value, setValue] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [notificationPageData, setNotificationPageData] = useState({
+    threads: [],
+    currentLoggedUser: {},
+    currentIndex: -1,
+    users: [],
+    dataLoading: true,
+    ifUserBlock: false,
+    mounted: false,
+  });
+  const [notificationData, setNotificationData] = useState<INotificationData>({
+    CRUDopen: false,
+    notifications: [],
+  });
+  const [markAllAsReadLoading, setMarkAllAsReadLoading] = useState(false);
+  const unReadNotifications = notificationData.notifications.filter((x: INotification) => x.state === 1);
+
+  useEffect(() => {
+    tokenService.onNewToken.on('USER', setCurrenUser);
+    messageService.publisher.on('threads', loadAll);
+    tokenService.emmitCurrentUser();
+    notificationService.publisher.on('reload', getInitialNotification);
+
+    authService.initHistory(history);
+    return () => {
+      tokenService.onNewToken.off('USER', setCurrenUser);
+      messageService.publisher.off('threads', loadAll);
+      notificationService.publisher.off('reload', getInitialNotification);
+    };
+  }, []);
+
+  useEffect(() => {
+    getInitialNotification();
+  }, []);
+
+  const getInitialNotification = async () => {
+    setIsLoading(true);
+    const res: any = await notificationService.reloadAll();
+    setIsLoading(false);
+    if (res.value.code === 'success') {
+      setNotificationData({
+        ...notificationData,
+        notifications: res.value.data,
+        notificationCount: res.value.data.filter((x: any) => x.state == 1).length,
+      });
+    } else {
+      toast.error('Error getting notifications');
+    }
+  };
+
+  const setCurrenUser = (data: any) => {
+    if (notificationPageData.mounted) {
+      setNotificationPageData(prev => ({
+        ...prev,
+        currentLoggedUser: data,
+      }));
+    } else {
+      setNotificationPageData(prev => ({
+        ...prev,
+        currentLoggedUser: data,
+      }));
+    }
+  };
+
+  const loadAll = (data: any[]) => {
+    saveConversations(data);
+    if (notificationPageData.mounted) {
+      setNotificationPageData(prev => ({
+        ...prev,
+        dataLoading: false,
+      }));
+    } else {
+      setNotificationPageData(prev => ({
+        ...prev,
+        dataLoading: false,
+      }));
+    }
+  };
+
+  const saveConversations = (threads: any) => {
+    threads.sort(function (a: any, b: any) {
+      return new Date(b.lastMessageDate).getTime() - new Date(a.lastMessageDate).getTime();
+    });
+
+    setNotificationPageData(prev => ({
+      ...prev,
+      threads,
+    }));
+  };
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+  };
+
+  const markAllAsRead = async () => {
+    setMarkAllAsReadLoading(true);
+    const response = await notificationService.markAllAsRead(notificationData.notifications);
+    if (response?.success) {
+      getInitialNotification();
+    } else {
+      toast.error('Error marking all as read');
+    }
+
+    setMarkAllAsReadLoading(false);
   };
 
   return (
@@ -67,7 +153,7 @@ const Notifications = () => {
             <Tab label="All" />
             <Tab label="Unread" />
           </Tabs>
-          {/* //  TODO: Creating a GLobal Component */}
+
           <Box
             sx={{
               '& .MuiButton-root': {
@@ -83,43 +169,19 @@ const Notifications = () => {
               },
             }}
           >
-            <Button>
-              <SVGCheck />
-              <span className="gradient-text">Mark all as readed</span>
+            <Button onClick={markAllAsRead}>
+              {markAllAsReadLoading ? <CircularProgress size={20} color="inherit" /> : <SVGCheck />}
+              <span className="gradient-text">Mark all as read</span>
             </Button>
           </Box>
         </Box>
       </Box>
+
       <CustomTabPanel value={value} index={0}>
-        <Box mb={{ md: '34px', xs: '20px' }} component="div">
-          <Typography
-            fontSize="16px"
-            fontWeight="500"
-            color={palette?.mode === 'light' ? '#2F2E41' : '#D9D9D9'}
-            marginBottom="23px"
-            variant="h3"
-          >
-            New
-          </Typography>
-          <List sx={{ width: '100%' }} component="ul">
-            {fakeData?.map((item: NotificationCardType, index: number) => (
-              <NotificationCard key={index} {...item} />
-            ))}
-          </List>
-        </Box>
-        <Box>
-          <Typography fontSize="16px" fontWeight="500" color={palette?.mode === 'light' ? '#2F2E41' : '#D9D9D9'} marginBottom="23px">
-            Earlier
-          </Typography>
-          <List sx={{ width: '100%' }}>
-            {fakeData.slice(1)?.map((item: NotificationCardType, index: number) => (
-              <NotificationCard key={index} {...item} />
-            ))}
-          </List>
-        </Box>
+        {isLoading ? <NotificationLoader /> : <NotificationList notifications={notificationData.notifications} />}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        {isLoading ? <NotificationLoader /> : <NotificationList notifications={unReadNotifications} />}
       </CustomTabPanel>
     </Wrapper>
   );
