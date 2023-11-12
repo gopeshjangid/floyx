@@ -13,7 +13,7 @@ import { INotification } from '@/app/(secured)/notifications/types';
 import { PARENTHESES_AND_BRACKETS_REGEX, PROFILE_REGEX } from '@/constants';
 import { notificationService } from '@/lib/services/new/notificationService';
 
-const ListItemItem = styled(ListItem)(({ theme, active }: { theme: Theme; active: boolean }) => ({
+const ListItemItem = styled(ListItem)<{ active: boolean }>(({ theme, active }) => ({
   alignItems: 'center',
   gap: '10px',
   padding: '0',
