@@ -4,5 +4,5 @@ export const allRoutes = {
   register: '/register',
   messages: '/messages',
   socialLogin: '/social-login',
-  notification: '/notification',
+  notifications: '/notifications',
 };

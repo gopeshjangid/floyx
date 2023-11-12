@@ -1,6 +1,6 @@
 'use client';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Box, Button, CircularProgress, Skeleton, Tab, Tabs, useTheme } from '@mui/material';
+import { Box, Button, CircularProgress, Tab, Tabs, useTheme } from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
 import { tokenService } from '@/lib/services/new/tokenService';
@@ -72,7 +72,7 @@ const Notifications = () => {
     setIsLoading(true);
     const res: any = await notificationService.reloadAll();
     setIsLoading(false);
-    if (res.value.code === 'success') {
+    if (res?.value?.code === 'success') {
       setNotificationData({
         ...notificationData,
         notifications: res.value.data,
@@ -130,9 +130,7 @@ const Notifications = () => {
   const markAllAsRead = async () => {
     setMarkAllAsReadLoading(true);
     const response = await notificationService.markAllAsRead(notificationData.notifications);
-    if (response?.success) {
-      getInitialNotification();
-    } else {
+    if (!response?.success) {
       toast.error('Error marking all as read');
     }
 

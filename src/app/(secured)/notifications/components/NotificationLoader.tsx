@@ -5,7 +5,7 @@ const NotificationLoader = () => {
   // TODO: improve
   return (
     <List sx={{ width: '100%' }} component="ul">
-      {Array.from(new Array(10)).map((_, index) => (
+      {Array.from(new Array(5)).map((_, index) => (
         <Skeleton animation="wave" key={index} height={90} />
       ))}
     </List>

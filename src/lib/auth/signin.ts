@@ -3,7 +3,7 @@ import { setAccessTokenCookie } from './index';
 
 export default async function signIn(email: string, password: string, remember: boolean) {
   try {
-    const response = await fetch(`${process.env.BACKEND_BASE_URL}${apiPaths.login}`, {
+    const response = await fetch(`${process.env.BACKEND_BASE_DEV_URL}${apiPaths.login}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

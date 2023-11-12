@@ -25,7 +25,8 @@ class NotificationService {
     })
       .then(response => response.json())
       .then(data => {
-        this.publisher.emit('reload');
+        // TODO: for now we are not reloading the notifications on single mark as read
+        // this.publisher.emit('reload');
         return data;
       })
       .catch(error => {
