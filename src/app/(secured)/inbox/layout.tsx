@@ -1,12 +1,6 @@
 import { Box, Grid } from '@mui/material';
 
-export default function Layout({
-  children,
-  chat,
-}: {
-  children: React.ReactNode;
-  chat: React.ReactNode;
-}) {
+export default function Layout({ children, chat }: { children: React.ReactNode; chat: React.ReactNode }) {
   return (
     <Box>
       <Grid container spacing={2}>
