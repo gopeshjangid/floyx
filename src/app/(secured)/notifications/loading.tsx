@@ -4,7 +4,7 @@ import React from 'react';
 const NotificationLoader = () => {
   return (
     <List sx={{ width: '100%' }} component="ul">
-      {Array.from(new Array(10)).map((_, index) => (
+      {Array.from(new Array(8)).map((_, index) => (
         <Skeleton animation="wave" key={index} height={90} />
       ))}
     </List>

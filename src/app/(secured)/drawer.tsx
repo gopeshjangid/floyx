@@ -18,10 +18,39 @@ import Link from 'next/link';
 import { useTheme } from '@mui/material';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Notifications', 'Messages', 'Search', 'Earnings', 'Profile', 'More'];
+const navItems = [
+  {
+    label: 'Home',
+    href: '/',
+  },
+  {
+    label: 'Notifications',
+    href: '/notifications',
+  },
+  {
+    label: 'Messages',
+    href: '/inbox',
+  },
+  {
+    label: 'Chat',
+    href: '/inbox/12121',
+  },
+  {
+    label: 'Earnings',
+    href: '/earnings',
+  },
+  {
+    label: 'Profile',
+    href: '/profile',
+  },
+  {
+    label: 'More',
+    href: '/more',
+  },
+];
 
 export default function DrawerAppBar() {
-  const isMobile = useMediaQuery('(max-width:480px)');
+  // const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
@@ -37,9 +66,9 @@ export default function DrawerAppBar() {
         <ListItem>
           <ThemeSwitch />
         </ListItem>
-        {navItems.map(item => (
-          <ListItemButton sx={{ textAlign: 'center' }} key={item} LinkComponent={Link} href={item.toLowerCase()}>
-            <ListItemText primary={item} />
+        {navItems.map((item, index) => (
+          <ListItemButton sx={{ textAlign: 'center' }} key={index} LinkComponent={Link} href={item.href}>
+            <ListItemText primary={item.label} />
           </ListItemButton>
         ))}
       </List>
