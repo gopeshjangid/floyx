@@ -1,9 +1,11 @@
 'use client';
 
 import { iconSearch, imgUser } from '@/assets/images';
-import { Box, IconButton, InputAdornment, TextField, useTheme } from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
+import { usePathname } from 'next/navigation';
+
 import ChatCard from './components/chat-item';
 import Wrapper from '@/components/wrapper';
 
@@ -51,15 +53,18 @@ const messagesUserData = [
 ];
 
 const Default = () => {
-  const { palette } = useTheme();
+  const pathname = usePathname();
+  const { palette, breakpoints } = useTheme();
+  const isMobile = useMediaQuery(breakpoints.down('md'));
+  const isChatOpen = pathname?.split('/').length === 3;
+
+  if (isMobile && isChatOpen) {
+    return null;
+  }
+
   return (
     <Wrapper>
-      <Box
-        borderBottom={`1px solid ${
-          palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
-        }`}
-        padding="18px 20px 15px"
-      >
+      <Box borderBottom={`1px solid ${palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`} padding="18px 20px 15px">
         <TextField
           fullWidth
           hiddenLabel

@@ -14,12 +14,7 @@ const Page = () => {
       <Wrapper mb={2}>
         <ChatHeader />
         <Box padding={{ md: '13px 25px', xs: '13px 15px' }}>
-          <Typography
-            textAlign="center"
-            color="#878D9A"
-            fontSize="13px"
-            fontWeight="400"
-          >
+          <Typography textAlign="center" color="#878D9A" fontSize="13px" fontWeight="400">
             Today
           </Typography>
           <Box
@@ -30,39 +25,16 @@ const Page = () => {
             }}
             width="100%"
           >
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="flex-end"
-              gap={2}
-            >
-              <ChatReceiverCard
-                id="1"
-                message="Hey! just working How about you?"
-              />
+            <Box display="flex" flexDirection="column" justifyContent="flex-end" gap={2}>
+              <ChatReceiverCard id="1" message="Hey! just working How about you?" />
               <ChatSenderCard id="1" message="Hi! What have you been up to?" />
-              <ChatReceiverCard
-                id="2"
-                message="I've been keeping busy too. Any exciting plans?"
-              />
-              <ChatReceiverCard
-                id="1"
-                message="Hey! just working How about you?"
-              />
+              <ChatReceiverCard id="2" message="I've been keeping busy too. Any exciting plans?" />
+              <ChatReceiverCard id="1" message="Hey! just working How about you?" />
               <ChatSenderCard id="1" message="Hi! What have you been up to?" />
-              <ChatReceiverCard
-                id="2"
-                message="I've been keeping busy too. Any exciting plans?"
-              />
-              <ChatReceiverCard
-                id="1"
-                message="Hey! just working How about you?"
-              />
+              <ChatReceiverCard id="2" message="I've been keeping busy too. Any exciting plans?" />
+              <ChatReceiverCard id="1" message="Hey! just working How about you?" />
               <ChatSenderCard id="1" message="Hi! What have you been up to?" />
-              <ChatReceiverCard
-                id="2"
-                message="I've been keeping busy too. Any exciting plans?"
-              />
+              <ChatReceiverCard id="2" message="I've been keeping busy too. Any exciting plans?" />
             </Box>
           </Box>
         </Box>

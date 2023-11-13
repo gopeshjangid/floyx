@@ -3,6 +3,7 @@ import React from 'react';
 
 type ChatSenderCardProps = {
   message: string;
+  id?: string;
 };
 const ChatSenderCard = ({ message }: ChatSenderCardProps) => {
   const { palette } = useTheme();

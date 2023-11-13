@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Box, useTheme } from '@mui/material';
 
-const Wrapper = ({ children, ...rest }: { children: ReactNode }) => {
+const Wrapper = ({ children, ...rest }: { children: ReactNode; mb?: any }) => {
   const { palette } = useTheme();
 
   return (
