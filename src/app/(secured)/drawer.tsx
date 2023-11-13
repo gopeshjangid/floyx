@@ -13,9 +13,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FloyxImage from '@/images/floyxIcon';
-import { useTheme } from '@emotion/react';
 import ThemeSwitch from '@/components/ThemeSwitcher';
 import Link from 'next/link';
+import { useTheme } from '@mui/material';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Notifications', 'Messages', 'Search', 'Earnings', 'Profile', 'More'];

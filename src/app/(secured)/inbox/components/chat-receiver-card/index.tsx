@@ -1,5 +1,4 @@
-import { useTheme } from '@emotion/react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
 type ChatReceiverCardProps = {

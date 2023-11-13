@@ -1,6 +1,5 @@
 import UserAvatar from '@/components/UserAvatar';
 import { allRoutes } from '@/constants/allRoutes';
-import { useTheme } from '@emotion/react';
 import {
   Box,
   ListItem,
@@ -9,6 +8,7 @@ import {
   Theme,
   Typography,
   styled,
+  useTheme,
 } from '@mui/material';
 import Link from 'next/link';
 import React, { FC } from 'react';
