@@ -38,7 +38,7 @@ const ChatCard: FC = ({
   userId,
   hour,
   description,
-}: ChatItemType) => {
+}: any) => {
   const { palette } = useTheme();
 
   return (

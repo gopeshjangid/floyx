@@ -82,7 +82,7 @@ const Default = () => {
       </Box>
 
       <Box sx={{ height: '620px', overflowY: 'auto', pr: 1 }}>
-        {messagesUserData?.map((chats: ChatItemType) => {
+        {messagesUserData?.map((chats: any) => {
           return <ChatCard key={chats.id} {...chats} />;
         })}
       </Box>
