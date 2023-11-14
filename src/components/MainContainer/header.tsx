@@ -13,12 +13,11 @@ import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import { styled } from '@mui/material/styles';
 
 export default function Header() {
-  
   const HeaderSection = styled(Box)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    pb: 1.25,  
+    marginBottom: '30px',
   }));
 
   const TOP_BAR = [
@@ -44,19 +43,19 @@ export default function Header() {
       data: [
         {
           text: 'Crypto',
-          icon: <DescriptionOutlinedIcon sx={{marginRight: 1}} />,
+          icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
           visible: true,
           link: '/crypto',
         },
         {
           text: 'AirDrop',
-          icon: <DescriptionOutlinedIcon sx={{marginRight: 1}} />,
+          icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
           visible: true,
           link: '/airdrop',
         },
         {
           text: 'Search',
-          icon: <DescriptionOutlinedIcon sx={{marginRight: 1}} />,
+          icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
           visible: true,
           link: '/search',
         },
@@ -68,14 +67,14 @@ export default function Header() {
   return (
     <HeaderSection>
       {TOP_BAR.map(val => (
-        <>
+        <Box>
           {!Array.isArray(val?.data) ? (
             val.visible && (
               <Button
                 variant="outlined"
                 href={val.link}
                 startIcon={val.icon}
-                color="info"
+                sx={{ width: '100%'}}
               >
                 <Typography variant="body2">{val.text}</Typography>
               </Button>
@@ -84,11 +83,17 @@ export default function Header() {
             <>
               {val.visible && (
                 <FormControl size="small">
-                  <Select disabled={false} defaultValue={'Crypto'} >
+                  <Select disabled={false} defaultValue={'Crypto'}>
                     {val.data.map(drop => (
-                      <MenuItem value={drop.text} >
-                       
-                        <Typography variant="body2" alignItems={'center'} display="flex"> {drop.icon}{drop.text}</Typography>
+                      <MenuItem value={drop.text}>
+                        <Typography
+                          variant="body2"
+                          alignItems={'center'}
+                          display="flex"
+                        >
+                          {drop.icon}
+                          {drop.text}
+                        </Typography>
                       </MenuItem>
                     ))}
                   </Select>
@@ -96,7 +101,7 @@ export default function Header() {
               )}
             </>
           )}
-        </>
+        </Box>
       ))}
     </HeaderSection>
   );
