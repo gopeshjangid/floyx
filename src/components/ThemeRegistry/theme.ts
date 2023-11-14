@@ -9,53 +9,59 @@ const poppins = Poppins({
   display: 'swap',
 });
 
+//const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
+const gradientBorder = ({ color1, color2, color3, width }) => {
+  return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
+};
 
-const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
-  const isLightTheme = mode === 'light';
   const palette = {
-      mode,
-      ...(mode === 'light'
-        ? {
-            primary: {
-              main: '#2F2E41', // Topic Text
-              // You can also define light, dark and contrastText if necessary
-            },
-            secondary: {
-              main: '#ADB3C6', // Text Guide
-              // You can also define light, dark and contrastText if necessary
-            },
-            text: {
-              primary: '#7C93AE', // Body Text
-              secondary: '#777D88'
-              // Define other text colors like 'secondary', 'disabled', etc., if necessary
-            },
-            background: {
-              default: '#F9FBFF', // Light - Background
-              paper: '#F9FBFC', // Light - Background 2
-            },
-          }
-        : {
-            primary: {
-              main: '#5798FF', // Primary Blue
-              // Define light, dark, and contrastText if necessary
-            },
-            secondary: {
-              main: '#A75FFF', // Primary Purple
-              // Define light, dark, and contrastText if necessary
-            },
-            background: {
-              default: '#1B1830', // Dark - Background
-              paper: '#0B081F', // Dark - Background 2
-            },
-            // Define other palette properties like error, warning, info, success, etc., if necessary
-            // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
-            text: {
-              primary: '#ffffff', // Assuming white text for dark mode for better readability
-              secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
-            },
-          }),
-    };
+    mode,
+    ...(mode === 'light'
+      ? {
+          primary: {
+            main: '#2F2E41', // Topic Text
+            // You can also define light, dark and contrastText if necessary
+            100: '#777D88',
+            200: '#777D88',
+          },
+          secondary: {
+            main: '#ADB3C6', // Text Guide
+            // You can also define light, dark and contrastText if necessary
+          },
+          text: {
+            primary: '#7C93AE', // Body Text
+            secondary: '#777D88',
+            // Define other text colors like 'secondary', 'disabled', etc., if necessary
+          },
+          background: {
+            default: '#F9FBFF', // Light - Background
+            paper: '#F9FBFC', // Light - Background 2
+          },
+        }
+      : {
+          primary: {
+            main: '#5798FF', // Primary Blue
+            // Define light, dark, and contrastText if necessary
+            100: '#D1D0D5',
+            200: '#CECED2',
+          },
+          secondary: {
+            main: '#A75FFF', // Primary Purple
+            // Define light, dark, and contrastText if necessary
+          },
+          background: {
+            default: '#1B1830', // Dark - Background
+            paper: '#0B081F', // Dark - Background 2
+          },
+          // Define other palette properties like error, warning, info, success, etc., if necessary
+          // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
+          text: {
+            primary: '#ffffff', // Assuming white text for dark mode for better readability
+            secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
+          },
+        }),
+  };
   return createTheme({
     palette,
     typography: {
@@ -146,124 +152,247 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         textTransform: 'uppercase',
       },
     },
-    components: {
-       MuiLink: {
-      styleOverrides: {
-        root: {
-          color: palette.primary.main, // Use the dynamic color for links
-          textDecoration: 'none',
-          '&:hover': {
-            textDecoration: 'underline',
-          },
-        },
-      }},
-      MuiTypography: {
-      styleOverrides: {
-        root: {
-          // Apply bottom margin to all Typography components
-          marginBottom: '0.35em', // Adjust the value to your preference
-        },
-        // If you want to apply it conditionally based on the `gutterBottom` prop:
-        gutterBottom: {
-          marginBottom: '0.35em', // Adjust the value to match the theme's spacing
-        },
+    breakpoints: {
+      values: {
+        xs: 300, // phone
+        sm: 680, // tablets
+        md: 900, // small laptop
+        lg: 1200, // desktop
+        xl: 1536, // large screens
       },
     },
-    MuiButton: {
-      styleOverrides: {
-        // Assuming "primary" is your default color for the button
-        containedPrimary: {
-          color: 'white', // Assuming you want white text for the button
-          borderRadius: '10px',
-          padding: '12px 29px',
-          gap: '10px',
-          background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
-          '&:hover': {
-            // You should also define the hover state
-            background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
-            opacity: 0.9 // Or any other styling you want on hover
-          }
+
+    components: {
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            // Apply bottom margin to all Typography components
+            marginBottom: '0.35em', // Adjust the value to your preference
+          },
+          // If you want to apply it conditionally based on the `gutterBottom` prop:
+          gutterBottom: {
+            marginBottom: '0.35em', // Adjust the value to match the theme's spacing
+          },
         },
-       outlined: {
-        width: '133px',
-          height: '40px',
-          padding: '11px 26px',
-          borderRadius: '4px',
-          gap: '10px',
-          fontWeight: 500,
-          fontSize: '16px',
-          lineHeight: '24px',
-          position: 'relative',
-          border: '1px solid transparent',
-            overflow: 'hidden', 
-           background: gradientBorder,
-            WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          MozBackgroundClip: 'text',
-          MozTextFillColor: 'transparent',
-          // The gradient text should be visible by default:
-          color: 'transparent',// Fallback color
-          '& .MuiButton-label': {
-            background: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            MozBackgroundClip: 'text',
-            MozTextFillColor: 'transparent',
-          },
-          // The gradient border should also be visible by default:
-          '&:before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            borderRadius: '4px',
-            border: '1px solid',
-            borderImageSlice: 1,
-            borderImageSource: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
-            zIndex: -1,
-          },
-          // Hover state: you might want to change the opacity or add other styles:
-          '&:hover': {
-            '&:before': {
-               borderRadius: 'inherit',
-              opacity: 0.8, // Example: slightly reduce the opacity on hover
+      },
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            color: palette.primary.main, // Use the dynamic color for links
+            textDecoration: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
             },
           },
-          // Active state: you might want to change the opacity or add other styles:
-          '&:active': {
-            '&:before': {
-              opacity: 0.9, // Example: slightly increase the opacity to indicate active state
+        },
+      },
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            margin: 0,
+            padding: 0,
+          },
+        },
+      },
+      // MuiButton: {
+      //   styleOverrides: {
+      //     root: {
+      //       textTransform: 'capitalize',
+      //       '&.MuiButton-containedPrimary': {
+      //         borderRadius: '10px',
+      //         background: 'var(--gradient-color)',
+      //         ...(isLightTheme
+      //           ? {
+      //               color: '#fff',
+      //             }
+      //           : {}),
+      //       },
+      //       '&.MuiButton-containedSecondary': {
+      //         ...(isLightTheme
+      //           ? {
+      //               color: '#fff',
+      //             }
+      //           : {}),
+      //       },
+      //     },
+      //   },
+      // },
+      MuiTabs: {
+        styleOverrides: {
+          root: {
+            '& .MuiTabs-flexContainer': {
+              gap: '24px',
+            },
+            '& .MuiTabs-indicator': {
+              background:
+                'linear-gradient(87deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
             },
           },
-          // Disabled state:
-          '&:disabled': {
-            color: '#aaa', // Dim the text color
-            backgroundColor: '#f3f3f3', // Set a different background
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          root: {
+            padding: '0',
+            minWidth: 'fit-content',
+            textTransform: 'capitalize',
+            fontSize: '16px',
+            fontFamily: 'Poppins',
+            fontWeight: '400',
+            color: 'rgba(255, 255, 255, 0.30)',
+          },
+        },
+      },
+      MuiFormControl: {
+        styleOverrides: {
+          root: {
+            marginBottom: '10px',
+            width: '100%',
+
+            '& .MuiIconButton-root': {
+              padding: '0',
+            },
+            '& fieldset': { display: 'none' },
+          },
+        },
+      },
+      MuiFormLabel: {
+        styleOverrides: {
+          root: {
+            marginBottom: '12px',
+            color: palette.primary[100],
+            fontSize: '16px',
+            fontWeight: '400',
+            textAlign: 'left',
+          },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            borderRadius: '10px !important',
+            // ...(isLightTheme
+            //   ? { background: '#F9FBFC', border: '1px solid #EFF1F7' }
+            //   : { background: '#1B1830', border: '1px solid #1B1830' }),
+            background: palette.background.paper,
+            border: `1px solid ${palette.background.paper}`,
+            overflow: 'hidden',
+            '&.MuiInputBase-adornedStart': { paddingLeft: '20px !important' },
+            '&.MuiInputBase-adornedEnd': { paddingRight: '20px !important' },
+            '& .MuiInputBase-input': {
+              padding: '13px 25px 13px 10px',
+              height: 'fit-content',
+              WebkitTextFillColor:
+                mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
+              borderRadius: '0',
+              '&::placeholder': { opacity: '1' },
+            },
+            '& .MuiInputAdornment-root': {
+              margin: '0',
+              '& .MuiIconButton-edgeEnd': {
+                margin: '0',
+                color:
+                  mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
+              },
+            },
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          input: {
+            '&:-webkit-autofill': {
+              '-webkit-box-shadow': `0 0 0 100px ${
+                mode === 'light' ? '#F9FBFC' : '#1B1830'
+              } inset`,
+              WebkitTextFillColor: mode === 'light' ? '#ADB3C6' : '#D1D0D5',
+              borderRadius: '0',
+            },
+          },
+        },
+      },
+      MuiFormControlLabel: {
+        styleOverrides: {
+          root: {
+            margin: '0',
+            '& .MuiTypography-root': {
+              color: mode === 'light' ? '#777D88' : '#D1D0D5',
+              fontSize: '16px',
+              fontWeight: '400',
+            },
+          },
+        },
+      },
+      MuiCheckbox: {
+        styleOverrides: {
+          root: {
+            color: mode === 'light' ? '#ADB3C6' : '#1B1830',
+            '&.Mui-checked': {
+              color: '#A85CFF',
+            },
+          },
+        },
+      },
+      MuiAvatar: {
+        styleOverrides: {
+          root: {
+            border: '1px solid  #A561FF',
+            background: 'rgba(194, 148, 255, 0.38)',
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          // Assuming "primary" is your default color for the button
+          root: { height: 'fit-content !important' },
+          containedPrimary: {
+            color: 'white', // Assuming you want white text for the button
+            borderRadius: '10px',
+            padding: '12px 29px',
+            gap: '10px',
+            background:
+              'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+            '&:hover': {
+              // You should also define the hover state
+              background:
+                'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+              opacity: 0.9, // Or any other styling you want on hover
+            },
+          },
+          outlined: {
+            height: '46px', // Hug (46px)
+            minWidth: '161px', // Hug (161px)
+            borderRadius: '4px', // Radius
+            border: '1px solid transparent', // Border with gradient
+            padding: '11px 26px', // Padding
+            gap: '10px', // Gap
+            position: 'relative', // To position the pseudo-elements for gradient
+            // Create pseudo-elements for gradient border
+            '&:before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              borderRadius: 'inherit',
+              backgroundImage: gradientBorder({
+                color1: '#AB59FF',
+                color2: '#858FFF',
+                color3: '#4D9AFF',
+                width: '1px',
+              }),
+              zIndex: 0,
+              pointerEvents: 'none', // Ignore pointer events on the pseudo-element
+            },
+            // Adjust the label (child of button) to bring it above the pseudo-element
             '& .MuiButton-label': {
-              background: 'none', // Remove gradient background on disabled state
-            },
-            '&:before': {
-              display: 'none', // Hide the gradient border on disabled state
+              position: 'relative',
+              zIndex: 1,
             },
           },
-          // Focus state: ensure the gradient border and text are fully visible:
-          '&:focus': {
-            '& .MuiButton-label': {
-              background: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              MozBackgroundClip: 'text',
-              MozTextFillColor: 'transparent',
-            },
-            '&:before': {
-              opacity: 1, // Ensure the gradient border is fully visible
-            },
-          },
-       }
-      }
-    }
+        },
+      },
     },
   });
 };
