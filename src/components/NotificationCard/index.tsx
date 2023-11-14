@@ -13,7 +13,7 @@ import { INotification } from '@/app/(secured)/notifications/types';
 import { PARENTHESES_AND_BRACKETS_REGEX, PROFILE_REGEX } from '@/constants';
 import { notificationService } from '@/lib/services/new/notificationService';
 
-const ListItemItem = styled(ListItem)<{ active: boolean }>(({ theme, active }) => ({
+const ListItemItem = styled(ListItem)<{ active: number }>(({ theme, active }) => ({
   alignItems: 'center',
   gap: '10px',
   padding: '0',
@@ -116,7 +116,7 @@ const NotificationCard = ({ publisher, date, id, image, text, type, state, objec
   // TODO: add proper active state styles
 
   return (
-    <ListItemItem active={!!state}>
+    <ListItemItem active={state ? 1 : 0}>
       <ListItemAvatar>
         <Link href={`/profile/${publisher.username}/posts'`}>
           <UserAvatar
