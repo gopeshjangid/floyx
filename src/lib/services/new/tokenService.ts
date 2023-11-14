@@ -116,7 +116,6 @@ export class TokenService {
     // localStorage.removeItem(ApiEndpoint.GetRecentArticles + '?forHome=true');
     // localStorage.removeItem(ApiEndpoint.AccountsToFallow + '?forHome=true');
 
-    // sessionStorage.removeItem(FLOYX_USERNAME);
     deleteCookie(FLOYX_TOKEN);
     deleteCookie(FLOYX_USERNAME);
   };

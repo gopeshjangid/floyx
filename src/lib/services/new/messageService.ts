@@ -61,9 +61,6 @@ class MessageService {
   };
 
   public markAsRead(id: any) {
-    // return requestService.post(ApiEndpoint.GetMessages + '/read/' + id).success(() => {
-    //   this.reloadAll();
-    // });
     fetch(ApiEndpoint.GetMessages + '/read/' + id, {
       method: 'POST',
       headers: {
@@ -79,15 +76,6 @@ class MessageService {
   }
 
   public reloadAll() {
-    // return requestService.get(ApiEndpoint.GetMessages).success(resp => {
-    //   this.messages = resp.data;
-    //   this.unreadTotal = 0;
-    //   resp.data.forEach((element: any) => {
-    //     this.unreadTotal += element.unreadCount;
-    //   });
-    //   this.publisher.emit('threads', this.messages);
-    // });
-
     fetch(ApiEndpoint.GetMessages, {
       method: 'GET',
       headers: {
@@ -112,9 +100,6 @@ class MessageService {
     if (createdDate) {
       url += '?createdDate=' + createdDate;
     }
-    // return requestService.get(url).success(resp => {
-    //   return resp.data;
-    // });
     return fetch(url, {
       method: 'GET',
       headers: {

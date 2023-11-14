@@ -35,32 +35,6 @@ class NotificationService {
       });
   }
 
-  // public markAllAsRead(notifications: any[]) {
-  //   let done = 0;
-  //   const max = notifications.length;
-  //   return notifications.forEach(item => {
-  //     return fetch(ApiEndpoint.GetNotificationsAll + '/read/' + item.id, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: tokenService.getBearerToken() || '',
-  //       },
-  //     })
-  //       .then(response => response.json())
-  //       .then(data => {
-  //         done++;
-  //         if (done === max) {
-  //           this.publisher.emit('reload');
-  //         }
-  //         return data;
-  //       })
-  //       .catch(error => {
-  //         console.error('Error:', error);
-  //         return error;
-  //       });
-  //   });
-  // }
-
   public async markAllAsRead(notifications: any[]) {
     const markReadPromises = notifications.map(notification => this.markSingleAsRead(notification.id));
 
