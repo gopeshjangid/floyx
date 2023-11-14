@@ -2,7 +2,6 @@ import { List, Skeleton } from '@mui/material';
 import React from 'react';
 
 const NotificationLoader = () => {
-  // TODO: improve
   return (
     <List
       sx={{

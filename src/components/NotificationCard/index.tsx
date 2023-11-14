@@ -114,8 +114,6 @@ const NotificationCard = ({ publisher, date, id, image, text, type, state, objec
     }
   };
 
-  // TODO: add proper active state styles
-
   return (
     <ListItemItem active={state ? 1 : 0}>
       <ListItemAvatar>
