@@ -175,12 +175,21 @@ const Notifications = () => {
         </Box>
       </Box>
 
-      <CustomTabPanel value={value} index={0}>
-        {isLoading ? <NotificationLoader /> : <NotificationList notifications={notificationData.notifications} />}
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        {isLoading ? <NotificationLoader /> : <NotificationList notifications={unReadNotifications} />}
-      </CustomTabPanel>
+      <Box
+        sx={{
+          '& .MuiBox-root': {
+            padding: '0',
+            paddingTop: { md: '30px', xs: '25px' },
+          },
+        }}
+      >
+        <CustomTabPanel value={value} index={0}>
+          {isLoading ? <NotificationLoader /> : <NotificationList notifications={notificationData.notifications} />}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          {isLoading ? <NotificationLoader /> : <NotificationList notifications={unReadNotifications} />}
+        </CustomTabPanel>
+      </Box>
     </Wrapper>
   );
 };

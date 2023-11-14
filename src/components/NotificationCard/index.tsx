@@ -16,8 +16,8 @@ import { notificationService } from '@/lib/services/new/notificationService';
 const ListItemItem = styled(ListItem)<{ active: number }>(({ theme, active }) => ({
   alignItems: 'center',
   gap: '10px',
-  padding: '0',
-  backgroundColor: active ? (theme.palette?.mode === 'light' ? '#F5F5F5' : '#2F2E41') : 'transparent',
+  padding: '9px 21px',
+  backgroundColor: active ? (theme.palette?.mode === 'light' ? '#eef5ff' : '#110d29') : 'transparent',
   '&:not(:last-child)': { marginBottom: '20px' },
   '& .MuiListItemText-root': {
     margin: '0',
@@ -39,6 +39,7 @@ const ListItemItem = styled(ListItem)<{ active: number }>(({ theme, active }) =>
   },
   [theme.breakpoints.up('md')]: {
     gap: '18px',
+    padding: '13px 31px',
 
     '&:not(:last-child)': { marginBottom: '28px' },
     '& .MuiListItemAvatar-root': {
