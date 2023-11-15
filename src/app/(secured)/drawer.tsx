@@ -19,7 +19,7 @@ import ThemeSwitch from '@/components/ThemeSwitcher';
 const drawerWidth = 240;
 const navItems = ['Home', 'Notifications', 'Messages', 'Search', 'Earnings', 'Profile', 'More'];
 
-export default function DrawerAppBar() {
+export default function DrawerAppBar({children}) {
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -63,7 +63,7 @@ export default function DrawerAppBar() {
           </IconButton>
         </Box>
       </AppBar>
-      <nav>
+    {isMobile && <nav>
         <Drawer
           container={container}
           variant={mobileOpen ? "temporary" : 'permanent'}
@@ -79,8 +79,13 @@ export default function DrawerAppBar() {
           }}
         >
           {drawer}
+          <Box>{children}</Box>
         </Drawer>
-      </nav>
+      </nav>}
+        <Box sx={{width: '100%', height: '100%'}} display="flex">
+           {!isMobile && <Box sx={{backgroundColor: theme.palette.mode ==='light' ? '#fff' : theme.palette.background.paper,width: '20%',display: {sm: true, md: true, lg: true}}}>{drawer}</Box>}
+           <Box>{children}</Box>
+         </Box>
       
     </>
   );
