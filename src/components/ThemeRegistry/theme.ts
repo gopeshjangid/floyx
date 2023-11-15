@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 //const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
-const gradientBorder = ({ color1, color2, color3, width }) => {
+const gradientBorder = ({ color1, color2, color3, width }: any) => {
   return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
 };
 
@@ -194,29 +194,6 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
         },
       },
-      // MuiButton: {
-      //   styleOverrides: {
-      //     root: {
-      //       textTransform: 'capitalize',
-      //       '&.MuiButton-containedPrimary': {
-      //         borderRadius: '10px',
-      //         background: 'var(--gradient-color)',
-      //         ...(isLightTheme
-      //           ? {
-      //               color: '#fff',
-      //             }
-      //           : {}),
-      //       },
-      //       '&.MuiButton-containedSecondary': {
-      //         ...(isLightTheme
-      //           ? {
-      //               color: '#fff',
-      //             }
-      //           : {}),
-      //       },
-      //     },
-      //   },
-      // },
       MuiTabs: {
         styleOverrides: {
           root: {
@@ -237,9 +214,11 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             minWidth: 'fit-content',
             textTransform: 'capitalize',
             fontSize: '16px',
-            fontFamily: 'Poppins',
             fontWeight: '400',
-            color: 'rgba(255, 255, 255, 0.30)',
+            color:
+              palette.mode === 'light'
+                ? '#7C93AE'
+                : 'rgba(255, 255, 255, 0.30)',
           },
         },
       },
@@ -336,7 +315,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiAvatar: {
         styleOverrides: {
           root: {
-            border: '1px solid  #A561FF',
+            border: '2px solid  #A561FF',
             background: 'rgba(194, 148, 255, 0.38)',
           },
         },
@@ -344,7 +323,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiButton: {
         styleOverrides: {
           // Assuming "primary" is your default color for the button
-          root: { height: 'fit-content !important' },
+          root: {
+            height: 'fit-content !important',
+            textTransform: 'capitalize',
+          },
           containedPrimary: {
             color: 'white', // Assuming you want white text for the button
             borderRadius: '10px',

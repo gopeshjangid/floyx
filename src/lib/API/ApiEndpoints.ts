@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
 export class ApiEndpoint {
-  public static BasePath = process.env.BACKEND_BASE_DEV_URL || ''
+  public static BasePath = process.env.NEXT_PUBLIC_BACKEND_BASE_DEV_URL
 
   public static Login = ApiEndpoint.BasePath + '/api/v1/identity/signin'
   public static Login2fa = ApiEndpoint.BasePath + '/api/v1/identity/validate2fa'

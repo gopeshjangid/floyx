@@ -7,6 +7,9 @@ const nextConfig = {
       transform: '@mui/icons-material/{{member}}',
     },
   },
+  compiler: {
+    emotion: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -14,6 +17,18 @@ const nextConfig = {
         hostname: 'source.unsplash.com',
         port: '',
         pathname: '/random',
+      },
+      {
+        protocol: 'https',
+        hostname: 'beta.floyx.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'floyx.com',
+        port: '',
+        pathname: '/**',
       },
     ],
   },
