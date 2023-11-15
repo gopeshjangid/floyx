@@ -1,14 +1,12 @@
 import React from 'react';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
-import { Box, Button, useTheme } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 import { iconGoogle } from '@/assets/images';
 import { allRoutes } from '@/constants/allRoutes';
 
 const SignInGoogle = () => {
-  const { palette } = useTheme();
-
   const handleGoogleLogin = async () => {
     await signIn('google', {
       callbackUrl: allRoutes.home,

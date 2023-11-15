@@ -1,18 +1,19 @@
-"use client"
-import { useState, useEffect } from 'react'
-import { useTheme } from 'next-themes'
+'use client';
+import { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
+import { Skeleton } from '@mui/material';
 
 const ThemeSwitch = () => {
-  const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
-    return null
+    return <Skeleton variant="rectangular" animation="wave" width={60} height={19} sx={{ padding: 0, margin: 0 }} />;
   }
 
   return (
@@ -21,7 +22,7 @@ const ThemeSwitch = () => {
       <option value="dark">Dark</option>
       <option value="light">Light</option>
     </select>
-  )
-}
+  );
+};
 
-export default ThemeSwitch
+export default ThemeSwitch;

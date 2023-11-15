@@ -1,7 +1,6 @@
 import React from 'react';
-import { useTheme } from '@emotion/react';
 import Link from 'next/link';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 import styled from '@emotion/styled';
 
 const LoginFooterWrapper = styled(Box)(() => ({
@@ -43,7 +42,7 @@ const LoginFooter = () => {
         color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
         sx={{ '& a': { color: '#5798FF' } }}
       >
-        © {(new Date().getFullYear())} Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>
+        © {new Date().getFullYear()} Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>
       </Typography>
     </LoginFooterWrapper>
   );
