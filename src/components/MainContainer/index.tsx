@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Header from './header';
 
 function MainContainer ({
