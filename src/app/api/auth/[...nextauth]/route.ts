@@ -34,7 +34,8 @@ const handler = NextAuth({
     strategy: 'jwt',
   },
   pages: {
-    signIn: '/login',
+    signIn: '/social-login',
+    error: '/social-login',
   },
 
   callbacks: {

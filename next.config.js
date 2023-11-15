@@ -15,6 +15,18 @@ const nextConfig = {
         port: '',
         pathname: '/random',
       },
+      {
+        protocol: 'https',
+        hostname: 'beta.floyx.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'floyx.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
