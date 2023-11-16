@@ -1,6 +1,6 @@
 'use client';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Box, Button, CircularProgress, Tab, Tabs, useTheme } from '@mui/material';
+import { Box, Button, CircularProgress, Tab, Tabs, styled } from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
 import { tokenService } from '@/lib/services/new/tokenService';
@@ -12,7 +12,39 @@ import { notificationService } from '@/lib/services/new/notificationService';
 import { INotification, INotificationData } from './types';
 import { useToast } from '@/components/Toast/useToast';
 import NotificationLoader from './components/NotificationLoader';
-
+import { Theme } from '@mui/system';
+const NotificationsWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
+  borderBottom: 1,
+  paddingInline: '20px',
+  border: `1px solid ${theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`,
+  '& .notifications-header': {
+    '& .MuiButton-root': {
+      padding: '0',
+      color: '#A85CFF',
+      fontSize: '16px',
+      fontWeight: '400',
+      lineHeight: '24px',
+      textTransform: 'capitalize',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px',
+    },
+  },
+  '& .notifications-content': {
+    '& .MuiBox-root': {
+      padding: '0',
+      paddingTop: '25px',
+    },
+  },
+  [theme.breakpoints.up('md')]: {
+    paddingInline: '32px',
+    '& .notifications-content': {
+      '& .MuiBox-root': {
+        paddingTop: '30px',
+      },
+    },
+  },
+}));
 interface TabPanelProps {
   children?: ReactNode;
   index: number;
@@ -31,7 +63,6 @@ function CustomTabPanel(props: TabPanelProps) {
 
 const Notifications = () => {
   const toast = useToast();
-  const { palette } = useTheme();
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [notificationPageData, setNotificationPageData] = useState({
@@ -139,50 +170,22 @@ const Notifications = () => {
 
   return (
     <Wrapper>
-      <Box
-        sx={{
-          borderBottom: 1,
-          border: `1px solid ${palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`,
-          px: { md: '32px', xs: '20px' },
-        }}
-      >
+      <NotificationsWrapper>
         <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="10px">
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="All" />
             <Tab label="Unread" />
           </Tabs>
 
-          <Box
-            sx={{
-              '& .MuiButton-root': {
-                padding: '0',
-                color: '#A85CFF',
-                fontSize: '16px',
-                fontWeight: '400',
-                lineHeight: '24px',
-                textTransform: 'capitalize',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-              },
-            }}
-          >
+          <Box className="notifications-header">
             <Button onClick={markAllAsRead}>
               {markAllAsReadLoading ? <CircularProgress size={20} color="inherit" /> : <SVGCheck />}
               <span className="gradient-text">Mark all as read</span>
             </Button>
           </Box>
         </Box>
-      </Box>
-
-      <Box
-        sx={{
-          '& .MuiBox-root': {
-            padding: '0',
-            paddingTop: { md: '30px', xs: '25px' },
-          },
-        }}
-      >
+      </NotificationsWrapper>
+      <Box className="notifications-content">
         <CustomTabPanel value={value} index={0}>
           {isLoading ? <NotificationLoader /> : <NotificationList notifications={notificationData.notifications} />}
         </CustomTabPanel>

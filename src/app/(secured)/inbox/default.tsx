@@ -1,8 +1,7 @@
 'use client';
 
-import { iconSearch, imgUser } from '@/assets/images';
+import { SVGSearch, imgUser } from '@/assets/images';
 import { Box, IconButton, InputAdornment, TextField, useMediaQuery, useTheme } from '@mui/material';
-import Image from 'next/image';
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
@@ -73,7 +72,7 @@ const Default = () => {
             startAdornment: (
               <InputAdornment position="end">
                 <IconButton edge="end" color="primary">
-                  <Image src={iconSearch} alt="" />
+                  <SVGSearch />
                 </IconButton>
               </InputAdornment>
             ),
@@ -81,7 +80,13 @@ const Default = () => {
         />
       </Box>
 
-      <Box sx={{ height: '620px', overflowY: 'auto', pr: 1 }}>
+      <Box
+        sx={{
+          height: '620px',
+          overflowY: 'auto',
+          pr: 1,
+        }}
+      >
         {messagesUserData?.map((chats: any) => {
           return <ChatCard key={chats.id} {...chats} />;
         })}
