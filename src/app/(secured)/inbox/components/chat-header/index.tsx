@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Theme,
-  Typography,
-  styled,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, ListItem, ListItemAvatar, ListItemText, Theme, Typography, styled, useTheme } from '@mui/material';
 import React from 'react';
 // import DeleteIcon from '@mui/icons-material/Delete';
 import Link from 'next/link';
@@ -22,8 +12,7 @@ const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
   gap: '10px',
   padding: '12px 14px',
-  borderBottom: `1px solid ${
-    theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+  borderBottom: `1px solid ${theme.palette.primary[800]}
   }`,
   '& .MuiListItemText-root': {
     margin: '0',
@@ -53,27 +42,12 @@ const ChatHeader = () => {
       </Link>
       <ListItemText
         primary={
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            flexWrap="wrap"
-          >
+          <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
             <Link href={allRoutes.messages}>
-              <Typography
-                color={palette?.mode === 'light' ? '#2F2E41' : '#fff'}
-                fontSize="16px"
-                fontWeight={500}
-                component="span"
-              >
+              <Typography color={palette?.mode === 'light' ? '#2F2E41' : '#fff'} fontSize="16px" fontWeight={500} component="span">
                 Michele
               </Typography>
-              <Typography
-                fontSize="14px"
-                fontWeight={400}
-                component="span"
-                className="gradient-text"
-              >
+              <Typography fontSize="14px" fontWeight={400} component="span" className="gradient-text">
                 @mich23
               </Typography>
             </Link>

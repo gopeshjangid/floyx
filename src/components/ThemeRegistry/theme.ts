@@ -23,11 +23,17 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             main: '#2F2E41', // Topic Text
             // You can also define light, dark and contrastText if necessary
             100: '#777D88',
-            200: '#777D88',
+            200: '#0B081F',
+            800: '#E7F0FC',
+            900: '#fff',
           },
           secondary: {
             main: '#ADB3C6', // Text Guide
             // You can also define light, dark and contrastText if necessary
+            100: '#A85CFF',
+            200: '#A561FF',
+            300: 'rgba(194, 148, 255, 0.38)',
+            400: '#AB59FF',
           },
           text: {
             primary: '#7C93AE', // Body Text
@@ -47,6 +53,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             focus: '#ADB3C6', // Text Guide
             hoverOpacity: 0.08,
             disabledOpacity: 0.48,
+            border: '#E7F0FC',
+            svg: ' #ADB3C6',
           },
         }
       : {
@@ -54,11 +62,17 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             main: '#5798FF', // Primary Blue
             // Define light, dark, and contrastText if necessary
             100: '#D1D0D5',
-            200: '#CECED2',
+            200: '#0B081F',
+            800: '#0B081F',
+            900: '#fff',
           },
           secondary: {
             main: '#A75FFF', // Primary Purple
             // Define light, dark, and contrastText if necessary
+            100: '#A85CFF',
+            200: '#A561FF',
+            300: 'rgba(194, 148, 255, 0.38)',
+            400: '#AB59FF',
           },
           background: {
             default: '#1B1830', // Dark - Background
@@ -79,6 +93,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             focus: '#ADB3C6', // Text Guide
             hoverOpacity: 0.08,
             disabledOpacity: 0.48,
+            border: '#0B081F',
+            svg: 'rgba(255, 255, 255, 0.30)',
           },
         }),
   };
@@ -221,7 +237,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               gap: '24px',
             },
             '& .MuiTabs-indicator': {
-              background: 'linear-gradient(87deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
+              background: `linear-gradient(87deg, ${palette.secondary[400]} 0%, #858FFF 57.35%, #4D9AFF 100.99%)`,
             },
           },
         },
@@ -234,7 +250,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             textTransform: 'capitalize',
             fontSize: '16px',
             fontWeight: '400',
-            color: palette?.mode === 'light' ? '#7C93AE' : 'rgba(255, 255, 255, 0.30)',
+            color: palette?.mode === 'light' ? palette.text.primary : palette?.action?.svg,
           },
         },
       },
@@ -266,18 +282,15 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           root: {
             borderRadius: '10px !important',
-            // ...(isLightTheme
-            //   ? { background: '#F9FBFC', border: '1px solid #EFF1F7' }
-            //   : { background: '#1B1830', border: '1px solid #1B1830' }),
             background: palette?.background?.paper,
-            border: `1px solid ${palette?.background?.paper}`,
+            border: `1px solid ${palette?.primary?.[800]}`,
             overflow: 'hidden',
             '&.MuiInputBase-adornedStart': { paddingLeft: '20px !important' },
             '&.MuiInputBase-adornedEnd': { paddingRight: '20px !important' },
             '& .MuiInputBase-input': {
               padding: '13px 25px 13px 10px',
               height: 'fit-content',
-              WebkitTextFillColor: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
+              WebkitTextFillColor: palette?.action?.svg,
               borderRadius: '0',
               '&::placeholder': { opacity: '1' },
             },
@@ -285,7 +298,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               margin: '0',
               '& .MuiIconButton-edgeEnd': {
                 margin: '0',
-                color: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
+                color: palette?.action?.svg,
               },
             },
           },
@@ -295,7 +308,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           input: {
             '&:-webkit-autofill': {
-              '-webkit-box-shadow': `0 0 0 100px ${mode === 'light' ? '#F9FBFC' : '#1B1830'} inset`,
+              '-webkit-box-shadow': `0 0 0 100px ${palette.background.paper} inset`,
               WebkitTextFillColor: mode === 'light' ? '#ADB3C6' : '#D1D0D5',
               borderRadius: '0',
             },
@@ -307,7 +320,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           root: {
             margin: '0',
             '& .MuiTypography-root': {
-              color: mode === 'light' ? '#777D88' : '#D1D0D5',
+              color: mode === 'light' ? palette.primary[100] : '#D1D0D5',
               fontSize: '16px',
               fontWeight: '400',
             },
@@ -319,7 +332,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           root: {
             color: mode === 'light' ? '#ADB3C6' : '#1B1830',
             '&.Mui-checked': {
-              color: '#A85CFF',
+              color: palette.secondary[100],
             },
           },
         },
@@ -327,8 +340,8 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiAvatar: {
         styleOverrides: {
           root: {
-            border: '2px solid  #A561FF',
-            background: 'rgba(194, 148, 255, 0.38)',
+            border: `2px solid ${palette.secondary[200]}`,
+            background: palette.secondary[300],
           },
         },
       },
@@ -344,10 +357,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             borderRadius: '10px',
             padding: '12px 29px',
             gap: '10px',
-            background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+            background: `linear-gradient(90deg, ${palette.secondary[400]}  0%, #858FFF 50%, #4D9AFF 100%)`,
             '&:hover': {
               // You should also define the hover state
-              background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+              background: `linear-gradient(90deg, ${palette.secondary[400]}  0%, #858FFF 50%, #4D9AFF 100%)`,
               opacity: 0.9, // Or any other styling you want on hover
             },
           },
