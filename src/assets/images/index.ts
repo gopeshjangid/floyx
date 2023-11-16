@@ -7,7 +7,6 @@ import iconUserGradient from './icons/user-gradient.svg';
 import iconLinkGradient from './icons/like-gradient.svg';
 import iconTelegramGradient from './icons/telegram-gradient.svg';
 import iconLinkMessage from './icons/message-gradient.svg';
-import iconSearch from './icons/search.svg';
 import iconPaperPlane from './icons/paper-plane.svg';
 import iconSmile from './icons/smile.svg';
 import iconTrash from './icons/trash.svg';
@@ -23,6 +22,7 @@ import SVGCheck from './svg/check';
 import SVGArrowLeft from './svg/arrow-left';
 import SVGUser from './svg/user';
 import SVGLock from './svg/lock';
+import SVGSearch from './svg/search';
 
 export {
   iconLogo,
@@ -37,11 +37,11 @@ export {
   iconLinkMessage,
   iconTelegramGradient,
   imgUser,
-  iconSearch,
   iconPaperPlane,
   iconSmile,
   SVGUser,
   SVGLock,
+  SVGSearch,
   iconTrash,
   iconFloyx,
 };
