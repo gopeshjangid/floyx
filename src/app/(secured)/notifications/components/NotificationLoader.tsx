@@ -3,11 +3,10 @@ import { Box, List, Skeleton, Theme, styled } from '@mui/material';
 const NotificationLoaderWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   padding: '0',
   '& .MuiList-root': {
-    padding: '0',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    gap: 10,
+    gap: 15,
     '& .MuiSkeleton-root': {
       transform: 'scale(1)',
       height: 50,

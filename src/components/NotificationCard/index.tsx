@@ -40,7 +40,7 @@ const ListItemItem = styled(ListItem)<{ active: number }>(({ theme, active }) =>
   },
   [theme.breakpoints.up('md')]: {
     gap: '18px',
-    padding: '13px 31px',
+    padding: '13px 31px 13px 0px',
 
     // '&:not(:last-child)': { marginBottom: '28px' },
     '& .MuiListItemAvatar-root': {
