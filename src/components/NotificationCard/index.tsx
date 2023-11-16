@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { CircularProgress, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Theme, Typography, styled, useTheme } from '@mui/material';
+import { CircularProgress, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography, styled, useTheme } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -18,9 +18,10 @@ const ListItemItem = styled(ListItem)<{ active: number }>(({ theme, active }) =>
   gap: '10px',
   padding: '9px 21px',
   backgroundColor: active ? (theme.palette?.mode === 'light' ? '#eef5ff' : '#110d29') : 'transparent',
-  '&:not(:last-child)': { marginBottom: '20px' },
+  // '&:not(:last-child)': { marginBottom: '20px' },
   '& .MuiListItemText-root': {
     margin: '0',
+    cursor: 'pointer',
   },
   '& .MuiListItemAvatar-root': {
     position: 'relative',
@@ -41,7 +42,7 @@ const ListItemItem = styled(ListItem)<{ active: number }>(({ theme, active }) =>
     gap: '18px',
     padding: '13px 31px',
 
-    '&:not(:last-child)': { marginBottom: '28px' },
+    // '&:not(:last-child)': { marginBottom: '28px' },
     '& .MuiListItemAvatar-root': {
       '& span': {
         right: '-7px',
@@ -133,7 +134,6 @@ const NotificationCard = ({ publisher, date, id, image, text, type, state, objec
         </Link>
       </ListItemAvatar>
       <ListItemText
-        sx={{ cursor: 'pointer' }}
         onClick={() => markAsRead(id, objectId, publisher.username, origin)}
         primary={
           <Typography
