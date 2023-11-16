@@ -38,6 +38,16 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             default: '#F9FBFF', // Light - Background
             paper: '#F9FBFC', // Light - Background 2
           },
+          action: {
+            active: '#ADB3C6', // Text Guide
+            hover: '#ADB3C6', // Text Guide
+            selected: '#ADB3C6', // Text Guide
+            disabled: '#ADB3C6', // Text Guide
+            disabledBackground: '#ADB3C6', // Text Guide
+            focus: '#ADB3C6', // Text Guide
+            hoverOpacity: 0.08,
+            disabledOpacity: 0.48,
+          },
         }
       : {
           primary: {
@@ -59,6 +69,16 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           text: {
             primary: '#ffffff', // Assuming white text for dark mode for better readability
             secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
+          },
+          action: {
+            active: '#ADB3C6', // Text Guide
+            hover: '#ADB3C6', // Text Guide
+            selected: '#ADB3C6', // Text Guide
+            disabled: '#ADB3C6', // Text Guide
+            disabledBackground: '#ADB3C6', // Text Guide
+            focus: '#ADB3C6', // Text Guide
+            hoverOpacity: 0.08,
+            disabledOpacity: 0.48,
           },
         }),
   };
@@ -178,7 +198,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       MuiLink: {
         styleOverrides: {
           root: {
-            color: palette.primary.main, // Use the dynamic color for links
+            color: palette?.primary?.main, // Use the dynamic color for links
             textDecoration: 'none',
             '&:hover': {
               textDecoration: 'underline',
@@ -201,8 +221,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               gap: '24px',
             },
             '& .MuiTabs-indicator': {
-              background:
-                'linear-gradient(87deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
+              background: 'linear-gradient(87deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
             },
           },
         },
@@ -215,10 +234,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             textTransform: 'capitalize',
             fontSize: '16px',
             fontWeight: '400',
-            color:
-              palette.mode === 'light'
-                ? '#7C93AE'
-                : 'rgba(255, 255, 255, 0.30)',
+            color: palette?.mode === 'light' ? '#7C93AE' : 'rgba(255, 255, 255, 0.30)',
           },
         },
       },
@@ -239,7 +255,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           root: {
             marginBottom: '12px',
-            color: palette.primary[100],
+            color: palette?.primary?.[100],
             fontSize: '16px',
             fontWeight: '400',
             textAlign: 'left',
@@ -253,16 +269,15 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             // ...(isLightTheme
             //   ? { background: '#F9FBFC', border: '1px solid #EFF1F7' }
             //   : { background: '#1B1830', border: '1px solid #1B1830' }),
-            background: palette.background.paper,
-            border: `1px solid ${palette.background.paper}`,
+            background: palette?.background?.paper,
+            border: `1px solid ${palette?.background?.paper}`,
             overflow: 'hidden',
             '&.MuiInputBase-adornedStart': { paddingLeft: '20px !important' },
             '&.MuiInputBase-adornedEnd': { paddingRight: '20px !important' },
             '& .MuiInputBase-input': {
               padding: '13px 25px 13px 10px',
               height: 'fit-content',
-              WebkitTextFillColor:
-                mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
+              WebkitTextFillColor: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
               borderRadius: '0',
               '&::placeholder': { opacity: '1' },
             },
@@ -270,8 +285,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               margin: '0',
               '& .MuiIconButton-edgeEnd': {
                 margin: '0',
-                color:
-                  mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
+                color: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.30)',
               },
             },
           },
@@ -281,9 +295,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           input: {
             '&:-webkit-autofill': {
-              '-webkit-box-shadow': `0 0 0 100px ${
-                mode === 'light' ? '#F9FBFC' : '#1B1830'
-              } inset`,
+              '-webkit-box-shadow': `0 0 0 100px ${mode === 'light' ? '#F9FBFC' : '#1B1830'} inset`,
               WebkitTextFillColor: mode === 'light' ? '#ADB3C6' : '#D1D0D5',
               borderRadius: '0',
             },
@@ -332,12 +344,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             borderRadius: '10px',
             padding: '12px 29px',
             gap: '10px',
-            background:
-              'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+            background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
             '&:hover': {
               // You should also define the hover state
-              background:
-                'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+              background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
               opacity: 0.9, // Or any other styling you want on hover
             },
           },
