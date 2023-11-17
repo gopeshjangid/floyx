@@ -7,14 +7,29 @@ import { Box } from '@mui/material';
 import { ToastProvider } from '@/components/Toast/useToast';
 import AuthProvider from '../context/AuthProvider';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children, content, rightContent }: any) {
   return (
     <>
       <DrawerAppBar>
         <Container fixed maxWidth="lg">
-          <Toolbar />
           <ToastProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <Container
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  width: '100%',
+                }}
+              >
+                <Box sx={{ width: '70%' }}>
+                  {content}
+                </Box>
+                <Box sx={{ width: '30%' }}>
+                  {rightContent}
+                </Box>
+                {children}
+              </Container>
+            </AuthProvider>
           </ToastProvider>
         </Container>
       </DrawerAppBar>

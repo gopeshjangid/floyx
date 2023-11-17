@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
+console.log("---", process.env.NEXT_PUBLIC_BACKEND_BASE_DEV_URL)
 export class ApiEndpoint {
-  public static BasePath = process.env.BACKEND_BASE_DEV_URL || ''
+  public static BasePath = process.env.NEXT_PUBLIC_BACKEND_BASE_DEV_URL || '';
+
   // public static BasePath = '';
   // Identity Api Start
   public static Login = ApiEndpoint.BasePath + '/api/v1/identity/signin'

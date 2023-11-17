@@ -66,7 +66,7 @@ export default function FriendsActivity({}) {
       <FriendActivityMainSection>
         {friendActivity ? (
           friendActivity.map((card, index) => (
-            <Container className="card" >
+            <Container className="card" key={`friendActivity${index}`}>
               <Box>
                 <UserCard
                   name={card.name}
