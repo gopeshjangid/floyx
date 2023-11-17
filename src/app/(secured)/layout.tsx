@@ -14,13 +14,14 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <DrawerAppBar />
-      <Container fixed maxWidth="sm">
+      <DrawerAppBar>
+      <Container fixed>
         <Toolbar />
         <ToastProvider>
           <AuthProvider>{children}</AuthProvider>
         </ToastProvider>
       </Container>
+      </DrawerAppBar>
     </>
   );
 }

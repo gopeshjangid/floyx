@@ -163,6 +163,29 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
     },
 
     components: {
+      MuiCheckbox: {
+    styleOverrides: {
+      root: {
+        color: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.7)', // Default color
+        '&.Mui-checked': {
+          color: '#A85CFF', // Color when checked
+        },
+        '&.Mui-disabled': {
+          color: mode === 'light' ? '#E0E3E7' : '#2D2F48', // Color when disabled
+        },
+      },
+      colorPrimary: {
+        '&.Mui-checked': {
+          color: '#5798FF', // Primary color when checked
+        },
+      },
+      colorSecondary: {
+        '&.Mui-checked': {
+          color: '#A85CFF', // Secondary color when checked
+        },
+      },
+    },
+  },
       MuiTypography: {
         styleOverrides: {
           root: {
@@ -323,16 +346,16 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
         },
       },
-      MuiCheckbox: {
-        styleOverrides: {
-          root: {
-            color: mode === 'light' ? '#ADB3C6' : '#1B1830',
-            '&.Mui-checked': {
-              color: '#A85CFF',
-            },
-          },
-        },
-      },
+      // MuiCheckbox: {
+      //   styleOverrides: {
+      //     root: {
+      //       color: mode === 'light' ? '#ADB3C6' : '#1B1830',
+      //       '&.Mui-checked': {
+      //         color: '#A85CFF',
+      //       },
+      //     },
+      //   },
+      // },
       MuiAvatar: {
         styleOverrides: {
           root: {
