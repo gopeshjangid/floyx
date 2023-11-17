@@ -25,7 +25,7 @@ export default async function socialSignIn({
     };
 
     const response = await fetch(
-      `${process.env.BACKEND_BASE_URL}${apiPaths.socialLogin}`,
+      `${process.env.BACKEND_BASE_DEV_URL}${apiPaths.socialLogin}`,
       {
         method: 'POST',
         headers: {

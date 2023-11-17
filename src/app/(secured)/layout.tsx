@@ -1,28 +1,20 @@
 import React from 'react';
 import DrawerAppBar from './drawer';
 import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
 
 import { getMetaData } from '@/lib/SEO';
-import AuthProvider from '@/app/context/AuthProvider';
-import { ToastProvider } from '@/components/Toast/useToast';
+import { Box } from '@mui/material';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <DrawerAppBar>
-      <Container fixed>
+    <Box display="flex" minHeight="100vh">
+      <DrawerAppBar />
+      {/* TODO: container width */}
+      <Box width="100%" paddingInline={2.5}>
         <Toolbar />
-        <ToastProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ToastProvider>
-      </Container>
-      </DrawerAppBar>
-    </>
+        {children}
+      </Box>
+    </Box>
   );
 }
 
