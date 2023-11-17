@@ -4,7 +4,7 @@ import { Box } from "@mui/material"
 
 export default function Page({}) {
   return (
-    <Box sx={{ width: '30%' }}>
+    <Box>
       <FriendsActivity />
       <PopularToday />
     </Box>

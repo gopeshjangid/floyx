@@ -7,6 +7,10 @@ import { Box } from '@mui/material';
 import { ToastProvider } from '@/components/Toast/useToast';
 import AuthProvider from '../context/AuthProvider';
 
+const isChildNull = (children: any) => {
+  return Boolean(children === null);
+};
+
 export default function RootLayout({ children, content, rightContent }: any) {
   return (
     <>
@@ -21,12 +25,8 @@ export default function RootLayout({ children, content, rightContent }: any) {
                   width: '100%',
                 }}
               >
-                <Box sx={{ width: '70%' }}>
-                  {content}
-                </Box>
-                <Box sx={{ width: '30%' }}>
-                  {rightContent}
-                </Box>
+                {content}
+                {rightContent}
                 {children}
               </Container>
             </AuthProvider>
