@@ -21,10 +21,13 @@ export default function RootLayout({ children, content, rightContent }: any) {
                   width: '100%',
                 }}
               >
-              <Box sx={{ width: '100%' }}>
-                {content}
+                <Box sx={{ width: '70%' }}>
+                  {content}
                 </Box>
-                <Box sx={{ width: '30%' }}>{rightContent}</Box>
+                <Box sx={{ width: '30%' }}>
+                  {rightContent}
+                </Box>
+                {children}
               </Container>
             </AuthProvider>
           </ToastProvider>

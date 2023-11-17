@@ -75,7 +75,7 @@ export default function PopularToday({}) {
       <PopularTodayListSection>
         {popularPosts ? (
           popularPosts.map((val, index) => (
-            <Box className="box">
+            <Box className="box" key={`popularToday${index}`}>
               <Box className="boxdata" sx={{}}>
                 <Box>
                   <Typography variant="h5">{index + 1}.</Typography>

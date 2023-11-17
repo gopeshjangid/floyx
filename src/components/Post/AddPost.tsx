@@ -74,8 +74,9 @@ export default function AddPost({}) {
         value={value}
         onChange={handleChange}
         aria-label="icon tabs example"
+        sx={{ paddingX: 2}} 
       >
-        <Tab label={<Typography variant="subtitle2">Post</Typography>} />
+        <Tab sx={{ paddingX: 2}} label={<Typography variant="subtitle2">Post</Typography>} />
         <Tab
           component="a"
           label={<Typography variant="subtitle2">Write an article</Typography>}

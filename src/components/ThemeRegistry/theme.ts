@@ -389,12 +389,13 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
           outlined: {
             height: '46px', // Hug (46px)
-            minWidth: '161px', // Hug (161px)
+            minWidth: 'fit-content', // Hug (161px)
             borderRadius: '4px', // Radius
-            border: '1px solid transparent', // Border with gradient
-            padding: '11px 26px', // Padding
+            border: `1px solid ${palette.text.primary}`, // Border with gradient
+            padding: '10px 10px', // Padding
             gap: '10px', // Gap
-            position: 'relative', // To position the pseudo-elements for gradient
+            position: 'relative', // To position the pseudo-elements for gradient,
+            color: palette.text.primary,
             // Create pseudo-elements for gradient border
             '&:before': {
               content: '""',
@@ -417,6 +418,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             '& .MuiButton-label': {
               position: 'relative',
               zIndex: 1,
+              color: palette.text.primary,
             },
           },
         },
