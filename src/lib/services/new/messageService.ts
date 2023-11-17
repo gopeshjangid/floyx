@@ -1,4 +1,6 @@
 import * as signalR from '@microsoft/signalr';
+import { CookieValueTypes } from 'cookies-next';
+
 import { EventEmitter } from 'events';
 import { tokenService } from './tokenService';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
@@ -31,8 +33,8 @@ class MessageService {
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(ApiEndpoint.BasePath + '/chathub', {
         accessTokenFactory: () => {
-          const token: string = tokenService.getToken();
-          return token !== null ? token : '';
+          const token: CookieValueTypes = tokenService.getToken();
+          return token?.toString() ?? '';
         },
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
@@ -69,7 +71,7 @@ class MessageService {
       },
     })
       .then(response => response.json())
-      .then(data => {
+      .then(() => {
         this.reloadAll();
       })
       .catch(err => console.error(err));
@@ -85,9 +87,9 @@ class MessageService {
     })
       .then(response => response.json())
       .then(data => {
-        this.messages = data.data;
+        this.messages = data.value.data;
         this.unreadTotal = 0;
-        data.data.forEach((element: any) => {
+        data.value.data.forEach((element: any) => {
           this.unreadTotal += element.unreadCount;
         });
         this.publisher.emit('threads', this.messages);

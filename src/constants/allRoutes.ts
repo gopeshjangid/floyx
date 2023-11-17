@@ -5,4 +5,5 @@ export const allRoutes = {
   messages: '/messages',
   socialLogin: '/social-login',
   notifications: '/notifications',
+  inbox: '/inbox',
 };

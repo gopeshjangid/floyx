@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Skeleton } from '@mui/material';
 
-const MessageLoader = () => {
+const MessageLoading = () => {
   return (
     <Box>
       <Skeleton variant="rectangular" animation="wave" height={70} />
@@ -12,4 +12,4 @@ const MessageLoader = () => {
   );
 };
 
-export default MessageLoader;
+export default MessageLoading;
