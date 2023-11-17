@@ -8,7 +8,6 @@ import UserCard from '../UserCard';
 const FriendActivitySection = styled(Box)(({ theme }) => ({
   marginLeft: '10px',
   alignItems: 'center',
-  marginTop: '45px',
   padding: '0px',
 }));
 
