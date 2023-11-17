@@ -6,7 +6,7 @@ interface UseQueryResult<T> {
   data: T | null;
   isLoading: boolean;
   error: string | null;
-  fetch: (data:any)=> void;
+  fetch: (method: string, data?:any)=> void;
 }
 
 // Update the useQuery hook to be a generic hook
@@ -15,13 +15,13 @@ const useQuery = <T,>(endpoint: string): UseQueryResult<T> => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-    const fetchData = async (data:any) => {
+    const fetchData = async (method:string, data?:any) => {
       setIsLoading(true);
       setError(null);
 
       try {
         //const response = await fetch(`${endpoint}?query=${encodeURIComponent(data)}`);
-        const response = await fetch(endpoint, {method: 'POST', body: JSON.stringify(data)});
+        const response = await fetch(endpoint, {method: method ?? 'GET', body: JSON.stringify(data)});
         if (!response.ok) {
           if (response.status === 401) {
             throw new Error('Unauthorized access - please login');

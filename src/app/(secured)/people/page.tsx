@@ -208,7 +208,7 @@ const MainComponent: React.FC = () => {
   } = useQuery<[]>(ApiEndpoint.SearchPeople);
 
   const handleSearch = (criteria: SearchCriteria) => {
-    fetch({ ...criteria, experienced: criteria.professionalExperience });
+    fetch("POST",{ ...criteria, experienced: criteria.professionalExperience });
   };
 
   return (

@@ -203,9 +203,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
     styleOverrides: {
       root: {
         color: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.7)', // Default color
-        '&.Mui-checked': {
-          color: '#A85CFF', // Color when checked
-        },
+         '&.Mui-checked': {
+              color: palette.secondary[100],
+            },
         '&.Mui-disabled': {
           color: mode === 'light' ? '#E0E3E7' : '#2D2F48', // Color when disabled
         },
