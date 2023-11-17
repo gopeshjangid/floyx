@@ -1,13 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Skeleton,
-  Typography,
-} from '@mui/material';
+import { useEffect, useState, Suspense } from 'react';
+import { Box, Button, Container, Divider, Skeleton, Typography } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { styled } from '@mui/material/styles';
 import UserCard from '../UserCard';
@@ -61,9 +54,11 @@ export default function FriendsActivity({}) {
     null
   );
 
-  useEffect(() => {
-    setTimeout(() => setFriendActivity(ACTIVITY_CARD), 1000);
-  }, []);
+  const myPromise = new Promise((resolve, reject) => {
+    setTimeout(resolve, 3000);
+  });
+
+  myPromise.then(() => setFriendActivity(ACTIVITY_CARD));
 
   return (
     <FriendActivitySection>
