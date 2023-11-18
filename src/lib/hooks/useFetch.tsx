@@ -1,45 +1,72 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { tokenService } from '../services/new/tokenService';
 
 // Define a generic interface for the hook's return type
 interface UseQueryResult<T> {
   data: T | null;
   isLoading: boolean;
   error: string | null;
-  fetch: (method: string, data?:any)=> void;
+  fetchData: ({ method, data, urlEndPoint }: IFetch) => Promise<void>;
 }
 
-// Update the useQuery hook to be a generic hook
-const useQuery = <T,>(endpoint: string): UseQueryResult<T> => {
+interface IFetch {
+  method: string;
+  data?: any;
+  urlEndPoint?: string;
+}
+
+// Update the useQuery hook to handle both GET and POST requests
+const useQuery = <T,>(endpoint?: string): UseQueryResult<T> => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-    const fetchData = async (method:string, data?:any) => {
-      setIsLoading(true);
-      setError(null);
+  const fetchData = async ({ method, data, urlEndPoint }: IFetch) => {
+    console.log('fetchData ~ urlEndPoint:', urlEndPoint);
+    console.log('fetchData ~ method:', method);
+    setIsLoading(true);
+    setError(null);
 
-      try {
-        //const response = await fetch(`${endpoint}?query=${encodeURIComponent(data)}`);
-        const response = await fetch(endpoint, {method: method ?? 'GET', body: JSON.stringify(data)});
-        if (!response.ok) {
-          if (response.status === 401) {
-            throw new Error('Unauthorized access - please login');
-          }
-          throw new Error('An error occurred while searching');
-        }
-        const result = await response.json() as T;
-        setData(result);
-      } catch (err) {
-        setError((err as Error).message);
-        setData(null);
-      } finally {
-        setIsLoading(false);
+    try {
+      let url = method === 'GET' ? urlEndPoint : endpoint;
+      const fetchOptions: RequestInit = { method: method };
+
+      fetchOptions.headers = {
+        Authorization: tokenService.getBearerToken() || '',
+      };
+
+      // Handle GET requests by appending query parameters
+      if (method.toUpperCase() === 'GET' && data) {
+        const queryString = new URLSearchParams(data).toString();
+        url += `?${queryString}`;
+      } else if (data) {
+        // Handle POST, PUT, PATCH, etc., by including the data in the request body
+        fetchOptions.body = JSON.stringify(data);
+        fetchOptions.headers = {
+          ...fetchOptions.headers,
+          'Content-Type': 'application/json',
+        };
       }
-    };
 
+      const response = await fetch(url || '', fetchOptions);
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error('Unauthorized access - please login');
+        }
+        throw new Error('An error occurred while fetching data');
+      }
+      const result = (await response.json()) as T;
+      setData(result);
+    } catch (err) {
+      setError((err as Error).message);
+      setData(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  return { fetch: fetchData, data, isLoading, error };
+  return { fetchData, data, isLoading, error };
 };
 
 export default useQuery;

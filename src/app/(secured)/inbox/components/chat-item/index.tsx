@@ -1,13 +1,12 @@
 import React from 'react';
 import { Box, ListItem, ListItemAvatar, ListItemText, Theme, Typography, styled, useTheme } from '@mui/material';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
 import UserAvatar from '@/components/UserAvatar';
 import { allRoutes } from '@/constants/allRoutes';
-import { IThread } from '../../types';
 import { getRelativeTime } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import Link from 'next/link';
 
 const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   padding: '0',
@@ -28,21 +27,27 @@ const ListItemItem = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-const ChatCard = (thread: IThread) => {
+interface IChatCard {
+  username: string;
+  name: string;
+  lastMessageDate?: string;
+}
+
+const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
   const { palette } = useTheme();
   const params = useParams();
 
   return (
     <ListItemItem
       sx={{
-        background: params?.username === thread.user.username ? '#131B3C' : '',
+        background: params?.username === username ? '#131B3C' : '',
       }}
     >
-      <Link href={`${allRoutes.inbox}/${thread.user.username}`}>
+      <Link href={`${allRoutes.inbox}/${username}`}>
         <ListItemAvatar>
           <UserAvatar
-            src={`${ApiEndpoint.ProfileDetails}/avatar/${thread.user.username}`}
-            alt={thread.user?.name}
+            src={`${ApiEndpoint.ProfileDetails}/avatar/${username}`}
+            alt={name}
             sx={{
               width: { md: '59px', xs: '50px' },
               height: { md: '59px', xs: '50px' },
@@ -54,10 +59,10 @@ const ChatCard = (thread: IThread) => {
             <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
               <Box>
                 <Typography color={palette?.mode === 'light' ? '#2F2E41' : '#fff'} fontSize="16px" fontWeight={500} component="span">
-                  {thread.user?.name.split(' ')[0]}
+                  {name.split(' ')[0]}
                 </Typography>
                 <Typography fontSize="14px" fontWeight={400} component="span" className="gradient-text">
-                  @{thread.user?.username}
+                  @{username}
                 </Typography>
               </Box>
               <Typography
@@ -68,8 +73,8 @@ const ChatCard = (thread: IThread) => {
                 fontSize="14px"
                 fontWeight={500}
               >
-                {getRelativeTime(thread.lastMessageDate)}
-              </Typography>{' '}
+                {lastMessageDate ? getRelativeTime(lastMessageDate) : 'Start to talk!'}
+              </Typography>
             </Box>
           }
           secondary={
