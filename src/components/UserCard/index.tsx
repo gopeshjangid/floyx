@@ -1,8 +1,6 @@
 import { Avatar, Box, Link, Typography } from "@mui/material"
 import { styled } from "@mui/material/styles"
-
 import DateParser from "../DateParser"
-import { StyledTypography } from "../StyledSecondaryText"
 
 export const UserCardBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -39,45 +37,11 @@ export default function UserCard({
       </Box>
       <Box>
         <Box className="display-flex">
-          {name &&
-            <Link href="#" underline="none" >
-              <StyledTypography variant="subtitle1" marginRight={1} >
-                {name}
-              </StyledTypography>
-            </Link>}
-          {username &&
-            <Typography
-              variant="body2"
-              className="card-username"
-              color={"primary"}
-              marginRight={1}
-              marginBottom={1.5}
-              display={"block"}
-              width="max-content"
-            >
-              @{username}
-            </Typography>}
-          {shared && (
-            <>
-              <StyledTypography
-                variant="subtitle1"
-                marginRight={1}
-                marginBottom={1.5}
-                display={"block"}
-                width="max-content"
-              >
-                shared a
-              </StyledTypography>
-              <Link href="#" underline="none" >
-                <Typography
-                  variant="subtitle1"
-                  marginBottom={1}
-                >
-                  post
-                </Typography>
-              </Link>
-              </>
-            )}
+          <Typography variant="subtitle1" component={"span"}>
+            <Link href="#" underline="none" >{name}</Link>
+            {` @${username} ${shared ? " shared a " : ""}`}
+            {shared && <Link href="#" underline="none" >post</Link>}
+          </Typography>
           </Box>
         {timestamp &&
           <Box>

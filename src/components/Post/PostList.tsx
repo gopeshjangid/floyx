@@ -438,7 +438,6 @@ export default function PostList() {
                   <Skeleton
                     variant="text"
                     height={25}
-                    width={500}
                     animation="wave"
                   />
                 </Box>
@@ -456,7 +455,6 @@ export default function PostList() {
               <Skeleton
                 variant="rounded"
                 height={300}
-                width={650}
                 animation="wave"
                 
               />
@@ -464,7 +462,6 @@ export default function PostList() {
             <Skeleton
               variant="text"
               height={30}
-              width={650}
               animation="wave"
             />{' '}
           </Box>

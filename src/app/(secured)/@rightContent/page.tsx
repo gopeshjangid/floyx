@@ -4,7 +4,7 @@ import { Box, Grid } from "@mui/material"
 
 export default function Page({}) {
   return (
-    <Grid sx={{ width: '30%', display: { xs: 'none', md: 'block' } }}>
+    <Grid sx={{ width: '30%', display: { xs: 'none', sm: 'block' } }}>
       <FriendsActivity />
       <PopularToday />
     </Grid>
