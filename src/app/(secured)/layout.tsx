@@ -1,6 +1,6 @@
 import React from "react";
 import DrawerAppBar from "./drawer";
-import { Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { getMetaData } from "@/lib/SEO";
 import { ToastProvider } from "@/components/Toast/useToast";
 import AuthProvider from "../context/AuthProvider";
@@ -8,21 +8,14 @@ import AuthProvider from "../context/AuthProvider";
 export default function RootLayout({ children, content, rightContent }: any) {
   return (
     <DrawerAppBar>
-      <Container fixed maxWidth="lg">
+      <Container maxWidth={false} fixed sx={{ padding: 0 }}>
         <ToastProvider>
           <AuthProvider>
-            <Container
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                width: "100%",
-                margin: '30px 0',
-              }}
-            >
+            <Grid container spacing={2} display={"flex"} flexDirection={"row"} sx={{margin: { xs: '70px 0', md: '30px 0' }, width: "100%"}}>
               {content}
               {rightContent}
               {children}
-            </Container>
+            </Grid>
           </AuthProvider>
         </ToastProvider>
       </Container>

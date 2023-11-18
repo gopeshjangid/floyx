@@ -1,12 +1,12 @@
 import FriendsActivity from "@/components/FriendsActivity"
 import PopularToday from "@/components/PopularToday"
-import { Box } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 
 export default function Page({}) {
   return (
-    <Box sx={{ width: '30%' }}>
+    <Grid sx={{ width: '30%', display: { xs: 'none', md: 'block' } }}>
       <FriendsActivity />
       <PopularToday />
-    </Box>
+    </Grid>
   )
 }

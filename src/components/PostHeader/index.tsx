@@ -16,6 +16,7 @@ export default function Header() {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
+    overflowY: 'hidden',
   }));
 
   const TOP_BAR = [

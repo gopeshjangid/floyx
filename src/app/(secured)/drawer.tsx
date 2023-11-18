@@ -122,7 +122,7 @@ export default function DrawerAppBar({children}: any) {
       </nav>}
         <Box sx={{width: '100%', height: '100%'}} display="flex">
            {!isMobile && <Box sx={{backgroundColor: theme.palette.mode ==='light' ? '#fff' : theme.palette.background.paper,width: '20%',display: {sm: true, md: true, lg: true}}}>{drawer}</Box>}
-           <Box>{children}</Box>
+            <Box sx={{ width: '100%' }}>{children}</Box>
          </Box>
       
     </>

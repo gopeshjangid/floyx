@@ -2,14 +2,14 @@ import AddPost from "@/components/Post/AddPost"
 import PostList from "@/components/Post/PostList"
 import PostHeader from "@/components/PostHeader"
 
-import { Box } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 
 export default function Page({}) {
   return (
-    <Box sx={{ width: '70%' }}>
+    <Grid sx={{ width:  { xs: '100%', md: '70%' } }}>
       <PostHeader />
       <AddPost />
       <PostList />
-    </Box>
+    </Grid>
   )
 }

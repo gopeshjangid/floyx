@@ -13,7 +13,13 @@ const ContainerBox = styled(Box)(({ theme }) => ({
   width: '65%',
   '& .lcs-box': {
     display: 'flex',
-    color:`${theme.palette.text.secondary}`,
+    alignItems: "center",
+    color: `${theme.palette.text.secondary}`,
+    '& .lcs-typo': {
+      marginLeft: '2px',
+      marginBottom: 0,
+      display: { xs: 'none', md: 'block' },
+    }
   },
 }));
 
@@ -22,22 +28,25 @@ export default function LikeCommentShare({ postDetails }: any) {
     <ContainerBox>
       <Box className="lcs-box">
         <Button variant="text" startIcon={<ThumbUpOffAltOutlinedIcon />}>
-          <Typography variant="body2" color={'primary'}>
-            {postDetails?.numberOfLikes} Likes
+          {postDetails?.numberOfLikes}
+          <Typography variant="body2" color={'primary'} className="lcs-typo">
+             Likes
           </Typography>
         </Button>
       </Box>
       <Box className="lcs-box">
         <Button variant="text" startIcon={<ChatBubbleOutlineOutlinedIcon />}>
-          <Typography variant="body2">
-            {postDetails?.numberOfComments} Comments
+          {postDetails?.numberOfComments}
+          <Typography variant="body2" className="lcs-typo">
+             Comments
           </Typography>
         </Button>
       </Box>
       <Box className="lcs-box">
         <Button variant="text" startIcon={<SendOutlinedIcon />}>
-          <Typography variant="body2">
-            {postDetails?.numberOfShares} Shares
+          {postDetails?.numberOfShares}
+          <Typography variant="body2" className="lcs-typo">
+             Shares
           </Typography>
         </Button>
       </Box>
