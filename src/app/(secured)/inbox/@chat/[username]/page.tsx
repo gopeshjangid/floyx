@@ -28,6 +28,7 @@ interface IChatPageData {
 
 const ChatPage = () => {
   const router = useRouter();
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState<boolean>(false);
   const { data = [], isLoading: chatUserDataLoading, fetchData } = useQuery();
   const { data: deleteData, isLoading: deleteLoading, fetchData: deleteConversation } = useQuery();
 
@@ -67,6 +68,13 @@ const ChatPage = () => {
   }, []);
 
   useEffect(() => {
+    if (shouldScrollToBottom) {
+      scrollToEndList();
+      setShouldScrollToBottom(false);
+    }
+  }, [shouldScrollToBottom]);
+
+  useEffect(() => {
     document.addEventListener('mousedown', handleClick, false);
     mountedRef.current = true;
     tokenService.emmitCurrentUser();
@@ -90,7 +98,7 @@ const ChatPage = () => {
       }));
       messageService.markAsRead(data.id);
     }
-    scrollToEndList();
+    setShouldScrollToBottom(true);
   };
 
   const getUserInfo = (data: any) => {
