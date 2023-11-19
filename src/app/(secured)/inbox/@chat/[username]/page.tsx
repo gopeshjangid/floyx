@@ -22,7 +22,7 @@ interface IChatPageData {
   toggleModal: boolean;
   showEmojiPicker: boolean;
   allPostReceived: boolean;
-  disabledSendButton: boolean;
+  disabledSendButton?: boolean;
 }
 
 const ChatPage = () => {
@@ -37,11 +37,10 @@ const ChatPage = () => {
     toggleModal: false,
     showEmojiPicker: false,
     allPostReceived: false,
-    disabledSendButton: false,
   });
+  const [sendBtnDisabled, setSendBtnDisabled] = useState<boolean>(true);
 
   const mountedRef = useRef(true);
-  // const disabledSendButton = useRef(false);
   const wrapperRef = useRef<HTMLElement>(null);
 
   // useEffect(() => {
@@ -145,29 +144,15 @@ const ChatPage = () => {
   //   toggleModal(false);
   // };
 
-  // const sendMessage = () => {
-  //   let currentDisabledSendButton = chatPageData.disabledSendButton;
-  //   if (chatPageData.text.trim() !== '') {
-  //     currentDisabledSendButton = true;
-  //     messageService
-  //       ?.sendMessage(username, chatPageData.text)!
-  //       .catch(err => {
-  //         currentDisabledSendButton = false;
-  //         setChatPageData(prevState => ({
-  //           ...prevState,
-  //           disabledSendButton: currentDisabledSendButton,
-  //         }));
-  //       })
-  //       .then(() => {
-  //         currentDisabledSendButton = false;
-  //         setChatPageData(prevState => ({
-  //           ...prevState,
-  //           text: '',
-  //           disabledSendButton: currentDisabledSendButton,
-  //         }));
-  //       });
-  //   }
-  // };
+  const sendMessage = (text: string) => {
+    if (text.trim() !== '') {
+      setSendBtnDisabled(true);
+      messageService?.sendMessage(username, text)?.finally(() => {
+        setSendBtnDisabled(false);
+        scrollToEndList();
+      });
+    }
+  };
 
   // const selectEmoji = (emoji: { native: any }) => {
   //   setChatPageData(prevState => ({
@@ -205,6 +190,10 @@ const ChatPage = () => {
   };
 
   const isChatLoading = chatUserDataLoading || !chatUserData?.name;
+
+  const onMessageChange = (message: string) => {
+    setSendBtnDisabled(message.trim() === '');
+  };
 
   return (
     <>
@@ -261,7 +250,7 @@ const ChatPage = () => {
           </Box>
         </Box>
       </Wrapper>
-      <ChatInput />
+      <ChatInput onSubmit={sendMessage} disabled={sendBtnDisabled} onMessageChange={onMessageChange} />
     </>
   );
 };

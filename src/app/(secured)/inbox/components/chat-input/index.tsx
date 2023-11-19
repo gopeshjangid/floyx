@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Box, IconButton, InputAdornment, TextField, Theme, styled } from '@mui/material';
 
@@ -43,13 +43,35 @@ const ChatInputWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-const ChatInput = () => {
+const ChatInput = ({
+  onSubmit,
+  disabled,
+  onMessageChange,
+}: {
+  onSubmit: (message: string) => void;
+  disabled: boolean;
+  onMessageChange: (message: string) => void;
+}) => {
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (message: string) => {
+    setMessage('');
+    onSubmit(message);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
+    onMessageChange(e.target.value);
+  };
+
   return (
     <ChatInputWrapper>
       <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap={1.5}>
         <UserAvatar src={imgUser} alt="user" sx={{ width: '49px', height: '49px' }} />
         <Box flex={1} className="form-control">
           <TextField
+            value={message}
+            onChange={handleChange}
             fullWidth
             hiddenLabel
             placeholder="Message to Michele..."
@@ -64,7 +86,7 @@ const ChatInput = () => {
             }}
           />
         </Box>
-        <IconButton className="chat-send-icon">
+        <IconButton className="chat-send-icon" onClick={() => handleSubmit(message)} disabled={disabled || !message}>
           <Image src={iconPaperPlane} alt="paper plane icon" />
         </IconButton>
       </Box>
