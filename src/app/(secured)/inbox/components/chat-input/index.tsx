@@ -91,6 +91,7 @@ const ChatInput = ({
   const onEmojiSelect = (emoji: any) => {
     setEmojiPicker(false);
     setMessage(prev => prev + emoji.native);
+    onMessageChange(message + emoji.native);
   };
 
   return (
