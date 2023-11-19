@@ -47,8 +47,8 @@ const PostData = [
           content: 'nnnnn',
           image: {
             thumbnailPath:
-              'https://s3.us-east-2.amazonaws.com/floyx-beta/post/8cd60beeba5e4f278b1ce425e67813fa.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231109/us-east-2/s3/aws4_request&X-Amz-Date=20231109T161152Z&X-Amz-SignedHeaders=host&X-Amz-Signature=cdf22134ace04176a0fb63d1f00cd7613990af339008f1ab130aca6c5e7db9f5',
-            path: 'https://s3.us-east-2.amazonaws.com/floyx-beta/post/2bf3ce92d75349ea8981c7dccd24699d.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231109/us-east-2/s3/aws4_request&X-Amz-Date=20231109T161152Z&X-Amz-SignedHeaders=host&X-Amz-Signature=2565249d28fcf35aa8cd008fc6c969bf7281aa6860807e05d4b0ee0ad18b8afe',
+              'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
+            path: 'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
           },
           link: null,
           shared: null,
@@ -119,8 +119,8 @@ const PostData = [
       content: "Gopesh's Dream Car",
       image: {
         thumbnailPath:
-          'https://s3.us-east-2.amazonaws.com/floyx-beta/post/2d28f62ca4654a60a0af58d0edc21568.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231109/us-east-2/s3/aws4_request&X-Amz-Date=20231109T161152Z&X-Amz-SignedHeaders=host&X-Amz-Signature=4d1950bdc30f766187721945ee219b0360700b24e43ad17523e9dac9a3383279',
-        path: 'https://s3.us-east-2.amazonaws.com/floyx-beta/post/edc41b3795d542f0b58b98dda9de847e.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231109/us-east-2/s3/aws4_request&X-Amz-Date=20231109T161152Z&X-Amz-SignedHeaders=host&X-Amz-Signature=695e3e434e0051461ea00ae8c572526fad410434091d6280f63ab9daa3feae73',
+          'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
+        path: 'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
       },
       link: null,
       shared: null,
@@ -411,6 +411,7 @@ export default function PostList() {
             image={val?.post?.image}
             link={val?.post?.link}
             postDetails={val?.post}
+            postId={val?.id}
             avatar={val?.author?.avatar || ''}
           />
         ))

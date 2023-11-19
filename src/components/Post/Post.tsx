@@ -17,7 +17,8 @@ export default function Post({
   link,
   isShared,
   postDetails,
-  avatar
+  avatar,
+  postId,
 }: any) {
 
   return (
@@ -42,7 +43,7 @@ export default function Post({
             {content}
           </Typography>
         </Box>
-        <PostImage image={image} link={link} shared={shared} isShared={isShared} />
+        <PostImage image={image} link={link} shared={shared} isShared={isShared} postId={postId} />
         <LikeCommentShare postDetails={postDetails}/>
         <AddComment avatar={avatar}/>
       </Box>

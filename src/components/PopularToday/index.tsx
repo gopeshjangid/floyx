@@ -13,7 +13,7 @@ const PopularTodaySection = styled(Box)(({ theme }) => ({
 const PopularTodayListSection = styled(Container)(({ theme }) => ({
   border: '1px solid ',
   borderRadius: '10px',
-  marginTop: '45px',
+  marginTop: '25px',
   padding: '20px',
   maxHeight: '200px',
   overflowY: 'scroll',

@@ -14,7 +14,7 @@ const FriendActivitySection = styled(Box)(({ theme }) => ({
 const FriendActivityMainSection = styled(Container)(({ theme }) => ({
   border: '1px solid ',
   borderRadius: '10px',
-  marginTop: '45px',
+  marginTop: '25px',
   '& .card-button': {
     padding: '10px 0px ',
   },
@@ -171,7 +171,7 @@ export default function FriendsActivity({}) {
             variant="outlined"
             sx={{
               width: '100%',
-              padding: '25px 0px',
+              padding: '15px 0px',
               margin: '25px 0px',
             }}
           >
