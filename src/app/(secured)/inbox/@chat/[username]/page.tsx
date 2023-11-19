@@ -154,21 +154,6 @@ const ChatPage = () => {
     }
   };
 
-  // const selectEmoji = (emoji: { native: any }) => {
-  //   setChatPageData(prevState => ({
-  //     ...prevState,
-  //     showEmojiPicker: false,
-  //     text: `${prevState.text}${emoji.native}`,
-  //   }));
-  // };
-
-  // const showEmojiPickers = () => {
-  //   setChatPageData(prevState => ({
-  //     ...prevState,
-  //     showEmojiPicker: !prevState.showEmojiPicker,
-  //   }));
-  // };
-
   const handleClick = (e: { target: any }) => {
     if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
       setChatPageData(prevState => ({

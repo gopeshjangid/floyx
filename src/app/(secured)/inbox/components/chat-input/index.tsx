@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Box, IconButton, InputAdornment, TextField, Theme, styled } from '@mui/material';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 
 import { iconPaperPlane, iconSmile, imgUser } from '@/assets/images';
 import UserAvatar from '@/components/UserAvatar';
@@ -53,6 +55,21 @@ const ChatInput = ({
   onMessageChange: (message: string) => void;
 }) => {
   const [message, setMessage] = useState('');
+  const [emojiPicker, setEmojiPicker] = useState(false);
+  const emojiWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleEmojiPicker, false);
+    return () => {
+      document.removeEventListener('mousedown', handleEmojiPicker, false);
+    };
+  }, []);
+
+  const handleEmojiPicker = (e: any) => {
+    if (emojiWrapperRef.current && !emojiWrapperRef.current.contains(e.target)) {
+      setEmojiPicker(false);
+    }
+  };
 
   const handleSubmit = (message: string) => {
     setMessage('');
@@ -62,6 +79,15 @@ const ChatInput = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
     onMessageChange(e.target.value);
+  };
+
+  const handleChangeEmojiPicker = () => {
+    setEmojiPicker(prev => !prev);
+  };
+
+  const onEmojiSelect = (emoji: any) => {
+    setEmojiPicker(false);
+    setMessage(prev => prev + emoji.native);
   };
 
   return (
@@ -78,7 +104,7 @@ const ChatInput = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton edge="end" color="primary">
+                  <IconButton edge="end" color="primary" onClick={handleChangeEmojiPicker}>
                     <Image src={iconSmile} alt="" />
                   </IconButton>
                 </InputAdornment>
@@ -86,6 +112,19 @@ const ChatInput = ({
             }}
           />
         </Box>
+        {emojiPicker && (
+          <Box
+            ref={emojiWrapperRef}
+            sx={{
+              position: 'absolute',
+              bottom: '5px',
+              right: '20px',
+              zIndex: 1,
+            }}
+          >
+            <Picker data={data} onEmojiSelect={onEmojiSelect} />
+          </Box>
+        )}
         <IconButton className="chat-send-icon" onClick={() => handleSubmit(message)} disabled={disabled || !message}>
           <Image src={iconPaperPlane} alt="paper plane icon" />
         </IconButton>
