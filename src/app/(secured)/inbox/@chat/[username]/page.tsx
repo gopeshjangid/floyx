@@ -28,13 +28,13 @@ interface IChatPageData {
 
 const ChatPage = () => {
   const router = useRouter();
-  const [shouldScrollToBottom, setShouldScrollToBottom] = useState<boolean>(false);
+  const params = useParams();
+  const username: string = params?.username?.toString() || '';
+
   const { data = [], isLoading: chatUserDataLoading, fetchData } = useQuery();
   const { data: deleteData, isLoading: deleteLoading, fetchData: deleteConversation } = useQuery();
 
   const [chatUserData, setChatUserData] = useState<IUser>(data as any);
-  const params = useParams();
-  const username: string = params?.username?.toString() || '';
   const [chatPageData, setChatPageData] = useState<IChatPageData>({
     conversation: [],
     currentLoggedUser: {},
@@ -44,8 +44,12 @@ const ChatPage = () => {
     allPostReceived: false,
   });
   const [sendBtnDisabled, setSendBtnDisabled] = useState<boolean>(true);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState<boolean>(false);
+
   const mountedRef = useRef(true);
   const wrapperRef = useRef<HTMLElement>(null);
+
+  const isChatLoading = chatUserDataLoading || !chatUserData?.name;
 
   useEffect(() => {
     setChatUserData((data as any)?.value?.data?.[0]);
@@ -172,8 +176,6 @@ const ChatPage = () => {
     });
   };
 
-  const isChatLoading = chatUserDataLoading || !chatUserData?.name;
-
   const onMessageChange = (message: string) => {
     setSendBtnDisabled(message.trim() === '');
   };
@@ -235,7 +237,7 @@ const ChatPage = () => {
           </Box>
         </Box>
       </Wrapper>
-      <ChatInput onSubmit={sendMessage} disabled={sendBtnDisabled} onMessageChange={onMessageChange} />
+      {!isChatLoading && <ChatInput onSubmit={sendMessage} disabled={sendBtnDisabled} onMessageChange={onMessageChange} />}
     </>
   );
 };
