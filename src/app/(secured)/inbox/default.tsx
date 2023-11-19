@@ -29,7 +29,6 @@ const Default = () => {
     users: [],
     dataLoading: true,
   });
-  console.log('Default ~ inboxData:', inboxData);
 
   const saveConversations = (threads: IThread[]) => {
     setInboxData(prevState => ({ ...prevState, threads, dataLoading: false }));
@@ -61,8 +60,8 @@ const Default = () => {
     const newUsers: any = [];
     const currentLoggedUser = inboxData.currentLoggedUser?.username;
 
-    if (data?.value?.data?.length) {
-      data?.value?.data?.map((user: IUser) => {
+    if ((data as any)?.value?.data?.length) {
+      (data as any)?.value?.data?.map((user: IUser) => {
         if (
           user.username !== currentLoggedUser &&
           (user.accountType === 0 || user.official === true || user.allowPrivateMassages === true)

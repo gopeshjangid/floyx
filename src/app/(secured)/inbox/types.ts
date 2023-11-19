@@ -10,6 +10,7 @@ export interface IUser {
   reportedUsers: string[];
   reportedPosts: string[];
   reportedArticles: string[];
+  allowPrivateMassages?: boolean;
 }
 
 export interface LastMessage {
@@ -26,8 +27,17 @@ export interface IThread {
 
 export interface IInboxData {
   threads: IThread[];
-  currentLoggedUser: IUser | object;
+  currentLoggedUser: any;
   currentIndex: number;
   users: IUser[];
   dataLoading: boolean;
+}
+
+export interface IMessage {
+  text: string;
+  time: string;
+  user: IUser;
+  oppositUser: IUser;
+  id: string;
+  date: string;
 }

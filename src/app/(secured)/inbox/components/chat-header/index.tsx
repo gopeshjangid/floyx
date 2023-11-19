@@ -6,7 +6,9 @@ import Image from 'next/image';
 
 import { allRoutes } from '@/constants/allRoutes';
 import UserAvatar from '@/components/UserAvatar';
-import { iconTrash, imgUser } from '@/assets/images';
+import { iconTrash } from '@/assets/images';
+import { getRelativeTime } from '@/lib/utils';
+import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
@@ -22,8 +24,13 @@ const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
     gap: '18px',
   },
 }));
+interface IChatCard {
+  username: string;
+  name: string;
+  lastMessageDate?: string;
+}
 
-const ChatHeader = () => {
+const ChatHeader = ({ name, username, lastMessageDate }: IChatCard) => {
   const { palette } = useTheme();
 
   return (
@@ -32,7 +39,7 @@ const ChatHeader = () => {
         <ListItemAvatar>
           <UserAvatar
             alt="Travis Howard"
-            src={imgUser}
+            src={`${ApiEndpoint.ProfileDetails}/avatar/${username}`}
             sx={{
               width: { md: '59px', xs: '50px' },
               height: { md: '59px', xs: '50px' },
@@ -45,10 +52,10 @@ const ChatHeader = () => {
           <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
             <Link href={allRoutes.messages}>
               <Typography color={palette?.mode === 'light' ? '#2F2E41' : '#fff'} fontSize="16px" fontWeight={500} component="span">
-                Michele
+                {name?.split(' ')[0]}
               </Typography>
               <Typography fontSize="14px" fontWeight={400} component="span" className="gradient-text">
-                @mich23
+                @{username}
               </Typography>
             </Link>
 
@@ -74,7 +81,7 @@ const ChatHeader = () => {
             fontSize="14px"
             fontWeight={500}
           >
-            Last seen 1 hour ago
+            {lastMessageDate ? `Last chat ${getRelativeTime(lastMessageDate)}` : ''}
           </Typography>
         }
       />

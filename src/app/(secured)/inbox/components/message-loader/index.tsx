@@ -10,8 +10,8 @@ const MessageLoader = () => {
     >
       {Array.from(new Array(7)).map((_, index) => (
         <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Skeleton variant="circular" animation="wave" height={59} width={59} />
-          <Skeleton variant="text" animation="wave" height={90} width="80%" />
+          <Skeleton variant="circular" height={59} width={59} />
+          <Skeleton variant="text" height={90} width="80%" />
         </Box>
       ))}
     </Box>

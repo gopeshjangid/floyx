@@ -23,8 +23,6 @@ const useQuery = <T,>(endpoint?: string): UseQueryResult<T> => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = async ({ method, data, urlEndPoint }: IFetch) => {
-    console.log('fetchData ~ urlEndPoint:', urlEndPoint);
-    console.log('fetchData ~ method:', method);
     setIsLoading(true);
     setError(null);
 

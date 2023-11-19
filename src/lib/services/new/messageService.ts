@@ -111,7 +111,7 @@ class MessageService {
     })
       .then(response => response.json())
       .then(data => {
-        return data.data;
+        return data;
       })
       .catch(err => console.error(err));
   }
