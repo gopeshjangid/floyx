@@ -2,6 +2,7 @@
 import { Box, Skeleton } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
+import moment from 'moment';
 
 import ChatHeader from '@/app/(secured)/inbox/components/chat-header';
 import ChatInput from '@/app/(secured)/inbox/components/chat-input';
@@ -52,12 +53,6 @@ const ChatPage = () => {
   }, [data]);
 
   useEffect(() => {
-    if (chatPageData?.conversation?.length > 0) {
-      scrollToEndList();
-    }
-  }, [chatPageData?.conversation]);
-
-  useEffect(() => {
     tokenService.onNewToken.on('USER', getUserInfo);
     messageService.publisher.on('messages', newMessage);
     tokenService.emmitCurrentUser();
@@ -91,6 +86,7 @@ const ChatPage = () => {
       }));
       messageService.markAsRead(data.id);
     }
+    scrollToEndList();
   };
 
   const getUserInfo = (data: any) => {
@@ -115,17 +111,16 @@ const ChatPage = () => {
     });
   };
 
-  // const loadMore = () => {
-  //   const user = userState.username;
-  //   const date = moment(chatPageData.conversation[0].time).utc();
-  //   messageService.loadMessages(user, date).then((resp: { data: string | any[] }) => {
-  //     setChatPageData(prevState => ({
-  //       ...prevState,
-  //       conversation: [...resp.value.data, ...prevState.conversation],
-  //       allPostReceived: resp.value.data.length < 10,
-  //     }));
-  //   });
-  // };
+  const loadMore = () => {
+    const date = moment(chatPageData.conversation[0].time).utc();
+    messageService.loadMessages(username, date).then((resp: any) => {
+      setChatPageData(prevState => ({
+        ...prevState,
+        conversation: [...resp.value.data, ...prevState.conversation],
+        allPostReceived: resp.value.data.length < 10,
+      }));
+    });
+  };
 
   // const handleText = (e: { target: { name: any; value: any } }) => {
   //   const { name, value } = e.target;
@@ -254,7 +249,14 @@ const ChatPage = () => {
             width="100%"
           >
             {isChatLoading && <MessageLoading />}
-            {!isChatLoading && <ChatBox conversations={chatPageData.conversation} recieverUsername={username} />}
+            {!isChatLoading && (
+              <ChatBox
+                conversations={chatPageData.conversation}
+                receiverUsername={username}
+                loadMore={loadMore}
+                loadMoreMessageBtn={!chatPageData.allPostReceived}
+              />
+            )}
             <div className="message-list-end" style={{ float: 'left', clear: 'both' }} />
           </Box>
         </Box>

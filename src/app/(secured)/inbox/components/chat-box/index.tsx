@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
 import moment from 'moment';
 
@@ -9,6 +9,8 @@ import { IMessage } from '../../types';
 interface IChatBox {
   conversations: IMessage[];
   receiverUsername: string | string[];
+  loadMore: () => void;
+  loadMoreMessageBtn?: boolean;
 }
 
 interface GroupedMessages {
@@ -36,7 +38,7 @@ const groupMessagesByDate = (conversations: IMessage[]): GroupedMessages => {
   return grouped;
 };
 
-const ChatBox = ({ conversations, receiverUsername }: IChatBox) => {
+const ChatBox = ({ conversations, receiverUsername, loadMore, loadMoreMessageBtn }: IChatBox) => {
   const groupedConversations = groupMessagesByDate(conversations);
 
   return (
@@ -57,6 +59,21 @@ const ChatBox = ({ conversations, receiverUsername }: IChatBox) => {
           >
             {dateLabel}
           </Typography>
+
+          {loadMoreMessageBtn && (
+            <Button
+              color="secondary"
+              onClick={loadMore}
+              sx={{
+                borderRadius: '20px',
+                width: 'fit-content',
+                alignSelf: 'center',
+                border: theme => `1px solid ${theme.palette.primary.main}`,
+              }}
+            >
+              Load older messages
+            </Button>
+          )}
           {groupedConversations?.[dateLabel].map(conversation => (
             <Fragment key={conversation.id}>
               {conversation.oppositUser.username === receiverUsername ? (
