@@ -1,7 +1,7 @@
 'use client';
 import { Box, Skeleton } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import moment from 'moment';
 
 import ChatHeader from '@/app/(secured)/inbox/components/chat-header';
@@ -14,6 +14,7 @@ import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import MessageLoading from '../../loading';
 import ChatBox from '../../components/chat-box';
 import { IUser } from '../../types';
+import { allRoutes } from '@/constants/allRoutes';
 
 interface IChatPageData {
   conversation: any[];
@@ -26,7 +27,10 @@ interface IChatPageData {
 }
 
 const ChatPage = () => {
+  const router = useRouter();
   const { data = [], isLoading: chatUserDataLoading, fetchData } = useQuery();
+  const { data: deleteData, isLoading: deleteLoading, fetchData: deleteConversation } = useQuery();
+
   const [chatUserData, setChatUserData] = useState<IUser>(data as any);
   const params = useParams();
   const username: string = params?.username?.toString() || '';
@@ -39,17 +43,18 @@ const ChatPage = () => {
     allPostReceived: false,
   });
   const [sendBtnDisabled, setSendBtnDisabled] = useState<boolean>(true);
-
   const mountedRef = useRef(true);
   const wrapperRef = useRef<HTMLElement>(null);
-
-  // useEffect(() => {
-  //   setUserState(username);
-  // }, [username]);
 
   useEffect(() => {
     setChatUserData((data as any)?.value?.data?.[0]);
   }, [data]);
+
+  useEffect(() => {
+    if ((deleteData as any)?.value?.code === 'success') {
+      router.push(allRoutes.inbox);
+    }
+  }, [deleteData]);
 
   useEffect(() => {
     tokenService.onNewToken.on('USER', getUserInfo);
@@ -121,28 +126,13 @@ const ChatPage = () => {
     });
   };
 
-  // const handleText = (e: { target: { name: any; value: any } }) => {
-  //   const { name, value } = e.target;
-  //   setChatPageData(prevState => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const toggleModal = (toggle: boolean) => {
-  //   setChatPageData(prevState => ({
-  //     ...prevState,
-  //     toggleModal: toggle,
-  //   }));
-  // };
-
-  // const deleteConversation = () => {
-  //   // TODO:
-  //   // requestService.delete(`${ApiEndpoint.DeleteMessage}/${userState.username}`).success(() => {
-  //   //   props.history.push('/inbox');
-  //   // });
-  //   toggleModal(false);
-  // };
+  const onDeleteConversation = () => {
+    console.log('delete');
+    deleteConversation({
+      method: 'DELETE',
+      urlEndPoint: `${ApiEndpoint.DeleteMessage}/${username}`,
+    });
+  };
 
   const sendMessage = (text: string) => {
     if (text.trim() !== '') {
@@ -208,9 +198,11 @@ const ChatPage = () => {
           </Box>
         ) : (
           <ChatHeader
+            deleteLoading={deleteLoading}
             name={chatUserData?.name}
             username={chatUserData?.username}
             lastMessageDate={chatPageData?.conversation?.[chatPageData?.conversation?.length - 1]?.time}
+            handleDelete={onDeleteConversation}
           />
         )}
         <Box padding={{ md: '13px 25px', xs: '13px 15px' }}>

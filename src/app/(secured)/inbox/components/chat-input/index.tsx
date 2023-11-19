@@ -3,8 +3,10 @@ import Image from 'next/image';
 import { Box, IconButton, InputAdornment, TextField, Theme, styled } from '@mui/material';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+import { useSession } from 'next-auth/react';
+import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
-import { iconPaperPlane, iconSmile, imgUser } from '@/assets/images';
+import { iconPaperPlane, iconSmile } from '@/assets/images';
 import UserAvatar from '@/components/UserAvatar';
 
 const ChatInputWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -57,6 +59,7 @@ const ChatInput = ({
   const [message, setMessage] = useState('');
   const [emojiPicker, setEmojiPicker] = useState(false);
   const emojiWrapperRef = useRef<HTMLDivElement>(null);
+  const session = useSession();
 
   useEffect(() => {
     document.addEventListener('mousedown', handleEmojiPicker, false);
@@ -93,14 +96,18 @@ const ChatInput = ({
   return (
     <ChatInputWrapper>
       <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap={1.5}>
-        <UserAvatar src={imgUser} alt="user" sx={{ width: '49px', height: '49px' }} />
+        <UserAvatar
+          src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)?.data?.user?.username}`}
+          alt={(session as any)?.data?.user?.username}
+          sx={{ width: '49px', height: '49px' }}
+        />
         <Box flex={1} className="form-control">
           <TextField
             value={message}
             onChange={handleChange}
             fullWidth
             hiddenLabel
-            placeholder="Message to Michele..."
+            placeholder="Write a message..."
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

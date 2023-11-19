@@ -27,7 +27,7 @@ const useQuery = <T,>(endpoint?: string): UseQueryResult<T> => {
     setError(null);
 
     try {
-      let url = method === 'GET' ? urlEndPoint : endpoint;
+      let url = ['GET', 'DELETE'].includes(method) ? urlEndPoint : endpoint;
       const fetchOptions: RequestInit = { method: method };
 
       fetchOptions.headers = {
