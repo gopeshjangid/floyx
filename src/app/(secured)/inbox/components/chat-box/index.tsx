@@ -43,6 +43,20 @@ const ChatBox = ({ conversations, receiverUsername, loadMore, loadMoreMessageBtn
 
   return (
     <Box display="flex" flexDirection="column" justifyContent="flex-end" gap={2}>
+      {loadMoreMessageBtn && (
+        <Button
+          color="secondary"
+          onClick={loadMore}
+          sx={{
+            borderRadius: '20px',
+            width: 'fit-content',
+            alignSelf: 'center',
+            border: theme => `1px solid ${theme.palette.primary.main}`,
+          }}
+        >
+          Load older messages
+        </Button>
+      )}
       {Object.keys(groupedConversations).map(dateLabel => (
         <Fragment key={dateLabel}>
           <Typography
@@ -60,20 +74,6 @@ const ChatBox = ({ conversations, receiverUsername, loadMore, loadMoreMessageBtn
             {dateLabel}
           </Typography>
 
-          {loadMoreMessageBtn && (
-            <Button
-              color="secondary"
-              onClick={loadMore}
-              sx={{
-                borderRadius: '20px',
-                width: 'fit-content',
-                alignSelf: 'center',
-                border: theme => `1px solid ${theme.palette.primary.main}`,
-              }}
-            >
-              Load older messages
-            </Button>
-          )}
           {groupedConversations?.[dateLabel].map(conversation => (
             <Fragment key={conversation.id}>
               {conversation.oppositUser.username === receiverUsername ? (
