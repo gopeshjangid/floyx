@@ -12,7 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
-import FloyxImage from '@/images/floyxIcon';
+import FloyxImage from '@/iconComponents/floyxIcon';
 import ThemeSwitch from '@/components/ThemeSwitcher';
 import Link from 'next/link';
 import { useTheme } from '@mui/material';
