@@ -1,23 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Theme,
-  styled,
-} from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField, Theme, styled } from '@mui/material';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
+import { useSession } from 'next-auth/react';
+import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
-import { iconPaperPlane, iconSmile, imgUser } from '@/assets/images';
+import { iconPaperPlane, iconSmile } from '@/assets/images';
 import UserAvatar from '@/components/UserAvatar';
 
 const ChatInputWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   borderRadius: '10px',
-  background: theme.palette?.mode === 'light' ? '#fff' : '#0B081F',
-  border: `1px solid ${
-    theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
-  }`,
+  background: theme.palette?.mode === 'light' ? theme.palette.primary[900] : theme.palette.primary[200],
+  border: `1px solid ${theme.palette.primary[800]}`,
   padding: '30px 14px 29px',
   '& .form-control': {
     '& .MuiFormControl-root': {
@@ -32,8 +27,7 @@ const ChatInputWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   },
   '& .chat-send-icon': {
     borderRadius: '5px',
-    background:
-      'linear-gradient(92deg, #A561FF 1.76%, #9881FE 33.15%, #5798FF 98.75%)',
+    background: 'linear-gradient(92deg, #A561FF 1.76%, #9881FE 33.15%, #5798FF 98.75%)',
     width: '45px',
     height: '45px',
   },
@@ -53,30 +47,72 @@ const ChatInputWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-const ChatInput = () => {
+const ChatInput = ({
+  onSubmit,
+  disabled,
+  onMessageChange,
+}: {
+  onSubmit: (message: string) => void;
+  disabled: boolean;
+  onMessageChange: (message: string) => void;
+}) => {
+  const [message, setMessage] = useState('');
+  const [emojiPicker, setEmojiPicker] = useState(false);
+  const emojiWrapperRef = useRef<HTMLDivElement>(null);
+  const session = useSession();
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleEmojiPicker, false);
+    return () => {
+      document.removeEventListener('mousedown', handleEmojiPicker, false);
+    };
+  }, []);
+
+  const handleEmojiPicker = (e: any) => {
+    if (emojiWrapperRef.current && !emojiWrapperRef.current.contains(e.target)) {
+      setEmojiPicker(false);
+    }
+  };
+
+  const handleSubmit = (message: string) => {
+    setMessage('');
+    onSubmit(message);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
+    onMessageChange(e.target.value);
+  };
+
+  const handleChangeEmojiPicker = () => {
+    setEmojiPicker(prev => !prev);
+  };
+
+  const onEmojiSelect = (emoji: any) => {
+    setEmojiPicker(false);
+    setMessage(prev => prev + emoji.native);
+    onMessageChange(message + emoji.native);
+  };
+
   return (
     <ChatInputWrapper>
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        flexWrap="wrap"
-        gap={1.5}
-      >
+      <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap={1.5}>
         <UserAvatar
-          src={imgUser}
-          alt="user"
+          src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)?.data?.user?.username}`}
+          alt={(session as any)?.data?.user?.username}
           sx={{ width: '49px', height: '49px' }}
         />
         <Box flex={1} className="form-control">
           <TextField
+            value={message}
+            onChange={handleChange}
             fullWidth
             hiddenLabel
-            placeholder="Message to Michele..."
+            placeholder="Write a message..."
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton edge="end" color="primary">
+                  <IconButton edge="end" color="primary" onClick={handleChangeEmojiPicker}>
                     <Image src={iconSmile} alt="" />
                   </IconButton>
                 </InputAdornment>
@@ -84,7 +120,20 @@ const ChatInput = () => {
             }}
           />
         </Box>
-        <IconButton className="chat-send-icon">
+        {emojiPicker && (
+          <Box
+            ref={emojiWrapperRef}
+            sx={{
+              position: 'absolute',
+              bottom: '5px',
+              right: '20px',
+              zIndex: 1,
+            }}
+          >
+            <Picker data={data} onEmojiSelect={onEmojiSelect} />
+          </Box>
+        )}
+        <IconButton className="chat-send-icon" onClick={() => handleSubmit(message)} disabled={disabled || !message}>
           <Image src={iconPaperPlane} alt="paper plane icon" />
         </IconButton>
       </Box>

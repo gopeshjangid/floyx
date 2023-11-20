@@ -1,11 +1,10 @@
 "use client"
 import * as React from 'react';
-import { Box, Card, Paper, Typography, IconButton, styled } from '@mui/material';
+import { Box, Card, CardContent, Typography, IconButton, styled } from '@mui/material';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import DailyIcon from "@/iconComponents/dailyTaskIcon";
-import Earnings from './components/earnings';
 // Styled components
 const DashboardCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -64,16 +63,40 @@ const Page: React.FC = () => {
 
   
   return (
-    <Box sx={{ p: 3,  }}>
-      <Box sx={{mb: 2}}>
-         <Tabs value={value} onChange={handleChange} aria-label="icon tabs example">
-      <Tab iconPosition='start' icon={<DailyIcon fill='' />} label="Earnings" aria-label="phone" />
-      <Tab iconPosition='start' icon={<DailyIcon fill='' />} label="Daily Task" aria-label="favorite" />
-       </Tabs>
-      </Box>
-      <Paper sx={{background: 'background.paper', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.15)'}}>
-          <Earnings/>
-      </Paper>
+    <Box sx={{ p: 3, borderColor: 'rgba(255, 255, 255, 0.15)' }}>
+      <DashboardCard>
+        <Item>
+          <IconWrapper>
+            <HistoryEduIcon />
+            <SectionTitle>Your Articles</SectionTitle>
+          </IconWrapper>
+          <SectionContent>Number of articles added: 10</SectionContent>
+          <StyledIconButton size="large">
+            <HistoryEduIcon />
+          </StyledIconButton>
+        </Item>
+        <Item>
+          <IconWrapper>
+            <ThumbUpAltIcon />
+            <SectionTitle>Your Votes</SectionTitle>
+          </IconWrapper>
+          <SectionContent>Number of all votes cast: 25</SectionContent>
+          <StyledIconButton size="large">
+            <ThumbUpAltIcon />
+          </StyledIconButton>
+        </Item>
+        <Item>
+          <IconWrapper>
+            <AssignmentTurnedInIcon />
+            <SectionTitle>Earnings From Daily Task</SectionTitle>
+          </IconWrapper>
+          <SectionContent>Total number of daily tasks: 45</SectionContent>
+          <StyledIconButton size="large">
+            <AssignmentTurnedInIcon />
+          </StyledIconButton>
+        </Item>
+      </DashboardCard>
+      {/* Repeat <DashboardCard> for other sections as needed */}
     </Box>
   );
 };

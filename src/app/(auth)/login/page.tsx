@@ -50,6 +50,13 @@ const LoginWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
     alignItems: 'center',
     gap: '5px',
   },
+  '&. submit-btn': {
+    textTransform: 'capitalize',
+    padding: '12px 29px',
+    color: theme.palette.background.default,
+    fontSize: '16px',
+    fontWeight: '400',
+  },
 }));
 
 interface ILogin {
@@ -221,18 +228,7 @@ const Login: FC = () => {
                     />
                   </FormControl>
                   <FormControl>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      sx={{
-                        textTransform: 'capitalize',
-                        padding: '12px 29px',
-                        color: palette.background.default,
-                        fontSize: '16px',
-                        fontWeight: '400',
-                      }}
-                    >
+                    <Button variant="contained" color="primary" type="submit" className="submit-btn">
                       {loading ? (
                         <>
                           <CircularProgress size={24} color="inherit" />

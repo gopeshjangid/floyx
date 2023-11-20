@@ -15,7 +15,7 @@ export class TokenService {
 
   public init() {
     if (typeof window !== 'undefined') {
-      const jsonToken = getCookie('accessToken');
+      const jsonToken = getCookie(FLOYX_TOKEN);
       if (jsonToken) {
         this.getCurrentUser();
       }
@@ -49,8 +49,8 @@ export class TokenService {
     })
       .then(response => response.json())
       .then(data => {
-        this.currentLoggedUser = data.data;
-        this.setImage(data.data.avatar);
+        this.currentLoggedUser = data.value.data;
+        this.setImage(data.value.data.avatar);
         this.emmitCurrentUser();
       })
       .catch(err => console.error(err));
