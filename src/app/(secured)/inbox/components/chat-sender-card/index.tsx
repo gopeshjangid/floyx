@@ -1,11 +1,8 @@
 import { Box, Typography, useTheme } from '@mui/material';
+import moment from 'moment';
 import React from 'react';
 
-type ChatSenderCardProps = {
-  message: string;
-  id?: string;
-};
-const ChatSenderCard = ({ message }: ChatSenderCardProps) => {
+const ChatSenderCard = ({ message, time }: { message: string; time: string }) => {
   const { palette } = useTheme();
 
   return (
@@ -37,7 +34,7 @@ const ChatSenderCard = ({ message }: ChatSenderCardProps) => {
         textAlign="right"
         pr={1}
       >
-        12:30 PM
+        {moment(time).format('hh:mm A')}
       </Typography>
     </Box>
   );

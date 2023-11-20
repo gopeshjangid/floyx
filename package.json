@@ -10,6 +10,8 @@
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
@@ -19,6 +21,7 @@
     "@reduxjs/toolkit": "1.9.5",
     "axios": "^1.6.0",
     "cookies-next": "^4.0.0",
+    "emoji-mart": "^5.5.2",
     "moment": "^2.29.4",
     "next": "14.0.2",
     "next-auth": "^4.24.4",
