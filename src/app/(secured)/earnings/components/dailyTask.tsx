@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 import * as React from 'react';
-import { Box, Card, CardContent, Typography, IconButton, styled } from '@mui/material';
+import { Box, Card, Typography, IconButton, styled } from '@mui/material';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
@@ -55,13 +56,13 @@ const SectionContent = styled(Typography)(({ theme }) => ({
 
 // Example usage of the styled components
 const Page: React.FC = () => {
-   const [value, setValue] = React.useState(0);
+   const [_value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  
+
   return (
     <Box sx={{ p: 3, borderColor: 'rgba(255, 255, 255, 0.15)' }}>
       <DashboardCard>

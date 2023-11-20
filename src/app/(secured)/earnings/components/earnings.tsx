@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import * as React from 'react';
 import { Box, Card, Button, Typography, IconButton, styled, useTheme } from '@mui/material';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
@@ -13,9 +13,7 @@ const DashboardCard = styled(Card)(({ theme }) => ({
   padding: theme.spacing(2),
   backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background.paper : theme.palette.background.default,
   borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.palette.mode === 'dark'
-    ? '0 8px 16px rgba(0, 0, 0, 0.3)'
-    : '0 8px 16px rgba(0, 0, 0, 0.1)',
+  boxShadow: theme.palette.mode === 'dark' ? '0 8px 16px rgba(0, 0, 0, 0.3)' : '0 8px 16px rgba(0, 0, 0, 0.1)',
   '&:not(:last-child)': {
     marginBottom: theme.spacing(2),
   },
@@ -67,7 +65,7 @@ const StyledBalanceCard = styled(Card)(({ theme }) => ({
   background: `linear-gradient(to right, ${theme.palette.primary.light}, ${theme.palette.primary.dark})`,
 }));
 
-const Section = styled(Box)(({ theme }) => ({
+const Section = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
@@ -124,22 +122,18 @@ const BalanceCard: React.FC = () => {
           <ActionButton variant="outlined" sx={{ mr: 1 }}>
             Withdraw
           </ActionButton>
-          <ActionButton variant="outlined">
-            Wallet
-          </ActionButton>
+          <ActionButton variant="outlined">Wallet</ActionButton>
         </Box>
       </Section>
     </StyledBalanceCard>
   );
 };
 
-
 // Example usage of the styled components
 const Earnings: React.FC = () => {
-   
   return (
     <Box sx={{ p: 3, borderColor: 'rgba(255, 255, 255, 0.15)' }}>
-        <BalanceCard/>
+      <BalanceCard />
       <DashboardCard>
         <Item>
           <IconWrapper>

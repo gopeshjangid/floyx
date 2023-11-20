@@ -39,8 +39,8 @@ export default function TermsOfService() {
             </Typography>
 
             <Typography color={color} paragraph>
-                You are granted a limited, non-exclusive, non-transferable, and non-sublicensable license to access and use the Service and our content for your personal use. You retain ownership of and responsibility for content you create or own. If you're posting anything you did not create yourself or do not own the rights to, you agree that you are responsible for any content you post; that you will only submit content that you have the right to post; and that you will fully comply with any third-party licenses relating to content you post</Typography>
- 
+                You are granted a limited, non-exclusive, non-transferable, and non-sublicensable license to access and use the Service and our content for your personal use. You retain ownership of and responsibility for content you create or own. If you&apos;re posting anything you did not create yourself or do not own the rights to, you agree that you are responsible for any content you post; that you will only submit content that you have the right to post; and that you will fully comply with any third-party licenses relating to content you post</Typography>
+
  <Typography color={color} variant="h5">
             Trademark Policy</Typography>
              <Typography color={color} paragraph>

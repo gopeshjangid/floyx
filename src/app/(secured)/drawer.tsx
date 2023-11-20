@@ -11,7 +11,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
 import FloyxImage from '@/iconComponents/floyxIcon';
 import ThemeSwitch from '@/components/ThemeSwitcher';
 import Link from 'next/link';
@@ -105,7 +104,7 @@ export default function DrawerAppBar() {
           onClose={handleDrawerToggle}
           sx={{
             flexShrink: 0,
-            display: { xs: !mobileOpen && 'none', sm: !mobileOpen && 'block' },
+            display: { xs: !mobileOpen ? 'none' : 'block', sm: !mobileOpen ? 'block' : 'block' },
             height: '100%',
             '& .MuiDrawer-paper': {
               borderWidth: 0,
