@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import * as React from 'react';
 import { Box, Card, Button, Typography, styled, useTheme, CardContent, Divider, Skeleton } from '@mui/material';
@@ -16,7 +17,6 @@ const DashboardCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-
 const GradientCard = styled(Card)(({ theme }) => ({
   background: 'linear-gradient(to right,#4D9AFF, #6dd5ed, #2193b0)', // This is a blue gradient, you can adjust it to match the provided image
   color: theme.palette.common.white,
@@ -34,14 +34,14 @@ const PointsDisplay = styled(Box)(({ theme }) => ({
 
 const PointsBalanceCard = () => {
   const { palette } = useTheme();
-   const {data: wallet, isLoading: walletLoading, isError: walletError} = useGetUserWalletQuery();
+  const { data: wallet, isLoading: walletLoading, isError: walletError } = useGetUserWalletQuery();
   return (
     <GradientCard>
       <CardContent sx={{ display: 'flex', width: '100%' }}>
         <PointsDisplay>
           <Box>
             <Typography variant="h6">Total points</Typography>
-            <Typography variant="h4">{walletLoading? <Skeleton variant='text'/> :wallet?.totalBalance+" Points"}</Typography>
+            <Typography variant="h4">{walletLoading ? <Skeleton variant="text" /> : wallet?.totalBalance + ' Points'}</Typography>
           </Box>
           <Box>
             <Button variant="contained">Transaction History</Button>
@@ -52,7 +52,7 @@ const PointsBalanceCard = () => {
           <AvailableBalanceicon />
           <Box width="100%">
             <Typography variant="h6">Available balance</Typography>
-            <Typography variant="h4">{walletLoading? <Skeleton variant='text'/> :wallet?.availableBalance+" Points"} </Typography>
+            <Typography variant="h4">{walletLoading ? <Skeleton variant="text" /> : wallet?.availableBalance + ' Points'} </Typography>
             <Typography variant="subtitle1">Currently: $8.75</Typography>
           </Box>
           <Box width="100%" display="flex" justifyContent="flex-start">
@@ -109,8 +109,8 @@ const DashboardBox: React.FC<Dashboard> = props => {
 
 // Example usage of the styled components
 const Earnings: React.FC = () => {
-  const {data: transactionHistory, isLoading: transacLoading, isError: transError} = useGetTransactionHistoryQuery();
-  const {data: tipHistory, isLoading: tipLoading, isError: tipError} = useGetTipHistoryQuery();
+  const { data: transactionHistory, isLoading: transacLoading, isError: transError } = useGetTransactionHistoryQuery();
+  const { data: tipHistory, isLoading: tipLoading, isError: tipError } = useGetTipHistoryQuery();
 
   return (
     <Box sx={{ p: 3, borderColor: 'rgba(255, 255, 255, 0.15)' }}>

@@ -6,7 +6,6 @@ import PageProvider from '@/components/ThemeRegistry/PageProvider';
 import '../index.scss';
 import AuthProvider from './context/AuthProvider';
 import { ToastProvider } from '@/components/Toast/useToast';
-import { useStore } from '@/lib/redux';
 import { initializeStore } from '@/lib/redux';
 
 const initializeStoreValues = {

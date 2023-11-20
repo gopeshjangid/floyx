@@ -24,7 +24,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             // You can also define light, dark and contrastText if necessary
             100: '#777D88',
             200: '#0B081F',
-            700:'#fff',
+            700: '#fff',
             800: '#E7F0FC',
             900: '#fff',
           },
@@ -202,28 +202,28 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
 
     components: {
       MuiCheckbox: {
-    styleOverrides: {
-      root: {
-        color: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.7)', // Default color
-         '&.Mui-checked': {
+        styleOverrides: {
+          root: {
+            color: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.7)', // Default color
+            '&.Mui-checked': {
               color: palette.secondary[100],
             },
-        '&.Mui-disabled': {
-          color: mode === 'light' ? '#E0E3E7' : '#2D2F48', // Color when disabled
+            '&.Mui-disabled': {
+              color: mode === 'light' ? '#E0E3E7' : '#2D2F48', // Color when disabled
+            },
+          },
+          colorPrimary: {
+            '&.Mui-checked': {
+              color: '#5798FF', // Primary color when checked
+            },
+          },
+          colorSecondary: {
+            '&.Mui-checked': {
+              color: '#A85CFF', // Secondary color when checked
+            },
+          },
         },
       },
-      colorPrimary: {
-        '&.Mui-checked': {
-          color: '#5798FF', // Primary color when checked
-        },
-      },
-      colorSecondary: {
-        '&.Mui-checked': {
-          color: '#A85CFF', // Secondary color when checked
-        },
-      },
-    },
-  },
       MuiTypography: {
         styleOverrides: {
           root: {
@@ -348,16 +348,6 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               color: mode === 'light' ? palette.primary[100] : '#D1D0D5',
               fontSize: '16px',
               fontWeight: '400',
-            },
-          },
-        },
-      },
-      MuiCheckbox: {
-        styleOverrides: {
-          root: {
-            color: mode === 'light' ? '#ADB3C6' : '#1B1830',
-            '&.Mui-checked': {
-              color: palette.secondary[100],
             },
           },
         },

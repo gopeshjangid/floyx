@@ -1,13 +1,6 @@
-import * as React from "react";
-const AvailableBalanceicon = (props) => (
-  <svg
-    width={176}
-    height={45}
-    viewBox="0 0 76 45"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+import * as React from 'react';
+const AvailableBalanceicon = (props: any) => (
+  <svg width={176} height={45} viewBox="0 0 76 45" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <rect y={3} width={39} height={39} rx={10} fill="#fff" />
     <path
       fillRule="evenodd"
@@ -16,14 +9,7 @@ const AvailableBalanceicon = (props) => (
       fill="url(#a)"
     />
     <defs>
-      <linearGradient
-        id="a"
-        x1={10}
-        y1={33}
-        x2={31.337}
-        y2={31.715}
-        gradientUnits="userSpaceOnUse"
-      >
+      <linearGradient id="a" x1={10} y1={33} x2={31.337} y2={31.715} gradientUnits="userSpaceOnUse">
         <stop stopColor="#AB59FF" />
         <stop offset={0.568} stopColor="#858FFF" />
         <stop offset={1} stopColor="#4D9AFF" />
