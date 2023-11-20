@@ -1,7 +1,7 @@
 /* Instruments */
 import { combineReducers } from '@reduxjs/toolkit';
-import { counterSlice } from './slices'
+import { earningsService } from './slices/earnings'
 
 export const reducer = combineReducers({
-  counter: counterSlice.reducer,
+  [earningsService.reducerPath]: earningsService.reducer,
 });
