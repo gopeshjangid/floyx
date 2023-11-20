@@ -16,15 +16,12 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-
-/* Instruments */
+import {earningsService} from "./slices/earnings";
 import { reducer } from './rootReducer';
-import { middleware } from './middleware';
-
 const persistConfig = {
-  key: 'floyxData',
+  key: 'root',
   storage,
-  whitelist: ['floyx_data'], // place to select which state you want to persist
+  whitelist: [earningsService.reducerPath ],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -33,14 +30,14 @@ let store: any;
 
 function makeStore(initialState = {}) {
   return configureStore({
-    reducer: persistedReducer, // corrected line
-    preloadedState: initialState, // corrected line
+    reducer: persistedReducer, 
+    preloadedState: initialState,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(middleware),
+      }).concat(earningsService.middleware),
   });
 }
 

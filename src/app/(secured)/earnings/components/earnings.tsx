@@ -1,11 +1,9 @@
-"use client"
+'use client';
 import * as React from 'react';
-import { Box, Card, Button, Typography, IconButton, styled, useTheme } from '@mui/material';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import HistoryIcon from '@mui/icons-material/History';
+import { Box, Card, Button, Typography, IconButton, styled, useTheme, CardContent, Divider, Skeleton } from '@mui/material';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import AvailableBalanceicon from '@/iconComponents/availableBalanceBadgeIcon';
+import { useGetTipHistoryQuery, useGetTransactionHistoryQuery, useGetUserWalletQuery } from '@/lib/redux/slices/earnings';
 // Styled components
 const DashboardCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -13,164 +11,148 @@ const DashboardCard = styled(Card)(({ theme }) => ({
   padding: theme.spacing(2),
   backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background.paper : theme.palette.background.default,
   borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.palette.mode === 'dark'
-    ? '0 8px 16px rgba(0, 0, 0, 0.3)'
-    : '0 8px 16px rgba(0, 0, 0, 0.1)',
   '&:not(:last-child)': {
     marginBottom: theme.spacing(2),
   },
 }));
 
-const Item = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: theme.spacing(1.5),
-  '&:last-child': {
-    marginBottom: 0,
-  },
+
+const GradientCard = styled(Card)(({ theme }) => ({
+  background: 'linear-gradient(to right,#4D9AFF, #6dd5ed, #2193b0)', // This is a blue gradient, you can adjust it to match the provided image
+  color: theme.palette.common.white,
 }));
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-}));
-
-const IconWrapper = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  marginRight: theme.spacing(2),
-  color: theme.palette.text.secondary,
-}));
-
-const SectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: theme.typography.pxToRem(16),
-  fontWeight: theme.typography.fontWeightMedium,
-  color: theme.palette.text.secondary,
-  marginBottom: theme.spacing(0.5),
-}));
-
-const SectionContent = styled(Typography)(({ theme }) => ({
-  fontSize: theme.typography.pxToRem(14),
-  color: theme.palette.text.primary,
-}));
-
-const StyledBalanceCard = styled(Card)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main, // Use your theme colors
-  color: theme.palette.text.primary,
-  borderRadius: theme.shape.borderRadius,
-  padding: theme.spacing(2),
+const PointsDisplay = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  boxShadow: theme.shadows[5],
-  // Add linear gradient background based on your theme colors
-  background: `linear-gradient(to right, ${theme.palette.primary.light}, ${theme.palette.primary.dark})`,
-}));
-
-const Section = styled(Box)(({ theme }) => ({
-  display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-start',
+  width: '50%',
+  padding: theme.spacing(2),
+  borderRadius: theme.shape.borderRadius,
 }));
 
-const PointsTypography = styled(Typography)(({ theme }) => ({
-  fontSize: theme.typography.h6.fontSize,
-  fontWeight: theme.typography.fontWeightBold,
-}));
-
-const ActionButton = styled(Button)(({ theme }) => ({
-  marginTop: theme.spacing(1),
-  color: theme.palette.primary.contrastText,
-  borderColor: theme.palette.primary.contrastText,
-}));
-
-const BalanceCard: React.FC = () => {
-  const theme = useTheme();
-
+const PointsBalanceCard = () => {
+  const { palette } = useTheme();
+   const {data: wallet, isLoading: walletLoading, isError: walletError} = useGetUserWalletQuery();
   return (
-    <StyledBalanceCard>
-      <Section>
-        <Typography variant="body2" color="text.secondary">
-          Total points
-        </Typography>
-        <Box display="flex" alignItems="center" mt={1}>
-          <AccountBalanceWalletIcon color="action" />
-          <PointsTypography ml={1}>10.250 Points</PointsTypography>
-        </Box>
-        <ActionButton variant="outlined" startIcon={<HistoryIcon />}>
-          Transaction History
-        </ActionButton>
-      </Section>
-      <Box
-        sx={{
-          height: '100%',
-          width: '1px',
-          bgcolor: theme.palette.divider,
-          opacity: 0.7,
-        }}
-      />
-      <Section>
-        <Typography variant="body2" color="text.secondary">
-          Available balance
-        </Typography>
-        <Box display="flex" alignItems="center" mt={1}>
-          <AccountBalanceWalletIcon color="action" />
-          <PointsTypography ml={1}>08.750 Points</PointsTypography>
-        </Box>
-        <Typography variant="caption" color="text.secondary" mt={0.5}>
-          Currently: $8.75
-        </Typography>
-        <Box display="flex" mt={1}>
-          <ActionButton variant="outlined" sx={{ mr: 1 }}>
-            Withdraw
-          </ActionButton>
-          <ActionButton variant="outlined">
-            Wallet
-          </ActionButton>
-        </Box>
-      </Section>
-    </StyledBalanceCard>
+    <GradientCard>
+      <CardContent sx={{ display: 'flex', width: '100%' }}>
+        <PointsDisplay>
+          <Box>
+            <Typography variant="h6">Total points</Typography>
+            <Typography variant="h4">{walletLoading? <Skeleton variant='text'/> :wallet?.totalBalance+" Points"}</Typography>
+          </Box>
+          <Box>
+            <Button variant="contained">Transaction History</Button>
+          </Box>
+        </PointsDisplay>
+        <Divider variant="middle" sx={{ color: '#fff' }} orientation="vertical" flexItem />
+        <PointsDisplay>
+          <AvailableBalanceicon />
+          <Box width="100%">
+            <Typography variant="h6">Available balance</Typography>
+            <Typography variant="h4">{walletLoading? <Skeleton variant='text'/> :wallet?.availableBalance+" Points"} </Typography>
+            <Typography variant="subtitle1">Currently: $8.75</Typography>
+          </Box>
+          <Box width="100%" display="flex" justifyContent="flex-start">
+            <Button variant="outlined" sx={{ width: '80px', border: `1.5px solid ${palette.primary[700]}`, color: palette.primary[700] }}>
+              Withdraw
+            </Button>
+            <Button color="primary" variant="outlined" sx={{ border: `1.5px solid ${palette.primary[700]}`, color: palette.primary[700] }}>
+              Wallet
+            </Button>
+          </Box>
+        </PointsDisplay>
+      </CardContent>
+    </GradientCard>
   );
 };
 
+type Dashboard = {
+  titleIcon: React.ReactNode;
+  title: string;
+  firstCountTitle: string;
+  firstCount: string;
+  secondTitle: string;
+  secondCount: string;
+  onHistoryClicked: () => void;
+};
+const DashboardBox: React.FC<Dashboard> = props => {
+  return (
+    <Box padding="16px">
+      {' '}
+      <Box width="100%" height="50px" display="flex">
+        {props?.titleIcon}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <Typography>{props?.title}</Typography>
+      </Box>
+      <Box display="flex" width="100%" justifyContent="space-between">
+        <Box width="90%">
+          <Box display="flex">
+            <Typography>{props?.firstCountTitle}:&nbsp;&nbsp;&nbsp;</Typography>
+            <Typography color="primary">{props?.firstCount}</Typography>
+          </Box>
+          <Box display="flex">
+            <Typography>{props?.secondTitle}:&nbsp;&nbsp;&nbsp;</Typography>
+            <Typography color="primary">{props?.secondCount}</Typography>
+          </Box>
+        </Box>
+        <Box width="10%">
+          <Button onClick={props?.onHistoryClicked} startIcon={<AccessTimeOutlinedIcon />} variant="outlined">
+            History
+          </Button>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
 // Example usage of the styled components
 const Earnings: React.FC = () => {
-   
+  const {data: transactionHistory, isLoading: transacLoading, isError: transError} = useGetTransactionHistoryQuery();
+  const {data: tipHistory, isLoading: tipLoading, isError: tipError} = useGetTipHistoryQuery();
+ 
   return (
     <Box sx={{ p: 3, borderColor: 'rgba(255, 255, 255, 0.15)' }}>
-        <BalanceCard/>
+      <Box>
+        <PointsBalanceCard />
+      </Box>
+      <Box padding="16px">
+        <Typography variant="subtitle1" textAlign="center">
+          Current exchange rate is 1 point = $1
+        </Typography>
+      </Box>
+      <Divider />
       <DashboardCard>
-        <Item>
-          <IconWrapper>
-            <HistoryEduIcon />
-            <SectionTitle>Your Articles</SectionTitle>
-          </IconWrapper>
-          <SectionContent>Number of articles added: 10</SectionContent>
-          <StyledIconButton size="large">
-            <HistoryEduIcon />
-          </StyledIconButton>
-        </Item>
-        <Item>
-          <IconWrapper>
-            <ThumbUpAltIcon />
-            <SectionTitle>Your Votes</SectionTitle>
-          </IconWrapper>
-          <SectionContent>Number of all votes cast: 25</SectionContent>
-          <StyledIconButton size="large">
-            <ThumbUpAltIcon />
-          </StyledIconButton>
-        </Item>
-        <Item>
-          <IconWrapper>
-            <AssignmentTurnedInIcon />
-            <SectionTitle>Earnings From Daily Task</SectionTitle>
-          </IconWrapper>
-          <SectionContent>Total number of daily tasks: 45</SectionContent>
-          <StyledIconButton size="large">
-            <AssignmentTurnedInIcon />
-          </StyledIconButton>
-        </Item>
+        <DashboardBox
+          onHistoryClicked={() => {}}
+          title="Your Articles"
+          titleIcon={<AccessTimeOutlinedIcon />}
+          firstCountTitle="Number of articles added"
+          firstCount="10"
+          secondTitle="Total funds earned from your article"
+          secondCount="3.69 Points"
+        />
+        <Divider />
+        <DashboardBox
+          onHistoryClicked={() => {}}
+          title="Your Votes"
+          titleIcon={<AccessTimeOutlinedIcon />}
+          firstCountTitle="Number of all votes cast"
+          firstCount="10"
+          secondTitle="The sum of funds earned from voting"
+          secondCount="3.69 Points"
+        />
+        <Divider />
+        <DashboardBox
+          onHistoryClicked={() => {}}
+          title="Earnings From Daily Task"
+          titleIcon={<AccessTimeOutlinedIcon />}
+          firstCountTitle="Total number of daily tasks"
+          firstCount="10"
+          secondTitle="Total funds earned from tasks"
+          secondCount="3.69 Points"
+        />
       </DashboardCard>
       {/* Repeat <DashboardCard> for other sections as needed */}
     </Box>

@@ -24,6 +24,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             // You can also define light, dark and contrastText if necessary
             100: '#777D88',
             200: '#0B081F',
+            700:'#fff',
             800: '#E7F0FC',
             900: '#fff',
           },
@@ -63,6 +64,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             // Define light, dark, and contrastText if necessary
             100: '#D1D0D5',
             200: '#0B081F',
+            700: '#0B081F',
             800: '#0B081F',
             900: '#fff',
           },
