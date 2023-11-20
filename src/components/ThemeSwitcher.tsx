@@ -13,7 +13,7 @@ const ThemeSwitch = () => {
   }, []);
 
   if (!mounted) {
-    return <Skeleton variant="rectangular" animation="wave" width={60} height={19} sx={{ padding: 0, margin: 0 }} />;
+    return <Skeleton variant="rectangular"  width={60} height={19} sx={{ padding: 0, margin: 0 }} />;
   }
 
   return (

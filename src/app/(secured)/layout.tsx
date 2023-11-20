@@ -8,13 +8,12 @@ import { Box } from '@mui/material';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <Box display="flex" minHeight="100vh">
-      <DrawerAppBar>
+      <DrawerAppBar />
       {/* TODO: container width */}
       <Box width="100%" paddingInline={2.5}>
         <Toolbar />
         {children}
       </Box>
-      </DrawerAppBar>
     </Box>
   );
 }
