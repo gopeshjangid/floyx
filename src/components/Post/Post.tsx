@@ -6,6 +6,7 @@ import SplitButton from "../SplitButton"
 import PostImage from "./PostImage"
 import LikeCommentShare from "./LikeCommentShare"
 import AddComment from "./AddComment"
+import CommentList from "../CommentLists"
 
 export default function Post({
   name,
@@ -19,6 +20,7 @@ export default function Post({
   postDetails,
   avatar,
   postId,
+  commentList,
 }: any) {
 
   return (
@@ -44,7 +46,8 @@ export default function Post({
           </Typography>
         </Box>
         <PostImage image={image} link={link} shared={shared} isShared={isShared} postId={postId} />
-        <LikeCommentShare postDetails={postDetails}/>
+        <LikeCommentShare postDetails={postDetails} />
+        <CommentList comments={commentList} />
         <AddComment avatar={avatar}/>
       </Box>
     </PostBox>

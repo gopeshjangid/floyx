@@ -5,7 +5,6 @@ import DateParser from '../DateParser';
 import moment from 'moment';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 
-
 export const UserCardBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-start",
@@ -24,13 +23,15 @@ export default function UserCard({
   timestamp,
   shared,
   showDate,
+  comment,
 }: {
-  name: string;
-  displayPicture?: string;
-  username: string;
-  timestamp: number;
+  name: string
+  displayPicture?: string
+  username: string
+  timestamp: number,
   shared?: any;
   showDate: any;
+  comment?: string,
 }) {
   return (
     <UserCardBox>
@@ -59,6 +60,7 @@ export default function UserCard({
             {moment(showDate).format('MMM DD, YY')}
           </Box>
         )}
+        {comment && <Box><Typography>{comment}</Typography></Box>}
       </Box>
     </UserCardBox>
   )
