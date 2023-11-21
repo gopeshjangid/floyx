@@ -1,6 +1,6 @@
 import { PostBox } from '@/components/Post/styledPostBox';
 import { Box } from '@mui/material';
-import ArticleContainer from './articleBox/articleContainer';
+import ArticleContainer from './articleContainer';
 
 const ARTICLE_CONTENT_DATA = [
   {
@@ -125,7 +125,8 @@ const ARTICLE_CONTENT_DATA = [
   },
 ];
 
-export default function ArticleContent() {
+export default async function ArticleContent() {
+  await new Promise(res => setTimeout(res, 5000))
   return (
     <Box>
       {ARTICLE_CONTENT_DATA.map(data => (

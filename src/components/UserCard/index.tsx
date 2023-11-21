@@ -1,6 +1,10 @@
-import { Avatar, Box, Link, Typography } from "@mui/material"
-import { styled } from "@mui/material/styles"
-import DateParser from "../DateParser"
+'use client';
+import { Avatar, Box, Link, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import DateParser from '../DateParser';
+import moment from 'moment';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+
 
 export const UserCardBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -18,13 +22,15 @@ export default function UserCard({
   displayPicture,
   username,
   timestamp,
-  shared
+  shared,
+  showDate,
 }: {
-  name: string
-  displayPicture?: string
-  username: string
-  timestamp: number,
-  shared?: any; 
+  name: string;
+  displayPicture?: string;
+  username: string;
+  timestamp: number;
+  shared?: any;
+  showDate: any;
 }) {
   return (
     <UserCardBox>
@@ -47,7 +53,12 @@ export default function UserCard({
           <Box>
             <DateParser date={timestamp} />
           </Box>}
-        
+          {showDate && (
+          <Box sx={{display:'flex', alignItems:'center'}}>
+            <CalendarMonthOutlinedIcon fontSize="small" />
+            {moment(showDate).format('MMM DD, YY')}
+          </Box>
+        )}
       </Box>
     </UserCardBox>
   )
