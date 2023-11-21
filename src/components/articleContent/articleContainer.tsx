@@ -6,20 +6,22 @@ import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded
 import UserAvatar from '@/components/UserAvatar';
 import moment from 'moment';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import Image from 'next/image'
+import UserCard from "../UserCard";
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   marginTop: '40px',
   borderRadius: '10px',
   '& .thumbnail': {
-    width: '50%',
-    img: {
-      width: '100%',
-      aspectRatio: '1/1',
-    },
+    width: '30%',
+    // img: {
+    //   width: '100%',
+    //   // aspectRatio: '1/1',
+    // },
   },
   '& .details': {
-    width: '100%',
+    width: '70%',
     padding: '18px',
     border: `1px solid ${theme.palette.text.disabled}`,
     borderRadius: '0 10px 10px 0',
@@ -52,7 +54,15 @@ export default function ArticleContainer({ linkDetails, authorDetails }: any) {
   return (
     <ArticleContent>
       <Box className="thumbnail">
-        <img src={linkDetails?.thumbnailPath} alt="thumbnail" />
+        <Image
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: '100%', height: "100%" }} 
+            src={linkDetails?.thumbnailPath}
+            alt="thumbnail"
+          />
+        
       </Box>
       <Box className="details">
         <Box className="top">
@@ -66,7 +76,12 @@ export default function ArticleContainer({ linkDetails, authorDetails }: any) {
         <Box className="middle">
           <Typography variant="body2">{linkDetails?.description}</Typography>
         </Box>
-        <Box className="bottom">
+        <UserCard
+          name={authorDetails?.name}
+          username={authorDetails?.username}
+          displayPicture={authorDetails?.avatar} 
+        />
+        {/* <Box className="bottom">
           <Box className="author-details">
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <UserAvatar
@@ -87,7 +102,7 @@ export default function ArticleContainer({ linkDetails, authorDetails }: any) {
             <CalendarMonthOutlinedIcon fontSize='small'/>
             <Typography variant="caption" sx={{marginBottom:'0px'}}>{moment(linkDetails?.publishedDate).format('MMM DD, YY')}</Typography>
           </Box>
-        </Box>
+        </Box> */}
       </Box>
       {/* <SplitButton /> */}
     </ArticleContent>

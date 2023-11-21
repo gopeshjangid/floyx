@@ -28,7 +28,7 @@ export default function UserCard({
   name: string
   displayPicture?: string
   username: string
-  timestamp: number,
+  timestamp?: number,
   shared?: any;
   showDate?: any;
   comment?: string,

@@ -6,10 +6,10 @@ const whoToFollowData = [
     name: 'hugo4',
     username: 'hugo4',
     avatar:
-      'https://s3.us-east-2.amazonaws.com/floyx-beta/profile/avatar.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231118/us-east-2/s3/aws4_request&X-Amz-Date=20231118T064925Z&X-Amz-SignedHeaders=host&X-Amz-Signature=2b189d8c97dbf56a280e929f87f9c61803427cbbfbc21a56213ff753730cb777',
+      'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
     shortDescription: 'Example description of user hugo4',
     backgroundImage:
-      'https://s3.us-east-2.amazonaws.com/floyx-beta/profile/background-default.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231118/us-east-2/s3/aws4_request&X-Amz-Date=20231118T064925Z&X-Amz-SignedHeaders=host&X-Amz-Signature=f757eae51401c7de84c367378d3e2b92eb7c6e0cea1de332f7ac01dfafcbf1e9',
+      'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
     numberOfFollowers: 3,
     numberOfFollowing: 2,
     numberOfArticles: 0,
@@ -27,10 +27,10 @@ const whoToFollowData = [
     name: 'candle',
     username: 'candle',
     avatar:
-      'https://s3.us-east-2.amazonaws.com/floyx-beta/profile/avatar.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231118/us-east-2/s3/aws4_request&X-Amz-Date=20231118T064925Z&X-Amz-SignedHeaders=host&X-Amz-Signature=2b189d8c97dbf56a280e929f87f9c61803427cbbfbc21a56213ff753730cb777',
+      'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
     shortDescription: 'Example description of user candle',
     backgroundImage:
-      'https://s3.us-east-2.amazonaws.com/floyx-beta/profile/background-default.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231118/us-east-2/s3/aws4_request&X-Amz-Date=20231118T064925Z&X-Amz-SignedHeaders=host&X-Amz-Signature=f757eae51401c7de84c367378d3e2b92eb7c6e0cea1de332f7ac01dfafcbf1e9',
+      'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
     numberOfFollowers: 1,
     numberOfFollowing: 0,
     numberOfArticles: 0,
@@ -48,10 +48,10 @@ const whoToFollowData = [
     name: 'Crypto',
     username: 'vizard',
     avatar:
-      'https://s3.us-east-2.amazonaws.com/floyx-beta/profile/avatar.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231118/us-east-2/s3/aws4_request&X-Amz-Date=20231118T064925Z&X-Amz-SignedHeaders=host&X-Amz-Signature=2b189d8c97dbf56a280e929f87f9c61803427cbbfbc21a56213ff753730cb777',
+      'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
     shortDescription: 'Example description of user vizard',
     backgroundImage:
-      'https://s3.us-east-2.amazonaws.com/floyx-beta/profile/background-default.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231118/us-east-2/s3/aws4_request&X-Amz-Date=20231118T064925Z&X-Amz-SignedHeaders=host&X-Amz-Signature=f757eae51401c7de84c367378d3e2b92eb7c6e0cea1de332f7ac01dfafcbf1e9',
+      'https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png',
     numberOfFollowers: 3,
     numberOfFollowing: 11,
     numberOfArticles: 0,
