@@ -12,7 +12,6 @@ export default function CommentList({comments}: any) {
           displayPicture={val?.user?.displayPicture} 
           comment={val?.comment?.content}
         />
-        {/* <Typography>{val?.comment?.content}</Typography> */}
       </Box>))}
     </>
   )

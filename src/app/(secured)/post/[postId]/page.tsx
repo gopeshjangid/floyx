@@ -21,8 +21,8 @@ const postDetail = {
         "type": 4,
         "content": "nnnnn",
         "image": {
-            "thumbnailPath": "https://s3.us-east-2.amazonaws.com/floyx-beta/post/8cd60beeba5e4f278b1ce425e67813fa.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231120/us-east-2/s3/aws4_request&X-Amz-Date=20231120T190606Z&X-Amz-SignedHeaders=host&X-Amz-Signature=d8169c4dab4a2d87e90e92d4d56765cc417e8baf9b5442f923e22a66192efc3e",
-            "path": "https://s3.us-east-2.amazonaws.com/floyx-beta/post/2bf3ce92d75349ea8981c7dccd24699d.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR/20231120/us-east-2/s3/aws4_request&X-Amz-Date=20231120T190606Z&X-Amz-SignedHeaders=host&X-Amz-Signature=26f9bbb4dcefc0b6bf5ccec3a93770a3c7c5a5010c2c65e047992172298d4aac"
+            "thumbnailPath": "https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png",
+            "path": "https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png"
         },
         "link": null,
         "shared": null,
@@ -66,7 +66,7 @@ export default function Page({ params }: { params: { postId: number } }) {
         postDetails={postDetail?.post}
         postId={postDetail?.id}
         commentList={commentList}
-      />          
+      />      
     </Grid>
   )
 }
