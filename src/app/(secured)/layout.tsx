@@ -4,17 +4,17 @@ import { Container, Grid } from "@mui/material";
 import { getMetaData } from "@/lib/SEO";
 import { ToastProvider } from "@/components/Toast/useToast";
 import AuthProvider from "../context/AuthProvider";
+import RightContent from "./_rightContent/page";
 
-export default function RootLayout({ children, content, rightContent }: any) {
+export default function RootLayout({ children, rightContent }: any) {
   return (
     <DrawerAppBar>
       <Container maxWidth={false} fixed sx={{ padding: 0 }}>
         <ToastProvider>
           <AuthProvider>
             <Grid container spacing={2} display={"flex"} flexDirection={"row"} sx={{margin: { xs: '70px 0', md: '30px 0' }, width: "100%"}}>
-              {content}
-              {rightContent}
               {children}
+              <RightContent />
             </Grid>
           </AuthProvider>
         </ToastProvider>

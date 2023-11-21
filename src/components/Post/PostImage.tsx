@@ -21,10 +21,6 @@ export default function PostImage({ image, link, shared, isShared, postId }: any
     return window.open(link.url, "_blank")
   }
 
-  useEffect(() => {
-      console.log(shared)
-  }, [shared])
-
   return (
     <Box>
       {image &&

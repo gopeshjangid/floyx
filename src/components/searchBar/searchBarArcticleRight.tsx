@@ -15,7 +15,7 @@ export default function SearchBarArcticleRight() {
       <MentionsInput
         className="mention-input-container"
         singleLine={false}
-        //   value={postObj.postText}
+        value={""}
         onChange={handleArticleSearch}
         placeholder={'Search articles...'}
         style={{ padding: '10px', display: 'flex', alignItem: 'centre', justifyContent: 'space-between' }}
