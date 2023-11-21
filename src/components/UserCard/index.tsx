@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar, Box, Link, Typography } from "@mui/material"
 import { styled } from "@mui/material/styles"
 import DateParser from "../DateParser"
@@ -18,13 +20,15 @@ export default function UserCard({
   displayPicture,
   username,
   timestamp,
-  shared
+  shared,
+  comment,
 }: {
   name: string
   displayPicture?: string
   username: string
   timestamp: number,
-  shared?: any; 
+  shared?: any;
+  comment?: string,
 }) {
   return (
     <UserCardBox>
@@ -47,7 +51,7 @@ export default function UserCard({
           <Box>
             <DateParser date={timestamp} />
           </Box>}
-        
+        {comment && <Box><Typography>{comment}</Typography></Box>}
       </Box>
     </UserCardBox>
   )

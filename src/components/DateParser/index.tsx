@@ -1,8 +1,8 @@
+"use client";
+
 import moment from 'moment'
 import * as React from 'react'
 import { StyledTypography } from "../StyledSecondaryText"
-
-
 
 const DateParser = ({ date }: any) => {
   const dateVal = `${moment(new Date(date)).fromNow(true)} ago`
