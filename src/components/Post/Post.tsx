@@ -22,7 +22,9 @@ export default function Post({
   postId,
   commentList,
 }: any) {
-
+  const handleOptions = (val: any) => {
+    console.log(val, postId)
+  }
   return (
     <PostBox>
       <Box sx={{ margin: "0rem 1rem 1rem" }}>
@@ -38,7 +40,12 @@ export default function Post({
             timestamp={createdDateTime}
             shared={shared}
           />
-          <SplitButton />
+          <Box sx={{padding: '20px 0'}}>
+            <SplitButton 
+              options={['Delete Post', 'Delete Link']}
+              handleOptions={handleOptions}
+            />
+          </Box>
         </Box>
         <Box>
           <Typography variant="h6">

@@ -30,7 +30,7 @@ export default function UserCard({
   username: string
   timestamp: number,
   shared?: any;
-  showDate: any;
+  showDate?: any;
   comment?: string,
 }) {
   return (
