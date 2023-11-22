@@ -353,13 +353,7 @@ const RegisterPage = () => {
           borderRadius: '20px',
         }}
       >
-        <Typography
-          variant="body2"
-          gutterBottom
-          align="center"
-          color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
-          sx={{ '& a': { color: '#5798FF' } }}
-        >
+        <Typography variant="body2" gutterBottom align="center" color={palette.primary[300]} sx={{ '& a': { color: '#5798FF' } }}>
           Administrator the body responsible for administration of data as per Article 4 (7) of GDPR, namely Floyx LLC. – owner and operator
           of Floyx platform and services, located in 16192 Coastal Highway, Lewes, Delaware 19958, County of Sussex, registered by the
           Delaware Registered as a Limited Liability Company under Companies Act, 1961, registration number 6099676 (
