@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -14,6 +14,7 @@ import {
   FormControl,
   FormLabel,
   useTheme,
+  debounce,
 } from '@mui/material';
 import Link from 'next/link';
 
@@ -21,8 +22,23 @@ import { SVGLock, SVGUser } from '@/assets/images';
 import EmailSVG from '@/iconComponents/email';
 import { allRoutes } from '@/constants/allRoutes';
 import Phone from '@/components/Phone';
+import { useCheckEmailMutation, useCheckUsernameMutation, useRegisterMutation } from '@/lib/redux/slices/registration';
 
 const RegisterPage = () => {
+  const [registerUser, { data: registrationData }] = useRegisterMutation();
+  const [checkUserName, { data: checkUserNameData }] = useCheckUsernameMutation();
+  const [checkEmail, { data: checkEmailData }] = useCheckEmailMutation();
+
+  const debouncedCheckUserName = useCallback(
+    debounce(username => checkUserName({ username }), 500),
+    []
+  );
+
+  const debouncedCheckEmail = useCallback(
+    debounce(mail => checkEmail({ mail }), 500),
+    []
+  );
+
   const { palette }: any = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [termsAndConditions, setTermsAndCondition] = useState<boolean>(false);
@@ -37,6 +53,38 @@ const RegisterPage = () => {
     phone: '',
   });
   const [formError, setFormError] = useState<any>({});
+
+  useEffect(() => {
+    if (checkUserNameData === 'username_in_use') {
+      setFormError((prev: any) => ({
+        ...prev,
+        username: 'Username already exists',
+      }));
+    }
+
+    if (checkUserNameData === 'success') {
+      setFormError((prev: any) => ({
+        ...prev,
+        username: '',
+      }));
+    }
+  }, [checkUserNameData]);
+
+  useEffect(() => {
+    if (checkEmailData === 'email_in_use') {
+      setFormError((prev: any) => ({
+        ...prev,
+        email: 'Email already exists',
+      }));
+    }
+
+    if (checkEmailData === 'success') {
+      setFormError((prev: any) => ({
+        ...prev,
+        email: '',
+      }));
+    }
+  }, [checkEmailData]);
 
   const validateForm = () => {
     const tempErrors: any = {};
@@ -61,14 +109,26 @@ const RegisterPage = () => {
       setLoading(true);
       console.log('Form data:', formData);
       // TODO: submit form
+      registerUser({
+        email: formData.email,
+        emailConfirmation: formData.confirmEmail,
+        name: formData.name,
+        username: formData.username,
+        password: formData.password,
+        accountType: 'personal',
+        acceptTerms: true,
+        phoneNumber: formData.phone,
+        isReferred: formData.recommendedMe,
+        invitedbyUsername: formData.recommendedMe ? formData.recommended : '',
+      });
     }
   };
 
-  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (event.target.name === 'recommendedMe') {
       const copy: any = { ...formData };
 
-      if (event.target.checked) {
+      if ((event as any).target.checked) {
         copy.recommendedMe = true;
       } else {
         copy.recommendedMe = false;
@@ -137,7 +197,10 @@ const RegisterPage = () => {
             fullWidth
             hiddenLabel
             placeholder="Ex. Dusti_69"
-            onChange={onChangeHandler}
+            onChange={e => {
+              debouncedCheckUserName(e.target.value);
+              onChangeHandler(e);
+            }}
             error={!!formError.username}
             helperText={formError.username}
             InputProps={{
@@ -188,13 +251,7 @@ const RegisterPage = () => {
                 ),
               }}
             />
-            <Phone
-              value={formData.phone}
-              // TODO:
-              // onChange={(e, x, y, z) => {
-              //   setFormData({ ...formData, phone: e });
-              // }}
-            />
+            <Phone value={formData.phone} onChange={onChangeHandler} />
           </>
         )}
 
@@ -205,7 +262,10 @@ const RegisterPage = () => {
             fullWidth
             hiddenLabel
             placeholder="Ex. name@gmail.com"
-            onChange={onChangeHandler}
+            onChange={e => {
+              debouncedCheckEmail(e.target.value);
+              onChangeHandler(e);
+            }}
             error={!!formError.email}
             helperText={formError.email}
             InputProps={{
@@ -284,6 +344,45 @@ const RegisterPage = () => {
           Already have an account?
           <Link href={allRoutes.socialLogin}> Sign in</Link>
         </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          p: 3,
+          border: `1px solid ${palette.action?.border}`,
+          borderRadius: '20px',
+        }}
+      >
+        <Typography
+          variant="body2"
+          gutterBottom
+          align="center"
+          color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
+          sx={{ '& a': { color: '#5798FF' } }}
+        >
+          Administrator the body responsible for administration of data as per Article 4 (7) of GDPR, namely Floyx LLC. – owner and operator
+          of Floyx platform and services, located in 16192 Coastal Highway, Lewes, Delaware 19958, County of Sussex, registered by the
+          Delaware Registered as a Limited Liability Company under Companies Act, 1961, registration number 6099676 (
+          <Link href={allRoutes.login}>more about processing your data.</Link>)
+        </Typography>
+      </Box>
+
+      <Box
+        display="flex"
+        gap="20px"
+        flexDirection="column"
+        p={5}
+        sx={{ '& a': { color: '#5798FF' } }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Link href={allRoutes.login}>Old Token Panel</Link>
+        <Box display="flex" gap="20px">
+          <Link href={allRoutes.termsAndConditions}>Terms of service</Link>
+          <Link href={allRoutes.privacyPolicy}>Privacy Policy</Link>
+          <Link href={allRoutes.cookiesPolicy}>Cookie Use</Link>
+        </Box>
+        <Typography variant="body1">2024 Powered by Floyx LLC</Typography>
       </Box>
     </Container>
   );

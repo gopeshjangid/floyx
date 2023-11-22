@@ -6,6 +6,7 @@ import 'react-phone-input-2/lib/bootstrap.css';
 
 interface IPhoneProps {
   value: string;
+  onChange: (e: any) => void;
 }
 
 const StyledPhone = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -74,7 +75,7 @@ const StyledPhone = styled(Box)(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-const Phone = ({ value }: IPhoneProps) => {
+const Phone = ({ value, onChange }: IPhoneProps) => {
   return (
     <FormControl>
       <FormLabel required>Phone number</FormLabel>
@@ -86,8 +87,13 @@ const Phone = ({ value }: IPhoneProps) => {
           country="in"
           value={value}
           specialLabel=""
-          onChange={(e, x, y) => {
-            console.log('phone', e, x, y);
+          onChange={e => {
+            onChange({
+              target: {
+                name: 'phone',
+                value: `+${e}`,
+              },
+            });
           }}
           inputProps={{
             id: 'phone',
