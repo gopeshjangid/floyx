@@ -54,8 +54,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             focus: '#ADB3C6', // Text Guide
             hoverOpacity: 0.08,
             disabledOpacity: 0.48,
-            border: '#E7F0FC',
+            border: '#EFF1F7',
             svg: ' #ADB3C6',
+            error: '#FF5757',
           },
         }
       : {
@@ -95,8 +96,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             focus: '#ADB3C6', // Text Guide
             hoverOpacity: 0.08,
             disabledOpacity: 0.48,
-            border: '#0B081F',
+            border: '#ffffff26',
             svg: 'rgba(255, 255, 255, 0.30)',
+            error: '#FF5757',
           },
         }),
   };
@@ -300,6 +302,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             fontSize: '16px',
             fontWeight: '400',
             textAlign: 'left',
+          },
+          asterisk: {
+            color: palette?.action?.error,
           },
         },
       },

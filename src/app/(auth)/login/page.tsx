@@ -99,7 +99,7 @@ const Login: FC = () => {
     };
 
     if (formData.email === '') {
-      err.email = 'Email required!';
+      err.email = 'This field required!';
     }
     if (formData.password === '') {
       err.password = 'Password is required!';
