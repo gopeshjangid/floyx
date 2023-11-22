@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 class AuthorizationService {
   private static readonly TOKEN_NAME = 'FLOYX_TOKEN'
 

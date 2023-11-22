@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   styled,
   useTheme,
@@ -11,15 +11,15 @@ import {
   Skeleton,
   Theme,
 } from '@mui/material';
-import useQuery from '@/lib/hooks/useFetch';
+// import useQuery from '@/lib/hooks/useFetch';
 interface Profile {
   name: string;
-  handle: string;
-  description: string;
-  followers: number;
-  posts: number;
-  articles: number;
-  initials: string;
+  handle?: string;
+  description?: string;
+  followers?: number;
+  posts?: number;
+  articles?: number;
+  initials?: string;
 }
 
 interface SearchResultProps {
@@ -65,7 +65,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
               </Typography>
             </>
           )}
-          
+
           {isLoading ? (
             <Skeleton width="80%" />
           ) : (

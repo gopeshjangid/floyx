@@ -1,24 +1,22 @@
-import { useTheme } from "next-themes";
-import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
-import getThemeObject from "./theme";
-import { FC, useEffect, useState } from "react";
+import { useTheme } from 'next-themes';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import getThemeObject from './theme';
+import { FC, useEffect, useState } from 'react';
 
 const MUIThemeProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { resolvedTheme } = useTheme();
   const [currentTheme, setCurrentTheme] = useState(getThemeObject('dark'));
 
   useEffect(() => {
-    if(!resolvedTheme) return;
-    const theme = getThemeObject(resolvedTheme)
-    setCurrentTheme(theme)
+    if (!resolvedTheme) return;
+    const theme = getThemeObject(resolvedTheme === 'dark' ? 'dark' : 'light');
+    setCurrentTheme(theme);
   }, [resolvedTheme]);
-  console.log({resolvedTheme})
+  console.log({ resolvedTheme });
   return (
     <ThemeProvider theme={currentTheme}>
-      <CssBaseline/>
-        <body className={`${resolvedTheme}-theme`}>
-        {children}
-      </body>
+      <CssBaseline />
+      <body className={`${resolvedTheme}-theme`}>{children}</body>
     </ThemeProvider>
   );
 };

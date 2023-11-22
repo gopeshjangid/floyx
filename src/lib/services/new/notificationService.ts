@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import { tokenService } from './tokenService';
 import { authService } from './authService';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
+import { CookieValueTypes } from 'cookies-next';
 
 class NotificationService {
   private connection: signalR.HubConnection | undefined;
@@ -95,8 +96,9 @@ class NotificationService {
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(ApiEndpoint.BasePath + '/notifications', {
         accessTokenFactory: () => {
-          const token: string = tokenService.getToken();
-          return token !== null ? token : '';
+          const token: CookieValueTypes = tokenService.getToken();
+          const returnVal = token ? token : '';
+          return returnVal;
         },
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,

@@ -9,7 +9,6 @@ import { iconLogo, imgLogin, imgLoginBG } from '@/assets/images';
 const ImageLogin = styled(Box)(({ theme }: { theme: Theme }) => ({
   textAlign: 'center',
   '& img': { height: '278px', objectFit: 'contain' },
-  '& .img-overlay': { position: 'absolute', inset: '0', width: '100%', height: '100%', borderRadius: '0px 0px 30px 30px' },
   '& .login-image-content': {
     textAlign: 'center',
     '& .MuiTypography-h5': {
@@ -36,6 +35,13 @@ const LoginImage = () => {
         position="relative"
         sx={{
           '& img': { maxWidth: '100%' },
+          '& .img-overlay': {
+            position: 'absolute',
+            inset: '0',
+            width: '100%',
+            height: '100%',
+            borderRadius: { md: '0', xs: '0px 0px 30px 30px' },
+          },
         }}
       >
         <Image src={imgLoginBG} alt="login bg" className="img-overlay" priority />

@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Typography } from "@mui/material"
 import DateParser from "../DateParser"
 import UserCard from "../UserCard"

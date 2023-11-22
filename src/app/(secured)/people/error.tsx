@@ -1,15 +1,17 @@
-"use client";
+'use client';
 import React from 'react';
 import { Container, Typography, Button, Box } from '@mui/material';
 import Link from 'next/link';
 
-function Error({ statusCode }) {
+function Error({ statusCode }: any) {
   return (
-    <Container component="main" maxWidth="md" sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh' }}>
+    <Container
+      component="main"
+      maxWidth="md"
+      sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh' }}
+    >
       <Typography variant="h1" component="h2" gutterBottom>
-        {statusCode
-          ? `An error ${statusCode} occurred on server`
-          : 'An error occurred on client'}
+        {statusCode ? `An error ${statusCode} occurred on server` : 'An error occurred on client'}
       </Typography>
       <Typography variant="h5" gutterBottom>
         Something went wrong.
@@ -24,6 +26,5 @@ function Error({ statusCode }) {
     </Container>
   );
 }
-
 
 export default Error;
