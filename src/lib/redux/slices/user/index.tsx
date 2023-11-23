@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import axios from 'axios';
 import type { ReduxState } from '../../store';
@@ -25,7 +27,7 @@ const baseQuery = fetchBaseQuery({
 const userService = createApi({
   reducerPath: 'userService',
   baseQuery: baseQuery,
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getCurrentUser: builder.query<User, void>({
       query: () => '/users/current',
       // ProvidesTags can be used for automatic re-fetching when data is mutated

@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* Instruments */
 import type { ReduxState } from '@/lib/redux'
 

@@ -37,8 +37,8 @@ const NotificationLoader = () => {
       <List component="ul">
         {Array.from(new Array(5)).map((_, index) => (
           <Box key={index} display="flex" gap={2}>
-            <Skeleton variant="circular" animation="wave" />
-            <Skeleton variant="text" animation="wave" />
+            <Skeleton variant="circular" />
+            <Skeleton variant="text" />
           </Box>
         ))}
       </List>

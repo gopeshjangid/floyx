@@ -11,8 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-import FloyxImage from '@/images/floyxIcon';
+import FloyxImage from '@/iconComponents/floyxIcon';
 import ThemeSwitch from '@/components/ThemeSwitcher';
 import Link from 'next/link';
 import { useTheme } from '@mui/material';
@@ -49,8 +48,8 @@ const navItems = [
   },
 ];
 
-export default function DrawerAppBar({children}: any) {
-  const isMobile = useMediaQuery('(max-width:480px)');
+export default function DrawerAppBar() {
+  // const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
@@ -97,7 +96,7 @@ export default function DrawerAppBar({children}: any) {
           </IconButton>
         </Box>
       </AppBar>
-    {isMobile && <nav>
+      <nav>
         <Drawer
           container={container}
           variant={mobileOpen ? 'temporary' : 'permanent'}
@@ -105,7 +104,7 @@ export default function DrawerAppBar({children}: any) {
           onClose={handleDrawerToggle}
           sx={{
             flexShrink: 0,
-            display: { xs: !mobileOpen && 'none', sm: !mobileOpen && 'block' },
+            display: { xs: !mobileOpen ? 'none' : 'block', sm: !mobileOpen ? 'block' : 'block' },
             height: '100%',
             '& .MuiDrawer-paper': {
               borderWidth: 0,
@@ -117,14 +116,8 @@ export default function DrawerAppBar({children}: any) {
           }}
         >
           {drawer}
-          <Box>{children}</Box>
         </Drawer>
-      </nav>}
-        <Box sx={{width: '100%', height: '100%'}} display="flex">
-           {!isMobile && <Box sx={{backgroundColor: theme.palette.mode ==='light' ? '#fff' : theme.palette.background.paper,width: '20%',display: {sm: true, md: true, lg: true}}}>{drawer}</Box>}
-            <Box sx={{ width: '100%' }}>{children}</Box>
-         </Box>
-      
+      </nav>
     </>
   );
 }

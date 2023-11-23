@@ -1,61 +1,102 @@
 'use client';
 
-import { SVGSearch, imgUser } from '@/assets/images';
-import { Box, IconButton, InputAdornment, TextField, useMediaQuery, useTheme } from '@mui/material';
-import React from 'react';
-import { usePathname } from 'next/navigation';
+import { Box, IconButton, InputAdornment, TextField, debounce, useMediaQuery, useTheme } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 
+import { SVGSearch } from '@/assets/images';
 import ChatCard from './components/chat-item';
 import Wrapper from '@/components/wrapper';
-
-const messagesUserData = [
-  {
-    id: '1',
-    img: imgUser,
-    username: 'Nora',
-    userId: 'Jaco',
-    hour: '1 hours ago',
-    description: "Good to see you! What's...",
-  },
-  {
-    id: '2',
-    img: imgUser,
-    username: 'Nora',
-    userId: 'Jaco',
-    hour: '1 hours ago',
-    description: "Good to see you! What's...",
-  },
-  {
-    id: '3',
-    img: imgUser,
-    username: 'Nora',
-    userId: 'Jaco',
-    hour: '1 hours ago',
-    description: "Good to see you! What's...",
-  },
-  {
-    id: '4',
-    img: imgUser,
-    username: 'Nora',
-    userId: 'Jaco',
-    hour: '1 hours ago',
-    description: "Good to see you! What's...",
-  },
-  {
-    id: '5',
-    img: imgUser,
-    username: 'Nora',
-    userId: 'Jaco',
-    hour: '1 hours ago',
-    description: "Good to see you! What's...",
-  },
-];
+import { messageService } from '@/lib/services/new/messageService';
+import { tokenService } from '@/lib/services/new/tokenService';
+import { IInboxData, IThread, IUser } from './types';
+import MessageLoader from './components/message-loader';
+import useQuery from '@/lib/hooks/useFetch';
+import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
 const Default = () => {
-  const pathname = usePathname();
+  const { data = [], isLoading, fetchData } = useQuery();
+  const params = useParams();
   const { palette, breakpoints } = useTheme();
   const isMobile = useMediaQuery(breakpoints.down('md'));
-  const isChatOpen = pathname?.split('/').length === 3;
+  const isChatOpen = params?.username;
+
+  const [searchText, setSearchText] = useState<string>('');
+  const [inboxData, setInboxData] = useState<IInboxData>({
+    threads: [],
+    currentLoggedUser: {},
+    currentIndex: -1,
+    users: [],
+    dataLoading: true,
+  });
+
+  const saveConversations = (threads: IThread[]) => {
+    setInboxData(prevState => ({ ...prevState, threads, dataLoading: false }));
+  };
+
+  useEffect(() => {
+    tokenService.init();
+  }, []);
+
+  useEffect(() => {
+    messageService.reloadAll();
+
+    const loadAll = (data: IThread[]) => {
+      saveConversations(data);
+      setInboxData(prevState => ({ ...prevState, dataLoading: false }));
+    };
+
+    tokenService.onNewToken.on('USER', setCurrentUser);
+    messageService.publisher.on('threads', loadAll);
+
+    tokenService.emmitCurrentUser();
+    return () => {
+      tokenService.onNewToken.removeListener('USER', setCurrentUser);
+      messageService.publisher.removeListener('threads', loadAll);
+    };
+  }, [params?.username]);
+
+  useEffect(() => {
+    const newUsers: any = [];
+    const currentLoggedUser = inboxData.currentLoggedUser?.username;
+
+    if ((data as any)?.value?.data?.length) {
+      (data as any)?.value?.data?.map((user: IUser) => {
+        if (
+          user.username !== currentLoggedUser &&
+          (user.accountType === 0 || user.official === true || user.allowPrivateMassages === true)
+        ) {
+          newUsers.push({ user });
+        }
+      });
+    }
+    setInboxData(prevState => ({ ...prevState, users: newUsers }));
+  }, [data]);
+
+  const setCurrentUser = (user: IUser) => {
+    setInboxData(prevState => ({ ...prevState, currentLoggedUser: user }));
+  };
+
+  const userSearch = (text: string) => {
+    if (text) {
+      fetchData({
+        method: 'GET',
+        urlEndPoint: `${ApiEndpoint.FindUserByName}/${text}/true`,
+      });
+    } else {
+      setInboxData(prevState => ({ ...prevState, users: [] }));
+    }
+  };
+
+  const debouncedUserSearch = useCallback(
+    debounce(text => userSearch(text), 500),
+    []
+  );
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedUserSearch(e.target.value);
+    setSearchText(e.target.value);
+  };
 
   if (isMobile && isChatOpen) {
     return null;
@@ -68,6 +109,8 @@ const Default = () => {
           fullWidth
           hiddenLabel
           placeholder="Search people..."
+          value={searchText}
+          onChange={handleSearch}
           InputProps={{
             startAdornment: (
               <InputAdornment position="end">
@@ -80,17 +123,27 @@ const Default = () => {
         />
       </Box>
 
-      <Box
-        sx={{
-          height: '620px',
-          overflowY: 'auto',
-          pr: 1,
-        }}
-      >
-        {messagesUserData?.map((chats: any) => {
-          return <ChatCard key={chats.id} {...chats} />;
-        })}
-      </Box>
+      {(inboxData?.dataLoading || isLoading) && <MessageLoader />}
+
+      {!inboxData?.dataLoading && (
+        <Box
+          sx={{
+            height: '620px',
+            overflowY: 'auto',
+            pr: 1,
+          }}
+        >
+          {inboxData?.users?.map(({ user }: any, index: number) => {
+            return <ChatCard key={index} username={user.username} name={user.name} />;
+          })}
+
+          {inboxData?.threads?.map((thread: IThread, index: number) => {
+            return (
+              <ChatCard key={index} username={thread.user?.username} name={thread?.user?.name} lastMessageDate={thread.lastMessageDate} />
+            );
+          })}
+        </Box>
+      )}
     </Wrapper>
   );
 };
