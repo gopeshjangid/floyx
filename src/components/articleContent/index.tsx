@@ -1,4 +1,3 @@
-import { PostBox } from '@/components/Post/styledPostBox';
 import { Box } from '@mui/material';
 import ArticleContainer from './articleContainer';
 

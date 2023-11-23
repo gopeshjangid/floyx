@@ -3,7 +3,7 @@ import { Avatar, Box, Link, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DateParser from '../DateParser';
 import moment from 'moment';
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import CalendarIcon from '@/images/image/calendarIcon';
 
 export const UserCardBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -56,7 +56,7 @@ export default function UserCard({
           </Box>}
           {showDate && (
           <Box sx={{display:'flex', alignItems:'center'}}>
-            <CalendarMonthOutlinedIcon fontSize="small" />
+            <CalendarIcon />
             {moment(showDate).format('MMM DD, YY')}
           </Box>
         )}
