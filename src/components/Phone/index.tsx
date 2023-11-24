@@ -1,5 +1,5 @@
 import { iconArrowDown } from '@/assets/images';
-import { Box, FormControl, FormLabel, Theme, styled } from '@mui/material';
+import { Box, FormControl, FormHelperText, FormLabel, Theme, styled } from '@mui/material';
 import React from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
@@ -7,12 +7,14 @@ import 'react-phone-input-2/lib/bootstrap.css';
 interface IPhoneProps {
   value: string;
   onChange: (e: any) => void;
+  checkPhone: ({ phoneNumber }: { phoneNumber: string }) => void;
+  error: string;
 }
 
 const StyledPhone = styled(Box)(({ theme }: { theme: Theme }) => ({
   '& .react-tel-input': {
     width: '100%',
-    marginBottom: '20px',
+    marginBottom: '5px',
     '& .selected-flag:before': {
       display: 'none',
     },
@@ -75,7 +77,7 @@ const StyledPhone = styled(Box)(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-const Phone = ({ value, onChange }: IPhoneProps) => {
+const Phone = ({ value, onChange, checkPhone, error }: IPhoneProps) => {
   return (
     <FormControl>
       <FormLabel required>Phone number</FormLabel>
@@ -94,6 +96,9 @@ const Phone = ({ value, onChange }: IPhoneProps) => {
                 value: `+${e}`,
               },
             });
+            checkPhone({
+              phoneNumber: `+${e}`,
+            });
           }}
           inputProps={{
             id: 'phone',
@@ -101,6 +106,7 @@ const Phone = ({ value, onChange }: IPhoneProps) => {
           }}
         />
       </StyledPhone>
+      <FormHelperText error>{error}</FormHelperText>
     </FormControl>
   );
 };

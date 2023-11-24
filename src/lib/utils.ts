@@ -11,3 +11,14 @@ export const getRelativeTime = (date: string) => {
   date = `${moment([yyyy, mm, dd, hh, min, sec]).fromNow(true)} ago`;
   return date;
 };
+
+export const showErrorMessages = (errorKeys: string[]): string => {
+  return errorKeys
+    .map(errorKey =>
+      errorKey
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+    )
+    .join('. ');
+};

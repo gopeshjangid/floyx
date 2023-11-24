@@ -21,10 +21,11 @@ export const registrationService = createApi({
         method: 'POST',
         body: body,
       }),
-      transformResponse: (response: any) => response?.value?.data,
+      transformResponse: (response: any) => response?.value?.code,
+      transformErrorResponse: (response: any): string[] => response?.data.value.code,
     }),
     checkUsername: builder.mutation({
-      query: (body) => ({
+      query: body => ({
         url: ApiEndpoint.CheckUser,
         method: 'POST',
         body: body,
@@ -39,8 +40,26 @@ export const registrationService = createApi({
       }),
       transformResponse: (response: any) => response?.value?.code,
     }),
+    checkPhone: builder.query({
+      query: body => ({
+        url: ApiEndpoint.CheckPhoneNumber,
+        method: 'GET',
+        params: body,
+      }),
+      transformResponse: (response: any) => response?.value?.code,
+    }),
+    verifyOtp: builder.mutation({
+      query: body => ({
+        url: ApiEndpoint.VerifyOTPCode,
+        method: 'POST',
+        body: body,
+      }),
+      transformResponse: (response: any) => response?.value?.code,
+      transformErrorResponse: (response: any) => response?.data.value.code,
+    }),
   }),
   tagTypes: ['registration'],
 });
 
-export const { useRegisterMutation, useCheckEmailMutation, useCheckUsernameMutation } = registrationService;
+export const { useRegisterMutation, useCheckEmailMutation, useCheckUsernameMutation, useLazyCheckPhoneQuery, useVerifyOtpMutation } =
+  registrationService;
