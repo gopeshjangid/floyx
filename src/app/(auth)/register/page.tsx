@@ -244,6 +244,7 @@ const RegisterPage = () => {
                 onChange={onChangeHandler}
                 error={!!formError.name}
                 helperText={formError.name}
+                inputProps={{ maxLength: 25 }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">
@@ -274,6 +275,7 @@ const RegisterPage = () => {
                 }}
                 error={!!formError.username}
                 helperText={formError.username}
+                inputProps={{ maxLength: 25 }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">
@@ -312,6 +314,7 @@ const RegisterPage = () => {
                   onChange={onChangeHandler}
                   error={!!formError.recommended}
                   helperText={formError.recommended}
+                  inputProps={{ maxLength: 25 }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">

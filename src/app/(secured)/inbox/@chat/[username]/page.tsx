@@ -139,7 +139,6 @@ const ChatPage = () => {
   };
 
   const onDeleteConversation = () => {
-    console.log('delete');
     deleteConversation({
       method: 'DELETE',
       urlEndPoint: `${ApiEndpoint.DeleteMessage}/${username}`,
