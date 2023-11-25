@@ -1,13 +1,15 @@
-import { withAuth } from 'next-auth/middleware';
+// import { withAuth } from 'next-auth/middleware';
 
-export default withAuth({
-  pages: {
-    signIn: '/social-login',
-    error: '/social-login',
-  },
-});
+// export default withAuth({
+//   pages: {
+//     signIn: '/social-login',
+//     error: '/social-login',
+//   },
+// });
+
+export { default } from 'next-auth/middleware';
 
 // WARN: Add all protected routes, do not use REGEX and do not try to create function or something that returns array
 export const config = {
-  matcher: ['/', '/notifications','/people',"/settings","/inbox", "/earnings", "/profile"],
+  matcher: ['/', '/notifications', '/people', '/settings', '/inbox', '/earnings', '/profile'],
 };

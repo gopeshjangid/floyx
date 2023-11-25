@@ -38,6 +38,7 @@ interface IFormError {
 }
 
 const Login: FC = () => {
+  console.log('login test')
   const toast = useToast();
   const { palette } = useTheme();
   const router = useRouter();
