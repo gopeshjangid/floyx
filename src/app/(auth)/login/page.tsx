@@ -70,6 +70,7 @@ const Login: FC = () => {
         router.replace(allRoutes.home);
         toast.success('Login successfully!');
       } else {
+        console.log('login error', response?.error);
         toast.error(response?.error || 'Something went wrong!');
       }
     }
