@@ -106,6 +106,7 @@ const AccountSetting = () => {
                 fullWidth
                 hiddenLabel
                 placeholder="Enter your current password"
+                value={formData.currentPassword}
                 onChange={onChangeHandler}
                 error={!!formError.currentPassword}
                 helperText={formError.currentPassword}
@@ -119,6 +120,7 @@ const AccountSetting = () => {
                 fullWidth
                 hiddenLabel
                 placeholder="Enter your new password"
+                value={formData.newPassword}
                 onChange={onChangeHandler}
                 error={!!formError.newPassword}
                 helperText={formError.newPassword}
@@ -132,6 +134,7 @@ const AccountSetting = () => {
                 fullWidth
                 hiddenLabel
                 placeholder="Enter your new password again"
+                value={formData.newPasswordConfirmation}
                 onChange={onChangeHandler}
                 error={!!formError.newPasswordConfirmation}
                 helperText={formError.newPasswordConfirmation}
