@@ -59,7 +59,7 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
                 href={allRoutes.settings.account}
                 label="Account"
                 icon={
-                  <SVGAccount stroke={value === allRoutes.settings.account ? theme.palette.secondary.main : theme.palette.action.svg} />
+                  <SVGAccount stroke={value === allRoutes.settings.account ? theme.palette.secondary[100] : theme.palette.action.svg} />
                 }
                 iconPosition="start"
               />
@@ -69,7 +69,7 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
                 label="Change Password"
                 icon={
                   <SVGChangePassword
-                    stroke={value === allRoutes.settings.changePassword ? theme.palette.secondary.main : theme.palette.action.svg}
+                    stroke={value === allRoutes.settings.changePassword ? theme.palette.secondary[100] : theme.palette.action.svg}
                   />
                 }
                 iconPosition="start"
@@ -79,7 +79,7 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
                 href={allRoutes.settings.blockUser}
                 label="Block User"
                 icon={
-                  <SVGBlockUser stroke={value === allRoutes.settings.blockUser ? theme.palette.secondary.main : theme.palette.action.svg} />
+                  <SVGBlockUser stroke={value === allRoutes.settings.blockUser ? theme.palette.secondary[100] : theme.palette.action.svg} />
                 }
                 iconPosition="start"
               />
@@ -87,7 +87,7 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
                 value={allRoutes.settings.help}
                 href={allRoutes.settings.help}
                 label="Help"
-                icon={<SVGHelp stroke={value === allRoutes.settings.help ? theme.palette.secondary.main : theme.palette.action.svg} />}
+                icon={<SVGHelp stroke={value === allRoutes.settings.help ? theme.palette.secondary[100] : theme.palette.action.svg} />}
                 iconPosition="start"
               />
             </Tabs>

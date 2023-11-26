@@ -14,9 +14,9 @@ const SVGChangePassword = (props: SVGProps<SVGSVGElement>) => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path d="M16.6636 16.6667H16.6729" stroke="#585667" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M12.4956 16.6667H12.5049" stroke="white" strokeOpacity={0.3} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M8.32761 16.6667H8.33697" stroke="white" strokeOpacity={0.3} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M16.6636 16.6667H16.6729" strokeOpacity={1} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12.4956 16.6667H12.5049" strokeOpacity={1} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M8.32761 16.6667H8.33697" strokeOpacity={1} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 export default SVGChangePassword;
