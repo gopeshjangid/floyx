@@ -16,7 +16,11 @@ declare module '@mui/material/styles' {
   }
 
   interface TypeAction {
-    border?: string; // Add this line
+    border?: string;
+    black?: string;
+    white?: string;
+    opposite?: string;
+    svg?: string;
     // Add other custom properties as needed
   }
 

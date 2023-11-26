@@ -58,6 +58,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             border: '#EFF1F7',
             svg: ' #ADB3C6',
             error: '#FF5757',
+            black: '#000',
+            white: '#fff',
+            opposite: '#000',
           },
         }
       : {
@@ -101,6 +104,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             border: '#ffffff26',
             svg: 'rgba(255, 255, 255, 0.30)',
             error: '#FF5757',
+            black: '#000',
+            white: '#fff',
+            opposite: '#fff',
           },
         }),
   };

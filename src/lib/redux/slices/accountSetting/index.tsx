@@ -34,8 +34,17 @@ export const accountSettingService = createApi({
       transformResponse: (response: any) => response?.value?.code,
       transformErrorResponse: (response: any): string[] => response?.data.value.code,
     }),
+    changePassword: builder.mutation({
+      query: body => ({
+        url: ApiEndpoint.ChangePassword,
+        method: 'POST',
+        body: body,
+      }),
+      transformResponse: (response: any) => response?.value?.code,
+      transformErrorResponse: (response: any): string[] => response?.data.value.code,
+    }),
   }),
   tagTypes: ['registration'],
 });
 
-export const { useUpdateSettingsMutation, useUpdateMessageSettingsMutation } = accountSettingService;
+export const { useUpdateSettingsMutation, useUpdateMessageSettingsMutation, useChangePasswordMutation } = accountSettingService;

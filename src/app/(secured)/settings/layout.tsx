@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Link from 'next/link';
-import { Theme, styled } from '@mui/material';
+import { Theme, styled, useTheme } from '@mui/material';
 import { usePathname } from 'next/navigation';
 
 import { allRoutes } from '@/constants/allRoutes';
@@ -40,6 +40,7 @@ function LinkTab(props: any) {
 }
 
 export default function SettingLayout({ children }: { children: React.ReactNode }) {
+  const theme = useTheme();
   const pathname = usePathname();
   const [value, setValue] = React.useState(pathname);
 
@@ -57,28 +58,36 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
                 value={allRoutes.settings.account}
                 href={allRoutes.settings.account}
                 label="Account"
-                icon={<SVGAccount />}
+                icon={
+                  <SVGAccount stroke={value === allRoutes.settings.account ? theme.palette.secondary.main : theme.palette.action.svg} />
+                }
                 iconPosition="start"
               />
               <LinkTab
                 value={allRoutes.settings.changePassword}
                 href={allRoutes.settings.changePassword}
                 label="Change Password"
-                icon={<SVGChangePassword />}
+                icon={
+                  <SVGChangePassword
+                    stroke={value === allRoutes.settings.changePassword ? theme.palette.secondary.main : theme.palette.action.svg}
+                  />
+                }
                 iconPosition="start"
               />
               <LinkTab
                 value={allRoutes.settings.blockUser}
                 href={allRoutes.settings.blockUser}
                 label="Block User"
-                icon={<SVGBlockUser />}
+                icon={
+                  <SVGBlockUser stroke={value === allRoutes.settings.blockUser ? theme.palette.secondary.main : theme.palette.action.svg} />
+                }
                 iconPosition="start"
               />
               <LinkTab
                 value={allRoutes.settings.help}
                 href={allRoutes.settings.help}
                 label="Help"
-                icon={<SVGHelp />}
+                icon={<SVGHelp stroke={value === allRoutes.settings.help ? theme.palette.secondary.main : theme.palette.action.svg} />}
                 iconPosition="start"
               />
             </Tabs>
