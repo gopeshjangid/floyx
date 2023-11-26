@@ -39,7 +39,7 @@ function LinkTab(props: any) {
   return <Tab component={Link} {...props} va />;
 }
 
-export default function NavTabs() {
+export default function SettingLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [value, setValue] = React.useState(pathname);
 
@@ -48,35 +48,44 @@ export default function NavTabs() {
   };
 
   return (
-    <Wrapper>
-      <SettingsWrapper>
-        <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="10px">
-          <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
-            <LinkTab
-              value={allRoutes.settings.account}
-              href={allRoutes.settings.account}
-              label="Account"
-              icon={<SVGAccount />}
-              iconPosition="start"
-            />
-            <LinkTab
-              value={allRoutes.settings.changePassword}
-              href={allRoutes.settings.changePassword}
-              label="Change Password"
-              icon={<SVGChangePassword />}
-              iconPosition="start"
-            />
-            <LinkTab
-              value={allRoutes.settings.blockUser}
-              href={allRoutes.settings.blockUser}
-              label="Block User"
-              icon={<SVGBlockUser />}
-              iconPosition="start"
-            />
-            <LinkTab value={allRoutes.settings.help} href={allRoutes.settings.help} label="Help" icon={<SVGHelp />} iconPosition="start" />
-          </Tabs>
-        </Box>
-      </SettingsWrapper>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <SettingsWrapper>
+          <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="10px">
+            <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
+              <LinkTab
+                value={allRoutes.settings.account}
+                href={allRoutes.settings.account}
+                label="Account"
+                icon={<SVGAccount />}
+                iconPosition="start"
+              />
+              <LinkTab
+                value={allRoutes.settings.changePassword}
+                href={allRoutes.settings.changePassword}
+                label="Change Password"
+                icon={<SVGChangePassword />}
+                iconPosition="start"
+              />
+              <LinkTab
+                value={allRoutes.settings.blockUser}
+                href={allRoutes.settings.blockUser}
+                label="Block User"
+                icon={<SVGBlockUser />}
+                iconPosition="start"
+              />
+              <LinkTab
+                value={allRoutes.settings.help}
+                href={allRoutes.settings.help}
+                label="Help"
+                icon={<SVGHelp />}
+                iconPosition="start"
+              />
+            </Tabs>
+          </Box>
+        </SettingsWrapper>
+      </Wrapper>
+      {children}
+    </>
   );
 }

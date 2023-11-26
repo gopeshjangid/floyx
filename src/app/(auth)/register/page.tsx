@@ -20,7 +20,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { SVGLock, SVGUser } from '@/assets/images';
-import EmailSVG from '@/iconComponents/email';
+import SVGEmail from '@/iconComponents/email';
 import { allRoutes } from '@/constants/allRoutes';
 import Phone from '@/components/Phone';
 import {
@@ -346,7 +346,7 @@ const RegisterPage = () => {
                   startAdornment: (
                     <InputAdornment position="end">
                       <IconButton edge="end" color="primary">
-                        <EmailSVG />
+                        <SVGEmail />
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -368,7 +368,7 @@ const RegisterPage = () => {
                   startAdornment: (
                     <InputAdornment position="end">
                       <IconButton edge="end" color="primary">
-                        <EmailSVG />
+                        <SVGEmail />
                       </IconButton>
                     </InputAdornment>
                   ),

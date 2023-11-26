@@ -7,11 +7,12 @@ import storage from 'redux-persist/lib/storage';
 import { earningsService } from './slices/earnings';
 import { reducer } from './rootReducer';
 import { registrationService } from './slices/registration';
+import { accountSettingService } from './slices/accountSetting';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [earningsService.reducerPath, registrationService.reducerPath],
+  whitelist: [earningsService.reducerPath, registrationService.reducerPath, accountSettingService.reducerPath],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -27,7 +28,7 @@ function makeStore(initialState = {}) {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(earningsService.middleware, registrationService.middleware),
+      }).concat(earningsService.middleware, registrationService.middleware, accountSettingService.middleware),
   });
 }
 

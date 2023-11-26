@@ -43,6 +43,10 @@ const navItems = [
     href: '/profile',
   },
   {
+    label: 'Settings',
+    href: '/settings/account',
+  },
+  {
     label: 'More',
     href: '/more',
   },
