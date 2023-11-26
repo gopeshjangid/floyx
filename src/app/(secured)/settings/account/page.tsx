@@ -12,10 +12,8 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-  Theme,
   Typography,
   debounce,
-  styled,
 } from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
@@ -28,16 +26,7 @@ import SVGExclamation from '@/iconComponents/exclamation';
 import SVGDelete from '@/iconComponents/delete';
 import { useCheckUsernameMutation } from '@/lib/redux/slices/registration';
 import { showErrorMessages } from '@/lib/utils';
-
-const AccountWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
-  '& .MuiInputBase-root': {
-    background: theme.palette.background.default,
-  },
-  margin: '25px',
-  [theme.breakpoints.up('md')]: {
-    margin: '50px',
-  },
-}));
+import { SettingWrapper } from '../styled';
 
 interface ISettingAccount {
   name: string;
@@ -183,7 +172,7 @@ const AccountSetting = () => {
           marginTop: '20px',
         }}
       >
-        <AccountWrapper>
+        <SettingWrapper>
           <Box component="form" noValidate onSubmit={updateAccountDetails}>
             <FormControl>
               <FormLabel>Name</FormLabel>
@@ -306,7 +295,7 @@ const AccountSetting = () => {
               <SVGDelete /> Delete Account
             </Button>
           </Box>
-        </AccountWrapper>
+        </SettingWrapper>
       </Wrapper>
     </>
   );

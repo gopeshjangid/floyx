@@ -1,16 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Divider, Skeleton, Stack } from '@mui/material';
+import { Skeleton, Stack } from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
 import { SettingWrapper } from '../styled';
 
-const AccountSettingSkeleton = () => {
+const ChangePasswordLoader = () => {
   return (
     <>
-      <Skeleton variant="text" width="20%" height="60px" />
-
       <Wrapper
         sx={{
           maxWidth: {
@@ -30,14 +28,8 @@ const AccountSettingSkeleton = () => {
 
             <Skeleton variant="text" width="15%" height="40px" />
             <Skeleton variant="text" width="100%" height="80px" />
-
-            <Skeleton variant="text" width="100%" height="50px" />
-            <Skeleton variant="text" width="100%" height="50px" />
           </Stack>
 
-          <Divider sx={{ margin: '10px 0' }} />
-          <Skeleton variant="text" width="30%" height="60px" />
-          <Skeleton variant="text" width="100%" height="50px" />
           <Skeleton variant="text" width="100%" height="80px" />
         </SettingWrapper>
       </Wrapper>
@@ -45,4 +37,4 @@ const AccountSettingSkeleton = () => {
   );
 };
 
-export default AccountSettingSkeleton;
+export default ChangePasswordLoader;
