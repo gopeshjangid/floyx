@@ -49,12 +49,12 @@ const RegisterPage = () => {
   const [otp, setOtp] = useState<string>('');
 
   const debouncedCheckUserName = useCallback(
-    debounce(username => checkUserName({ username }), 500),
+    debounce(username => username && checkUserName({ username }), 500),
     []
   );
 
   const debouncedCheckEmail = useCallback(
-    debounce(mail => checkEmail({ mail }), 500),
+    debounce(mail => mail && checkEmail({ mail }), 500),
     []
   );
 

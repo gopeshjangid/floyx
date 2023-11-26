@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -14,9 +14,9 @@ import {
   TextField,
   Theme,
   Typography,
+  debounce,
   styled,
 } from '@mui/material';
-import { useRouter } from 'next/navigation';
 
 import Wrapper from '@/components/wrapper';
 import ThemeSwitch from '@/components/ThemeSwitcher';
@@ -26,13 +26,17 @@ import { useUpdateMessageSettingsMutation, useUpdateSettingsMutation } from '@/l
 import SVGEmail from '@/iconComponents/email';
 import SVGExclamation from '@/iconComponents/exclamation';
 import SVGDelete from '@/iconComponents/delete';
+import { useCheckUsernameMutation } from '@/lib/redux/slices/registration';
+import { showErrorMessages } from '@/lib/utils';
 
 const AccountWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   '& .MuiInputBase-root': {
     background: theme.palette.background.default,
   },
-  width: '80%',
-  margin: '50px',
+  margin: '25px',
+  [theme.breakpoints.up('md')]: {
+    margin: '50px',
+  },
 }));
 
 interface ISettingAccount {
@@ -54,8 +58,10 @@ const AccountSetting = () => {
     useUpdateSettingsMutation();
   const [updateMessageSetting, { data: messageSettingUpdateData, isLoading: messageSettingLoading, error: messageSettingError }] =
     useUpdateMessageSettingsMutation();
+  const [checkUserName, { data: checkUserNameData }] = useCheckUsernameMutation();
+
   const toast = useToast();
-  const router = useRouter();
+
   const [formData, setFormData] = useState<ISettingAccount>({
     email: '',
     name: '',
@@ -63,7 +69,53 @@ const AccountSetting = () => {
     enableMessage: false,
   });
   const [formError, setFormError] = useState<ISettingAccountFormError>({});
+
   const isLoading = settingUpdateLoading || messageSettingLoading;
+
+  useEffect(() => {
+    if (checkUserNameData && checkUserNameData === 'username_in_use') {
+      setFormError((prev: any) => ({
+        ...prev,
+        username: 'This username already exists, try another one',
+      }));
+    }
+
+    if (checkUserNameData === 'success') {
+      setFormError((prev: any) => ({
+        ...prev,
+        username: '',
+      }));
+    }
+  }, [checkUserNameData]);
+
+  useEffect(() => {
+    if (settingUpdateData === 'success') {
+      toast.success('Account details updated successfully!');
+    }
+  }, [settingUpdateData]);
+
+  useEffect(() => {
+    if (messageSettingUpdateData === 'success') {
+      toast.success('Message settings updated successfully!');
+    }
+  }, [messageSettingUpdateData]);
+
+  useEffect(() => {
+    if (settingUpdateError) {
+      toast.error(showErrorMessages(settingUpdateError as string[]));
+    }
+  }, [settingUpdateError]);
+
+  useEffect(() => {
+    if (messageSettingError) {
+      toast.error(showErrorMessages(messageSettingError as string[]));
+    }
+  }, [messageSettingError]);
+
+  const debouncedCheckUserName = useCallback(
+    debounce(username => username && checkUserName({ username }), 500),
+    []
+  );
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === 'enableMessage') {
@@ -107,7 +159,6 @@ const AccountSetting = () => {
     const isValid: boolean = validateForm();
 
     if (isValid) {
-      // TODO:
       updateSettings({
         name: formData.name,
         username: formData.username,
@@ -123,7 +174,15 @@ const AccountSetting = () => {
   return (
     <>
       <ThemeSwitch />
-      <Wrapper sx={{ width: '70%', marginTop: '20px' }}>
+      <Wrapper
+        sx={{
+          maxWidth: {
+            xs: '100%',
+            sm: '70%',
+          },
+          marginTop: '20px',
+        }}
+      >
         <AccountWrapper>
           <Box component="form" noValidate onSubmit={updateAccountDetails}>
             <FormControl>
@@ -155,7 +214,10 @@ const AccountSetting = () => {
                 fullWidth
                 hiddenLabel
                 placeholder="Dusti_96"
-                onChange={onChangeHandler}
+                onChange={e => {
+                  debouncedCheckUserName(e.target.value);
+                  onChangeHandler(e as any);
+                }}
                 error={!!formError.username}
                 helperText={formError.username}
                 InputProps={{

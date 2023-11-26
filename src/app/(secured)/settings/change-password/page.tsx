@@ -12,8 +12,10 @@ const AccountWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   '& .MuiInputBase-root': {
     background: theme.palette.background.default,
   },
-  width: '80%',
-  margin: '50px',
+  margin: '25px',
+  [theme.breakpoints.up('md')]: {
+    margin: '50px',
+  },
 }));
 
 interface IChangePassword {
@@ -96,7 +98,15 @@ const AccountSetting = () => {
 
   return (
     <>
-      <Wrapper sx={{ width: '70%', marginTop: '20px' }}>
+      <Wrapper
+        sx={{
+          maxWidth: {
+            xs: '100%',
+            sm: '70%',
+          },
+          marginTop: '20px',
+        }}
+      >
         <AccountWrapper>
           <Box component="form" noValidate onSubmit={updateAccountDetails}>
             <FormControl>

@@ -53,7 +53,7 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
       <Wrapper>
         <SettingsWrapper>
           <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="10px">
-            <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
+            <Tabs value={value} onChange={handleChange} aria-label="setting tabs" variant="scrollable" scrollButtons="auto">
               <LinkTab
                 value={allRoutes.settings.account}
                 href={allRoutes.settings.account}

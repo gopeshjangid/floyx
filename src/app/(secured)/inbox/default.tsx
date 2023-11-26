@@ -89,7 +89,7 @@ const Default = () => {
   };
 
   const debouncedUserSearch = useCallback(
-    debounce(text => userSearch(text), 500),
+    debounce(text => text && userSearch(text), 500),
     []
   );
 
