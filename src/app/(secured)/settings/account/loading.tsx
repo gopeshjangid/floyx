@@ -23,13 +23,13 @@ const AccountSettingSkeleton = () => {
         <SettingWrapper>
           <Stack>
             <Skeleton variant="text" width="15%" height="40px" />
-            <Skeleton variant="text" width="100%" height="80px" />
+            <Skeleton variant="text" width="100%" height="70px" />
 
             <Skeleton variant="text" width="15%" height="40px" />
-            <Skeleton variant="text" width="100%" height="80px" />
+            <Skeleton variant="text" width="100%" height="70px" />
 
             <Skeleton variant="text" width="15%" height="40px" />
-            <Skeleton variant="text" width="100%" height="80px" />
+            <Skeleton variant="text" width="100%" height="70px" />
 
             <Skeleton variant="text" width="100%" height="50px" />
             <Skeleton variant="text" width="100%" height="50px" />
@@ -38,7 +38,7 @@ const AccountSettingSkeleton = () => {
           <Divider sx={{ margin: '10px 0' }} />
           <Skeleton variant="text" width="30%" height="60px" />
           <Skeleton variant="text" width="100%" height="50px" />
-          <Skeleton variant="text" width="100%" height="80px" />
+          <Skeleton variant="text" width="100%" height="70px" />
         </SettingWrapper>
       </Wrapper>
     </>
