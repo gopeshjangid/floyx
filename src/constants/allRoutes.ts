@@ -13,7 +13,7 @@ export const allRoutes = {
     index: '/settings',
     account: '/settings/account',
     changePassword: '/settings/change-password',
-    blockUser: '/settings/block-user',
+    blockUser: '/settings/blocked-user',
     help: '/settings/help',
   },
 };
