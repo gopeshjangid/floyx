@@ -151,8 +151,8 @@ const AccountSetting = () => {
               />
             </FormControl>
 
-            <FormControl>
-              <Button variant="contained" color="primary" type="submit" className="submit-btn">
+            <FormControl margin="normal">
+              <Button variant="contained" color="primary" type="submit">
                 {isLoading ? (
                   <>
                     <CircularProgress size={24} color="inherit" />
