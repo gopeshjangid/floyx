@@ -80,7 +80,7 @@ export default function AddPost({}) {
         <Tab
           component="a"
           label={<Typography variant="subtitle2">Write an article</Typography>}
-          href="/articles/add-edit"
+          href="/article/add-edit"
         />
       </Tabs>
       <Box className={`input-container ${postObj.postTextLeft < 0 ? 'danger-text' : postObj.postTextLeft < 30 ? 'warning-text' : ''}`}>

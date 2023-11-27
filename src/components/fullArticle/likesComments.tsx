@@ -8,10 +8,11 @@ import ReplyIcon from '@/images/image/replyIcon';
 import DateParser from '../DateParser';
 import AddComment from '../Post/AddComment';
 import CommentList from '../CommentLists';
+import { useGetCommentListQuery } from '@/lib/redux/slices/articleCommentList';
 
-export default function LikesComments({ likesCommentsDetails }: any) {
+export default function LikesComments({ likesCommentsDetails, articleId }: any) {
   const ARTICLE_DETAILS = likesCommentsDetails;
-  const COMMENT_DETAILS = likesCommentsDetails?.article?.commentsList;
+  const {data: commentList } = useGetCommentListQuery(articleId)
 
   function formatIndianNumber(num: number) {
     if (num < 1000) {
@@ -34,13 +35,13 @@ export default function LikesComments({ likesCommentsDetails }: any) {
       <Divider />
       <Box sx={{ display: 'flex', padding: '17px 20px' }}>
         <Button variant="text" startIcon={<LikeIcon />} sx={{ marginRight: '25px' }}>
-          {formatIndianNumber(ARTICLE_DETAILS.article.numberOfLikes)} Likes
+          {formatIndianNumber(ARTICLE_DETAILS?.article?.numberOfLikes)} Likes
         </Button>
         <Button variant="text" startIcon={<CommentIcon />} sx={{ marginRight: '25px' }}>
-          {formatIndianNumber(ARTICLE_DETAILS.article.numberOfComments)} Comments
+          {formatIndianNumber(ARTICLE_DETAILS?.article?.numberOfComments)} Comments
         </Button>
         <Button variant="text" startIcon={<ShareIcon />} sx={{ marginRight: '25px' }}>
-          {formatIndianNumber(ARTICLE_DETAILS.article.numberOfShares)} Share
+          {formatIndianNumber(ARTICLE_DETAILS?.article?.numberOfShares)} Share
         </Button>
       </Box>
       <Divider />
@@ -48,7 +49,7 @@ export default function LikesComments({ likesCommentsDetails }: any) {
         Comments
       </Typography>
       <Box>
-        {COMMENT_DETAILS.map((val: any, index: number) => (
+        {commentList && commentList.map((val: any, index: number) => (
           <Box key={index}>
             <Box sx={{ display: 'flex', marginTop: '30px' }}>
               <Box>
@@ -71,7 +72,7 @@ export default function LikesComments({ likesCommentsDetails }: any) {
                 </Box>
                 <Box sx={{ display: 'flex', margin: '20px 0px' }}>
                   <Button variant="text" startIcon={<LikeIcon />} sx={{ marginRight: '25px' }}>
-                    Like
+                    {val?.comment?.numberOfLikes} Like
                   </Button>
                   <Button variant="text" startIcon={<ReplyIcon />} sx={{ marginRight: '25px' }}>
                     Reply
@@ -79,12 +80,12 @@ export default function LikesComments({ likesCommentsDetails }: any) {
                 </Box>
               </Box>
             </Box>
-            {index !== COMMENT_DETAILS.length - 1 && <Divider />}
+            {index !== commentList.length - 1 && <Divider />}
           </Box>
         ))}
       </Box>
       {/* <Box>
-        <CommentList comments={COMMENT_DETAILS}/>
+        <CommentList comments={commentList}/>
       </Box> */}
       <Box sx={{ marginTop: '40px', padding: '0px 19px 17px 19px', border: '1px solid white', borderRadius: '10px' }}>
         <AddComment avatar={ARTICLE_DETAILS?.user?.avatar} />

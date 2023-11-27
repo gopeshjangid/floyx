@@ -40,7 +40,7 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function AuthorCoulmn({ authorDetails }: any) {
+export default function AuthorCoulmn({ authorDetails, details, userDetails }: any) {
   const ARTICLE_DETAILS = authorDetails;
 
   
@@ -68,8 +68,8 @@ export default function AuthorCoulmn({ authorDetails }: any) {
       <Box className="author-box">
         <Box>
           <Avatar
-            alt={ARTICLE_DETAILS?.user?.name}
-            src={ARTICLE_DETAILS?.user?.avatar}
+            alt={userDetails?.name}
+            src={userDetails?.avatar}
             sx={{ width: 60, height: 60, marginRight: '10px' }}
           />
         </Box>
@@ -77,9 +77,9 @@ export default function AuthorCoulmn({ authorDetails }: any) {
           <Box className="name">
             <Typography variant="subtitle1" component={'span'}>
               <Link href="#" underline="none">
-                {ARTICLE_DETAILS?.user?.name}
+                {userDetails?.name}
               </Link>
-              @{ARTICLE_DETAILS?.user?.username}
+              @{userDetails?.username}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -88,20 +88,20 @@ export default function AuthorCoulmn({ authorDetails }: any) {
               <Typography variant="body2" sx={{ margin: '0px 5px' }}>
                 Followers:
               </Typography>
-              <Typography variant="body2">{ARTICLE_DETAILS?.user?.numberOfFollowers}</Typography>
+              <Typography variant="body2">{userDetails?.numberOfFollowers}</Typography>
             </Box>
             <Box sx={{ display: 'flex' }}>
               <ArticleIcon />
               <Typography variant="body2" sx={{ margin: '0px 5px' }}>
                 Articles:
               </Typography>
-              <Typography variant="body2">{ARTICLE_DETAILS?.user?.numberOfArticles}</Typography>
+              <Typography variant="body2">{userDetails?.numberOfArticles}</Typography>
             </Box>
           </Box>
         </Box>
       </Box>
       <Box className="author-about">
-        <Typography variant="body1">{ARTICLE_DETAILS?.user?.about}</Typography>
+        <Typography variant="body1">{userDetails?.shortDescription}</Typography>
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ marginRight: '25px' }}>
             <Typography variant="subtitle2">{ARTICLE_DETAILS?.user?.nationality}</Typography>
@@ -130,13 +130,13 @@ export default function AuthorCoulmn({ authorDetails }: any) {
                   <Box sx={{ display: 'flex' }}>
                     <Box>
                       <Avatar
-                        alt={ARTICLE_DETAILS?.user?.name}
-                        src={ARTICLE_DETAILS?.user?.avatar}
+                        alt={details?.user?.name}
+                        src={details?.user?.avatar}
                         sx={{ width: 20, height: 20, marginRight: '10px' }}
                       />
                     </Box>
                     <Box>
-                      <Typography variant="caption">by {ARTICLE_DETAILS?.user?.name}</Typography>
+                      <Typography variant="caption">by {details?.user?.name}</Typography>
                     </Box>
                   </Box>
                 </Box>

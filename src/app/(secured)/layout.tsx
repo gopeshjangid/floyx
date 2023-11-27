@@ -6,15 +6,15 @@ import { ToastProvider } from "@/components/Toast/useToast";
 import AuthProvider from "../context/AuthProvider";
 import RightContent from "./_rightContent/page";
 
-export default function RootLayout({ children, rightContent }: any) {
+export default function RootLayout({ children }: any) {
   return (
     <Box display="flex" minHeight="100vh">
       <DrawerAppBar />
       {/* TODO: container width */}
-      <Box width="100%" paddingInline={2.5}>
-        <Toolbar />
+      <Grid container display={"flex"} flexDirection={"row"} sx={{margin: { xs: '70px 0', md: '30px 0' }, width: "100%"}}>  <Toolbar />
         {children}
-      </Box>
+        <RightContent />
+      </Grid>
     </Box>
   );
 }

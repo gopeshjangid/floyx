@@ -1,5 +1,8 @@
+"use client";
 import Post from "@/components/Post/Post"
+import { useGetPostDetailQuery } from "@/lib/redux/slices/posts";
 import { Grid } from "@mui/material"
+import { useEffect } from "react";
 
 const postDetail = {
     "id": "652241bfda29c95e1800df45",
@@ -53,9 +56,14 @@ const commentList = [
     }
 ];
 export default function Page({ params }: { params: { postId: number } }) {
+  const {data: postDetail, isLoading} = useGetPostDetailQuery(params.postId);
+
+  useEffect(() => {
+    console.log(postDetail)
+  }, [postDetail])
   return (
     <Grid sx={{ width:  { xs: '100%', sm: '70%' } }}>
-      <Post
+      {postDetail && <Post
         name={postDetail?.author?.name}
         username={postDetail?.author?.username}
         createdDateTime={postDetail?.post?.createdDateTime}
@@ -66,7 +74,7 @@ export default function Page({ params }: { params: { postId: number } }) {
         postDetails={postDetail?.post}
         postId={postDetail?.id}
         commentList={commentList}
-      />      
+      />}   
     </Grid>
   )
 }

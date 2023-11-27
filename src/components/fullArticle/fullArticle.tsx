@@ -8,24 +8,26 @@ import TwitterIcon from '@/images/image/twitter';
 
 const TAGS = ['inspiration', 'adventure', 'creativity', 'explore', 'science', 'geography'];
 
-export default function FullArticle({ postDetails }: any) {
-  const ARTICLE_DETAILS = postDetails;
+export default function FullArticle({ details }: any) {
+  
+  const CONTENT = details?.article?.content && JSON.parse(details?.article?.content)
+  console.log(details?.article, 'articleDetails')
   return (
     <Box sx={{ width: '100%' }}>
       <Box>
         <Button variant="text" startIcon={<BookMarkIcon />}>
           Bookmark
         </Button>
-        <Typography variant="h1">{ARTICLE_DETAILS.article.title}</Typography>
+        <Typography variant="h1">{details?.article?.title}</Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex' }}>
           <Box>
             <UserCard
-              name={ARTICLE_DETAILS.user.name}
-              displayPicture={ARTICLE_DETAILS.user.avatar}
-              username={ARTICLE_DETAILS.user.username}
-              showDate={ARTICLE_DETAILS.article.publicationDate}
+              name={details?.user?.name}
+              displayPicture={details?.user?.avatar}
+              username={details?.user?.username}
+              showDate={details?.article?.publicationDate}
             />
           </Box>
           <Box sx={{ padding: '20px 10px' }}>
@@ -42,7 +44,7 @@ export default function FullArticle({ postDetails }: any) {
       </Box>
       <Box sx={{ display: 'flex' }}>
         <Grid container>
-          {TAGS.map(val => (
+          {details?.article?.tags && details?.article?.tags.map(val => (
             <Grid
               item
               xs="auto"
@@ -64,10 +66,10 @@ export default function FullArticle({ postDetails }: any) {
         </Grid>
       </Box>
       <Box sx={{ marginTop: '20px' }}>
-        <img src={ARTICLE_DETAILS.article.coverPhotoPath} width={'100%'} />
+        <img src={details?.article?.coverPhotoPath} width={'100%'} />
       </Box>
       <Box sx={{ marginTop: '20px' }}>
-        {ARTICLE_DETAILS.article.content.map((val: any, index: number) => (
+        {CONTENT && CONTENT.map((val: any, index: number) => (
           <Box sx={{ padding: '10px 0' }} key={`articleDetail${index}`}>
             {val?.type === 'paragraph' ? (
               <Typography variant="body1">{val?.value}</Typography>
