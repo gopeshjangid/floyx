@@ -38,6 +38,7 @@ interface IFormError {
 }
 
 const Login: FC = () => {
+  console.log('login test 122')
   const toast = useToast();
   const { palette } = useTheme();
   const router = useRouter();
@@ -61,6 +62,8 @@ const Login: FC = () => {
         remember: formData.remember,
         redirect: false,
       });
+
+      console.log('login response', response);
       setLoading(false);
 
       if (response?.ok) {
