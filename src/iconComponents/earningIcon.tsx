@@ -1,5 +1,5 @@
 import * as React from "react";
-const EarningIcon = (props) => (
+const EarningIcon = (props : any) => (
   <svg
     width={56}
     height={56}

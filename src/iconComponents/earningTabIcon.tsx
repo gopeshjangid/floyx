@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const EaringTabIcon = (props) => (
+const EaringTabIcon = (props : any) => (
   <svg
     width={24}
     height={24}
