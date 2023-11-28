@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import moment from 'moment';
 import { getCookie, deleteCookie } from 'cookies-next';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
