@@ -84,7 +84,7 @@ const CopyableInput = () => {
   );
 };
 
-const StyledBox = ({ children }) => {
+const StyledBox = ({ children }: any) => {
   const { palette } = useTheme();
   return (
     <Box
