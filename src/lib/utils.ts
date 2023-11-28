@@ -13,7 +13,6 @@ export const getRelativeTime = (date: string) => {
   date = `${moment([yyyy, mm, dd, hh, min, sec]).fromNow(true)} ago`;
   return date;
 };
-import { NextRouter } from 'next/router';
 
 // Define a helper function to check if we're on the server
 const isServer = () => typeof window === 'undefined';
