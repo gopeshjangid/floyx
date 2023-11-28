@@ -5,9 +5,9 @@ export default withAuth({
     signIn: '/social-login',
     error: '/social-login',
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });
-
 // WARN: Add all protected routes, do not use REGEX and do not try to create function or something that returns array
 export const config = {
-  matcher: ['/', '/notifications','/people',"/settings","/inbox", "/earnings", "/profile"],
+  matcher: ['/', '/notifications', '/people', '/settings', '/inbox', '/earnings', '/profile'],
 };
