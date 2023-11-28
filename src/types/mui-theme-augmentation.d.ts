@@ -14,12 +14,21 @@ declare module '@mui/material/styles' {
 
     // Add other custom properties as needed
   }
-  
+
+  interface TypeAction {
+    border?: string;
+    black?: string;
+    white?: string;
+    opposite?: string;
+    svg?: string;
+    // Add other custom properties as needed
+  }
+
   // Optionally, if you have custom properties outside of the PaletteColor
   interface ThemeOptions {
     // Define any additional theme options here
   }
-  
+
   interface Theme {
     // Corresponding non-optional properties for the Theme
   }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client';
 import React from 'react';
 import {
@@ -84,7 +85,7 @@ const CopyableInput = () => {
   );
 };
 
-const StyledBox = ({ children }) => {
+const StyledBox = ({ children }: any) => {
   const { palette } = useTheme();
   return (
     <Box

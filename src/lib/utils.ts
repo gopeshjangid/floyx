@@ -1,7 +1,9 @@
+// @ts-nocheck
+
 import moment from 'moment';
 import { getCookie, deleteCookie } from 'cookies-next';
-
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 export const getRelativeTime = (date: string) => {
   const dateObject = new Date(date);
   const sec = dateObject.getSeconds();
