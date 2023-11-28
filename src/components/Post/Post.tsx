@@ -41,6 +41,7 @@ export default function Post({
             username={username}
             timestamp={createdDateTime}
             shared={shared}
+            displayPicture={avatar}
           />
           <Box sx={{padding: '20px 0'}}>
             <SplitButton 

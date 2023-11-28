@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 import DateParser from '../DateParser';
 import moment from 'moment';
 import CalendarIcon from '@/images/image/calendarIcon';
+import UserAvatar from "../UserAvatar";
+import { ApiEndpoint } from "@/lib/services/ApiEndpoints";
 
 export const UserCardBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -35,11 +37,11 @@ export default function UserCard({
 }) {
   return (
     <UserCardBox>
-      <Box>
-        <Avatar
+      <Box sx={{marginRight: '10px'}}>
+        <UserAvatar
           alt={name}
-          src={displayPicture}
-          sx={{ width: 50, height: 50, marginRight: "10px" }}
+          src={`${ApiEndpoint.CurrentUserDetails}/avatar/${username}`}
+          sx={{ width: "50px", height: "50px" }}
         />
       </Box>
       <Box>

@@ -1,5 +1,5 @@
 "use client"
-import { Box, Modal, Typography } from "@mui/material"
+import { Box, Modal, Skeleton, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import Post from "./Post"
 import moment from "moment"
@@ -7,7 +7,9 @@ import Link from "next/link"
 import Image from 'next/image'
 
 export default function PostImage({ image, link, shared, isShared, postId }: any) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const handleClose = () => {
     setOpen(false)
   }
@@ -21,12 +23,24 @@ export default function PostImage({ image, link, shared, isShared, postId }: any
     return window.open(link.url, "_blank")
   }
 
+  const handleImageLoad = () => {
+    setLoading(false);
+  };
+
   return (
     <Box>
       {image &&
         <Box>
+          {loading && (
+            <Skeleton
+              variant="rounded"
+              height={300}
+              animation="wave"
+            />
+          )}
           <Image
             width={0}
+            onLoad={handleImageLoad}
             height={0}
             sizes="100vw"
             style={{ width: '100%', height: 'auto' }} // optional
@@ -73,6 +87,7 @@ export default function PostImage({ image, link, shared, isShared, postId }: any
             <Post
               name={shared?.author?.name || ''}
               username={shared?.author?.username || ''}
+              avatar={shared?.author?.avatar}
               createdDateTime={shared?.post?.createdDateTime}
               content={shared?.post?.content}
               shared={shared?.post?.shared}

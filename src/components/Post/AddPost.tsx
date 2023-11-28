@@ -1,7 +1,9 @@
 "use client"
 
-import { Box, Card, CardContent, Tab, Tabs, Typography } from "@mui/material"
+import { Box, Card, Button, Tab, Tabs, Typography, CircularProgress } from "@mui/material"
 import { SyntheticEvent, useEffect, useRef, useState } from "react"
+import Image from 'next/image'
+
 import { userDetail } from "../../constant/payload"
 import Avatar from "@mui/material/Avatar"
 import PersonIcon from "@mui/icons-material/Person"
@@ -9,22 +11,24 @@ import { MentionsInput, Mention } from "react-mentions"
 import CropOriginalIcon from "@mui/icons-material/CropOriginal"
 import VideoCameraBackOutlinedIcon from "@mui/icons-material/VideoCameraBackOutlined"
 import { PostBox } from "./styledPostBox"
+import { useCreatePostMutation } from "@/lib/redux"
 
+const initialPostObj = {
+  postText: '',
+  postTextLeft: 280,
+  publishButtonDisabled: false,
+};
 
-export default function AddPost({}) {
+export default function AddPost({ }) {
   const imageFileInput = useRef<HTMLInputElement>(null)
   const videoFileInput = useRef<HTMLInputElement>(null)
+  const [postObj, setPostObj] = useState(initialPostObj)
   const [value, setValue] = useState(0);
   const [isAuthorizedUser, setIsAuthorizedUser] = useState<Boolean>(false);
-  const [postObj, setPostObj] = useState({
-    postText: '',
-    postTextLeft: 280,
-    publishButtonDisabled: false,
-  })
-  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(
-    null
-  )
-  const [imageToUpload, setImageToUpload] = useState(null)
+  const [imagePreview, setImagePreview] = useState<string | Blob>('')
+  const [imageToUpload, setImageToUpload] = useState<string | Blob>('')
+
+  const [createPost, { data, error, isLoading, isSuccess }] = useCreatePostMutation();
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     console.log(newValue)
@@ -45,12 +49,15 @@ export default function AddPost({}) {
   }
 
   const handlePostText = (e: any, newValue: any, newPlainTextValue: any, mentions: any) => {
-    const text = e.target.value
+    const text = e.target.value;
 
-    setPostObj({
-      postText: text,
-      postTextLeft: 280 - calulcateLength(newPlainTextValue),
-      publishButtonDisabled: !isAuthorizedUser ? true : 280 - calulcateLength(newPlainTextValue) < 0
+    setPostObj(prev => {
+      return {
+        ...prev,
+        postText: text,
+        postTextLeft: 280 - calulcateLength(newPlainTextValue),
+        publishButtonDisabled: !isAuthorizedUser ? true : 280 - calulcateLength(newPlainTextValue) < 0,
+      }
     })
   }
 
@@ -64,11 +71,21 @@ export default function AddPost({}) {
     return Array.from(str.split(/[\ufe00-\ufe0f]/).join('')).length
   }
 
-  useEffect(() => {
-    // userDetailsService.refresh();
+  const publishImage = async () => {
+    const formData = new FormData()
+    formData.append('text', postObj.postText)
+    formData.append('file', imageToUpload)
+    await createPost(formData);
+    setPostObj(initialPostObj);
+  }
 
-  }, [])
+  const publishPost = () => {
+    setPostObj((prev) => ({ ...prev, publishButtonDisabled: true }))
+    publishImage()
+  }
+
   return (
+    <>
     <PostBox>
       <Tabs
         value={value}
@@ -110,32 +127,26 @@ export default function AddPost({}) {
         </Box>
         {postObj.postTextLeft < 30 && (
           <div className="post__warning">
-            <span>
-              {postObj.postTextLeft > 0
+            <Typography component={"span"} color={"error"}>
+                {postObj.postTextLeft > 0
                 ? 'You are getting close to the maximum character limit.'
                 : 'You have exceeded the maximum character limit.'}
-            </span>
-            <span className="post__count">{postObj.postTextLeft}</span>
+            </Typography>  
+
+            <Typography component={"span"}>{postObj.postTextLeft}</Typography>
           </div>
-        )}
-        {imagePreview && <img src={imagePreview} />}
+          )}
+          {error && !isLoading && <Typography component={"span"} color={"error"}>{"Please add photo description to publish it."}</Typography>}
+        {imagePreview && <Image
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: '100%', height: 'auto' }} // optional
+              src={imagePreview}
+              alt="thumbnail"
+            />}
       </Box>
       <Box className="upload-media">
-        <Box>
-          <input
-            className="file-imput"
-            type="file"
-            onChange={handleImg}
-            ref={videoFileInput}
-            accept="image/x-png,image/gif,image/jpeg"
-          />
-          <label className="image-upload"  onClick={() => {
-              videoFileInput?.current?.click()
-            }}>
-            <VideoCameraBackOutlinedIcon />
-            <Typography variant="subtitle1">Video</Typography>
-          </label>
-        </Box>
         <Box>
           <input
             className="file-imput"
@@ -154,7 +165,24 @@ export default function AddPost({}) {
             <Typography variant="subtitle1">Image</Typography>
           </label>
         </Box>
+        
       </Box>
-    </PostBox>
+      
+      </PostBox>
+      <Box>
+        {(imagePreview || postObj.postText !== '') &&
+          <Button
+            variant="contained"
+            fullWidth
+            disabled={isLoading}
+            sx={{ marginTop: 1 }}
+            onClick={publishPost}
+          >
+            {isLoading && <CircularProgress />}
+            {!isLoading && "Publish Post"}
+          </Button>
+        }
+      </Box>
+    </>
   )
 }
