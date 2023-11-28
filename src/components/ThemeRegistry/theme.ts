@@ -10,9 +10,9 @@ const poppins = Poppins({
 });
 
 //const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
-const gradientBorder = ({ color1, color2, color3, width }: any) => {
-  return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
-};
+// const gradientBorder = ({ color1, color2, color3, width }: any) => {
+//   return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
+// };
 
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
   const palette = {
@@ -275,7 +275,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             textTransform: 'capitalize',
             fontSize: '16px',
             fontWeight: '400',
-            color: palette?.mode === 'light' ? palette.text.primary : palette?.action?.svg,
+            color:
+              palette?.mode === 'light'
+                ? palette.text.primary
+                : palette?.action?.svg,
           },
         },
       },
@@ -379,9 +382,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               opacity: 0.9, // Or any other styling you want on hover
             },
           },
-          outlined: {
-           
-          },
+          outlined: {},
         },
       },
     },
