@@ -10,7 +10,6 @@ import {
   Typography,
   Paper,
   OutlinedInput,
-  LinearProgress,
   useTheme,
   Chip,
 } from '@mui/material';
@@ -22,7 +21,6 @@ import { useSession } from 'next-auth/react';
 import {
   useGetBonusTaskStatusQuery,
   useGetInviteHistoryQuery,
-  useGetTransactionHistoryQuery,
 } from '@/lib/redux/slices/earnings';
 
 const CopyableInput = () => {
@@ -109,7 +107,7 @@ const StyledBox = ({ children }) => {
 
 const InvitationStatusCard = () => {
   const { palette } = useTheme();
-  const { data, isLoading, isError, error } = useGetInviteHistoryQuery();
+  const { data, isLoading } = useGetInviteHistoryQuery();
 
   const totalReward = data
     ? data?.referralHistory.reduce((a, c) => a + c.referrEarnedAmount, 0)
@@ -165,7 +163,7 @@ const InvitationStatusCard = () => {
 };
 
 const ReferralCard = () => {
-  const { isError, data, isLoading } = useGetBonusTaskStatusQuery();
+  const { data, isLoading } = useGetBonusTaskStatusQuery();
 
   return (
     <StyledBox>

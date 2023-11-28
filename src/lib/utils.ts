@@ -13,17 +13,16 @@ export const getRelativeTime = (date: string) => {
   date = `${moment([yyyy, mm, dd, hh, min, sec]).fromNow(true)} ago`;
   return date;
 };
-import Router, { NextRouter } from 'next/router';
+import { NextRouter } from 'next/router';
 
 // Define a helper function to check if we're on the server
 const isServer = () => typeof window === 'undefined';
 
 const redirectToLogin = () => {
   if (!isServer()) {
-    const router: NextRouter = require('next/router').default;
-    console.log('redirect ');
+    //const router: NextRouter = require('next/router').default;
     window.location.href = '/login';
-    router.push('/login').catch(e => console.error('Redirection Error:', e));
+    //router.push('/login').catch(e => console.error('Redirection Error:', e));
   }
   // Server-side redirects should be handled in getServerSideProps or getInitialProps
 };
