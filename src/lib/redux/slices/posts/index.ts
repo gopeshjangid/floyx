@@ -29,15 +29,19 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+interface PostDetail {
+  pageNumber: number;
+  postCreatedDate: number;
+}
 export const postServices = createApi({
   reducerPath: 'postsReducer',
   baseQuery: baseQuery,
   endpoints: builder => ({
-    getPostDetail: builder.query<any, void>({
+    getPostDetail: builder.query<any, string>({
       query: (id) => `${ApiEndpoint.GetPosts}/post/${id}`,
       transformResponse: (response: any) => response?.value?.data,
     }),
-    getPosts: builder.query<any, string>({
+    getPosts: builder.query<any, PostDetail>({
       query: ({ pageNumber, postCreatedDate }:any) => {
         const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {
@@ -85,7 +89,7 @@ export const postServices = createApi({
       }),
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
-    deletePost: builder.mutation<any, void>({
+    deletePost: builder.mutation<any, string>({
       query: (id) =>({
         url: `${ApiEndpoint.DeletePost}/${id}`,
         method: 'DELETE',

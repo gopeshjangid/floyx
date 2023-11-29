@@ -23,7 +23,7 @@ export const commentList = createApi({
   endpoints: builder => ({
     getCommentList: builder.query<Comment, string>({
       query: articleId => `${ApiEndpoint.GetComments}/${articleId}`,
-      transformResponse: (response: any) => response?.value?.data,
+      transformResponse: (response: any) => response?.value?.data || [],
     }),
   }),
   tagTypes: ['commentList'],

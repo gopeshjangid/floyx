@@ -1,14 +1,13 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import AuthorCoulmn from '@/components/fullArticle/authorColumn';
 import FullArticle from '@/components/fullArticle/fullArticle';
 import LikesComments from '@/components/fullArticle/likesComments';
 import TipColumn from '@/components/fullArticle/tipCoumn';
 import { useGetUserDetailsQuery } from '@/lib/redux/slices/userDetails';
-import { Container, Box, Typography, Button } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { usePathname } from 'next/navigation';
 import { useGetArticleDetailsQuery } from '@/lib/redux/slices/articleDetails';
-import { useGetCommentListQuery } from '@/lib/redux/slices/articleCommentList';
 
 const ARTICLE_DETAILS = {
   article: {
@@ -166,10 +165,14 @@ export default function Page() {
   return (
     <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Box sx={{ width: '70%' }}>
-        <FullArticle details={articleDetails} userDetails={userDetails}/>
-        <TipColumn details={articleDetails} articlePuclicUrl={articlePuclicUrl}/>
-        <AuthorCoulmn authorDetails={ARTICLE_DETAILS} details={articleDetails}/>
-        <LikesComments likesCommentsDetails={articleDetails} articleId={articleId}/>
+        {articleId && (
+          <>
+            <FullArticle details={articleDetails} userDetails={userDetails} />
+            <TipColumn details={articleDetails} articlePuclicUrl={articlePuclicUrl}/>
+            <AuthorCoulmn authorDetails={ARTICLE_DETAILS} details={articleDetails}/>
+            <LikesComments likesCommentsDetails={articleDetails} articleId={articleId} />
+          </>
+        )}
       </Box>
     </Container>
   );

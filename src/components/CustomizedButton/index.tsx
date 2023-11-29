@@ -81,8 +81,8 @@ export default function CustomizedMenus({startIcon, menuItem}: any) {
         open={open}
         onClose={handleClose}
       >
-         {menuItem && menuItem.map((val:any) => (
-            <MenuItem value={val.text}>
+         {menuItem && menuItem.map((val:any, index: number) => (
+            <MenuItem value={val.text} key={`menuItem${index}`}>
               <Typography
                 variant="body2"
                 alignItems={'center'}

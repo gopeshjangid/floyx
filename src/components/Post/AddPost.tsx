@@ -18,12 +18,12 @@ const initialPostObj = {
   publishButtonDisabled: false,
 };
 
-export default function AddPost({ }) {
+export default function AddPost() {
   const imageFileInput = useRef<HTMLInputElement>(null)
   const [postObj, setPostObj] = useState(initialPostObj)
-  const [value, setValue] = useState(0);
-  const [isAuthorizedUser, setIsAuthorizedUser] = useState<Boolean>(false);
-  const [imagePreview, setImagePreview] = useState<string | Blob>('')
+  const value = 0;
+  const isAuthorizedUser =false;
+  const [imagePreview, setImagePreview] = useState<any>('')
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('')
 
   const [createPost, {error, isLoading }] = useCreatePostMutation();
@@ -41,7 +41,7 @@ export default function AddPost({ }) {
       reader.readAsDataURL(img)
       reader.onloadend = () => {
         setImageToUpload(img)
-        setImagePreview(reader.result)
+        setImagePreview(reader.result || "")
       }
     }
   }

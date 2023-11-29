@@ -128,8 +128,8 @@ export default async function ArticleContent() {
   await new Promise(res => setTimeout(res, 5000))
   return (
     <Box>
-      {ARTICLE_CONTENT_DATA.map(data => (
-        <ArticleContainer linkDetails={data?.post?.link} authorDetails={data?.author}/>
+      {ARTICLE_CONTENT_DATA.map((data, index) => (
+        <ArticleContainer key={`articleContainer${index}`} linkDetails={data?.post?.link} authorDetails={data?.author}/>
       ))}
     </Box>
   );

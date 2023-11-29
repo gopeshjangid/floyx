@@ -2,38 +2,6 @@
 import Post from "@/components/Post/Post"
 import { useGetPostDetailQuery } from "@/lib/redux/slices/posts";
 import { Grid } from "@mui/material"
-import { useEffect } from "react";
-
-const postDetail = {
-    "id": "652241bfda29c95e1800df45",
-    "author": {
-        "id": "5efdbf14fb6be50001cbc36c",
-        "name": "Saddam Husain Khan",
-        "username": "saddam_beta",
-        "avatar": "/api/v1/Users/details/avatar/saddam_beta",
-        "official": false,
-        "accountType": 0
-    },
-    "post": {
-        "id": "652241bfda29c95e1800df45",
-        "createdDateTime": 1696743871000,
-        "numberOfComments": 1,
-        "numberOfShares": 1,
-        "numberOfLikes": 0,
-        "likedByAuthor": false,
-        "type": 4,
-        "content": "nnnnn",
-        "image": {
-            "thumbnailPath": "https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png",
-            "path": "https://floyx-beta.s3.amazonaws.com/article/bfa36c00179b4a3495f6186253c17438.png"
-        },
-        "link": null,
-        "shared": null,
-        "promoted": false,
-        "isSharedPostAvailable": true
-    },
-    "lastComment": null
-}
 
 const commentList = [
     {
@@ -56,7 +24,7 @@ const commentList = [
     }
 ];
 export default function Page({ params }: { params: { postId: string } }) {
-  const {data: postDetail, isLoading} = useGetPostDetailQuery(params.postId);
+  const {data: postDetail } = useGetPostDetailQuery(params.postId);
 
   return (
     <Grid sx={{ width:  { xs: '100%', sm: '70%' } }}>

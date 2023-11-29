@@ -7,7 +7,7 @@ import { useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
 import { Avatar, Box, Button, Typography, Link, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const AuthorDetailBox = styled(Box)(({ theme }) => ({
+export const AuthorDetailBox = styled(Box)(() => ({
   width: '100%',
   marginTop: '35px',
   border: '1px solid white',
@@ -41,10 +41,9 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function AuthorCoulmn({ authorDetails, details, userDetails }: any) {
-  const ARTICLE_DETAILS = authorDetails;
+export default function AuthorCoulmn({ authorDetails, details }: any) {
 
-  const [updatePost, result] = useGetFollowStatusMutation();
+  const [updatePost] = useGetFollowStatusMutation();
 
   return (
     <AuthorDetailBox>
@@ -108,12 +107,12 @@ export default function AuthorCoulmn({ authorDetails, details, userDetails }: an
         <Typography variant="body1">{details?.user?.shortDescription}</Typography>
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ marginRight: '25px' }}>
-            <Typography variant="subtitle2">{ARTICLE_DETAILS?.user?.nationality}</Typography>
+            <Typography variant="subtitle2">{authorDetails?.user?.nationality}</Typography>
           </Box>
           <Box>
             <Link href="#" underline="none" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               {<LinkIcon />}
-              {ARTICLE_DETAILS?.user?.websites}
+              {authorDetails?.user?.websites}
             </Link>
           </Box>
         </Box>
@@ -121,7 +120,7 @@ export default function AuthorCoulmn({ authorDetails, details, userDetails }: an
       <Box className="more-about-auhtor">
         <Typography variant="h5">More From Author</Typography>
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{ paddingTop: '20px' }}>
-          {(ARTICLE_DETAILS?.user?.more).map((val: any, index: number) => (
+          {/* {authorDetails?.user && authorDetails?.user?.more && (authorDetails?.user?.more).length && (authorDetails?.user?.more).map((val: any, index: number) => (
             <Grid item xs={2} sm={4} md={6} key={index}>
               <Box sx={{ display: 'flex', border: '1px solid white', borderRadius: '10px', padding: '15px 10px' }}>
                 <Box sx={{ marginRight: '15px' }}>
@@ -142,7 +141,7 @@ export default function AuthorCoulmn({ authorDetails, details, userDetails }: an
                 </Box>
               </Box>
             </Grid>
-          ))}
+          ))} */}
         </Grid>
       </Box>
     </AuthorDetailBox>

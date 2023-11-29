@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Typography, Button, Grid, Popover } from '@mui/material';
 import UserCard from '@/components/UserCard';
 import StarIcon from '@/images/image/star';
@@ -11,15 +11,11 @@ import TwitterIcon from '@/images/image/twitter';
 import { useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
 import { useGetArticleTotalEarningsQuery } from '@/lib/redux/slices/articleTotalEarnings';
 
-const TAGS = ['inspiration', 'adventure', 'creativity', 'explore', 'science', 'geography'];
-
 export default function FullArticle({ details }: any) {
   const CONTENT = details?.article?.content && JSON.parse(details?.article?.content);
-  const articleId = details?.article?.id;
-  if (!articleId) {
-    return null;
-  }
-  const [updatefollowUnfolow, result] = useGetFollowStatusMutation();
+  const articleId = details?.article?.id || "";
+
+  const [updatefollowUnfolow] = useGetFollowStatusMutation();
   const { data: totalEarningPoints } = useGetArticleTotalEarningsQuery(articleId);
   const pointsEarned = totalEarningPoints
     ? (
@@ -55,7 +51,6 @@ export default function FullArticle({ details }: any) {
           <Box>
             <UserCard
               name={details?.user?.name}
-              displayPicture={details?.user?.avatar}
               username={details?.user?.username}
               showDate={details?.article?.publicationDate}
             />

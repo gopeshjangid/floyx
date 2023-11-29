@@ -1,11 +1,11 @@
 'use client';
 
 import { styled } from '@mui/material/styles';
-import { Box, Typography, Avatar, TextField } from '@mui/material';
+import { Box, Avatar } from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-const AddCommentBox = styled(Box)(({ theme }) => ({
+const AddCommentBox = styled(Box)(() => ({
   marginTop: '20px',
   display: 'flex',
   width: '100%',
@@ -22,8 +22,8 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function AddComment({ avatar }) {
-  const [isAuthorizedUser, setIsAuthorizedUser] = useState<Boolean>(false);
+export default function AddComment({ avatar }: any) {
+  const isAuthorizedUser =false;
   const [postObj, setPostObj] = useState({
     postText: '',
     postTextLeft: 280,
@@ -34,7 +34,6 @@ export default function AddComment({ avatar }) {
     e: any,
     newValue: any,
     newPlainTextValue: any,
-    mentions: any
   ) => {
     const text = e.target.value;
 
@@ -66,16 +65,10 @@ export default function AddComment({ avatar }) {
         <Avatar src={avatar} className="avatar" />
       </Box>
       <Box className="comment-box">
-        {/* <TextField
-          fullWidth
-          label="Add a comment..."
-          id="fullWidth"
-          size="small"
-        /> */}
         <MentionsInput
           className="mention-input-container"
           singleLine={false}
-          //   value={postObj.postText}
+          value={postObj.postText}
           onChange={handlePostText}
           placeholder={'Add a comment...'}
           style={{padding:'10px', display:'flex', alignItem:'centre', justifyContent:'space-between'}}

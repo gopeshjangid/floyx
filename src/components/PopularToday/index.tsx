@@ -4,13 +4,13 @@ import { Box, Typography, Container, Divider, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
-const PopularTodaySection = styled(Box)(({ theme }) => ({
+const PopularTodaySection = styled(Box)(() => ({
   marginLeft: '10px',
   alignItems: 'center',
   marginTop: '40px',
 }));
 
-const PopularTodayListSection = styled(Container)(({ theme }) => ({
+const PopularTodayListSection = styled(Container)(() => ({
   border: '1px solid ',
   borderRadius: '10px',
   marginTop: '25px',
@@ -62,7 +62,7 @@ interface PostObject {
   postNumbers: number;
 }
 
-export default function PopularToday({}) {
+export default function PopularToday() {
   const [popularPosts, setPopularPosts] = useState<PostObject[] | null>(null);
 
   useEffect(() => {

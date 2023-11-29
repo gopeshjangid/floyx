@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export default function TipColumn({details, articlePuclicUrl}:any) {
     const [value, setValue] = useState<number>(30);
-    const [updateTip, result] = useSetTipMutation()
+    const [updateTip] = useSetTipMutation()
 
   
     const handleChange = (event:any, newValue: any) => {

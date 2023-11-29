@@ -1,14 +1,14 @@
 'use client';
 
-import { Box, Container, Tabs, Tab, Typography, Button } from '@mui/material';
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { Box, Tabs, Tab, Typography, Button } from '@mui/material';
+import { SyntheticEvent } from 'react';
 import { styled } from '@mui/material/styles';
 
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 
-const ArticleHeadContainer = styled(Box)(({ theme }) => ({
+const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
   '& .tab-group': {
     borderBottom: '1px solid',
@@ -21,7 +21,7 @@ const ArticleHeadContainer = styled(Box)(({ theme }) => ({
 }));
 
 export default function ArticleHead() {
-  const [value, setValue] = useState(0);
+  const value = 0;
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     console.log(newValue);

@@ -11,7 +11,7 @@ import CustomizedMenus from "../CustomizedButton";
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 
 export default function Header() {
-  const HeaderSection = styled(Box)(({ theme }) => ({
+  const HeaderSection = styled(Box)(() => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',

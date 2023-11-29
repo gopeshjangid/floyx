@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import * as InfiniteScroll from 'react-infinite-scroller'
+import InfiniteScroll from 'react-infinite-scroller'
 import { Box, CircularProgress, Skeleton } from '@mui/material';
 
 import { PostBox } from './styledPostBox';
@@ -16,15 +16,13 @@ export default function PostList() {
     postCreatedDate: 0,
   });
   const [apiHit, setApiHit] = useState(false);
-  const { data: postData, isFetching } = useGetPostsQuery({ apiParams?.pageNumber });
+  const { data: postData, isFetching } = useGetPostsQuery(apiParams);
 
-  const loadMore = (e, pageNumber, isFetching, apiHit) => {
+  const loadMore = (e:any, pageNumber: number, isFetching: boolean, apiHit: boolean) => {
     // console.log(isFetching, 'afdsdfsdfasfd')
     const lastPost = postData[postData.length - 1];
-    console.log(e, pageNumber, isFetching, e > pageNumber , lastPost !== undefined , !isFetching , !apiHit);
-    
+  
     if (e > pageNumber && lastPost !== undefined && !isFetching && !apiHit) {
-      console.log('ddddd')
       setApiHit(true);
       setApiParams({
         pageNumber: e,
@@ -39,7 +37,7 @@ export default function PostList() {
       {(Array.isArray(postData) && postData?.length) ? (
           <InfiniteScroll
             pageStart={0}
-            loadMore={(e) => loadMore(e, apiParams?.pageNumber, isFetching, apiHit)}
+            loadMore={(e:any) => loadMore(e, apiParams?.pageNumber, isFetching, apiHit)}
             hasMore={!apiHit}
             threshold={600}
             loader={<CircularProgress />}

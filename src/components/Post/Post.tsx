@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import PostActionModal from "./PostActionModal";
 import { useRouter } from "next/navigation";
 import { allRoutes } from "@/constants/allRoutes";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 export default function Post({
   name,
@@ -29,8 +29,8 @@ export default function Post({
   postId,
   commentList,
 }: any) {
-  const session = useSession();
-  const userDetail = session.data?.user;
+  // const session = useSession();
+  // const userDetail = session.data?.user;
 
   const router = useRouter();
   const [buttonOptions, setButtonOptions] = useState(["Direct Link"]);
@@ -47,7 +47,7 @@ export default function Post({
   }
 
   useEffect(() => {
-    if (username === userDetail?.username) {
+    if (username === "sadam_hussain") {
       setButtonOptions(["Delete Post", "Direct Link"])
     }
   }, [username]);  
@@ -66,7 +66,6 @@ export default function Post({
             username={username}
             timestamp={createdDateTime}
             shared={shared}
-            displayPicture={avatar}
           />
           <Box sx={{padding: '20px 0'}}>
             <SplitButton 

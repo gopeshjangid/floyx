@@ -3,9 +3,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded';
-import UserAvatar from '@/components/UserAvatar';
-import moment from 'moment';
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import Image from 'next/image'
 import UserCard from "../UserCard";
 
@@ -79,7 +76,6 @@ export default function ArticleContainer({ linkDetails, authorDetails }: any) {
         <UserCard
           name={authorDetails?.name}
           username={authorDetails?.username}
-          displayPicture={authorDetails?.avatar} 
         />
         {/* <Box className="bottom">
           <Box className="author-details">

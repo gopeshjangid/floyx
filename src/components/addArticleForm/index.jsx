@@ -1,7 +1,7 @@
 'use client';
 import { Box, Button, Divider, Input, TextField } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function AddArticleForm({ saveDraft, setSaveDraft }) {
   const [title, setTitle] = useState(null);

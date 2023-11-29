@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
-import { Avatar, Box, Divider, Typography, Link, Button, Modal, Paper } from '@mui/material';
+import { Avatar, Box, Divider, Typography, Link, Button, Modal } from '@mui/material';
 import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import ReplyIcon from '@/images/image/replyIcon';
 import DateParser from '../DateParser';
@@ -12,7 +12,7 @@ import AddComment from '../Post/AddComment';
 import { useGetCommentListQuery } from '@/lib/redux/slices/articleCommentList';
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -27,10 +27,7 @@ const style = {
 };
 
 export default function LikesComments({ likesCommentsDetails, articleId }: any) {
-  const ARTICLE_DETAILS = likesCommentsDetails;
-  if (!articleId) {
-    return null;
-  }
+
   const { data: commentList } = useGetCommentListQuery(articleId);
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -44,7 +41,6 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   function formatIndianNumber(num: number) {
     if (num < 1000) {
@@ -67,24 +63,24 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
       <Divider />
       <Box sx={{ display: 'flex', padding: '17px 20px' }}>
         <Button variant="text" startIcon={<LikeIcon />} sx={{ marginRight: '25px' }}>
-          {formatIndianNumber(ARTICLE_DETAILS?.article?.numberOfLikes)} Likes
+          {formatIndianNumber(likesCommentsDetails?.article?.numberOfLikes)} Likes
         </Button>
         <Button variant="text" startIcon={<CommentIcon />} sx={{ marginRight: '25px' }}>
-          {formatIndianNumber(ARTICLE_DETAILS?.article?.numberOfComments)} Comments
+          {formatIndianNumber(likesCommentsDetails?.article?.numberOfComments)} Comments
         </Button>
         <Button variant="text" startIcon={<ShareIcon />} sx={{ marginRight: '25px' }} onClick={handleClick}>
-          {formatIndianNumber(ARTICLE_DETAILS?.article?.numberOfShares)} Share
+          {formatIndianNumber(likesCommentsDetails?.article?.numberOfShares)} Share
         </Button>
         <Modal open={open} onClose={handleClose}>
           <Box sx={style}>
             <Box sx={{ padding: '10px' }}>
-              <AddComment avatar={ARTICLE_DETAILS?.user?.avatar} />
+              <AddComment avatar={likesCommentsDetails?.user?.avatar} />
             </Box>
             <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
-              <Typography variant="h1">{ARTICLE_DETAILS?.article?.title}</Typography>
+              <Typography variant="h1">{likesCommentsDetails?.article?.title}</Typography>
             </Box>
             <Box sx={{ padding: '10px' }}>
-              <img src={ARTICLE_DETAILS?.article?.coverPhotoPath} width={'100%'} />
+              <img src={likesCommentsDetails?.article?.coverPhotoPath} width={'100%'} />
             </Box>
             <Divider />
             <Box sx={{ paddingTop: '10px', display: 'flex', justifyContent: 'flex-end' }}>
@@ -98,7 +94,7 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
         Comments
       </Typography>
       <Box>
-        {commentList &&
+        {Array.isArray(commentList) &&
           commentList.map((val: any, index: number) => (
             <Box key={index}>
               <Box sx={{ display: 'flex', marginTop: '30px' }}>
@@ -138,7 +134,7 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
         <CommentList comments={commentList}/>
       </Box> */}
       <Box sx={{ marginTop: '40px', padding: '0px 19px 17px 19px', border: '1px solid white', borderRadius: '10px' }}>
-        <AddComment avatar={ARTICLE_DETAILS?.user?.avatar} />
+        <AddComment avatar={likesCommentsDetails?.user?.avatar} />
       </Box>
       <RecommendedTopics />
     </Box>

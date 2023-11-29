@@ -1,17 +1,17 @@
 'use client';
-import { useEffect, useState, Suspense } from 'react';
+import { useState } from 'react';
 import { Box, Button, Container, Divider, Skeleton, Typography } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { styled } from '@mui/material/styles';
 import UserCard from '../UserCard';
 
-const FriendActivitySection = styled(Box)(({ theme }) => ({
+const FriendActivitySection = styled(Box)(() => ({
   marginLeft: '10px',
   alignItems: 'center',
   padding: '0px',
 }));
 
-const FriendActivityMainSection = styled(Container)(({ theme }) => ({
+const FriendActivityMainSection = styled(Container)(() => ({
   border: '1px solid ',
   borderRadius: '10px',
   marginTop: '25px',
@@ -48,12 +48,12 @@ interface ActivityProps {
   postTime: number;
   activity: string;
 }
-export default function FriendsActivity({}) {
+export default function FriendsActivity() {
   const [friendActivity, setFriendActivity] = useState<ActivityProps[] | null>(
     null
   );
 
-  const myPromise = new Promise((resolve, reject) => {
+  const myPromise = new Promise((resolve) => {
     setTimeout(resolve, 3000);
   });
 
@@ -71,7 +71,6 @@ export default function FriendsActivity({}) {
                   name={card.name}
                   username={card.userName}
                   timestamp={card.postTime}
-                  displayPicture={card.displayPicture}
                 />
               </Box>
               <Box>
