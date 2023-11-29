@@ -45,11 +45,12 @@ export default function UserCard({
       <Box>
         <Box className="display-flex">
           <Typography variant="subtitle1" component={"span"}>
-            <Link href="#" underline="none" >{name}</Link>
-            {` @${username} ${shared ? " shared a " : ""}`}
+            {name}
+            <Link href="#" underline="none" >{` @${username} `}</Link>
+            {` ${shared ? " shared a " : ""}`}
             {shared && <Link href="#" underline="none" >post</Link>}
           </Typography>
-          </Box>
+        </Box>
         {timestamp &&
           <Box>
             <DateParser date={timestamp} />

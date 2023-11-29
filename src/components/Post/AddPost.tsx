@@ -6,11 +6,11 @@ import Image from 'next/image'
 
 import { userDetail } from "../../constant/payload"
 import Avatar from "@mui/material/Avatar"
-import PersonIcon from "@mui/icons-material/Person"
 import { MentionsInput, Mention } from "react-mentions"
 import CropOriginalIcon from "@mui/icons-material/CropOriginal"
 import { PostBox } from "./styledPostBox"
 import { useCreatePostMutation } from "@/lib/redux"
+import { SVGUser } from "@/assets/images"
 
 const initialPostObj = {
   postText: '',
@@ -101,7 +101,7 @@ export default function AddPost() {
       <Box className={`input-container ${postObj.postTextLeft < 0 ? 'danger-text' : postObj.postTextLeft < 30 ? 'warning-text' : ''}`}>
         <Box className="styled-input-container">
         <Avatar>
-          <PersonIcon />
+          <SVGUser />
         </Avatar>
         <MentionsInput
           className="mention-input-container"

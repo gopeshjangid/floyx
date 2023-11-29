@@ -17,8 +17,8 @@ export default function Page() {
       case "/":
         return (
           <>
-            <FriendsActivity />
             <PopularToday />
+            <FriendsActivity />
           </>
         )
       case "/article": 

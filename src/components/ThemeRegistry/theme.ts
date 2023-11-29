@@ -185,7 +185,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           }
         },
        outlined: {
-        width: '133px',
+        // width: '133px',
           height: '40px',
           padding: '11px 26px',
           borderRadius: '4px',
@@ -202,7 +202,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           MozBackgroundClip: 'text',
           MozTextFillColor: 'transparent',
           // The gradient text should be visible by default:
-          color: 'transparent',// Fallback color
+          // color: 'transparent',// Fallback color
           '& .MuiButton-label': {
             background: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
             WebkitBackgroundClip: 'text',
@@ -262,6 +262,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             },
           },
        }
+        // outlined: {},
       }
     }
     },

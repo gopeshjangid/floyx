@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles"
 
 export const PostBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.text.secondary}`,
-  borderRadius: "5px",
+  borderRadius: "10px",
   marginTop: "2rem",
   "& .danger-text": {
     color: theme.palette.error.main,
@@ -15,8 +15,8 @@ export const PostBox = styled(Box)(({ theme }) => ({
   },
   "& .upload-media": {
     width: "100%",
-    borderBottomLeftRadius: "5px",
-    borderBottomRightRadius: "5px",
+    borderBottomLeftRadius: "10px",
+    borderBottomRightRadius: "10px",
     display: "flex",
     backgroundColor: theme.palette.background.paper,
     padding: "1rem 2rem",

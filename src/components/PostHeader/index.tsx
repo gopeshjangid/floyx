@@ -64,8 +64,8 @@ export default function Header() {
 
   return (
     <HeaderSection>
-      {TOP_BAR.map(val => (
-      <>
+      {TOP_BAR.map((val, index) => (
+        <Box key={`headerBar${index}`}>
           {!Array.isArray(val?.data) ? (
             val.visible && (
               <Button
@@ -87,7 +87,7 @@ export default function Header() {
               )}
             </>
           )}
-          </>
+        </Box>
       ))}
     </HeaderSection>
   );
