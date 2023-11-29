@@ -10,9 +10,11 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 
 const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
+  marginTop: '15px',
+  alignItems: 'center',
   '& .tab-group': {
     borderBottom: '1px solid',
-    width: '100%',
+    width: '70%',
     marginRight: '10px',
     '& .tab-group-label': {
       display: 'flex',
