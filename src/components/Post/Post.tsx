@@ -1,6 +1,7 @@
 "use client";
 
-import { Box, Typography } from "@mui/material"
+import { Box, Modal, Typography } from "@mui/material";
+
 import DateParser from "../DateParser"
 import UserCard from "../UserCard"
 import { PostBox } from "./styledPostBox"
@@ -9,6 +10,12 @@ import PostImage from "./PostImage"
 import LikeCommentShare from "./LikeCommentShare"
 import AddComment from "./AddComment"
 import CommentList from "../CommentLists"
+import { useDeletePostMutation } from "@/lib/redux";
+import { useEffect, useState } from "react";
+import PostActionModal from "./PostActionModal";
+import { useRouter } from "next/navigation";
+import { allRoutes } from "@/constants/allRoutes";
+import { useSession } from "next-auth/react";
 
 export default function Post({
   name,
@@ -24,9 +31,29 @@ export default function Post({
   postId,
   commentList,
 }: any) {
-  const handleOptions = (val: any) => {
-    console.log(val, postId)
+  const session = useSession();
+  const userDetail = session.data?.user;
+
+  const router = useRouter();
+  const [buttonOptions, setButtonOptions] = useState(["Direct Link"]);
+  const [buttonAction, setButtonAction] = useState('');
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleOptions = (val: any, options: Array<string>) => {
+    setButtonAction(options[val]);
+    if (options[val] === "Delete Post") {
+      setOpen(true);
+    } else if (options[val] === "Direct Link") {
+      router.push(`${allRoutes.post}/${postId}`)
+    }
   }
+
+  useEffect(() => {
+    if (username === userDetail?.username) {
+      setButtonOptions(["Delete Post", "Direct Link"])
+    }
+  }, [username]);  
+
   return (
     <PostBox>
       <Box sx={{ margin: "0rem 1rem 1rem" }}>
@@ -45,8 +72,8 @@ export default function Post({
           />
           <Box sx={{padding: '20px 0'}}>
             <SplitButton 
-              options={['Delete Post', 'Delete Link']}
-              handleOptions={handleOptions}
+              options={buttonOptions}
+              handleOptions={(event:any) => handleOptions(event, buttonOptions)}
             />
           </Box>
         </Box>
@@ -60,6 +87,12 @@ export default function Post({
         <CommentList comments={commentList} />
         <AddComment avatar={avatar}/>
       </Box>
+      <PostActionModal
+        open={open}
+        setOpen={setOpen}
+        action={buttonAction}
+        postId={postId}
+      />
     </PostBox>
   )
 }

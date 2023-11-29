@@ -14,11 +14,7 @@ import MenuList from '@mui/material/MenuList';
 export default function SplitButton({options, handleOptions}: any) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
-  };
+  const [selectedIndex, setSelectedIndex] = React.useState<number|null>(null);
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
@@ -76,7 +72,7 @@ export default function SplitButton({options, handleOptions}: any) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options.map((option, index) => (
+                  {options.map((option:string, index: number) => (
                     <MenuItem
                       key={option}
                       disabled={index === 2}

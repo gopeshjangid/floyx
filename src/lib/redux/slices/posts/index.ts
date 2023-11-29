@@ -12,7 +12,7 @@ const initialState: Posts = {
   allPostRecived: true,
 }
 const newtoken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJzdWIiOiI1ZWZkYmYxNGZiNmJlNTAwMDFjYmMzNmMiLCJ1bmlxdWVfbmFtZSI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImp0aSI6IjIzNThiMjVmLWUyNTItNGI0NC04M2E3LWRkY2I5YzFjNGQ3ZiIsImlhdCI6IjE3MDExNjkzMzQ4MTYiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvaXNwZXJzaXN0ZW50IjoiZmFsc2UiLCJuYmYiOjE3MDExNjkzMzQsImV4cCI6MTcwMTE3MjkzNCwiaXNzIjoiZmxveXgifQ.Qox1KFqnKcyQUYrrw0EH0sBxqvlRJ94lXsY3s33_ljI';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJzdWIiOiI1ZWZkYmYxNGZiNmJlNTAwMDFjYmMzNmMiLCJ1bmlxdWVfbmFtZSI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImp0aSI6IjQ3YjUxZGU1LTI3ZGItNDZkMS1iNTY2LTE1M2RiZGM2MzNkZiIsImlhdCI6IjE3MDEyNDExNzA3MzQiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvaXNwZXJzaXN0ZW50IjoiZmFsc2UiLCJuYmYiOjE3MDEyNDExNzAsImV4cCI6MTcwMTI0NDc3MCwiaXNzIjoiZmxveXgifQ.1IAr2oSGIU-phRXiNz28NPaRD44Es_vuts5FnH_gEVY';
 
 // Base query using fetchBaseQuery and caching
 const baseQuery = fetchBaseQuery({
@@ -84,13 +84,22 @@ export const postServices = createApi({
         body: initialPost,
       }),
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+    }),
+    deletePost: builder.mutation<any, string>({
+      query: (id) =>({
+        url: `${ApiEndpoint.DeletePost}/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     })
   }),
-  tagTypes: ['Posts']
+  tagTypes: ['Posts'],
+  
 });
 
 export const {
   useGetPostsQuery,
   useGetPostDetailQuery,
   useCreatePostMutation,
+  useDeletePostMutation,
 } = postServices;
