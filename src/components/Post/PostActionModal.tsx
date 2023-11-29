@@ -1,5 +1,6 @@
 import { useDeletePostMutation } from "@/lib/redux"
 import { Box, Button, CircularProgress, Modal, Typography } from "@mui/material"
+import React from "react";
 
 export default function PostActionModal({
   action,
@@ -9,7 +10,7 @@ export default function PostActionModal({
 }: {
   action: string
   open: boolean
-  setOpen: Function
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>; 
   postId: string
 }) {
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation()
@@ -31,7 +32,7 @@ export default function PostActionModal({
     >
       <Box
         sx={{
-          position: "absolute" as "absolute",
+          position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",

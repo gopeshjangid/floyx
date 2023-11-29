@@ -1,8 +1,7 @@
 "use client";
 
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
-import DateParser from "../DateParser"
 import UserCard from "../UserCard"
 import { PostBox } from "./styledPostBox"
 import SplitButton from "../SplitButton"
@@ -10,7 +9,6 @@ import PostImage from "./PostImage"
 import LikeCommentShare from "./LikeCommentShare"
 import AddComment from "./AddComment"
 import CommentList from "../CommentLists"
-import { useDeletePostMutation } from "@/lib/redux";
 import { useEffect, useState } from "react";
 import PostActionModal from "./PostActionModal";
 import { useRouter } from "next/navigation";

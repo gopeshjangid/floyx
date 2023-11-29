@@ -1,23 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as InfiniteScroll from 'react-infinite-scroller'
 import { Box, CircularProgress, Skeleton } from '@mui/material';
 
 import { PostBox } from './styledPostBox';
 import Post from './Post';
 import { useGetPostsQuery } from "@/lib/redux/slices/posts";
-
-interface postObj {
-  id: string;
-  author: any;
-  post: {
-    id: string;
-    content: string;
-    link: {
-      thumbnailPath: string;
-    };
-  };
-}
 
 export default function PostList() {
   const [apiParams, setApiParams] = useState<{
@@ -28,8 +16,7 @@ export default function PostList() {
     postCreatedDate: 0,
   });
   const [apiHit, setApiHit] = useState(false);
-  const [postCreatedDate, setPostCreatedDate] = useState<number>(0);
-  const { data: postData, isLoading, isFetching, isError, ...props } = useGetPostsQuery(apiParams?.pageNumber);
+  const { data: postData, isFetching } = useGetPostsQuery({ apiParams?.pageNumber });
 
   const loadMore = (e, pageNumber, isFetching, apiHit) => {
     // console.log(isFetching, 'afdsdfsdfasfd')

@@ -1,6 +1,6 @@
 "use client"
 import { Box, Modal, Skeleton, Typography } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Post from "./Post"
 import moment from "moment"
 import Link from "next/link"

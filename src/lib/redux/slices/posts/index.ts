@@ -37,9 +37,9 @@ export const postServices = createApi({
       query: (id) => `${ApiEndpoint.GetPosts}/post/${id}`,
       transformResponse: (response: any) => response?.value?.data,
     }),
-    getPosts: builder.query<any, void>({
-      query: ({ pageNumber, postCreatedDate } :any) => {
-        let apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
+    getPosts: builder.query<any, string>({
+      query: ({ pageNumber, postCreatedDate }:any) => {
+        const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {
           return apiEndPoint;
         } 
@@ -85,7 +85,7 @@ export const postServices = createApi({
       }),
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
-    deletePost: builder.mutation<any, string>({
+    deletePost: builder.mutation<any, void>({
       query: (id) =>({
         url: `${ApiEndpoint.DeletePost}/${id}`,
         method: 'DELETE',

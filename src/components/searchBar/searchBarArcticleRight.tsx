@@ -1,7 +1,6 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import { Mention, MentionsInput } from 'react-mentions';
 
 export default function SearchBarArcticleRight() {

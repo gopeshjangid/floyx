@@ -1,7 +1,7 @@
 "use client"
 
-import { Box, Card, Button, Tab, Tabs, Typography, CircularProgress } from "@mui/material"
-import { SyntheticEvent, useEffect, useRef, useState } from "react"
+import { Box, Button, Tab, Tabs, Typography, CircularProgress } from "@mui/material"
+import { SyntheticEvent, useRef, useState } from "react"
 import Image from 'next/image'
 
 import { userDetail } from "../../constant/payload"
@@ -9,7 +9,6 @@ import Avatar from "@mui/material/Avatar"
 import PersonIcon from "@mui/icons-material/Person"
 import { MentionsInput, Mention } from "react-mentions"
 import CropOriginalIcon from "@mui/icons-material/CropOriginal"
-import VideoCameraBackOutlinedIcon from "@mui/icons-material/VideoCameraBackOutlined"
 import { PostBox } from "./styledPostBox"
 import { useCreatePostMutation } from "@/lib/redux"
 
@@ -21,14 +20,13 @@ const initialPostObj = {
 
 export default function AddPost({ }) {
   const imageFileInput = useRef<HTMLInputElement>(null)
-  const videoFileInput = useRef<HTMLInputElement>(null)
   const [postObj, setPostObj] = useState(initialPostObj)
   const [value, setValue] = useState(0);
   const [isAuthorizedUser, setIsAuthorizedUser] = useState<Boolean>(false);
   const [imagePreview, setImagePreview] = useState<string | Blob>('')
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('')
 
-  const [createPost, { data, error, isLoading, isSuccess }] = useCreatePostMutation();
+  const [createPost, {error, isLoading }] = useCreatePostMutation();
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     console.log(newValue)
@@ -48,7 +46,7 @@ export default function AddPost({ }) {
     }
   }
 
-  const handlePostText = (e: any, newValue: any, newPlainTextValue: any, mentions: any) => {
+  const handlePostText = (e: any, newValue: any, newPlainTextValue: any) => {
     const text = e.target.value;
 
     setPostObj(prev => {
