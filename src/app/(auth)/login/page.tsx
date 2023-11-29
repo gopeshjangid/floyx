@@ -38,7 +38,7 @@ interface IFormError {
 }
 
 const Login: FC = () => {
-  console.log('login test 122')
+  console.log('login test 122');
   const toast = useToast();
   const { palette } = useTheme();
   const router = useRouter();
@@ -49,6 +49,9 @@ const Login: FC = () => {
     remember: false,
   });
   const [formError, setFormError] = useState<IFormError>({});
+
+  console.log('next auth url', process.env.NEXTAUTH_URL);
+  console.log('next auth url', process.env.NEXTAUTH_SECRET);
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

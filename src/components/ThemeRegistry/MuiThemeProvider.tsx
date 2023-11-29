@@ -12,7 +12,6 @@ const MUIThemeProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     const theme = getThemeObject(resolvedTheme === 'dark' ? 'dark' : 'light');
     setCurrentTheme(theme);
   }, [resolvedTheme]);
-  console.log({ resolvedTheme });
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />
