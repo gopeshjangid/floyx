@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import UserAvatar from '../UserAvatar';
 
 const whoToFollowData = [
@@ -74,7 +74,7 @@ export default async function WhoToFollow() {
     <Box sx={{ marginTop: '40px' }}>
       <Typography>Who to follow</Typography>
       <Box sx={{ marginTop: '30px', padding: '0 10px 10px 0' }}>
-        {whoToFollowData.map((val, index) => (
+        {whoToFollowData.map((val) => (
           <>
             <Box sx={{ display: 'flex', marginTop: '10px' }}>
               <Box>

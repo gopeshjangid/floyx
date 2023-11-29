@@ -11,7 +11,7 @@ export default function RootLayout({ children }: any) {
     <Box display="flex" minHeight="100vh">
       <DrawerAppBar />
       {/* TODO: container width */}
-      <Grid container display={"flex"} flexDirection={"row"} sx={{margin: { xs: '70px 0', md: '30px 0' }, width: "100%"}}>  <Toolbar />
+      <Grid container display={"flex"} flexDirection={"row"} sx={{ margin: { xs: '70px 0', md: '30px 0' }, width: "100%"}}>
         {children}
         <RightContent />
       </Grid>

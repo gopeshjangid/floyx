@@ -1,6 +1,6 @@
 import { Box, Divider, Skeleton, Typography } from '@mui/material';
 
-export default function Loading({}) {
+export default function Loading() {
   return (
     <Box sx={{ marginTop: '40px' }}>
       <Typography>Who to follow</Typography>

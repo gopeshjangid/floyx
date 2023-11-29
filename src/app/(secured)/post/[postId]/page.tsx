@@ -55,12 +55,9 @@ const commentList = [
         }
     }
 ];
-export default function Page({ params }: { params: { postId: number } }) {
+export default function Page({ params }: { params: { postId: string } }) {
   const {data: postDetail, isLoading} = useGetPostDetailQuery(params.postId);
 
-  useEffect(() => {
-    console.log(postDetail)
-  }, [postDetail])
   return (
     <Grid sx={{ width:  { xs: '100%', sm: '70%' } }}>
       {postDetail && <Post

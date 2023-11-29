@@ -6,4 +6,5 @@ export const allRoutes = {
   socialLogin: '/social-login',
   notifications: '/notifications',
   inbox: '/inbox',
+  post: '/post',
 };

@@ -1,11 +1,13 @@
 'use client';
-import { Avatar, Box, Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DateParser from '../DateParser';
 import moment from 'moment';
 import CalendarIcon from '@/images/image/calendarIcon';
+import UserAvatar from "../UserAvatar";
+import { ApiEndpoint } from "@/lib/services/ApiEndpoints";
 
-export const UserCardBox = styled(Box)(({ theme }) => ({
+export const UserCardBox = styled(Box)(() => ({
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",
@@ -18,28 +20,26 @@ export const UserCardBox = styled(Box)(({ theme }) => ({
 
 export default function UserCard({
   name,
-  displayPicture,
   username,
   timestamp,
   shared,
   showDate,
   comment,
 }: {
-  name: string
-  displayPicture?: string
-  username: string
-  timestamp?: number,
+  name: string;
+  username: string;
+  timestamp?: number;
   shared?: any;
   showDate?: any;
   comment?: string,
 }) {
   return (
     <UserCardBox>
-      <Box>
-        <Avatar
+      <Box sx={{marginRight: '10px'}}>
+        <UserAvatar
           alt={name}
-          src={displayPicture}
-          sx={{ width: 50, height: 50, marginRight: "10px" }}
+          src={`${ApiEndpoint.CurrentUserDetails}/avatar/${username}`}
+          sx={{ width: "50px", height: "50px" }}
         />
       </Box>
       <Box>

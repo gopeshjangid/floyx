@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { Button, FormControl, MenuItem, Select } from '@mui/material';
+import { Button } from '@mui/material';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';

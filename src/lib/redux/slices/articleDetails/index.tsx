@@ -21,7 +21,7 @@ export const artcileDetails = createApi({
   reducerPath: 'artcileDetailsReducer',
   baseQuery: baseQuery,
   endpoints: builder => ({
-    getArticleDetails: builder.query<Article, any>({
+    getArticleDetails: builder.query<any, any>({
       query: ({ userName, articlePuclicUrl }) => `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`,
       transformResponse: (response: any) => response?.value?.data,
       providesTags: ['FollowStatus', 'LikeStatus'],
