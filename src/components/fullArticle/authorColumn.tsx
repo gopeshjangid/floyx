@@ -3,6 +3,7 @@
 import ArticleIcon from '@/images/image/articleIcon';
 import LinkIcon from '@/images/image/linkIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
+import { useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
 import { Avatar, Box, Button, Typography, Link, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -43,7 +44,7 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
 export default function AuthorCoulmn({ authorDetails, details, userDetails }: any) {
   const ARTICLE_DETAILS = authorDetails;
 
-  
+  const [updatePost, result] = useGetFollowStatusMutation();
 
   return (
     <AuthorDetailBox>
@@ -59,27 +60,30 @@ export default function AuthorCoulmn({ authorDetails, details, userDetails }: an
           </Box>
           <Box sx={{ margin: '0px 10px', color: 'white' }}>|</Box>
           <Box>
-            <Button variant="outlined" size="small" sx={{ borderRadius: '30px', padding: '3px 15px' }}>
-              Follow
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{ borderRadius: '30px', padding: '3px 15px' }}
+              onClick={() => {
+                updatePost(details?.user?.username);
+              }}
+            >
+              {details?.user?.isFollowed ? 'Follow' : 'UnFollow'}
             </Button>
           </Box>
         </Box>
       </Box>
       <Box className="author-box">
         <Box>
-          <Avatar
-            alt={userDetails?.name}
-            src={userDetails?.avatar}
-            sx={{ width: 60, height: 60, marginRight: '10px' }}
-          />
+          <Avatar alt={details?.user?.name} src={details?.user?.avatar} sx={{ width: 60, height: 60, marginRight: '10px' }} />
         </Box>
         <Box>
           <Box className="name">
             <Typography variant="subtitle1" component={'span'}>
               <Link href="#" underline="none">
-                {userDetails?.name}
+                {details?.user?.name}
               </Link>
-              @{userDetails?.username}
+              @{details?.user?.username}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -88,20 +92,20 @@ export default function AuthorCoulmn({ authorDetails, details, userDetails }: an
               <Typography variant="body2" sx={{ margin: '0px 5px' }}>
                 Followers:
               </Typography>
-              <Typography variant="body2">{userDetails?.numberOfFollowers}</Typography>
+              <Typography variant="body2">{details?.user?.numberOfFollowers}</Typography>
             </Box>
             <Box sx={{ display: 'flex' }}>
               <ArticleIcon />
               <Typography variant="body2" sx={{ margin: '0px 5px' }}>
                 Articles:
               </Typography>
-              <Typography variant="body2">{userDetails?.numberOfArticles}</Typography>
+              <Typography variant="body2">{details?.user?.numberOfArticles}</Typography>
             </Box>
           </Box>
         </Box>
       </Box>
       <Box className="author-about">
-        <Typography variant="body1">{userDetails?.shortDescription}</Typography>
+        <Typography variant="body1">{details?.user?.shortDescription}</Typography>
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ marginRight: '25px' }}>
             <Typography variant="subtitle2">{ARTICLE_DETAILS?.user?.nationality}</Typography>
@@ -129,11 +133,7 @@ export default function AuthorCoulmn({ authorDetails, details, userDetails }: an
                   </Box>
                   <Box sx={{ display: 'flex' }}>
                     <Box>
-                      <Avatar
-                        alt={details?.user?.name}
-                        src={details?.user?.avatar}
-                        sx={{ width: 20, height: 20, marginRight: '10px' }}
-                      />
+                      <Avatar alt={details?.user?.name} src={details?.user?.avatar} sx={{ width: 20, height: 20, marginRight: '10px' }} />
                     </Box>
                     <Box>
                       <Typography variant="caption">by {details?.user?.name}</Typography>

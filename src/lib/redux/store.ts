@@ -22,6 +22,7 @@ import { postServices } from './slices/posts';
 import { userDetails } from './slices/userDetails';
 import { artcileDetails } from './slices/articleDetails';
 import { commentList } from './slices/articleCommentList';
+import { articleTotalEarnings } from './slices/articleTotalEarnings';
 const persistConfig = {
   key: 'root',
   storage,
@@ -48,6 +49,7 @@ function makeStore(initialState = {}) {
       .concat(userDetails.middleware)
       .concat(artcileDetails.middleware)
       .concat(commentList.middleware)
+      .concat(articleTotalEarnings.middleware)
   });
 }
 

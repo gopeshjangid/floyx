@@ -10,6 +10,7 @@ import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 const ContainerBox = styled(Box)(({ theme }) => ({
   paddingLeft: '0px',
   display: 'flex',
+  overflow:'scroll',
   justifyContent: 'space-between',
   marginTop: '30px',
   width: '65%',

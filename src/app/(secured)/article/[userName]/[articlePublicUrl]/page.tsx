@@ -166,9 +166,9 @@ export default function Page() {
   return (
     <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Box sx={{ width: '70%' }}>
-        <FullArticle details={articleDetails}/>
-        <TipColumn />
-        <AuthorCoulmn authorDetails={ARTICLE_DETAILS} details={articleDetails} userDetails={userDetails}/>
+        <FullArticle details={articleDetails} userDetails={userDetails}/>
+        <TipColumn details={articleDetails} articlePuclicUrl={articlePuclicUrl}/>
+        <AuthorCoulmn authorDetails={ARTICLE_DETAILS} details={articleDetails}/>
         <LikesComments likesCommentsDetails={articleDetails} articleId={articleId}/>
       </Box>
     </Container>

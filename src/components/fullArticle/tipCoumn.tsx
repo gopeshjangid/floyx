@@ -1,6 +1,28 @@
+'use client'
+import { useSetTipMutation } from '@/lib/redux/slices/articleTotalEarnings';
 import { Box, Typography, Slider, Button } from '@mui/material';
+import { useState } from 'react';
 
-export default function TipColumn() {
+export default function TipColumn({details, articlePuclicUrl}:any) {
+    const [value, setValue] = useState<number>(30);
+    const [updateTip, result] = useSetTipMutation()
+
+  
+    const handleChange = (event:any, newValue: any) => {
+      setValue(newValue);
+    };
+
+    const handleTip = () => {
+      const payload:any = {
+        "articleId":details?.article?.id,
+        "articlePublicUrl":articlePuclicUrl,
+        "articleTipAmount":value/10000,
+        "articleUserId":details?.user?.id,
+        "userTipAmount":(100-value)/10000
+      }
+      updateTip(payload)
+    }
+
   return (
     <Box
       sx={{
@@ -17,17 +39,28 @@ export default function TipColumn() {
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
-        <Slider defaultValue={100} aria-label="Disabled slider" sx={{ width: '50%' }} />
+        <Slider
+          // aria-label="Disabled slider"
+          sx={{ width: '50%' }}
+          value={value}
+          onChange={handleChange}
+          aria-labelledby="discrete-slider-small-steps"
+          step={10}
+          marks
+          min={0}
+          max={100}
+          valueLabelDisplay="auto"
+        />
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
         <Typography variant="subtitle2" sx={{ textAlign: 'center' }}>
-          40% to author / 60% to me
+          {value}% to author / {100-value}% to me
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
-        <Button variant="contained">Tip</Button>
+        <Button variant="contained" onClick={handleTip}>Tip</Button>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px'  }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
         <Typography variant="body1" sx={{ textAlign: 'center' }}>
           Start earning money by reading articles!
         </Typography>

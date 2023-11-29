@@ -5,6 +5,7 @@ import { postServices } from './slices/posts';
 import { userDetails } from './slices/userDetails';
 import { artcileDetails } from './slices/articleDetails';
 import { commentList } from './slices/articleCommentList';
+import { articleTotalEarnings } from './slices/articleTotalEarnings';
 
 export const reducer = combineReducers({
   [earningsService.reducerPath]: earningsService.reducer,
@@ -12,5 +13,6 @@ export const reducer = combineReducers({
   [userDetails.reducerPath]: userDetails.reducer,
   [artcileDetails.reducerPath]: artcileDetails.reducer,
   [commentList.reducerPath]: commentList.reducer,
+  [articleTotalEarnings.reducerPath]: articleTotalEarnings.reducer
 
 });
