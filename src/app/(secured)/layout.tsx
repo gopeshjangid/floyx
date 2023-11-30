@@ -1,15 +1,16 @@
+
 import React from "react";
 import DrawerAppBar from "./drawer";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { getMetaData } from "@/lib/SEO";
 import RightContent from "./_rightContent/page";
+import { StyleRootLayout } from "@/components/StyleRootLayout";
 // import { useTheme } from "@mui/material";
 
 export default function RootLayout({ children }: any) {
-  // const theme = useTheme();
 
   return (
-    <Box display="flex" minHeight="100vh">
+    <StyleRootLayout>
       <DrawerAppBar />
       {/* TODO: container width */}
       <Grid
@@ -23,7 +24,7 @@ export default function RootLayout({ children }: any) {
         {children}
         <RightContent />
       </Grid>
-    </Box>
+    </StyleRootLayout>
   );
 }
 

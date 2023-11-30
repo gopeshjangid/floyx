@@ -69,6 +69,7 @@ export default function CustomizedMenus({startIcon, menuItem}: any) {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
         startIcon={startIcon}
+        sx={{padding: '5px 10px'}}
       >
         Options
       </Button>
