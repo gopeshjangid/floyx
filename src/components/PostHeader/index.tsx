@@ -9,8 +9,11 @@ import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import { styled } from '@mui/material/styles';
 import CustomizedMenus from "../CustomizedButton";
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
+  const router = useRouter();
+
   const HeaderSection = styled(Box)(() => ({
     display: 'flex',
     justifyContent: 'space-between',
@@ -23,19 +26,19 @@ export default function Header() {
       text: 'Articles/Blog',
       icon: <DescriptionOutlinedIcon />,
       visible: true,
-      link: '/articlePage',
+      link: '/article',
     },
     {
       text: 'Video/Live Streams',
       icon: <VideocamIcon />,
       visible: true,
-      link: '/videoPage',
+      link: '/article',
     },
     {
       text: 'Group',
       icon: <PeopleOutlinedIcon />,
       visible: true,
-      link: '/groupPage',
+      link: '/article',
     },
     {
       data: [
@@ -62,6 +65,11 @@ export default function Header() {
     },
   ];
 
+  const handleClick = (link: string | undefined) => {
+    if(link)
+      router.push(link)
+  }
+
   return (
     <HeaderSection>
       {TOP_BAR.map((val, index) => (
@@ -70,9 +78,9 @@ export default function Header() {
             val.visible && (
               <Button
                 variant="outlined"
-                href={val.link}
+                onClick={() => handleClick(val?.link)}
                 startIcon={val.icon}
-                sx={ { marginRight: 2}}
+                sx={ { marginRight: 1, padding: '5px 10px', whiteSpace: "nowrap", alignItems: 'center'}}
               >
                 {val.text}
               </Button>
@@ -80,10 +88,10 @@ export default function Header() {
           ) : (
             <>
               {val.visible && (
-                  <CustomizedMenus
-                    startIcon={<CurrencyBitcoinIcon />}
-                    menuItem={val.data}
-                  />
+                <CustomizedMenus
+                  startIcon={<CurrencyBitcoinIcon />}
+                  menuItem={val.data}
+                />
               )}
             </>
           )}

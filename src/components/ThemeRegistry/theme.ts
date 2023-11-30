@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 
-const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
+// const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
   // const isLightTheme = mode === 'light';
   const palette = {
@@ -184,85 +184,85 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             opacity: 0.9 // Or any other styling you want on hover
           }
         },
-       outlined: {
-        // width: '133px',
-          height: '40px',
-          padding: '11px 26px',
-          borderRadius: '4px',
-          gap: '10px',
-          fontWeight: 500,
-          fontSize: '16px',
-          lineHeight: '24px',
-          position: 'relative',
-          border: '1px solid transparent',
-            overflow: 'hidden', 
-           background: gradientBorder,
-            WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          MozBackgroundClip: 'text',
-          MozTextFillColor: 'transparent',
-          // The gradient text should be visible by default:
-          // color: 'transparent',// Fallback color
-          '& .MuiButton-label': {
-            background: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            MozBackgroundClip: 'text',
-            MozTextFillColor: 'transparent',
-          },
-          // The gradient border should also be visible by default:
-          '&:before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            borderRadius: '4px',
-            border: '1px solid',
-            borderImageSlice: 1,
-            borderImageSource: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
-            zIndex: -1,
-          },
-          // Hover state: you might want to change the opacity or add other styles:
-          '&:hover': {
-            '&:before': {
-               borderRadius: 'inherit',
-              opacity: 0.8, // Example: slightly reduce the opacity on hover
-            },
-          },
-          // Active state: you might want to change the opacity or add other styles:
-          '&:active': {
-            '&:before': {
-              opacity: 0.9, // Example: slightly increase the opacity to indicate active state
-            },
-          },
-          // Disabled state:
-          '&:disabled': {
-            color: '#aaa', // Dim the text color
-            backgroundColor: '#f3f3f3', // Set a different background
-            '& .MuiButton-label': {
-              background: 'none', // Remove gradient background on disabled state
-            },
-            '&:before': {
-              display: 'none', // Hide the gradient border on disabled state
-            },
-          },
-          // Focus state: ensure the gradient border and text are fully visible:
-          '&:focus': {
-            '& .MuiButton-label': {
-              background: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              MozBackgroundClip: 'text',
-              MozTextFillColor: 'transparent',
-            },
-            '&:before': {
-              opacity: 1, // Ensure the gradient border is fully visible
-            },
-          },
-       }
-        // outlined: {},
+      //  outlined: {
+      //   // width: '133px',
+      //     height: '40px',
+      //     padding: '11px 26px',
+      //     borderRadius: '4px',
+      //     gap: '10px',
+      //     fontWeight: 500,
+      //     fontSize: '16px',
+      //     lineHeight: '24px',
+      //     position: 'relative',
+      //     border: '1px solid transparent',
+      //       overflow: 'hidden', 
+      //      background: gradientBorder,
+      //       WebkitBackgroundClip: 'text',
+      //     WebkitTextFillColor: 'transparent',
+      //     MozBackgroundClip: 'text',
+      //     MozTextFillColor: 'transparent',
+      //     // The gradient text should be visible by default:
+      //     // color: 'transparent',// Fallback color
+      //     '& .MuiButton-label': {
+      //       background: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
+      //       WebkitBackgroundClip: 'text',
+      //       WebkitTextFillColor: 'transparent',
+      //       MozBackgroundClip: 'text',
+      //       MozTextFillColor: 'transparent',
+      //     },
+      //     // The gradient border should also be visible by default:
+      //     '&:before': {
+      //       content: '""',
+      //       position: 'absolute',
+      //       top: 0,
+      //       right: 0,
+      //       bottom: 0,
+      //       left: 0,
+      //       borderRadius: '4px',
+      //       border: '1px solid',
+      //       borderImageSlice: 1,
+      //       borderImageSource: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
+      //       zIndex: -1,
+      //     },
+      //     // Hover state: you might want to change the opacity or add other styles:
+      //     '&:hover': {
+      //       '&:before': {
+      //          borderRadius: 'inherit',
+      //         opacity: 0.8, // Example: slightly reduce the opacity on hover
+      //       },
+      //     },
+      //     // Active state: you might want to change the opacity or add other styles:
+      //     '&:active': {
+      //       '&:before': {
+      //         opacity: 0.9, // Example: slightly increase the opacity to indicate active state
+      //       },
+      //     },
+      //     // Disabled state:
+      //     '&:disabled': {
+      //       color: '#aaa', // Dim the text color
+      //       backgroundColor: '#f3f3f3', // Set a different background
+      //       '& .MuiButton-label': {
+      //         background: 'none', // Remove gradient background on disabled state
+      //       },
+      //       '&:before': {
+      //         display: 'none', // Hide the gradient border on disabled state
+      //       },
+      //     },
+      //     // Focus state: ensure the gradient border and text are fully visible:
+      //     '&:focus': {
+      //       '& .MuiButton-label': {
+      //         background: 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
+      //         WebkitBackgroundClip: 'text',
+      //         WebkitTextFillColor: 'transparent',
+      //         MozBackgroundClip: 'text',
+      //         MozTextFillColor: 'transparent',
+      //       },
+      //       '&:before': {
+      //         opacity: 1, // Ensure the gradient border is fully visible
+      //       },
+      //     },
+      //  }
+        outlined: {},
       }
     }
     },

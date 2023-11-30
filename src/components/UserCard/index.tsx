@@ -44,7 +44,7 @@ export default function UserCard({
       </Box>
       <Box>
         <Box className="display-flex">
-          <Typography variant="subtitle1" component={"span"}>
+          <Typography variant="subtitle1" component={"span"} color="textPrimary">
             {name}
             <Link href="#" underline="none" >{` @${username} `}</Link>
             {` ${shared ? " shared a " : ""}`}

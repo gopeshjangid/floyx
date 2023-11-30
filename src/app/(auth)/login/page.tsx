@@ -51,7 +51,10 @@ const Login: FC = () => {
   const [formError, setFormError] = useState<IFormError>({});
 
   console.log('next auth url', process.env.NEXTAUTH_URL);
-  console.log('next auth url', process.env.NEXTAUTH_SECRET);
+  console.log('vercel url', process.env.VERCEL_URL);
+  console.log('public vercel url', process.env.NEXT_PUBLIC_VERCEL_URL);
+  console.log("public backend url", process.env.NEXT_PUBLIC_BACKEND_BASE_DEV_URL);
+  console.log('next auth url 22', process.env.NEXTAUTH_SECRET);
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

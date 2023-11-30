@@ -3,6 +3,7 @@
 import { Box, Button, Tab, Tabs, Typography, CircularProgress } from "@mui/material"
 import { SyntheticEvent, useRef, useState } from "react"
 import Image from 'next/image'
+import Link from 'next/link';
 
 import { userDetail } from "../../constant/payload"
 import Avatar from "@mui/material/Avatar"
@@ -93,7 +94,7 @@ export default function AddPost() {
       >
         <Tab sx={{ paddingX: 2}} label={<Typography variant="subtitle2">Post</Typography>} />
         <Tab
-          component="a"
+          component={Link}
           label={<Typography variant="subtitle2">Write an article</Typography>}
           href="/article/add-edit"
         />
