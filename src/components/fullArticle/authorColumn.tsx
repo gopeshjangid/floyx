@@ -107,12 +107,12 @@ export default function AuthorCoulmn({ authorDetails, details }: any) {
         <Typography variant="body1">{details?.user?.shortDescription}</Typography>
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ marginRight: '25px' }}>
-            <Typography variant="subtitle2">{authorDetails?.user?.nationality}</Typography>
+            <Typography variant="subtitle2">{details?.user?.nationality || 'Canada'}</Typography>
           </Box>
           <Box>
             <Link href="#" underline="none" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               {<LinkIcon />}
-              {authorDetails?.user?.websites}
+              {details?.user?.websites || 'www.website.com'}
             </Link>
           </Box>
         </Box>
