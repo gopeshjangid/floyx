@@ -10,9 +10,9 @@ const poppins = Poppins({
 });
 
 //const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
-const gradientBorder = ({ color1, color2, color3, width }: any) => {
-  return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
-};
+// const gradientBorder = ({ color1, color2, color3, width }: any) => {
+//   return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
+// };
 
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
   const palette = {
@@ -285,7 +285,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             textTransform: 'capitalize',
             fontSize: '16px',
             fontWeight: '400',
-            color: palette?.mode === 'light' ? palette.text.primary : palette?.action?.svg,
+            color:
+              palette?.mode === 'light'
+                ? palette.text.primary
+                : palette?.action?.svg,
           },
         },
       },
@@ -392,38 +395,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               opacity: 0.9, // Or any other styling you want on hover
             },
           },
-          outlined: {
-            height: '46px', // Hug (46px)
-            minWidth: '161px', // Hug (161px)
-            borderRadius: '4px', // Radius
-            border: '1px solid transparent', // Border with gradient
-            padding: '11px 26px', // Padding
-            gap: '10px', // Gap
-            position: 'relative', // To position the pseudo-elements for gradient
-            // Create pseudo-elements for gradient border
-            '&:before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-              borderRadius: 'inherit',
-              backgroundImage: gradientBorder({
-                color1: '#AB59FF',
-                color2: '#858FFF',
-                color3: '#4D9AFF',
-                width: '1px',
-              }),
-              zIndex: 0,
-              pointerEvents: 'none', // Ignore pointer events on the pseudo-element
-            },
-            // Adjust the label (child of button) to bring it above the pseudo-element
-            '& .MuiButton-label': {
-              position: 'relative',
-              zIndex: 1,
-            },
-          },
+          outlined: {},
         },
       },
     },

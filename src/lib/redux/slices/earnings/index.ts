@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
-import { getCookie } from 'cookies-next';
-import { FLOYX_TOKEN } from '@/constants';
+import { baseQuery } from '@/lib/utils';
 
 interface Wallet {
   availableBalance: number;
@@ -12,20 +11,64 @@ interface Wallet {
   id: string;
 }
 
-// Base query using fetchBaseQuery and caching
-const baseQuery = fetchBaseQuery({
-  baseUrl: '/',
-  prepareHeaders: (headers, { getState }) => {
-    console.log('calling apis');
-    // Use getState to get the current token from the store
-    // const token = (getState() as ReduxState).auth.token;
-    // // If we have a token set in state, let's assume that we should be passing it.
-    // if (token) {
-    headers.set('authorization', `Bearer ${getCookie(FLOYX_TOKEN)}`);
-    // }
-    return headers;
-  },
-});
+type Task = {
+  userId: string;
+  bonusTaskId: string;
+  taskName: string;
+  countNeeded: number;
+  promotedDays: number;
+  isCompleted: boolean;
+};
+
+type ApiResponse<T> = {
+  value: {
+    data: T;
+    code: string;
+  };
+};
+
+type TipHistoryType = {
+  amountEarned: number;
+  articleId: string;
+  articlePublicUrl: string;
+  articleUserName: string;
+  earnedOn: string;
+  userId: string;
+};
+
+type ArticleHistry = {
+  amountEarned: number;
+  articleId: string;
+  articleUrl: string;
+  articleUserId: string;
+  earnedOn: string;
+};
+
+type ReferralHistory = {
+  invitedUsername: string;
+  referrEarnedAmount: number;
+  invitedDate: string;
+};
+
+type CompletedTaskHistory = {
+  amountEarned: number;
+  earnedOn: string;
+  userId: string;
+};
+
+type InviteHistoryResponse = {
+  currentMilestone: number;
+  currentMilestoneAmount: number;
+  nextMilestone: number;
+  nextMilestoneAmount: number;
+  referralHistory: any[]; // Replace 'any' with a more specific type if you know the structure of objects in this array
+  total: number;
+};
+
+type BonusTaskStatusResponse = Task[];
+type ReferralStatusResponse = ReferralHistory[];
+type TipHistoryTypeResponse = TipHistoryType[];
+type CompletedHistoryTypeResponse = CompletedTaskHistory[];
 
 export const earningsService = createApi({
   reducerPath: 'earningsReducer',
@@ -39,9 +82,32 @@ export const earningsService = createApi({
       query: () => ApiEndpoint.UserWallet,
       transformResponse: (response: any) => response?.value?.data,
     }),
-    getTipHistory: builder.query<Wallet, void>({
+    getTipHistory: builder.query<TipHistoryTypeResponse, void>({
       query: () => ApiEndpoint.UserTipHistory,
+      transformResponse: (response: ApiResponse<TipHistoryTypeResponse>) => {
+        console.log({ response });
+        return response?.value?.data;
+      },
+    }),
+    getArticleTipHistory: builder.query<ArticleHistry[], void>({
+      query: () => ApiEndpoint.UserArticleTipHistory,
       transformResponse: (response: any) => response?.value?.data,
+    }),
+    getBonusTaskStatus: builder.query<BonusTaskStatusResponse, void>({
+      query: () => ApiEndpoint.BonusTaskStatus,
+      transformResponse: (response: ApiResponse<BonusTaskStatusResponse>) =>
+        response?.value.data,
+    }),
+    getInviteHistory: builder.query<InviteHistoryResponse, void>({
+      query: () => ApiEndpoint.GetInviteHistory,
+      transformResponse: (response: ApiResponse<InviteHistoryResponse>) =>
+        response?.value.data,
+    }),
+    getCompletedTaskHistory: builder.query<CompletedHistoryTypeResponse, void>({
+      query: () => ApiEndpoint.CompletedTaskHistory,
+      transformResponse: (
+        response: ApiResponse<CompletedHistoryTypeResponse>
+      ) => response?.value.data,
     }),
 
     // Add other endpoints if needed
@@ -50,5 +116,13 @@ export const earningsService = createApi({
   tagTypes: ['TransactionHistory'],
 });
 
-export const { useGetTransactionHistoryQuery, useGetTipHistoryQuery, useGetUserWalletQuery, useLazyGetTransactionHistoryQuery } =
-  earningsService;
+export const {
+  useGetTransactionHistoryQuery,
+  useGetArticleTipHistoryQuery,
+  useGetTipHistoryQuery,
+  useGetUserWalletQuery,
+  useLazyGetTransactionHistoryQuery,
+  useGetBonusTaskStatusQuery,
+  useGetCompletedTaskHistoryQuery,
+  useGetInviteHistoryQuery,
+} = earningsService;
