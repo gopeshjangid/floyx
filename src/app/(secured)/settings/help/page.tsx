@@ -34,7 +34,10 @@ const Help = () => {
     <Wrapper
       sx={{
         marginTop: '25px',
-        maxWidth: '70%',
+        maxWidth: {
+          md: '100%',
+          lg: '70%',
+        },
       }}
     >
       <Tabs

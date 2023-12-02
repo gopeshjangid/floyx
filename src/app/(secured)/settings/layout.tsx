@@ -56,7 +56,14 @@ export default function SettingLayout({
 
   return (
     <>
-      <Wrapper>
+      <Wrapper
+        sx={{
+          maxWidth: {
+            md: '100%',
+            lg: '70%',
+          },
+        }}
+      >
         <SettingsWrapper>
           <Box
             display="flex"

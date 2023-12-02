@@ -101,8 +101,8 @@ const AccountSetting = () => {
       <Wrapper
         sx={{
           maxWidth: {
-            xs: '100%',
-            sm: '70%',
+            md: '100%',
+            lg: '70%',
           },
           marginTop: '20px',
         }}

@@ -20,7 +20,10 @@ import Wrapper from '@/components/wrapper';
 import ThemeSwitch from '@/components/ThemeSwitcher';
 import { SVGUser } from '@/assets/images';
 import { useToast } from '@/components/Toast/useToast';
-import { useUpdateMessageSettingsMutation, useUpdateSettingsMutation } from '@/lib/redux/slices/accountSetting';
+import {
+  useUpdateMessageSettingsMutation,
+  useUpdateSettingsMutation,
+} from '@/lib/redux/slices/accountSetting';
 import SVGEmail from '@/iconComponents/email';
 import SVGExclamation from '@/iconComponents/exclamation';
 import SVGDelete from '@/iconComponents/delete';
@@ -43,11 +46,24 @@ interface ISettingAccountFormError {
 }
 
 const AccountSetting = () => {
-  const [updateSettings, { data: settingUpdateData, isLoading: settingUpdateLoading, error: settingUpdateError }] =
-    useUpdateSettingsMutation();
-  const [updateMessageSetting, { data: messageSettingUpdateData, isLoading: messageSettingLoading, error: messageSettingError }] =
-    useUpdateMessageSettingsMutation();
-  const [checkUserName, { data: checkUserNameData }] = useCheckUsernameMutation();
+  const [
+    updateSettings,
+    {
+      data: settingUpdateData,
+      isLoading: settingUpdateLoading,
+      error: settingUpdateError,
+    },
+  ] = useUpdateSettingsMutation();
+  const [
+    updateMessageSetting,
+    {
+      data: messageSettingUpdateData,
+      isLoading: messageSettingLoading,
+      error: messageSettingError,
+    },
+  ] = useUpdateMessageSettingsMutation();
+  const [checkUserName, { data: checkUserNameData }] =
+    useCheckUsernameMutation();
 
   const toast = useToast();
 
@@ -166,8 +182,8 @@ const AccountSetting = () => {
       <Wrapper
         sx={{
           maxWidth: {
-            xs: '100%',
-            sm: '70%',
+            md: '100%',
+            lg: '70%',
           },
           marginTop: '20px',
         }}
@@ -241,7 +257,12 @@ const AccountSetting = () => {
                   ),
                 }}
               />
-              <Box display="flex" alignItems="center" justifyContent="left" gap={1}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                gap={1}
+              >
                 <SVGExclamation />
                 Email will not be publicly displayed
               </Box>
@@ -250,14 +271,21 @@ const AccountSetting = () => {
             <FormControl margin="normal">
               <FormControlLabel
                 name="remember"
-                control={<Checkbox defaultChecked={false} onChange={onChangeHandler} />}
+                control={
+                  <Checkbox defaultChecked={false} onChange={onChangeHandler} />
+                }
                 label="
                     Enable Message: Allow other users to send me private message"
               />
             </FormControl>
 
             <FormControl>
-              <Button variant="contained" color="primary" type="submit" className="submit-btn">
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className="submit-btn"
+              >
                 {isLoading ? (
                   <>
                     <CircularProgress size={24} color="inherit" />
@@ -274,14 +302,28 @@ const AccountSetting = () => {
             flexDirection={'column'}
             gap={0.5}
             mt={2}
-            borderTop={theme => `1px solid ${theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`}
+            borderTop={theme =>
+              `1px solid ${
+                theme.palette?.mode === 'light'
+                  ? '#E7F0FC'
+                  : 'rgba(255, 255, 255, 0.15)'
+              }`
+            }
           >
-            <Typography mt={2} variant="subtitle2" color={theme => theme.palette.primary[100]}>
+            <Typography
+              mt={2}
+              variant="subtitle2"
+              color={theme => theme.palette.primary[100]}
+            >
               Delete Account
             </Typography>
 
-            <Typography variant="subtitle2" color={theme => theme.palette.primary[300]}>
-              This can’t be reversed, so make sure you’re sure this is what you want
+            <Typography
+              variant="subtitle2"
+              color={theme => theme.palette.primary[300]}
+            >
+              This can’t be reversed, so make sure you’re sure this is what you
+              want
             </Typography>
 
             <Button
