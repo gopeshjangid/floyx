@@ -18,7 +18,9 @@ import Wrapper from '@/components/wrapper';
 const SettingsWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   borderBottom: 1,
   paddingInline: '20px',
-  border: `1px solid ${theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`,
+  border: `1px solid ${
+    theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+  }`,
   '& .notifications-content': {
     '& .MuiBox-root': {
       padding: '0',
@@ -39,7 +41,11 @@ function LinkTab(props: any) {
   return <Tab component={Link} {...props} va />;
 }
 
-export default function SettingLayout({ children }: { children: React.ReactNode }) {
+export default function SettingLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const theme = useTheme();
   const pathname = usePathname();
   const [value, setValue] = React.useState(pathname);
@@ -52,14 +58,32 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
     <>
       <Wrapper>
         <SettingsWrapper>
-          <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="10px">
-            <Tabs value={value} onChange={handleChange} aria-label="setting tabs" variant="scrollable" scrollButtons="auto">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            flexWrap="wrap"
+            gap="10px"
+          >
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="setting tabs"
+              variant="scrollable"
+              scrollButtons="auto"
+            >
               <LinkTab
                 value={allRoutes.settings.account}
                 href={allRoutes.settings.account}
                 label="Account"
                 icon={
-                  <SVGAccount stroke={value === allRoutes.settings.account ? theme.palette.secondary[100] : theme.palette.action.svg} />
+                  <SVGAccount
+                    stroke={
+                      value === allRoutes.settings.account
+                        ? theme.palette.secondary[100]
+                        : theme.palette.action.svg
+                    }
+                  />
                 }
                 iconPosition="start"
               />
@@ -69,7 +93,11 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
                 label="Change Password"
                 icon={
                   <SVGChangePassword
-                    stroke={value === allRoutes.settings.changePassword ? theme.palette.secondary[100] : theme.palette.action.svg}
+                    stroke={
+                      value === allRoutes.settings.changePassword
+                        ? theme.palette.secondary[100]
+                        : theme.palette.action.svg
+                    }
                   />
                 }
                 iconPosition="start"
@@ -79,7 +107,13 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
                 href={allRoutes.settings.blockUser}
                 label="Block User"
                 icon={
-                  <SVGBlockUser stroke={value === allRoutes.settings.blockUser ? theme.palette.secondary[100] : theme.palette.action.svg} />
+                  <SVGBlockUser
+                    stroke={
+                      value === allRoutes.settings.blockUser
+                        ? theme.palette.secondary[100]
+                        : theme.palette.action.svg
+                    }
+                  />
                 }
                 iconPosition="start"
               />
@@ -87,7 +121,15 @@ export default function SettingLayout({ children }: { children: React.ReactNode 
                 value={allRoutes.settings.help}
                 href={allRoutes.settings.help}
                 label="Help"
-                icon={<SVGHelp stroke={value === allRoutes.settings.help ? theme.palette.secondary[100] : theme.palette.action.svg} />}
+                icon={
+                  <SVGHelp
+                    stroke={
+                      value === allRoutes.settings.help
+                        ? theme.palette.secondary[100]
+                        : theme.palette.action.svg
+                    }
+                  />
+                }
                 iconPosition="start"
               />
             </Tabs>
