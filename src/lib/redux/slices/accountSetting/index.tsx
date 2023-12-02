@@ -23,7 +23,8 @@ export const accountSettingService = createApi({
         body: body,
       }),
       transformResponse: (response: any) => response?.value?.code,
-      transformErrorResponse: (response: any): string[] => response?.data.value.code,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
     }),
     updateMessageSettings: builder.mutation({
       query: body => ({
@@ -32,7 +33,8 @@ export const accountSettingService = createApi({
         body: body,
       }),
       transformResponse: (response: any) => response?.value?.code,
-      transformErrorResponse: (response: any): string[] => response?.data.value.code,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
     }),
     changePassword: builder.mutation({
       query: body => ({
@@ -41,10 +43,35 @@ export const accountSettingService = createApi({
         body: body,
       }),
       transformResponse: (response: any) => response?.value?.code,
-      transformErrorResponse: (response: any): string[] => response?.data.value.code,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
+    }),
+    getBlockedUsers: builder.query({
+      query: () => ({
+        url: ApiEndpoint.GetBlockedUsers,
+        method: 'GET',
+      }),
+      transformResponse: (response: any) => response?.value?.data,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
+    }),
+    unblockUser: builder.mutation({
+      query: ({ username }) => ({
+        url: `${ApiEndpoint.UnblockedUsers}/${username}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: any) => response?.value?.code,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
     }),
   }),
   tagTypes: ['registration'],
 });
 
-export const { useUpdateSettingsMutation, useUpdateMessageSettingsMutation, useChangePasswordMutation } = accountSettingService;
+export const {
+  useUpdateSettingsMutation,
+  useUpdateMessageSettingsMutation,
+  useChangePasswordMutation,
+  useGetBlockedUsersQuery,
+  useUnblockUserMutation,
+} = accountSettingService;

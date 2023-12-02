@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Button,
+  CircularProgress,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -17,13 +18,16 @@ const ListItemItem = styled(ListItem)(({ theme }) => ({
   alignItems: 'center',
   gap: '10px',
   padding: '9px 21px',
+  margin: '20px',
   '& .MuiListItemText-root': {
     margin: '0',
     cursor: 'pointer',
   },
-  borderBottom: `1px solid ${
-    theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
-  }`,
+  '&:not(:last-child)': {
+    borderBottom: `1px solid ${
+      theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+    }`,
+  },
   '& .MuiListItemAvatar-root': {
     position: 'relative',
     '& span': {
@@ -59,11 +63,17 @@ interface IBlockedUserItem {
   username: string;
   name: string;
   avatar: string;
+  unBlockUser: ({ username }: { username: string }) => void;
+  loading: boolean;
 }
 
-const BlockedUserItem = ({ id, username, name, avatar }: IBlockedUserItem) => {
+const BlockedUserItem = ({
+  username,
+  name,
+  unBlockUser,
+  loading,
+}: IBlockedUserItem) => {
   const { palette } = useTheme();
-  const isBlocked = true;
 
   return (
     <ListItemItem>
@@ -116,8 +126,18 @@ const BlockedUserItem = ({ id, username, name, avatar }: IBlockedUserItem) => {
           padding: '5px 15px',
           background: '#5798FF3B',
         }}
+        onClick={() => unBlockUser({ username })}
+        disabled={loading}
       >
-        {isBlocked ? 'Unblock' : 'Block'}
+        {loading && (
+          <CircularProgress
+            size={16}
+            sx={{
+              marginRight: '5px',
+            }}
+          />
+        )}
+        Unblock
       </Button>
     </ListItemItem>
   );

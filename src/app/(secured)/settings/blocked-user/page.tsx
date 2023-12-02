@@ -1,10 +1,17 @@
 'use client';
 
 import { Box, List, Theme, styled } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Wrapper from '@/components/wrapper';
 import BlockedUserItem from '@/components/BlockedUserItem';
+import {
+  useGetBlockedUsersQuery,
+  useUnblockUserMutation,
+} from '@/lib/redux/slices/accountSetting';
+import BlockedUserLoader from './loading';
+import { useToast } from '@/components/Toast/useToast';
+import { showErrorMessages } from '@/lib/utils';
 
 const AccountWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   '& .MuiInputBase-root': {
@@ -23,103 +30,32 @@ interface IBlockedUserItem {
   avatar: string;
 }
 
-const blockedUsers = [
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-  {
-    id: '5efdbf14fb6be50001cbc36c',
-    username: 'saddam_beta',
-    name: 'Saddam Husain Khans',
-    avatar:
-      'https://floyx-beta.s3.us-east-2.amazonaws.com/profile/79c17c3f1c704e829cb0a7d75d203937.png?X-Amz-Expires=1800&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZOGNDJSQSFOTYWIR%2F20231202%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20231202T051346Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e73d1d57372195469a361db5984d644f47588b84b8e54b3357813ac49d01c74b',
-  },
-];
-
 const BlockedUsers = () => {
+  const toast = useToast();
+  const { data: blockedUsers, isLoading, error } = useGetBlockedUsersQuery({});
+  const [
+    unBlockUser,
+    { data: unBlockUserData, isLoading: isUnBlockUserLoading },
+  ] = useUnblockUserMutation();
+
+  useEffect(() => {
+    if ((error as any)?.length > 0) {
+      toast.error(showErrorMessages(error as any));
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (unBlockUserData === 'success') {
+      toast.success('User unblocked successfully');
+    } else if (unBlockUserData === 'eror') {
+      toast.error('Something went wrong');
+    }
+  }, [unBlockUserData]);
+
+  if (isLoading) {
+    return <BlockedUserLoader />;
+  }
+
   return (
     <Wrapper
       sx={{
@@ -131,10 +67,15 @@ const BlockedUsers = () => {
       }}
     >
       <AccountWrapper>
-        {blockedUsers.length > 0 ? (
+        {blockedUsers?.length > 0 ? (
           <List sx={{ width: '100%', p: 0 }} component="ul">
             {blockedUsers?.map((item: IBlockedUserItem, index: number) => (
-              <BlockedUserItem key={index} {...item} />
+              <BlockedUserItem
+                key={index}
+                {...item}
+                unBlockUser={unBlockUser}
+                loading={isUnBlockUserLoading}
+              />
             ))}
           </List>
         ) : (
