@@ -16,7 +16,7 @@ const MUIThemeProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />
-      <body className={`${resolvedTheme}-theme`}>{children}</body>
+      {children}
     </ThemeProvider>
   );
 };
