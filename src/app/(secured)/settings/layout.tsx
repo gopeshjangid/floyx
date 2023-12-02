@@ -55,7 +55,14 @@ export default function SettingLayout({
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Wrapper
         sx={{
           maxWidth: {
@@ -144,6 +151,6 @@ export default function SettingLayout({
         </SettingsWrapper>
       </Wrapper>
       {children}
-    </>
+    </Box>
   );
 }
