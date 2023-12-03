@@ -12,6 +12,7 @@ import {
   Divider,
   Skeleton,
   Grid,
+  useMediaQuery,
 } from '@mui/material';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import AvailableBalanceicon from '@/iconComponents/availableBalanceBadgeIcon';
@@ -25,6 +26,7 @@ import {
 import useQuery from '@/lib/hooks/useFetch';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import SubscriptionIcon from '@/iconComponents/subscriptionIcon';
+import TotalPpintsIcon from '@/iconComponents/totalPointsIcon';
 import ArticleIcon from '@/iconComponents/articleIcon';
 import axios from 'axios';
 import VoteIcon from '@/iconComponents/voteIcon';
@@ -33,7 +35,6 @@ import EarningIcon from '@/iconComponents/earningIcon';
 const DashboardCard = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: theme.spacing(2),
   backgroundColor:
     theme.palette.mode === 'dark' ? theme.palette.background.paper : '#fff',
   borderRadius: theme.shape.borderRadius,
@@ -44,8 +45,10 @@ const DashboardCard = styled(Card)(({ theme }) => ({
 }));
 
 const GradientCard = styled(Card)(({ theme }) => ({
-  background: 'linear-gradient(to right,#4D9AFF, #6dd5ed, #2193b0)', // This is a blue gradient, you can adjust it to match the provided image
+  background: 'linear-gradient(134deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)', // This is a blue gradient, you can adjust it to match the provided image
   color: theme.palette.common.white,
+  borderRadius: '16px',
+  boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.25)',
 }));
 
 const PointsDisplay = styled(Box)(({ theme }) => ({
@@ -53,7 +56,7 @@ const PointsDisplay = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
   alignItems: 'center',
   flexDirection: 'column',
-  width: '50%',
+  width: '100%',
   borderRadius: theme.shape.borderRadius,
 }));
 
@@ -71,7 +74,12 @@ const PointsBalanceCard = () => {
     error,
   } = useGetUserWalletQuery();
   const [currentBalance, setCurrentBalance] = React.useState(0.0);
-
+  const balanceButtonStyle = {
+    color: palette.mode === 'dark' ? '#000000' : '#ffffff',
+    border: `1.5px solid`,
+    borderColor:
+      'linear-gradient(134deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+  };
   const getActiveCurrency = (currencyResp: any) => {
     const activeCurrency = currencyResp.value.data.currencyName;
     axios
@@ -107,13 +115,13 @@ const PointsBalanceCard = () => {
   }, []);
 
   if (walletError) {
-    return (
-      <Box p="16px">
-        <Typography color="error" variant="h6">
-          Something went wrong!
-        </Typography>
-      </Box>
-    );
+    // return (
+    //   <Box p="16px">
+    //     <Typography color="error" variant="h6">
+    //       Something went wrong!
+    //     </Typography>
+    //   </Box>
+    // );
   }
   return (
     <GradientCard>
@@ -125,8 +133,18 @@ const PointsBalanceCard = () => {
                 <Grid item xs={12} sm={12}>
                   <Typography variant="h6">Total points</Typography>
                 </Grid>
-                <Grid item xs={12} sm={12}>
-                  <Typography variant="h4">
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  justifyContent="flex-start"
+                  display={'flex'}
+                  gap={2}
+                >
+                  <TotalPpintsIcon
+                    fill={palette.mode === 'light' ? '#fff' : null}
+                  />
+                  <Typography sx={{ flex: 2 }} variant="h4">
                     {walletLoading ? (
                       <Skeleton variant="text" />
                     ) : (
@@ -161,12 +179,21 @@ const PointsBalanceCard = () => {
           <Grid item xs={12} sm={6}>
             <PointsDisplay>
               <Grid container spacing={1}>
-                <Grid item sm={3} xs={3} textAlign="left">
-                  <AvailableBalanceicon />
+                <Grid item xs={12} sm={12}>
+                  <Typography variant="h6">Available balance</Typography>
+                </Grid>
+                <Grid item sm={3} xs={3}>
+                  <AvailableBalanceicon
+                    fill={palette.mode === 'light' && '#fff'}
+                  />
                 </Grid>
                 <Grid item sm={9} xs={9}>
-                  <Box width="100%">
-                    <Typography variant="h6">Available balance</Typography>
+                  <Box
+                    width="100%"
+                    flexDirection="column"
+                    display="flex"
+                    justifyContent="center"
+                  >
                     <Typography variant="h4">
                       {walletLoading ? (
                         <Skeleton variant="text" />
@@ -184,11 +211,13 @@ const PointsBalanceCard = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item sm={12} xs={6}>
-                  <Button variant="outlined">Withdraw</Button>
+                <Grid item sm={6} xs={6}>
+                  <Button sx={balanceButtonStyle} variant="outlined">
+                    Withdraw
+                  </Button>
                 </Grid>
-                <Grid item xs={6}>
-                  <Button color="primary" variant="outlined">
+                <Grid item sm={6} xs={6}>
+                  <Button sx={balanceButtonStyle} variant="outlined">
                     Wallet
                   </Button>
                 </Grid>
@@ -212,8 +241,9 @@ type Dashboard = {
   isLoading: boolean;
 };
 const DashboardBox: React.FC<Dashboard> = props => {
+  const isMobile = useMediaQuery('(max-width:480px)');
   return (
-    <Box padding="16px">
+    <Box padding={isMobile ? 0 : '16px'}>
       <Box width="100%" height="80px" alignItems="center" display="flex">
         {props?.titleIcon}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Typography variant="h5">{props?.title}</Typography>
@@ -254,6 +284,7 @@ const DashboardBox: React.FC<Dashboard> = props => {
                 onClick={props?.onHistoryClicked}
                 startIcon={<AccessTimeOutlinedIcon />}
                 variant="outlined"
+                sx={{ width: '100%' }}
               >
                 History
               </Button>
@@ -268,6 +299,7 @@ const DashboardBox: React.FC<Dashboard> = props => {
 // Example usage of the styled components
 const Earnings: React.FC = () => {
   const { palette } = useTheme();
+  const isMobile = useMediaQuery('(max-width:480px)');
   const {
     data: completedHistory,
     isLoading: completedLoading,
@@ -303,7 +335,7 @@ const Earnings: React.FC = () => {
         }, 0)
       : 0.0;
   return (
-    <Box sx={{ p: 0 }}>
+    <Box sx={{ p: isMobile ? 0 : 2 }}>
       <Box>
         <PointsBalanceCard />
       </Box>
@@ -349,13 +381,13 @@ const Earnings: React.FC = () => {
             />
           }
           firstCountTitle="Number of all votes cast"
-          firstCount={
-            !tipError && tipHistory
-              ? tipHistory.length + ' Points'
+          firstCount={!tipError && tipHistory ? tipHistory.length : 0}
+          secondTitle="The sum of funds earned from voting"
+          secondCount={
+            !tipError && tipHistory && tipHistory
+              ? tipPoints.toFixed(3) + ' Points'
               : 0 + ' Points'
           }
-          secondTitle="The sum of funds earned from voting"
-          secondCount={!tipError && tipHistory && tipHistory ? tipPoints : 0}
           isLoading={articleTipLoading}
         />
         <Divider />
@@ -371,7 +403,7 @@ const Earnings: React.FC = () => {
           firstCountTitle="Total number of daily tasks"
           firstCount={completedHistory ? completedHistory.length : 0}
           secondTitle="Total funds earned from tasks"
-          secondCount={completedTaskPoints + ' Points'}
+          secondCount={completedTaskPoints.toFixed(3) + ' Points'}
           isLoading={articleTipLoading}
         />
       </DashboardCard>

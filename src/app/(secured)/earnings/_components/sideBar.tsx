@@ -91,10 +91,10 @@ const StyledBox = ({ children }: any) => {
     <Box
       sx={{
         maxWidth: 360,
-        background: palette.background.paper, // Adjust the color based on your design
+        backgroundColor: palette.primary[700], // Adjust the color based on your design
         borderRadius: '8px', // Adjust border radius based on your design
         border: `1px solid ${palette.action.border}`, // Adjust border color based on your design
-        padding: '24px',
+        padding: '16px',
         color: '#fff',
         display: 'flex',
         flexDirection: 'column',
@@ -129,13 +129,13 @@ const InvitationStatusCard = () => {
       >
         History
       </Button>
-      <Typography variant="body1" gutterBottom>
+      <Typography variant="body1" gutterBottom color="textPrimary">
         Successfully completed: &nbsp;
         <strong style={{ color: palette.primary.main }}>
           {data ? data.referralHistory.length : <Skeleton variant="text" />}
         </strong>
       </Typography>
-      <Typography variant="body1" gutterBottom>
+      <Typography variant="body1" gutterBottom color="textPrimary">
         Total referrals earned: &nbsp;
         <strong style={{ color: palette.primary.main }}>
           {isLoading ? (
@@ -153,7 +153,7 @@ const InvitationStatusCard = () => {
           textAlign: 'justify',
         }}
       >
-        <Typography variant="body2" gutterBottom>
+        <Typography variant="body2" gutterBottom color="textPrimary">
           Invite friends to Floyx, for each friend invited you will receive
           additional points and bonuses. Use only safe social media and let your
           profile grow!
@@ -168,14 +168,16 @@ const ReferralCard = () => {
 
   return (
     <StyledBox>
-      <Typography variant="h6">Bonuses: </Typography>
+      <Typography variant="h6" color="textPrimary">
+        Bonuses:{' '}
+      </Typography>
       {isLoading ? (
         <Skeleton variant="rectangular" width="100%" height={320} />
       ) : (
         data &&
         data.map((bonus, index) => (
           <Box key={index} sx={{ width: '100%' }}>
-            <Typography variant="subtitle2" gutterBottom>
+            <Typography variant="subtitle2" color="textPrimary" gutterBottom>
               {bonus.taskName}
             </Typography>
             <Chip
@@ -204,8 +206,8 @@ const ReferralCard = () => {
 const EarningsSideBar = () => {
   const { status, data } = useSession();
   return (
-    <Stack spacing={2} paddingTop="24px">
-      <Typography variant="h6">
+    <Stack spacing={2} mt={3} paddingTop="24px">
+      <Typography variant="h6" color="textPrimary">
         {status === 'loading' ? (
           <Skeleton variant="rectangular" sx={{ width: '200px' }} />
         ) : (
@@ -217,7 +219,7 @@ const EarningsSideBar = () => {
         <CopyableInput />
       </StyledBox>
       <StyledBox>
-        <Typography textAlign="left" variant="h6">
+        <Typography color="textPrimary" textAlign="left" variant="h6">
           Invitation status:{' '}
         </Typography>
         <InvitationStatusCard />

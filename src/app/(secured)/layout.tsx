@@ -1,19 +1,18 @@
 import React from 'react';
 import DrawerAppBar from './drawer';
-import Toolbar from '@mui/material/Toolbar';
+import Grid from '@mui/material/Grid';
 
 import { getMetaData } from '@/lib/SEO';
 import { Box } from '@mui/material';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <Box display="flex" minHeight="100vh">
-      <DrawerAppBar />
-      {/* TODO: container width */}
-      <Box width="100%" paddingInline={2.5}>
-        <Toolbar />
-        {children}
-      </Box>
+    <Box component="main" display="flex" minHeight="100vh">
+      <DrawerAppBar>{children}</DrawerAppBar>
     </Box>
   );
 }
