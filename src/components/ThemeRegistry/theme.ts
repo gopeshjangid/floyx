@@ -62,6 +62,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             white: '#fff',
             opposite: '#000',
           },
+          common: {
+            white: '#ffffff',
+            black: '#000000',
+          },
         }
       : {
           primary: {
@@ -89,7 +93,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           // Define other palette properties like error, warning, info, success, etc., if necessary
           // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
           text: {
-            primary: '#ffffff', // Assuming white text for dark mode for better readability
+            primary: '#D1D0D5', // Assuming white text for dark mode for better readability
             secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
           },
           action: {
@@ -107,6 +111,10 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             black: '#000',
             white: '#fff',
             opposite: '#fff',
+          },
+          common: {
+            white: '#ffffff',
+            black: '#000000',
           },
         }),
   };
