@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-const EaringTabIcon = props => (
+const EaringTabIcon = (props: any) => (
   <svg
     width={24}
     height={24}
     viewBox="0 0 24 24"
-    fill={props.fill}
     xmlns="http://www.w3.org/2000/svg"
     {...props}
+    fill="none"
   >
     <path
       d="M17.7514 7.04997C17.5114 7.00997 17.2614 6.99998 17.0014 6.99998H7.00141C6.72141 6.99998 6.45141 7.01998 6.19141 7.05998C6.33141 6.77998 6.53141 6.52001 6.77141 6.28001L10.0214 3.02C11.3914 1.66 13.6114 1.66 14.9814 3.02L16.7314 4.78996C17.3714 5.41996 17.7114 6.21997 17.7514 7.04997Z"
