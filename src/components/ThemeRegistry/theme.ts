@@ -14,48 +14,98 @@ const poppins = Poppins({
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
   // const isLightTheme = mode === 'light';
   const palette = {
-      mode,
-      ...(mode === 'light'
-        ? {
-            primary: {
-              main: '#2F2E41', // Topic Text
-              // You can also define light, dark and contrastText if necessary
-            },
-            secondary: {
-              main: '#ADB3C6', // Text Guide
-              // You can also define light, dark and contrastText if necessary
-            },
-            text: {
-              primary: '#7C93AE', // Body Text
-              secondary: '#777D88'
-              // Define other text colors like 'secondary', 'disabled', etc., if necessary
-            },
-            background: {
-              default: '#F9FBFF', // Light - Background
-              paper: '#F9FBFC', // Light - Background 2
-            },
-          }
-        : {
-            primary: {
-              main: '#5798FF', // Primary Blue
-              // Define light, dark, and contrastText if necessary
-            },
-            secondary: {
-              main: '#A75FFF', // Primary Purple
-              // Define light, dark, and contrastText if necessary
-            },
-            background: {
-              default: '#1B1830', // Dark - Background
-              paper: '#0B081F', // Dark - Background 2
-            },
-            // Define other palette properties like error, warning, info, success, etc., if necessary
-            // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
-            text: {
-              primary: '#ffffff', // Assuming white text for dark mode for better readability
-              secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
-            },
-          }),
-    };
+    mode,
+    ...(mode === 'light'
+      ? {
+          primary: {
+            main: '#2F2E41', // Topic Text
+            // You can also define light, dark and contrastText if necessary
+            100: '#777D88',
+            200: '#0B081F',
+            700: '#fff',
+            800: '#E7F0FC',
+            900: '#fff',
+          },
+          secondary: {
+            main: '#ADB3C6', // Text Guide
+            // You can also define light, dark and contrastText if necessary
+            100: '#A85CFF',
+            200: '#A561FF',
+            300: 'rgba(194, 148, 255, 0.38)',
+            400: '#AB59FF',
+          },
+          text: {
+            primary: '#7C93AE', // Body Text
+            secondary: '#777D88',
+            // Define other text colors like 'secondary', 'disabled', etc., if necessary
+          },
+          background: {
+            default: '#F9FBFF', // Light - Background
+            paper: '#F9FBFC', // Light - Background 2
+          },
+          action: {
+            active: '#ADB3C6', // Text Guide
+            hover: '#ADB3C6', // Text Guide
+            selected: '#ADB3C6', // Text Guide
+            disabled: '#ADB3C6', // Text Guide
+            disabledBackground: '#ADB3C6', // Text Guide
+            focus: '#ADB3C6', // Text Guide
+            hoverOpacity: 0.08,
+            disabledOpacity: 0.48,
+            border: '#E7F0FC',
+            svg: ' #ADB3C6',
+          },
+          common: {
+            white: '#ffffff',
+            black: '#000000',
+          },
+        }
+      : {
+          primary: {
+            main: '#5798FF', // Primary Blue
+            // Define light, dark, and contrastText if necessary
+            100: '#D1D0D5',
+            200: '#0B081F',
+            700: '#0B081F',
+            800: '#0B081F',
+            900: '#fff',
+          },
+          secondary: {
+            main: '#A75FFF', // Primary Purple
+            // Define light, dark, and contrastText if necessary
+            100: '#A85CFF',
+            200: '#A561FF',
+            300: 'rgba(194, 148, 255, 0.38)',
+            400: '#AB59FF',
+          },
+          background: {
+            default: '#1B1830', // Dark - Background
+            paper: '#0B081F', // Dark - Background 2
+          },
+          // Define other palette properties like error, warning, info, success, etc., if necessary
+          // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
+          text: {
+            primary: '#D1D0D5', // Assuming white text for dark mode for better readability
+            secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
+          },
+          action: {
+            active: '#ADB3C6', // Text Guide
+            hover: '#ADB3C6', // Text Guide
+            selected: '#ADB3C6', // Text Guide
+            disabled: '#ADB3C6', // Text Guide
+            disabledBackground: '#ADB3C6', // Text Guide
+            focus: '#ADB3C6', // Text Guide
+            hoverOpacity: 0.08,
+            disabledOpacity: 0.48,
+            border: '#0B081F',
+            svg: 'rgba(255, 255, 255, 0.30)',
+          },
+          common: {
+            white: '#ffffff',
+            black: '#000000',
+          },
+        }),
+  };
   return createTheme({
     palette,
     typography: {
