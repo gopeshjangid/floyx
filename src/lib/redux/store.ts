@@ -16,12 +16,13 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import {earningsService} from "./slices/earnings";
+import { earningsService } from './slices/earnings';
+import { profileService } from './slices/profile';
 import { reducer } from './rootReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [earningsService.reducerPath ],
+  whitelist: [earningsService.reducerPath],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -30,37 +31,38 @@ let store: any;
 
 function makeStore(initialState = {}) {
   return configureStore({
-    reducer: persistedReducer, 
+    reducer: persistedReducer,
     preloadedState: initialState,
-    middleware: (getDefaultMiddleware) =>
+    middleware: getDefaultMiddleware =>
       getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(earningsService.middleware),
+      })
+        .concat(earningsService.middleware)
+        .concat(profileService.middleware),
   });
 }
 
 export const initializeStore = (preloadedState: any) => {
   let _store = store ?? makeStore(preloadedState);
 
-   if (preloadedState && store) {
+  if (preloadedState && store) {
     _store = makeStore({
       ...store.getState(),
       ...preloadedState,
-    })
+    });
     // Reset the current store
-    store = undefined
+    store = undefined;
   }
 
   // For SSG and SSR always create a new store
-  if (typeof window === 'undefined') return _store
+  if (typeof window === 'undefined') return _store;
   // Create the store once in the client
-  if (!store) store = _store
+  if (!store) store = _store;
 
-  return _store
+  return _store;
 };
-
 
 export const useDispatch = () => useReduxDispatch<ReduxDispatch>();
 export const useSelector: TypedUseSelectorHook<ReduxState> = useReduxSelector;
@@ -68,7 +70,7 @@ export const useSelector: TypedUseSelectorHook<ReduxState> = useReduxSelector;
 /* Types */
 export type ReduxStore = ReturnType<typeof makeStore>;
 export type ReduxState = ReturnType<ReduxStore['getState']>;
-export type ReduxDispatch =  typeof store.dispatch;
+export type ReduxDispatch = typeof store.dispatch;
 export type ReduxThunkAction<ReturnType = void> = ThunkAction<
   ReturnType,
   ReduxState,
