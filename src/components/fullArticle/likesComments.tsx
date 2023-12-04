@@ -9,7 +9,7 @@ import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import ReplyIcon from '@/images/image/replyIcon';
 import DateParser from '../DateParser';
 import AddComment from '../Post/AddComment';
-import { useGetCommentListQuery } from '@/lib/redux/slices/articleCommentList';
+import { useGetCommentListQuery, useGetLikeStatusMutation } from '@/lib/redux/slices/articleDetails';
 
 const style = {
   position: 'absolute',
@@ -29,8 +29,10 @@ const style = {
 export default function LikesComments({ likesCommentsDetails, articleId }: any) {
 
   const { data: commentList } = useGetCommentListQuery(articleId);
-
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const open = Boolean(anchorEl);
+  const [updateLike] = useGetLikeStatusMutation()
+
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,7 +42,6 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
 
   function formatIndianNumber(num: number) {
     if (num < 1000) {
@@ -58,11 +59,17 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
     }
   }
 
+  const handleArticleLike = ()=> {
+    const type:string = 'ArticleLike'
+    updateLike({articleId, type})
+  }
+
+
   return (
     <Box sx={{ marginTop: '35px', width: '100%' }}>
       <Divider />
       <Box sx={{ display: 'flex', padding: '17px 20px' }}>
-        <Button variant="text" startIcon={<LikeIcon />} sx={{ marginRight: '25px' }}>
+        <Button variant="text" startIcon={<LikeIcon />} sx={{ marginRight: '25px' }} onClick={handleArticleLike}>
           {formatIndianNumber(likesCommentsDetails?.article?.numberOfLikes)} Likes
         </Button>
         <Button variant="text" startIcon={<CommentIcon />} sx={{ marginRight: '25px' }}>
@@ -84,7 +91,7 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
             </Box>
             <Divider />
             <Box sx={{ paddingTop: '10px', display: 'flex', justifyContent: 'flex-end' }}>
-              <Button variant="contained">Bookmark</Button>
+              <Button variant="contained">Publish</Button>
             </Box>
           </Box>
         </Modal>
@@ -117,7 +124,7 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
                     <Typography>{val?.comment?.content}</Typography>
                   </Box>
                   <Box sx={{ display: 'flex', margin: '20px 0px' }}>
-                    <Button variant="text" startIcon={<LikeIcon />} sx={{ marginRight: '25px' }}>
+                    <Button variant="text" startIcon={<LikeIcon />} sx={{ marginRight: '25px' }} >
                       {val?.comment?.numberOfLikes} Like
                     </Button>
                     <Button variant="text" startIcon={<ReplyIcon />} sx={{ marginRight: '25px' }}>

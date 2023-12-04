@@ -8,21 +8,26 @@ import BookMarkIcon from '@/images/image/archiveMinus';
 import FaceBookIcon from '@/images/image/facebookIcon';
 import LinkedinIcon from '@/images/image/linkedin';
 import TwitterIcon from '@/images/image/twitter';
-import { useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
-import { useGetArticleTotalEarningsQuery } from '@/lib/redux/slices/articleTotalEarnings';
+import { useGetArticleTotalEarningsQuery, useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
 
 export default function FullArticle({ details }: any) {
-  const CONTENT = details?.article?.content && JSON.parse(details?.article?.content);
-  const articleId = details?.article?.id || "";
+  const CONTENT =
+    details?.article?.content && JSON.parse(details?.article?.content);
+  const articleId = details?.article?.id || '';
 
   const [updatefollowUnfolow] = useGetFollowStatusMutation();
-  const { data: totalEarningPoints } = useGetArticleTotalEarningsQuery(articleId);
+  const { data: totalEarningPoints } =
+    useGetArticleTotalEarningsQuery(articleId);
   const pointsEarned = totalEarningPoints
     ? (
-        parseFloat(totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount) +
-        parseFloat(totalEarningPoints?.totalEarnings[0]?.userEarnedAmount)
+        (totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount) +
+        (totalEarningPoints?.totalEarnings[0]?.userEarnedAmount)
       ).toFixed(3)
     : 0;
+
+  const createMarkup = (htmlString: string) => {
+    return { __html: htmlString };
+  };
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
@@ -151,9 +156,13 @@ export default function FullArticle({ details }: any) {
           CONTENT.map((val: any, index: number) => (
             <Box sx={{ padding: '10px 0' }} key={`articleDetail${index}`}>
               {val?.type === 'paragraph' ? (
-                <Typography variant="body1">{val?.value}</Typography>
+                <Typography variant="body1">
+                  <div dangerouslySetInnerHTML={createMarkup(val?.value)} />
+                </Typography>
               ) : (
-                <Typography variant="h2">{val?.value}</Typography>
+                <Typography variant="h2">
+                  <div dangerouslySetInnerHTML={createMarkup(val?.value)} />
+                </Typography>
               )}
             </Box>
           ))}

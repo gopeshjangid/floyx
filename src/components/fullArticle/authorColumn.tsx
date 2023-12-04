@@ -41,7 +41,7 @@ export const AuthorDetailBox = styled(Box)(() => ({
   },
 }));
 
-export default function AuthorCoulmn({ authorDetails, details }: any) {
+export default function AuthorCoulmn({ details }: any) {
 
   const [updatePost] = useGetFollowStatusMutation();
 
