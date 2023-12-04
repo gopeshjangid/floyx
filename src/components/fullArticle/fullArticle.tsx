@@ -68,7 +68,7 @@ export default function FullArticle({ details }: any) {
             </Button>
           </Box>
         </Box>
-        <Box sx={{ padding: '20px 10px', display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ padding: '20px 0px', width:'auto', display:'flex', justifyContent:'flex-end'}}>
           <Button
             variant="outlined"
             size="small"
@@ -78,7 +78,8 @@ export default function FullArticle({ details }: any) {
             onMouseEnter={handlePopoverOpen}
             onMouseLeave={handlePopoverClose}
           >
-            {pointsEarned} Points
+            <Typography variant='button'>{`${pointsEarned} Points`} </Typography>
+            
           </Button>
           <Popover
             id="mouse-over-popover"
