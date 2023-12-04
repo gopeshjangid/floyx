@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useMediaQuery } from '@mui/material';
-const SVGComponent = props => {
+const SVGComponent = (props:any) => {
   const isMobile = useMediaQuery('(max-width:480px)');
   return (
     <svg

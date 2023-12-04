@@ -1,6 +1,9 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import { Avatar } from '@mui/material';
+import { SVGUser } from "@/assets/images";
 
 interface UserAvatarProps {
   src: string | StaticImageData;
@@ -21,9 +24,26 @@ interface UserAvatarProps {
   };
 }
 const UserAvatar = ({ src, alt, sx }: UserAvatarProps) => {
+  const [loading, setLoading] = useState<boolean>(true);
+
   return (
     <Avatar sx={sx}>
-      <Image src={src} alt={alt} layout="fill" />
+      {!loading && <SVGUser />}
+      {loading && <Image
+        src={src}
+        alt={alt}
+        layout="fill"
+        onLoadingComplete={(result) => {
+          if (result.naturalWidth === 0) {
+            // Broken image
+            console.log('afasdfasdf');
+            setLoading(false);
+          }
+        }}
+        onError={() => {
+          setLoading(false);
+        }}
+      />}
     </Avatar>
   );
 };

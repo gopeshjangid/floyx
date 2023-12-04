@@ -18,10 +18,16 @@ import {
 import storage from 'redux-persist/lib/storage';
 import {earningsService} from "./slices/earnings";
 import { reducer } from './rootReducer';
+import { postServices } from './slices/posts';
+import { userDetails } from './slices/userDetails';
+import { artcileDetails } from './slices/articleDetails';
+import { commentList } from './slices/articleCommentList';
+import { articleTotalEarnings } from './slices/articleTotalEarnings';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [earningsService.reducerPath ],
+  whitelist: [earningsService.reducerPath, postServices.reducerPath, userDetails.reducerPath ],
+
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -37,7 +43,13 @@ function makeStore(initialState = {}) {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(earningsService.middleware),
+      })
+      .concat(earningsService.middleware)
+      .concat(postServices.middleware)
+      .concat(userDetails.middleware)
+      .concat(artcileDetails.middleware)
+      .concat(commentList.middleware)
+      .concat(articleTotalEarnings.middleware)
   });
 }
 
