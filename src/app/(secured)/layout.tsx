@@ -1,9 +1,7 @@
 import React from 'react';
 import DrawerAppBar from './drawer';
-import Grid from '@mui/material/Grid';
-
-import { getMetaData } from '@/lib/SEO';
 import { Box } from '@mui/material';
+import { getMetaData } from '@/lib/SEO';
 
 export default function RootLayout({
   children,
@@ -11,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Box component="main" display="flex" minHeight="100vh">
+    <Box component="main" minHeight="100vh">
       <DrawerAppBar>{children}</DrawerAppBar>
     </Box>
   );

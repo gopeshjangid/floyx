@@ -1,10 +1,28 @@
 /* Core */
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
-import { useSelector as useReduxSelector, useDispatch as useReduxDispatch, TypedUseSelectorHook } from 'react-redux';
-import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import {
+  useSelector as useReduxSelector,
+  useDispatch as useReduxDispatch,
+  TypedUseSelectorHook,
+} from 'react-redux';
+import {
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { earningsService } from './slices/earnings';
+import { profileService } from './slices/profile';
+import { postServices } from './slices/posts';
+import { userDetails } from './slices/userDetails';
+import { artcileDetails } from './slices/articleDetails';
+import { commentList } from './slices/articleCommentList';
+import { articleTotalEarnings } from './slices/articleTotalEarnings';
 import { reducer } from './rootReducer';
 import { registrationService } from './slices/registration';
 import { accountSettingService } from './slices/accountSetting';
@@ -12,7 +30,13 @@ import { accountSettingService } from './slices/accountSetting';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [earningsService.reducerPath, registrationService.reducerPath, accountSettingService.reducerPath],
+  whitelist: [
+    earningsService.reducerPath,
+    postServices.reducerPath,
+    userDetails.reducerPath,
+    registrationService.reducerPath,
+    accountSettingService.reducerPath,
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -28,7 +52,16 @@ function makeStore(initialState = {}) {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(earningsService.middleware, registrationService.middleware, accountSettingService.middleware),
+      })
+        .concat(earningsService.middleware)
+        .concat(postServices.middleware)
+        .concat(userDetails.middleware)
+        .concat(artcileDetails.middleware)
+        .concat(commentList.middleware)
+        .concat(articleTotalEarnings.middleware)
+        .concat(profileService.middleware)
+        .concat(registrationService.middleware)
+        .concat(accountSettingService.middleware),
   });
 }
 
@@ -59,7 +92,12 @@ export const useSelector: TypedUseSelectorHook<ReduxState> = useReduxSelector;
 export type ReduxStore = ReturnType<typeof makeStore>;
 export type ReduxState = ReturnType<ReduxStore['getState']>;
 export type ReduxDispatch = typeof store.dispatch;
-export type ReduxThunkAction<ReturnType = void> = ThunkAction<ReturnType, ReduxState, unknown, Action>;
+export type ReduxThunkAction<ReturnType = void> = ThunkAction<
+  ReturnType,
+  ReduxState,
+  unknown,
+  Action
+>;
 
 export function useStore(initialState: any) {
   const store = useMemo(() => initializeStore(initialState), [initialState]);

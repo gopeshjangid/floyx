@@ -16,4 +16,5 @@ export const allRoutes = {
     blockUser: '/settings/blocked-user',
     help: '/settings/help',
   },
+  post: '/post',
 };
