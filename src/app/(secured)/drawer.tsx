@@ -184,7 +184,7 @@ export default function DrawerAppBar({ children }) {
         )}
         {!isMobile ? (
           <Grid container columnSpacing={{ sm: 2, md: 3 }}>
-            <Grid item sm={2}>
+            <Grid item sm={3} md={3} lg={2}>
               <Paper
                 elevation={0}
                 sx={{
@@ -198,7 +198,7 @@ export default function DrawerAppBar({ children }) {
                 {drawer}
               </Paper>
             </Grid>
-            <Grid item sm={10}>
+            <Grid item sm={9} md={9} lg={10}>
               {children}
             </Grid>
           </Grid>

@@ -1,8 +1,8 @@
-import AddPost from "@/components/Post/AddPost"
-import PostList from "@/components/Post/PostList"
-import PostHeader from "@/components/PostHeader"
+import AddPost from '@/components/Post/AddPost';
+import PostList from '@/components/Post/PostList';
+import PostHeader from '@/components/PostHeader';
 
-import { Grid } from "@mui/material"
+import { Grid } from '@mui/material';
 
 export default function Page() {
   return (
@@ -11,5 +11,5 @@ export default function Page() {
       <AddPost />
       <PostList />
     </Grid>
-  )
+  );
 }
