@@ -5,22 +5,20 @@ import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
 const PopularTodaySection = styled(Box)(() => ({
-  marginLeft: '10px',
   alignItems: 'center',
-  marginTop: '40px',
+  marginTop: '1rem',
 }));
 
 const PopularTodayListSection = styled(Container)(() => ({
   border: '1px solid ',
   borderRadius: '10px',
   marginTop: '25px',
-  padding: '20px',
   maxHeight: '200px',
   overflowY: 'scroll',
   '& .box': {
-    margin: '5px',
+    marginTop: '10px',
     '& .boxdata': {
-      padding: '5px',
+      // padding: '5px',
       display: 'flex',
     },
   },
