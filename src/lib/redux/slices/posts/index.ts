@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
+import { baseQuery } from '@/lib/utils';
 
 interface Posts {
   postData: Array<string>;
@@ -11,38 +12,75 @@ const initialState: Posts = {
   postData: [],
   allPostRecived: true,
 }
-const newtoken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJzdWIiOiI1ZWZkYmYxNGZiNmJlNTAwMDFjYmMzNmMiLCJ1bmlxdWVfbmFtZSI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImp0aSI6IjViYzhiNGY2LTYwMTQtNDNjMy1hNTM5LWI4ZjJjYjY4ZTk2MiIsImlhdCI6IjE3MDEzMjg3OTA3MTciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvaXNwZXJzaXN0ZW50IjoiZmFsc2UiLCJuYmYiOjE3MDEzMjg3OTAsImV4cCI6MTcwMTMzMjM5MCwiaXNzIjoiZmxveXgifQ.PUY--JZmBfHl-Lm9TdIlr7VKQyYoDG2g11921iWU1hc';
+// const newtoken =
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJzdWIiOiI1ZWZkYmYxNGZiNmJlNTAwMDFjYmMzNmMiLCJ1bmlxdWVfbmFtZSI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImp0aSI6ImI0ODJjYTgyLTE2ZWYtNGNiNy1hODI2LTAwMmQ2NTM1N2RkYiIsImlhdCI6IjE3MDE0MTc1MzUxMTUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvaXNwZXJzaXN0ZW50IjoiZmFsc2UiLCJuYmYiOjE3MDE0MTc1MzUsImV4cCI6MTcwMTQyMTEzNSwiaXNzIjoiZmxveXgifQ.jeA9BA7cSUUce5zOlGYBSHZpdQXQhG9fcaMWH9byTzQ"
 
-// Base query using fetchBaseQuery and caching
-const baseQuery = fetchBaseQuery({
-  baseUrl: '/',
-  prepareHeaders: (headers, { getState }) => {
-    console.log('calling apis');
-    // Use getState to get the current token from the store
-    // const token = (getState() as ReduxState).auth.token;
-    // // If we have a token set in state, let's assume that we should be passing it.
-    // if (token) {
-    headers.set('authorization', `Bearer ${newtoken}`);
-    // }
-    return headers;
-  },
-});
+// // Base query using fetchBaseQuery and caching
+// const baseQuery = fetchBaseQuery({
+//   baseUrl: '/',
+//   prepareHeaders: (headers, { getState }) => {
+//     console.log('calling apis');
+//     // Use getState to get the current token from the store
+//     // const token = (getState() as ReduxState).auth.token;
+//     // // If we have a token set in state, let's assume that we should be passing it.
+//     // if (token) {
+//     headers.set('authorization', `Bearer ${newtoken}`);
+//     // }
+//     return headers;
+//   },
+// });
 
 interface PostDetail {
   pageNumber: number;
   postCreatedDate: number;
 }
+
+interface Author {
+  id: string;
+  name: string;
+  username: string;
+  avatar: string;
+  official: boolean;
+  accountType: number;
+}
+
+interface Post {
+  id: string;
+  createdDateTime: number;
+  numberOfComments: number;
+  numberOfShares: number;
+  numberOfLikes: number;
+  likedByAuthor: boolean;
+  type: number;
+  content: string;
+  image: {
+    thumbnailPath: string;
+    path: string;
+  };
+  link: null | string;
+  shared: null | string;
+  promoted: boolean;
+  isSharedPostAvailable: boolean;
+}
+
+interface PostDetailResult {
+  author: Author;
+  id: string;
+  lastComment: string;
+  post: Post
+}
+
+
 export const postServices = createApi({
   reducerPath: 'postsReducer',
   baseQuery: baseQuery,
   endpoints: builder => ({
-    getPostDetail: builder.query<any, string>({
+    getPostDetail: builder.query<PostDetailResult, string>({
       query: (id) => `${ApiEndpoint.GetPosts}/post/${id}`,
       transformResponse: (response: any) => response?.value?.data,
     }),
     getPosts: builder.query<any, PostDetail>({
-      query: ({ pageNumber, postCreatedDate }:any) => {
+      query: ({ pageNumber, postCreatedDate }) => {
         const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {
           return apiEndPoint;

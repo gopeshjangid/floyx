@@ -20,8 +20,6 @@
     "@mui/icons-material": "5.14.18",
     "@mui/material": "5.14.18",
     "@reduxjs/toolkit": "1.9.5",
-    "@types/react-infinite-scroller": "^1.2.5",
-    "@types/react-mentions": "^4.1.11",
     "axios": "^1.6.0",
     "cookies-next": "^4.0.0",
     "emoji-mart": "^5.5.2",

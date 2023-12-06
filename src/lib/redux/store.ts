@@ -20,18 +20,13 @@ import { earningsService } from './slices/earnings';
 import { profileService } from './slices/profile';
 import { reducer } from './rootReducer';
 import { postServices } from './slices/posts';
-import { userDetails } from './slices/userDetails';
 import { artcileDetails } from './slices/articleDetails';
-import { commentList } from './slices/articleCommentList';
-import { articleTotalEarnings } from './slices/articleTotalEarnings';
+import { userService } from './slices/user';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [
-    earningsService.reducerPath,
-    postServices.reducerPath,
-    userDetails.reducerPath,
-  ],
+  whitelist: [earningsService.reducerPath, postServices.reducerPath ],
+
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -48,13 +43,10 @@ function makeStore(initialState = {}) {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       })
-        .concat(earningsService.middleware)
-        .concat(postServices.middleware)
-        .concat(userDetails.middleware)
-        .concat(artcileDetails.middleware)
-        .concat(commentList.middleware)
-        .concat(articleTotalEarnings.middleware)
-        .concat(profileService.middleware),
+      .concat(earningsService.middleware)
+      .concat(postServices.middleware)
+      .concat(artcileDetails.middleware)
+      .concat(userService. middleware)
   });
 }
 
