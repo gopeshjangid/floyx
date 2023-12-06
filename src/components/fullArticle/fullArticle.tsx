@@ -4,7 +4,7 @@ import React from 'react';
 import { Box, Typography, Button, Grid, Popover } from '@mui/material';
 import UserCard from '@/components/UserCard';
 import StarIcon from '@/images/image/star';
-import BookMarkIcon from '@/images/image/archiveMinus';
+import BookMarkIcon from '@/images/image/bookMarkIcon';
 import FaceBookIcon from '@/images/image/facebookIcon';
 import LinkedinIcon from '@/images/image/linkedin';
 import TwitterIcon from '@/images/image/twitter';

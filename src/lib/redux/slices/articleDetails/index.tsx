@@ -137,6 +137,10 @@ export const artcileDetails = createApi({
       query: articleId => `${ApiEndpoint.GetComments}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || [],
     }),
+    getArticleList : builder.query<any, string>({
+      query: (tabName) =>`${ApiEndpoint.DeleteArticle}/${tabName}`,
+      transformResponse: (response: any) => response?.value?.data || [],
+    })
   }),
   tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip'],
 });
@@ -147,5 +151,6 @@ export const {
   useGetLikeStatusMutation,
   useGetArticleTotalEarningsQuery, 
   useSetTipMutation,
-  useGetCommentListQuery 
+  useGetCommentListQuery,
+  useGetArticleListQuery 
 } = artcileDetails;
