@@ -26,13 +26,13 @@ const ArticleHeadContainer = styled(Box)(() => ({
   },
 }));
 
-export default function ArticleHead({ setArticleList }: any) {
+export default function ArticleHead({ setArticleList, setLoadingList }: any) {
   const [value, setValue] = useState('popular');
   const [tabName, setTabName] = useState('liked?limited=true');
-
-  const { data: articleList } = useGetArticleListQuery(tabName);
+  const { data: articleList, isLoading } = useGetArticleListQuery(tabName);
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setLoadingList(true);
     setValue(newValue);
     if (newValue === 'popular') {
       setTabName('liked?limited=true');
@@ -42,7 +42,11 @@ export default function ArticleHead({ setArticleList }: any) {
   };
 
   useEffect(() => {
-    if (articleList) setArticleList(articleList || []);
+    setLoadingList(isLoading);
+    if (articleList) {
+      setLoadingList(isLoading);
+      setArticleList(articleList || []);
+    }
   }, [articleList]);
 
   return (
@@ -93,6 +97,8 @@ export default function ArticleHead({ setArticleList }: any) {
           variant="outlined"
           color="primary"
           sx={{ border: '1px solid white' }}
+          target="_blank"
+          href="/composer/create"
         >
           New Articles
         </Button>
