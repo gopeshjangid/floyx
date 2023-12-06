@@ -13,7 +13,27 @@ import { useEffect, useState } from "react";
 import PostActionModal from "./PostActionModal";
 import { useRouter } from "next/navigation";
 import { allRoutes } from "@/constants/allRoutes";
+import { ArticleComments } from "@/lib/redux/slices/articleDetails";
+import { Post as PostDetail } from "@/lib/redux";
+import { useSession } from "next-auth/react";
 // import { useSession } from "next-auth/react";
+interface postDetail {
+  name: string;
+  username: string;
+  createdDateTime: number;
+  content: string;
+  shared: null | string;
+  image:  {
+    thumbnailPath: string;
+    path: string;
+  };
+  link: null | string;
+  isShared?: boolean;
+  postDetails?: PostDetail;
+  avatar:string;
+  postId:string;
+  commentList?: ArticleComments[],
+}
 
 export default function Post({
   name,
@@ -28,9 +48,9 @@ export default function Post({
   avatar,
   postId,
   commentList,
-}: any) {
-  // const session = useSession();
-  // const userDetail = session.data?.user;
+}: postDetail) {
+  const session = useSession();
+  const userDetail = (session as any)?.data?.user?.username;
 
   const router = useRouter();
   const [buttonOptions, setButtonOptions] = useState(["Direct Link"]);
@@ -47,7 +67,7 @@ export default function Post({
   }
 
   useEffect(() => {
-    if (username === "sadam_hussain") {
+    if (username === userDetail) {
       setButtonOptions(["Delete Post", "Direct Link"])
     }
   }, [username]);  
@@ -81,8 +101,8 @@ export default function Post({
         </Box>
         <PostImage image={image} link={link} shared={shared} isShared={isShared} postId={postId} />
         <LikeCommentShare postDetails={postDetails} />
-        <CommentList comments={commentList} />
-        <AddComment avatar={avatar}/>
+        {!isShared && <CommentList comments={commentList} />}
+        {!isShared && <AddComment avatar={avatar} />}
       </Box>
       <PostActionModal
         open={open}

@@ -1,4 +1,5 @@
 import { useDeletePostMutation } from "@/lib/redux"
+import { DeleteOutline } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Modal, Typography } from "@mui/material"
 import React from "react";
 
@@ -17,7 +18,8 @@ export default function PostActionModal({
 
   const performAction = async () => {
     if (action === "Delete Post") {
-      await deletePost(postId)
+      await deletePost(postId);
+      setOpen(false);
     }
   }
 
@@ -44,10 +46,10 @@ export default function PostActionModal({
         }}
       >
         <Box>
-          <Typography variant="h6" component="h2">
-            {action}
+          <Typography variant="h6" component="h2" display={"flex"} justifyContent={"center"} alignItems={"center"}>
+            <DeleteOutline /> {action}
           </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
+          <Typography id="keep-mounted-modal-description" sx={{ margin: "32px 0"}}>
             {action === "Delete Post" &&
               "Are you sure you want to delete this post?"}
           </Typography>

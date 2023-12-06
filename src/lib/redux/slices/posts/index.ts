@@ -12,23 +12,6 @@ const initialState: Posts = {
   postData: [],
   allPostRecived: true,
 }
-// const newtoken =
-// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJzdWIiOiI1ZWZkYmYxNGZiNmJlNTAwMDFjYmMzNmMiLCJ1bmlxdWVfbmFtZSI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImp0aSI6ImI0ODJjYTgyLTE2ZWYtNGNiNy1hODI2LTAwMmQ2NTM1N2RkYiIsImlhdCI6IjE3MDE0MTc1MzUxMTUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvaXNwZXJzaXN0ZW50IjoiZmFsc2UiLCJuYmYiOjE3MDE0MTc1MzUsImV4cCI6MTcwMTQyMTEzNSwiaXNzIjoiZmxveXgifQ.jeA9BA7cSUUce5zOlGYBSHZpdQXQhG9fcaMWH9byTzQ"
-
-// // Base query using fetchBaseQuery and caching
-// const baseQuery = fetchBaseQuery({
-//   baseUrl: '/',
-//   prepareHeaders: (headers, { getState }) => {
-//     console.log('calling apis');
-//     // Use getState to get the current token from the store
-//     // const token = (getState() as ReduxState).auth.token;
-//     // // If we have a token set in state, let's assume that we should be passing it.
-//     // if (token) {
-//     headers.set('authorization', `Bearer ${newtoken}`);
-//     // }
-//     return headers;
-//   },
-// });
 
 interface PostDetail {
   pageNumber: number;
@@ -44,7 +27,7 @@ interface Author {
   accountType: number;
 }
 
-interface Post {
+export interface Post {
   id: string;
   createdDateTime: number;
   numberOfComments: number;
@@ -63,7 +46,7 @@ interface Post {
   isSharedPostAvailable: boolean;
 }
 
-interface PostDetailResult {
+export interface PostDetailResult {
   author: Author;
   id: string;
   lastComment: string;
@@ -79,7 +62,7 @@ export const postServices = createApi({
       query: (id) => `${ApiEndpoint.GetPosts}/post/${id}`,
       transformResponse: (response: any) => response?.value?.data,
     }),
-    getPosts: builder.query<any, PostDetail>({
+    getPosts: builder.query<PostDetailResult[], PostDetail>({
       query: ({ pageNumber, postCreatedDate }) => {
         const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {

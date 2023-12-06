@@ -18,7 +18,7 @@ interface LikeStatusData {
   numberOfLikes: number;
 }
 
-interface ArticleComments {
+export interface ArticleComments {
   autoFocus: boolean;
   index: number;
   key: string;
