@@ -12,6 +12,9 @@ import CropOriginalIcon from "@mui/icons-material/CropOriginal"
 import { PostBox } from "./styledPostBox"
 import { useCreatePostMutation } from "@/lib/redux"
 import { SVGUser } from "@/assets/images"
+import { useSession } from "next-auth/react";
+import UserAvatar from "../UserAvatar";
+import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
 
 const initialPostObj = {
   postText: '',
@@ -21,7 +24,8 @@ const initialPostObj = {
 
 export default function AddPost() {
   const imageFileInput = useRef<HTMLInputElement>(null)
-  const [postObj, setPostObj] = useState(initialPostObj)
+  const [postObj, setPostObj] = useState(initialPostObj);
+  const session = useSession();
   const value = 0;
   const isAuthorizedUser =false;
   const [imagePreview, setImagePreview] = useState<any>('')
@@ -76,6 +80,8 @@ export default function AddPost() {
     formData.append('file', imageToUpload)
     await createPost(formData);
     setPostObj(initialPostObj);
+    setImagePreview('');
+    setImageToUpload('');
   }
 
   const publishPost = () => {
@@ -101,40 +107,44 @@ export default function AddPost() {
       </Tabs>
       <Box className={`input-container ${postObj.postTextLeft < 0 ? 'danger-text' : postObj.postTextLeft < 30 ? 'warning-text' : ''}`}>
         <Box className="styled-input-container">
-        <Avatar>
-          <SVGUser />
-        </Avatar>
-        <MentionsInput
-          className="mention-input-container"
-          singleLine={false}
-          value={postObj.postText}
-          onChange={handlePostText}
-          placeholder={
-            userDetail.sharedPost && !userDetail.sharedEvent
-              ? "What is happening?"
-              : "Want to add something to your post?"
-          }
-        >
-          <Mention
-            trigger="@"
-            displayTransform={(id: string) => `@${id}`}
-            data={[]}
-            // renderSuggestion={[]}
-            appendSpaceOnAdd={true}
+          <UserAvatar
+            src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)?.data?.user?.username}`}
+            alt={(session as any)?.data?.user?.username}
+            sx={{ width: '49px', height: '49px' }}
           />
-        </MentionsInput>
-        </Box>
-        {postObj.postTextLeft < 30 && (
-          <div className="post__warning">
-            <Typography component={"span"} color={"error"}>
-                {postObj.postTextLeft > 0
-                ? 'You are getting close to the maximum character limit.'
-                : 'You have exceeded the maximum character limit.'}
-            </Typography>  
+          <Box className="mention-input">
+            <MentionsInput
+            className="mention-input-container"
+            singleLine={false}
+            value={postObj.postText}
+            onChange={handlePostText}
+            placeholder={
+              userDetail.sharedPost && !userDetail.sharedEvent
+                ? "What is happening?"
+                : "Want to add something to your post?"
+            }
+          >
+            <Mention
+              trigger="@"
+              displayTransform={(id: string) => `@${id}`}
+              data={[]}
+              // renderSuggestion={[]}
+              appendSpaceOnAdd={true}
+            />
+            </MentionsInput>
+            {postObj.postTextLeft < 30 && (
+              <div className="post__warning">
+                <Typography component={"span"} color={"error"}>
+                    {postObj.postTextLeft > 0
+                    ? 'You are getting close to the maximum character limit.'
+                    : 'You have exceeded the maximum character limit.'}
+                </Typography>  
 
-            <Typography component={"span"}>{postObj.postTextLeft}</Typography>
-          </div>
-          )}
+                <Typography component={"span"}>{postObj.postTextLeft}</Typography>
+              </div>
+            )}
+          </Box>
+        </Box>
           {error && !isLoading && <Typography component={"span"} color={"error"}>{"Please add photo description to publish it."}</Typography>}
         {imagePreview && <Image
               width={0}

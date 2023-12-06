@@ -40,7 +40,7 @@ export default function PostList({postData, loadMore, apiParams, isFetching}: Po
                 postDetails={val?.post}
                 postId={val?.id}
                 avatar={val?.author?.avatar || ''}
-                />
+              />
             ))
           }
           </InfiniteScroll>

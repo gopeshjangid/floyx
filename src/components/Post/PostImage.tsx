@@ -83,7 +83,7 @@ export default function PostImage({ image, link, shared, isShared, postId }: any
         </Box>}
       {shared && !isShared && (
         <>
-          <Link href={`/post/${postId}`}>
+          <Link href={`/post/${shared?.post?.id}`}>
             <Post
               name={shared?.author?.name || ''}
               username={shared?.author?.username || ''}
@@ -93,8 +93,9 @@ export default function PostImage({ image, link, shared, isShared, postId }: any
               shared={shared?.post?.shared}
               image={shared?.post?.image}
               link={shared?.post?.link}
+              postId={shared?.post?.id}
               isShared={true}
-              />
+            />
           </Link>
         </>
       )}
