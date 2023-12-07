@@ -89,7 +89,7 @@ const Default = () => {
   };
 
   const debouncedUserSearch = useCallback(
-    debounce(text => userSearch(text), 500),
+    debounce(text => text && userSearch(text), 500),
     []
   );
 
@@ -106,6 +106,7 @@ const Default = () => {
     <Wrapper>
       <Box borderBottom={`1px solid ${palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`} padding="18px 20px 15px">
         <TextField
+          name="search"
           fullWidth
           hiddenLabel
           placeholder="Search people..."

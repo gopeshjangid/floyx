@@ -7,6 +7,8 @@ import { artcileDetails } from './slices/articleDetails';
 import { commentList } from './slices/articleCommentList';
 import { articleTotalEarnings } from './slices/articleTotalEarnings';
 import { profileService } from './slices/profile';
+import { registrationService } from './slices/registration';
+import { accountSettingService } from './slices/accountSetting';
 
 export const reducer = combineReducers({
   [earningsService.reducerPath]: earningsService.reducer,
@@ -16,4 +18,6 @@ export const reducer = combineReducers({
   [commentList.reducerPath]: commentList.reducer,
   [articleTotalEarnings.reducerPath]: articleTotalEarnings.reducer,
   [profileService.reducerPath]: profileService.reducer,
+  [registrationService.reducerPath]: registrationService.reducer,
+  [accountSettingService.reducerPath]: accountSettingService.reducer,
 });

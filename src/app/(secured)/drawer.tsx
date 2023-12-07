@@ -63,6 +63,10 @@ const navItems = [
     icon: (fill: string) => <ProfileIcon stroke={fill} />,
   },
   {
+    label: 'Settings',
+    href: '/settings/account',
+  },
+  {
     label: 'More',
     href: '/more',
     icon: (fill: string) => <MoreIcon fill={fill} />,
@@ -99,7 +103,7 @@ export default function DrawerAppBar({ children }) {
         {navItems.map((item, index) => (
           <ListItemButton key={index} LinkComponent={Link} href={item.href}>
             <ListItemIcon>
-              {item?.icon(theme.palette.text.primary)}
+              {item?.icon && item?.icon(theme.palette.text.primary)}
             </ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItemButton>
