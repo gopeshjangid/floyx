@@ -47,13 +47,13 @@ interface ISettingAccountFormError {
 const AccountSetting = () => {
   const {
     data: settingsData,
-    isFetching: getSettingLoading,
+    isLoading: getSettingLoading,
     error: getSettingError,
   } = useGetSettingsQuery({});
 
   const {
     data: getMessageSettingData,
-    isFetching: getMessageSettingLoading,
+    isLoading: getMessageSettingLoading,
     error: getMessageSettingError,
   } = useGetMessageSettingsQuery({});
 

@@ -28,9 +28,6 @@ const AccountSettingSkeleton = () => {
             <Skeleton variant="text" width="15%" height="40px" />
             <Skeleton variant="text" width="100%" height="70px" />
 
-            <Skeleton variant="text" width="15%" height="40px" />
-            <Skeleton variant="text" width="100%" height="70px" />
-
             <Skeleton variant="text" width="100%" height="50px" />
             <Skeleton variant="text" width="100%" height="50px" />
           </Stack>

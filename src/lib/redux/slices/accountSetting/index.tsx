@@ -15,22 +15,14 @@ const baseQuery = fetchBaseQuery({
 export const accountSettingService = createApi({
   reducerPath: 'accountSetting',
   baseQuery: baseQuery,
+  tagTypes: ['accountSetting', 'blockUser'],
   endpoints: builder => ({
-    updateSettings: builder.mutation({
-      query: body => ({
-        url: ApiEndpoint.UpdateSettings,
-        method: 'POST',
-        body: body,
-      }),
-      transformResponse: (response: any) => response?.value?.code,
-      transformErrorResponse: (response: any): string[] =>
-        response?.data.value.code,
-    }),
     getSettings: builder.query({
       query: () => ({
         url: ApiEndpoint.Settings,
         method: 'GET',
       }),
+      providesTags: ['accountSetting'],
       transformResponse: (response: any) => response?.value?.data,
       transformErrorResponse: (response: any): string[] =>
         response?.data.value.code,
@@ -40,9 +32,21 @@ export const accountSettingService = createApi({
         url: ApiEndpoint.MessageSetting,
         method: 'GET',
       }),
+      providesTags: ['accountSetting'],
       transformResponse: (response: any) => response?.value?.data,
       transformErrorResponse: (response: any): string[] =>
         response?.data.value.code,
+    }),
+    updateSettings: builder.mutation({
+      query: body => ({
+        url: ApiEndpoint.UpdateSettings,
+        method: 'POST',
+        body: body,
+      }),
+      transformResponse: (response: any) => response?.value?.code,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
+      invalidatesTags: ['accountSetting'],
     }),
     updateMessageSettings: builder.mutation({
       query: body => ({
@@ -53,6 +57,7 @@ export const accountSettingService = createApi({
       transformResponse: (response: any) => response?.value?.code,
       transformErrorResponse: (response: any): string[] =>
         response?.data.value.code,
+      invalidatesTags: ['accountSetting'],
     }),
     changePassword: builder.mutation({
       query: body => ({
@@ -69,6 +74,7 @@ export const accountSettingService = createApi({
         url: ApiEndpoint.GetBlockedUsers,
         method: 'GET',
       }),
+      providesTags: ['blockUser'],
       transformResponse: (response: any) => response?.value?.data,
       transformErrorResponse: (response: any): string[] =>
         response?.data.value.code,
@@ -81,9 +87,9 @@ export const accountSettingService = createApi({
       transformResponse: (response: any) => response?.value?.code,
       transformErrorResponse: (response: any): string[] =>
         response?.data.value.code,
+      invalidatesTags: ['blockUser'],
     }),
   }),
-  tagTypes: ['registration'],
 });
 
 export const {

@@ -9,7 +9,11 @@ const WrapperContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
     theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
   }`,
   marginTop: '20px',
-  maxWidth: '98%',
+  maxWidth: '96%',
+
+  [theme.breakpoints.down('lg')]: {
+    maxWidth: '90%',
+  },
 }));
 const Wrapper = ({
   children,
