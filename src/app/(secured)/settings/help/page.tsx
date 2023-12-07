@@ -62,6 +62,7 @@ const Help = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <PrivacyPolicy />
+
         </CustomTabPanel>
       </Box>
     </Wrapper>
