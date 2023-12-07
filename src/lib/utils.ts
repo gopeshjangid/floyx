@@ -51,3 +51,23 @@ export const baseQuery = fetchBaseQuery({
     return response.json();
   },
 });
+
+export const months = [
+  { label: 'January', value: '01' },
+  { label: 'February', value: '02' },
+  { label: 'March', value: '03' },
+  { label: 'April', value: '04' },
+  { label: 'May', value: '05' },
+  { label: 'June', value: '06' },
+  { label: 'July', value: '07' },
+  { label: 'August', value: '08' },
+  { label: 'September', value: '09' },
+  { label: 'October', value: '10' },
+  { label: 'November', value: '11' },
+  { label: 'December', value: '12' },
+];
+
+export const years = Array.from({ length: 2023 - 2000 + 1 }, (_, index) => ({
+  label: String(index + 2000),
+  value: String(index + 2000),
+}));

@@ -12,6 +12,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { useSession } from 'next-auth/react';
 import { useGetBonusTaskStatusQuery } from '@/lib/redux/slices/earnings';
+import { useGetPopularAccountsToFollowQuery } from '@/lib/redux/slices/profile';
 
 const StyledBox = ({ children }: any) => {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -36,27 +37,48 @@ const StyledBox = ({ children }: any) => {
 };
 
 const PopularAccountsList = () => {
-  const { data, isLoading } = useGetBonusTaskStatusQuery();
-  const accountsList = isLoading && !data ? [1, 2, 3, 4, 5] : data;
-
+  const { data, isLoading } = useGetPopularAccountsToFollowQuery();
+  const accountsList =
+    isLoading && !data ? [1, 2, 3, 4, 5] : data?.result ?? [];
   return (
     <Stack gap={2}>
       {accountsList.map((account, index) => (
-        <StyledBox>
+        <StyledBox key={'accont-' + index}>
           <Box key={index} sx={{ width: '100%' }}>
-            <Stack direction="row" gap={2}>
+            <Stack direction="row" gap={1}>
               {account?.avatar ? (
-                <Avatar src={account?.avatar} />
+                <Avatar sx={{ width: 55, height: 55 }} src={account?.avatar} />
               ) : (
                 <Skeleton width={55} variant="circular" height={55} />
               )}
-              <Box display="flex" flexDirection="column">
-                <Typography variant="body1" color="textPrimary">
-                  {account?.name ?? <Skeleton width={80} variant="text" />}
-                </Typography>
-                <Typography variant="body1" color="primary">
-                  {account?.username ?? <Skeleton width={80} variant="text" />}
-                </Typography>
+              <Box display="flex" flexDirection="column" alignItems={'center'}>
+                {isLoading ? (
+                  <Skeleton
+                    width={'100%'}
+                    animation="pulse"
+                    variant="rectangular"
+                    height={'65px'}
+                  />
+                ) : (
+                  account && (
+                    <>
+                      <Typography
+                        textAlign={'justify'}
+                        variant="subtitle2"
+                        color="textPrimary"
+                      >
+                        {account?.name}
+                      </Typography>
+                      <Typography
+                        textAlign={'justify'}
+                        variant="caption"
+                        color="secondary"
+                      >
+                        {'@' + account?.username}
+                      </Typography>
+                    </>
+                  )
+                )}
               </Box>
             </Stack>
           </Box>
@@ -69,7 +91,7 @@ const PopularAccountsList = () => {
 const PopularAccounts = () => {
   const { status, data } = useSession();
   return (
-    <Stack spacing={2} mt={2} pt={1}>
+    <Stack spacing={2} mt={5} pt={1}>
       <Typography variant="h6" color="textPrimary">
         Popular Accounts
       </Typography>

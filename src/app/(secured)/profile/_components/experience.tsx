@@ -1,218 +1,222 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import * as React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Grid,
   Typography,
-  IconButton,
-  Chip,
-  styled,
-  InputLabel,
-  Checkbox,
-  TextField,
   Stack,
   useMediaQuery,
-  FormControlLabel,
   Button,
-  TextareaAutosize,
+  Alert,
+  Skeleton,
+  Backdrop,
+  CircularProgress,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-interface SearchCriteria {
-  name: string;
-  country: string;
-  skill: string;
-  skills: string[];
-  professionalExperience: boolean;
-}
 
-const StyledChip = styled(Chip)(({ theme }) => ({
-  borderRadius: '4px', // Adjust the border-radius for rounded corners
-  padding: theme.spacing(0.5, 1), // Use theme spacing for consistent padding
-  margin: theme.spacing(0.5), // Use theme spacing for consistent margins
-  backgroundColor:
-    theme.palette.mode === 'dark' ? 'rgba(87, 152, 255, 0.13)' : '#bbdefb', // Dark blue for dark mode, light blue for light mode
-  color:
-    theme.palette.mode === 'dark'
-      ? theme.palette.primary.main
-      : theme.palette.primary.main, // Lighter text for dark mode, dark text for light mode
-  '& .MuiChip-label': {
-    padding: theme.spacing(0, 1), // Use theme spacing inside the chip
-  },
-  '& .MuiChip-deleteIcon': {
-    color:
-      theme.palette.mode === 'dark'
-        ? theme.palette.primary.main
-        : theme.palette.primary.main, // Same as text color
-    '&:hover': {
-      color: theme.palette.mode === 'dark' ? '#fff' : '#546e7a', // Lighter on hover for dark mode, darker for light mode
-    },
-  },
-}));
+import {
+  useAddExperienceMutation,
+  useGetProfileAboutQuery,
+  useUpdateExperienceMutation,
+} from '@/lib/redux/slices/profile';
+import ProfileActivityInfo from '@/components/ProfileActivityInfo';
+import DynamicForm from './addEditActivity';
+import { months, years } from '@/lib/utils';
+import { useToast } from '@/components/Toast/useToast';
 
-const SearchComponent: React.FC = ({ onSearch }) => {
-  const [searchCriteria, setSearchCriteria] = React.useState<SearchCriteria>({
-    name: '',
-    country: '',
-    skill: '',
-    skills: [],
-    professionalExperience: false,
+const elements = [
+  {
+    label: 'Position',
+    name: 'position',
+    type: 'text',
+    options: { maxLength: 30 },
+    xs: 9,
+    componentProps: { inputProps: { maxLength: 30 } },
+  },
+  {
+    label: 'Company',
+    name: 'company',
+    type: 'text',
+    options: { maxLength: 30 },
+    xs: 9,
+    componentProps: { inputProps: { maxLength: 30 } },
+  },
+
+  {
+    label: 'From',
+    name: 'fromMonth',
+    type: 'monthSelect',
+    options: months,
+    xs: 4.5,
+  },
+  {
+    label: '',
+    name: 'fromYear',
+    type: 'yearSelect',
+    options: years,
+    xs: 4.5,
+  },
+  {
+    label: 'To',
+    name: 'toMonth',
+    type: 'monthSelect',
+    options: months,
+    xs: 4.5,
+  },
+  {
+    label: '',
+    name: 'toYear',
+    type: 'yearSelect',
+    options: years,
+    xs: 4.5,
+  },
+  {
+    label: 'Description',
+    name: 'description',
+    type: 'text',
+    options: { maxLength: 50 },
+    xs: 9,
+    componentProps: { inputProps: { maxLength: 50 }, minRows: 3 },
+  },
+];
+
+const initialValues = {
+  id: '',
+  company: '',
+  description: '',
+  fromMonth: '',
+  fromYear: '',
+  period: '',
+  position: '',
+  toMonth: '',
+  toYear: '',
+};
+
+const ExperienceForm: React.FC = () => {
+  const toast = useToast();
+  const [action, setAction] = React.useState('');
+  const { data, isError, isLoading, error } = useGetProfileAboutQuery({
+    username: 'saddam_beta',
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, checked, type } = e.target;
-    setSearchCriteria({
-      ...searchCriteria,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-  };
+  const [addExperience, { isLoading: isAdding, error: addError, isSuccess }] =
+    useAddExperienceMutation();
 
-  const handleSkillKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && searchCriteria.skill.trim() !== '') {
-      setSearchCriteria({
-        ...searchCriteria,
-        skills: [...searchCriteria.skills, searchCriteria.skill],
-        skill: '', // Clear the input after adding
-      });
-      e.preventDefault();
+  const [
+    updateExperience,
+    { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSuccess },
+  ] = useUpdateExperienceMutation();
+
+  const [formValues, setFormValues] = useState(initialValues);
+  const handleSubmit = data => {
+    if (formValues?.id) {
+      updateExperience(data);
+    } else {
+      addExperience(data);
     }
   };
 
-  const handleDeleteSkill = (skillToDelete: string) => {
-    setSearchCriteria(prevCriteria => ({
-      ...prevCriteria,
-      skills: prevCriteria.skills.filter(skill => skill !== skillToDelete),
-    }));
-  };
+  useEffect(() => {
+    if (isSuccess || isUpdateSuccess) {
+      toast.success(`New Experience ${isUpdateSuccess ? 'Updated' : 'Added'}!`);
+      setAction('');
+    }
+  }, [isSuccess, isUpdateSuccess]);
+
+  useEffect(() => {
+    if (addError || updateError) {
+      toast.error(
+        `Error Occured in ${updateError ? 'updating' : 'adding'} experience`
+      );
+    }
+  }, [addError, updateError]);
+
+  const onEditHandler = useCallback(
+    data => {
+      setAction('Edit');
+      setFormValues(data);
+    },
+    [setAction, setFormValues]
+  );
+
+  const cancelHandler = useCallback(() => {
+    setAction('');
+    setFormValues({});
+  }, [setFormValues, setAction]);
+
+  if (isLoading) {
+    return (
+      <Skeleton
+        animation="wave"
+        width="100%"
+        variant="rectangular"
+        height="300px"
+      />
+    );
+  }
+
+  if (isError) return <Alert severity="error">Error occured: {error}</Alert>;
+
+  if (action === '') {
+    return (
+      <Stack gap={2}>
+        <Box py={2} width={'100%'}>
+          <Grid spacing={2} container>
+            <Grid textAlign="left" item xs={4}>
+              <Typography variant="h5" color="textPrimary">
+                Experience
+              </Typography>
+            </Grid>{' '}
+            <Grid item xs={8} textAlign="right">
+              <Button variant="outlined" onClick={() => setAction('ADD')}>
+                Add New
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+        {data?.experiences ? (
+          data?.experiences?.map((experience, index) => (
+            <ProfileActivityInfo
+              onEdit={onEditHandler}
+              key={'experience-' + index}
+              {...experience}
+              type="Experience"
+            />
+          ))
+        ) : (
+          <Typography variant="subtitle1">
+            No experience history available.
+          </Typography>
+        )}
+      </Stack>
+    );
+  }
 
   return (
-    <Grid container justifyContent={'center'} spacing={2}>
-      <Grid xs={3} item>
-        {' '}
-        <InputLabel htmlFor="Name">Name</InputLabel>
-      </Grid>
-      <Grid xs={9} item>
-        {' '}
-        <TextField
-          variant="outlined"
-          name="name"
-          placeholder="Ex. Dustin Max"
-          value={searchCriteria.name}
-          onChange={handleInputChange}
-        />
-      </Grid>
-      <Grid xs={3} item>
-        {' '}
-        <InputLabel htmlFor="Country">Country</InputLabel>
-      </Grid>
-      <Grid xs={9} item>
-        {' '}
-        <TextField
-          variant="outlined"
-          name="country"
-          placeholder="Ex. Canada"
-          value={searchCriteria.country}
-          onChange={handleInputChange}
-        />
-      </Grid>
-      <Grid xs={3} item>
-        {' '}
-        <InputLabel htmlFor="Skill">Skill</InputLabel>
-      </Grid>
-      <Grid xs={9} item>
-        <TextField
-          variant="outlined"
-          name="skill"
-          placeholder="Type skill and press enter"
-          value={searchCriteria.skill}
-          onChange={handleInputChange}
-          onKeyUp={handleSkillKeyPress}
-        />
-        {searchCriteria.skills.map((skill, index) => (
-          <StyledChip
-            deleteIcon={<CloseIcon fontSize="small" />}
-            onDelete={() => handleDeleteSkill(skill)}
-            key={index}
-            label={skill}
-          />
-        ))}
-      </Grid>
-
-      <Grid xs={12} item>
-        <InputLabel htmlFor="Type interest and press enter">
-          Description
-        </InputLabel>
-        <TextareaAutosize
-          variant="outlined"
-          name="country"
-          placeholder="Enter description..."
-          value={searchCriteria.country}
-          minRows={5}
-          sx={{ width: '100%' }}
-          onChange={handleInputChange}
-        />
-      </Grid>
-      <Grid xs={3} item>
-        {' '}
-        <InputLabel htmlFor="Country">Interested in</InputLabel>
-      </Grid>
-      <Grid xs={9} item>
-        {' '}
-        <TextField
-          variant="outlined"
-          name="country"
-          placeholder="Type interest and press enter"
-          value={searchCriteria.country}
-          onChange={handleInputChange}
-        />
-      </Grid>
-      <Grid xs={3} item>
-        {' '}
-        <InputLabel htmlFor="Country">Language</InputLabel>
-      </Grid>
-      <Grid xs={9} item>
-        {' '}
-        <TextField
-          variant="outlined"
-          name="country"
-          placeholder="Type language and press enter"
-          value={searchCriteria.country}
-          onChange={handleInputChange}
-        />
-      </Grid>
-    </Grid>
+    <Box>
+      {(isAdding || isUpdating) && (
+        <Backdrop sx={{ color: '#fff', zIndex: 999 }} open={true}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
+      <DynamicForm
+        formElements={elements}
+        initialValues={formValues}
+        onSubmit={handleSubmit}
+        onCancel={cancelHandler}
+        title="Add New Experience"
+      />
+    </Box>
   );
 };
 
-// Example usage of the styled components
 const ExperienceSection: React.FC = () => {
-  const [_value, setValue] = React.useState(0);
   const isMobile = useMediaQuery('(max-width:480px)');
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
 
   return (
     <Box sx={{ p: isMobile ? 0 : 3, borderColor: 'rgba(255, 255, 255, 0.15)' }}>
-      <Box p={1} width={'100%'}>
-        <Stack
-          gap={2}
-          justifyContent="space-between"
-          alignItems="center"
-          display="flex"
-          direction="row"
-        >
-          <Typography variant="h5" color="textPrimary">
-            Professional Experience
-          </Typography>
-          <Stack gap={1} direction="row">
-            <Button variant="outlined">Save</Button>
-            <Button variant="text">Cancel</Button>
-          </Stack>
-        </Stack>
-      </Box>
       <Box p={2} textAlign="center">
-        <SearchComponent />
+        <ExperienceForm />
       </Box>
     </Box>
   );
