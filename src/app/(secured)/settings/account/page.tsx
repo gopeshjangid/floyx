@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -13,7 +13,6 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  debounce,
 } from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
@@ -21,31 +20,43 @@ import ThemeSwitch from '@/components/ThemeSwitcher';
 import { SVGUser } from '@/assets/images';
 import { useToast } from '@/components/Toast/useToast';
 import {
+  useGetMessageSettingsQuery,
+  useGetSettingsQuery,
   useUpdateMessageSettingsMutation,
   useUpdateSettingsMutation,
 } from '@/lib/redux/slices/accountSetting';
 import SVGEmail from '@/iconComponents/email';
 import SVGExclamation from '@/iconComponents/exclamation';
 import SVGDelete from '@/iconComponents/delete';
-import { useCheckUsernameMutation } from '@/lib/redux/slices/registration';
 import { showErrorMessages } from '@/lib/utils';
 import { SettingWrapper } from '../styled';
+import AccountSettingSkeleton from './loading';
 
 interface ISettingAccount {
   name: string;
-  username: string;
   email: string;
   enableMessage: boolean;
 }
 
 interface ISettingAccountFormError {
   name?: string;
-  username?: string;
   email?: string;
   enableMessage?: boolean;
 }
 
 const AccountSetting = () => {
+  const {
+    data: settingsData,
+    isFetching: getSettingLoading,
+    error: getSettingError,
+  } = useGetSettingsQuery({});
+
+  const {
+    data: getMessageSettingData,
+    isFetching: getMessageSettingLoading,
+    error: getMessageSettingError,
+  } = useGetMessageSettingsQuery({});
+
   const [
     updateSettings,
     {
@@ -62,36 +73,27 @@ const AccountSetting = () => {
       error: messageSettingError,
     },
   ] = useUpdateMessageSettingsMutation();
-  const [checkUserName, { data: checkUserNameData }] =
-    useCheckUsernameMutation();
 
   const toast = useToast();
 
   const [formData, setFormData] = useState<ISettingAccount>({
     email: '',
     name: '',
-    username: '',
     enableMessage: false,
   });
   const [formError, setFormError] = useState<ISettingAccountFormError>({});
 
-  const isLoading = settingUpdateLoading || messageSettingLoading;
+  const isUpdateLoading = settingUpdateLoading || messageSettingLoading;
 
   useEffect(() => {
-    if (checkUserNameData && checkUserNameData === 'username_in_use') {
-      setFormError((prev: any) => ({
-        ...prev,
-        username: 'This username already exists, try another one',
-      }));
+    if (settingsData && getMessageSettingData) {
+      setFormData({
+        email: settingsData.email,
+        name: settingsData.name,
+        enableMessage: getMessageSettingData?.allowPrivateMassages,
+      });
     }
-
-    if (checkUserNameData === 'success') {
-      setFormError((prev: any) => ({
-        ...prev,
-        username: '',
-      }));
-    }
-  }, [checkUserNameData]);
+  }, [settingsData, getMessageSettingData]);
 
   useEffect(() => {
     if (settingUpdateData === 'success') {
@@ -117,10 +119,17 @@ const AccountSetting = () => {
     }
   }, [messageSettingError]);
 
-  const debouncedCheckUserName = useCallback(
-    debounce(username => username && checkUserName({ username }), 500),
-    []
-  );
+  useEffect(() => {
+    if (getSettingError) {
+      toast.error(showErrorMessages(getSettingError as string[]));
+    }
+  }, [getSettingError]);
+
+  useEffect(() => {
+    if (getMessageSettingError) {
+      toast.error(showErrorMessages(getMessageSettingError as string[]));
+    }
+  }, [getMessageSettingError]);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === 'enableMessage') {
@@ -150,9 +159,6 @@ const AccountSetting = () => {
     if (formData.name === '') {
       err.name = 'Name is required!';
     }
-    if (formData.username === '') {
-      err.username = 'Username is required!';
-    }
 
     setFormError({ ...err });
 
@@ -166,7 +172,6 @@ const AccountSetting = () => {
     if (isValid) {
       updateSettings({
         name: formData.name,
-        username: formData.username,
         email: formData.email,
       });
 
@@ -175,6 +180,10 @@ const AccountSetting = () => {
       });
     }
   };
+
+  if (getSettingLoading || getMessageSettingLoading) {
+    return <AccountSettingSkeleton />;
+  }
 
   return (
     <>
@@ -196,35 +205,11 @@ const AccountSetting = () => {
                 name="name"
                 fullWidth
                 hiddenLabel
+                value={formData.name}
                 placeholder="Dustin Max"
                 onChange={onChangeHandler}
                 error={!!formError.name}
                 helperText={formError.name}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end" color="primary">
-                        <SVGUser />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Username</FormLabel>
-              <TextField
-                name="username"
-                fullWidth
-                hiddenLabel
-                placeholder="Dusti_96"
-                onChange={e => {
-                  debouncedCheckUserName(e.target.value);
-                  onChangeHandler(e as any);
-                }}
-                error={!!formError.username}
-                helperText={formError.username}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">
@@ -243,6 +228,7 @@ const AccountSetting = () => {
                 name="email"
                 fullWidth
                 hiddenLabel
+                value={formData.email}
                 placeholder="name@gmail.com"
                 onChange={onChangeHandler}
                 error={!!formError.email}
@@ -270,9 +256,12 @@ const AccountSetting = () => {
 
             <FormControl margin="normal">
               <FormControlLabel
-                name="remember"
+                name="enableMessage"
                 control={
-                  <Checkbox defaultChecked={false} onChange={onChangeHandler} />
+                  <Checkbox
+                    checked={formData.enableMessage}
+                    onChange={onChangeHandler}
+                  />
                 }
                 label="
                     Enable Message: Allow other users to send me private message"
@@ -286,7 +275,7 @@ const AccountSetting = () => {
                 type="submit"
                 className="submit-btn"
               >
-                {isLoading ? (
+                {isUpdateLoading ? (
                   <>
                     <CircularProgress size={24} color="inherit" />
                     Save Changes

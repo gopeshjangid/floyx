@@ -26,6 +26,24 @@ export const accountSettingService = createApi({
       transformErrorResponse: (response: any): string[] =>
         response?.data.value.code,
     }),
+    getSettings: builder.query({
+      query: () => ({
+        url: ApiEndpoint.Settings,
+        method: 'GET',
+      }),
+      transformResponse: (response: any) => response?.value?.data,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
+    }),
+    getMessageSettings: builder.query({
+      query: () => ({
+        url: ApiEndpoint.MessageSetting,
+        method: 'GET',
+      }),
+      transformResponse: (response: any) => response?.value?.data,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
+    }),
     updateMessageSettings: builder.mutation({
       query: body => ({
         url: ApiEndpoint.MessageSetting,
@@ -74,4 +92,6 @@ export const {
   useChangePasswordMutation,
   useGetBlockedUsersQuery,
   useUnblockUserMutation,
+  useGetSettingsQuery,
+  useGetMessageSettingsQuery,
 } = accountSettingService;
