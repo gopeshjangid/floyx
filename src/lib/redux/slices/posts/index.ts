@@ -75,7 +75,7 @@ export const postServices = createApi({
         result
           ? // successful query
             [
-              ...result.map(({ id }:any) => ({ type: 'Posts', id })),
+              ...result.map(({ id }:any) => ({ type: 'Posts' as const, id })),
               { type: 'Posts', id: 'LIST' },
             ]
           : // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated

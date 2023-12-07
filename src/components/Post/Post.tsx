@@ -16,6 +16,7 @@ import { allRoutes } from "@/constants/allRoutes";
 import { ArticleComments } from "@/lib/redux/slices/articleDetails";
 import { Post as PostDetail } from "@/lib/redux";
 import { useSession } from "next-auth/react";
+import LikesComments from "../fullArticle/likesComments";
 // import { useSession } from "next-auth/react";
 interface postDetail {
   name: string;
@@ -100,9 +101,16 @@ export default function Post({
           </Typography>
         </Box>
         <PostImage image={image} link={link} shared={shared} isShared={isShared} postId={postId} />
-        <LikeCommentShare postDetails={postDetails} />
+        {/* <LikeCommentShare postDetails={postDetails} /> */}
+        <LikesComments
+          likesCommentsDetails={postDetails}
+          avatar={avatar}
+          articleId={postId}
+          isPost={true}
+          isShared={isShared}
+        />
         {!isShared && <CommentList comments={commentList} />}
-        {!isShared && <AddComment avatar={avatar} />}
+        {/* {!isShared && <AddComment avatar={avatar} />} */}
       </Box>
       <PostActionModal
         open={open}

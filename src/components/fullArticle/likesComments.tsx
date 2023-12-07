@@ -26,7 +26,7 @@ const style = {
   m: 2,
 };
 
-export default function LikesComments({ likesCommentsDetails, articleId }: any) {
+export default function LikesComments({ likesCommentsDetails, avatar, articleId, isPost = false, isShared = undefined }: any) {
 
   const { data: commentList } = useGetCommentListQuery(articleId);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -70,43 +70,29 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
       <Divider />
       <Box sx={{ display: 'flex', padding: '17px 20px' }}>
         <Button variant="text" startIcon={<LikeIcon />} sx={{ marginRight: '25px' }} onClick={handleArticleLike}>
-          {formatIndianNumber(likesCommentsDetails?.article?.numberOfLikes)} Likes
+          {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
         </Button>
         <Button variant="text" startIcon={<CommentIcon />} sx={{ marginRight: '25px' }}>
-          {formatIndianNumber(likesCommentsDetails?.article?.numberOfComments)} Comments
+          {formatIndianNumber(likesCommentsDetails?.numberOfComments)} Comments
         </Button>
         <Button variant="text" startIcon={<ShareIcon />} sx={{ marginRight: '25px' }} onClick={handleClick}>
-          {formatIndianNumber(likesCommentsDetails?.article?.numberOfShares)} Share
+          {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
         </Button>
-        <Modal open={open} onClose={handleClose}>
-          <Box sx={style}>
-            <Box sx={{ padding: '10px' }}>
-              <AddComment avatar={likesCommentsDetails?.user?.avatar} />
-            </Box>
-            <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
-              <Typography variant="h1">{likesCommentsDetails?.article?.title}</Typography>
-            </Box>
-            <Box sx={{ padding: '10px' }}>
-              <img src={likesCommentsDetails?.article?.coverPhotoPath} width={'100%'} />
-            </Box>
-            <Divider />
-            <Box sx={{ paddingTop: '10px', display: 'flex', justifyContent: 'flex-end' }}>
-              <Button variant="contained">Publish</Button>
-            </Box>
-          </Box>
-        </Modal>
+        
       </Box>
       <Divider />
-      <Typography variant="h5" sx={{ marginTop: '40px' }}>
-        Comments
-      </Typography>
+      {!isPost && isShared === undefined && (
+        <Typography variant="h5" sx={{ marginTop: '40px' }}>
+          Comments
+        </Typography>
+      )}
       <Box>
         {Array.isArray(commentList) &&
           commentList.map((val: any, index: number) => (
             <Box key={index}>
               <Box sx={{ display: 'flex', marginTop: '30px' }}>
                 <Box>
-                  <Avatar alt={val?.user?.name} src={val?.user?.avatar} sx={{ width: 60, height: 60, marginRight: '10px' }} />
+                  <Avatar alt={val?.user?.name} src={val?.user} sx={{ width: 60, height: 60, marginRight: '10px' }} />
                 </Box>
                 <Box sx={{ width: '100%' }}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -140,10 +126,34 @@ export default function LikesComments({ likesCommentsDetails, articleId }: any) 
       {/* <Box>
         <CommentList comments={commentList}/>
       </Box> */}
-      <Box sx={{ marginTop: '40px', padding: '0px 19px 17px 19px', border: '1px solid white', borderRadius: '10px' }}>
-        <AddComment avatar={likesCommentsDetails?.user?.avatar} />
-      </Box>
-      <RecommendedTopics />
+      {!isPost && isShared === undefined && (
+        <>
+          <Box sx={{ marginTop: '40px', padding: '0px 19px 17px 19px', border: '1px solid white', borderRadius: '10px' }}>
+            <AddComment avatar={avatar} />
+          </Box>
+          <RecommendedTopics />
+        </>
+      )}
+      {isPost && !isShared && (
+          <AddComment avatar={avatar} />
+      )}
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+          <Box sx={{ padding: '10px' }}>
+            <AddComment avatar={avatar} />
+          </Box>
+          <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
+            <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
+          </Box>
+          <Box sx={{ padding: '10px' }}>
+            <img src={likesCommentsDetails?.coverPhotoPath} width={'100%'} />
+          </Box>
+          <Divider />
+          <Box sx={{ paddingTop: '10px', display: 'flex', justifyContent: 'flex-end' }}>
+            <Button variant="contained">Publish</Button>
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   );
 }
