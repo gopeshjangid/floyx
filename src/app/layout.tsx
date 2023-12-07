@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { useTheme } from 'next-themes';
 import { Provider } from 'react-redux';
 import PageProvider from '@/components/ThemeRegistry/PageProvider';
 import '../index.scss';
@@ -9,6 +8,7 @@ import { ToastProvider } from '@/components/Toast/useToast';
 import { initializeStore } from '@/lib/redux';
 const initializeStoreValues = {
   earningsReducer: {},
+  registerReducer: {},
 };
 
 export default function RootLayout({
@@ -16,10 +16,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { theme } = useTheme();
   return (
     <html lang="en">
-      <body className={`${theme}-theme`}>
+      <body>
         <ToastProvider>
           <AuthProvider>
             <Provider store={initializeStore(initializeStoreValues)}>

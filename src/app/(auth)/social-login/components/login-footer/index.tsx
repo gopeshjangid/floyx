@@ -39,7 +39,7 @@ const LoginFooter = () => {
         fontSize="16px"
         fontWeight="400"
         lineHeight="24px"
-        color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
+        color={palette.primary[300]}
         sx={{ '& a': { color: '#5798FF' } }}
       >
         © {new Date().getFullYear()} Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>

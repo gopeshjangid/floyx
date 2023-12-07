@@ -16,6 +16,16 @@ export const getRelativeTime = (date: string) => {
   return date;
 };
 
+export const showErrorMessages = (errorKeys: string[]): string => {
+  return errorKeys
+    .map(errorKey =>
+      errorKey
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+    )
+    .join('. ');
+};
 // Define a helper function to check if we're on the server
 const isServer = () => typeof window === 'undefined';
 

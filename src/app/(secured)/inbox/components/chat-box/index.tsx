@@ -65,11 +65,12 @@ const ChatBox = ({ conversations, receiverUsername, loadMore, loadMoreMessageBtn
               top: 0,
               zIndex: 1,
               padding: '5px 0',
+              textAlign: 'center',
+              color: '#878D9A',
+              fontSize: '15px',
+              fontWeight: '500',
+              backgroundColor: theme => theme.palette.background.paper,
             }}
-            textAlign="center"
-            color="#878D9A"
-            fontSize="15px"
-            fontWeight="500"
           >
             {dateLabel}
           </Typography>
