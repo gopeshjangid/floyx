@@ -59,8 +59,16 @@ export default function LikesComments({ likesCommentsDetails, avatar, articleId,
     }
   }
 
-  const handleArticleLike = ()=> {
-    const type:string = 'ArticleLike'
+  const likeType = () => {
+    if (isPost) {
+      return 'PostLike'
+    } else {
+      return 'ArticleLike';
+    }
+  }
+
+  const handleArticleLike = () => {
+    const type: string = likeType();
     updateLike({articleId, type})
   }
 

@@ -2,6 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
+import { postServices } from "../posts";
 
 interface ArticleDetailsArgs {
   userName: string;
@@ -123,7 +124,14 @@ export const artcileDetails = createApi({
         url: `${ApiEndpoint.Like}/${articleId}?type=${type}`,
         method: 'POST',
       }),
-      invalidatesTags: ['LikeStatus'],
+      invalidatesTags: (_, __, arg) => arg.type === 'ArticleLike' ? ['LikeStatus']: [],
+      onQueryStarted: (arg, api) => {
+        if (arg.type == 'PostLike') {
+          api.queryFulfilled.then(() => {
+            api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }]))
+          })
+        }
+      },
     }),
     getArticleTotalEarnings: builder.query<any, string>({
       query: (articleId) => `${ApiEndpoint.ArticleTotalEarning}/${articleId}`,
