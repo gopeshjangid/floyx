@@ -18,15 +18,25 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { earningsService } from './slices/earnings';
 import { profileService } from './slices/profile';
-import { reducer } from './rootReducer';
 import { postServices } from './slices/posts';
 import { artcileDetails } from './slices/articleDetails';
 import { userService } from './slices/user';
+import { commentService } from "./slices/comments";
+import { reducer } from './rootReducer';
+import { registrationService } from './slices/registration';
+import { accountSettingService } from './slices/accountSetting';
+
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [earningsService.reducerPath, postServices.reducerPath ],
-
+  whitelist: [
+    earningsService.reducerPath,
+    postServices.reducerPath,
+    profileService.reducerPath,
+    registrationService.reducerPath,
+    accountSettingService.reducerPath,
+    commentService.reducerPath,
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -46,7 +56,11 @@ function makeStore(initialState = {}) {
       .concat(earningsService.middleware)
       .concat(postServices.middleware)
       .concat(artcileDetails.middleware)
-      .concat(userService. middleware)
+      .concat(userService.middleware)
+      .concat(commentService.middleware)
+      .concat(profileService.middleware)
+      .concat(registrationService.middleware)
+      .concat(accountSettingService.middleware),
   });
 }
 

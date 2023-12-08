@@ -172,7 +172,7 @@ const Notifications = () => {
     <Wrapper>
       <NotificationsWrapper>
         <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="10px">
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tabs value={value} onChange={handleChange} aria-label="notification tabs">
             <Tab label="All" />
             <Tab label="Unread" />
           </Tabs>

@@ -3,87 +3,106 @@
 import * as React from 'react';
 import {
   Box,
-  Card,
+  Stack,
   Typography,
   IconButton,
   styled,
-  Stack,
   useMediaQuery,
   Paper,
   useTheme,
   Chip,
   Skeleton,
   Avatar,
+  Button,
 } from '@mui/material';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import DailTaskSTatusIcon from '@/iconComponents/dailyTaskStatusIcon';
+import {
+  BorderColorOutlined,
+  ChevronLeft,
+  LocationOn,
+} from '@mui/icons-material';
 import {
   useGetCurrentProfileDetailsQuery,
+  useGetProfileAboutQuery,
   useGetProfileDetailsQuery,
 } from '@/lib/redux/slices/profile';
-import { useGetCurrentUserQuery } from '@/lib/redux/slices/user';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Calender from '@/assets/images/icons/calendar.svg';
+import LinkIcon from '@/assets/images/icons/link.svg';
+import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import BlockReportUser from './blockReportUser';
 
-// Styled components
-const ProfileCard = styled(Card)(({ theme }) => ({
-  backgroundColor: theme.palette.primary[700],
+const ProfileFollowerWrapper = styled(Box)(({ theme, ...props }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: 1,
+  color: theme.palette.common.white,
+  position: 'absolute',
+  bottom: props.isMobile ? '' : '20px',
+  right: '16px',
   borderRadius: '10px',
-  border: !isMobile ? '1px solid ' + palette.action['border'] : '',
+  overflow: 'hidden',
 }));
 
-const GradientTextChip = styled(Chip)(({ theme }) => ({
-  // Apply a gradient background
-  background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
-  // Set the text color to transparent for the gradient to be visible
-  color: 'transparent',
-  // Use the background as the text fill
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text', // For webkit browsers like Chrome and Safari
-  WebkitTextFillColor: 'transparent', // For webkit browsers
-  // Add more styling if needed to match the uploaded image
-  // Adjust other styles as needed (border-radius, padding, etc.)
+const ProfileCover = styled(Box)(({ theme }) => ({
+  height: '280px',
+  borderRadius: '10px',
+  width: '100%',
+  overflow: 'hidden',
+  position: 'relative',
 }));
 
-const Item = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: theme.spacing(1.5),
-  '&:last-child': {
-    marginBottom: 0,
-  },
+const ProfilePic = styled(Box)(({ theme, ...props }) => ({
+  top: props?.isMobile ? '32%' : '39%',
+  left: '13px',
+  background: theme.palette.background.default,
+  borderRadius: '50px',
+  width: '100px',
+  height: '100px',
+  position: 'absolute',
 }));
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-}));
+const OtherUserProfileActions: React.FC<{ username: string }> = ({
+  username,
+}) => {
+  const router = useRouter();
+  return (
+    <Stack
+      justifyContent="flex-end"
+      mt={2}
+      alignItems="center"
+      direction="row"
+      gap={1}
+    >
+      <React.Suspense fallback={<Typography>Loading...</Typography>}>
+        <BlockReportUser username={'chirag'} onSuccess={() => {}} />
+      </React.Suspense>
 
-const IconWrapper = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  marginRight: theme.spacing(2),
-  color: theme.palette.text.secondary,
-}));
-
-const SectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: theme.typography.pxToRem(16),
-  fontWeight: theme.typography.fontWeightMedium,
-  color: theme.palette.text.secondary,
-  marginBottom: theme.spacing(0.5),
-}));
-
-const SectionContent = styled(Typography)(({ theme }) => ({
-  fontSize: theme.typography.pxToRem(14),
-  color: theme.palette.text.primary,
-}));
+      <Button
+        onClick={() => router.push('/inbox')}
+        variant="contained"
+        startIcon={<EmailOutlinedIcon color="primary" />}
+      >
+        Message
+      </Button>
+      <Button
+        variant="contained"
+        //onClick={() => router.push('/inbox')}
+      >
+        Follow
+      </Button>
+      <IconButton>
+        <NotificationAddOutlinedIcon color="primary" />
+      </IconButton>
+    </Stack>
+  );
+};
 
 // Example usage of the styled components
 const ProfileSection: React.FC = () => {
   const params = useParams();
-  console.log('params', params);
+  const isMobile = useMediaQuery('(max-width:480px)');
   const {
     data: profile,
     isLoading,
@@ -94,55 +113,144 @@ const ProfileSection: React.FC = () => {
     isLoading: currnetProfileLoading,
     error: currentProfileError,
   } = useGetCurrentProfileDetailsQuery();
+  const {
+    data: profileAbout,
+    isLoading: aboutLoading,
+    isError: isAboutError,
+  } = useGetProfileAboutQuery({ username: 'saddam_beta' });
   const [_value, setValue] = React.useState(0);
   const { palette } = useTheme();
-  const isMobile = useMediaQuery('(max-width:480px)');
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
 
   return (
     <Box mt={4}>
+      <Box my={2} display="flex" alignItems="center">
+        <IconButton>
+          <ChevronLeft color="secondary" />
+        </IconButton>
+        <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
+          {isLoading ? (
+            <Skeleton
+              variant="rectangular"
+              sx={{ width: '100%', height: '20px' }}
+            />
+          ) : (
+            <>
+              <Typography variant="body2" color="textPrimary">
+                {profile?.name}
+              </Typography>
+              <Typography variant="subtitle1" color="primary">
+                @{profile?.username}
+              </Typography>
+            </>
+          )}
+        </Stack>
+      </Box>
+
       <Paper
         sx={{
           borderRadius: '10px',
-          border: '1px solid ' + palette.action['border'],
+          position: 'relative',
         }}
       >
-        <Box
-          sx={{
-            height: '200px',
-            borderRadius: '10px',
-            width: '100%',
-            border: '1px solid grey',
-          }}
-        >
+        <ProfileCover>
           {isLoading && !profile ? (
             <Skeleton
               variant="rectangular"
+              animation="wave"
               sx={{ width: '100%', height: '200px' }}
             />
           ) : (
             <>
-              {' '}
-              {/* <Image
-                alt="profile image"
-                width={300}
-                height={200}
-                src={profile?.backgroundImage}
-              /> */}
-              <Avatar src={profile?.avatar} />
+              <React.Suspense
+                fallback={
+                  <Skeleton
+                    animation="wave"
+                    variant="rectangular"
+                    sx={{ width: '100%', height: '200px' }}
+                  />
+                }
+              >
+                <Image
+                  alt="profile image"
+                  layout="fill"
+                  objectFit="cover"
+                  objectPosition="center"
+                  src={profile?.backgroundImage}
+                />
+              </React.Suspense>
+              <ProfileFollowerWrapper
+                isMobile={isMobile}
+                sx={{ top: '16px', right: '16px' }}
+              >
+                <Box display="flex" p={1} gap={1} bgcolor="#0B081F">
+                  <Button startIcon={<BorderColorOutlined fontSize="small" />}>
+                    Edit Profile
+                  </Button>
+                </Box>
+              </ProfileFollowerWrapper>
+              <ProfileFollowerWrapper>
+                <Box display="flex" p={1} gap={1} bgcolor="#0B081F">
+                  <Typography variant="subtitle1">Following</Typography>
+                  <Typography variant="subtitle1" color="primary">
+                    {profile?.numberOfFollowing}
+                  </Typography>
+                  <Typography>|</Typography>
+                  <Typography variant="subtitle1">Followers</Typography>
+                  <Typography variant="subtitle1" color="primary">
+                    {profile?.numberOfFollowers}
+                  </Typography>
+                </Box>
+              </ProfileFollowerWrapper>
             </>
           )}
+        </ProfileCover>
+        <ProfilePic isMobile={isMobile}>
+          {isLoading && !profile ? (
+            <Skeleton
+              variant="circular"
+              animation="wave"
+              sx={{
+                width: '92%',
+                height: '92%',
+                left: '3.5%',
+                top: '3%',
+                position: 'relative',
+              }}
+            />
+          ) : (
+            <Avatar
+              src={profile?.avatar}
+              sx={{
+                width: '92%',
+                height: '92%',
+                left: '3.5%',
+                top: '3%',
+                border: `3px solid ${palette.primary.main}`,
+              }}
+            />
+          )}
+        </ProfilePic>
+        <Box mt={isMobile ? 8 : 0}>
+          <OtherUserProfileActions username={params} />
         </Box>
-        <Box mt={2} p={2} textAlign="center">
+        <Box mt={6} p={2} textAlign="center">
           <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
-            <Typography variant="body2" color="textPrimary">
-              {isLoading ? <Skeleton variant="text" /> : profile?.name}
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              @{isLoading ? <Skeleton variant="text" /> : profile?.username}
-            </Typography>
+            {isLoading ? (
+              <Skeleton
+                animation="wave"
+                variant="rectangular"
+                sx={{ width: '100%', height: '20px' }}
+              />
+            ) : (
+              <>
+                <Typography variant="body2" color="textPrimary">
+                  {profile?.name}
+                </Typography>
+                <Typography variant="subtitle1" color="primary">
+                  @{profile?.username}
+                </Typography>
+              </>
+            )}
           </Stack>
           <Box my={2}>
             <Typography
@@ -157,20 +265,40 @@ const ProfileSection: React.FC = () => {
               )}
             </Typography>
           </Box>
-          <Stack direction="row" spacing={{ xs: 1, sm: 3, md: 4 }}>
-            <Typography variant="subtitle2" color="textPrimary">
-              Canada
-            </Typography>
-            <Typography variant="subtitle2" color="primary">
-              www.tourist.com
-            </Typography>
-            <Typography variant="subtitle2" color="primary">
-              Joined Sept 1990
-            </Typography>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            gap={1}
+            spacing={{ xs: 0, sm: 3, md: 4 }}
+          >
+            {aboutLoading ? (
+              <Skeleton variant="rectangular" height={'30px'} width="100%" />
+            ) : (
+              <>
+                <Box display="flex" gap={1}>
+                  <LocationOn />
+                  <Typography variant="body2" color="textPrimary">
+                    {profileAbout?.about?.location}
+                  </Typography>
+                </Box>
+                <Box display="flex" gap={1}>
+                  <Image src={LinkIcon} alt="website link icon" />
+                  <Typography variant="subtitle2" color="textPrimary">
+                    {profileAbout?.about?.website}
+                  </Typography>
+                </Box>
+                <Box display="flex" gap={1}>
+                  <Image src={Calender} alt="Calender Icon" />
+                  <Typography variant="subtitle2" color="primary">
+                    Joined Sept 1990
+                  </Typography>
+                </Box>
+              </>
+            )}
           </Stack>
           <Box my={2}>
             <Typography textAlign="left" variant="body1">
-              Skills
+              {!aboutLoading && 'Skills'}
             </Typography>
             <Stack
               flexWrap="wrap"
@@ -181,42 +309,20 @@ const ProfileSection: React.FC = () => {
               rowGap={2}
               spacing={{ xs: 1, sm: 3, md: 4 }}
             >
-              <GradientTextChip
-                label="Blockchain"
-                href="#basic-chip"
-                clickable
-                sx={{ backgroundColor: palette.primary[700] }}
-              />
-              <Chip
-                label="Blockchain"
-                component="a"
-                href="#basic-chip"
-                clickable
-              />
-              <Chip
-                label="Blockchain"
-                component="a"
-                href="#basic-chip"
-                clickable
-              />
-              <Chip
-                label="Blockchain"
-                component="a"
-                href="#basic-chip"
-                clickable
-              />
-              <Chip
-                label="Blockchain"
-                component="a"
-                href="#basic-chip"
-                clickable
-              />{' '}
-              <Chip
-                label="Blockchain"
-                component="a"
-                href="#basic-chip"
-                clickable
-              />
+              {aboutLoading ? (
+                <Skeleton variant="rectangular" width="100%" height="100px" />
+              ) : (
+                profileAbout &&
+                profileAbout?.about?.skills.map((skill, index) => (
+                  <Chip
+                    key={'skill' + index}
+                    label={skill}
+                    component="a"
+                    href="#basic-chip"
+                    clickable
+                  />
+                ))
+              )}
             </Stack>
           </Box>
         </Box>

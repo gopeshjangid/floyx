@@ -87,7 +87,6 @@ export default function PostImage({ image, link, shared, isShared, postId }: any
             <Post
               name={shared?.author?.name || ''}
               username={shared?.author?.username || ''}
-              avatar={shared?.author?.avatar}
               createdDateTime={shared?.post?.createdDateTime}
               content={shared?.post?.content}
               shared={shared?.post?.shared}

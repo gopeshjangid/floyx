@@ -24,7 +24,7 @@ export default function PostList({postData, loadMore, apiParams, isFetching}: Po
             loadMore={(e:any) => loadMore(e, apiParams?.pageNumber, isFetching)}
             hasMore={!isFetching}
             threshold={600}
-            loader={<CircularProgress />}
+            loader={<CircularProgress key="progress0"/>}
           >
           {
             postData?.map((val: any) => (
@@ -39,7 +39,6 @@ export default function PostList({postData, loadMore, apiParams, isFetching}: Po
                 link={val?.post?.link}
                 postDetails={val?.post}
                 postId={val?.id}
-                avatar={val?.author?.avatar || ''}
               />
             ))
           }

@@ -23,7 +23,11 @@ export default function Page() {
             <FullArticle details={articleDetails} />
             <TipColumn details={articleDetails} articlePuclicUrl={articlePuclicUrl} articleId={articleId}/>
             <AuthorCoulmn details={articleDetails}/>
-            <LikesComments likesCommentsDetails={articleDetails} articleId={articleId} />
+            <LikesComments
+              likesCommentsDetails={articleDetails?.article}
+              userDetail={articleDetails?.user?.avatar}
+              itemId={articleId}
+            />
           </>
         )}
       </Box>

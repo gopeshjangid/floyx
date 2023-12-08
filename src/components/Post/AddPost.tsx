@@ -15,6 +15,7 @@ import { SVGUser } from "@/assets/images"
 import { useSession } from "next-auth/react";
 import UserAvatar from "../UserAvatar";
 import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
+import { useToast } from "../Toast/useToast";
 
 const initialPostObj = {
   postText: '',
@@ -23,6 +24,7 @@ const initialPostObj = {
 };
 
 export default function AddPost() {
+  const toast = useToast()
   const imageFileInput = useRef<HTMLInputElement>(null)
   const [postObj, setPostObj] = useState(initialPostObj);
   const session = useSession();
@@ -82,6 +84,7 @@ export default function AddPost() {
     setPostObj(initialPostObj);
     setImagePreview('');
     setImageToUpload('');
+    toast.success('Post is created successfully');
   }
 
   const publishPost = () => {

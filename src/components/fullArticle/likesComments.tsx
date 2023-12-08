@@ -17,13 +17,13 @@ import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import ReplyIcon from '@/images/image/replyIcon';
 import DateParser from '../DateParser';
 import AddComment from '../Post/AddComment';
+import { useToast } from '../Toast/useToast';
 import {
-  useCheckArticleIsSharedMutation,
-  useGetCommentListQuery,
   useGetLikeStatusMutation,
   useShareArticleMutation,
+  useCheckArticleIsSharedMutation
 } from '@/lib/redux/slices/articleDetails';
-import { useToast } from '../Toast/useToast';
+import Comment from "../CommentLists";
 
 const style = {
   position: 'absolute',
@@ -41,15 +41,17 @@ const style = {
 };
 
 export default function LikesComments({
+  commentList,
   likesCommentsDetails,
-  articleId,
+  itemId,
+  isPost = false,
+  isShared = undefined,
+  isPostDetail = undefined
 }: any) {
+
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const toast = useToast();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
   const open = Boolean(anchorEl);
-  const { data: commentList } = useGetCommentListQuery(articleId);
   const [updateLike] = useGetLikeStatusMutation();
   const [checkIsShared, result] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
@@ -79,14 +81,9 @@ export default function LikesComments({
     }
   }
 
-  const handleArticleLike = () => {
-    const type: string = 'ArticleLike';
-    updateLike({ articleId, type });
-  };
-
   const handlePublish = async () => {
-    const result = await checkIsShared(articleId);
-    const status: boolean = result.data 
+    const result = await checkIsShared(itemId);
+    const status: boolean = result?.data;
     if (status){
       toast.error('This article has already been shared');
 
@@ -94,10 +91,22 @@ export default function LikesComments({
     const payload = {
       content: '',
     };
-    await publishArticle({ articleId, status, payload });
+    await publishArticle({ articleId:itemId, status, payload });
     setAnchorEl(null);
 
   };
+  const likeType = () => {
+    if (isPost) {
+      return 'PostLike'
+    } else {
+      return 'ArticleLike';
+    }
+  }
+
+  const handleArticleLike = () => {
+    const type: string = likeType();
+    updateLike({articleId: itemId, type})
+  }
 
   return (
     <Box sx={{ marginTop: '35px', width: '100%' }}>
@@ -109,7 +118,7 @@ export default function LikesComments({
           sx={{ marginRight: '25px' }}
           onClick={handleArticleLike}
         >
-          {formatIndianNumber(likesCommentsDetails?.article?.numberOfLikes)}{' '}
+          {formatIndianNumber(likesCommentsDetails?.numberOfLikes)}{' '}
           Likes
         </Button>
         <Button
@@ -117,7 +126,7 @@ export default function LikesComments({
           startIcon={<CommentIcon />}
           sx={{ marginRight: '25px' }}
         >
-          {formatIndianNumber(likesCommentsDetails?.article?.numberOfComments)}{' '}
+          {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
           Comments
         </Button>
         <Button
@@ -126,117 +135,59 @@ export default function LikesComments({
           sx={{ marginRight: '25px' }}
           onClick={handleClick}
         >
-          {formatIndianNumber(likesCommentsDetails?.article?.numberOfShares)}{' '}
+          {formatIndianNumber(likesCommentsDetails?.numberOfShares)}{' '}
           Share
         </Button>
-        <Modal open={open} onClose={handleClose}>
-          <Box sx={style}>
-            <Box sx={{ padding: '10px' }}>
-              <AddComment avatar={likesCommentsDetails?.user?.avatar} />
-            </Box>
-            <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
-              <Typography variant="h1">
-                {likesCommentsDetails?.article?.title}
-              </Typography>
-            </Box>
-            <Box sx={{ padding: '10px' }}>
-              <img
-                src={likesCommentsDetails?.article?.coverPhotoPath}
-                width={'100%'}
-              />
-            </Box>
-            <Divider />
-            <Box
-              sx={{
-                paddingTop: '10px',
-                display: 'flex',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <Button variant="contained" onClick={handlePublish}>
-                Publish
-              </Button>
-            </Box>
-          </Box>
-        </Modal>
       </Box>
       <Divider />
-      <Typography variant="h5" sx={{ marginTop: '40px' }}>
-        Comments
-      </Typography>
-      <Box>
+      {!isPost && isShared === undefined && (
+        <Typography variant="h5" sx={{ marginTop: '40px' }}>
+          Comments
+        </Typography>
+      )}
+      {isPostDetail && <Box>
         {Array.isArray(commentList) &&
           commentList.map((val: any, index: number) => (
-            <Box key={index}>
-              <Box sx={{ display: 'flex', marginTop: '30px' }}>
-                <Box>
-                  <Avatar
-                    alt={val?.user?.name}
-                    src={val?.user?.avatar}
-                    sx={{ width: 60, height: 60, marginRight: '10px' }}
-                  />
-                </Box>
-                <Box sx={{ width: '100%' }}>
-                  <Box
-                    sx={{ display: 'flex', justifyContent: 'space-between' }}
-                  >
-                    <Box>
-                      <Typography variant="subtitle1" component={'span'}>
-                        <Link href="#" underline="none">
-                          {val?.user?.name}{' '}
-                        </Link>
-                        @{val?.user?.username}
-                      </Typography>
-                    </Box>
-                    <Box>{DateParser(val?.comment?.createdDateTime)}</Box>
-                  </Box>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      marginTop: '15px',
-                      border: '1px solid white',
-                      borderRadius: '10px',
-                      padding: '20px',
-                    }}
-                  >
-                    <Typography>{val?.comment?.content}</Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', margin: '20px 0px' }}>
-                    <Button
-                      variant="text"
-                      startIcon={<LikeIcon />}
-                      sx={{ marginRight: '25px' }}
-                    >
-                      {val?.comment?.numberOfLikes} Like
-                    </Button>
-                    <Button
-                      variant="text"
-                      startIcon={<ReplyIcon />}
-                      sx={{ marginRight: '25px' }}
-                    >
-                      Reply
-                    </Button>
-                  </Box>
-                </Box>
-              </Box>
+            <>
+              <Comment key={index} comment={val} />
               {index !== commentList.length - 1 && <Divider />}
-            </Box>
-          ))}
-      </Box>
-      {/* <Box>
-        <CommentList comments={commentList}/>
-      </Box> */}
-      <Box
-        sx={{
-          marginTop: '40px',
-          padding: '0px 19px 17px 19px',
-          border: '1px solid white',
-          borderRadius: '10px',
-        }}
-      >
-        <AddComment avatar={likesCommentsDetails?.user?.avatar} />
-      </Box>
-      <RecommendedTopics />
+            </>
+        ))}
+      </Box>}
+      {!isPost && isShared === undefined && (
+        <>
+          <Box
+            sx={{
+              marginTop: '40px',
+              padding: '0px 19px 17px 19px',
+              border: '1px solid white',
+              borderRadius: '10px'
+            }}>
+            <AddComment id={itemId} commentType="ArticleComment" />
+          </Box>
+          <RecommendedTopics />
+        </>
+      )}
+      {isPost && !isShared && (
+          <AddComment id={itemId} commentType="PostComment" />
+      )}
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+          <Box sx={{ padding: '10px' }}>
+            <AddComment id={itemId} commentType={isPost ? "PostComment" : "ArticleComment"} />
+          </Box>
+          <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
+            <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
+          </Box>
+          <Box sx={{ padding: '10px' }}>
+            <img src={likesCommentsDetails?.coverPhotoPath} width={'100%'} />
+          </Box>
+          <Divider />
+          <Box sx={{ paddingTop: '10px', display: 'flex', justifyContent: 'flex-end' }}>
+            <Button variant="contained" onClick={handlePublish}>Publish</Button>
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   );
 }

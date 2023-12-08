@@ -6,7 +6,6 @@ import { Box, Paper } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import DailyIcon from '@/iconComponents/dailyTaskIcon';
-import Earnings from './_components/earnings';
 import EaringTabIcon from '@/iconComponents/earningTabIcon';
 import { useMediaQuery, useTheme } from '@mui/material';
 import ProfileSection from './_components/profileSection';
@@ -55,10 +54,7 @@ const Page: React.FC = () => {
           />
         </Tabs>
       </Box>
-      <Box>
-        {value === 0 && <Earnings />}
-        {value === 2 && <AboutSection />}
-      </Box>
+      <Box>{value === 2 && <AboutSection />}</Box>
     </Box>
   );
 };

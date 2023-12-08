@@ -69,7 +69,7 @@ const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
                 sx={{ display: 'inline' }}
                 component="span"
                 variant="body2"
-                color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
+                color={palette.primary[300]}
                 fontSize="14px"
                 fontWeight={500}
               >
@@ -82,7 +82,7 @@ const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
               sx={{ display: 'inline' }}
               component="span"
               variant="body2"
-              color={palette?.mode === 'light' ? '#85838F' : '#777D88'}
+              color={palette.primary[300]}
               fontSize={{ md: '16px', xs: '14px' }}
               fontWeight={500}
             >
