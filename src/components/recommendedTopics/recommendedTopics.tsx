@@ -7,7 +7,7 @@ const recommendedTopics = [
   },
   {
     text: 'Gaming console',
-    value: 'crypto',
+    value: 'gamingConsole',
   },
   {
     text: 'AirDrop',
@@ -19,7 +19,7 @@ const recommendedTopics = [
   },
   {
     text: 'Gaming console',
-    value: 'crypto',
+    value: 'crcrc',
   },
   {
     text: 'Car',

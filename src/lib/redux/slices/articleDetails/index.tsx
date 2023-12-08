@@ -83,9 +83,16 @@ interface UserComment {
 
 interface ArticleDraftsNumber {
   numberOfArticles: number;
-  numberOfDrafts: number
+  numberOfDrafts: number;
 }
 
+interface shareArticleArgs {
+  articleId: string;
+  status: boolean;
+  payload: {
+    content: string;
+  };
+}
 
 // const newtoken =
 // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJzdWIiOiI1ZWZkYmYxNGZiNmJlNTAwMDFjYmMzNmMiLCJ1bmlxdWVfbmFtZSI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImp0aSI6ImI0ODJjYTgyLTE2ZWYtNGNiNy1hODI2LTAwMmQ2NTM1N2RkYiIsImlhdCI6IjE3MDE0MTc1MzUxMTUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjVlZmRiZjE0ZmI2YmU1MDAwMWNiYzM2YyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvaXNwZXJzaXN0ZW50IjoiZmFsc2UiLCJuYmYiOjE3MDE0MTc1MzUsImV4cCI6MTcwMTQyMTEzNSwiaXNzIjoiZmxveXgifQ.jeA9BA7cSUUce5zOlGYBSHZpdQXQhG9fcaMWH9byTzQ"
@@ -126,12 +133,12 @@ export const artcileDetails = createApi({
       invalidatesTags: ['LikeStatus'],
     }),
     getArticleTotalEarnings: builder.query<any, string>({
-      query: (articleId) => `${ApiEndpoint.ArticleTotalEarning}/${articleId}`,
+      query: articleId => `${ApiEndpoint.ArticleTotalEarning}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data,
       providesTags: ['articleTip'],
     }),
     setTip: builder.mutation<any, string>({
-      query: (payload) => ({
+      query: payload => ({
         url: `${ApiEndpoint.TipArticle}`,
         method: 'POST',
         body: payload,
@@ -142,14 +149,30 @@ export const artcileDetails = createApi({
       query: articleId => `${ApiEndpoint.GetComments}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || [],
     }),
-    getArticleList : builder.query<any, string>({
-      query: (tabName) =>`${ApiEndpoint.DeleteArticle}/${tabName}`,
+    getArticleList: builder.query<any, string>({
+      query: tabName => `${ApiEndpoint.DeleteArticle}/${tabName}`,
       transformResponse: (response: any) => response?.value?.data || [],
     }),
-    getArticleInfo : builder.query<ArticleDraftsNumber, void>({
-      query: () =>`${ApiEndpoint.GetArticlesInfo}`,
+    getArticleInfo: builder.query<ArticleDraftsNumber, void>({
+      query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
-    })
+    }),
+    checkArticleIsShared: builder.mutation<any, string>({
+      query: articleId => ({
+        url: `${ApiEndpoint.IsSharedPost}/${articleId}`,
+        method: 'POST',
+        body: {},
+      }),
+      transformResponse: (response: any) => response?.value?.data,
+    }),
+    shareArticle: builder.mutation<any, shareArticleArgs>({
+      query: ({ articleId, status, payload }) => ({
+        url: `${ApiEndpoint.ShareArticle}/${articleId}/${status}`,
+        method: 'POST',
+        body: payload,
+      }),
+      transformResponse: (response: any) => response?.value?.data || {},
+    }),
   }),
   tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip'],
 });
@@ -158,9 +181,11 @@ export const {
   useGetArticleDetailsQuery,
   useGetFollowStatusMutation,
   useGetLikeStatusMutation,
-  useGetArticleTotalEarningsQuery, 
+  useGetArticleTotalEarningsQuery,
   useSetTipMutation,
   useGetCommentListQuery,
-  useGetArticleListQuery, 
-  useGetArticleInfoQuery
+  useGetArticleListQuery,
+  useGetArticleInfoQuery,
+  useCheckArticleIsSharedMutation,
+  useShareArticleMutation
 } = artcileDetails;

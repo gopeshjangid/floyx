@@ -8,7 +8,7 @@ import PostHeader from '@/components/PostHeader';
 import { useGetPostsQuery } from "@/lib/redux";
 
 import { Box, Grid, useMediaQuery } from '@mui/material';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface apiParams {
   pageNumber: number;
@@ -35,6 +35,10 @@ export default function Page() {
       }
     }
   }
+
+  useEffect(()=>{
+    console.log('postData',postData)
+  }, [postData])
 
   return (
     <Box p={isMobile ? 2 : 0}>
