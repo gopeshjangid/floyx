@@ -6,5 +6,15 @@ export const allRoutes = {
   socialLogin: '/social-login',
   notifications: '/notifications',
   inbox: '/inbox',
+  termsAndConditions: '/terms-and-conditions',
+  privacyPolicy: '/privacy-policy',
+  cookiesPolicy: '/cookies-policy',
+  settings: {
+    index: '/settings',
+    account: '/settings/account',
+    changePassword: '/settings/change-password',
+    blockUser: '/settings/blocked-user',
+    help: '/settings/help',
+  },
   post: '/post',
 };

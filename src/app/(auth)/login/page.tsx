@@ -38,7 +38,7 @@ interface IFormError {
 }
 
 const Login: FC = () => {
-  console.log('login test 122');
+  console.log('vercel url', process.env.NEXT_AUTH_VERCEL_URL);
   const toast = useToast();
   const { palette } = useTheme();
   const router = useRouter();
@@ -49,12 +49,6 @@ const Login: FC = () => {
     remember: false,
   });
   const [formError, setFormError] = useState<IFormError>({});
-
-  console.log('next auth url', process.env.NEXTAUTH_URL);
-  console.log('vercel url', process.env.VERCEL_URL);
-  console.log('public vercel url', process.env.NEXT_PUBLIC_VERCEL_URL);
-  console.log("public backend url", process.env.NEXT_PUBLIC_BACKEND_BASE_DEV_URL);
-  console.log('next auth url 22', process.env.NEXTAUTH_SECRET);
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -108,7 +102,7 @@ const Login: FC = () => {
     };
 
     if (formData.email === '') {
-      err.email = 'Email required!';
+      err.email = 'This field required!';
     }
     if (formData.password === '') {
       err.password = 'Password is required!';
@@ -125,17 +119,41 @@ const Login: FC = () => {
 
   return (
     <Grid item md={6} sm={12} zIndex="1">
-      <Box textAlign="center" padding={{ md: '47px 15px 40px', xs: '38px 25px 38px' }}>
-        <Typography variant="h5" fontSize="16px" color={palette.text.primary} marginBottom="26px">
+      <Box
+        textAlign="center"
+        padding={{ md: '47px 15px 40px', xs: '38px 25px 38px' }}
+      >
+        <Typography
+          variant="h5"
+          fontSize="16px"
+          color={palette.text.primary}
+          marginBottom="26px"
+        >
           Join for free today and keep your data safe in the digital Space{' '}
         </Typography>
-        <Box display="flex" flexDirection="column" gap="24px" maxWidth="360px" marginInline="auto">
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="24px"
+          maxWidth="360px"
+          marginInline="auto"
+        >
           <Box mb="3px">
-            <Button variant="outlined" className="outline-btn" onClick={() => router.push(allRoutes.register)}>
+            <Button
+              variant="outlined"
+              className="outline-btn"
+              onClick={() => router.push(allRoutes.register)}
+            >
               Create an account
             </Button>
           </Box>
-          <Typography variant="h3" fontSize="24px" fontWeight="600" color={palette.text.primary} textAlign="left">
+          <Typography
+            variant="h3"
+            fontSize="24px"
+            fontWeight="600"
+            color={palette.text.primary}
+            textAlign="left"
+          >
             Login to your account
           </Typography>
           <Box component="form" m={0} noValidate onSubmit={login}>
@@ -169,7 +187,11 @@ const Login: FC = () => {
                 mb={1.5}
               >
                 <FormLabel>Password</FormLabel>
-                <Typography fontSize="16px" fontWeight="400" sx={{ '& a': { color: '#5798FF' } }}>
+                <Typography
+                  fontSize="16px"
+                  fontWeight="400"
+                  sx={{ '& a': { color: '#5798FF' } }}
+                >
                   <Link href={allRoutes.login}>Forgotten your password?</Link>
                 </Typography>
               </Box>
@@ -194,7 +216,12 @@ const Login: FC = () => {
               />
             </FormControl>
             <FormControl>
-              <Button variant="contained" color="primary" type="submit" className="submit-btn">
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className="submit-btn"
+              >
                 {loading ? (
                   <>
                     <CircularProgress size={24} color="inherit" />
@@ -208,7 +235,9 @@ const Login: FC = () => {
             <FormControl sx={{ marginBottom: '0 !important' }}>
               <FormControlLabel
                 name="remember"
-                control={<Checkbox defaultChecked={false} onChange={onChangeHandler} />}
+                control={
+                  <Checkbox defaultChecked={false} onChange={onChangeHandler} />
+                }
                 label="Remember me"
               />
             </FormControl>
@@ -219,7 +248,7 @@ const Login: FC = () => {
               fontSize="16px"
               fontWeight="400"
               lineHeight="24px"
-              color={palette.primary[200]}
+              color={palette.primary[300]}
               sx={{ '& a': { color: '#5798FF' } }}
             >
               By signing up,you agree to

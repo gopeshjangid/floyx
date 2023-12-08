@@ -11,6 +11,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useSession } from 'next-auth/react';
+import moment from 'moment';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
 import HomeIcon from '@/iconComponents/homeIcon';
@@ -29,6 +31,7 @@ import {
   Toolbar,
   ListItemIcon,
 } from '@mui/material';
+import { allRoutes } from '@/constants/allRoutes';
 
 const drawerWidth = 240;
 const navItems = [
@@ -63,13 +66,22 @@ const navItems = [
     icon: (fill: string) => <ProfileIcon stroke={fill} />,
   },
   {
+    label: 'Settings',
+    href: '/settings/account',
+  },
+  {
     label: 'More',
     href: '/more',
     icon: (fill: string) => <MoreIcon fill={fill} />,
   },
+  {
+    label: 'Logout',
+    href: '/api/auth/signout',
+  },
 ];
 
 export default function DrawerAppBar({ children }: any) {
+  const session = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
@@ -81,6 +93,14 @@ export default function DrawerAppBar({ children }: any) {
   const homeRedirect = () => {
     router.push('/');
   };
+
+  React.useEffect(() => {
+    if (session.data?.expires) {
+      if (moment(session.data.expires).isBefore(moment())) {
+        router.push(allRoutes.socialLogin);
+      }
+    }
+  }, [session]);
 
   const drawer = (
     <Box>
@@ -99,7 +119,7 @@ export default function DrawerAppBar({ children }: any) {
         {navItems.map((item, index) => (
           <ListItemButton key={index} LinkComponent={Link} href={item.href}>
             <ListItemIcon>
-              {item?.icon(theme.palette.text.primary)}
+              {item?.icon && item?.icon(theme.palette.text.primary)}
             </ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItemButton>
