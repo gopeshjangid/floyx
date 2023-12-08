@@ -9,12 +9,10 @@ const poppins = Poppins({
   display: 'swap',
 });
 
-//const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
-// const gradientBorder = ({ color1, color2, color3, width }: any) => {
-//   return `linear-gradient(90deg, ${color1} 0%, ${color2} 50%, ${color3} 100%) 1 round ${width}`;
-// };
 
+// const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
+  // const isLightTheme = mode === 'light';
   const palette = {
     mode,
     ...(mode === 'light'
@@ -24,6 +22,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             // You can also define light, dark and contrastText if necessary
             100: '#777D88',
             200: '#0B081F',
+            300: '#85838F',
             700: '#fff',
             800: '#E7F0FC',
             900: '#fff',
@@ -54,8 +53,16 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             focus: '#ADB3C6', // Text Guide
             hoverOpacity: 0.08,
             disabledOpacity: 0.48,
-            border: '#E7F0FC',
+            border: '#EFF1F7',
             svg: ' #ADB3C6',
+            error: '#FF5757',
+            black: '#000',
+            white: '#fff',
+            opposite: '#000',
+          },
+          common: {
+            white: '#ffffff',
+            black: '#000000',
           },
         }
       : {
@@ -64,6 +71,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             // Define light, dark, and contrastText if necessary
             100: '#D1D0D5',
             200: '#0B081F',
+            300: '#777D88',
             700: '#0B081F',
             800: '#0B081F',
             900: '#fff',
@@ -83,7 +91,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           // Define other palette properties like error, warning, info, success, etc., if necessary
           // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
           text: {
-            primary: '#ffffff', // Assuming white text for dark mode for better readability
+            primary: '#D1D0D5', // Assuming white text for dark mode for better readability
             secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
           },
           action: {
@@ -95,8 +103,16 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             focus: '#ADB3C6', // Text Guide
             hoverOpacity: 0.08,
             disabledOpacity: 0.48,
-            border: '#0B081F',
+            border: '#ffffff26',
             svg: 'rgba(255, 255, 255, 0.30)',
+            error: '#FF5757',
+            black: '#000',
+            white: '#fff',
+            opposite: '#fff',
+          },
+          common: {
+            white: '#ffffff',
+            black: '#000000',
           },
         }),
   };
@@ -190,63 +206,69 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         textTransform: 'uppercase',
       },
     },
-    breakpoints: {
-      values: {
-        xs: 300, // phone
-        sm: 680, // tablets
-        md: 900, // small laptop
-        lg: 1200, // desktop
-        xl: 1536, // large screens
+    components: {
+       MuiLink: {
+      styleOverrides: {
+        root: {
+          color: palette.primary.main, // Use the dynamic color for links
+          textDecoration: 'none',
+          '&:hover': {
+            textDecoration: 'underline',
+          },
+        },
+      }},
+      MuiTypography: {
+      styleOverrides: {
+        root: {
+          // Apply bottom margin to all Typography components
+          marginBottom: '0.35em', // Adjust the value to your preference
+        },
+        // If you want to apply it conditionally based on the `gutterBottom` prop:
+        gutterBottom: {
+          marginBottom: '0.35em', // Adjust the value to match the theme's spacing
+        },
       },
     },
-
-    components: {
-      MuiCheckbox: {
+      MuiButton: {
         styleOverrides: {
-          root: {
-            color: mode === 'light' ? '#ADB3C6' : 'rgba(255, 255, 255, 0.7)', // Default color
-            '&.Mui-checked': {
-              color: palette.secondary[100],
-            },
-            '&.Mui-disabled': {
-              color: mode === 'light' ? '#E0E3E7' : '#2D2F48', // Color when disabled
-            },
-          },
-          colorPrimary: {
-            '&.Mui-checked': {
-              color: '#5798FF', // Primary color when checked
-            },
-          },
-          colorSecondary: {
-            '&.Mui-checked': {
-              color: '#A85CFF', // Secondary color when checked
-            },
-          },
-        },
-      },
-      MuiTypography: {
-        styleOverrides: {
-          root: {
-            // Apply bottom margin to all Typography components
-            marginBottom: '0.35em', // Adjust the value to your preference
-          },
-          // If you want to apply it conditionally based on the `gutterBottom` prop:
-          gutterBottom: {
-            marginBottom: '0.35em', // Adjust the value to match the theme's spacing
-          },
-        },
-      },
-      MuiLink: {
-        styleOverrides: {
-          root: {
-            color: palette?.primary?.main, // Use the dynamic color for links
-            textDecoration: 'none',
+          // Assuming "primary" is your default color for the button
+          containedPrimary: {
+            color: 'white', // Assuming you want white text for the button
+            borderRadius: '10px',
+            padding: '12px 29px',
+            gap: '10px',
+            background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
             '&:hover': {
-              textDecoration: 'underline',
-            },
+              // You should also define the hover state
+              background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+              opacity: 0.9 // Or any other styling you want on hover
+            }
           },
         },
       },
+      // MuiTypography: {
+      //   styleOverrides: {
+      //     root: {
+      //       // Apply bottom margin to all Typography components
+      //       marginBottom: '0.35em', // Adjust the value to your preference
+      //     },
+      //     // If you want to apply it conditionally based on the `gutterBottom` prop:
+      //     gutterBottom: {
+      //       marginBottom: '0.35em', // Adjust the value to match the theme's spacing
+      //     },
+      //   },
+      // },
+      // MuiLink: {
+      //   styleOverrides: {
+      //     root: {
+      //       color: palette?.primary?.main, // Use the dynamic color for links
+      //       textDecoration: 'none',
+      //       '&:hover': {
+      //         textDecoration: 'underline',
+      //       },
+      //     },
+      //   },
+      // },
       MuiCssBaseline: {
         styleOverrides: {
           body: {
@@ -303,6 +325,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             fontSize: '16px',
             fontWeight: '400',
             textAlign: 'left',
+          },
+          asterisk: {
+            color: palette?.action?.error,
           },
         },
       },
@@ -363,28 +388,28 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
         },
       },
-      MuiButton: {
-        styleOverrides: {
-          // Assuming "primary" is your default color for the button
-          root: {
-            height: 'fit-content !important',
-            textTransform: 'capitalize',
-          },
-          containedPrimary: {
-            color: 'white', // Assuming you want white text for the button
-            borderRadius: '10px',
-            padding: '12px 29px',
-            gap: '10px',
-            background: `linear-gradient(90deg, ${palette.secondary[400]}  0%, #858FFF 50%, #4D9AFF 100%)`,
-            '&:hover': {
-              // You should also define the hover state
-              background: `linear-gradient(90deg, ${palette.secondary[400]}  0%, #858FFF 50%, #4D9AFF 100%)`,
-              opacity: 0.9, // Or any other styling you want on hover
-            },
-          },
-          outlined: {},
-        },
-      },
+      // MuiButton: {
+      //   styleOverrides: {
+      //     // Assuming "primary" is your default color for the button
+      //     root: {
+      //       height: 'fit-content !important',
+      //       textTransform: 'capitalize',
+      //     },
+      //     containedPrimary: {
+      //       color: 'white', // Assuming you want white text for the button
+      //       borderRadius: '10px',
+      //       padding: '12px 29px',
+      //       gap: '10px',
+      //       background: `linear-gradient(90deg, ${palette.secondary[400]}  0%, #858FFF 50%, #4D9AFF 100%)`,
+      //       '&:hover': {
+      //         // You should also define the hover state
+      //         background: `linear-gradient(90deg, ${palette.secondary[400]}  0%, #858FFF 50%, #4D9AFF 100%)`,
+      //         opacity: 0.9, // Or any other styling you want on hover
+      //       },
+      //     },
+      //     outlined: {},
+      //   },
+      // },
     },
   });
 };

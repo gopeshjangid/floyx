@@ -8,6 +8,7 @@ const nextConfig = {
     },
   },
   images: {
+    domains: ['floyx-beta.s3.us-east-2.amazonaws.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -24,6 +25,18 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'floyx.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'floyx-beta.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 's3.us-east-2.amazonaws.com',
         port: '',
         pathname: '/**',
       },

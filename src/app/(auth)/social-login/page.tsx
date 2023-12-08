@@ -42,7 +42,7 @@ const SocialLogin: FC = () => {
               fontSize="16px"
               fontWeight="400"
               lineHeight="24px"
-              color={palette.primary[200]}
+              color={palette.primary[300]}
               sx={{ '& a': { color: '#5798FF' } }}
             >
               By signing up,you agree to

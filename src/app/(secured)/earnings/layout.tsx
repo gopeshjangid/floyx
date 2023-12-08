@@ -1,25 +1,26 @@
+'use client';
 import React from 'react';
-import { getMetaData } from '@/lib/SEO';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ReferralCard from './_components/sideBar';
+import { useMediaQuery } from '@mui/material';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const isMobile = useMediaQuery('(max-width:480px)');
   return (
-    <Box>
-      <Grid container columnSpacing={8}>
-        <Grid item xs={12} sm={8}>
+    <Box p={isMobile ? 2 : 0}>
+      <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid item xs={12} sm={9}>
           {children}
         </Grid>
-        <Grid item xs={12} sm={4}>
-           <ReferralCard />
+        <Grid item xs={12} sm={3}>
+          <ReferralCard />
         </Grid>
       </Grid>
     </Box>
   );
 }
-
-export const metadata = getMetaData({
-  title: 'Floyx | Decentralized World',
-  description: 'Floyx | Decentralized World',
-});
