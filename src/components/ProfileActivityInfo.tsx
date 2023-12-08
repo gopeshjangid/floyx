@@ -7,7 +7,6 @@ import {
   IconButton,
   Stack,
   useMediaQuery,
-  Avatar,
   Divider,
 } from '@mui/material';
 import { BorderColorOutlined } from '@mui/icons-material';

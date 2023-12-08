@@ -49,9 +49,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     setFormValues({ ...formValues });
   }, [initialValues]);
 
-  const [formErrors, setFormErrors] = useState<FormValues>({});
+  //const [formErrors, setFormErrors] = useState<FormValues>({});
   const validate = () => {
-    let tempErrors: FormValues = {};
+    const tempErrors: FormValues = {};
     formElements.forEach(element => {
       if (element.type === 'text') {
         // Simple text validation: check if the field is not empty
@@ -61,7 +61,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
       }
       // Add more validation rules for other types as needed
     });
-    setFormErrors(tempErrors);
+    //setFormErrors(tempErrors);
     // Form is valid if there are no error messages
     return Object.keys(tempErrors).length === 0;
   };
@@ -78,8 +78,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validate()) {
-      console.log({ formValues });
-      console.log({ initialValues });
       const form = Object.keys(formValues)
         .filter(key => Object.keys(initialValues).includes(key))
         .reduce((obj: any, key) => {

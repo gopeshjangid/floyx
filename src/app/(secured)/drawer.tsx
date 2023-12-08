@@ -117,7 +117,15 @@ export default function DrawerAppBar({ children }) {
       </Box>
       <List>
         {navItems.map((item, index) => (
-          <ListItemButton key={index} LinkComponent={Link} href={item.href}>
+          <ListItemButton
+            key={index}
+            LinkComponent={Link}
+            href={
+              item.label === 'Profile'
+                ? `${item.href}/${session.data?.user?.username}`
+                : item.href
+            }
+          >
             <ListItemIcon>
               {item?.icon && item?.icon(theme.palette.text.primary)}
             </ListItemIcon>

@@ -23,6 +23,7 @@ import ProfileActivityInfo from '@/components/ProfileActivityInfo';
 import DynamicForm from './addEditActivity';
 import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
+import { useParams } from 'next/navigation';
 
 const elements = [
   {
@@ -94,9 +95,10 @@ const initialValues = {
 
 const ExperienceForm: React.FC = () => {
   const toast = useToast();
+  const params = useParams();
   const [action, setAction] = React.useState('');
   const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: 'saddam_beta',
+    username: params.username,
   });
 
   const [addExperience, { isLoading: isAdding, error: addError, isSuccess }] =
@@ -199,13 +201,22 @@ const ExperienceForm: React.FC = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      <DynamicForm
-        formElements={elements}
-        initialValues={formValues}
-        onSubmit={handleSubmit}
-        onCancel={cancelHandler}
-        title="Add New Experience"
-      />
+      <React.Suspense
+        fallback={
+          <Typography variant="body2" color="warning">
+            Loading...{' '}
+          </Typography>
+        }
+      >
+        {' '}
+        <DynamicForm
+          formElements={elements}
+          initialValues={formValues}
+          onSubmit={handleSubmit}
+          onCancel={cancelHandler}
+          title="Add New Experience"
+        />
+      </React.Suspense>
     </Box>
   );
 };
@@ -222,4 +233,4 @@ const ExperienceSection: React.FC = () => {
   );
 };
 
-export default ExperienceSection;
+export default React.memo(ExperienceSection);
