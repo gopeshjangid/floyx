@@ -51,7 +51,7 @@ interface Props {
 export default function AddComment({id, commentType}:Props) {
   const session = useSession();
   const toast = useToast();
-  const [createComment, {error, isLoading }] = useCreateCommentMutation();
+  const [createComment, { isLoading }] = useCreateCommentMutation();
 
   const [commentText, setCommentText] = useState('');
 

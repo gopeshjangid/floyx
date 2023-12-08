@@ -1,21 +1,17 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
 import {
-  Avatar,
   Box,
   Divider,
   Typography,
-  Link,
   Button,
   Modal,
 } from '@mui/material';
 import RecommendedTopics from '../recommendedTopics/recommendedTopics';
-import ReplyIcon from '@/images/image/replyIcon';
-import DateParser from '../DateParser';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
 import {
@@ -56,7 +52,6 @@ export default function LikesComments({
   const [checkIsShared, result] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
 
-  
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };

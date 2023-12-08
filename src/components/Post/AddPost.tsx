@@ -6,12 +6,10 @@ import Image from 'next/image'
 import Link from 'next/link';
 
 import { userDetail } from "../../constant/payload"
-import Avatar from "@mui/material/Avatar"
 import { MentionsInput, Mention } from "react-mentions"
 import CropOriginalIcon from "@mui/icons-material/CropOriginal"
 import { PostBox } from "./styledPostBox"
 import { useCreatePostMutation } from "@/lib/redux"
-import { SVGUser } from "@/assets/images"
 import { useSession } from "next-auth/react";
 import UserAvatar from "../UserAvatar";
 import { ApiEndpoint } from "@/lib/API/ApiEndpoints";

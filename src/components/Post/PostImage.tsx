@@ -6,7 +6,7 @@ import moment from "moment"
 import Link from "next/link"
 import Image from 'next/image'
 
-export default function PostImage({ image, link, shared, isShared, postId }: any) {
+export default function PostImage({ image, link, shared, isShared }: any) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
