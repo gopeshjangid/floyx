@@ -74,6 +74,10 @@ const navItems = [
     href: '/more',
     icon: (fill: string) => <MoreIcon fill={fill} />,
   },
+  {
+    label: 'Logout',
+    href: '/api/auth/signout',
+  },
 ];
 
 export default function DrawerAppBar({ children }) {
