@@ -1,11 +1,16 @@
 'use client';
 
 import { styled } from '@mui/material/styles';
-import { Box, Avatar } from '@mui/material';
+import { Box } from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
 import { useState } from 'react';
+import UserAvatar from "../UserAvatar";
+import { useSession } from "next-auth/react";
+import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
+import { useCreateCommentMutation } from "@/lib/redux/slices/comments";
+import { useToast } from "../Toast/useToast";
 
-const AddCommentBox = styled(Box)(() => ({
+const AddCommentBox = styled(Box)(({ theme }) => ({
   marginTop: '20px',
   display: 'flex',
   width: '100%',
@@ -16,71 +21,85 @@ const AddCommentBox = styled(Box)(() => ({
     height: 49,
     marginRight: '20px',
   },
-  '& .comment-box': {
-    width: '100%',
-    borderRadius: '5px',
+  "& .styled-input-container": {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+    "& .mention-input": {
+      display: "flex",
+      width: "90%",
+      flexDirection: "column",
+        "& textarea": {
+          padding: "0.5rem",
+          color: theme.palette.text.primary,
+          borderRadius: '10px',
+        },
+        "& .mention-input-container": {
+          width: "100%",
+          padding: "0.5rem",
+          backgroundColor: theme.palette.background.default,
+          borderRadius: '10px',
+        }
+      },
   },
 }));
 
-export default function AddComment({ avatar }: any) {
-  const isAuthorizedUser =false;
-  const [postObj, setPostObj] = useState({
-    postText: '',
-    postTextLeft: 280,
-    publishButtonDisabled: false,
-  });
+interface Props {
+  id: string;
+  commentType: string;
+}
+export default function AddComment({id, commentType}:Props) {
+  const session = useSession();
+  const toast = useToast();
+  const [createComment, {error, isLoading }] = useCreateCommentMutation();
 
-  const handlePostText = (
-    e: any,
-    newValue: any,
-    newPlainTextValue: any,
-  ) => {
+  const [commentText, setCommentText] = useState('');
+
+  const handlePostText = (e: any) => {
     const text = e.target.value;
-
-    setPostObj({
-      postText: text,
-      postTextLeft: 280 - calulcateLength(newPlainTextValue),
-      publishButtonDisabled: !isAuthorizedUser
-        ? true
-        : 280 - calulcateLength(newPlainTextValue) < 0,
-    });
+    setCommentText( text);
   };
 
-  const calulcateLength = (str: string) => {
-    const output = str.replace(
-      /([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2694-\u2697]|\uD83E[\uDD10-\uDD5D])/g,
-      ''
-    );
-    const total = fancyCount(str) - fancyCount(output) + fancyCount(output);
-    return total;
-  };
-
-  const fancyCount = (str: any) => {
-    return Array.from(str.split(/[\ufe00-\ufe0f]/).join('')).length;
-  };
+  const onEnterPress = async (e: any) => {
+    const addComment = {
+      itemId: id,
+      type: commentType,
+      content: commentText
+    }
+    if (e.keyCode === 13 && e.shiftKey === false && commentText.length > 0) {
+      await createComment(addComment);
+      toast.success('Comment is added successfully');
+      setCommentText('');
+    }
+  }
 
   return (
     <AddCommentBox>
-      <Box>
-        <Avatar src={avatar} className="avatar" />
-      </Box>
-      <Box className="comment-box">
-        <MentionsInput
-          className="mention-input-container"
-          singleLine={false}
-          value={postObj.postText}
-          onChange={handlePostText}
-          placeholder={'Add a comment...'}
-          style={{padding:'10px', display:'flex', alignItem:'centre', justifyContent:'space-between'}}
-        >
+      <Box className="styled-input-container">
+        <UserAvatar
+          src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)?.data?.user?.username}`}
+          alt={(session as any)?.data?.user?.username}
+          sx={{ width: '49px', height: '49px' }}
+        />
+        <Box className="mention-input">
+          <MentionsInput
+            className="mention-input-container"
+            singleLine={false}
+            value={commentText}
+            onChange={handlePostText}
+            disabled={isLoading}
+            onKeyDown={onEnterPress}
+            placeholder={"Add a comment"}
+          >
           <Mention
             trigger="@"
-            // displayTransform={(id: string) => `@${id}`}
+            displayTransform={(id: string) => `@${id}`}
             data={[]}
             // renderSuggestion={[]}
             appendSpaceOnAdd={true}
           />
         </MentionsInput>
+        </Box>
       </Box>
     </AddCommentBox>
   );

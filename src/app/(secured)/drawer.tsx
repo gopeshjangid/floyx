@@ -69,7 +69,7 @@ const navItems = [
   },
 ];
 
-export default function DrawerAppBar({ children }) {
+export default function DrawerAppBar({ children }: any) {
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();

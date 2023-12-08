@@ -39,7 +39,6 @@ export default function PostList({postData, loadMore, apiParams, isFetching}: Po
                 link={val?.post?.link}
                 postDetails={val?.post}
                 postId={val?.id}
-                avatar={val?.author?.avatar || ''}
               />
             ))
           }

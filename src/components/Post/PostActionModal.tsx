@@ -2,6 +2,7 @@ import { useDeletePostMutation } from "@/lib/redux"
 import { DeleteOutline } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Modal, Typography } from "@mui/material"
 import React from "react";
+import { useToast } from "../Toast/useToast";
 
 export default function PostActionModal({
   action,
@@ -13,13 +14,15 @@ export default function PostActionModal({
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>; 
   postId: string
-}) {
+  }) {
+  const toast = useToast();
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation()
 
   const performAction = async () => {
     if (action === "Delete Post") {
       await deletePost(postId);
       setOpen(false);
+      toast.success('Post is deleted successfully.')
     }
   }
 
@@ -61,12 +64,13 @@ export default function PostActionModal({
             sx={{
               marginRight: 3,
               padding: "12px 29px",
-              borderRadius: "10px"
+              borderRadius: "10px",
             }}
+            disabled={isDeleting}
             onClick={performAction}
           >
             {!isDeleting && action}
-            {isDeleting && <CircularProgress color="primary"/>}
+            {isDeleting && <CircularProgress color="primary" size={25}/>}
           </Button>
           <Button variant="contained" color="primary" onClick={() => setOpen(false)}>
             Cancel

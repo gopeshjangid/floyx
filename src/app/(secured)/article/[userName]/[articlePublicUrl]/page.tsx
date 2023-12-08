@@ -26,7 +26,7 @@ export default function Page() {
             <LikesComments
               likesCommentsDetails={articleDetails?.article}
               userDetail={articleDetails?.user?.avatar}
-              articleId={articleId}
+              itemId={articleId}
             />
           </>
         )}

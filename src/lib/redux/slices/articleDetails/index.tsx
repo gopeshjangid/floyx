@@ -77,7 +77,7 @@ interface User {
   accountType: number;
 }
 
-interface UserComment {
+export interface UserComment {
   user: User;
   comment: Comment;
 }
@@ -169,6 +169,7 @@ export const {
   useGetArticleTotalEarningsQuery, 
   useSetTipMutation,
   useGetCommentListQuery,
+  useLazyGetCommentListQuery,
   useGetArticleListQuery, 
   useGetArticleInfoQuery
 } = artcileDetails;

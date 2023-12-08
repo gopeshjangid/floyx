@@ -22,10 +22,11 @@ import { reducer } from './rootReducer';
 import { postServices } from './slices/posts';
 import { artcileDetails } from './slices/articleDetails';
 import { userService } from './slices/user';
+import { commentService } from "./slices/comments";
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [earningsService.reducerPath, postServices.reducerPath ],
+  whitelist: [earningsService.reducerPath, postServices.reducerPath, commentService.reducerPath ],
 
 };
 
@@ -46,7 +47,8 @@ function makeStore(initialState = {}) {
       .concat(earningsService.middleware)
       .concat(postServices.middleware)
       .concat(artcileDetails.middleware)
-      .concat(userService. middleware)
+      .concat(userService.middleware)
+      .concat(commentService.middleware)
   });
 }
 
