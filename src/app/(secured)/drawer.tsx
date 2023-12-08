@@ -11,6 +11,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useSession } from 'next-auth/react';
+import moment from 'moment';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
 import HomeIcon from '@/iconComponents/homeIcon';
@@ -29,6 +31,7 @@ import {
   Toolbar,
   ListItemIcon,
 } from '@mui/material';
+import { allRoutes } from '@/constants/allRoutes';
 
 const drawerWidth = 240;
 const navItems = [
@@ -71,9 +74,14 @@ const navItems = [
     href: '/more',
     icon: (fill: string) => <MoreIcon fill={fill} />,
   },
+  {
+    label: 'Logout',
+    href: '/api/auth/signout',
+  },
 ];
 
 export default function DrawerAppBar({ children }) {
+  const session = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
@@ -85,6 +93,14 @@ export default function DrawerAppBar({ children }) {
   const homeRedirect = () => {
     router.push('/');
   };
+
+  React.useEffect(() => {
+    if (session.data?.expires) {
+      if (moment(session.data.expires).isBefore(moment())) {
+        router.push(allRoutes.socialLogin);
+      }
+    }
+  }, [session]);
 
   const drawer = (
     <Box>
