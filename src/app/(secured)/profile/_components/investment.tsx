@@ -5,130 +5,98 @@ import {
   Box,
   Grid,
   Typography,
-  Chip,
-  styled,
   Stack,
   useMediaQuery,
   Button,
   Alert,
   Skeleton,
-  CircularProgress,
-  Backdrop,
 } from '@mui/material';
 
 import {
-  useAddEducationMutation,
+  useAddInvestmentMutation,
   useGetProfileAboutQuery,
-  useUpdateEducationMutation,
+  useUpdateInvestmentMutation,
 } from '@/lib/redux/slices/profile';
 import ProfileActivityInfo from '@/components/ProfileActivityInfo';
 import DynamicForm from './addEditActivity';
-import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
 
 const elements = [
   {
-    label: 'School',
-    name: 'school',
+    label: 'Name',
+    name: 'name',
     type: 'text',
     options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
   {
-    label: 'Field',
-    name: 'field',
+    label: 'Year',
+    name: 'year',
     type: 'text',
     options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
+
   {
-    label: 'Type',
-    name: 'type',
+    label: 'Description',
+    name: 'description',
     type: 'text',
-    options: { maxLength: 30 },
+    options: { maxLength: 50 },
     xs: 9,
-    componentProps: { inputProps: { maxLength: 30 } },
-  },
-  {
-    label: 'From',
-    name: 'fromMonth',
-    type: 'monthSelect',
-    options: months,
-    xs: 4.5,
-  },
-  {
-    label: '',
-    name: 'fromYear',
-    type: 'yearSelect',
-    options: years,
-    xs: 4.5,
-  },
-  {
-    label: 'To',
-    name: 'toMonth',
-    type: 'monthSelect',
-    options: months,
-    xs: 4.5,
-  },
-  {
-    label: '',
-    name: 'toYear',
-    type: 'yearSelect',
-    options: years,
-    xs: 4.5,
+    componentProps: { inputProps: { maxLength: 50 }, minRows: 3 },
   },
 ];
 
 const initialValues = {
   id: '',
-  school: '',
-  field: '',
-  type: '',
-  fromMonth: '',
-  fromYear: '',
-  toMonth: '',
-  toYear: '',
+  name: '',
+  year: '',
+  description: '',
 };
 
-const EducationForm: React.FC = () => {
+const InvestmentForm: React.FC = () => {
   const toast = useToast();
   const [action, setAction] = React.useState('');
   const { data, isError, isLoading, error } = useGetProfileAboutQuery({
     username: 'saddam_beta',
   });
 
-  const [addEducation, { isLoading: isAdding, error: addError, isSuccess }] =
-    useAddEducationMutation();
-
   const [
-    updateEducation,
-    { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSucess },
-  ] = useUpdateEducationMutation();
+    addInvestment,
+    { isLoading: isAdding, isError: isAddError, error: addError, isSuccess },
+  ] = useAddInvestmentMutation();
+  const [
+    updateInvestment,
+    {
+      isLoading: isUpdating,
+      isError: isUpdateError,
+      error: updateError,
+      isSuccess: isUpdateSuccess,
+    },
+  ] = useUpdateInvestmentMutation();
 
   const [formValues, setFormValues] = useState(initialValues);
   const handleSubmit = data => {
-    if (formValues.id) {
-      updateEducation(data);
+    if (formValues?.id) {
+      updateInvestment(data);
     } else {
-      addEducation(data);
+      addInvestment({ ...data, phase: '', quantity: '', tags: [] });
     }
   };
 
   useEffect(() => {
-    if (isSuccess || isUpdateSucess) {
-      toast.success(
-        isUpdateSucess ? 'Education updated!' : `New Education Added!`
-      );
+    if (isSuccess || isUpdateSuccess) {
+      toast.success(`New Investment ${isUpdateSuccess ? 'Updated' : 'Added'}!`);
       setAction('');
     }
-  }, [isSuccess, isUpdateSucess]);
+  }, [isSuccess, isUpdateSuccess]);
 
   useEffect(() => {
     if (addError || updateError) {
       toast.error(
-        `Error Occured in ${updateError ? 'updating' : 'adding'} education`
+        `Error Occured in ${updateError ? 'updating' : 'adding'} investment`
       );
     }
   }, [addError, updateError]);
@@ -146,7 +114,7 @@ const EducationForm: React.FC = () => {
     setFormValues({});
   }, [setFormValues, setAction]);
 
-  if (isLoading) {
+  if (isLoading || isAdding) {
     return (
       <Skeleton
         animation="wave"
@@ -166,7 +134,7 @@ const EducationForm: React.FC = () => {
           <Grid spacing={2} container>
             <Grid textAlign="left" item xs={4}>
               <Typography variant="h5" color="textPrimary">
-                Education
+                Investment
               </Typography>
             </Grid>{' '}
             <Grid item xs={8} textAlign="right">
@@ -176,18 +144,18 @@ const EducationForm: React.FC = () => {
             </Grid>
           </Grid>
         </Box>
-        {data?.educations ? (
-          data?.educations?.map((education, index) => (
+        {data?.investments ? (
+          data?.investments?.map((investment, index) => (
             <ProfileActivityInfo
               onEdit={onEditHandler}
-              key={'education-' + index}
-              {...education}
-              type="Education"
+              key={'investment-' + index}
+              {...investment}
+              type='Investment'
             />
           ))
         ) : (
           <Typography variant="subtitle1">
-            No education history available.
+            No investment history available.
           </Typography>
         )}
       </Stack>
@@ -196,33 +164,27 @@ const EducationForm: React.FC = () => {
 
   return (
     <Box>
-      {(isAdding || isUpdating) && (
-        <Backdrop sx={{ color: '#fff', zIndex: 999 }} open={true}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )}
       <DynamicForm
         formElements={elements}
         initialValues={formValues}
         onSubmit={handleSubmit}
         onCancel={cancelHandler}
-        title="Add New Education"
+        title="Add New Investment"
       />
     </Box>
   );
 };
 
-// Example usage of the styled components
-const EducationSection: React.FC = () => {
+const InvestmentSection: React.FC = () => {
   const isMobile = useMediaQuery('(max-width:480px)');
 
   return (
     <Box sx={{ p: isMobile ? 0 : 3, borderColor: 'rgba(255, 255, 255, 0.15)' }}>
       <Box p={2} textAlign="center">
-        <EducationForm />
+        <InvestmentForm />
       </Box>
     </Box>
   );
 };
 
-export default EducationSection;
+export default InvestmentSection;

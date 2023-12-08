@@ -6,13 +6,16 @@ import '../index.scss';
 import AuthProvider from './context/AuthProvider';
 import { ToastProvider } from '@/components/Toast/useToast';
 import { initializeStore } from '@/lib/redux';
-
 const initializeStoreValues = {
   earningsReducer: {},
   registerReducer: {},
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
