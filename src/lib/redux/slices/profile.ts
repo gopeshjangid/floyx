@@ -36,23 +36,25 @@ type UserProfileDetails = {
   username: string;
 };
 
+type About = {
+  location: string | null;
+  website: string | null;
+  skills: string[];
+  description: string | null;
+  github: string | null;
+  prototype: string | null;
+  video: string | null;
+  category: string | null;
+  interests: string[];
+  languages: string[];
+  acronym: string | null;
+};
+
 export type AboutType = {
   educations: null | any[]; // Replace 'any' with more specific type if available
   investments: null | any[]; // Replace 'any' with more specific type if available
   experiences: null | any[]; // Replace 'any' with more specific type if available
-  about: {
-    location: string | null;
-    website: string | null;
-    skills: string[];
-    description: string | null;
-    github: string | null;
-    prototype: string | null;
-    video: string | null;
-    category: string | null;
-    interests: string[];
-    languages: string[];
-    acronym: string | null;
-  };
+  about: About;
   listOfLocations: null | any[]; // Replace 'any' with more specific type if available
 };
 
@@ -139,9 +141,8 @@ export const profileService = createApi({
       },
       providesTags: ['PopularAccount'],
     }),
-    getProfileAbout: builder.query<AboutType, void>({
-      query: (params: any) =>
-        ApiEndpoint.GetAboutProfile + '/' + params?.username,
+    getProfileAbout: builder.query<AboutType, { username: string }>({
+      query: params => ApiEndpoint.GetAboutProfile + '/' + params?.username,
       transformResponse: (response: ApiResponse<AboutType>) =>
         response?.value?.data,
       providesTags: ['profileAbout'],
@@ -206,7 +207,7 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout'],
     }),
-    updateAboutInfo: builder.mutation<AboutType, Partial<AboutType>>({
+    updateAboutInfo: builder.mutation<AboutType, Partial<About | AboutType>>({
       query: profileAbout => ({
         url: `${ApiEndpoint.UpdateAboutProfile}`, // Assuming `id` is part of investmentData
         method: 'POST', // or 'PATCH' for partial updates

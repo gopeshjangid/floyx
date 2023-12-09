@@ -95,13 +95,13 @@ const initialValues = {
 
 const EducationForm: React.FC = () => {
   const toast = useToast();
-  const params = useParams();
+  const params = useParams<{ username: string }>();
   const [action, setAction] = React.useState('');
   const { data, isError, isLoading, error } = useGetProfileAboutQuery(
     {
-      username: params?.username,
+      username: params?.username ?? '',
     },
-    { skip: params?.username === '' }
+    { skip: !params?.username }
   );
 
   const [addEducation, { isLoading: isAdding, error: addError, isSuccess }] =

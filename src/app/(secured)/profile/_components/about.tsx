@@ -19,6 +19,7 @@ import {
   FormControl,
   Select,
   MenuItem,
+  SelectChangeEvent,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ExperienceSection from './experience';
@@ -130,22 +131,32 @@ const ActivityChipEditInfo: React.FC<ActivityChipEditInfoProps> = ({
   );
 };
 
+type PersonalInfoType = {
+  [key: string]: string | string[];
+  location: string;
+  website: string;
+  skills: string[];
+  description: string;
+  interests: string[];
+  languages: string[];
+};
+
 const PersonalInfo: React.FC = () => {
   const { palette } = useTheme();
-  const params = useParams();
+  const params = useParams<{ username: string }>();
   const [isEdit, setIsEdit] = React.useState(false);
   const toast = useToast();
-  const { data, isLoading, error } = useGetProfileAboutQuery(
+  const { data, isLoading } = useGetProfileAboutQuery(
     {
-      username: params?.username,
+      username: params?.username ?? '',
     },
-    { skip: params?.username === '' }
+    { skip: !params?.username }
   );
   const [
     updateAbout,
     { isLoading: isUpdating, error: aboutUpdateError, isSuccess: aboutSuccess },
   ] = useUpdateAboutInfoMutation();
-  const [formValues, setFormValues] = React.useState({
+  const [formValues, setFormValues] = React.useState<PersonalInfoType>({
     location: '',
     website: '',
     skills: [],
@@ -182,7 +193,14 @@ const PersonalInfo: React.FC = () => {
     }
   }, [data]);
 
-  const [formErrors, setFormErrors] = React.useState({});
+  // const [formErrors, setFormErrors] = React.useState<{ [key]: string }>({
+  //   location: '',
+  //   website: '',
+  //   skills: [],
+  //   description: '',
+  //   interests: [],
+  //   languages: [],
+  // });
 
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
@@ -195,40 +213,43 @@ const PersonalInfo: React.FC = () => {
   const handleDeleteChip = (chipToDelete: string, key: string) => {
     setFormValues({
       ...formValues,
-      [key]: (formValues[key] || []).filter(chip => chip !== chipToDelete),
+      [key]: ((formValues[key] as string[]) || []).filter(
+        (chip: string) => chip !== chipToDelete
+      ),
     });
   };
 
   const validate = () => {
-    const errors = {};
-    if (!formValues.location) {
-      errors.location = 'Location is required';
-    }
-    if (!formValues.location) {
-      errors.location = 'Location is required';
-    }
-    if (!formValues.location) {
-      errors.location = 'Location is required';
-    }
+    const errors: any = {};
+    // if (!formValues.location) {
+    //   errors.location = 'Location is required';
+    // }
+    // if (!formValues.website) {
+    //   errors.website = 'Website is required';
+    // }
+
     // Add other validation checks as needed
-    setFormErrors(errors);
+    //setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const addSkillHandler = (skill: string, key: string) => {
+    const values = Array.isArray(formValues[key])
+      ? [...(formValues[key] as string[]), skill]
+      : [skill];
     setFormValues({
       ...formValues,
-      [key]: [...(formValues[key] ?? {}), skill],
+      [key]: values,
     });
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validate()) return;
     updateAbout(formValues);
   };
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
     const { name, value } = event.target;
     setFormValues({
       ...formValues,
@@ -246,7 +267,6 @@ const PersonalInfo: React.FC = () => {
       />
     );
   }
-  console.log('formvalues', formValues);
   return (
     <>
       {isUpdating && (
@@ -274,7 +294,7 @@ const PersonalInfo: React.FC = () => {
             <Stack gap={1} direction="row">
               {isEdit ? (
                 <>
-                  <Button variant="outlined" onClick={handleSubmit}>
+                  <Button variant="outlined" type="submit">
                     Save
                   </Button>
                   <Button onClick={() => setIsEdit(false)} variant="text">
