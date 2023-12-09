@@ -32,6 +32,7 @@ import {
 } from '@/lib/redux/slices/profile';
 import { useToast } from '@/components/Toast/useToast';
 import TextareaAutosize from '@/components/CustomTextArea';
+import { useParams } from 'next/navigation';
 
 const StyledChip = styled(Chip)(({ theme }) => ({
   borderRadius: '16px', // Adjust the border-radius for rounded corners
@@ -131,11 +132,15 @@ const ActivityChipEditInfo: React.FC<ActivityChipEditInfoProps> = ({
 
 const PersonalInfo: React.FC = () => {
   const { palette } = useTheme();
+  const params = useParams();
   const [isEdit, setIsEdit] = React.useState(false);
   const toast = useToast();
-  const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: 'saddam_beta',
-  });
+  const { data, isLoading, error } = useGetProfileAboutQuery(
+    {
+      username: params?.username,
+    },
+    { skip: params?.username === '' }
+  );
   const [
     updateAbout,
     { isLoading: isUpdating, error: aboutUpdateError, isSuccess: aboutSuccess },
@@ -195,7 +200,7 @@ const PersonalInfo: React.FC = () => {
   };
 
   const validate = () => {
-    let errors = {};
+    const errors = {};
     if (!formValues.location) {
       errors.location = 'Location is required';
     }

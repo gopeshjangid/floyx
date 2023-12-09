@@ -32,6 +32,7 @@ import LinkIcon from '@/assets/images/icons/link.svg';
 import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import BlockReportUser from './blockReportUser';
+import UsernameLink from '@/components/usernameLink';
 
 const ProfileFollowerWrapper = styled(Box)(({ theme, ...props }) => ({
   display: 'flex',
@@ -102,12 +103,13 @@ const OtherUserProfileActions: React.FC<{ username: string }> = ({
 // Example usage of the styled components
 const ProfileSection: React.FC = () => {
   const params = useParams();
+  const username = params.username;
   const isMobile = useMediaQuery('(max-width:480px)');
   const {
     data: profile,
     isLoading,
     error,
-  } = useGetProfileDetailsQuery({ username: 'saddam_beta' });
+  } = useGetProfileDetailsQuery({ username });
   const {
     data: currentProfile,
     isLoading: currnetProfileLoading,
@@ -117,7 +119,7 @@ const ProfileSection: React.FC = () => {
     data: profileAbout,
     isLoading: aboutLoading,
     isError: isAboutError,
-  } = useGetProfileAboutQuery({ username: 'saddam_beta' });
+  } = useGetProfileAboutQuery({ username });
   const [_value, setValue] = React.useState(0);
   const { palette } = useTheme();
 
@@ -138,9 +140,7 @@ const ProfileSection: React.FC = () => {
               <Typography variant="body2" color="textPrimary">
                 {profile?.name}
               </Typography>
-              <Typography variant="subtitle1" color="primary">
-                @{profile?.username}
-              </Typography>
+              <UsernameLink username={profile?.username ?? ''} />
             </>
           )}
         </Stack>
@@ -246,9 +246,7 @@ const ProfileSection: React.FC = () => {
                 <Typography variant="body2" color="textPrimary">
                   {profile?.name}
                 </Typography>
-                <Typography variant="subtitle1" color="primary">
-                  @{profile?.username}
-                </Typography>
+                <UsernameLink username={profile?.username ?? ''} />
               </>
             )}
           </Stack>
@@ -331,4 +329,4 @@ const ProfileSection: React.FC = () => {
   );
 };
 
-export default ProfileSection;
+export default React.memo(ProfileSection);
