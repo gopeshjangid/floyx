@@ -1,5 +1,5 @@
 'use client';
-import * as React from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
@@ -13,6 +13,16 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSession } from 'next-auth/react';
 import moment from 'moment';
+import { getCookie } from 'cookies-next';
+import Link from 'next/link';
+import {
+  useTheme,
+  useMediaQuery,
+  Grid,
+  Toolbar,
+  ListItemIcon,
+  ListItemSecondaryAction,
+} from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
 import HomeIcon from '@/iconComponents/homeIcon';
@@ -23,15 +33,11 @@ import MoreIcon from '@/iconComponents/moreIcon';
 import ProfileIcon from '@/iconComponents/profileIcon';
 import SearchIcon from '@/iconComponents/searchIcon';
 import ThemeSwitch from '@/components/ThemeSwitcher';
-import Link from 'next/link';
-import {
-  useTheme,
-  useMediaQuery,
-  Grid,
-  Toolbar,
-  ListItemIcon,
-} from '@mui/material';
 import { allRoutes } from '@/constants/allRoutes';
+import { notificationService } from '@/lib/services/new/notificationService';
+import { messageService } from '@/lib/services/new/messageService';
+import { FLOYX_USERNAME } from '@/constants';
+import { INotification } from './notifications/types';
 
 const drawerWidth = 240;
 const navItems = [
@@ -80,14 +86,48 @@ const navItems = [
   },
 ];
 
-const DrawerAppBar: React.FC<{
-  children: React.ReactNode | React.ReactElement;
-}> = ({ children }) => {
+const CountWrapper = ({ count }: { count: number }) => (
+  <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: '20px',
+      height: '20px',
+      borderRadius: '50%',
+      backgroundColor: 'primary.main',
+      color: 'background.default',
+      fontSize: '10px',
+      fontWeight: 'bold',
+    }}
+  >
+    {count}
+  </Box>
+);
+
+interface IDrawerState {
+  currentLoggedUser: {
+    username: string;
+  };
+  notificationCount: number;
+  messagesCount: number;
+  notifications: INotification[];
+}
+
+export default function DrawerAppBar({ children }: { children: ReactNode }) {
+  const [drawerData, setDrawerData] = useState<IDrawerState>({
+    currentLoggedUser: {
+      username: getCookie(FLOYX_USERNAME)?.toString() || '',
+    },
+    notificationCount: 0,
+    messagesCount: 0,
+    notifications: [],
+  });
   const session = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
   };
@@ -96,13 +136,47 @@ const DrawerAppBar: React.FC<{
     router.push('/');
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (session.data?.expires) {
       if (moment(session.data.expires).isBefore(moment())) {
         router.push(allRoutes.socialLogin);
       }
     }
   }, [session]);
+
+  useEffect(() => {
+    notificationService.publisher.on('change', getNotifications);
+    notificationService.publisher.on('reload', getInitialNotification);
+    messageService.publisher.on('threads', getMessageCount);
+    getInitialNotification();
+  }, []);
+
+  const getNotifications = (data: INotification[]) => {
+    setDrawerData(prev => ({
+      ...prev,
+      notifications: data,
+      notificationCount: data.filter(x => x?.state == 1).length,
+    }));
+  };
+
+  const getInitialNotification = async () => {
+    const res: any = await notificationService.reloadAll();
+    if (res?.value?.code === 'success') {
+      setDrawerData(prev => ({
+        ...prev,
+        notifications: res.value.data,
+        notificationCount: res.value.data.filter((x: any) => x.state == 1)
+          .length,
+      }));
+    }
+  };
+
+  const getMessageCount = () => {
+    setDrawerData(prev => ({
+      ...prev,
+      messagesCount: messageService.unreadTotal,
+    }));
+  };
 
   const drawer = (
     <Box>
@@ -132,6 +206,14 @@ const DrawerAppBar: React.FC<{
               {item?.icon && item?.icon(theme.palette.text.primary)}
             </ListItemIcon>
             <ListItemText primary={item.label} />
+            <ListItemSecondaryAction>
+              {item.label === 'Notifications' &&
+              drawerData.notificationCount > 0 ? (
+                <CountWrapper count={drawerData.notificationCount} />
+              ) : item.label === 'Messages' && drawerData.messagesCount > 0 ? (
+                <CountWrapper count={drawerData.messagesCount} />
+              ) : null}
+            </ListItemSecondaryAction>
           </ListItemButton>
         ))}
 
@@ -241,6 +323,4 @@ const DrawerAppBar: React.FC<{
       </nav>
     </>
   );
-};
-
-export default DrawerAppBar;
+}
