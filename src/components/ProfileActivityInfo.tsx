@@ -8,6 +8,7 @@ import {
   Stack,
   useMediaQuery,
   Divider,
+  Skeleton,
 } from '@mui/material';
 import { BorderColorOutlined } from '@mui/icons-material';
 import ExperienceIcon from '@/assets/images/icons/experienceIcon.svg';
@@ -96,7 +97,11 @@ const ProfileActivityInfo: React.FC<
 
     return (
       <BackgroundAvatar>
-        <Image src={icon} height={40} width={30} alt="activity image" />
+        {icon ? (
+          <Image src={icon} height={40} width={30} alt="activity image" />
+        ) : (
+          <Skeleton variant="circular" width={'30px'} height="40px" />
+        )}
       </BackgroundAvatar>
     );
   };
