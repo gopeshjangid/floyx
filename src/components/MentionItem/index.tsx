@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import UserCard from "../UserCard";
 import UserAvatar from "../UserAvatar";
 import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
 
