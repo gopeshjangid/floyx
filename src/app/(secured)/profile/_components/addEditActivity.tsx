@@ -54,8 +54,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     const tempErrors: FormValues = {};
     formElements.forEach(element => {
       if (element.type === 'text') {
-        // Simple text validation: check if the field is not empty
-        if (!formValues[element.name].trim()) {
+        const value = formValues[element.name];
+        if (typeof value === 'string' && !value.trim()) {
           tempErrors[element.name] = `${element.label} is required`;
         }
       }
