@@ -17,7 +17,7 @@ import {
   useGetProfileAboutQuery,
   useUpdateInvestmentMutation,
 } from '@/lib/redux/slices/profile';
-import ProfileActivityInfo from '@/components/ProfileActivityInfo';
+import ProfileActivityInfo, { Project } from '@/components/ProfileActivityInfo';
 import DynamicForm from './addEditActivity';
 import { useToast } from '@/components/Toast/useToast';
 import { useParams } from 'next/navigation';
@@ -27,7 +27,6 @@ const elements = [
     label: 'Name',
     name: 'name',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -35,7 +34,6 @@ const elements = [
     label: 'Year',
     name: 'year',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -44,7 +42,6 @@ const elements = [
     label: 'Description',
     name: 'description',
     type: 'text',
-    options: { maxLength: 50 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 50 }, minRows: 3 },
   },
@@ -53,34 +50,47 @@ const elements = [
 const initialValues = {
   id: '',
   name: '',
+  phase: '',
+  quantity: '',
   year: '',
   description: '',
+  tags: '',
 };
 
+type InvestMentType = Project;
+
+type FormValues = {
+  [key: string]: string;
+};
 const InvestmentForm: React.FC = () => {
   const toast = useToast();
   const params = useParams();
   const [action, setAction] = React.useState('');
-  const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: params.username,
-  });
+  const username = Array.isArray(params?.username)
+    ? params?.username[0]
+    : params?.username || '';
 
-  const [
-    addInvestment,
-    { isLoading: isAdding, isError: isAddError, error: addError, isSuccess },
-  ] = useAddInvestmentMutation();
+  const { data, isError, isLoading, error } = useGetProfileAboutQuery(
+    {
+      username,
+    },
+    { skip: !username }
+  );
+
+  const [addInvestment, { isLoading: isAdding, error: addError, isSuccess }] =
+    useAddInvestmentMutation();
   const [
     updateInvestment,
     {
-      isLoading: isUpdating,
-      isError: isUpdateError,
+      // isLoading: isUpdating,
+      // isError: isUpdateError,
       error: updateError,
       isSuccess: isUpdateSuccess,
     },
   ] = useUpdateInvestmentMutation();
 
-  const [formValues, setFormValues] = useState(initialValues);
-  const handleSubmit = data => {
+  const [formValues, setFormValues] = useState<FormValues>({});
+  const handleSubmit = (data: Partial<InvestMentType>) => {
     if (formValues?.id) {
       updateInvestment(data);
     } else {
@@ -104,7 +114,7 @@ const InvestmentForm: React.FC = () => {
   }, [addError, updateError]);
 
   const onEditHandler = useCallback(
-    data => {
+    (data: FormValues) => {
       setAction('Edit');
       setFormValues(data);
     },
@@ -113,7 +123,7 @@ const InvestmentForm: React.FC = () => {
 
   const cancelHandler = useCallback(() => {
     setAction('');
-    setFormValues({});
+    setFormValues(initialValues);
   }, [setFormValues, setAction]);
 
   if (isLoading || isAdding) {
@@ -127,7 +137,10 @@ const InvestmentForm: React.FC = () => {
     );
   }
 
-  if (isError) return <Alert severity="error">Error occured: {error}</Alert>;
+  if (isError)
+    return (
+      <Alert severity="error">Error occured: {JSON.stringify(error)}</Alert>
+    );
 
   if (action === '') {
     return (
