@@ -12,15 +12,16 @@ import {
   Typography,
 } from '@mui/material';
 
-type SelectProps = { value: string; label: string };
-// Define a type for the form element configuration
 type FormElementConfig = {
-  name: string;
   label: string;
+  name: string;
   type: string;
-  options?: SelectProps[] | any; // For select type
-  xs: number; // Grid sizing for extra small screens
-  componentProps: any;
+  options?: { label: string; value: string }[] | { maxLength: number };
+  xs: number;
+  componentProps?: {
+    inputProps?: { maxLength: number };
+    minRows?: number;
+  };
 };
 
 // Define a type for the form values
