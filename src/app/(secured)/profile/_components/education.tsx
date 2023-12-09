@@ -25,6 +25,7 @@ import ProfileActivityInfo from '@/components/ProfileActivityInfo';
 import DynamicForm from './addEditActivity';
 import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
+import { useParams } from 'next/navigation';
 
 const elements = [
   {
@@ -94,10 +95,14 @@ const initialValues = {
 
 const EducationForm: React.FC = () => {
   const toast = useToast();
+  const params = useParams();
   const [action, setAction] = React.useState('');
-  const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: 'saddam_beta',
-  });
+  const { data, isError, isLoading, error } = useGetProfileAboutQuery(
+    {
+      username: params?.username,
+    },
+    { skip: params?.username === '' }
+  );
 
   const [addEducation, { isLoading: isAdding, error: addError, isSuccess }] =
     useAddEducationMutation();
@@ -201,13 +206,21 @@ const EducationForm: React.FC = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      <DynamicForm
-        formElements={elements}
-        initialValues={formValues}
-        onSubmit={handleSubmit}
-        onCancel={cancelHandler}
-        title="Add New Education"
-      />
+      <React.Suspense
+        fallback={
+          <Typography variant="body2" color="warning">
+            Loading...{' '}
+          </Typography>
+        }
+      >
+        <DynamicForm
+          formElements={elements}
+          initialValues={formValues}
+          onSubmit={handleSubmit}
+          onCancel={cancelHandler}
+          title="Add New Education"
+        />
+      </React.Suspense>
     </Box>
   );
 };
@@ -225,4 +238,4 @@ const EducationSection: React.FC = () => {
   );
 };
 
-export default EducationSection;
+export default React.memo(EducationSection);

@@ -20,6 +20,7 @@ import {
 import ProfileActivityInfo from '@/components/ProfileActivityInfo';
 import DynamicForm from './addEditActivity';
 import { useToast } from '@/components/Toast/useToast';
+import { useParams } from 'next/navigation';
 
 const elements = [
   {
@@ -58,9 +59,10 @@ const initialValues = {
 
 const InvestmentForm: React.FC = () => {
   const toast = useToast();
+  const params = useParams();
   const [action, setAction] = React.useState('');
   const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: 'saddam_beta',
+    username: params.username,
   });
 
   const [
@@ -150,7 +152,7 @@ const InvestmentForm: React.FC = () => {
               onEdit={onEditHandler}
               key={'investment-' + index}
               {...investment}
-              type='Investment'
+              type="Investment"
             />
           ))
         ) : (
@@ -187,4 +189,4 @@ const InvestmentSection: React.FC = () => {
   );
 };
 
-export default InvestmentSection;
+export default React.memo(InvestmentSection);

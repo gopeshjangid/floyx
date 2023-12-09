@@ -10,8 +10,6 @@ import {
 } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
-import { useSession } from 'next-auth/react';
-import { useGetBonusTaskStatusQuery } from '@/lib/redux/slices/earnings';
 import { useGetPopularAccountsToFollowQuery } from '@/lib/redux/slices/profile';
 
 const StyledBox = ({ children }: any) => {
@@ -89,7 +87,6 @@ const PopularAccountsList = () => {
 };
 
 const PopularAccounts = () => {
-  const { status, data } = useSession();
   return (
     <Stack spacing={2} mt={5} pt={1}>
       <Typography variant="h6" color="textPrimary">
