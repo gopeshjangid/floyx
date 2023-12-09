@@ -80,7 +80,9 @@ const navItems = [
   },
 ];
 
-export default function DrawerAppBar({ children }) {
+const DrawerAppBar: React.FC<{
+  children: React.ReactNode | React.ReactElement;
+}> = ({ children }) => {
   const session = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -239,4 +241,6 @@ export default function DrawerAppBar({ children }) {
       </nav>
     </>
   );
-}
+};
+
+export default DrawerAppBar;
