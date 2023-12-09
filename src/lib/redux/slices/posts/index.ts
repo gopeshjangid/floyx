@@ -61,6 +61,7 @@ export const postServices = createApi({
     getPostDetail: builder.query<PostDetailResult, string>({
       query: (id) => `${ApiEndpoint.GetPosts}/post/${id}`,
       transformResponse: (response: any) => response?.value?.data,
+      providesTags: ['postDetail'],
     }),
     getPosts: builder.query<PostDetailResult[], PostDetail>({
       query: ({ pageNumber, postCreatedDate }) => {
@@ -118,7 +119,7 @@ export const postServices = createApi({
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     })
   }),
-  tagTypes: ['Posts'],
+  tagTypes: ['Posts', 'postDetail'],
   
 });
 

@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import { useRouter } from "next/navigation";
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
@@ -15,11 +16,12 @@ import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
 import {
-  useGetLikeStatusMutation,
+  usePostLikeStatusMutation,
   useShareArticleMutation,
   useCheckArticleIsSharedMutation
 } from '@/lib/redux/slices/articleDetails';
 import Comment from "../CommentLists";
+import { allRoutes } from "@/constants/allRoutes";
 
 const style = {
   position: 'absolute',
@@ -46,9 +48,14 @@ export default function LikesComments({
 }: any) {
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [commentText, setCommentText] = useState('');
+
   const toast = useToast();
+  const router = useRouter();
   const open = Boolean(anchorEl);
-  const [updateLike] = useGetLikeStatusMutation();
+  const commentRef = useRef();
+
+  const [updateLike] = usePostLikeStatusMutation();
   const [checkIsShared, result] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
 
@@ -120,6 +127,7 @@ export default function LikesComments({
           variant="text"
           startIcon={<CommentIcon />}
           sx={{ marginRight: '25px' }}
+          onClick={() => isPost ? router.push(`${allRoutes.post }/${itemId}`) : ''}
         >
           {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
           Comments
@@ -143,10 +151,15 @@ export default function LikesComments({
       {isPostDetail && <Box>
         {Array.isArray(commentList) &&
           commentList.map((val: any, index: number) => (
-            <>
-              <Comment key={index} comment={val} />
+            <div key={index}>
+              <Comment
+                comment={val}
+                type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                setCommentText={setCommentText}
+                inputRef={commentRef}
+              />
               {index !== commentList.length - 1 && <Divider />}
-            </>
+            </div>
         ))}
       </Box>}
       {!isPost && isShared === undefined && (
@@ -158,18 +171,36 @@ export default function LikesComments({
               border: '1px solid white',
               borderRadius: '10px'
             }}>
-            <AddComment id={itemId} commentType="ArticleComment" />
+            <AddComment
+              id={itemId}
+              commentRef={commentRef}
+              commentType="ArticleComment"
+              commentText={commentText}
+              setCommentText={setCommentText}
+            />
           </Box>
           <RecommendedTopics />
         </>
       )}
       {isPost && !isShared && (
-          <AddComment id={itemId} commentType="PostComment" />
+        <AddComment
+          id={itemId}
+          commentRef={commentRef}
+          commentType="PostComment"
+          commentText={commentText}
+          setCommentText={setCommentText}
+        />
       )}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <Box sx={{ padding: '10px' }}>
-            <AddComment id={itemId} commentType={isPost ? "PostComment" : "ArticleComment"} />
+            <AddComment
+              id={itemId}
+              commentRef={commentRef}
+              commentType={isPost ? "PostComment" : "ArticleComment"}
+              commentText={commentText}
+              setCommentText={setCommentText}
+            />
           </Box>
           <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
             <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
