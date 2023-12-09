@@ -1,3 +1,4 @@
+/* @ts-error */
 import React, { useEffect, useState } from 'react';
 import {
   Box,
@@ -10,13 +11,14 @@ import {
   Grid,
   Stack,
   Typography,
+  SelectChangeEvent,
 } from '@mui/material';
 
 type FormElementConfig = {
   label: string;
   name: string;
   type: string;
-  options?: { label: string; value: string }[] | { maxLength: number };
+  options?: { label: string; value: string }[];
   xs: number;
   componentProps?: {
     inputProps?: { maxLength: number };
@@ -69,7 +71,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
   const handleChange = (
     event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | SelectChangeEvent<string | boolean>
     >
   ) => {
     const { name, value } = event.target as { name: string; value: string };
@@ -111,6 +115,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               value={formValues[element.name] ?? ''}
               defaultValue={formValues[element.name]}
               label={element.label}
+              //@ts-ignore
               onChange={handleChange}
               {...element.componentProps}
             >

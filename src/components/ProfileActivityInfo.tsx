@@ -52,7 +52,7 @@ export type ProfileActivityInfoProps = Education &
   Project &
   CommonFields;
 
-const BackgroundAvatar = props => (
+const BackgroundAvatar = (props: { children: React.ReactNode }) => (
   <Box
     sx={{
       borderRadius: '50%',

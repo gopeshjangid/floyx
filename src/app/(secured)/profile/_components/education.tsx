@@ -24,13 +24,12 @@ import DynamicForm from './addEditActivity';
 import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
 import { useParams } from 'next/navigation';
-import { Education, Project } from '@/components/ProfileActivityInfo';
+import { Education } from '@/components/ProfileActivityInfo';
 const elements = [
   {
     label: 'School',
     name: 'school',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -38,7 +37,6 @@ const elements = [
     label: 'Field',
     name: 'field',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -46,7 +44,6 @@ const elements = [
     label: 'Type',
     name: 'type',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },

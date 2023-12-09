@@ -122,7 +122,7 @@ export const profileService = createApi({
         response?.value?.data,
       providesTags: ['currentProfile'],
     }),
-    getProfileDetails: builder.query<UserProfileDetails, void>({
+    getProfileDetails: builder.query<UserProfileDetails, { username: string }>({
       query: (params: any) =>
         ApiEndpoint.ProfileDetails + '/' + params?.username,
       transformResponse: (response: ApiResponse<UserProfileDetails>) =>
@@ -192,7 +192,10 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout'],
     }),
-    updateEducation: builder.mutation<Education, Partial<Education>>({
+    updateEducation: builder.mutation<
+      Education,
+      Partial<Education & { id: string }>
+    >({
       query: investmentData => ({
         url: `${ApiEndpoint.EditProfileEducation}${investmentData.id}`, // Assuming `id` is part of investmentData
         method: 'POST', // or 'PATCH' for partial updates
