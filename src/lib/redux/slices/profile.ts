@@ -2,12 +2,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
-import {
-  CommonFields,
-  Education,
-  Project,
-  WorkExperience,
-} from '@/components/ProfileActivityInfo';
+import { Education, Project } from '@/components/ProfileActivityInfo';
 
 type ApiResponse<T> = {
   value: {

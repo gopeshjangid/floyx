@@ -17,8 +17,8 @@ type SelectProps = { value: string; label: string };
 type FormElementConfig = {
   name: string;
   label: string;
-  type: 'text' | 'monthSelect' | 'yearSelect';
-  options?: SelectProps[]; // For select type
+  type: string;
+  options?: SelectProps[] | any; // For select type
   xs: number; // Grid sizing for extra small screens
   componentProps: any;
 };

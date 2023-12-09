@@ -5,8 +5,6 @@ import {
   Box,
   Grid,
   Typography,
-  Chip,
-  styled,
   Stack,
   useMediaQuery,
   Button,
@@ -26,7 +24,7 @@ import DynamicForm from './addEditActivity';
 import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
 import { useParams } from 'next/navigation';
-
+import { Education, Project } from '@/components/ProfileActivityInfo';
 const elements = [
   {
     label: 'School',
@@ -112,8 +110,10 @@ const EducationForm: React.FC = () => {
     { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSucess },
   ] = useUpdateEducationMutation();
 
-  const [formValues, setFormValues] = useState(initialValues);
-  const handleSubmit = data => {
+  const [formValues, setFormValues] = useState<Education & { id?: string }>(
+    initialValues
+  );
+  const handleSubmit = (data: Partial<Education>) => {
     if (formValues.id) {
       updateEducation(data);
     } else {
@@ -139,7 +139,7 @@ const EducationForm: React.FC = () => {
   }, [addError, updateError]);
 
   const onEditHandler = useCallback(
-    data => {
+    (data: Education) => {
       setAction('Edit');
       setFormValues(data);
     },
@@ -148,7 +148,7 @@ const EducationForm: React.FC = () => {
 
   const cancelHandler = useCallback(() => {
     setAction('');
-    setFormValues({});
+    setFormValues(initialValues);
   }, [setFormValues, setAction]);
 
   if (isLoading) {
@@ -162,7 +162,10 @@ const EducationForm: React.FC = () => {
     );
   }
 
-  if (isError) return <Alert severity="error">Error occured: {error}</Alert>;
+  if (isError)
+    return (
+      <Alert severity="error">Error occured: {JSON.stringify(error)}</Alert>
+    );
 
   if (action === '') {
     return (
