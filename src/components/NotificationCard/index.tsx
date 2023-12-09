@@ -1,7 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { CircularProgress, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography, styled, useTheme } from '@mui/material';
+import {
+  CircularProgress,
+  ListItem,
+  ListItemAvatar,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  styled,
+  useTheme,
+} from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -13,48 +22,64 @@ import { INotification } from '@/app/(secured)/notifications/types';
 import { PARENTHESES_AND_BRACKETS_REGEX, PROFILE_REGEX } from '@/constants';
 import { notificationService } from '@/lib/services/new/notificationService';
 
-const ListItemItem = styled(ListItem)<{ active: number }>(({ theme, active }) => ({
-  alignItems: 'center',
-  gap: '10px',
-  padding: '9px 21px',
-  backgroundColor: active ? (theme.palette?.mode === 'light' ? '#eef5ff' : '#110d29') : 'transparent',
-  // '&:not(:last-child)': { marginBottom: '20px' },
-  '& .MuiListItemText-root': {
-    margin: '0',
-    cursor: 'pointer',
-  },
-  '& .MuiListItemAvatar-root': {
-    position: 'relative',
-    '& span': {
-      position: 'absolute',
-      right: '0',
-      bottom: '-3px',
-      borderRadius: '100%',
-      width: '25px',
-      height: '25px',
-      background: '#fff',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+const ListItemItem = styled(ListItem)<{ active: number }>(
+  ({ theme, active }) => ({
+    alignItems: 'center',
+    gap: '10px',
+    padding: '9px 21px',
+    backgroundColor: active
+      ? theme.palette?.mode === 'light'
+        ? '#eef5ff'
+        : '#110d29'
+      : 'transparent',
+    // '&:not(:last-child)': { marginBottom: '20px' },
+    '& .MuiListItemText-root': {
+      margin: '0',
+      cursor: 'pointer',
     },
-  },
-  [theme.breakpoints.up('md')]: {
-    gap: '18px',
-    padding: '13px 31px 13px 0px',
-
-    // '&:not(:last-child)': { marginBottom: '28px' },
     '& .MuiListItemAvatar-root': {
+      position: 'relative',
       '& span': {
-        right: '-7px',
-        bottom: '0',
-        width: '27px',
-        height: '27px',
+        position: 'absolute',
+        right: '0',
+        bottom: '-3px',
+        borderRadius: '100%',
+        width: '25px',
+        height: '25px',
+        background: '#fff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       },
     },
-  },
-}));
+    [theme.breakpoints.up('md')]: {
+      gap: '18px',
+      padding: '13px 31px 13px 0px',
 
-const NotificationCard = ({ publisher, date, id, image, text, type, state, objectId, origin }: INotification) => {
+      // '&:not(:last-child)': { marginBottom: '28px' },
+      '& .MuiListItemAvatar-root': {
+        '& span': {
+          right: '-7px',
+          bottom: '0',
+          width: '27px',
+          height: '27px',
+        },
+      },
+    },
+  })
+);
+
+const NotificationCard = ({
+  publisher,
+  date,
+  id,
+  image,
+  text,
+  type,
+  state,
+  objectId,
+  origin,
+}: INotification) => {
   const { palette } = useTheme();
   const router = useRouter();
   const [markAsReadLoading, setMarkAsReadLoading] = useState(false);
@@ -69,7 +94,10 @@ const NotificationCard = ({ publisher, date, id, image, text, type, state, objec
   };
 
   const formatText = (text: string) => {
-    const formattedText: string = text.replace(PARENTHESES_AND_BRACKETS_REGEX, '');
+    const formattedText: string = text.replace(
+      PARENTHESES_AND_BRACKETS_REGEX,
+      ''
+    );
     return formattedText;
   };
 
@@ -85,13 +113,18 @@ const NotificationCard = ({ publisher, date, id, image, text, type, state, objec
     }
   };
 
-  const markAsRead = async (id: any, objectId: string, username: string, origin: number) => {
+  const markAsRead = async (
+    id: any,
+    objectId: string,
+    username: string,
+    origin: number
+  ) => {
     setMarkAsReadLoading(true);
     const response = await notificationService.markAsRead(id);
     setMarkAsReadLoading(false);
 
     if (objectId) {
-      let url = null;
+      let url = '';
       switch (origin) {
         case 0:
           url = '/post/' + objectId;
@@ -120,7 +153,11 @@ const NotificationCard = ({ publisher, date, id, image, text, type, state, objec
       <ListItemAvatar>
         <Link href={`/profile/${publisher.username}/posts'`}>
           <UserAvatar
-            src={type === 6 ? iconFloyx : `${ApiEndpoint.ProfileDetails}/avatar/${publisher.username}`}
+            src={
+              type === 6
+                ? iconFloyx
+                : `${ApiEndpoint.ProfileDetails}/avatar/${publisher.username}`
+            }
             alt={publisher?.name}
             sx={{
               width: { md: '59px', xs: '50px' },
@@ -140,7 +177,9 @@ const NotificationCard = ({ publisher, date, id, image, text, type, state, objec
             color={palette?.mode === 'light' ? '#2F2E41' : '#fff'}
             fontSize="16px"
             fontWeight={400}
-            dangerouslySetInnerHTML={{ __html: addLinksAndFormat(getShortText(text)) }}
+            dangerouslySetInnerHTML={{
+              __html: addLinksAndFormat(getShortText(text)),
+            }}
           />
         }
         secondary={

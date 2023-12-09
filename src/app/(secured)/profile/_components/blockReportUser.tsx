@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
   Box,
   Typography,
   Button,
-  Checkbox,
   FormControlLabel,
   Popover,
   IconButton,
@@ -11,6 +10,8 @@ import {
   Stack,
   Divider,
   useTheme,
+  Radio,
+  RadioGroup,
 } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -24,6 +25,7 @@ import {
   useAddReportUserMutation,
   useBlockUserMutation,
 } from '@/lib/redux/slices/profile';
+import { useToast } from '@/components/Toast/useToast';
 
 interface UserActionModalProps {
   onSuccess: (status: string) => void;
@@ -54,9 +56,31 @@ const BlockUserDisclaimer = () => {
     </Box>
   );
 };
+
+const reportChecks = [
+  'Their Materials are abusive or hateful',
+  "It's suspicious or spam",
+  'It appears their account is hacked',
+  "They're pretending to be me or someone else",
+  'Their profile info and/or images includes abusive or hateful content',
+];
 const ReportUserDisclaimer: React.FC<{
   handleReportChange: (e: any) => void;
 }> = ({ handleReportChange }) => {
+  const [radioValue, setRadioValue] = useState('');
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value; // No need for optional chaining here
+    const name = event.target.name;
+
+    if (name === 'check' && radioValue) {
+      setRadioValue('');
+    } else if (event.target.name === 'check') {
+      setRadioValue(value);
+    }
+    handleReportChange(value);
+  };
   return (
     <Box>
       <Typography variant="h6" textAlign="center">
@@ -64,35 +88,28 @@ const ReportUserDisclaimer: React.FC<{
       </Typography>
       <Divider sx={{ marginBottom: 2 }} />
       <Stack gap={1}>
-        <FormControlLabel
-          control={<Checkbox defaultChecked />}
-          label="Their Materials are abusive or hateful"
-        />
-        <FormControlLabel
-          control={<Checkbox defaultChecked />}
-          label="It's suspicious or spam"
-        />
-        <FormControlLabel
-          control={<Checkbox defaultChecked />}
-          label="It appears their account is hacked"
-        />
-        <FormControlLabel
-          control={<Checkbox defaultChecked />}
-          label="They're pretending to be me or someone else"
-        />
-        <FormControlLabel
-          control={<Checkbox defaultChecked />}
-          label="Their profile info and/or images includes abusive or hateful content"
-        />
+        <RadioGroup
+          defaultValue={radioValue}
+          defaultChecked={!!radioValue}
+          onChange={handleChange}
+          name="check"
+        >
+          {reportChecks.map((check, index) => (
+            <FormControlLabel
+              key={'label-' + index}
+              value={check}
+              control={<Radio />}
+              label={check}
+            />
+          ))}
+        </RadioGroup>
+
         <Typography variant="subtitle2">
           If the user violates the Floyx rules in other ways, Please write to us
           below :
         </Typography>
 
-        <TextareaAutosize
-          onChange={handleReportChange}
-          placeholder="Type here..."
-        />
+        <TextareaAutosize onChange={handleChange} placeholder="Type here..." />
       </Stack>
     </Box>
   );
@@ -103,23 +120,28 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
   username,
   onSuccess,
 }) => {
+  const toast = useToast();
   const { palette } = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
 
-  const [
-    blockUser,
-    { isLoading: isBlocking, isSuccess: isBlocked, error: blockError },
-  ] = useBlockUserMutation();
-  const [
-    reportUser,
-    { isLoading: isReporting, isSuccess: isReported, error: reportError },
-  ] = useAddReportUserMutation();
+  const [blockUser, { isSuccess: isBlocked }] = useBlockUserMutation();
+  const [reportUser, { isSuccess: isReported }] = useAddReportUserMutation();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  useEffect(() => {
+    if (isBlocked || isReported) {
+      toast.success(
+        isBlocked
+          ? 'The user has been blocked !'
+          : 'The user has been reported!'
+      );
+    }
+  }, [isBlocked, isReported]);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -130,8 +152,8 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
   const [reportReason, setReportReason] = useState('');
   const [modalType, setModalType] = useState('');
 
-  const handleReportChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setReportReason(event.target.value);
+  const handleReportChange = (event: string) => {
+    setReportReason(event);
   };
 
   const handleReportSubmit = async () => {
@@ -141,6 +163,7 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
       handleClose();
       setModalType('');
     } catch (error) {
+      toast.error('Error occured in reporting the user');
       console.error('Error reporting the user:', error);
     }
   };
@@ -152,6 +175,7 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
       handleClose();
       setModalType('');
     } catch (error) {
+      toast.error('Error occured in blocking the user');
       console.error('Error blocking the user:', error);
     }
   };
@@ -238,6 +262,7 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
                 autoFocus
                 variant="contained"
                 onClick={handleReportSubmit}
+                disabled={!reportReason}
               >
                 Report
               </Button>

@@ -5,8 +5,6 @@ import {
   Box,
   Grid,
   Typography,
-  Chip,
-  styled,
   Stack,
   useMediaQuery,
   Button,
@@ -25,13 +23,13 @@ import ProfileActivityInfo from '@/components/ProfileActivityInfo';
 import DynamicForm from './addEditActivity';
 import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
-
+import { useParams } from 'next/navigation';
+import { Education } from '@/components/ProfileActivityInfo';
 const elements = [
   {
     label: 'School',
     name: 'school',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -39,7 +37,6 @@ const elements = [
     label: 'Field',
     name: 'field',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -47,7 +44,6 @@ const elements = [
     label: 'Type',
     name: 'type',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -94,10 +90,14 @@ const initialValues = {
 
 const EducationForm: React.FC = () => {
   const toast = useToast();
+  const params = useParams<{ username: string }>();
   const [action, setAction] = React.useState('');
-  const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: 'saddam_beta',
-  });
+  const { data, isError, isLoading, error } = useGetProfileAboutQuery(
+    {
+      username: params?.username ?? '',
+    },
+    { skip: !params?.username }
+  );
 
   const [addEducation, { isLoading: isAdding, error: addError, isSuccess }] =
     useAddEducationMutation();
@@ -107,8 +107,10 @@ const EducationForm: React.FC = () => {
     { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSucess },
   ] = useUpdateEducationMutation();
 
-  const [formValues, setFormValues] = useState(initialValues);
-  const handleSubmit = data => {
+  const [formValues, setFormValues] = useState<Education & { id?: string }>(
+    initialValues
+  );
+  const handleSubmit = (data: Partial<Education>) => {
     if (formValues.id) {
       updateEducation(data);
     } else {
@@ -134,7 +136,7 @@ const EducationForm: React.FC = () => {
   }, [addError, updateError]);
 
   const onEditHandler = useCallback(
-    data => {
+    (data: Education) => {
       setAction('Edit');
       setFormValues(data);
     },
@@ -143,7 +145,7 @@ const EducationForm: React.FC = () => {
 
   const cancelHandler = useCallback(() => {
     setAction('');
-    setFormValues({});
+    setFormValues(initialValues);
   }, [setFormValues, setAction]);
 
   if (isLoading) {
@@ -157,7 +159,10 @@ const EducationForm: React.FC = () => {
     );
   }
 
-  if (isError) return <Alert severity="error">Error occured: {error}</Alert>;
+  if (isError)
+    return (
+      <Alert severity="error">Error occured: {JSON.stringify(error)}</Alert>
+    );
 
   if (action === '') {
     return (
@@ -201,13 +206,21 @@ const EducationForm: React.FC = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      <DynamicForm
-        formElements={elements}
-        initialValues={formValues}
-        onSubmit={handleSubmit}
-        onCancel={cancelHandler}
-        title="Add New Education"
-      />
+      <React.Suspense
+        fallback={
+          <Typography variant="body2" color="warning">
+            Loading...{' '}
+          </Typography>
+        }
+      >
+        <DynamicForm
+          formElements={elements}
+          initialValues={formValues}
+          onSubmit={handleSubmit}
+          onCancel={cancelHandler}
+          title="Add New Education"
+        />
+      </React.Suspense>
     </Box>
   );
 };
@@ -225,4 +238,4 @@ const EducationSection: React.FC = () => {
   );
 };
 
-export default EducationSection;
+export default React.memo(EducationSection);
