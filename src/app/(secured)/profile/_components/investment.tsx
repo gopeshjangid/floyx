@@ -67,12 +67,12 @@ const InvestmentForm: React.FC = () => {
   const params = useParams();
   const [action, setAction] = React.useState('');
   const username = Array.isArray(params?.username)
-    ? params?.username[0]
+    ? params?.username[0] ?? ''
     : params?.username || '';
 
   const { data, isError, isLoading, error } = useGetProfileAboutQuery(
     {
-      username,
+      username: username!,
     },
     { skip: !username }
   );
