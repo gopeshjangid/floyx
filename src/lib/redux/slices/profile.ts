@@ -227,7 +227,7 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout', 'profileDetails'],
     }),
-    blockUser: builder.mutation<ReportUser, Partial<ReportUser>>({
+    blockUser: builder.mutation<ReportUser, Partial<{ username: string }>>({
       query: user => ({
         url: `${ApiEndpoint.BlockUser}/${user.username}`, // Assuming `id` is part of investmentData
         method: 'POST', // or 'PATCH' for partial updates

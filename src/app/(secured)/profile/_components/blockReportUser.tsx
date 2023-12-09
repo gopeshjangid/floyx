@@ -74,13 +74,12 @@ const ReportUserDisclaimer: React.FC<{
 }> = ({ handleReportChange }) => {
   const [radioValue, setRadioValue] = useState('');
   const handleChange = (
-    event:
-      | ChangeEventHandler<HTMLTextAreaElement>
-      | ChangeEvent<HTMLTextAreaElement>
-      | ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const value = event.target?.value ?? '';
-    if (event.target.name === 'check' && radioValue) {
+    const value = event.target.value; // No need for optional chaining here
+    const name = event.target.name;
+
+    if (name === 'check' && radioValue) {
       setRadioValue('');
     } else if (event.target.name === 'check') {
       setRadioValue(value);

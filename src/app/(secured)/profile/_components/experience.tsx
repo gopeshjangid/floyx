@@ -95,10 +95,10 @@ const initialValues = {
 
 const ExperienceForm: React.FC = () => {
   const toast = useToast();
-  const params = useParams();
+  const params = useParams<{ username: string }>();
   const [action, setAction] = React.useState('');
   const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: params.username,
+    username: (params.username as string) ?? '',
   });
 
   const [addExperience, { isLoading: isAdding, error: addError, isSuccess }] =
@@ -157,7 +157,10 @@ const ExperienceForm: React.FC = () => {
     );
   }
 
-  if (isError) return <Alert severity="error">Error occured: {error}</Alert>;
+  if (isError)
+    return (
+      <Alert severity="error">Error occured: {JSON.stringify(error)}</Alert>
+    );
 
   if (action === '') {
     return (
