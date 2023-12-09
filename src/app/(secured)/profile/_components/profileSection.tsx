@@ -113,12 +113,12 @@ const OtherUserProfileActions: React.FC<{ username: string }> = ({
 const ProfileSection: React.FC = () => {
   const params = useParams();
   const username = Array.isArray(params?.username)
-    ? params?.username[0]
+    ? params?.username[0] ?? ''
     : params?.username || '';
 
   const isMobile = useMediaQuery('(max-width:480px)');
   const { data: profile, isLoading } = useGetProfileDetailsQuery(
-    { username },
+    { username: username! },
     {
       skip: !username,
     }
@@ -129,7 +129,7 @@ const ProfileSection: React.FC = () => {
   //   error: currentProfileError,
   // } = useGetCurrentProfileDetailsQuery();
   const { data: profileAbout, isLoading: aboutLoading } =
-    useGetProfileAboutQuery({ username });
+    useGetProfileAboutQuery({ username: username! });
   const { palette } = useTheme();
 
   return (
