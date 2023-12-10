@@ -22,6 +22,7 @@ import {
   Toolbar,
   ListItemIcon,
   ListItemSecondaryAction,
+  styled,
 } from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
@@ -38,53 +39,24 @@ import { notificationService } from '@/lib/services/new/notificationService';
 import { messageService } from '@/lib/services/new/messageService';
 import { FLOYX_USERNAME } from '@/constants';
 import { INotification } from './notifications/types';
+import CustomPopover from '@/components/PopoverOptions';
+import LogoutIcon from '@/iconComponents/logOut';
+import SettingsIcon from '@/iconComponents/settingsIcon';
 
 const drawerWidth = 240;
-const navItems = [
-  {
-    label: 'Home',
-    href: '/',
-    icon: (fill: string) => <HomeIcon stroke={fill} />,
+
+const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
+  // ...other styles you might want
+  '&:hover': {
+    background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
+    '.MuiListItemIcon-root': {
+      color: theme.palette.common.white,
+    },
+    '.MuiListItemText-primary': {
+      color: theme.palette.common.white,
+    },
   },
-  {
-    label: 'Notifications',
-    href: '/notifications',
-    icon: (fill: string) => <NotificationIcon stroke={fill} />,
-  },
-  {
-    label: 'Messages',
-    href: '/inbox',
-    icon: (fill: string) => <MessageIcon stroke={fill} />,
-  },
-  {
-    label: 'Search',
-    href: '/people',
-    icon: (fill: string) => <SearchIcon stroke={fill} />,
-  },
-  {
-    label: 'Wallet',
-    href: '/earnings',
-    icon: (fill: string) => <WalletIcon stroke={fill} />,
-  },
-  {
-    label: 'Profile',
-    href: '/profile',
-    icon: (fill: string) => <ProfileIcon stroke={fill} />,
-  },
-  {
-    label: 'Settings',
-    href: '/settings/account',
-  },
-  {
-    label: 'More',
-    href: '/more',
-    icon: (fill: string) => <MoreIcon fill={fill} />,
-  },
-  {
-    label: 'Logout',
-    href: '/api/auth/signout',
-  },
-];
+}));
 
 const CountWrapper = ({ count }: { count: number }) => (
   <Box
@@ -128,6 +100,60 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navItems = [
+    {
+      label: 'Home',
+      href: '/',
+      icon: (fill: string) => <HomeIcon stroke={fill} />,
+    },
+    {
+      label: 'Notifications',
+      href: '/notifications',
+      icon: (fill: string) => <NotificationIcon stroke={fill} />,
+    },
+    {
+      label: 'Messages',
+      href: '/inbox',
+      icon: (fill: string) => <MessageIcon stroke={fill} />,
+    },
+    {
+      label: 'Search',
+      href: '/people',
+      icon: (fill: string) => <SearchIcon stroke={fill} />,
+    },
+    {
+      label: 'Wallet',
+      href: '/earnings',
+      icon: (fill: string) => <WalletIcon stroke={fill} />,
+    },
+    {
+      label: 'Profile',
+      href: '/profile',
+      icon: (fill: string) => <ProfileIcon stroke={fill} />,
+    },
+    {
+      label: 'More',
+      href: '#',
+      icon: (fill: string) => (
+        <CustomPopover
+          actionOriginIcon={<MoreIcon fill={fill} />}
+          options={[
+            {
+              label: 'Settings',
+              startIcon: <SettingsIcon />,
+              onClick: () => router.push(`/settings/account`),
+            },
+            {
+              label: 'Logout',
+              startIcon: <LogoutIcon />,
+              onClick: () => router.push(`/api/auth/signout`),
+            },
+          ]}
+        />
+      ),
+    },
+  ];
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
   };
@@ -193,7 +219,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       </Box>
       <List>
         {navItems.map((item, index) => (
-          <ListItemButton
+          <CustomListItemButton
             key={index}
             LinkComponent={Link}
             href={
@@ -214,7 +240,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 <CountWrapper count={drawerData.messagesCount} />
               ) : null}
             </ListItemSecondaryAction>
-          </ListItemButton>
+          </CustomListItemButton>
         ))}
 
         <ListItem>
