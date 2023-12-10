@@ -38,7 +38,16 @@ interface IFormError {
 }
 
 const Login: FC = () => {
-  console.log('vercel url', process.env.NEXT_AUTH_VERCEL_URL);
+  console.log('NEXT_PUBLIC_VERCEL_URL', process.env.NEXT_PUBLIC_VERCEL_URL);
+  console.log('VERCEL_URL', process.env.VERCEL_URL);
+  console.log('NEXTAUTH_URL', process.env.NEXTAUTH_URL);
+  console.log('NEXT_PUBLIC_NEXTAUTH_URL', process.env.NEXT_PUBLIC_NEXTAUTH_URL);
+  console.log('NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET);
+  console.log(
+    'NEXT_PUBLIC_NEXTAUTH_SECRET',
+    process.env.NEXT_PUBLIC_NEXTAUTH_SECRET
+  );
+
   const toast = useToast();
   const { palette } = useTheme();
   const router = useRouter();
