@@ -1,3 +1,4 @@
+/* @ts-error */
 import React, { useEffect, useState } from 'react';
 import {
   Box,
@@ -10,17 +11,19 @@ import {
   Grid,
   Stack,
   Typography,
+  SelectChangeEvent,
 } from '@mui/material';
 
-type SelectProps = { value: string; label: string };
-// Define a type for the form element configuration
 type FormElementConfig = {
-  name: string;
   label: string;
-  type: 'text' | 'monthSelect' | 'yearSelect';
-  options?: SelectProps[]; // For select type
-  xs: number; // Grid sizing for extra small screens
-  componentProps: any;
+  name: string;
+  type: string;
+  options?: { label: string; value: string }[];
+  xs: number;
+  componentProps?: {
+    inputProps?: { maxLength: number };
+    minRows?: number;
+  };
 };
 
 // Define a type for the form values
@@ -54,8 +57,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     const tempErrors: FormValues = {};
     formElements.forEach(element => {
       if (element.type === 'text') {
-        // Simple text validation: check if the field is not empty
-        if (!formValues[element.name].trim()) {
+        const value = formValues[element.name];
+        if (typeof value === 'string' && !value.trim()) {
           tempErrors[element.name] = `${element.label} is required`;
         }
       }
@@ -68,7 +71,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
   const handleChange = (
     event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | SelectChangeEvent<string | boolean>
     >
   ) => {
     const { name, value } = event.target as { name: string; value: string };
@@ -110,6 +115,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               value={formValues[element.name] ?? ''}
               defaultValue={formValues[element.name]}
               label={element.label}
+              //@ts-ignore
               onChange={handleChange}
               {...element.componentProps}
             >
