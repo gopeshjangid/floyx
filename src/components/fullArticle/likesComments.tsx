@@ -56,7 +56,7 @@ export default function LikesComments({
   const commentRef = useRef();
 
   const [updateLike] = usePostLikeStatusMutation();
-  const [checkIsShared, result] = useCheckArticleIsSharedMutation();
+  const [checkIsShared] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -155,7 +155,7 @@ export default function LikesComments({
             ))}
         </Box>
       )}
-      {isPostDetail && <Box>
+      {showComments && <Box>
         {Array.isArray(commentList) &&
           commentList.map((val: any, index: number) => (
             <div key={index}>

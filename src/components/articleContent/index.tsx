@@ -9,7 +9,7 @@ export default function ArticleContent({ articleList, loadingList }: any) {
         <Box sx={{ marginTop: 'px' }}>
           <Skeleton variant="rounded" width={'100%'} height={300} />
         </Box>
-      ) : articleList.length !== 0 ? (
+      ) : articleList && articleList.length !== 0 ? (
         articleList?.map((data: any, index: number) => (
           <ArticleContainer
             key={`articleContainer${index}`}

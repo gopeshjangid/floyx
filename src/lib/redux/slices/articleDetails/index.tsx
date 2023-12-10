@@ -178,5 +178,6 @@ export const {
   useCheckArticleIsSharedMutation,
   useShareArticleMutation,
   useGetArticleListQuery, 
+  useLazyGetArticleListQuery,
   useGetArticleInfoQuery,
 } = artcileDetails;

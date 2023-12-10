@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import AuthorCoulmn from '@/components/fullArticle/authorColumn';
 import FullArticle from '@/components/fullArticle/fullArticle';
@@ -6,7 +7,8 @@ import LikesComments from '@/components/fullArticle/likesComments';
 import TipColumn from '@/components/fullArticle/tipCoumn';
 import { Container, Box } from '@mui/material';
 import { usePathname } from 'next/navigation';
-import { useGetArticleDetailsQuery, useGetCommentListQuery } from '@/lib/redux/slices/articleDetails';
+import { useGetArticleDetailsQuery } from '@/lib/redux/slices/articleDetails';
+import { useGetCommentListQuery } from '@/lib/redux/slices/comments';
 
 export default function Page() {
   const url = usePathname();

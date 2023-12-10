@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Tabs, Tab, Typography, Button, Divider } from '@mui/material';
-import React, { useState, SyntheticEvent, useEffect } from 'react';
+import React, { useState, SyntheticEvent } from 'react';
 import { styled } from '@mui/material/styles';
 
 import BookMarkIcon from '@/images/image/bookMarkIcon';
@@ -9,7 +9,6 @@ import LikeIcon from '@/images/image/likeIcon';
 import RecentIcon from '@/images/image/recentIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
 import PopularIcon from '@/images/image/popularIcon';
-import { useGetArticleListQuery } from '@/lib/redux/slices/articleDetails';
 
 const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
@@ -26,13 +25,10 @@ const ArticleHeadContainer = styled(Box)(() => ({
   },
 }));
 
-export default function ArticleHead({ setArticleList, setLoadingList }: any) {
+export default function ArticleHead({ setTabName }: any) {
   const [value, setValue] = useState('popular');
-  const [tabName, setTabName] = useState('liked?limited=true');
-  const { data: articleList, isLoading } = useGetArticleListQuery(tabName);
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
-    setLoadingList(true);
     setValue(newValue);
     if (newValue === 'popular') {
       setTabName('liked?limited=true');
@@ -40,14 +36,6 @@ export default function ArticleHead({ setArticleList, setLoadingList }: any) {
       setTabName(newValue);
     }
   };
-
-  useEffect(() => {
-    setLoadingList(isLoading);
-    if (articleList) {
-      setLoadingList(isLoading);
-      setArticleList(articleList || []);
-    }
-  }, [articleList]);
 
   return (
     <>
