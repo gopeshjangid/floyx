@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from "../posts";
-import { artcileDetails } from '../articleDetails';
+import { UserComment, artcileDetails } from '../articleDetails';
 
 export const commentService = createApi({
   reducerPath: 'commentReducer',
   baseQuery: baseQuery,
   endpoints: builder => ({
+    getCommentList: builder.query<UserComment[], string>({
+      query: articleId => `${ApiEndpoint.GetComments}/${articleId}`,
+      transformResponse: (response: any) => response?.value?.data || [],
+      providesTags: ['commentList']
+    }),
     createComment: builder.mutation<any, any>({
       query: (commantData) => ({
         url: `${ApiEndpoint.AddComment}`,
@@ -17,18 +22,32 @@ export const commentService = createApi({
       }),
       onQueryStarted: (arg, api) => {
         api.queryFulfilled.then(() => {
+          console.log(arg.type);
           if (arg.type === 'PostComment') {
-            api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }]))
+            api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }, 'postDetail']))
           } else {
             api.dispatch(artcileDetails.util.invalidateTags(['LikeStatus']));
           }
         })
-      }
+      },
+      invalidatesTags: ['commentList']
+    }),
+    getUserSuggestion: builder.query<any, any>({
+      query: mentionValue => `${ApiEndpoint.FindUserByName}/${mentionValue}`,
+      transformResponse: (response: any) => (response?.value?.data || []).map((user:any) => {
+        return {
+          avatar: user.avatar,
+          display: user.name,
+          id: user.username
+        };
+      }),
     }),
   }),
-  tagTypes: ['Comment'],
+  tagTypes: ['commentList'],
 });
 
 export const {
   useCreateCommentMutation,
+  useGetCommentListQuery,
+  useLazyGetUserSuggestionQuery,
 } = commentService;

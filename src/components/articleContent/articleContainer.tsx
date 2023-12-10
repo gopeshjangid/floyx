@@ -6,8 +6,6 @@ import Image from 'next/image';
 import UserCard from '../UserCard';
 import BookMarkIcon from '@/images/image/bookMarkIcon';
 import { useGetTipHistoryQuery } from '@/lib/redux/slices/earnings';
-import CalendarIcon from '@/images/image/calendarIcon';
-import moment from 'moment';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   display: 'flex',

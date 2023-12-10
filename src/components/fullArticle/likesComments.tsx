@@ -1,29 +1,27 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useRef, useState } from 'react';
+import { useRouter } from "next/navigation";
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
 import {
-  Avatar,
   Box,
   Divider,
   Typography,
-  Link,
   Button,
   Modal,
 } from '@mui/material';
 import RecommendedTopics from '../recommendedTopics/recommendedTopics';
-import ReplyIcon from '@/images/image/replyIcon';
-import DateParser from '../DateParser';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
 import {
-  useGetLikeStatusMutation,
+  usePostLikeStatusMutation,
   useShareArticleMutation,
   useCheckArticleIsSharedMutation,
 } from '@/lib/redux/slices/articleDetails';
-import Comment from '../CommentLists';
+import Comment from "../CommentLists";
+import { allRoutes } from "@/constants/allRoutes";
 
 const style = {
   position: 'absolute',
@@ -48,12 +46,16 @@ export default function LikesComments({
   isShared = undefined,
   showComments = undefined,
 }: any) {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
+
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [commentText, setCommentText] = useState('');
+
   const toast = useToast();
+  const router = useRouter();
   const open = Boolean(anchorEl);
-  const [updateLike] = useGetLikeStatusMutation();
+  const commentRef = useRef();
+
+  const [updateLike] = usePostLikeStatusMutation();
   const [checkIsShared, result] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
 
@@ -123,6 +125,7 @@ export default function LikesComments({
           variant="text"
           startIcon={<CommentIcon />}
           sx={{ marginRight: '25px' }}
+          onClick={() => isPost ? router.push(`${allRoutes.post }/${itemId}`) : ''}
         >
           {formatIndianNumber(likesCommentsDetails?.numberOfComments)} Comments
         </Button>
@@ -152,6 +155,20 @@ export default function LikesComments({
             ))}
         </Box>
       )}
+      {isPostDetail && <Box>
+        {Array.isArray(commentList) &&
+          commentList.map((val: any, index: number) => (
+            <div key={index}>
+              <Comment
+                comment={val}
+                type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                setCommentText={setCommentText}
+                inputRef={commentRef}
+              />
+              {index !== commentList.length - 1 && <Divider />}
+            </div>
+        ))}
+      </Box>}
       {!isPost && isShared === undefined && (
         <>
           <Box
@@ -159,23 +176,37 @@ export default function LikesComments({
               marginTop: '40px',
               padding: '0px 19px 17px 19px',
               border: '1px solid white',
-              borderRadius: '10px',
-            }}
-          >
-            <AddComment id={itemId} commentType="ArticleComment" />
+              borderRadius: '10px'
+            }}>
+            <AddComment
+              id={itemId}
+              commentRef={commentRef}
+              commentType="ArticleComment"
+              commentText={commentText}
+              setCommentText={setCommentText}
+            />
           </Box>
           <RecommendedTopics />
         </>
       )}
       {isPost && !isShared && (
-        <AddComment id={itemId} commentType="PostComment" />
+        <AddComment
+          id={itemId}
+          commentRef={commentRef}
+          commentType="PostComment"
+          commentText={commentText}
+          setCommentText={setCommentText}
+        />
       )}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <Box sx={{ padding: '10px' }}>
             <AddComment
               id={itemId}
-              commentType={isPost ? 'PostComment' : 'ArticleComment'}
+              commentRef={commentRef}
+              commentType={isPost ? "PostComment" : "ArticleComment"}
+              commentText={commentText}
+              setCommentText={setCommentText}
             />
           </Box>
           <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>

@@ -7,8 +7,8 @@ import {
   IconButton,
   Stack,
   useMediaQuery,
-  Avatar,
   Divider,
+  Skeleton,
 } from '@mui/material';
 import { BorderColorOutlined } from '@mui/icons-material';
 import ExperienceIcon from '@/assets/images/icons/experienceIcon.svg';
@@ -39,7 +39,7 @@ export type WorkExperience = {
 };
 
 export type Project = {
-  id: string;
+  id?: string;
   name: string;
   year: string;
   phase?: string; // Optional
@@ -53,7 +53,7 @@ export type ProfileActivityInfoProps = Education &
   Project &
   CommonFields;
 
-const BackgroundAvatar = props => (
+const BackgroundAvatar = (props: { children: React.ReactNode }) => (
   <Box
     sx={{
       borderRadius: '50%',
@@ -97,7 +97,11 @@ const ProfileActivityInfo: React.FC<
 
     return (
       <BackgroundAvatar>
-        <Image src={icon} height={40} width={30} alt="activity image" />
+        {icon ? (
+          <Image src={icon} height={40} width={30} alt="activity image" />
+        ) : (
+          <Skeleton variant="circular" width={'30px'} height="40px" />
+        )}
       </BackgroundAvatar>
     );
   };

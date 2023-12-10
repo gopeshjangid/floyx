@@ -3,12 +3,14 @@
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserAvatar from "../UserAvatar";
 import { useSession } from "next-auth/react";
 import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
-import { useCreateCommentMutation } from "@/lib/redux/slices/comments";
+import { useCreateCommentMutation, useLazyGetUserSuggestionQuery } from "@/lib/redux/slices/comments";
 import { useToast } from "../Toast/useToast";
+import MentionItem from "../MentionItem";
+import { tokenService } from "@/lib/services/new/tokenService";
 
 const AddCommentBox = styled(Box)(({ theme }) => ({
   marginTop: '20px',
@@ -47,19 +49,52 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
 interface Props {
   id: string;
   commentType: string;
+  commentText: string;
+  setCommentText: any;
+  commentRef: any;
 }
-export default function AddComment({id, commentType}:Props) {
+export default function AddComment({id, commentRef, commentType, commentText, setCommentText}:Props) {
   const session = useSession();
   const toast = useToast();
-  const [createComment, {error, isLoading }] = useCreateCommentMutation();
-
-  const [commentText, setCommentText] = useState('');
-
+  const [createComment, { isLoading }] = useCreateCommentMutation();
+  // const [getUserSuggestion, { data: renderSuggestions }] = useLazyGetUserSuggestionQuery();
   const handlePostText = (e: any) => {
     const text = e.target.value;
     setCommentText( text);
   };
 
+  // const getUserDetails = async (mentionValue: string) => {
+  //   if (mentionValue) {
+  //     await getUserSuggestion(mentionValue);
+  //     return renderSuggestions;
+  //   }
+  //   return [];
+  // }
+
+  const getUserSuggestion = (mentionValue: string, callback: any) => {
+    if (mentionValue) {
+      return new Promise(async (res, rej) => {
+        const bearer_token = tokenService.getBearerToken();
+
+        fetch(`${ApiEndpoint.FindUserByName}/${mentionValue}`, {
+          method: 'GET',
+          headers: {
+            authorization: bearer_token
+          }
+        })
+          .then((res) => res.json())
+          .then((res) =>
+            res.value.data.map((user: any) => ({
+              avatar: user.avatar,
+              display: user.name,
+              id: user.username
+            }))
+          )
+          .then(callback)
+      })
+    }
+    return callback([]);
+  }
   const onEnterPress = async (e: any) => {
     const addComment = {
       itemId: id,
@@ -73,6 +108,10 @@ export default function AddComment({id, commentType}:Props) {
     }
   }
 
+  const renderUserSuggestion = (user: any) => {
+    return <MentionItem user={user} />
+  }
+
   return (
     <AddCommentBox>
       <Box className="styled-input-container">
@@ -83,6 +122,7 @@ export default function AddComment({id, commentType}:Props) {
         />
         <Box className="mention-input">
           <MentionsInput
+            inputRef={commentRef}
             className="mention-input-container"
             singleLine={false}
             value={commentText}
@@ -94,8 +134,8 @@ export default function AddComment({id, commentType}:Props) {
           <Mention
             trigger="@"
             displayTransform={(id: string) => `@${id}`}
-            data={[]}
-            // renderSuggestion={[]}
+            data={getUserSuggestion}
+            renderSuggestion={renderUserSuggestion}
             appendSpaceOnAdd={true}
           />
         </MentionsInput>

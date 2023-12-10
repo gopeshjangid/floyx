@@ -4,10 +4,18 @@ import { tokenService } from './tokenService';
 import { authService } from './authService';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { CookieValueTypes } from 'cookies-next';
+import { INotification } from '@/app/(secured)/notifications/types';
+
+interface IRawNotification {
+  value: {
+    code: string;
+    data: INotification[];
+  };
+}
 
 class NotificationService {
   private connection: signalR.HubConnection | undefined;
-  private notifications: any[] = [];
+  private notifications: IRawNotification = { value: { code: '', data: [] } };
   public publisher = new EventEmitter();
 
   constructor() {
@@ -36,12 +44,16 @@ class NotificationService {
       });
   }
 
-  public async markAllAsRead(notifications: any[]) {
-    const markReadPromises = notifications.map(notification => this.markSingleAsRead(notification.id));
+  public async markAllAsRead(notifications: INotification[]) {
+    const markReadPromises = notifications.map(notification =>
+      this.markSingleAsRead(notification.id)
+    );
 
     try {
       const results = await Promise.allSettled(markReadPromises);
-      const allSuccessful = results.every(result => result.status === 'fulfilled');
+      const allSuccessful = results.every(
+        result => result.status === 'fulfilled'
+      );
 
       if (allSuccessful) {
         this.publisher.emit('reload');
@@ -50,7 +62,10 @@ class NotificationService {
         };
       } else {
         const errors = results.filter(result => result.status === 'rejected');
-        console.error('Some notifications could not be marked as read:', errors);
+        console.error(
+          'Some notifications could not be marked as read:',
+          errors
+        );
       }
     } catch (error) {
       console.error('Error in marking all notifications as read:', error);
@@ -109,8 +124,8 @@ class NotificationService {
 
     this.connection.on('Notification', msg => {
       const notifications = this.notifications;
-      notifications.unshift(msg);
-      this.publisher.emit('change', this.notifications);
+      notifications.value.data.unshift(msg);
+      this.publisher.emit('change', this.notifications.value.data);
     });
   }
 

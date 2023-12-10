@@ -19,17 +19,19 @@ import {
   useGetProfileAboutQuery,
   useUpdateExperienceMutation,
 } from '@/lib/redux/slices/profile';
-import ProfileActivityInfo from '@/components/ProfileActivityInfo';
+import ProfileActivityInfo, {
+  WorkExperience,
+} from '@/components/ProfileActivityInfo';
 import DynamicForm from './addEditActivity';
 import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
+import { useParams } from 'next/navigation';
 
 const elements = [
   {
     label: 'Position',
     name: 'position',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -37,7 +39,6 @@ const elements = [
     label: 'Company',
     name: 'company',
     type: 'text',
-    options: { maxLength: 30 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 30 } },
   },
@@ -74,7 +75,6 @@ const elements = [
     label: 'Description',
     name: 'description',
     type: 'text',
-    options: { maxLength: 50 },
     xs: 9,
     componentProps: { inputProps: { maxLength: 50 }, minRows: 3 },
   },
@@ -94,9 +94,10 @@ const initialValues = {
 
 const ExperienceForm: React.FC = () => {
   const toast = useToast();
+  const params = useParams<{ username: string }>();
   const [action, setAction] = React.useState('');
   const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: 'saddam_beta',
+    username: params?.username ?? '',
   });
 
   const [addExperience, { isLoading: isAdding, error: addError, isSuccess }] =
@@ -107,8 +108,10 @@ const ExperienceForm: React.FC = () => {
     { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSuccess },
   ] = useUpdateExperienceMutation();
 
-  const [formValues, setFormValues] = useState(initialValues);
-  const handleSubmit = data => {
+  const [formValues, setFormValues] = useState<
+    (WorkExperience | Partial<WorkExperience>) & { id?: string }
+  >(initialValues);
+  const handleSubmit = (data: Partial<WorkExperience>) => {
     if (formValues?.id) {
       updateExperience(data);
     } else {
@@ -132,7 +135,7 @@ const ExperienceForm: React.FC = () => {
   }, [addError, updateError]);
 
   const onEditHandler = useCallback(
-    data => {
+    (data: Partial<WorkExperience>) => {
       setAction('Edit');
       setFormValues(data);
     },
@@ -141,7 +144,7 @@ const ExperienceForm: React.FC = () => {
 
   const cancelHandler = useCallback(() => {
     setAction('');
-    setFormValues({});
+    setFormValues(initialValues);
   }, [setFormValues, setAction]);
 
   if (isLoading) {
@@ -155,7 +158,10 @@ const ExperienceForm: React.FC = () => {
     );
   }
 
-  if (isError) return <Alert severity="error">Error occured: {error}</Alert>;
+  if (isError)
+    return (
+      <Alert severity="error">Error occured: {JSON.stringify(error)}</Alert>
+    );
 
   if (action === '') {
     return (
@@ -199,13 +205,22 @@ const ExperienceForm: React.FC = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      <DynamicForm
-        formElements={elements}
-        initialValues={formValues}
-        onSubmit={handleSubmit}
-        onCancel={cancelHandler}
-        title="Add New Experience"
-      />
+      <React.Suspense
+        fallback={
+          <Typography variant="body2" color="warning">
+            Loading...{' '}
+          </Typography>
+        }
+      >
+        {' '}
+        <DynamicForm
+          formElements={elements}
+          initialValues={formValues}
+          onSubmit={handleSubmit}
+          onCancel={cancelHandler}
+          title="Add New Experience"
+        />
+      </React.Suspense>
     </Box>
   );
 };
@@ -222,4 +237,4 @@ const ExperienceSection: React.FC = () => {
   );
 };
 
-export default ExperienceSection;
+export default React.memo(ExperienceSection);

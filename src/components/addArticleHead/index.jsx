@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from 'react';
+import React from 'react';
 import { Box, Button, Typography, Tabs, Tab } from '@mui/material';
 
 export default function AddArticleHead({ setSaveDraft, articleDraftNumbers, value, setValue }) {

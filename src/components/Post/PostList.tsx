@@ -1,16 +1,15 @@
 'use client';
-import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller'
 import { Box, CircularProgress, Skeleton } from '@mui/material';
 
 import { PostBox } from './styledPostBox';
 import Post from './Post';
-import { PostDetailResult, useGetPostsQuery } from "@/lib/redux/slices/posts";
+import { PostDetailResult } from "@/lib/redux/slices/posts";
 import { apiParams } from "@/app/(secured)/page";
 
 interface PostProps {
   postData: PostDetailResult[];
-  loadMore: Function;
+  loadMore: any;
   apiParams: apiParams;
   isFetching: boolean;
 } 

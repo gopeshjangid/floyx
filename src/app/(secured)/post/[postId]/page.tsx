@@ -1,6 +1,6 @@
 "use client";
 import Post from "@/components/Post/Post"
-import { useGetCommentListQuery } from "@/lib/redux/slices/articleDetails";
+import { useGetCommentListQuery } from "@/lib/redux/slices/comments";
 import { useGetPostDetailQuery } from "@/lib/redux/slices/posts";
 import { Grid } from "@mui/material"
 
