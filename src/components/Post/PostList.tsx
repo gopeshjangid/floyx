@@ -1,46 +1,29 @@
 'use client';
-import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller'
 import { Box, CircularProgress, Skeleton } from '@mui/material';
 
 import { PostBox } from './styledPostBox';
 import Post from './Post';
-import { useGetPostsQuery } from "@/lib/redux/slices/posts";
+import { PostDetailResult } from "@/lib/redux/slices/posts";
+import { apiParams } from "@/app/(secured)/page";
 
-export default function PostList() {
-  const [apiParams, setApiParams] = useState<{
-    pageNumber: number;
-    postCreatedDate: number;
-  }>({
-    pageNumber: 0,
-    postCreatedDate: 0,
-  });
-  const [apiHit, setApiHit] = useState(false);
-  const { data: postData, isFetching } = useGetPostsQuery(apiParams);
-
-  const loadMore = (e:any, pageNumber: number, isFetching: boolean, apiHit: boolean) => {
-    // console.log(isFetching, 'afdsdfsdfasfd')
-    const lastPost = postData[postData.length - 1];
-  
-    if (e > pageNumber && lastPost !== undefined && !isFetching && !apiHit) {
-      setApiHit(true);
-      setApiParams({
-        pageNumber: e,
-        postCreatedDate: lastPost?.post?.createdDateTime,
-      });
-    }
-  }
-
+interface PostProps {
+  postData: PostDetailResult[];
+  loadMore: any;
+  apiParams: apiParams;
+  isFetching: boolean;
+} 
+export default function PostList({postData, loadMore, apiParams, isFetching}: PostProps) {
 
   return (
     <>
       {(Array.isArray(postData) && postData?.length) ? (
           <InfiniteScroll
             pageStart={0}
-            loadMore={(e:any) => loadMore(e, apiParams?.pageNumber, isFetching, apiHit)}
-            hasMore={!apiHit}
+            loadMore={(e:any) => loadMore(e, apiParams?.pageNumber, isFetching)}
+            hasMore={!isFetching}
             threshold={600}
-            loader={<CircularProgress />}
+            loader={<CircularProgress key="progress0"/>}
           >
           {
             postData?.map((val: any) => (
@@ -55,8 +38,7 @@ export default function PostList() {
                 link={val?.post?.link}
                 postDetails={val?.post}
                 postId={val?.id}
-                avatar={val?.author?.avatar || ''}
-                />
+              />
             ))
           }
           </InfiniteScroll>

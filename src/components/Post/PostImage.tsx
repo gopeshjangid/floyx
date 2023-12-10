@@ -1,12 +1,15 @@
 "use client"
-import { Box, Modal, Skeleton, Typography } from "@mui/material"
+import { Box, Skeleton, Typography } from "@mui/material"
 import { useState } from "react"
-import Post from "./Post"
 import moment from "moment"
 import Link from "next/link"
 import Image from 'next/image'
+import Lightbox from "react-image-lightbox-with-rotate";
+import 'react-image-lightbox-with-rotate/style.css'; 
 
-export default function PostImage({ image, link, shared, isShared, postId }: any) {
+import Post from "./Post"
+
+export default function PostImage({ image, link, shared, isShared }: any) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -48,16 +51,12 @@ export default function PostImage({ image, link, shared, isShared, postId }: any
             src={image.thumbnailPath}
             alt="thumbnail"
           />
-          <Modal open={open} onClose={handleClose}>
-            <Image
-               width={0}
-                height={0}
-                sizes="100vw"
-                style={{ width: '100%', height: 'auto' }} // optional
-              src={image.thumbnailPath}
-              alt="thumbnail"
+          {open && (
+            <Lightbox
+              mainSrc={image.path}
+              onCloseRequest={handleClose}
             />
-          </Modal>
+          )}
         </Box>}
       {link &&
         <Box onClick={openInNewTab}>
@@ -83,18 +82,18 @@ export default function PostImage({ image, link, shared, isShared, postId }: any
         </Box>}
       {shared && !isShared && (
         <>
-          <Link href={`/post/${postId}`}>
+          <Link href={`/post/${shared?.post?.id}`}>
             <Post
               name={shared?.author?.name || ''}
               username={shared?.author?.username || ''}
-              avatar={shared?.author?.avatar}
               createdDateTime={shared?.post?.createdDateTime}
               content={shared?.post?.content}
               shared={shared?.post?.shared}
               image={shared?.post?.image}
               link={shared?.post?.link}
+              postId={shared?.post?.id}
               isShared={true}
-              />
+            />
           </Link>
         </>
       )}

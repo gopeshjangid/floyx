@@ -6,14 +6,31 @@ import UserCard from "../UserCard"
 import { PostBox } from "./styledPostBox"
 import SplitButton from "../SplitButton"
 import PostImage from "./PostImage"
-import LikeCommentShare from "./LikeCommentShare"
-import AddComment from "./AddComment"
-import CommentList from "../CommentLists"
 import { useEffect, useState } from "react";
 import PostActionModal from "./PostActionModal";
 import { useRouter } from "next/navigation";
 import { allRoutes } from "@/constants/allRoutes";
+import { Post as PostDetail, UserComment } from "@/lib/redux";
+import { useSession } from "next-auth/react";
+import LikesComments from "../fullArticle/likesComments";
 // import { useSession } from "next-auth/react";
+interface postDetail {
+  name: string;
+  username: string;
+  createdDateTime: number;
+  content: string;
+  shared: null | string;
+  image:  {
+    thumbnailPath: string;
+    path: string;
+  };
+  link: null | string;
+  isShared?: boolean;
+  postDetails?: PostDetail;
+  postId:string;
+  commentList?: UserComment[],
+  showComments?: boolean | undefined,
+}
 
 export default function Post({
   name,
@@ -25,12 +42,12 @@ export default function Post({
   link,
   isShared,
   postDetails,
-  avatar,
   postId,
   commentList,
-}: any) {
-  // const session = useSession();
-  // const userDetail = session.data?.user;
+  showComments,
+}: postDetail) {
+  const session = useSession();
+  const userDetail = (session as any)?.data?.user?.username;
 
   const router = useRouter();
   const [buttonOptions, setButtonOptions] = useState(["Direct Link"]);
@@ -47,7 +64,7 @@ export default function Post({
   }
 
   useEffect(() => {
-    if (username === "sadam_hussain") {
+    if (username === userDetail) {
       setButtonOptions(["Delete Post", "Direct Link"])
     }
   }, [username]);  
@@ -80,9 +97,16 @@ export default function Post({
           </Typography>
         </Box>
         <PostImage image={image} link={link} shared={shared} isShared={isShared} postId={postId} />
-        <LikeCommentShare postDetails={postDetails} />
-        <CommentList comments={commentList} />
-        <AddComment avatar={avatar}/>
+        {(!isShared || showComments) && (
+          <LikesComments
+            likesCommentsDetails={isShared ? postDetails?.shared : postDetails}
+            itemId={postId}
+            isPost={true}
+            isShared={isShared}
+            showComments={showComments}
+            commentList={commentList}
+          />
+        )}
       </Box>
       <PostActionModal
         open={open}

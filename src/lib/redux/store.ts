@@ -19,10 +19,9 @@ import storage from 'redux-persist/lib/storage';
 import { earningsService } from './slices/earnings';
 import { profileService } from './slices/profile';
 import { postServices } from './slices/posts';
-import { userDetails } from './slices/userDetails';
 import { artcileDetails } from './slices/articleDetails';
-import { commentList } from './slices/articleCommentList';
-import { articleTotalEarnings } from './slices/articleTotalEarnings';
+import { userService } from './slices/user';
+import { commentService } from "./slices/comments";
 import { reducer } from './rootReducer';
 import { registrationService } from './slices/registration';
 import { accountSettingService } from './slices/accountSetting';
@@ -33,9 +32,10 @@ const persistConfig = {
   whitelist: [
     earningsService.reducerPath,
     postServices.reducerPath,
-    userDetails.reducerPath,
+    profileService.reducerPath,
     registrationService.reducerPath,
     accountSettingService.reducerPath,
+    commentService.reducerPath,
   ],
 };
 
@@ -53,15 +53,14 @@ function makeStore(initialState = {}) {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       })
-        .concat(earningsService.middleware)
-        .concat(postServices.middleware)
-        .concat(userDetails.middleware)
-        .concat(artcileDetails.middleware)
-        .concat(commentList.middleware)
-        .concat(articleTotalEarnings.middleware)
-        .concat(profileService.middleware)
-        .concat(registrationService.middleware)
-        .concat(accountSettingService.middleware),
+      .concat(earningsService.middleware)
+      .concat(postServices.middleware)
+      .concat(artcileDetails.middleware)
+      .concat(userService.middleware)
+      .concat(commentService.middleware)
+      .concat(profileService.middleware)
+      .concat(registrationService.middleware)
+      .concat(accountSettingService.middleware),
   });
 }
 

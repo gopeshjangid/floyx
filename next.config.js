@@ -40,6 +40,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'floyx-beta.s3.us-east-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

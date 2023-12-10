@@ -35,8 +35,6 @@ const UserAvatar = ({ src, alt, sx }: UserAvatarProps) => {
         layout="fill"
         onLoadingComplete={(result) => {
           if (result.naturalWidth === 0) {
-            // Broken image
-            console.log('afasdfasdf');
             setLoading(false);
           }
         }}

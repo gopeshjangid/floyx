@@ -1,30 +1,48 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import axios from 'axios';
-import type { ReduxState } from '../../store';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { baseQuery } from '@/lib/utils';
 
+// Base query using fetchBaseQuery and caching
+// const baseQuery = fetchBaseQuery({
+//   baseUrl: '/api',
+//   prepareHeaders: (headers, { getState }) => {
+//     // Use getState to get the current token from the store
+//     const token = (getState() as ReduxState).auth.token;
+//     // If we have a token set in state, let's assume that we should be passing it.
+//     if (token) {
+//       headers.set('authorization', `Bearer ${token}`);
+//     }
+//     return headers;
+//   },
+// });
+
+interface UserData {
+  name: string;
+  username: string;
+  avatar: string;
+  shortDescription: string;
+  backgroundImage: string;
+  numberOfFollowers: number;
+  numberOfFollowing: number;
+  numberOfArticles: number;
+  numberOfPosts: number;
+  numberOfEvents: number;
+  experienced: boolean;
+  followed: boolean;
+  official: boolean;
+  accountType: number;
+  id: string;
+  numberOfMilestones: number;
+  allowPrivateMessages: boolean;
+}
 interface User {
   id: number;
   name: string;
   email: string;
 }
 
-// Base query using fetchBaseQuery and caching
-const baseQuery = fetchBaseQuery({
-  baseUrl: '/api',
-  prepareHeaders: (headers, { getState }) => {
-    // Use getState to get the current token from the store
-    const token = (getState() as ReduxState).auth.token;
-    // If we have a token set in state, let's assume that we should be passing it.
-    if (token) {
-      headers.set('authorization', `Bearer ${token}`);
-    }
-    return headers;
-  },
-});
-
-const userService = createApi({
+export const userService = createApi({
   reducerPath: 'userService',
   baseQuery: baseQuery,
   endpoints: builder => ({
@@ -33,13 +51,17 @@ const userService = createApi({
       // ProvidesTags can be used for automatic re-fetching when data is mutated
       providesTags: (result, error, arg) => [{ type: 'User', id: 'CURRENT' }],
     }),
+    getUserDetails: builder.query<UserData, string>({
+      query: userName => `${ApiEndpoint.CurrentUserDetails}/${userName}`,
+      transformResponse: (response: any) => response?.value?.data,
+    }),
     // Add other endpoints if needed
   }),
   // Enable caching, invalidation, and other features
-  tagTypes: ['User'],
+  tagTypes: ['userDetails', 'User'],
 });
 
-export const { useGetCurrentUserQuery } = userService;
+export const  { useGetUserDetailsQuery, useGetCurrentUserQuery }  = userService;
 
 // Usage in a React component:
 const UserProfile = () => {
