@@ -107,11 +107,6 @@ type ReportUser = {
   Reason: string;
 };
 
-type BlockUser = {
-  Username: string;
-  Reason: string;
-};
-
 export const profileService = createApi({
   reducerPath: 'profileReducer',
   baseQuery: baseQuery,
@@ -235,6 +230,15 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout', 'profileDetails'],
     }),
+    followUser: builder.mutation<void, Partial<{ username: string }>>({
+      query: user => ({
+        url: `${ApiEndpoint.Follow}/${user.username}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+        body: {},
+      }),
+      transformResponse: (response: any) => response.value,
+      invalidatesTags: ['profileAbout', 'profileDetails'],
+    }),
   }),
   tagTypes: [
     'currentProfile',
@@ -260,4 +264,5 @@ export const {
   useUpdateAboutInfoMutation,
   useAddReportUserMutation,
   useBlockUserMutation,
+  useFollowUserMutation,
 } = profileService;

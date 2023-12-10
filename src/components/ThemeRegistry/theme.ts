@@ -9,7 +9,6 @@ const poppins = Poppins({
   display: 'swap',
 });
 
-
 // const gradientBorder = 'linear-gradient(86.55deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)';
 const getThemeObject = (mode: PaletteMode): ThemeOptions => {
   // const isLightTheme = mode === 'light';
@@ -26,6 +25,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             700: '#fff',
             800: '#E7F0FC',
             900: '#fff',
+            boxBorder: 'rgba(231, 240, 252, 1)',
           },
           secondary: {
             main: '#ADB3C6', // Text Guide
@@ -75,6 +75,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             700: '#0B081F',
             800: '#0B081F',
             900: '#fff',
+            boxBorder: 'rgba(255, 255, 255, 0.15)',
           },
           secondary: {
             main: '#A75FFF', // Primary Purple
@@ -207,28 +208,29 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       },
     },
     components: {
-       MuiLink: {
-      styleOverrides: {
-        root: {
-          color: palette.primary.main, // Use the dynamic color for links
-          textDecoration: 'none',
-          '&:hover': {
-            textDecoration: 'underline',
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            color: palette.primary.main, // Use the dynamic color for links
+            textDecoration: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
+            },
           },
         },
-      }},
+      },
       MuiTypography: {
-      styleOverrides: {
-        root: {
-          // Apply bottom margin to all Typography components
-          marginBottom: '0.35em', // Adjust the value to your preference
-        },
-        // If you want to apply it conditionally based on the `gutterBottom` prop:
-        gutterBottom: {
-          marginBottom: '0.35em', // Adjust the value to match the theme's spacing
+        styleOverrides: {
+          root: {
+            // Apply bottom margin to all Typography components
+            marginBottom: '0.35em', // Adjust the value to your preference
+          },
+          // If you want to apply it conditionally based on the `gutterBottom` prop:
+          gutterBottom: {
+            marginBottom: '0.35em', // Adjust the value to match the theme's spacing
+          },
         },
       },
-    },
       MuiButton: {
         styleOverrides: {
           // Assuming "primary" is your default color for the button
@@ -237,12 +239,14 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             borderRadius: '10px',
             padding: '12px 29px',
             gap: '10px',
-            background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+            background:
+              'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
             '&:hover': {
               // You should also define the hover state
-              background: 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
-              opacity: 0.9 // Or any other styling you want on hover
-            }
+              background:
+                'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+              opacity: 0.9, // Or any other styling you want on hover
+            },
           },
         },
       },

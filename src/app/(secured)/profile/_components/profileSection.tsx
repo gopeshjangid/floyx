@@ -15,6 +15,7 @@ import {
   Avatar,
   Button,
   BoxProps,
+  CircularProgress,
 } from '@mui/material';
 import {
   BorderColorOutlined,
@@ -22,6 +23,8 @@ import {
   LocationOn,
 } from '@mui/icons-material';
 import {
+  useFollowUserMutation,
+  useGetPopularAccountsToFollowQuery,
   //useGetCurrentProfileDetailsQuery,
   useGetProfileAboutQuery,
   useGetProfileDetailsQuery,
@@ -34,6 +37,9 @@ import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutl
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import BlockReportUser from './blockReportUser';
 import UsernameLink from '@/components/usernameLink';
+import { useToast } from '@/components/Toast/useToast';
+import CustomLoadingButton from '@/components/LoadingButton';
+import { useSession } from 'next-auth/react';
 
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
@@ -76,7 +82,29 @@ const ProfilePic = styled(Box)<ProfileFollowerWrapperProps>(
 const OtherUserProfileActions: React.FC<{ username: string }> = ({
   username,
 }) => {
+  const toast = useToast();
+  const { data: accountDetail, isError: AccountLoadError } =
+    useGetProfileDetailsQuery({ username: username! });
+
+  const [followUser, { isSuccess, isLoading, isError }] =
+    useFollowUserMutation();
   const router = useRouter();
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      toast.success(
+        `${!accountDetail?.followed ? 'Followed' : 'UnFollowed'} successfully`
+      );
+    }
+
+    if (isError) {
+      toast.error(
+        `Error occured in ${
+          !accountDetail?.followed ? 'Following' : 'UnFollowing'
+        }`
+      );
+    }
+  }, [isSuccess, isError]);
   return (
     <Stack
       justifyContent="flex-end"
@@ -90,21 +118,24 @@ const OtherUserProfileActions: React.FC<{ username: string }> = ({
       </React.Suspense>
 
       <Button
-        onClick={() => router.push('/inbox')}
+        onClick={() => router.push('/inbox/' + username)}
         variant="contained"
         startIcon={<EmailOutlinedIcon color="primary" />}
       >
         Message
       </Button>
-      <Button
+      <CustomLoadingButton
+        isLoading={isLoading}
+        text={accountDetail?.followed ? 'Unfollow' : 'Follow'}
         variant="contained"
-        //onClick={() => router.push('/inbox')}
+        onClick={() => followUser({ username })}
+        disabled={AccountLoadError}
       >
         Follow
-      </Button>
-      <IconButton>
+      </CustomLoadingButton>
+      {/* <IconButton>
         <NotificationAddOutlinedIcon color="primary" />
-      </IconButton>
+      </IconButton> */}
     </Stack>
   );
 };
@@ -112,10 +143,12 @@ const OtherUserProfileActions: React.FC<{ username: string }> = ({
 // Example usage of the styled components
 const ProfileSection: React.FC = () => {
   const params = useParams();
+
   const username = Array.isArray(params?.username)
     ? params?.username[0] ?? ''
     : params?.username || '';
-
+  const session = useSession();
+  const isSameuser = session.data?.user.username === username;
   const isMobile = useMediaQuery('(max-width:480px)');
   const { data: profile, isLoading } = useGetProfileDetailsQuery(
     { username: username! },
@@ -247,9 +280,13 @@ const ProfileSection: React.FC = () => {
             />
           )}
         </ProfilePic>
-        <Box mt={isMobile ? 8 : 0}>
-          <OtherUserProfileActions username={username ?? ''} />
-        </Box>
+        {!isLoading && (
+          <Box mt={isMobile ? 8 : 0}>
+            {!isSameuser ? (
+              <OtherUserProfileActions username={username ?? ''} />
+            ) : null}
+          </Box>
+        )}
         <Box mt={6} p={2} textAlign="center">
           <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
             {isLoading ? (

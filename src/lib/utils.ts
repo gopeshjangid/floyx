@@ -30,11 +30,12 @@ export const showErrorMessages = (errorKeys: string[]): string => {
 const isServer = () => typeof window === 'undefined';
 
 const redirectToLogin = () => {
-  if (!isServer()) {
-    //const router: NextRouter = require('next/router').default;
-    window.location.href = '/login';
-    //router.push('/login').catch(e => console.error('Redirection Error:', e));
-  }
+  //if (!isServer()) {
+  console.log('redirection =>');
+  //const router: NextRouter = require('next/router').default;
+  window.location.href = '/login';
+  //router.push('/login').catch(e => console.error('Redirection Error:', e));
+  //}
   // Server-side redirects should be handled in getServerSideProps or getInitialProps
 };
 
