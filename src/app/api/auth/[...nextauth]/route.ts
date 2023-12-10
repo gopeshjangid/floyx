@@ -7,7 +7,6 @@ import signIn from '@/lib/auth/signin';
 import socialSignIn from '@/lib/auth/socialSignIn';
 
 const handler = NextAuth({
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -35,8 +34,8 @@ const handler = NextAuth({
     strategy: 'jwt',
   },
   pages: {
-    signIn: '/social-login',
-    error: '/login',
+    signIn: '/login',
+    error: '/social-login',
   },
 
   callbacks: {

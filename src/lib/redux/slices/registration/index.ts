@@ -12,7 +12,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 export const registrationService = createApi({
-  reducerPath: 'registration',
+  reducerPath: 'registerReducer',
   baseQuery: baseQuery,
   endpoints: builder => ({
     register: builder.mutation({

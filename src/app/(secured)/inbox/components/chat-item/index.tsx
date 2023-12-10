@@ -1,5 +1,14 @@
 import React from 'react';
-import { Box, ListItem, ListItemAvatar, ListItemText, Theme, Typography, styled, useTheme } from '@mui/material';
+import {
+  Box,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Theme,
+  Typography,
+  styled,
+  useTheme,
+} from '@mui/material';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -40,7 +49,8 @@ const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
   return (
     <ListItemItem
       sx={{
-        background: params?.username === username ? '#131B3C' : '',
+        background:
+          params?.username === username ? palette.background.default : '',
       }}
     >
       <Link href={`${allRoutes.inbox}/${username}`}>
@@ -56,12 +66,27 @@ const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              flexWrap="wrap"
+            >
               <Box>
-                <Typography color={palette?.mode === 'light' ? '#2F2E41' : '#fff'} fontSize="16px" fontWeight={500} component="span">
+                <Typography
+                  color={palette?.mode === 'light' ? '#2F2E41' : '#fff'}
+                  fontSize="16px"
+                  fontWeight={500}
+                  component="span"
+                >
                   {name.split(' ')[0]}
                 </Typography>
-                <Typography fontSize="14px" fontWeight={400} component="span" className="gradient-text">
+                <Typography
+                  fontSize="14px"
+                  fontWeight={400}
+                  component="span"
+                  className="gradient-text"
+                >
                   @{username}
                 </Typography>
               </Box>
@@ -73,7 +98,9 @@ const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
                 fontSize="14px"
                 fontWeight={500}
               >
-                {lastMessageDate ? getRelativeTime(lastMessageDate) : 'Start to talk!'}
+                {lastMessageDate
+                  ? getRelativeTime(lastMessageDate)
+                  : 'Start to talk!'}
               </Typography>
             </Box>
           }
