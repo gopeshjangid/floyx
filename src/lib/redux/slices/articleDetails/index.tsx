@@ -179,6 +179,7 @@ export const artcileDetails = createApi({
         body: payload,
       }),
       transformResponse: (response: any) => response?.value?.data || {},
+      invalidatesTags:['LikeStatus']
     }),
   }),
   tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip'],

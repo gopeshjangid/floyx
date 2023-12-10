@@ -6,7 +6,7 @@ import LikesComments from '@/components/fullArticle/likesComments';
 import TipColumn from '@/components/fullArticle/tipCoumn';
 import { Container, Box } from '@mui/material';
 import { usePathname } from 'next/navigation';
-import { useGetArticleDetailsQuery } from '@/lib/redux/slices/articleDetails';
+import { useGetArticleDetailsQuery, useGetCommentListQuery } from '@/lib/redux/slices/articleDetails';
 
 export default function Page() {
   const url = usePathname();
@@ -14,7 +14,8 @@ export default function Page() {
   const userName = urlArray ? urlArray[2] : '';
   const articlePuclicUrl = urlArray ? urlArray[3] : '';
   const { data: articleDetails } = useGetArticleDetailsQuery({userName, articlePuclicUrl})
-  const articleId = articleDetails?.article?.id
+  const articleId = articleDetails?.article?.id;
+  const {data: commentList} = useGetCommentListQuery(articleDetails?.article?.id || '')
   return (
     <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Box sx={{ width: '70%' }}>
@@ -27,6 +28,8 @@ export default function Page() {
               likesCommentsDetails={articleDetails?.article}
               userDetail={articleDetails?.user?.avatar}
               itemId={articleId}
+              commentList={commentList}
+              showComments={true}
             />
           </>
         )}

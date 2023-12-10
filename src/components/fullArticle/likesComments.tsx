@@ -21,9 +21,9 @@ import { useToast } from '../Toast/useToast';
 import {
   useGetLikeStatusMutation,
   useShareArticleMutation,
-  useCheckArticleIsSharedMutation
+  useCheckArticleIsSharedMutation,
 } from '@/lib/redux/slices/articleDetails';
-import Comment from "../CommentLists";
+import Comment from '../CommentLists';
 
 const style = {
   position: 'absolute',
@@ -46,17 +46,17 @@ export default function LikesComments({
   itemId,
   isPost = false,
   isShared = undefined,
-  isPostDetail = undefined
+  showComments = undefined,
 }: any) {
-
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
   const toast = useToast();
   const open = Boolean(anchorEl);
   const [updateLike] = useGetLikeStatusMutation();
   const [checkIsShared, result] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
 
-  
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -82,31 +82,30 @@ export default function LikesComments({
   }
 
   const handlePublish = async () => {
-    const result = await checkIsShared(itemId);
+    const result:any = await checkIsShared(itemId);
     const status: boolean = result?.data;
-    if (status){
+    if (status) {
       toast.error('This article has already been shared');
-
     }
     const payload = {
       content: '',
     };
-    await publishArticle({ articleId:itemId, status, payload });
+    await publishArticle({ articleId: itemId, status, payload });
+    toast.success('Article is Published Succesfully ');
     setAnchorEl(null);
-
   };
   const likeType = () => {
     if (isPost) {
-      return 'PostLike'
+      return 'PostLike';
     } else {
       return 'ArticleLike';
     }
-  }
+  };
 
   const handleArticleLike = () => {
     const type: string = likeType();
-    updateLike({articleId: itemId, type})
-  }
+    updateLike({ articleId: itemId, type });
+  };
 
   return (
     <Box sx={{ marginTop: '35px', width: '100%' }}>
@@ -118,16 +117,14 @@ export default function LikesComments({
           sx={{ marginRight: '25px' }}
           onClick={handleArticleLike}
         >
-          {formatIndianNumber(likesCommentsDetails?.numberOfLikes)}{' '}
-          Likes
+          {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
         </Button>
         <Button
           variant="text"
           startIcon={<CommentIcon />}
           sx={{ marginRight: '25px' }}
         >
-          {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
-          Comments
+          {formatIndianNumber(likesCommentsDetails?.numberOfComments)} Comments
         </Button>
         <Button
           variant="text"
@@ -135,8 +132,7 @@ export default function LikesComments({
           sx={{ marginRight: '25px' }}
           onClick={handleClick}
         >
-          {formatIndianNumber(likesCommentsDetails?.numberOfShares)}{' '}
-          Share
+          {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
         </Button>
       </Box>
       <Divider />
@@ -144,16 +140,18 @@ export default function LikesComments({
         <Typography variant="h5" sx={{ marginTop: '40px' }}>
           Comments
         </Typography>
+      )} 
+      {showComments && (
+        <Box>
+          {Array.isArray(commentList) &&
+            commentList.map((val: any, index: number) => (
+              <>
+                <Comment key={index} comment={val} />
+                {index !== commentList.length - 1 && <Divider />}
+              </>
+            ))}
+        </Box>
       )}
-      {isPostDetail && <Box>
-        {Array.isArray(commentList) &&
-          commentList.map((val: any, index: number) => (
-            <>
-              <Comment key={index} comment={val} />
-              {index !== commentList.length - 1 && <Divider />}
-            </>
-        ))}
-      </Box>}
       {!isPost && isShared === undefined && (
         <>
           <Box
@@ -161,20 +159,24 @@ export default function LikesComments({
               marginTop: '40px',
               padding: '0px 19px 17px 19px',
               border: '1px solid white',
-              borderRadius: '10px'
-            }}>
+              borderRadius: '10px',
+            }}
+          >
             <AddComment id={itemId} commentType="ArticleComment" />
           </Box>
           <RecommendedTopics />
         </>
       )}
       {isPost && !isShared && (
-          <AddComment id={itemId} commentType="PostComment" />
+        <AddComment id={itemId} commentType="PostComment" />
       )}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <Box sx={{ padding: '10px' }}>
-            <AddComment id={itemId} commentType={isPost ? "PostComment" : "ArticleComment"} />
+            <AddComment
+              id={itemId}
+              commentType={isPost ? 'PostComment' : 'ArticleComment'}
+            />
           </Box>
           <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
             <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
@@ -183,8 +185,16 @@ export default function LikesComments({
             <img src={likesCommentsDetails?.coverPhotoPath} width={'100%'} />
           </Box>
           <Divider />
-          <Box sx={{ paddingTop: '10px', display: 'flex', justifyContent: 'flex-end' }}>
-            <Button variant="contained" onClick={handlePublish}>Publish</Button>
+          <Box
+            sx={{
+              paddingTop: '10px',
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button variant="contained" onClick={handlePublish}>
+              Publish
+            </Button>
           </Box>
         </Box>
       </Modal>

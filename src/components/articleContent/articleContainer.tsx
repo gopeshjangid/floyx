@@ -1,11 +1,10 @@
 'use client';
 
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Image from 'next/image';
 import UserCard from '../UserCard';
 import BookMarkIcon from '@/images/image/bookMarkIcon';
-import { usePathname } from 'next/navigation';
 import { useGetTipHistoryQuery } from '@/lib/redux/slices/earnings';
 import CalendarIcon from '@/images/image/calendarIcon';
 import moment from 'moment';
@@ -40,6 +39,7 @@ const ArticleContent = styled(Box)(({ theme }) => ({
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'centre',
+      width: '100%',
       color: `${theme.palette.text.secondary}`,
     },
     '& .middle': {
@@ -60,7 +60,6 @@ const ArticleContent = styled(Box)(({ theme }) => ({
 }));
 
 export default function ArticleContainer({ articleDetails, userDetails }: any) {
-  const url = usePathname();
   const { data: tipHistory } = useGetTipHistoryQuery();
 
   const content = JSON.parse(articleDetails?.content);
@@ -71,7 +70,7 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
   };
 
   const handleClick = () => {
-    const dynamicUrl = `${url}/${userDetails?.username}/${articleDetails?.publicUrl}`;
+    const dynamicUrl = `/article/${userDetails?.username}/${articleDetails?.publicUrl}`;
     window.open(dynamicUrl, '_blank');
   };
 
@@ -89,27 +88,54 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
   return (
     <ArticleContent onClick={handleClick}>
       <Box className="thumbnail">
-        <Image
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: '100%', height: '100%' }}
-          src={articleDetails?.coverPhotoThumbnail}
-          alt="thumbnail"
-        />
+        {articleDetails?.coverPhotoThumbnail ? (
+          <Image
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: '100%', height: '100%' }}
+            src={articleDetails?.coverPhotoThumbnail}
+            alt="thumbnail"
+          />
+        ) : (
+          <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
+        )}
       </Box>
       <Box className="details">
         <Box className="top">
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               alignItems: 'center',
+              width: '80%',
             }}
           >
-            <Typography variant="h5">{articleDetails?.title} </Typography>
-            <Typography variant="caption">
-              {tippedOrNot() ? '  (!You Tipped)' : ''}{' '}
+            <Typography
+              variant="h5"
+              sx={{
+                width: 'auto',
+                textWrap: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {articleDetails?.title ? (
+                articleDetails?.title
+              ) : (
+                <Skeleton variant="text" width={400} />
+              )}
+            </Typography>
+            <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
+              {tipHistory ? (
+                tippedOrNot() ? (
+                  '  (!You Tipped)'
+                ) : (
+                  ''
+                )
+              ) : (
+                <Skeleton variant="text" width={100} />
+              )}
             </Typography>
           </Box>
           <IconButton>
@@ -117,8 +143,18 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
           </IconButton>
         </Box>
         <Box className="middle">
-          <Typography variant="body2">
-            {/* {articleDetails?.description || 'Not Available'} */}
+          <Typography
+            variant="body2"
+            sx={{
+              minHeight: `${40}px`,
+              maxHeight: `${40 * 2}px`,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 2,
+            }}
+          >
             <div dangerouslySetInnerHTML={createMarkup(description)} />
           </Typography>
         </Box>

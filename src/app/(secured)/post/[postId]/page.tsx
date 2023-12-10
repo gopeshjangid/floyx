@@ -21,7 +21,7 @@ export default function Page({ params }: { params: { postId: string } }) {
         postDetails={postDetail?.post}
         postId={postDetail?.id}
         commentList={commentList}
-        isPostDetail={true}
+        showComments={true}
       />}   
     </Grid>
   )

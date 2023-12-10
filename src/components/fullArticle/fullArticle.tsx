@@ -8,7 +8,10 @@ import BookMarkIcon from '@/images/image/bookMarkIcon';
 import FaceBookIcon from '@/images/image/facebookIcon';
 import LinkedinIcon from '@/images/image/linkedin';
 import TwitterIcon from '@/images/image/twitter';
-import { useGetArticleTotalEarningsQuery, useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
+import {
+  useGetArticleTotalEarningsQuery,
+  useGetFollowStatusMutation,
+} from '@/lib/redux/slices/articleDetails';
 
 export default function FullArticle({ details }: any) {
   const CONTENT =
@@ -20,8 +23,8 @@ export default function FullArticle({ details }: any) {
     useGetArticleTotalEarningsQuery(articleId);
   const pointsEarned = totalEarningPoints
     ? (
-        (totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount) +
-        (totalEarningPoints?.totalEarnings[0]?.userEarnedAmount)
+        totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +
+        totalEarningPoints?.totalEarnings[0]?.userEarnedAmount
       ).toFixed(3)
     : 0;
 
@@ -73,7 +76,14 @@ export default function FullArticle({ details }: any) {
             </Button>
           </Box>
         </Box>
-        <Box sx={{ padding: '20px 0px', width:'auto', display:'flex', justifyContent:'flex-end'}}>
+        <Box
+          sx={{
+            padding: '20px 0px',
+            width: 'auto',
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
           <Button
             variant="outlined"
             size="small"
@@ -83,8 +93,9 @@ export default function FullArticle({ details }: any) {
             onMouseEnter={handlePopoverOpen}
             onMouseLeave={handlePopoverClose}
           >
-            <Typography variant='button'>{`${pointsEarned} Points`} </Typography>
-            
+            <Typography variant="button">
+              {`${pointsEarned} Points`}{' '}
+            </Typography>
           </Button>
           <Popover
             id="mouse-over-popover"
@@ -112,12 +123,17 @@ export default function FullArticle({ details }: any) {
               </Box>
               <Box>
                 <Typography sx={{ p: 1 }} variant="button">
-                  - Author {totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount || 0} points
+                  - Author{' '}
+                  {totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount ||
+                    0}{' '}
+                  points
                 </Typography>
               </Box>
               <Box>
                 <Typography sx={{ p: 1 }} variant="button">
-                  - Voters {totalEarningPoints?.totalEarnings[0]?.userEarnedAmount || 0} points
+                  - Voters{' '}
+                  {totalEarningPoints?.totalEarnings[0]?.userEarnedAmount || 0}{' '}
+                  points
                 </Typography>
               </Box>
             </Box>
@@ -151,7 +167,7 @@ export default function FullArticle({ details }: any) {
       <Box sx={{ marginTop: '20px' }}>
         <img src={details?.article?.coverPhotoPath} width={'100%'} />
       </Box>
-      <Box sx={{ marginTop: '20px' }}>
+      <Box sx={{ marginTop: '20px', wordWrap: 'break-word' }}>
         {CONTENT &&
           CONTENT.map((val: any, index: number) => (
             <Box sx={{ padding: '10px 0' }} key={`articleDetail${index}`}>
@@ -167,7 +183,13 @@ export default function FullArticle({ details }: any) {
             </Box>
           ))}
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Box>
           <Button variant="text">
             <Typography variant="subtitle2">Edit</Typography>

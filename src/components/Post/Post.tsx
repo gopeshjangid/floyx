@@ -29,7 +29,7 @@ interface postDetail {
   postDetails?: PostDetail;
   postId:string;
   commentList?: UserComment[],
-  isPostDetail?: boolean | undefined,
+  showComments?: boolean | undefined,
 }
 
 export default function Post({
@@ -44,7 +44,7 @@ export default function Post({
   postDetails,
   postId,
   commentList,
-  isPostDetail,
+  showComments,
 }: postDetail) {
   const session = useSession();
   const userDetail = (session as any)?.data?.user?.username;
@@ -97,17 +97,16 @@ export default function Post({
           </Typography>
         </Box>
         <PostImage image={image} link={link} shared={shared} isShared={isShared} postId={postId} />
-        {(!isShared || isPostDetail) && (
+        {(!isShared || showComments) && (
           <LikesComments
             likesCommentsDetails={isShared ? postDetails?.shared : postDetails}
             itemId={postId}
             isPost={true}
             isShared={isShared}
-            isPostDetail={isPostDetail}
+            showComments={showComments}
             commentList={commentList}
           />
         )}
-        {/* {!isShared && <CommentList comments={commentList} />} */}
       </Box>
       <PostActionModal
         open={open}

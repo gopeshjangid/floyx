@@ -12,7 +12,7 @@ import WhoToFollowLoader from "@/components/whoToFollow/loader";
 
 export default function Page() {
   const [articleList, setArticleList] = useState([]);
-  const [loadingList, setLoadingList] = useState(false);
+  const [loadingList, setLoadingList] = useState(true);
   const isMobile = useMediaQuery('(max-width:480px)');
 
   return (
@@ -30,7 +30,6 @@ export default function Page() {
               loadingList={loadingList}
             />
           </Grid>
-          
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1} paddingLeft={1}>
             <SearchBarArcticleRight />
