@@ -1,11 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseQuery } from '@/lib/utils';
+import { createApi } from '@reduxjs/toolkit/query/react';
 // import NProgress from "nprogress";
 
-const BASEURL = 'http://localhost:8000/api/notes';
+// const BASEURL = 'http://localhost:8000/api/notes';
 
 export const noteAPI = createApi({
   reducerPath: 'noteAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: BASEURL }),
+  baseQuery: baseQuery,
   tagTypes: ['Notes'],
   endpoints: builder => ({
     createNote: builder.mutation({

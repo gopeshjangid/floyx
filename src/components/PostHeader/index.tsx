@@ -26,7 +26,7 @@ export default function Header() {
       text: 'Articles/Blog',
       icon: <DescriptionOutlinedIcon />,
       visible: true,
-      link: '/article',
+      link: '/articles',
     },
     {
       text: 'Video/Live Streams',

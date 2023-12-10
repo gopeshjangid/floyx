@@ -43,7 +43,6 @@ export const AuthorDetailBox = styled(Box)(() => ({
 
 export default function AuthorCoulmn({ details }: any) {
   const [updatePost] = useGetFollowStatusMutation();
-
   return (
     <AuthorDetailBox>
       <Box className="header">

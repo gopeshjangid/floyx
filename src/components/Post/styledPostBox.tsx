@@ -7,6 +7,7 @@ export const PostBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.text.secondary}`,
   borderRadius: "10px",
   marginTop: "2rem",
+  backgroundColor: theme.palette.background.paper,
   "& .danger-text": {
     color: theme.palette.error.main,
   },
@@ -18,7 +19,7 @@ export const PostBox = styled(Box)(({ theme }) => ({
     borderBottomLeftRadius: "10px",
     borderBottomRightRadius: "10px",
     display: "flex",
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     padding: "1rem 2rem",
     "& .file-imput": {
       display: "none"
@@ -35,17 +36,26 @@ export const PostBox = styled(Box)(({ theme }) => ({
   },
   "& .input-container": {
     padding: "2.5rem 2rem",
+    
     "& .styled-input-container": {
       display: "flex",
       width: "100%",
       justifyContent: "space-between",
-      "& textarea": {
-        padding: "0.5rem",
-        color: theme.palette.text.primary,
-      },
-      "& .mention-input-container": {
+      "& .mention-input": {
+        display: "flex",
         width: "90%",
-        backgroundColor: theme.palette.background.paper
+        flexDirection: "column",
+        "& textarea": {
+          padding: "0.5rem",
+          color: theme.palette.text.primary,
+          borderRadius: '10px',
+        },
+        "& .mention-input-container": {
+          width: "100%",
+          padding: "0.5rem",
+          backgroundColor: theme.palette.background.default,
+          borderRadius: '10px',
+        }
       }
     },
     "& img": {
