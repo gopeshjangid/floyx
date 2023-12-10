@@ -1,10 +1,13 @@
 "use client"
-import { Box, Modal, Skeleton, Typography } from "@mui/material"
+import { Box, Button, Modal, Skeleton, Typography } from "@mui/material"
 import { useState } from "react"
-import Post from "./Post"
 import moment from "moment"
 import Link from "next/link"
 import Image from 'next/image'
+import Lightbox from "react-image-lightbox-with-rotate";
+import 'react-image-lightbox-with-rotate/style.css'; 
+
+import Post from "./Post"
 
 export default function PostImage({ image, link, shared, isShared }: any) {
   const [open, setOpen] = useState(false);
@@ -48,16 +51,12 @@ export default function PostImage({ image, link, shared, isShared }: any) {
             src={image.thumbnailPath}
             alt="thumbnail"
           />
-          <Modal open={open} onClose={handleClose}>
-            <Image
-               width={0}
-                height={0}
-                sizes="100vw"
-                style={{ width: '100%', height: 'auto' }} // optional
-              src={image.thumbnailPath}
-              alt="thumbnail"
+          {open && (
+            <Lightbox
+              mainSrc={image.path}
+              onCloseRequest={handleClose}
             />
-          </Modal>
+          )}
         </Box>}
       {link &&
         <Box onClick={openInNewTab}>
