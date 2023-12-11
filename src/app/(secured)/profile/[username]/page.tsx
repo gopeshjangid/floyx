@@ -10,14 +10,12 @@ import EaringTabIcon from '@/iconComponents/earningTabIcon';
 import { useTheme } from '@mui/material';
 import ProfileSection from '../_components/profileSection';
 import AboutSection from '../_components/about';
-import { useGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
-import { useParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { GradientText } from '@/components/usernameLink';
+import ProfilePostList from '../_components/postList';
 
 const Page: React.FC = () => {
   const { palette } = useTheme();
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -40,23 +38,42 @@ const Page: React.FC = () => {
             icon={
               <EaringTabIcon fill={value === 0 && palette.background.paper} />
             }
-            label="Posts"
+            label={
+              value === 0 ? (
+                <GradientText fontWeight="normal">Posts</GradientText>
+              ) : (
+                'Posts'
+              )
+            }
             aria-label="phone"
           />
           <Tab
             iconPosition="start"
             icon={<DailyIcon fill={value === 1 && palette.background.paper} />}
-            label="Articles"
+            label={
+              value === 1 ? (
+                <GradientText fontWeight="normal">Articles</GradientText>
+              ) : (
+                'Articles'
+              )
+            }
             aria-label="favorite"
           />
           <Tab
             iconPosition="start"
             icon={<DailyIcon fill={value === 1 && palette.background.paper} />}
-            label="About"
+            label={
+              value === 2 ? (
+                <GradientText fontWeight="normal">About</GradientText>
+              ) : (
+                'About'
+              )
+            }
             aria-label="favorite"
           />
         </Tabs>
       </Box>
+      <Box>{value === 0 && <ProfilePostList />}</Box>
       <Box>{value === 2 && <AboutSection />}</Box>
     </Box>
   );

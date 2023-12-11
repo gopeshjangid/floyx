@@ -23,6 +23,7 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   styled,
+  Button,
 } from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
@@ -42,18 +43,30 @@ import { INotification } from './notifications/types';
 import CustomPopover from '@/components/PopoverOptions';
 import LogoutIcon from '@/iconComponents/logOut';
 import SettingsIcon from '@/iconComponents/settingsIcon';
+import { AddCircle } from '@mui/icons-material';
+import { GradientText } from '@/components/usernameLink';
+import SidebarProfileBar from '@/components/sidebarProfileInfo';
 
 const drawerWidth = 240;
 
 const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
-  // ...other styles you might want
   '&:hover': {
     background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
+    color:
+      theme.palette.mode === 'light'
+        ? theme.palette.common.black
+        : theme.palette.common.white,
     '.MuiListItemIcon-root': {
-      color: theme.palette.common.white,
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.common.white
+          : theme.palette.common.black,
     },
     '.MuiListItemText-primary': {
-      color: theme.palette.common.white,
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.common.white
+          : theme.palette.common.black,
     },
   },
 }));
@@ -134,7 +147,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     },
     {
       label: 'More',
-      href: '#',
+      href: '',
       icon: (fill: string) => (
         <CustomPopover
           actionOriginIcon={<MoreIcon fill={fill} />}
@@ -151,6 +164,15 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             },
           ]}
         />
+      ),
+    },
+    {
+      label: '',
+      href: '/profile',
+      icon: (fill: string) => (
+        <Button variant="outlined" startIcon={<AddCircle />}>
+          <GradientText>Write Post</GradientText>{' '}
+        </Button>
       ),
     },
   ];
@@ -312,12 +334,15 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 borderWidth: 0,
                 position: 'relative',
                 boxSizing: 'border-box',
-                width: drawerWidth,
+                width: drawerWidth + 30,
                 background: theme.palette.background.default,
               },
             }}
           >
             {drawer}
+            <Box pl={2}>
+              <SidebarProfileBar />
+            </Box>
           </Drawer>
         )}
         {!isMobile ? (
@@ -326,7 +351,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               <Paper
                 elevation={0}
                 sx={{
-                  height: '100vh',
+                  height: '100%',
                   width: '100%',
                   paddingTop: 1,
                   pl: 1,
@@ -334,6 +359,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 }}
               >
                 {drawer}
+                <SidebarProfileBar />
               </Paper>
             </Grid>
             <Grid item sm={9} md={9} lg={10}>

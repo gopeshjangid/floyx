@@ -10,20 +10,19 @@ import {
   Box,
   Skeleton,
   Theme,
+  Stack,
+  Divider,
 } from '@mui/material';
-// import useQuery from '@/lib/hooks/useFetch';
-interface Profile {
-  name: string;
-  handle?: string;
-  description?: string;
-  followers?: number;
-  posts?: number;
-  articles?: number;
-  initials?: string;
-}
+import { UserDetailsType } from '@/lib/redux/slices/profile';
+import UsernameLink from '../usernameLink';
+import { SVGUser } from '@/assets/images';
+import CustomTypographyWithIcon from '../typographyWithIcon';
+import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
+import ArticleIcon from '@/iconComponents/articleIcon';
+import ArticleSvgIcon from '@/iconComponents/articleSvgIcon';
 
 interface SearchResultProps {
-  profile: Profile;
+  profile: UserDetailsType;
   isLoading: boolean;
 }
 
@@ -42,36 +41,37 @@ const StyledAvatar = styled(Avatar)(({ theme }: { theme: Theme }) => ({
 
 const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
   const theme = useTheme();
-
+  console.log('profile: ', profile);
   return (
     <StyledCard>
-      <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-        {isLoading ? (
-          <Skeleton variant="circular" width={40} height={40} />
-        ) : (
-          <StyledAvatar>{profile.initials}</StyledAvatar>
-        )}
-        <Box sx={{ flexGrow: 1 }}>
-          {isLoading ? (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Skeleton width="30%" />
-              <Skeleton width="10%" />
-            </Box>
-          ) : (
-            <>
-              <Typography variant="subtitle1">{profile.name}</Typography>
-              <Typography variant="subtitle2" color="textSecondary">
-                {profile.handle}
-              </Typography>
-            </>
-          )}
-
-          {isLoading ? (
-            <Skeleton width="80%" />
-          ) : (
-            <Typography variant="body2">{profile.description}</Typography>
-          )}
+      <CardContent>
+        <Box>
+          <Stack direction="row">
+            {isLoading ? (
+              <Skeleton variant="circular" width={40} height={40} />
+            ) : (
+              <StyledAvatar>{profile.avatar}</StyledAvatar>
+            )}
+            {isLoading ? (
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Skeleton width="30%" />
+                <Skeleton width="10%" />
+              </Box>
+            ) : (
+              <Box mb={2}>
+                <Stack alignItems="center" direction="row" gap={1}>
+                  <Typography variant="h6">{profile.name}</Typography>
+                  <UsernameLink username={profile.username} />
+                </Stack>
+                <Typography variant="subtitle1">
+                  {profile.shortDescription}
+                </Typography>
+              </Box>
+            )}
+          </Stack>
+          <Divider />
           <Box
+            mt={1}
             sx={{
               display: 'flex',
               alignItems: 'center',
@@ -94,25 +94,44 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                 {isLoading ? (
                   <Skeleton width={60} />
                 ) : (
-                  <Typography variant="body2" sx={{ marginRight: 2 }}>
-                    {`Followers: ${profile.followers}`}
-                  </Typography>
+                  <CustomTypographyWithIcon
+                    fontWeight={'400'}
+                    icon={<SVGUser fill={theme.palette.action.svg} />}
+                    variant="body2"
+                  >
+                    {' '}
+                    {`Followers: ${profile.numberOfFollowers}`}
+                  </CustomTypographyWithIcon>
                 )}
               </Box>{' '}
               <Box sx={{ flexGrow: 1 }}>
                 {isLoading ? (
                   <Skeleton width={60} />
                 ) : (
-                  <Typography variant="body2" sx={{ marginRight: 2 }}>
-                    {`Posts: ${profile.posts}`}
-                  </Typography>
+                  <CustomTypographyWithIcon
+                    fontWeight={'400'}
+                    icon={
+                      <DailyTaskIcon
+                        stroke={theme.palette.action.svg}
+                        width={'20px'}
+                        height={'20px'}
+                      />
+                    }
+                    variant="body2"
+                  >
+                    {`Posts: ${profile.numberOfPosts}`}
+                  </CustomTypographyWithIcon>
                 )}
               </Box>{' '}
               <Box sx={{ flexGrow: 1 }}>
                 {isLoading ? (
                   <Skeleton width={60} />
                 ) : (
-                  <Typography variant="body2">{`Articles: ${profile.articles}`}</Typography>
+                  <CustomTypographyWithIcon
+                    fontWeight={'400'}
+                    icon={<ArticleSvgIcon width="20px" />}
+                    variant="body2"
+                  >{`Articles: ${profile.numberOfArticles}`}</CustomTypographyWithIcon>
                 )}
               </Box>
             </Box>
@@ -124,7 +143,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
 };
 
 interface SearchResultsComponentProps {
-  results: Profile[];
+  results: UserDetailsType[];
   isLoading: boolean;
 }
 
@@ -145,6 +164,5 @@ const SearchResultsComponent: React.FC<SearchResultsComponentProps> = ({
     </Box>
   );
 };
-
 
 export default SearchResultsComponent;
