@@ -96,7 +96,7 @@ export default function Post({
             {content}
           </Typography>
         </Box>
-        <PostImage image={image} link={link} shared={shared} isShared={isShared} postId={postId} />
+        <PostImage image={image} link={link} shared={shared} isShared={isShared} />
         {(!isShared || showComments) && (
           <LikesComments
             likesCommentsDetails={isShared ? postDetails?.shared : postDetails}

@@ -57,6 +57,10 @@ const navItems = [
     icon: (fill: string) => <MessageIcon stroke={fill} />,
   },
   {
+    label: 'Articles',
+    href: '/articles',
+  },
+  {
     label: 'Search',
     href: '/people',
     icon: (fill: string) => <SearchIcon stroke={fill} />,

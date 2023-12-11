@@ -3271,7 +3271,7 @@ promise-retry@^2.0.1:
     err-code "^2.0.2"
     retry "^0.12.0"
 
-prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -3318,6 +3318,14 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-image-lightbox-rotate-fixed@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-image-lightbox-rotate-fixed/-/react-image-lightbox-rotate-fixed-1.2.3.tgz#f5c27b78b80b3ce60cdc9822e8db5e99aa5ab37c"
+  integrity sha512-eISskISIL1kuTwtUwi6QLKbysM7FSui1rDfuR9AMFw/p1n8ZZMLHNATGDLRVVFRXEfxOY3FLaTuQObXObeqvEg==
+  dependencies:
+    prop-types "^15.6.0"
+    react-image-lightbox "^4.3.0"
+
 react-image-lightbox-with-rotate@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-image-lightbox-with-rotate/-/react-image-lightbox-with-rotate-5.1.1.tgz#16b68dadd9a65d738725478803c9f3509d19cdad"
@@ -3326,6 +3334,14 @@ react-image-lightbox-with-rotate@^5.1.1:
     blueimp-load-image "^2.19.0"
     prop-types "^15.6.1"
     react-modal "^3.4.4"
+
+react-image-lightbox@^4.3.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-4.6.0.tgz#14b823a1aaf914f471613dc4ca59d8ce4c3dbf97"
+  integrity sha512-77nhT4D90z1lK8ztR40EiiXp0H/Py7dIccNT993Nq1HT168WXKqVSCmjB6IEA1uxjpkseal/tptTU7eVWoFH1A==
+  dependencies:
+    prop-types "^15.5.8"
+    react-modal "^3.1.10"
 
 react-infinite-scroller@^1.2.6:
   version "1.2.6"
@@ -3359,7 +3375,7 @@ react-mentions@^4.4.10:
     prop-types "^15.5.8"
     substyle "^9.1.0"
 
-react-modal@^3.4.4:
+react-modal@^3.1.10, react-modal@^3.4.4:
   version "3.16.1"
   resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.16.1.tgz#34018528fc206561b1a5467fc3beeaddafb39b2b"
   integrity sha512-VStHgI3BVcGo7OXczvnJN7yT2TWHJPDXZWyI/a0ssFNhGZWsPmB8cF0z33ewDXq4VfYMO1vXgiv/g8Nj9NDyWg==

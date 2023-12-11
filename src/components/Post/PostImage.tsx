@@ -4,8 +4,7 @@ import { useState } from "react"
 import moment from "moment"
 import Link from "next/link"
 import Image from 'next/image'
-import Lightbox from "react-image-lightbox-with-rotate";
-import 'react-image-lightbox-with-rotate/style.css'; 
+import Lightbox from "react-image-lightbox-rotate-fixed";
 
 import Post from "./Post"
 
@@ -23,7 +22,7 @@ export default function PostImage({ image, link, shared, isShared }: any) {
   }
 
   const openInNewTab = () => {
-    return window.open(link.url, "_blank")
+    window.open(link.url, "_blank")
   }
 
   const handleImageLoad = () => {
