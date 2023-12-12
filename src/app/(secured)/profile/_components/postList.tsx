@@ -46,19 +46,13 @@ export default function ProfilePostList() {
   return (
     <Box p={isMobile ? 2 : 0}>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
-          <PostHeader />
-          <AddPost />
+        <Grid item xs={12} sm={12} marginTop={2} marginBottom={2}>
           <PostList
             postData={postData || []}
             loadMore={loadMore}
             apiParams={apiParams}
             isFetching={isFetching}
           />
-        </Grid>
-        <Grid item xs={12} sm={3} paddingRight={1}>
-          <PopularToday />
-          <FriendsActivity />
         </Grid>
       </Grid>
     </Box>

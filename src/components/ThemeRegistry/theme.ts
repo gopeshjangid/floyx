@@ -26,6 +26,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             800: '#E7F0FC',
             900: '#fff',
             boxBorder: 'rgba(231, 240, 252, 1)',
+            boxBackground: '#fff',
           },
           secondary: {
             main: '#ADB3C6', // Text Guide
@@ -76,6 +77,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             800: '#0B081F',
             900: '#fff',
             boxBorder: 'rgba(255, 255, 255, 0.15)',
+            boxBackground: '#0B081F',
           },
           secondary: {
             main: '#A75FFF', // Primary Purple
