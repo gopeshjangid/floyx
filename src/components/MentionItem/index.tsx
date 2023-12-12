@@ -1,17 +1,37 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import UserAvatar from "../UserAvatar";
 import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
+import UsernameLink from "../usernameLink";
 
 export default function MentionItem(user: any) {
+  console.log(user.user);
   return (
-    <Box>
+    <Box
+      display={"flex"}
+      margin={2}
+      alignItems={"center"}
+      sx={{backgroundColor: "background.default"}}
+    >
       <UserAvatar
-        src={`${ApiEndpoint.ProfileDetails}/avatar/${user.username}`}
-        alt={user.username}
+        src={user.user.avatar}
+        alt={user.user.display}
         sx={{ width: '49px', height: '49px' }}
       />
-      {user.name}
-      {`$${user.username}`}
+      <Typography
+        component="span"
+        variant="subtitle2"
+        sx={{ margin: "0 8px" }}
+      >
+        {user.user.display}
+      </Typography>
+      <Typography
+        component="span"
+        variant="subtitle2"
+        color="primary"
+        sx={{ cursor: 'pointer', textDecoration: 'none' }}
+      >
+        {user.user.id}
+      </Typography>
     </Box>
   )
 }

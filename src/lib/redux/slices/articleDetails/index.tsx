@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from "../posts";
+import { commentService } from "../comments";
 
 interface ArticleDetailsArgs {
   userName: string;
@@ -118,13 +119,16 @@ export const artcileDetails = createApi({
         url: `${ApiEndpoint.Like}/${articleId}?type=${type}`,
         method: 'POST',
       }),
-      invalidatesTags: (_, __, arg) => arg.type === 'ArticleLike' ? ['LikeStatus']: [],
+      invalidatesTags: (_, __, arg) => arg.type === 'ArticleLike' ? ['LikeStatus'] : [],
       onQueryStarted: (arg, api) => {
-        if (arg.type == 'PostLike') {
-          api.queryFulfilled.then(() => {
-            api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }]))
-          })
-        }
+        api.queryFulfilled.then(() => {
+          console.log(arg);
+          if (arg.type == 'PostLike') {
+            api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }, 'postDetail']))
+          } else if (arg.type == 'PostCommentLiked') {
+            api.dispatch(commentService.util.invalidateTags(['commentList']));
+          }
+        })
       },
     }),
     getArticleTotalEarnings: builder.query<any, string>({
@@ -140,7 +144,7 @@ export const artcileDetails = createApi({
       }),
       invalidatesTags: ['articleTip'],
     }),
-    
+
     getArticleList: builder.query<any, string>({
       query: tabName => `${ApiEndpoint.DeleteArticle}/${tabName}`,
       transformResponse: (response: any) => response?.value?.data || [],
@@ -163,7 +167,7 @@ export const artcileDetails = createApi({
         body: payload,
       }),
       transformResponse: (response: any) => response?.value?.data || {},
-      invalidatesTags:['LikeStatus']
+      invalidatesTags: ['LikeStatus']
     }),
   }),
   tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip'],
@@ -177,7 +181,7 @@ export const {
   useSetTipMutation,
   useCheckArticleIsSharedMutation,
   useShareArticleMutation,
-  useGetArticleListQuery, 
+  useGetArticleListQuery,
   useLazyGetArticleListQuery,
   useGetArticleInfoQuery,
 } = artcileDetails;

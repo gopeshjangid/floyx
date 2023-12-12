@@ -112,7 +112,7 @@ export default function LikesComments({
   return (
     <Box sx={{ marginTop: '35px', width: '100%' }}>
       <Divider />
-      <Box sx={{ display: 'flex', padding: '17px 20px' }}>
+      <Box sx={{ display: 'flex', padding: '16px 20px' }}>
         <Button
           variant="text"
           startIcon={<LikeIcon />}
@@ -144,17 +144,6 @@ export default function LikesComments({
           Comments
         </Typography>
       )} 
-      {showComments && (
-        <Box>
-          {Array.isArray(commentList) &&
-            commentList.map((val: any, index: number) => (
-              <>
-                <Comment key={index} comment={val} />
-                {index !== commentList.length - 1 && <Divider />}
-              </>
-            ))}
-        </Box>
-      )}
       {showComments && <Box>
         {Array.isArray(commentList) &&
           commentList.map((val: any, index: number) => (
