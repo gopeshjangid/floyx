@@ -23,7 +23,7 @@ export default function Comment({ comment, inputRef, type, setCommentText }: any
     if (!content) {
       return ''
     }
-    const profileRegex = /@\[([^\]]+)\]\(([^\)]+)\)/gm
+    const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm
     const link = '<a href="/profile/$2">@$2</a>'
     const urlRegex = /(https?:\/\/[^\s]+)/g
     const urlLink = '<a href="$1" target="_blank">$1</a>'
