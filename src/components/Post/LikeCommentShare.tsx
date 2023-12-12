@@ -49,7 +49,7 @@ export default function LikeCommentShare({ postDetails }: any) {
             className="lcs-typo"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Comments
+            Commentsd
           </Typography>
         </Button>
       </Box>

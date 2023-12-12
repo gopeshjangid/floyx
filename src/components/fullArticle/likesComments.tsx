@@ -111,19 +111,26 @@ export default function LikesComments({
           variant="text"
           startIcon={<LikeIcon />}
           onClick={handleArticleLike}
+          sx={{ padding: 0 }}
         >
           {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
         </Button>
         <Button
           variant="text"
           startIcon={<CommentIcon />}
+          sx={{ padding: 0 }}
           onClick={() =>
             isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
           }
         >
           {formatIndianNumber(likesCommentsDetails?.numberOfComments)} Comments
         </Button>
-        <Button variant="text" startIcon={<ShareIcon />} onClick={handleClick}>
+        <Button
+          sx={{ padding: 0 }}
+          variant="text"
+          startIcon={<ShareIcon />}
+          onClick={handleClick}
+        >
           {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
         </Button>
       </Stack>

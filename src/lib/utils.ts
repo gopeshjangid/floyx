@@ -3,7 +3,8 @@
 import moment from 'moment';
 import { getCookie, deleteCookie } from 'cookies-next';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import { signOut } from 'next-auth/react';
+import router from 'next/router';
 export const getRelativeTime = (date: string) => {
   const dateObject = new Date(date);
   const sec = dateObject.getSeconds();
@@ -55,7 +56,10 @@ export const baseQuery = fetchBaseQuery({
     if (response.status === 401) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
-      redirectToLogin();
+      await signOut({ redirect: false });
+
+      // Redirect to the login page
+      router.push('/login');
       return;
     }
     // You need to return a valid response format here

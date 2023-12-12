@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { FC } from 'react';
 import NextAppDirEmotionCacheProvider from './EmotionCache';
 import MUIThemeProvider from './MuiThemeProvider';
-
+import './global.css';
 interface PageProviderProps {
   children: React.ReactNode;
 }
