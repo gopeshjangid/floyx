@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -10,18 +10,18 @@ import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 const ContainerBox = styled(Box)(({ theme }) => ({
   paddingLeft: '0px',
   display: 'flex',
-  overflow:'scroll',
+  overflow: 'scroll',
   justifyContent: 'space-between',
   marginTop: '30px',
   width: '65%',
   '& .lcs-box': {
     display: 'flex',
-    alignItems: "center",
+    alignItems: 'center',
     color: `${theme.palette.text.secondary}`,
     '& .lcs-typo': {
       marginLeft: '2px',
       marginBottom: 0,
-    }
+    },
   },
 }));
 
@@ -31,24 +31,37 @@ export default function LikeCommentShare({ postDetails }: any) {
       <Box className="lcs-box">
         <Button variant="text" startIcon={<ThumbUpOffAltOutlinedIcon />}>
           {postDetails?.numberOfLikes}
-          <Typography variant="body2" color={'primary'} className="lcs-typo" sx={{display: { xs: 'none', sm: 'block' }}}>
-             Likes
+          <Typography
+            variant="body2"
+            color={'primary'}
+            className="lcs-typo"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            Likes
           </Typography>
         </Button>
       </Box>
       <Box className="lcs-box">
         <Button variant="text" startIcon={<ChatBubbleOutlineOutlinedIcon />}>
           {postDetails?.numberOfComments}
-          <Typography variant="body2" className="lcs-typo" sx={{display: { xs: 'none', sm: 'block' }}}>
-             Comments
+          <Typography
+            variant="body2"
+            className="lcs-typo"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            Comments
           </Typography>
         </Button>
       </Box>
       <Box className="lcs-box">
         <Button variant="text" startIcon={<SendOutlinedIcon />}>
           {postDetails?.numberOfShares}
-          <Typography variant="body2" className="lcs-typo" sx={{display: { xs: 'none', sm: 'block' }}}>
-             Shares
+          <Typography
+            variant="body2"
+            className="lcs-typo"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            Shares
           </Typography>
         </Button>
       </Box>

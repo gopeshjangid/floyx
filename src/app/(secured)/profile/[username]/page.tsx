@@ -12,6 +12,7 @@ import ProfileSection from '../_components/profileSection';
 import AboutSection from '../_components/about';
 import { GradientText } from '@/components/usernameLink';
 import ProfilePostList from '../_components/postList';
+import ProfileArticleList from '../_components/articleList';
 
 const Page: React.FC = () => {
   const { palette } = useTheme();
@@ -74,6 +75,7 @@ const Page: React.FC = () => {
         </Tabs>
       </Box>
       <Box>{value === 0 && <ProfilePostList />}</Box>
+      <Box>{value === 1 && <ProfileArticleList />}</Box>
       <Box>{value === 2 && <AboutSection />}</Box>
     </Box>
   );

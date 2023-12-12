@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import FriendsActivity from "@/components/FriendsActivity";
-import PopularToday from "@/components/PopularToday";
+import FriendsActivity from '@/components/FriendsActivity';
+import PopularToday from '@/components/PopularToday';
 import AddPost from '@/components/Post/AddPost';
 import PostList from '@/components/Post/PostList';
 import PostHeader from '@/components/PostHeader';
-import { useGetPostsQuery } from "@/lib/redux";
+import { useGetPostsQuery } from '@/lib/redux';
 
 import { Box, Grid, useMediaQuery } from '@mui/material';
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -34,14 +34,14 @@ export default function Page() {
         });
       }
     }
-  }
+  };
 
-  useEffect(()=>{
-    console.log('postData',postData)
-  }, [postData])
+  useEffect(() => {
+    console.log('postData', postData);
+  }, [postData]);
 
   return (
-    <Box p={isMobile ? 2 : 0}>
+    <Box p={isMobile ? 2 : 0} mt={2}>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
           <PostHeader />

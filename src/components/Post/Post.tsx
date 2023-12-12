@@ -94,7 +94,9 @@ export default function Post({
           </Box>
         </Box>
         <Box>
-          <Typography variant="h6">{content}</Typography>
+          <Typography sx={{ wordWrap: 'break-word' }} variant="h6">
+            {content}
+          </Typography>
         </Box>
         <PostImage
           image={image}

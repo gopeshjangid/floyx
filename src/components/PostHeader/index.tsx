@@ -7,7 +7,7 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import { styled } from '@mui/material/styles';
-import CustomizedMenus from "../CustomizedButton";
+import CustomizedMenus from '../CustomizedButton';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import { useRouter } from 'next/navigation';
 
@@ -18,7 +18,17 @@ export default function Header() {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    overflowY: 'hidden',
+    overflowY: 'auto',
+    '&::-webkit-scrollbar': {
+      width: '5px',
+      backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+      borderRadius: '10px',
+    },
+    scrollbarWidth: 'thin',
+    scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.1)',
   }));
 
   const TOP_BAR = [
@@ -66,9 +76,8 @@ export default function Header() {
   ];
 
   const handleClick = (link: string | undefined) => {
-    if(link)
-      router.push(link)
-  }
+    if (link) router.push(link);
+  };
 
   return (
     <HeaderSection>
@@ -80,7 +89,12 @@ export default function Header() {
                 variant="outlined"
                 onClick={() => handleClick(val?.link)}
                 startIcon={val.icon}
-                sx={ { marginRight: 1, padding: '5px 10px', whiteSpace: "nowrap", alignItems: 'center'}}
+                sx={{
+                  marginRight: 1,
+                  padding: '5px 10px',
+                  whiteSpace: 'nowrap',
+                  alignItems: 'center',
+                }}
               >
                 {val.text}
               </Button>

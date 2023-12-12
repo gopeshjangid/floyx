@@ -210,6 +210,17 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       },
     },
     components: {
+      MuiCssBaseline: {
+        styleOverrides: `
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      `,
+      },
       MuiLink: {
         styleOverrides: {
           root: {
