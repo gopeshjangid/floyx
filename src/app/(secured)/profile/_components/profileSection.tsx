@@ -15,7 +15,6 @@ import {
   Avatar,
   Button,
   BoxProps,
-  CircularProgress,
 } from '@mui/material';
 import {
   BorderColorOutlined,
@@ -24,7 +23,6 @@ import {
 } from '@mui/icons-material';
 import {
   useFollowUserMutation,
-  useGetPopularAccountsToFollowQuery,
   //useGetCurrentProfileDetailsQuery,
   useGetProfileAboutQuery,
   useGetProfileDetailsQuery,
@@ -33,13 +31,14 @@ import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Calender from '@/assets/images/icons/calendar.svg';
 import LinkIcon from '@/assets/images/icons/link.svg';
-import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
+//import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import BlockReportUser from './blockReportUser';
 import UsernameLink from '@/components/usernameLink';
 import { useToast } from '@/components/Toast/useToast';
 import CustomLoadingButton from '@/components/LoadingButton';
 import { useSession } from 'next-auth/react';
+import CustomChip from '@/components/CustomGridientChip';
 
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
@@ -192,6 +191,7 @@ const ProfileSection: React.FC = () => {
         sx={{
           borderRadius: '10px',
           position: 'relative',
+          border: `1px solid ${palette.primary.boxBorder}`,
         }}
       >
         <ProfileCover isMobile={isMobile}>
@@ -366,7 +366,7 @@ const ProfileSection: React.FC = () => {
               ) : (
                 profileAbout &&
                 profileAbout?.about?.skills.map((skill, index) => (
-                  <Chip
+                  <CustomChip
                     key={'skill' + index}
                     label={skill}
                     component="a"

@@ -1,17 +1,11 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
-import {
-  Box,
-  Divider,
-  Typography,
-  Button,
-  Modal,
-} from '@mui/material';
+import { Box, Divider, Typography, Button, Modal, Stack } from '@mui/material';
 import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
@@ -20,8 +14,8 @@ import {
   useShareArticleMutation,
   useCheckArticleIsSharedMutation,
 } from '@/lib/redux/slices/articleDetails';
-import Comment from "../CommentLists";
-import { allRoutes } from "@/constants/allRoutes";
+import Comment from '../CommentLists';
+import { allRoutes } from '@/constants/allRoutes';
 
 const style = {
   position: 'absolute',
@@ -46,8 +40,9 @@ export default function LikesComments({
   isShared = undefined,
   showComments = undefined,
 }: any) {
-
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
   const [commentText, setCommentText] = useState('');
 
   const toast = useToast();
@@ -84,7 +79,7 @@ export default function LikesComments({
   }
 
   const handlePublish = async () => {
-    const result:any = await checkIsShared(itemId);
+    const result: any = await checkIsShared(itemId);
     const status: boolean = result?.data;
     if (status) {
       toast.error('This article has already been shared');
@@ -111,34 +106,34 @@ export default function LikesComments({
 
   return (
     <Box sx={{ marginTop: '35px', width: '100%' }}>
-      <Divider />
-      <Box sx={{ display: 'flex', padding: '16px 20px' }}>
+      <Stack direction="row" gap={2}>
         <Button
           variant="text"
           startIcon={<LikeIcon />}
-          sx={{ marginRight: '25px' }}
           onClick={handleArticleLike}
+          sx={{ padding: 0 }}
         >
           {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
         </Button>
         <Button
           variant="text"
           startIcon={<CommentIcon />}
-          sx={{ marginRight: '25px' }}
-          onClick={() => isPost ? router.push(`${allRoutes.post }/${itemId}`) : ''}
+          sx={{ padding: 0 }}
+          onClick={() =>
+            isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
+          }
         >
           {formatIndianNumber(likesCommentsDetails?.numberOfComments)} Comments
         </Button>
         <Button
+          sx={{ padding: 0 }}
           variant="text"
           startIcon={<ShareIcon />}
-          sx={{ marginRight: '25px' }}
           onClick={handleClick}
         >
           {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
         </Button>
-      </Box>
-      <Divider />
+      </Stack>
       {!isPost && isShared === undefined && (
         <Typography variant="h5" sx={{ marginTop: '40px' }}>
           Comments
@@ -165,8 +160,9 @@ export default function LikesComments({
               marginTop: '40px',
               padding: '0px 19px 17px 19px',
               border: '1px solid white',
-              borderRadius: '10px'
-            }}>
+              borderRadius: '10px',
+            }}
+          >
             <AddComment
               id={itemId}
               commentRef={commentRef}
@@ -193,7 +189,7 @@ export default function LikesComments({
             <AddComment
               id={itemId}
               commentRef={commentRef}
-              commentType={isPost ? "PostComment" : "ArticleComment"}
+              commentType={isPost ? 'PostComment' : 'ArticleComment'}
               commentText={commentText}
               setCommentText={setCommentText}
             />

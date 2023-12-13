@@ -52,7 +52,7 @@ const Page: React.FC = () => {
           border: !isMobile ? '1px solid ' + palette.action['border'] : '',
         }}
       >
-        {value !== 0 ? <Earnings /> : <DailyTask />}
+        {value === 0 ? <Earnings /> : <DailyTask />}
       </Paper>
     </Box>
   );

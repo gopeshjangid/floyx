@@ -11,8 +11,8 @@ const FriendActivitySection = styled(Box)(() => ({
   padding: '0px',
 }));
 
-const FriendActivityMainSection = styled(Container)(() => ({
-  border: '1px solid ',
+const FriendActivityMainSection = styled(Container)(({ theme }) => ({
+  border: `1px solid ${theme.palette.primary.boxBorder}`,
   borderRadius: '10px',
   marginTop: '25px',
   '& .card-button': {
@@ -35,12 +35,12 @@ const ACTIVITY_CARD = [
     userName: 'saddam_beta',
     activity: 'John added 4 Arcticles in the last 48 hour',
   },
-   {
+  {
     name: 'John Wick',
     userName: 'saddam_beta',
     activity: 'John added 4 Arcticles in the last 48 hour',
   },
-    {
+  {
     name: 'John Wick',
     userName: 'saddam_beta',
     activity: 'John added 4 Arcticles in the last 48 hour',
@@ -53,14 +53,14 @@ interface ActivityProps {
   activity: string;
 }
 
-const showEmptySkelton = ["", "", "", ""];
+const showEmptySkelton = ['', '', '', ''];
 
 export default function FriendsActivity() {
   const [friendActivity, setFriendActivity] = useState<ActivityProps[] | null>(
     null
   );
 
-  const myPromise = new Promise((resolve) => {
+  const myPromise = new Promise(resolve => {
     setTimeout(resolve, 1000);
   });
 
@@ -74,52 +74,49 @@ export default function FriendsActivity() {
           friendActivity.map((card, index) => (
             <Container className="card" key={`friendActivity${index}`}>
               <Box>
-                <UserCard
-                  name={card.name}
-                  username={card.userName}
-                />
+                <UserCard name={card.name} username={card.userName} />
               </Box>
               {!(index === friendActivity.length - 1) && <Divider />}
             </Container>
           ))
         ) : (
           <>
-              {showEmptySkelton.map((val, index) => (
-                <Box key={`emptyRecent${index}`}>
-                  <Container className="card">
-                    <UserCardBox>
+            {showEmptySkelton.map((val, index) => (
+              <Box key={`emptyRecent${index}`}>
+                <Container className="card">
+                  <UserCardBox>
+                    <Box>
+                      <Skeleton
+                        variant="circular"
+                        width={50}
+                        height={50}
+                        sx={{ marginRight: '10px' }}
+                        animation="wave"
+                      />
+                    </Box>
+                    <Box>
                       <Box>
                         <Skeleton
-                          variant="circular"
-                          width={50}
-                          height={50}
-                          sx={{ marginRight: '10px' }}
+                          variant="text"
+                          height={20}
+                          width={180}
                           animation="wave"
                         />
                       </Box>
                       <Box>
-                        <Box>
-                          <Skeleton
-                            variant="text"
-                            height={20}
-                            width={180}
-                            animation="wave"
-                          />
-                        </Box>
-                        <Box>
-                          <Skeleton
-                            variant="text"
-                            height={20}
-                            width={80}
-                            animation="wave"
-                          />
-                        </Box>
+                        <Skeleton
+                          variant="text"
+                          height={20}
+                          width={80}
+                          animation="wave"
+                        />
                       </Box>
-                    </UserCardBox>
-                  </Container>
-                  {showEmptySkelton?.length !== (index + 1) && <Divider />}
-                </Box>
-              ))}
+                    </Box>
+                  </UserCardBox>
+                </Container>
+                {showEmptySkelton?.length !== index + 1 && <Divider />}
+              </Box>
+            ))}
           </>
         )}
       </FriendActivityMainSection>

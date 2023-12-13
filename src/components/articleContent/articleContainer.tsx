@@ -25,7 +25,7 @@ const ArticleContent = styled(Box)(({ theme }) => ({
   '& .details': {
     width: '70%',
     padding: '18px',
-    border: `1px solid ${theme.palette.text.disabled}`,
+    border: `1px solid ${theme.palette.primary.boxBorder}`,
     borderRadius: '0 10px 10px 0',
     '& .date': {
       display: 'flex',
@@ -156,14 +156,8 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
             <div dangerouslySetInnerHTML={createMarkup(description)} />
           </Typography>
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Box>
+        <Box>
+          <Box width="100%">
             <UserCard
               name={userDetails?.name}
               username={userDetails?.username}

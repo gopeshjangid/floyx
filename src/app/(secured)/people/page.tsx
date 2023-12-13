@@ -1,6 +1,18 @@
 'use client';
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, FormControlLabel, Grid, InputLabel, Paper } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  FormControlLabel,
+  Grid,
+  InputLabel,
+  Paper,
+  Theme,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
 import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
@@ -8,15 +20,20 @@ import CloseIcon from '@mui/icons-material/Close';
 import SearchResultItems from '@/components/search/FoundResultList';
 import useQuery from '@/lib/hooks/useFetch';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
-// interface Profile {
-//   name: string;
-//   handle: string;
-//   avatar: string;
-//   followers: number;
-//   posts: number;
-//   articles: number;
-// }
+import { SVGUser } from '@/assets/images';
+import { FlagOutlined } from '@mui/icons-material';
+import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
+import { UserDetailsType } from '@/lib/redux/slices/profile';
 
+export const SearchBoxWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
+  '& .MuiInputBase-root': {
+    background: theme.palette.background.default,
+  },
+  margin: '25px',
+  [theme.breakpoints.up('md')]: {
+    margin: '50px',
+  },
+}));
 interface SearchCriteria {
   name: string;
   country: string;
@@ -25,17 +42,30 @@ interface SearchCriteria {
   professionalExperience: boolean;
 }
 
+interface UserProfilesResponse {
+  total: number;
+  result: UserDetailsType[];
+  page: number;
+}
+
 const StyledChip = styled(Chip)(({ theme }) => ({
   borderRadius: '4px', // Adjust the border-radius for rounded corners
   padding: theme.spacing(0.5, 1), // Use theme spacing for consistent padding
   margin: theme.spacing(0.5), // Use theme spacing for consistent margins
-  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(87, 152, 255, 0.13)' : '#bbdefb', // Dark blue for dark mode, light blue for light mode
-  color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.main, // Lighter text for dark mode, dark text for light mode
+  backgroundColor:
+    theme.palette.mode === 'dark' ? 'rgba(87, 152, 255, 0.13)' : '#bbdefb', // Dark blue for dark mode, light blue for light mode
+  color:
+    theme.palette.mode === 'dark'
+      ? theme.palette.primary.main
+      : theme.palette.primary.main, // Lighter text for dark mode, dark text for light mode
   '& .MuiChip-label': {
     padding: theme.spacing(0, 1), // Use theme spacing inside the chip
   },
   '& .MuiChip-deleteIcon': {
-    color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.main, // Same as text color
+    color:
+      theme.palette.mode === 'dark'
+        ? theme.palette.primary.main
+        : theme.palette.primary.main, // Same as text color
     '&:hover': {
       color: theme.palette.mode === 'dark' ? '#fff' : '#546e7a', // Lighter on hover for dark mode, darker for light mode
     },
@@ -45,7 +75,8 @@ const StyledChip = styled(Chip)(({ theme }) => ({
 // Search Component with TypeScript
 const SearchComponent: React.FC<{
   onSearch: (criteria: SearchCriteria) => void;
-}> = ({ onSearch }) => {
+  isLoading: boolean;
+}> = ({ onSearch, isLoading }) => {
   const [searchCriteria, setSearchCriteria] = useState<SearchCriteria>({
     name: '',
     country: '',
@@ -81,95 +112,159 @@ const SearchComponent: React.FC<{
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Grid container justifyContent={'center'} spacing={2}>
-        <Grid xs={3} item>
-          {' '}
-          <InputLabel htmlFor="Name">Name</InputLabel>
+    <Box
+      component="form"
+      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+    >
+      <SearchBoxWrapper>
+        <Grid container justifyContent={'center'} spacing={2}>
+          <Grid xs={3} item>
+            {' '}
+            <InputLabel htmlFor="Name">Name</InputLabel>
+          </Grid>
+          <Grid xs={9} item>
+            {' '}
+            <TextField
+              variant="outlined"
+              name="name"
+              placeholder="Ex. Dustin Max"
+              value={searchCriteria.name}
+              onChange={handleInputChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" color="primary">
+                      <SVGUser />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid xs={3} item>
+            {' '}
+            <InputLabel htmlFor="Country">Country</InputLabel>
+          </Grid>
+          <Grid xs={9} item>
+            {' '}
+            <TextField
+              variant="outlined"
+              name="country"
+              placeholder="Ex. Canada"
+              value={searchCriteria.country}
+              onChange={handleInputChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" color="primary">
+                      <FlagOutlined />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid xs={3} item>
+            {' '}
+            <InputLabel htmlFor="Skill">Skill</InputLabel>
+          </Grid>
+          <Grid xs={9} item>
+            <TextField
+              variant="outlined"
+              name="skill"
+              placeholder="Type skill and press enter"
+              value={searchCriteria.skill}
+              onChange={handleInputChange}
+              onKeyUp={handleSkillKeyPress}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" color="primary">
+                      <DailyTaskIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {searchCriteria.skills.map((skill, index) => (
+              <StyledChip
+                deleteIcon={<CloseIcon fontSize="small" />}
+                onDelete={() => handleDeleteSkill(skill)}
+                key={index}
+                label={skill}
+              />
+            ))}
+          </Grid>
+          <Grid xs={3} item>
+            {' '}
+            &nbsp;
+          </Grid>
+          <Grid xs={9} item>
+            {' '}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="professionalExperience"
+                  checked={searchCriteria.professionalExperience}
+                  onChange={handleInputChange}
+                />
+              }
+              label="Only with professional experience"
+            />
+          </Grid>
+          <Grid xs={3} item>
+            {' '}
+            &nbsp;
+          </Grid>
+          <Grid xs={9} item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => onSearch(searchCriteria)}
+              sx={{ width: '100%' }}
+              disabled={
+                Object.values(searchCriteria).every(
+                  v =>
+                    v === false ||
+                    v === '' ||
+                    v === null ||
+                    v === undefined ||
+                    (Array.isArray(v) && v.length === 0)
+                ) || isLoading
+              }
+            >
+              Search
+            </Button>
+          </Grid>
         </Grid>
-        <Grid xs={9} item>
-          {' '}
-          <TextField variant="outlined" name="name" placeholder="Ex. Dustin Max" value={searchCriteria.name} onChange={handleInputChange} />
-        </Grid>
-        <Grid xs={3} item>
-          {' '}
-          <InputLabel htmlFor="Country">Country</InputLabel>
-        </Grid>
-        <Grid xs={9} item>
-          {' '}
-          <TextField
-            variant="outlined"
-            name="country"
-            placeholder="Ex. Canada"
-            value={searchCriteria.country}
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid xs={3} item>
-          {' '}
-          <InputLabel htmlFor="Skill">Skill</InputLabel>
-        </Grid>
-        <Grid xs={9} item>
-          <TextField
-            variant="outlined"
-            name="skill"
-            placeholder="Type skill and press enter"
-            value={searchCriteria.skill}
-            onChange={handleInputChange}
-            onKeyUp={handleSkillKeyPress}
-          />
-          {searchCriteria.skills.map((skill, index) => (
-            <StyledChip deleteIcon={<CloseIcon fontSize="small" />} onDelete={() => handleDeleteSkill(skill)} key={index} label={skill} />
-          ))}
-        </Grid>
-        <Grid xs={3} item>
-          {' '}
-          &nbsp;
-        </Grid>
-        <Grid xs={9} item>
-          {' '}
-          <FormControlLabel
-            control={
-              <Checkbox name="professionalExperience" checked={searchCriteria.professionalExperience} onChange={handleInputChange} />
-            }
-            label="Only with professional experience"
-          />
-        </Grid>
-        <Grid xs={3} item>
-          {' '}
-          &nbsp;
-        </Grid>
-        <Grid xs={9} item>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => onSearch(searchCriteria)}
-            sx={{ width: '100%' }}
-            disabled={Object.values(searchCriteria).every(
-              v => v === false || v === '' || v === null || v === undefined || (Array.isArray(v) && v.length === 0)
-            )}
-          >
-            Search
-          </Button>
-        </Grid>
-      </Grid>
+      </SearchBoxWrapper>
     </Box>
   );
 };
 
 // Main Component that uses SearchComponent and ProfileCard with TypeScript
 const MainComponent: React.FC = () => {
-  const { data = [], isLoading, error, fetchData } = useQuery<[]>(ApiEndpoint.SearchPeople);
+  const { data, isLoading, error, fetchData } = useQuery<{
+    value: {
+      data: UserProfilesResponse;
+    };
+  }>(ApiEndpoint.SearchPeople);
 
   const handleSearch = (criteria: SearchCriteria) => {
     fetchData({
       method: 'POST',
-      data: { ...criteria, experienced: criteria.professionalExperience },
+      data: {
+        name: criteria.name,
+        skills: criteria.skills,
+        page: 0,
+        country: criteria.country,
+        experienced: criteria.professionalExperience,
+      },
     });
   };
-
+  const result = data?.value.data ?? ({} as UserProfilesResponse);
   return (
-    <Box>
+    <Box mt={5}>
       <Paper
         sx={{
           padding: '16px',
@@ -179,11 +274,16 @@ const MainComponent: React.FC = () => {
         }}
         elevation={0}
       >
-        <SearchComponent onSearch={handleSearch} />
+        <SearchComponent isLoading={isLoading} onSearch={handleSearch} />
       </Paper>
       {error && <Typography color="error">{error}</Typography>}
-      {!error && !isLoading && <Typography color="success">{`Found ${data?.length ?? 0} results`}</Typography>}
-      <SearchResultItems results={[]} isLoading={isLoading} />
+      {isLoading && <Typography color="info">Searching...</Typography>}
+      {!error && !isLoading && (
+        <Typography color="success">{`Found ${
+          result?.total ?? 0
+        } results`}</Typography>
+      )}
+      <SearchResultItems results={result?.result ?? []} isLoading={isLoading} />
     </Box>
   );
 };

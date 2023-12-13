@@ -11,7 +11,7 @@ interface Posts {
 const initialState: Posts = {
   postData: [],
   allPostRecived: true,
-}
+};
 
 interface PostDetail {
   pageNumber: number;
@@ -50,33 +50,59 @@ export interface PostDetailResult {
   author: Author;
   id: string;
   lastComment: string;
-  post: Post
+  post: Post;
 }
 
+type PostListByUserArgs = {
+  username: string;
+  pageNumber: string;
+  postCreatedDate: string;
+};
 
 export const postServices = createApi({
   reducerPath: 'postsReducer',
   baseQuery: baseQuery,
   endpoints: builder => ({
     getPostDetail: builder.query<PostDetailResult, string>({
-      query: (id) => `${ApiEndpoint.GetPosts}/post/${id}`,
+      query: id => `${ApiEndpoint.GetPosts}/post/${id}`,
       transformResponse: (response: any) => response?.value?.data,
       providesTags: ['postDetail'],
+    }),
+    getPostListByUser: builder.query<PostDetailResult[], PostListByUserArgs>({
+      query: ({ pageNumber, postCreatedDate, username }) => {
+        const apiEndPoint = ApiEndpoint.GetPosts + `/${username}`;
+        if (!pageNumber) {
+          return apiEndPoint;
+        }
+        return `${apiEndPoint}?page=${pageNumber}&postCreatedDate=${postCreatedDate}`;
+      },
+      providesTags: result =>
+        // is result available?
+        result
+          ? // successful query
+            [
+              ...result.map(({ id }: any) => ({ type: 'Posts' as const, id })),
+              { type: 'Posts', id: 'LIST' },
+            ]
+          : // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
+            [{ type: 'Posts', id: 'LIST' }],
+
+      transformResponse: (response: any) => response?.value?.data || [],
     }),
     getPosts: builder.query<PostDetailResult[], PostDetail>({
       query: ({ pageNumber, postCreatedDate }) => {
         const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {
           return apiEndPoint;
-        } 
+        }
         return `${apiEndPoint}?page=${pageNumber}&postCreatedDate=${postCreatedDate}`;
       },
-      providesTags:(result) =>
+      providesTags: result =>
         // is result available?
         result
           ? // successful query
             [
-              ...result.map(({ id }:any) => ({ type: 'Posts' as const, id })),
+              ...result.map(({ id }: any) => ({ type: 'Posts' as const, id })),
               { type: 'Posts', id: 'LIST' },
             ]
           : // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
@@ -112,15 +138,14 @@ export const postServices = createApi({
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
     deletePost: builder.mutation<any, string>({
-      query: (id) =>({
+      query: id => ({
         url: `${ApiEndpoint.DeletePost}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
-    })
+    }),
   }),
-  tagTypes: ['Posts', 'postDetail'],
-  
+  tagTypes: ['Posts', 'postDetail', 'UserPostList'],
 });
 
 export const {
@@ -128,4 +153,5 @@ export const {
   useGetPostDetailQuery,
   useCreatePostMutation,
   useDeletePostMutation,
+  useGetPostListByUserQuery,
 } = postServices;

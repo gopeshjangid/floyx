@@ -2,73 +2,81 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import { styled } from '@mui/material/styles';
-import CustomizedMenus from "../CustomizedButton";
+import CustomizedMenus from '../CustomizedButton';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import { useRouter } from 'next/navigation';
 
+const TOP_BAR = [
+  {
+    text: 'Articles/Blog',
+    icon: <DescriptionOutlinedIcon />,
+    visible: true,
+    link: '/articles',
+  },
+  {
+    text: 'Video/Live Streams',
+    icon: <VideocamIcon />,
+    visible: true,
+    link: '/article',
+  },
+  {
+    text: 'Group',
+    icon: <PeopleOutlinedIcon />,
+    visible: true,
+    link: '/article',
+  },
+  {
+    data: [
+      {
+        text: 'Crypto',
+        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
+        visible: true,
+        link: '/crypto',
+      },
+      {
+        text: 'AirDrop',
+        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
+        visible: true,
+        link: '/airdrop',
+      },
+      {
+        text: 'Search',
+        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
+        visible: true,
+        link: '/search',
+      },
+    ],
+    visible: true,
+  },
+];
+
 export default function Header() {
   const router = useRouter();
-
+  const { palette } = useTheme();
   const HeaderSection = styled(Box)(() => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    overflowY: 'hidden',
+    overflowY: 'auto',
+    '&::-webkit-scrollbar': {
+      width: '.5rem',
+      backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+      borderRadius: '10px',
+    },
+    scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.1)',
   }));
 
-  const TOP_BAR = [
-    {
-      text: 'Articles/Blog',
-      icon: <DescriptionOutlinedIcon />,
-      visible: true,
-      link: '/articles',
-    },
-    {
-      text: 'Video/Live Streams',
-      icon: <VideocamIcon />,
-      visible: true,
-      link: '/article',
-    },
-    {
-      text: 'Group',
-      icon: <PeopleOutlinedIcon />,
-      visible: true,
-      link: '/article',
-    },
-    {
-      data: [
-        {
-          text: 'Crypto',
-          icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-          visible: true,
-          link: '/crypto',
-        },
-        {
-          text: 'AirDrop',
-          icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-          visible: true,
-          link: '/airdrop',
-        },
-        {
-          text: 'Search',
-          icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-          visible: true,
-          link: '/search',
-        },
-      ],
-      visible: true,
-    },
-  ];
-
   const handleClick = (link: string | undefined) => {
-    if(link)
-      router.push(link)
-  }
+    if (link) router.push(link);
+  };
 
   return (
     <HeaderSection>
@@ -80,7 +88,16 @@ export default function Header() {
                 variant="outlined"
                 onClick={() => handleClick(val?.link)}
                 startIcon={val.icon}
-                sx={ { marginRight: 1, padding: '5px 10px', whiteSpace: "nowrap", alignItems: 'center'}}
+                sx={{
+                  marginRight: 1,
+                  padding: '5px 10px',
+                  whiteSpace: 'nowrap',
+                  alignItems: 'center',
+                  color: palette.text.primary,
+                  borderColor: palette.primary.boxBorder,
+                  fontWeight: 500,
+                  fontSize: '15px',
+                }}
               >
                 {val.text}
               </Button>

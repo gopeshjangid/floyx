@@ -65,6 +65,17 @@ type InviteHistoryResponse = {
   total: number;
 };
 
+export type DailyTaskType = {
+  canGetReward: boolean;
+  dailyTaskId: string;
+  isCompleted: boolean;
+  taskAddedAt: string;
+  taskDescription: string;
+  taskReward: number;
+  taskStatus: string;
+  userid: string;
+};
+
 type BonusTaskStatusResponse = Task[];
 type ReferralStatusResponse = ReferralHistory[];
 type TipHistoryTypeResponse = TipHistoryType[];
@@ -109,11 +120,17 @@ export const earningsService = createApi({
         response: ApiResponse<CompletedHistoryTypeResponse>
       ) => response?.value.data,
     }),
+    getDailyTaskList: builder.query<DailyTaskType[], void>({
+      query: () => ApiEndpoint.DailyTaskStatus,
+      transformResponse: (response: ApiResponse<DailyTaskType[]>) =>
+        response?.value.data,
+      providesTags: ['dailTaskList'],
+    }),
 
     // Add other endpoints if needed
   }),
   // Enable caching, invalidation, and other features
-  tagTypes: ['TransactionHistory'],
+  tagTypes: ['TransactionHistory', 'dailTaskList'],
 });
 
 export const {
@@ -125,4 +142,5 @@ export const {
   useGetBonusTaskStatusQuery,
   useGetCompletedTaskHistoryQuery,
   useGetInviteHistoryQuery,
+  useGetDailyTaskListQuery,
 } = earningsService;

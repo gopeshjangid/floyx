@@ -9,12 +9,12 @@ const PopularTodaySection = styled(Box)(() => ({
   marginTop: '1rem',
 }));
 
-const PopularTodayListSection = styled(Container)(() => ({
-  border: '1px solid ',
+const PopularTodayListSection = styled(Container)(({ theme }) => ({
+  border: `1px solid ${theme.palette.primary.boxBorder}`,
   borderRadius: '10px',
   marginTop: '25px',
-  maxHeight: '200px',
-  overflowY: 'scroll',
+  maxHeight: '35vh',
+  overflowY: 'auto',
   '& .box': {
     marginTop: '10px',
     '& .boxdata': {

@@ -22,6 +22,8 @@ import {
   Toolbar,
   ListItemIcon,
   ListItemSecondaryAction,
+  styled,
+  Button,
 } from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
@@ -38,57 +40,36 @@ import { notificationService } from '@/lib/services/new/notificationService';
 import { messageService } from '@/lib/services/new/messageService';
 import { FLOYX_USERNAME } from '@/constants';
 import { INotification } from './notifications/types';
+import CustomPopover from '@/components/PopoverOptions';
+import LogoutIcon from '@/iconComponents/logOut';
+import SettingsIcon from '@/iconComponents/settingsIcon';
+import { AddCircle } from '@mui/icons-material';
+import { GradientText } from '@/components/usernameLink';
+import SidebarProfileBar from '@/components/sidebarProfileInfo';
 
 const drawerWidth = 240;
-const navItems = [
-  {
-    label: 'Home',
-    href: '/',
-    icon: (fill: string) => <HomeIcon stroke={fill} />,
+
+const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
+  '&:hover': {
+    background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
+    color:
+      theme.palette.mode === 'light'
+        ? theme.palette.common.black
+        : theme.palette.common.white,
+    '.MuiListItemIcon-root': {
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.common.white
+          : theme.palette.common.black,
+    },
+    '.MuiListItemText-primary': {
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.common.white
+          : theme.palette.common.black,
+    },
   },
-  {
-    label: 'Notifications',
-    href: '/notifications',
-    icon: (fill: string) => <NotificationIcon stroke={fill} />,
-  },
-  {
-    label: 'Messages',
-    href: '/inbox',
-    icon: (fill: string) => <MessageIcon stroke={fill} />,
-  },
-  {
-    label: 'Articles',
-    href: '/articles',
-  },
-  {
-    label: 'Search',
-    href: '/people',
-    icon: (fill: string) => <SearchIcon stroke={fill} />,
-  },
-  {
-    label: 'Wallet',
-    href: '/earnings',
-    icon: (fill: string) => <WalletIcon stroke={fill} />,
-  },
-  {
-    label: 'Profile',
-    href: '/profile',
-    icon: (fill: string) => <ProfileIcon stroke={fill} />,
-  },
-  {
-    label: 'Settings',
-    href: '/settings/account',
-  },
-  {
-    label: 'More',
-    href: '/more',
-    icon: (fill: string) => <MoreIcon fill={fill} />,
-  },
-  {
-    label: 'Logout',
-    href: '/api/auth/signout',
-  },
-];
+}));
 
 const CountWrapper = ({ count }: { count: number }) => (
   <Box
@@ -132,6 +113,69 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navItems = [
+    {
+      label: 'Home',
+      href: '/',
+      icon: (fill: string) => <HomeIcon stroke={fill} />,
+    },
+    {
+      label: 'Notifications',
+      href: '/notifications',
+      icon: (fill: string) => <NotificationIcon stroke={fill} />,
+    },
+    {
+      label: 'Messages',
+      href: '/inbox',
+      icon: (fill: string) => <MessageIcon stroke={fill} />,
+    },
+    {
+      label: 'Search',
+      href: '/people',
+      icon: (fill: string) => <SearchIcon stroke={fill} />,
+    },
+    {
+      label: 'Wallet',
+      href: '/earnings',
+      icon: (fill: string) => <WalletIcon stroke={fill} />,
+    },
+    {
+      label: 'Profile',
+      href: '/profile',
+      icon: (fill: string) => <ProfileIcon stroke={fill} />,
+    },
+    {
+      label: 'More',
+      href: '',
+      icon: (fill: string) => (
+        <CustomPopover
+          actionOriginIcon={<MoreIcon fill={fill} />}
+          options={[
+            {
+              label: 'Settings',
+              startIcon: <SettingsIcon />,
+              onClick: () => router.push(`/settings/account`),
+            },
+            {
+              label: 'Logout',
+              startIcon: <LogoutIcon />,
+              onClick: () => router.push(`/api/auth/signout`),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      label: '',
+      href: '/profile',
+      icon: (fill: string) => (
+        <Button variant="outlined" startIcon={<AddCircle />}>
+          <GradientText>Write Post</GradientText>{' '}
+        </Button>
+      ),
+    },
+  ];
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
   };
@@ -197,7 +241,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       </Box>
       <List>
         {navItems.map((item, index) => (
-          <ListItemButton
+          <CustomListItemButton
             key={index}
             LinkComponent={Link}
             href={
@@ -218,7 +262,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 <CountWrapper count={drawerData.messagesCount} />
               ) : null}
             </ListItemSecondaryAction>
-          </ListItemButton>
+          </CustomListItemButton>
         ))}
 
         <ListItem>
@@ -290,12 +334,15 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 borderWidth: 0,
                 position: 'relative',
                 boxSizing: 'border-box',
-                width: drawerWidth,
+                width: drawerWidth + 30,
                 background: theme.palette.background.default,
               },
             }}
           >
             {drawer}
+            <Box pl={2}>
+              <SidebarProfileBar />
+            </Box>
           </Drawer>
         )}
         {!isMobile ? (
@@ -304,7 +351,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               <Paper
                 elevation={0}
                 sx={{
-                  height: '100vh',
+                  height: '100%',
                   width: '100%',
                   paddingTop: 1,
                   pl: 1,
@@ -312,6 +359,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 }}
               >
                 {drawer}
+                <SidebarProfileBar />
               </Paper>
             </Grid>
             <Grid item sm={9} md={9} lg={10}>
