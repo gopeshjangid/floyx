@@ -27,6 +27,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             900: '#fff',
             boxBorder: 'rgba(231, 240, 252, 1)',
             boxBackground: '#fff',
+            iconFontColor: '#fff',
           },
           secondary: {
             main: '#ADB3C6', // Text Guide
@@ -78,6 +79,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             900: '#fff',
             boxBorder: 'rgba(255, 255, 255, 0.15)',
             boxBackground: '#0B081F',
+            iconFontColor: '#0B081F',
           },
           secondary: {
             main: '#A75FFF', // Primary Purple
@@ -210,17 +212,6 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       },
     },
     components: {
-      MuiCssBaseline: {
-        styleOverrides: `
-        * {
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-          &::-webkit-scrollbar {
-            display: none;
-          }
-        }
-      `,
-      },
       MuiLink: {
         styleOverrides: {
           root: {
@@ -287,12 +278,15 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       //   },
       // },
       MuiCssBaseline: {
-        styleOverrides: {
-          body: {
-            margin: 0,
-            padding: 0,
-          },
-        },
+        styleOverrides: `
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      `,
       },
       MuiTabs: {
         styleOverrides: {

@@ -45,10 +45,12 @@ export const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const token = getCookie(
       'FLOYX_TOKEN',
-      isServer() ? getState()?.req : undefined
+      isServer() ? getState()?.req : getCookie('FLOYX_TOKEN')
     );
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
+    } else {
+      router.push('/login');
     }
     return headers;
   },

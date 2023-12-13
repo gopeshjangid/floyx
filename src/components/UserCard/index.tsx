@@ -44,8 +44,8 @@ export default function UserCard({
           sx={{ width: '50px', height: '50px' }}
         />
       </Box>
-      <Box display="flex" justifyContent="space-between" width="100%">
-        <Box display="flex" flexDirection="column" width="100%">
+      <Box justifyContent="space-between" width="100%">
+        <Box gap={1} display="flex" width="100%">
           <Typography
             variant="subtitle1"
             component={'span'}

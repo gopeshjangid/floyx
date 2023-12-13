@@ -126,7 +126,7 @@ const InvitationStatusCard = () => {
         margin: 'auto',
       }}
     >
-      {showHistory && (
+      {showHistory && data && (
         <CustomDialog
           content={
             <Stack gap={2}>
@@ -150,7 +150,7 @@ const InvitationStatusCard = () => {
             </Stack>
           }
           open
-          title="Inviation History"
+          title="Invitation History"
           actions={
             <Button onClick={() => setShowHistory(false)} variant="outlined">
               Close
