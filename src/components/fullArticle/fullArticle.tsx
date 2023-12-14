@@ -12,6 +12,7 @@ import {
   useGetArticleTotalEarningsQuery,
   useGetFollowStatusMutation,
 } from '@/lib/redux/slices/articleDetails';
+import Image from 'next/image';
 
 export default function FullArticle({ details }: any) {
   const CONTENT =
@@ -165,7 +166,14 @@ export default function FullArticle({ details }: any) {
         </Grid>
       </Box>
       <Box sx={{ marginTop: '20px' }}>
-        <img src={details?.article?.coverPhotoPath} width={'100%'} />
+        <Image
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: '100%', height: '100%' }}
+          src={details?.article?.coverPhotoPath}
+          alt="thumbnail"
+        />
       </Box>
       <Box sx={{ marginTop: '20px', wordWrap: 'break-word' }}>
         {CONTENT &&

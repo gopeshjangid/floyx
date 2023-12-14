@@ -158,6 +158,14 @@ export default function AuthorCoulmn({ details }: any) {
               <Box sx={{ display: 'flex', border: '1px solid white', borderRadius: '10px', padding: '15px 10px' }}>
                 <Box sx={{ marginRight: '15px' }}>
                   <img src={val?.thumbnail} width={60} height={60} />
+                  <Image
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: '100%', height: '100%' }}
+              src={val?.thumbnail}
+              alt="thumbnail"
+            />
                 </Box>
                 <Box>
                   <Box>

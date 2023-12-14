@@ -22,6 +22,7 @@ import {
 } from '@/lib/redux/slices/articleDetails';
 import Comment from "../CommentLists";
 import { allRoutes } from "@/constants/allRoutes";
+import Image from 'next/image';
 
 const style = {
   position: 'absolute',
@@ -86,16 +87,20 @@ export default function LikesComments({
   const handlePublish = async () => {
     const result:any = await checkIsShared(itemId);
     const status: boolean = result?.data;
+    const payload = {
+      content: commentText,
+    };
     if (status) {
       toast.error('This article has already been shared');
+    } else {
+      await publishArticle({ articleId: itemId, status, payload });
+      toast.success('Article is Published Succesfully ');
     }
-    const payload = {
-      content: '',
-    };
-    await publishArticle({ articleId: itemId, status, payload });
-    toast.success('Article is Published Succesfully ');
+    setCommentText('')
     setAnchorEl(null);
   };
+
+  
   const likeType = () => {
     if (isPost) {
       return 'PostLike';
@@ -209,11 +214,18 @@ export default function LikesComments({
               setCommentText={setCommentText}
             />
           </Box>
-          <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
-            <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
+          <Box sx={{ padding: '10px', marginTop:'10%' }}>
+            <Image
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: '100%', height: '100%' }}
+              src={likesCommentsDetails?.coverPhotoPath}
+              alt="thumbnail"
+            />
           </Box>
-          <Box sx={{ padding: '10px' }}>
-            <img src={likesCommentsDetails?.coverPhotoPath} width={'100%'} />
+          <Box sx={{ padding: '10px', paddingTop:'1px',textTransform: 'capitalize' }}>
+            <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
           </Box>
           <Divider />
           <Box
