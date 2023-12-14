@@ -54,6 +54,13 @@ export type AboutType = {
   listOfLocations: null | any[]; // Replace 'any' with more specific type if available
 };
 
+export type ProfileInfoType = {
+  avatar: object | null; // Assuming 'avatar' is an object, you might want to define a more specific type if possible
+  backgroundImage: Blob | null; // 'binary' often refers to a Blob type in the context of file data
+  shortDescription: string;
+  deleteAvatar: boolean;
+};
+
 type ProfileDetails = {
   accountType: number;
   avatar: string;
@@ -218,6 +225,16 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout'],
     }),
+    updateProfileDetail: builder.mutation<boolean, any>({
+      query: profileDetail => ({
+        url: `${ApiEndpoint.ProfileDetails}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+        body: profileDetail,
+      }),
+      transformResponse: (response: ApiResponse<boolean>) =>
+        response.value.data,
+      invalidatesTags: ['profileDetails'],
+    }),
     addReportUser: builder.mutation<ReportUser, Partial<ReportUser>>({
       query: profileAbout => ({
         url: `${ApiEndpoint.ReportUser}`, // Assuming `id` is part of investmentData
@@ -299,4 +316,5 @@ export const {
   useBlockUserMutation,
   useFollowUserMutation,
   useAddReportArticleMutation,
+  useUpdateProfileDetailMutation,
 } = profileService;

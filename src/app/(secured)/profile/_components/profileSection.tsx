@@ -10,11 +10,11 @@ import {
   useMediaQuery,
   Paper,
   useTheme,
-  Chip,
   Skeleton,
   Avatar,
   Button,
   BoxProps,
+  LinearProgress,
 } from '@mui/material';
 import {
   BorderColorOutlined,
@@ -22,10 +22,12 @@ import {
   LocationOn,
 } from '@mui/icons-material';
 import {
+  ProfileInfoType,
   useFollowUserMutation,
   //useGetCurrentProfileDetailsQuery,
   useGetProfileAboutQuery,
   useGetProfileDetailsQuery,
+  useUpdateProfileDetailMutation,
 } from '@/lib/redux/slices/profile';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -39,9 +41,12 @@ import { useToast } from '@/components/Toast/useToast';
 import CustomLoadingButton from '@/components/LoadingButton';
 import { useSession } from 'next-auth/react';
 import CustomChip from '@/components/CustomGridientChip';
+import ImageUploader from '@/components/imageUploader';
+import TextareaAutosize from '@/components/CustomTextArea';
 
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
+  top?: string;
 }
 
 const ProfileFollowerWrapper = styled(Box)<ProfileFollowerWrapperProps>(
@@ -51,12 +56,42 @@ const ProfileFollowerWrapper = styled(Box)<ProfileFollowerWrapperProps>(
     padding: 1,
     color: theme.palette.common.white,
     position: 'absolute',
-    bottom: props.isMobile ? '' : '20px',
+    bottom: 'unset',
+    top: props.top,
     right: '16px',
     borderRadius: '10px',
     overflow: 'hidden',
+    border: '1px solid rgba(255, 255, 255, 0.18)',
+    backgroundColor: 'rgba(11, 8, 31, 0.38)',
   })
 );
+
+const ProfileCoverUploader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: 1,
+  color: theme.palette.primary.iconFontColor,
+  position: 'absolute',
+  top: '50%',
+  right: '50%',
+  borderRadius: '10px',
+  overflow: 'hidden',
+  background: theme.palette.primary.main,
+}));
+
+const ProfilePicUploader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: 1,
+  color: theme.palette.primary.iconFontColor,
+  position: 'absolute',
+  top: '52%',
+  right: '19%',
+  borderRadius: '10px',
+  overflow: 'hidden',
+  zIndex: 9999,
+  background: theme.palette.primary.main,
+}));
 
 const ProfileCover = styled(Box)<ProfileFollowerWrapperProps>(() => ({
   height: '280px',
@@ -142,7 +177,18 @@ const OtherUserProfileActions: React.FC<{ username: string }> = ({
 // Example usage of the styled components
 const ProfileSection: React.FC = () => {
   const params = useParams();
-
+  const toast = useToast();
+  const [isEdit, setIsEdit] = React.useState(false);
+  const [form, setForm] = React.useState<Partial<ProfileInfoType>>({
+    avatar: null, // Assuming 'avatar' is an object, you might want to define a more specific type if possible
+    backgroundImage: null, // 'binary' often refers to a Blob type in the context of file data
+    shortDescription: '',
+    deleteAvatar: false,
+  });
+  const [imagePreview, setImagePreview] = React.useState({
+    cover: null,
+    profile: null,
+  });
   const username = Array.isArray(params?.username)
     ? params?.username[0] ?? ''
     : params?.username || '';
@@ -155,22 +201,66 @@ const ProfileSection: React.FC = () => {
       skip: !username,
     }
   );
-  // const {
-  //   data: currentProfile,
-  //   isLoading: currnetProfileLoading,
-  //   error: currentProfileError,
-  // } = useGetCurrentProfileDetailsQuery();
+  const [
+    updateProfile,
+    { isLoading: isUpdating, isSuccess: isUpdated, isError: updateError },
+  ] = useUpdateProfileDetailMutation();
+
+  const onCoverUploaded = data => {
+    setForm(form => ({ ...form, backgroundImage: data }));
+  };
+
+  const getCoverPreviewData = data => {
+    setImagePreview(preview => ({ ...preview, cover: data }));
+  };
+
+  React.useEffect(() => {
+    if (isUpdated) {
+      toast.success('Profile updated!');
+      setIsEdit(false);
+    }
+
+    if (updateError) {
+      toast.error('Error occured in profile updating!');
+    }
+  }, [isUpdated, updateError]);
+
+  React.useEffect(() => {
+    if (profile) {
+      setForm(form => ({
+        ...form,
+        shortDescription: profile.shortDescription,
+      }));
+    }
+  }, [profile]);
+
+  const onProfileUploaded = data => {
+    setForm(form => ({ ...form, avatar: data }));
+  };
+
+  const getProfilePreviewData = data => {
+    setImagePreview(preview => ({ ...preview, profile: data }));
+  };
   const { data: profileAbout, isLoading: aboutLoading } =
     useGetProfileAboutQuery({ username: username! });
   const { palette } = useTheme();
 
+  const onUpdateSubmit = () => {
+    const formData = new FormData();
+    formData.append('avatar', form.avatar ? (form.avatar as any) : '');
+    if (form.backgroundImage) {
+      formData.append('backgroundImage', form.backgroundImage);
+    }
+    formData.append('shortDescription', String(form.shortDescription));
+    formData.append('deleteAvatar', Boolean(form.deleteAvatar) as any); // Convert boolean to string
+    formData.append('deleteBgImage', Boolean('') as any); // Convert boolean to string
+    updateProfile(formData);
+  };
+
   return (
     <Box mt={4}>
-      <Box my={2} display="flex" alignItems="center">
-        <IconButton>
-          <ChevronLeft color="secondary" />
-        </IconButton>
-        <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
+      <Box my={2}>
+        <Stack direction="row" flexWrap={'wrap'}>
           {isLoading ? (
             <Skeleton
               variant="rectangular"
@@ -178,10 +268,39 @@ const ProfileSection: React.FC = () => {
             />
           ) : (
             <>
-              <Typography variant="body2" color="textPrimary">
-                {profile?.name}
-              </Typography>
-              <UsernameLink username={profile?.username ?? ''} />
+              {!isEdit && (
+                <Stack direction="row" gap={1} alignItems={'center'}>
+                  <IconButton sx={{ marginBottom: '4px' }}>
+                    <ChevronLeft fontSize="medium" color="secondary" />
+                  </IconButton>
+                  <Typography variant="body2" color="textPrimary">
+                    {profile?.name}
+                  </Typography>
+                  <UsernameLink username={profile?.username ?? ''} />
+                </Stack>
+              )}
+              {isEdit && (
+                <Stack
+                  width={'100%'}
+                  direction="row"
+                  gap={2}
+                  justifyContent={'space-between'}
+                >
+                  <Typography>Edit Profile</Typography>
+                  <Stack direction="row" gap={1}>
+                    <Button
+                      disabled={isUpdating}
+                      onClick={onUpdateSubmit}
+                      variant="contained"
+                    >
+                      Save changes
+                    </Button>
+                    <Button onClick={() => setIsEdit(false)} variant="text">
+                      Cancel
+                    </Button>
+                  </Stack>
+                </Stack>
+              )}
             </>
           )}
         </Stack>
@@ -194,6 +313,11 @@ const ProfileSection: React.FC = () => {
           border: `1px solid ${palette.primary.boxBorder}`,
         }}
       >
+        {isUpdating && (
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
+        )}
         <ProfileCover isMobile={isMobile}>
           {isLoading && !profile ? (
             <Skeleton
@@ -218,7 +342,11 @@ const ProfileSection: React.FC = () => {
                     layout="fill"
                     objectFit="cover"
                     objectPosition="center"
-                    src={profile?.backgroundImage}
+                    src={
+                      isEdit && imagePreview.cover
+                        ? imagePreview.cover
+                        : profile?.backgroundImage
+                    }
                   />
                 ) : (
                   <Skeleton
@@ -228,25 +356,46 @@ const ProfileSection: React.FC = () => {
                   />
                 )}
               </React.Suspense>
-              <ProfileFollowerWrapper
-                isMobile={isMobile}
-                sx={{ top: '16px', right: '16px' }}
-              >
-                <Box display="flex" p={1} gap={1} bgcolor="#0B081F">
-                  <Button startIcon={<BorderColorOutlined fontSize="small" />}>
-                    Edit Profile
-                  </Button>
-                </Box>
-              </ProfileFollowerWrapper>
-              <ProfileFollowerWrapper isMobile={isMobile}>
-                <Box display="flex" p={1} gap={1} bgcolor="#0B081F">
-                  <Typography variant="subtitle1">Following</Typography>
-                  <Typography variant="subtitle1" color="primary">
+              {isEdit && (
+                <ProfileCoverUploader>
+                  <ImageUploader
+                    onImageUpload={onCoverUploaded}
+                    getPreviewData={getCoverPreviewData}
+                  />
+                </ProfileCoverUploader>
+              )}
+              {!isEdit && (
+                <ProfileFollowerWrapper
+                  isMobile={isMobile}
+                  top="4%"
+                  sx={{ top: '16px', right: '16px' }}
+                >
+                  <Box display="flex" p={1} gap={1} bgcolor="#0B081F">
+                    <Button
+                      onClick={() => setIsEdit(true)}
+                      color="inherit"
+                      startIcon={<BorderColorOutlined fontSize="small" />}
+                    >
+                      Edit Profile
+                    </Button>
+                  </Box>
+                </ProfileFollowerWrapper>
+              )}
+              <ProfileFollowerWrapper top="70%" isMobile={isMobile}>
+                <Box
+                  display="flex"
+                  p={1}
+                  alignItems="center"
+                  gap={1}
+                  bgcolor="#0B081F"
+                >
+                  <Typography variant="subtitle2">Following</Typography>
+                  <Typography variant="subtitle2" color="primary">
                     {profile?.numberOfFollowing}
                   </Typography>
                   <Typography>|</Typography>
-                  <Typography variant="subtitle1">Followers</Typography>
-                  <Typography variant="subtitle1" color="primary">
+                  <Typography variant="subtitle2">Followers</Typography>
+                  <Typography variant="subtitle2" color="primary">
                     {profile?.numberOfFollowers}
                   </Typography>
                 </Box>
@@ -268,16 +417,30 @@ const ProfileSection: React.FC = () => {
               }}
             />
           ) : (
-            <Avatar
-              src={profile?.avatar}
-              sx={{
-                width: '92%',
-                height: '92%',
-                left: '3.5%',
-                top: '3%',
-                border: `3px solid ${palette.primary.main}`,
-              }}
-            />
+            <Box sx={{ position: 'relative', height: '100%', width: '100%' }}>
+              <Avatar
+                src={
+                  isEdit && imagePreview.profile
+                    ? imagePreview.profile
+                    : profile?.avatar
+                }
+                sx={{
+                  width: '92%',
+                  height: '92%',
+                  left: '3.5%',
+                  top: '3%',
+                  border: `3px solid ${palette.primary.main}`,
+                }}
+              />
+              {isEdit && (
+                <ProfilePicUploader>
+                  <ImageUploader
+                    onImageUpload={onProfileUploaded}
+                    getPreviewData={getProfilePreviewData}
+                  />
+                </ProfilePicUploader>
+              )}
+            </Box>
           )}
         </ProfilePic>
         {!isLoading && (
@@ -305,17 +468,31 @@ const ProfileSection: React.FC = () => {
             )}
           </Stack>
           <Box my={2}>
-            <Typography
-              textAlign="justify"
-              variant="subtitle2"
-              color="textPrimary"
-            >
-              {isLoading ? (
-                <Skeleton variant="rectangular" height="60px" />
-              ) : (
-                profile?.shortDescription
-              )}
-            </Typography>
+            {!isEdit ? (
+              <Typography
+                textAlign="justify"
+                variant="subtitle2"
+                color="textPrimary"
+              >
+                {isLoading ? (
+                  <Skeleton variant="rectangular" height="60px" />
+                ) : (
+                  profile?.shortDescription
+                )}
+              </Typography>
+            ) : (
+              <TextareaAutosize
+                onChange={event =>
+                  setForm(form => ({
+                    ...form,
+                    shortDescription: event.target.value,
+                  }))
+                }
+                placeholder="Enter short description..."
+                value={form.shortDescription}
+                minRows={2}
+              />
+            )}
           </Box>
           <Stack
             direction="row"

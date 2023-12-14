@@ -147,7 +147,7 @@ const PersonalInfo: React.FC = () => {
   React.useEffect(() => {
     if (aboutSuccess) {
       setIsEdit(false);
-      toast.success(`About info updated'}!`);
+      toast.success(`About info updated!`);
     }
   }, [aboutSuccess]);
 
@@ -224,6 +224,7 @@ const PersonalInfo: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('event: ', event);
     if (!validate()) return;
     updateAbout(formValues);
   };
@@ -285,6 +286,7 @@ const PersonalInfo: React.FC = () => {
                   sx={{ borderRadius: '29px' }}
                   startIcon={<BorderColorOutlined />}
                   variant="outlined"
+                  type="button"
                   onClick={() => setIsEdit(true)}
                 >
                   Edit Section
@@ -396,7 +398,6 @@ const PersonalInfo: React.FC = () => {
 };
 // Example usage of the styled components
 const AboutSection: React.FC = () => {
-  const [_value, setValue] = React.useState(0);
   const { palette } = useTheme();
   const isMobile = useMediaQuery('(max-width:480px)');
 
@@ -492,4 +493,4 @@ const AboutSection: React.FC = () => {
   );
 };
 
-export default AboutSection;
+export default React.memo(AboutSection);
