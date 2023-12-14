@@ -1,8 +1,18 @@
 'use client';
 import { useState } from 'react';
-import { Box, Container, Divider, Skeleton, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Container,
+  Divider,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
-import UserCard, { UserCardBox } from '../UserCard';
+import { UserCardBox } from '../UserCard';
+import UsernameLink from '../usernameLink';
 
 const FriendActivitySection = styled(Box)(() => ({
   marginLeft: '10px',
@@ -11,17 +21,10 @@ const FriendActivitySection = styled(Box)(() => ({
   padding: '0px',
 }));
 
-const FriendActivityMainSection = styled(Container)(({ theme }) => ({
+const UserBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
+  background: theme.palette.background.paper,
   borderRadius: '10px',
-  marginTop: '25px',
-  '& .card-button': {
-    padding: '10px 0px ',
-  },
-  '& .card': {
-    padding: '0px',
-    marginTop: '20px',
-  },
 }));
 
 const ACTIVITY_CARD = [
@@ -56,6 +59,7 @@ interface ActivityProps {
 const showEmptySkelton = ['', '', '', ''];
 
 export default function FriendsActivity() {
+  const theme = useTheme();
   const [friendActivity, setFriendActivity] = useState<ActivityProps[] | null>(
     null
   );
@@ -69,16 +73,21 @@ export default function FriendsActivity() {
   return (
     <FriendActivitySection>
       <Typography variant="body1">Newly Registered Users</Typography>
-      <FriendActivityMainSection>
+      <Box my={2}>
         {friendActivity ? (
-          friendActivity.map((card, index) => (
-            <Container className="card" key={`friendActivity${index}`}>
-              <Box>
-                <UserCard name={card.name} username={card.userName} />
-              </Box>
-              {!(index === friendActivity.length - 1) && <Divider />}
-            </Container>
-          ))
+          <Stack gap={1}>
+            {friendActivity.map((card, index) => (
+              <UserBox key={`friendActivity${index}`} p={1}>
+                <Stack direction={'row'} gap={1} py={1}>
+                  <Avatar />
+                  <Stack justifyContent={'center'}>
+                    <Typography variant="subtitle2">{card.name}</Typography>
+                    <UsernameLink variant="caption" username={card.userName} />
+                  </Stack>
+                </Stack>
+              </UserBox>
+            ))}
+          </Stack>
         ) : (
           <>
             {showEmptySkelton.map((val, index) => (
@@ -119,7 +128,7 @@ export default function FriendsActivity() {
             ))}
           </>
         )}
-      </FriendActivityMainSection>
+      </Box>
     </FriendActivitySection>
   );
 }

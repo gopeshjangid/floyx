@@ -58,9 +58,7 @@ export const baseQuery = fetchBaseQuery({
     if (response.status === 401) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
-      await signOut({ redirect: false });
-
-      // Redirect to the login page
+      await signOut({ redirect: true });
       router.push('/login');
       return;
     }

@@ -62,7 +62,7 @@ const ProfileFollowerWrapper = styled(Box)<ProfileFollowerWrapperProps>(
     borderRadius: '10px',
     overflow: 'hidden',
     border: '1px solid rgba(255, 255, 255, 0.18)',
-    background: '#0B081F',
+    backgroundColor: 'rgba(11, 8, 31, 0.38)',
   })
 );
 
