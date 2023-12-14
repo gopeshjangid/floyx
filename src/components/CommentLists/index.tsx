@@ -19,6 +19,16 @@ export default function Comment({ comment, inputRef, type, setCommentText }: any
     setCommentText(`@${(session as any)?.data?.user?.username}`);
     inputRef.current.focus();
   }
+  const addLinks = (content: any) => {
+    if (!content) {
+      return ''
+    }
+    const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm
+    const link = '<a href="/profile/$2">@$2</a>'
+    const urlRegex = /(https?:\/\/[^\s]+)/g
+    const urlLink = '<a href="$1" target="_blank">$1</a>'
+    return content.replace(urlRegex, urlLink).replace(profileRegex, link)
+  }
 
   return (
     <Box sx={{ display: 'flex', marginTop: '30px' }}>
@@ -29,7 +39,7 @@ export default function Comment({ comment, inputRef, type, setCommentText }: any
           sx={{ width: "50px", height: "50px" }}
         />
       </Box>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: '100%', marginLeft: '16px' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box>
             <Typography variant="subtitle1" component={'span'}>
@@ -42,7 +52,17 @@ export default function Comment({ comment, inputRef, type, setCommentText }: any
           {comment?.comment?.createdDateTime && <Box><DateParser date={comment?.comment?.createdDateTime}/></Box>}
         </Box>
         <Box sx={{ width: '100%', marginTop: '15px', border: '1px solid white', borderRadius: '10px', padding: '20px' }}>
-          <Typography>{comment?.comment?.content}</Typography>
+          {/* <Typography>{comment?.comment?.content}</Typography> */}
+          <pre
+            style={{
+              whiteSpace: 'pre-wrap',
+              fontFamily: 'inherit',
+              fontSize: '1em'
+            }}
+            dangerouslySetInnerHTML={{
+              __html: addLinks(comment?.comment?.content)
+            }}
+          />
         </Box>
         <Box sx={{ display: 'flex', margin: '20px 0px' }}>
           <Button

@@ -11,6 +11,7 @@ import {
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { useGetPopularAccountsToFollowQuery } from '@/lib/redux/slices/profile';
+import UsernameLink from '@/components/usernameLink';
 
 const StyledBox = ({ children }: any) => {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -67,13 +68,7 @@ const PopularAccountsList = () => {
                       >
                         {account?.name}
                       </Typography>
-                      <Typography
-                        textAlign={'justify'}
-                        variant="caption"
-                        color="secondary"
-                      >
-                        {'@' + account?.username}
-                      </Typography>
+                      <UsernameLink username={account?.username} />
                     </>
                   )
                 )}

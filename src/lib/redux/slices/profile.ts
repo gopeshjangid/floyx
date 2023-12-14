@@ -64,7 +64,7 @@ type ProfileDetails = {
   verified: boolean;
 };
 
-type Account = {
+export type Account = {
   name: string;
   username: string;
   avatar: string;
@@ -83,6 +83,8 @@ type Account = {
   numberOfMilestones: number;
   allowPrivateMassages: boolean;
 };
+
+export type UserDetailsType = Account;
 
 type AccountApiResponse = {
   total: number;

@@ -34,30 +34,7 @@ import {
 import { useToast } from '@/components/Toast/useToast';
 import TextareaAutosize from '@/components/CustomTextArea';
 import { useParams } from 'next/navigation';
-
-const StyledChip = styled(Chip)(({ theme }) => ({
-  borderRadius: '16px', // Adjust the border-radius for rounded corners
-  padding: theme.spacing(0.5, 1), // Use theme spacing for consistent padding
-  margin: theme.spacing(0.5), // Use theme spacing for consistent margins
-  backgroundColor:
-    theme.palette.mode === 'dark' ? 'rgba(87, 152, 255, 0.13)' : '#bbdefb', // Dark blue for dark mode, light blue for light mode
-  color:
-    theme.palette.mode === 'dark'
-      ? theme.palette.primary.main
-      : theme.palette.primary.main, // Lighter text for dark mode, dark text for light mode
-  '& .MuiChip-label': {
-    padding: theme.spacing(0, 1), // Use theme spacing inside the chip
-  },
-  '& .MuiChip-deleteIcon': {
-    color:
-      theme.palette.mode === 'dark'
-        ? theme.palette.primary.main
-        : theme.palette.primary.main, // Same as text color
-    '&:hover': {
-      color: theme.palette.mode === 'dark' ? '#fff' : '#546e7a', // Lighter on hover for dark mode, darker for light mode
-    },
-  },
-}));
+import CustomChip from '@/components/CustomGridientChip';
 
 type ActivityChipEditInfoProps = {
   label: string;
@@ -113,19 +90,21 @@ const ActivityChipEditInfo: React.FC<ActivityChipEditInfoProps> = ({
             onKeyUp={handleSkillKeyPress}
           />
         )}
-        {list.map((skill, index) => {
-          if (isEdit) {
-            return (
-              <StyledChip
-                onDelete={() => handleDeleteSkill(skill, activityKey)}
-                deleteIcon={<CloseIcon fontSize="small" />}
-                key={index}
-                label={skill}
-              />
-            );
-          }
-          return <StyledChip key={index} label={skill} />;
-        })}
+        <Stack direction="row" gap={1}>
+          {list.map((skill, index) => {
+            if (isEdit) {
+              return (
+                <CustomChip
+                  onDelete={() => handleDeleteSkill(skill, activityKey)}
+                  deleteIcon={<CloseIcon fontSize="small" />}
+                  key={index}
+                  label={skill}
+                />
+              );
+            }
+            return <CustomChip key={index} label={skill} />;
+          })}
+        </Stack>
       </Grid>
     </>
   );

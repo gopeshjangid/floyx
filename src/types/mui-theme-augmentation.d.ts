@@ -11,7 +11,7 @@ declare module '@mui/material/styles' {
     700?: string;
     800?: string;
     900?: string;
-
+    boxBorder: string;
     // Add other custom properties as needed
   }
 

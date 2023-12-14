@@ -32,7 +32,7 @@ const ArticleContent = styled(Box)(({ theme }) => ({
   '& .details': {
     width: '70%',
     padding: '18px',
-    border: `1px solid ${theme.palette.text.disabled}`,
+    border: `1px solid ${theme.palette.primary.boxBorder}`,
     borderRadius: '0 10px 10px 0',
     '& .date': {
       display: 'flex',
@@ -211,28 +211,6 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
               />
             </Box>
           </Box>
-          {/* <Box className="bottom">
-          <Box className="author-details">
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <UserAvatar
-                alt="Travis Howard"
-                src={userDetails?.avatar}
-                sx={{
-                  width: { md: '40px', xs: '40px' },
-                  height: { md: '40px', xs: '40px' },
-                }}
-              />
-            </Box>
-            <Box>
-              <Typography variant="subtitle2">{userDetails?.name}</Typography>
-              <Typography variant="caption">{userDetails?.username}</Typography>
-            </Box>
-          </Box>
-          <Box className="date">
-            <CalendarMonthOutlinedIcon fontSize='small'/>
-            <Typography variant="caption" sx={{marginBottom:'0px'}}>{moment(articleDetails?.publishedDate).format('MMM DD, YY')}</Typography>
-          </Box>
-        </Box> */}
         </Box>
       </ArticleContent>
     </>
