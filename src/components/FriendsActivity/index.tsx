@@ -8,7 +8,6 @@ import {
   Skeleton,
   Stack,
   Typography,
-  useTheme,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { UserCardBox } from '../UserCard';
@@ -59,7 +58,6 @@ interface ActivityProps {
 const showEmptySkelton = ['', '', '', ''];
 
 export default function FriendsActivity() {
-  const theme = useTheme();
   const [friendActivity, setFriendActivity] = useState<ActivityProps[] | null>(
     null
   );

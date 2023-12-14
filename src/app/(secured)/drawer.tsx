@@ -169,7 +169,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     {
       label: '',
       href: '/profile',
-      icon: (fill: string) => (
+      icon: () => (
         <Button variant="outlined" startIcon={<AddCircle />}>
           <GradientText>Write Post</GradientText>{' '}
         </Button>

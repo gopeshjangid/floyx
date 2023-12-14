@@ -14,7 +14,6 @@ const CustomTypographyWithIcon: React.FC<CustomTypographyProps> = ({
   icon,
   iconPosition = 'start',
   children,
-  sxIcon,
   ...typographyProps
 }) => {
   return (

@@ -116,8 +116,6 @@ type ReportUser = {
   Reason: string;
 };
 
-type UpdateResponse = {};
-
 export const profileService = createApi({
   reducerPath: 'profileReducer',
   baseQuery: baseQuery,
