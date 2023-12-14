@@ -6,6 +6,13 @@ import Image from 'next/image';
 import UserCard from '../UserCard';
 import BookMarkIcon from '@/images/image/bookMarkIcon';
 import { useGetTipHistoryQuery } from '@/lib/redux/slices/earnings';
+import DottedButton from './dottedButton';
+import ShareIcon from '@/images/image/shareIcon';
+import FlagIcon from '@/images/image/flagIcon';
+import BlockUserIcon from '@/images/image/blockUser';
+import { useState } from 'react';
+import ActionModal from './actionModal';
+
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -57,7 +64,29 @@ const ArticleContent = styled(Box)(({ theme }) => ({
   },
 }));
 
+const options = [
+  {
+    name: 'Report Article',
+    icon: <FlagIcon />,
+  },
+  {
+    name: 'Block User',
+    icon: <BlockUserIcon />,
+  },
+  {
+    name: 'Report User',
+    icon: <FlagIcon />,
+  },
+  {
+    name: 'Share Article',
+    icon: <ShareIcon />,
+  },
+];
+
 export default function ArticleContainer({ articleDetails, userDetails }: any) {
+  const [item, setItem] = useState<number>();
+  const [openDialog, setOpenDialog] = useState(false);
+
   const { data: tipHistory } = useGetTipHistoryQuery();
 
   const content = JSON.parse(articleDetails?.content);
@@ -83,112 +112,107 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
     }
   };
 
+  const handleOption = (index: number) => {
+    setOpenDialog(true);
+    setItem(index);
+  }
   return (
-    <ArticleContent onClick={handleClick}>
-      <Box className="thumbnail">
-        {articleDetails?.coverPhotoThumbnail ? (
-          <Image
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: '100%', height: '100%' }}
-            src={articleDetails?.coverPhotoThumbnail}
-            alt="thumbnail"
-          />
-        ) : (
-          <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
-        )}
-      </Box>
-      <Box className="details">
-        <Box className="top">
+    <>
+      <ArticleContent onClick={handleClick}>
+        <Box className="thumbnail">
+          {articleDetails?.coverPhotoThumbnail ? (
+            <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: '100%', height: '100%' }}
+                src={articleDetails?.coverPhotoThumbnail}
+                alt="thumbnail"
+              />
+              <Box sx={{position: 'absolute', top: '10px', left: '10px'}}>
+                <DottedButton options={options} setItem={setItem} handleOption={handleOption}/>
+              </Box>
+              <ActionModal item={item} openDialog={openDialog} setOpenDialog={setOpenDialog} articleDetails={articleDetails} username={userDetails?.username}/>
+            </Box>
+          ) : (
+            <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
+          )}
+        </Box>
+        <Box className="details">
+          <Box className="top">
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                width: '80%',
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  width: 'auto',
+                  textWrap: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {articleDetails?.title ? (
+                  articleDetails?.title
+                ) : (
+                  <Skeleton variant="text" width={400} />
+                )}
+              </Typography>
+              <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
+                {tipHistory ? (
+                  tippedOrNot() ? (
+                    '  (!You Tipped)'
+                  ) : (
+                    ''
+                  )
+                ) : (
+                  <Skeleton variant="text" width={100} />
+                )}
+              </Typography>
+            </Box>
+            <IconButton>
+              <BookMarkIcon />
+            </IconButton>
+          </Box>
+          <Box className="middle">
+            <Typography
+              variant="body2"
+              sx={{
+                minHeight: `${40}px`,
+                maxHeight: `${40 * 2}px`,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: 2,
+              }}
+            >
+              <div dangerouslySetInnerHTML={createMarkup(description)} />
+            </Typography>
+          </Box>
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'flex-start',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              width: '80%',
             }}
           >
-            <Typography
-              variant="h5"
-              sx={{
-                width: 'auto',
-                textWrap: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              {articleDetails?.title ? (
-                articleDetails?.title
-              ) : (
-                <Skeleton variant="text" width={400} />
-              )}
-            </Typography>
-            <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
-              {tipHistory ? (
-                tippedOrNot() ? (
-                  '  (!You Tipped)'
-                ) : (
-                  ''
-                )
-              ) : (
-                <Skeleton variant="text" width={100} />
-              )}
-            </Typography>
-          </Box>
-          <IconButton>
-            <BookMarkIcon />
-          </IconButton>
-        </Box>
-        <Box className="middle">
-          <Typography
-            variant="body2"
-            sx={{
-              minHeight: `${40}px`,
-              maxHeight: `${40 * 2}px`,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              display: '-webkit-box',
-              WebkitBoxOrient: 'vertical',
-              WebkitLineClamp: 2,
-            }}
-          >
-            <div dangerouslySetInnerHTML={createMarkup(description)} />
-          </Typography>
-        </Box>
-        <Box>
-          <Box width="100%">
-            <UserCard
-              name={userDetails?.name}
-              username={userDetails?.username}
-              showDate={articleDetails?.publicationDate}
-            />
-          </Box>
-        </Box>
-        {/* <Box className="bottom">
-          <Box className="author-details">
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <UserAvatar
-                alt="Travis Howard"
-                src={userDetails?.avatar}
-                sx={{
-                  width: { md: '40px', xs: '40px' },
-                  height: { md: '40px', xs: '40px' },
-                }}
+            <Box>
+              <UserCard
+                name={userDetails?.name}
+                username={userDetails?.username}
+                showDate={articleDetails?.publicationDate}
               />
             </Box>
-            <Box>
-              <Typography variant="subtitle2">{userDetails?.name}</Typography>
-              <Typography variant="caption">{userDetails?.username}</Typography>
-            </Box>
           </Box>
-          <Box className="date">
-            <CalendarMonthOutlinedIcon fontSize='small'/>
-            <Typography variant="caption" sx={{marginBottom:'0px'}}>{moment(articleDetails?.publishedDate).format('MMM DD, YY')}</Typography>
-          </Box>
-        </Box> */}
-      </Box>
-      {/* <SplitButton /> */}
-    </ArticleContent>
+        </Box>
+      </ArticleContent>
+    </>
   );
 }

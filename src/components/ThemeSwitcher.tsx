@@ -79,7 +79,6 @@ const ThemeSwitch = () => {
           }}
         />
       }
-      label="Dark Mode"
     />
   );
 };

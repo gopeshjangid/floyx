@@ -45,10 +45,12 @@ export const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const token = getCookie(
       'FLOYX_TOKEN',
-      isServer() ? getState()?.req : undefined
+      isServer() ? getState()?.req : getCookie('FLOYX_TOKEN')
     );
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
+    } else {
+      router.push('/login');
     }
     return headers;
   },
@@ -56,9 +58,7 @@ export const baseQuery = fetchBaseQuery({
     if (response.status === 401) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
-      await signOut({ redirect: false });
-
-      // Redirect to the login page
+      await signOut({ redirect: true });
       router.push('/login');
       return;
     }

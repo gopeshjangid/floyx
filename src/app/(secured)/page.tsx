@@ -1,7 +1,8 @@
 'use client';
 
-import FriendsActivity from '@/components/FriendsActivity';
-import PopularToday from '@/components/PopularToday';
+import FollowNewAccounts from '@/components/AccountFollowBox';
+import NewRegisteredUsers from '@/components/FriendsActivity';
+import RecentArticles from '@/components/PopularToday';
 import AddPost from '@/components/Post/AddPost';
 import PostList from '@/components/Post/PostList';
 import PostHeader from '@/components/PostHeader';
@@ -59,6 +60,7 @@ export default function Page() {
           >
             <PostHeader />
             <AddPost />
+            <FollowNewAccounts />
             <PostList
               postData={postData || []}
               loadMore={loadMore}
@@ -69,8 +71,8 @@ export default function Page() {
           </Box>
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1}>
-          <PopularToday />
-          <FriendsActivity />
+          <RecentArticles />
+          <NewRegisteredUsers />
         </Grid>
       </Grid>
     </Box>

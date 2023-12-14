@@ -3,6 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { Education, Project } from '@/components/ProfileActivityInfo';
+import { artcileDetails } from './articleDetails';
 
 type ApiResponse<T> = {
   value: {
@@ -51,6 +52,13 @@ export type AboutType = {
   experiences: null | any[]; // Replace 'any' with more specific type if available
   about: About;
   listOfLocations: null | any[]; // Replace 'any' with more specific type if available
+};
+
+export type ProfileInfoType = {
+  avatar: object | null; // Assuming 'avatar' is an object, you might want to define a more specific type if possible
+  backgroundImage: Blob | null; // 'binary' often refers to a Blob type in the context of file data
+  shortDescription: string;
+  deleteAvatar: boolean;
 };
 
 type ProfileDetails = {
@@ -106,6 +114,11 @@ type Experience = {
 
 type ReportUser = {
   Username: string;
+  Reason: string;
+};
+
+type ReportArticle = {
+  contentId: string;
   Reason: string;
 };
 
@@ -212,14 +225,45 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout'],
     }),
+    updateProfileDetail: builder.mutation<boolean, any>({
+      query: profileDetail => ({
+        url: `${ApiEndpoint.ProfileDetails}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+        body: profileDetail,
+      }),
+      transformResponse: (response: ApiResponse<boolean>) =>
+        response.value.data,
+      invalidatesTags: ['profileDetails'],
+    }),
     addReportUser: builder.mutation<ReportUser, Partial<ReportUser>>({
       query: profileAbout => ({
         url: `${ApiEndpoint.ReportUser}`, // Assuming `id` is part of investmentData
         method: 'POST', // or 'PATCH' for partial updates
         body: profileAbout,
       }),
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(() => {
+          api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
+        });
+      },
       transformResponse: (response: ApiResponse<ReportUser>) =>
         response.value.data,
+
+      invalidatesTags: ['profileAbout', 'profileDetails'],
+    }),
+    addReportArticle: builder.mutation<ReportArticle, Partial<ReportArticle>>({
+      query: profileAbout => ({
+        url: `${ApiEndpoint.ReportArticle}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+        body: profileAbout,
+      }),
+      transformResponse: (response: ApiResponse<ReportArticle>) =>
+        response.value.data,
+        onQueryStarted: (arg, api) => {
+          api.queryFulfilled.then(() => {
+            api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
+          });
+        },
       invalidatesTags: ['profileAbout', 'profileDetails'],
     }),
     blockUser: builder.mutation<ReportUser, Partial<{ username: string }>>({
@@ -228,8 +272,12 @@ export const profileService = createApi({
         method: 'POST', // or 'PATCH' for partial updates
         body: {},
       }),
-      transformResponse: (response: ApiResponse<ReportUser>) =>
-        response.value.data,
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(() => {
+          api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
+        });
+      },
+      transformResponse: (response: ApiResponse<ReportUser>) => response.value.data,
       invalidatesTags: ['profileAbout', 'profileDetails'],
     }),
     followUser: builder.mutation<void, Partial<{ username: string }>>({
@@ -267,4 +315,6 @@ export const {
   useAddReportUserMutation,
   useBlockUserMutation,
   useFollowUserMutation,
+  useAddReportArticleMutation,
+  useUpdateProfileDetailMutation,
 } = profileService;

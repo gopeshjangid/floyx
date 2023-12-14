@@ -1,5 +1,13 @@
 'use client';
-import { Box, Typography, Container, Divider, Skeleton } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Container,
+  Divider,
+  Skeleton,
+  Avatar,
+  Stack,
+} from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
@@ -69,22 +77,20 @@ export default function PopularToday() {
 
   return (
     <PopularTodaySection>
-      <Typography variant="body1">Your friend’s activities</Typography>
+      <Typography variant="body1">Recent Articles</Typography>
       <PopularTodayListSection>
         {popularPosts ? (
           popularPosts.map((val, index) => (
             <Box className="box" key={`popularToday${index}`}>
-              <Box className="boxdata" sx={{}}>
+              <Stack py={1} direction="row" gap={2}>
+                <Avatar />
                 <Box>
-                  <Typography variant="h5">{index + 1}.</Typography>
-                </Box>
-                <Box>
-                  <Typography variant="h5">{val.postName}</Typography>
-                  <Typography variant="body2">
-                    {val.postNumbers.toLocaleString('en-IN')} Posts
+                  <Typography variant="body2">{val.postName}</Typography>
+                  <Typography sx={{ opacity: 0.6 }} variant="caption">
+                    hkhjkhjkhkh
                   </Typography>
                 </Box>
-              </Box>
+              </Stack>
               <Divider />
             </Box>
           ))

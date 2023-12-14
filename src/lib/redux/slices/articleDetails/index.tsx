@@ -146,7 +146,8 @@ export const artcileDetails = createApi({
     }),
 
     getArticleList: builder.query<any, string|undefined>({
-      query: tabName => `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}`: ""}`,
+      query: tabName => `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ""}`,
+      providesTags: ['getArticleList'],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
@@ -170,7 +171,7 @@ export const artcileDetails = createApi({
       invalidatesTags: ['LikeStatus']
     }),
   }),
-  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip'],
+  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList'],
 });
 
 export const {
