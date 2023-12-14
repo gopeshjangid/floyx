@@ -1,9 +1,18 @@
 'use client';
 
 import React from 'react';
-import { Box, Button, Typography, Tabs, Tab } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography,
+  Tabs,
+  Tab,
+  Stack,
+  useTheme,
+} from '@mui/material';
 
 export default function AddArticleHead({ setSaveDraft, articleDraftNumbers, value, setValue }) {
+  const { palette } = useTheme();
 
   const handleSaveDraft = () => {
     setSaveDraft(true);
@@ -14,23 +23,14 @@ export default function AddArticleHead({ setSaveDraft, articleDraftNumbers, valu
   }
 
   return (
-    <Box
-      sx={{
-        width: '90%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        border: '1px solid white',
-        borderRadius: '5px',
-        padding: '0px 0px 0px 15px ',
-      }}
+    <Stack
+      direction="row"
+      gap={1}
+      justifyContent="space-between"
+      mb={2}
+      sx={{ borderBottom: `1px solid ${palette.action.border}` }}
     >
-      <Box sx={{ display: 'flex' }} >
-        <Box sx={{ borderRight: '1px solid white', marginRight: '20px' }}>
-          <Typography variant="subtitle1" sx={{ padding: '15px 20px 0 0' }}>
-            Article Editor
-          </Typography>
-        </Box>
+      <Stack>
         <Tabs
           value={value}
           onChange={handlePageChange}
@@ -39,32 +39,33 @@ export default function AddArticleHead({ setSaveDraft, articleDraftNumbers, valu
           <Tab
             className="tab"
             label={<Typography variant="subtitle2">My Articles [{articleDraftNumbers?.info?.numberOfArticles}]</Typography>}
-            value={'myArticles'}
-            sx={{ paddingTop: '17px' }}
+            value={'my'}
+            sx={{ paddingTop: '16px' }}
           />
           <Tab
             className="tab"
             label={<Typography variant="subtitle2">My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]</Typography>}
-            value={'myDrafts'}
-            sx={{ paddingTop: '17px' }}
-
+            value={'draft'}
+            sx={{ paddingTop: '16px' }}
           />
           <Tab
             className="tab"
             label={<Typography variant="subtitle2">Write New</Typography>}
             value={'newArticle'}
-            sx={{ paddingTop: '17px' }}
+            sx={{ paddingTop: '16px' }}
           />
         </Tabs>
-      </Box>
-      {value === 'newArticle' && <Box>
-        <Button variant="outlined" sx={{ marginRight: '10px', borderRadius: '10px', paddingX: '20px' }} onClick={handleSaveDraft}>
-          Save as Draft
-        </Button>
-        <Button variant="outlined" sx={{ marginRight: '10px', borderRadius: '10px', paddingX: '20px' }}>
-          Publish
-        </Button>
-      </Box>}
-    </Box>
+      </Stack>
+      {value === 'newArticle' && (
+        <Stack direction="row" gap={1} alignItems={"flex-start"}>
+          <Button variant="outlined" sx={{ borderRadius: '10px' }} onClick={handleSaveDraft}>
+            Save as Draft
+          </Button>
+          <Button variant="outlined" sx={{ borderRadius: '10px' }}>
+            Publish
+          </Button>
+        </Stack>
+      )}
+    </Stack>
   );
 }

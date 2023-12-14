@@ -145,8 +145,8 @@ export const artcileDetails = createApi({
       invalidatesTags: ['articleTip'],
     }),
 
-    getArticleList: builder.query<any, string>({
-      query: tabName => `${ApiEndpoint.DeleteArticle}/${tabName}`,
+    getArticleList: builder.query<any, string|undefined>({
+      query: tabName => `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}`: ""}`,
       transformResponse: (response: any) => response?.value?.data || [],
     }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({

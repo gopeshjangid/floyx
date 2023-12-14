@@ -45,6 +45,9 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
         backgroundColor: theme.palette.background.default,
         borderRadius: '10px',
       },
+      '& .mention-input-container__suggestions': {
+        backgroundColor: `${ theme.palette.background.default } !important`,
+      }
     },
   },
 }));

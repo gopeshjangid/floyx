@@ -120,7 +120,7 @@ export default function AddPost() {
             label={
               <Typography variant="subtitle2">Write an article</Typography>
             }
-            href="/article/add-edit"
+            href="/composer/create"
           />
         </Tabs>
         <Box
