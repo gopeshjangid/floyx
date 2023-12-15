@@ -133,8 +133,11 @@ export const profileService = createApi({
         response?.value?.data,
       providesTags: ['profileDetails'],
     }),
-    getPopularAccountsToFollow: builder.query<AccountApiResponse, void>({
-      query: () => ApiEndpoint.AccountsToFallow,
+    getPopularAccountsToFollow: builder.query<
+      AccountApiResponse,
+      { param?: string }
+    >({
+      query: ({ param }) => ApiEndpoint.AccountsToFallow + param,
       transformResponse: (response: ApiResponse<AccountApiResponse>) => {
         return response?.value?.data;
       },
@@ -256,7 +259,7 @@ export const profileService = createApi({
         body: {},
       }),
       transformResponse: (response: any) => response.value,
-      invalidatesTags: ['profileAbout', 'profileDetails'],
+      invalidatesTags: ['profileAbout', 'profileDetails', 'PopularAccount'],
     }),
   }),
   tagTypes: [

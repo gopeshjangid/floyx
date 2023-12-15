@@ -12,7 +12,9 @@ declare module '@mui/material/styles' {
     800?: string;
     900?: string;
     boxBorder: string;
+    main: string;
     iconFontColor: string;
+    mainBackground: string;
     // Add other custom properties as needed
   }
 
