@@ -147,13 +147,15 @@ export const artcileDetails = createApi({
 
     getArticleList: builder.query<any, string|undefined>({
       query: tabName => `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ""}`,
-      providesTags: ['getArticleList'],
+      providesTags: ['getArticleList', 'deleteArticle'],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
+      providesTags: ['deleteArticle'],
     }),
+
     checkArticleIsShared: builder.mutation<boolean, string>({
       query: articleId => ({
         url: `${ApiEndpoint.IsSharedPost}/${articleId}`,
@@ -170,8 +172,16 @@ export const artcileDetails = createApi({
       transformResponse: (response: any) => response?.value?.data || {},
       invalidatesTags: ['LikeStatus']
     }),
+    deleteArticle: builder.mutation<any , string>({
+      query: (articleId)=>({
+        url:`${ApiEndpoint.DeleteArticle}/${articleId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['deleteArticle']
+
+    })
   }),
-  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList'],
+  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList','deleteArticle'],
 });
 
 export const {
@@ -185,4 +195,5 @@ export const {
   useGetArticleListQuery,
   useLazyGetArticleListQuery,
   useGetArticleInfoQuery,
+  useDeleteArticleMutation
 } = artcileDetails;
