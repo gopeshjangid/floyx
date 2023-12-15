@@ -6,7 +6,7 @@ import { MentionsInput, Mention } from 'react-mentions';
 import UserAvatar from '../UserAvatar';
 import { useSession } from 'next-auth/react';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import { useCreateCommentMutation } from '@/lib/redux/slices/comments';
+import { useCreateCommentMutation, useLazyGetUserSuggestionQuery } from '@/lib/redux/slices/comments';
 import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
 import { tokenService } from '@/lib/services/new/tokenService';
