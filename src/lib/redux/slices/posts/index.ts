@@ -55,8 +55,8 @@ export interface PostDetailResult {
 
 type PostListByUserArgs = {
   username: string;
-  pageNumber: string;
-  postCreatedDate: string;
+  pageNumber: number;
+  postCreatedDate: number;
 };
 
 export const postServices = createApi({

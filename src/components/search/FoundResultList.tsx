@@ -18,7 +18,6 @@ import UsernameLink from '../usernameLink';
 import { SVGUser } from '@/assets/images';
 import CustomTypographyWithIcon from '../typographyWithIcon';
 import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
-import ArticleIcon from '@/iconComponents/articleIcon';
 import ArticleSvgIcon from '@/iconComponents/articleSvgIcon';
 
 interface SearchResultProps {

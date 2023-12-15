@@ -3,13 +3,10 @@ import {
   Box,
   Typography,
   useTheme,
-  Divider,
-  Skeleton,
   Avatar,
   Stack,
   Button,
 } from '@mui/material';
-
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import UsernameLink from './usernameLink';
@@ -52,8 +49,6 @@ export default function FollowNewAccounts() {
   useEffect(() => {
     setTimeout(() => setPopularPosts(POPULAR_POSTS), 1000);
   }, []);
-
-  const accounts = [1, 2, 3];
 
   return (
     <Box mt={2}>

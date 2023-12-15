@@ -1,27 +1,23 @@
 'use client';
-
-import FriendsActivity from '@/components/FriendsActivity';
-import PopularToday from '@/components/PopularToday';
-import AddPost from '@/components/Post/AddPost';
 import PostList from '@/components/Post/PostList';
-import PostHeader from '@/components/PostHeader';
-import { useGetPostListByUserQuery, useGetPostsQuery } from '@/lib/redux';
-
+import { useGetPostListByUserQuery } from '@/lib/redux';
 import { Box, Grid, useMediaQuery } from '@mui/material';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export interface apiParams {
   pageNumber: number;
   postCreatedDate: number;
+  username: string;
 }
 
-export default function ProfilePostList() {
+function ProfilePostList() {
   const params = useParams();
+
   const [apiParams, setApiParams] = useState<apiParams>({
     pageNumber: 0,
     postCreatedDate: 0,
-    username: params?.username ?? '',
+    username: (params.username as any) ?? '',
   });
 
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -32,6 +28,7 @@ export default function ProfilePostList() {
       const lastPost = postData[postData.length - 1];
       if (e > pageNumber && lastPost !== undefined && !isFetching) {
         setApiParams({
+          ...apiParams,
           pageNumber: e,
           postCreatedDate: lastPost?.post?.createdDateTime,
         });
@@ -52,9 +49,12 @@ export default function ProfilePostList() {
             loadMore={loadMore}
             apiParams={apiParams}
             isFetching={isFetching}
+            hasMore={postData ? postData.length === 10 : false}
           />
         </Grid>
       </Grid>
     </Box>
   );
 }
+
+export default React.memo(ProfilePostList);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
 import { getMetaData } from '@/lib/SEO';
-import Link from 'next/link';
 
 const PrivacyPolicyPage = () => {
   return (

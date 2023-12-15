@@ -2,10 +2,9 @@
 
 import ArticleContent from '@/components/articleContent';
 import { useGetArticleListQuery } from '@/lib/redux';
-
 import { Box, Grid, useMediaQuery } from '@mui/material';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -14,6 +13,7 @@ export interface apiParams {
 
 export default function ProfileArticleList() {
   const params = useParams();
+  const username = Array.isArray(params) ? params[0] : params.username ?? '';
   //   const [apiParams, setApiParams] = useState<apiParams>({
   //     pageNumber: 0,
   //     postCreatedDate: 0,
@@ -21,9 +21,7 @@ export default function ProfileArticleList() {
   //   });
 
   const isMobile = useMediaQuery('(max-width:480px)');
-  const { data: articleList, isFetching } = useGetArticleListQuery(
-    params.username ?? ''
-  );
+  const { data: articleList, isFetching } = useGetArticleListQuery(username);
 
   //   const loadMore = (e: any, pageNumber: number, isFetching: boolean) => {
   //     if (articleList) {

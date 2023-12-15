@@ -1,6 +1,6 @@
 'use client';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Box, CircularProgress, Skeleton, Stack } from '@mui/material';
+import { Box, Skeleton, Stack } from '@mui/material';
 
 import { PostBox } from './styledPostBox';
 import Post from './Post';

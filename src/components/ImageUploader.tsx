@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useRef, useCallback } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 
 import { IconButton, Input, useTheme } from '@mui/material';
 import { CameraAltOutlined } from '@mui/icons-material';
