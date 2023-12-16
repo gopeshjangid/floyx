@@ -1,7 +1,8 @@
 'use client';
 
-import FriendsActivity from '@/components/FriendsActivity';
-import PopularToday from '@/components/PopularToday';
+import FollowNewAccounts from '@/components/AccountFollowBox';
+import NewRegisteredUsers from '@/components/FriendsActivity';
+import RecentArticles from '@/components/PopularToday';
 import AddPost from '@/components/Post/AddPost';
 import PostList from '@/components/Post/PostList';
 import PostHeader from '@/components/PostHeader';
@@ -42,8 +43,8 @@ export default function Page() {
   }, [postData]);
   const viewportHeight = window.innerHeight;
   return (
-    <Box p={isMobile ? 2 : 0} mt={2}>
-      <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+    <Box p={isMobile ? 2 : 2} mt={2}>
+      <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>
         <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
           <Box
             sx={{
@@ -59,6 +60,7 @@ export default function Page() {
           >
             <PostHeader />
             <AddPost />
+            <FollowNewAccounts />
             <PostList
               postData={postData || []}
               loadMore={loadMore}
@@ -69,8 +71,8 @@ export default function Page() {
           </Box>
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1}>
-          <PopularToday />
-          <FriendsActivity />
+          <RecentArticles />
+          <NewRegisteredUsers />
         </Grid>
       </Grid>
     </Box>

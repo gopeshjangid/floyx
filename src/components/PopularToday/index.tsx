@@ -1,16 +1,19 @@
 'use client';
-import { Box, Typography, Container, Divider, Skeleton } from '@mui/material';
+import { useGetArticleListQuery } from '@/lib/redux';
+import { Box, Typography, Divider, Skeleton, Stack } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const PopularTodaySection = styled(Box)(() => ({
   alignItems: 'center',
   marginTop: '1rem',
 }));
 
-const PopularTodayListSection = styled(Container)(({ theme }) => ({
+const PopularTodayListSection = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
+  backgroundColor: theme.palette.primary.mainBackground,
   borderRadius: '10px',
   marginTop: '25px',
   maxHeight: '35vh',
@@ -18,79 +21,59 @@ const PopularTodayListSection = styled(Container)(({ theme }) => ({
   '& .box': {
     marginTop: '10px',
     '& .boxdata': {
-      // padding: '5px',
       display: 'flex',
     },
   },
 }));
 
-const POPULAR_POSTS = [
-  {
-    postName: 'AirDrops 2023',
-    postNumbers: 872981,
-  },
-  {
-    postName: 'Cars',
-    postNumbers: 87828931,
-  },
-  {
-    postName: 'Anime',
-    postNumbers: 9298112,
-  },
-  {
-    postName: 'Bikes',
-    postNumbers: 872361891,
-  },
-  {
-    postName: 'Dancers',
-    postNumbers: 872361891,
-  },
-  {
-    postName: 'Airplanes',
-    postNumbers: 872361891,
-  },
-  {
-    postName: 'Random',
-    postNumbers: 872361891,
-  },
-];
-
-interface PostObject {
-  postName: string; // I assume ID is defined elsewhere
-  postNumbers: number;
-}
-
-export default function PopularToday() {
-  const [popularPosts, setPopularPosts] = useState<PostObject[] | null>(null);
-
-  useEffect(() => {
-    setTimeout(() => setPopularPosts(POPULAR_POSTS), 1000);
-  }, []);
+function RecentArticles() {
+  const { data, isLoading, isError } = useGetArticleListQuery(
+    'recent?forHome=true'
+  );
 
   return (
     <PopularTodaySection>
-      <Typography variant="body1">Your friend’s activities</Typography>
+      <Typography variant="body1">Recent Articles</Typography>
+      {isError && (
+        <Typography variant="body1" color="error">
+          Something went wrong!
+        </Typography>
+      )}
       <PopularTodayListSection>
-        {popularPosts ? (
-          popularPosts.map((val, index) => (
-            <Box className="box" key={`popularToday${index}`}>
-              <Box className="boxdata" sx={{}}>
-                <Box>
-                  <Typography variant="h5">{index + 1}.</Typography>
-                </Box>
-                <Box>
-                  <Typography variant="h5">{val.postName}</Typography>
-                  <Typography variant="body2">
-                    {val.postNumbers.toLocaleString('en-IN')} Posts
-                  </Typography>
-                </Box>
-              </Box>
+        {!isLoading && data ? (
+          data.map((article, index) => (
+            <Box p={2} key={`popularToday${index}`}>
+              <Link target="__blank" href={article.article.publicUrl}>
+                <Stack py={1} direction="row" gap={2}>
+                  <Box>
+                    <Image
+                      alt={article.article.title}
+                      src={article.article?.coverPhotoThumbnail}
+                      height={70}
+                      width={80}
+                      style={{ borderRadius: '3px' }}
+                    />
+                  </Box>
+                  <Box>
+                    <Typography
+                      sx={{ wordBreak: 'break-all' }}
+                      variant="body2"
+                      gutterBottom={false}
+                    >
+                      {article.article.title}...
+                    </Typography>
+                    <Typography sx={{ opacity: 0.6 }} variant="caption">
+                      {article.article.title?.slice(0, 20)}...
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Link>
               <Divider />
             </Box>
           ))
         ) : (
           <>
-            <Box className="box">
+            <Box p={2} className="box">
               <Skeleton
                 variant="text"
                 height={35}
@@ -105,7 +88,7 @@ export default function PopularToday() {
               />
               <Divider />
             </Box>
-            <Box className="box">
+            <Box p={2} className="box">
               <Skeleton
                 variant="text"
                 height={35}
@@ -120,7 +103,7 @@ export default function PopularToday() {
               />
               <Divider />
             </Box>
-            <Box className="box">
+            <Box p={2} className="box">
               <Skeleton
                 variant="text"
                 height={35}
@@ -140,3 +123,5 @@ export default function PopularToday() {
     </PopularTodaySection>
   );
 }
+
+export default RecentArticles;

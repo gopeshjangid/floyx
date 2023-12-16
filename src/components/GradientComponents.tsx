@@ -1,5 +1,4 @@
 import { styled, Button } from '@mui/material';
-import React from 'react';
 
 export const GradientText = styled('span')(({ ...props }) => ({
   background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
@@ -10,7 +9,7 @@ export const GradientText = styled('span')(({ ...props }) => ({
   ...props,
 }));
 
-export const GradientOutlinedButton = styled(Button)(({ theme }) => ({
+export const GradientOutlinedButton = styled(Button)(() => ({
   position: 'relative',
   backgroundColor: 'transparent',
   color: 'transparent',

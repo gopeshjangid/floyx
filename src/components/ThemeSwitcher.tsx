@@ -65,6 +65,7 @@ const ThemeSwitch = () => {
 
   return (
     <FormControlLabel
+      label=""
       control={
         <MaterialUISwitch
           sx={{ m: 2 }}

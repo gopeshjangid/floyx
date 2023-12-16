@@ -25,7 +25,7 @@ import { FlagOutlined } from '@mui/icons-material';
 import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
 import { UserDetailsType } from '@/lib/redux/slices/profile';
 
-export const SearchBoxWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
+const SearchBoxWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   '& .MuiInputBase-root': {
     background: theme.palette.background.default,
   },

@@ -3,14 +3,10 @@
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
-import { useEffect, useState } from 'react';
 import UserAvatar from '../UserAvatar';
 import { useSession } from 'next-auth/react';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import {
-  useCreateCommentMutation,
-  useLazyGetUserSuggestionQuery,
-} from '@/lib/redux/slices/comments';
+import { useCreateCommentMutation } from '@/lib/redux/slices/comments';
 import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
 import { tokenService } from '@/lib/services/new/tokenService';
@@ -83,7 +79,7 @@ export default function AddComment({
 
   const getUserSuggestion = (mentionValue: string, callback: any) => {
     if (mentionValue) {
-      return new Promise(async (res, rej) => {
+      return new Promise(() => {
         const bearer_token = tokenService.getBearerToken();
 
         fetch(`${ApiEndpoint.FindUserByName}/${mentionValue}`, {

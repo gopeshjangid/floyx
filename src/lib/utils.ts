@@ -30,16 +30,6 @@ export const showErrorMessages = (errorKeys: string[]): string => {
 // Define a helper function to check if we're on the server
 const isServer = () => typeof window === 'undefined';
 
-const redirectToLogin = () => {
-  //if (!isServer()) {
-  console.log('redirection =>');
-  //const router: NextRouter = require('next/router').default;
-  window.location.href = '/login';
-  //router.push('/login').catch(e => console.error('Redirection Error:', e));
-  //}
-  // Server-side redirects should be handled in getServerSideProps or getInitialProps
-};
-
 export const baseQuery = fetchBaseQuery({
   baseUrl: '/',
   prepareHeaders: (headers, { getState }) => {
@@ -58,9 +48,7 @@ export const baseQuery = fetchBaseQuery({
     if (response.status === 401) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
-      await signOut({ redirect: false });
-
-      // Redirect to the login page
+      await signOut({ redirect: true });
       router.push('/login');
       return;
     }

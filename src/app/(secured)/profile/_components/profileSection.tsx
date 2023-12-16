@@ -41,7 +41,7 @@ import { useToast } from '@/components/Toast/useToast';
 import CustomLoadingButton from '@/components/LoadingButton';
 import { useSession } from 'next-auth/react';
 import CustomChip from '@/components/CustomGridientChip';
-import ImageUploader from '@/components/imageUploader';
+import ImageUploader from '@/components/ImageUploader';
 import TextareaAutosize from '@/components/CustomTextArea';
 
 interface ProfileFollowerWrapperProps extends BoxProps {
@@ -62,7 +62,7 @@ const ProfileFollowerWrapper = styled(Box)<ProfileFollowerWrapperProps>(
     borderRadius: '10px',
     overflow: 'hidden',
     border: '1px solid rgba(255, 255, 255, 0.18)',
-    background: '#0B081F',
+    backgroundColor: 'rgba(11, 8, 31, 0.38)',
   })
 );
 

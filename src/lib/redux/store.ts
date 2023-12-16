@@ -21,7 +21,7 @@ import { profileService } from './slices/profile';
 import { postServices } from './slices/posts';
 import { artcileDetails } from './slices/articleDetails';
 import { userService } from './slices/user';
-import { commentService } from "./slices/comments";
+import { commentService } from './slices/comments';
 import { reducer } from './rootReducer';
 import { registrationService } from './slices/registration';
 import { accountSettingService } from './slices/accountSetting';
@@ -53,14 +53,14 @@ function makeStore(initialState = {}) {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       })
-      .concat(earningsService.middleware)
-      .concat(postServices.middleware)
-      .concat(artcileDetails.middleware)
-      .concat(userService.middleware)
-      .concat(commentService.middleware)
-      .concat(profileService.middleware)
-      .concat(registrationService.middleware)
-      .concat(accountSettingService.middleware),
+        .concat(earningsService.middleware)
+        .concat(postServices.middleware)
+        .concat(artcileDetails.middleware)
+        .concat(userService.middleware)
+        .concat(commentService.middleware)
+        .concat(profileService.middleware)
+        .concat(registrationService.middleware)
+        .concat(accountSettingService.middleware),
   });
 }
 

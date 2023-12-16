@@ -7,7 +7,9 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
+import ListItemButton, {
+  ListItemButtonProps,
+} from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -50,6 +52,10 @@ import SidebarProfileBar from '@/components/sidebarProfileInfo';
 const drawerWidth = 240;
 
 const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
+  color:
+    theme.palette.mode === 'light'
+      ? theme.palette.common.black
+      : theme.palette.common.white,
   '&:hover': {
     background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
     color:
@@ -68,8 +74,31 @@ const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
           ? theme.palette.common.white
           : theme.palette.common.black,
     },
+    '& svg': {
+      stroke:
+        theme.palette.mode === 'light'
+          ? theme.palette.common.white
+          : theme.palette.common.black,
+    },
   },
 }));
+
+interface LinkListItemButtonProps
+  extends Omit<ListItemButtonProps, 'component'> {
+  href: string;
+}
+
+const LinkListItemButton: React.FC<LinkListItemButtonProps> = ({
+  href,
+  children,
+  ...props
+}) => {
+  return (
+    <Link href={href} passHref>
+      <CustomListItemButton {...props}>{children}</CustomListItemButton>
+    </Link>
+  );
+};
 
 const CountWrapper = ({ count }: { count: number }) => (
   <Box
@@ -169,7 +198,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     {
       label: '',
       href: '/profile',
-      icon: (fill: string) => (
+      icon: () => (
         <Button variant="outlined" startIcon={<AddCircle />}>
           <GradientText>Write Post</GradientText>{' '}
         </Button>
@@ -241,28 +270,30 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       </Box>
       <List>
         {navItems.map((item, index) => (
-          <CustomListItemButton
-            key={index}
-            LinkComponent={Link}
+          <LinkListItemButton
+            key={index + 'list-item-nav-item'}
             href={
               item.label === 'Profile'
                 ? `${item.href}/${session.data?.user?.username}`
                 : item.href
             }
           >
-            <ListItemIcon>
-              {item?.icon && item?.icon(theme.palette.text.primary)}
-            </ListItemIcon>
-            <ListItemText primary={item.label} />
-            <ListItemSecondaryAction>
-              {item.label === 'Notifications' &&
-              drawerData.notificationCount > 0 ? (
-                <CountWrapper count={drawerData.notificationCount} />
-              ) : item.label === 'Messages' && drawerData.messagesCount > 0 ? (
-                <CountWrapper count={drawerData.messagesCount} />
-              ) : null}
-            </ListItemSecondaryAction>
-          </CustomListItemButton>
+            <>
+              <ListItemIcon>
+                {item?.icon && item?.icon(theme.palette.text.primary)}
+              </ListItemIcon>
+              <ListItemText primary={item.label} />
+              <ListItemSecondaryAction>
+                {item.label === 'Notifications' &&
+                drawerData.notificationCount > 0 ? (
+                  <CountWrapper count={drawerData.notificationCount} />
+                ) : item.label === 'Messages' &&
+                  drawerData.messagesCount > 0 ? (
+                  <CountWrapper count={drawerData.messagesCount} />
+                ) : null}
+              </ListItemSecondaryAction>
+            </>
+          </LinkListItemButton>
         ))}
 
         <ListItem>
@@ -347,7 +378,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
         )}
         {!isMobile ? (
           <Grid container columnSpacing={{ sm: 2, md: 3 }}>
-            <Grid item sm={3} md={3} lg={2}>
+            <Grid item sm={3} md={4} lg={2}>
               <Paper
                 elevation={0}
                 sx={{
@@ -362,7 +393,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 <SidebarProfileBar />
               </Paper>
             </Grid>
-            <Grid item sm={9} md={9} lg={10}>
+            <Grid item sm={9} md={8} lg={10}>
               {children}
             </Grid>
           </Grid>

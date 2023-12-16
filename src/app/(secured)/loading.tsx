@@ -3,7 +3,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Box, Grid } from '@mui/material';
 
-export default function Variants() {
+export default function HomePageLoading() {
   return (
     <Box mt={4} p={1}>
       <Grid container spacing={1}>
