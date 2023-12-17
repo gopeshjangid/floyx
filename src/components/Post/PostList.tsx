@@ -45,7 +45,7 @@ export default function PostList({
           loadMore={(e: any) => loadMore(e, apiParams?.pageNumber, isFetching)}
           hasMore={hasMore}
           useWindow={false}
-          threshold={100}
+          // threshold={100}
           loader={<LoaderSkeleton key="loader-ininfite" />}
         >
           {postData?.map((val: any) => (

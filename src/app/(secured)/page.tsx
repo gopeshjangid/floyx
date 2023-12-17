@@ -39,7 +39,7 @@ export default function Page() {
   };
 
   useEffect(() => {
-    console.log('postData', postData);
+    console.log('postData', postData, postData === undefined, postData?.length % 10 === 0);
   }, [postData]);
   const viewportHeight = window.innerHeight;
   return (
@@ -66,7 +66,7 @@ export default function Page() {
               loadMore={loadMore}
               apiParams={apiParams}
               isFetching={isFetching}
-              hasMore={postData?.length === 10}
+              hasMore={ postData === undefined || postData?.length % 10 === 0}
             />
           </Box>
         </Grid>

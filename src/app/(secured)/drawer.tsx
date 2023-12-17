@@ -24,6 +24,9 @@ import {
   ListItemSecondaryAction,
   styled,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
 } from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
@@ -46,6 +49,7 @@ import SettingsIcon from '@/iconComponents/settingsIcon';
 import { AddCircle } from '@mui/icons-material';
 import { GradientText } from '@/components/usernameLink';
 import SidebarProfileBar from '@/components/sidebarProfileInfo';
+import AddPost from '@/components/Post/AddPost';
 
 const drawerWidth = 240;
 
@@ -112,7 +116,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
+  const { palette } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openWriteDialog, setOpenWriteDialog] = useState(false);
 
   const navItems = [
     {
@@ -168,9 +174,13 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     },
     {
       label: '',
-      href: '/profile',
+      href: '',
       icon: () => (
-        <Button variant="outlined" startIcon={<AddCircle />}>
+        <Button
+          variant="outlined"
+          startIcon={<AddCircle />}
+          onClick={() => setOpenWriteDialog(true)}
+        >
           <GradientText>Write Post</GradientText>{' '}
         </Button>
       ),
@@ -373,6 +383,21 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
           </Paper>
         )}
       </nav>
+      <Dialog
+        open={openWriteDialog}
+        onClose={() => setOpenWriteDialog(false)}
+        aria-labelledby="responsive-dialog-title"
+        PaperProps={{
+          sx: { background: palette.background.default, width: '100%', },
+        }}
+      >
+        <DialogTitle sx={{textAlign:'center', paddingBottom:0}}>
+          Create Post
+        </DialogTitle>
+        <DialogContent sx={{m:0,paddingTop:0}}>
+          <AddPost writeDialog={true} setOpenWriteDialog={setOpenWriteDialog}/>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
