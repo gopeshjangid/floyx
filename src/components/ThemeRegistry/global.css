@@ -7,3 +7,19 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
+:root {
+    /* Your default theme */
+    --background: white;
+    --foreground: black;
+}
+
+[data-theme='dark'] {
+    --background: black;
+    --foreground: white;
+}
+
+[data-theme='dark'] {
+    --fg: #fff;
+    --bg: #000;
+}

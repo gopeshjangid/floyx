@@ -40,7 +40,6 @@ const StyledAvatar = styled(Avatar)(({ theme }: { theme: Theme }) => ({
 
 const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
   const theme = useTheme();
-  console.log('profile: ', profile);
   return (
     <StyledCard>
       <CardContent>
@@ -111,7 +110,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                     fontWeight={'400'}
                     icon={
                       <DailyTaskIcon
-                        stroke={theme.palette.action.svg}
+                        fill={theme.palette.action.svg}
                         width={'20px'}
                         height={'20px'}
                       />

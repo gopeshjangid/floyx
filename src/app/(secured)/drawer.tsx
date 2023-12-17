@@ -93,6 +93,9 @@ const LinkListItemButton: React.FC<LinkListItemButtonProps> = ({
   children,
   ...props
 }) => {
+  if (href === 'more') {
+    return <CustomListItemButton {...props}>{children}</CustomListItemButton>;
+  }
   return (
     <Link href={href} passHref>
       <CustomListItemButton {...props}>{children}</CustomListItemButton>
@@ -176,7 +179,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     },
     {
       label: 'More',
-      href: '',
+      href: 'more',
       icon: (fill: string) => (
         <CustomPopover
           actionOriginIcon={<MoreIcon fill={fill} />}

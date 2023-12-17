@@ -26,7 +26,6 @@ export default function AddArticleForm({ saveDraft, setSaveDraft }) {
 
   const handleFileUpload = event => {
     const file = event.target.files[0];
-    console.log('Selected file:', file);
     setSaveDraft(false);
   };
 
@@ -35,7 +34,6 @@ export default function AddArticleForm({ saveDraft, setSaveDraft }) {
       title: title,
       content: content,
     };
-    console.log('data', data);
     setSaveDraft(false);
   };
 
@@ -46,9 +44,23 @@ export default function AddArticleForm({ saveDraft, setSaveDraft }) {
   }, [saveDraft]);
 
   return (
-    <Box sx={{ marginTop: '30px', border: '1px solid White', borderRadius: '5px', width: '90%', p: '30px' }}>
+    <Box
+      sx={{
+        marginTop: '30px',
+        border: '1px solid White',
+        borderRadius: '5px',
+        width: '90%',
+        p: '30px',
+      }}
+    >
       <Box>
-        <TextField placeholder="Title" fullWidth multiline value={title} onChange={handleTitleChange} />
+        <TextField
+          placeholder="Title"
+          fullWidth
+          multiline
+          value={title}
+          onChange={handleTitleChange}
+        />
       </Box>
       <Box sx={{ m: '20px 0px' }}>
         <Divider />
@@ -60,14 +72,25 @@ export default function AddArticleForm({ saveDraft, setSaveDraft }) {
             ref={fileInputRef}
             sx={{ display: 'none' }}
           />
-          <Button variant="text" startIcon={<InsertPhotoIcon />} onClick={handleButtonClick}>
+          <Button
+            variant="text"
+            startIcon={<InsertPhotoIcon />}
+            onClick={handleButtonClick}
+          >
             Cover Photo (Optional)
           </Button>
         </Box>
         <Divider />
       </Box>
       <Box>
-        <TextField value={content} onChange={handleContentChange} placeholder="Content" fullWidth multiline rows={10} />
+        <TextField
+          value={content}
+          onChange={handleContentChange}
+          placeholder="Content"
+          fullWidth
+          multiline
+          rows={10}
+        />
       </Box>
     </Box>
   );

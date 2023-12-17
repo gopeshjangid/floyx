@@ -143,7 +143,7 @@ const ChatInput = ({
                     color="primary"
                     onClick={handleChangeEmojiPicker}
                   >
-                    <Image src={iconSmile} alt="" />
+                    <Image src={iconSmile} alt="smiley" />
                   </IconButton>
                 </InputAdornment>
               ),

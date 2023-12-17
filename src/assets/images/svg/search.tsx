@@ -17,7 +17,7 @@ const SVGSearch = () => {
             stroke="currentColor"
             // stroke-opacity="0.3"
             strokeWidth="1.5"
-            stroke-linecap="round"
+            strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
@@ -26,7 +26,7 @@ const SVGSearch = () => {
             stroke="currentColor"
             // stroke-opacity="0.3"
             strokeWidth="1.5"
-            stroke-linecap="round"
+            strokeLinecap="round"
             strokeLinejoin="round"
           />
         </g>

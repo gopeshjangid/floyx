@@ -72,7 +72,6 @@ const Login: FC = () => {
         redirect: false,
       });
 
-      console.log('login response', response);
       setLoading(false);
 
       if (response?.ok) {
