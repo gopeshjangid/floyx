@@ -206,8 +206,11 @@ export const artcileDetails = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: ['deleteArticle']
-
-    })
+    }),
+    getFollowMoreAccount: builder.query<any, void>({
+      query: () => `${ApiEndpoint.AccountsToFallow}?forHome=true`,
+      transformResponse: (response: any) => response?.value?.data || {},
+    }),
   }),
   tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList', 'deleteArticle', 'ArticleInfoNumber'],
 });
@@ -227,4 +230,5 @@ export const {
   useUpdateDraftArticleMutation,
   usePublishArticleMutation,
   useDeleteArticleMutation,
+  useGetFollowMoreAccountQuery,
 } = artcileDetails;

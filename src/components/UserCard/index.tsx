@@ -47,7 +47,7 @@ export default function UserCard({
         />
       </Box>
       <Box display={"flex"} justifyContent="space-between" width="100%">
-        <Box gap={1} display="flex" flexDirection={isArticle ? "column" : 'row'} width="100%">
+        <Box gap={isArticle ? 0 :1} display="flex" flexDirection={isArticle ? "column" : 'row'} width="100%">
           <Typography
             variant="subtitle1"
             component={'span'}

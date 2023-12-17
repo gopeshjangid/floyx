@@ -35,6 +35,20 @@ const ArticleContent = styled(Box)(({ theme }) => ({
   },
   '& .thumbnail': {
     width: '30%',
+    "& .thumbnailBox": {
+      position: 'relative',
+      width: '100%',
+      height: '100%', 
+      "& .dottedButton": {
+        position: 'absolute',
+        top: '10px',
+        left: '10px',
+      },
+      "& img": {
+        width: '100%',
+        height: '100%',
+      }
+    },
     // img: {
     //   width: '100%',
     //   // aspectRatio: '1/1',
@@ -171,16 +185,16 @@ export default function ArticleContainer({
       <ArticleContent onClick={handleClick}>
         <Box className="thumbnail">
           {articleDetails?.coverPhotoThumbnail ? (
-            <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+            <Box className="thumbnailBox">
               <Image
                 width={0}
                 height={0}
                 sizes="100vw"
-                style={{ width: '100%', height: '100%' }}
+                style={{ }}
                 src={articleDetails?.coverPhotoThumbnail}
                 alt="thumbnail"
               />
-              <Box sx={{ position: 'absolute', top: '10px', left: '10px' }}>
+              <Box className="dottedButton">
                 <DottedButton
                   options={addEdittype ? addEditoptions : options}
                   setItem={setItem}
@@ -229,7 +243,7 @@ export default function ArticleContainer({
                 )}
               </Typography>
             </Box>
-            <IconButton>
+            <IconButton onClick={(e) => e.stopPropagation()}>
               <BookMarkIcon />
             </IconButton>
           </Box>
