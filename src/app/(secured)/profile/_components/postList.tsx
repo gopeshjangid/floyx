@@ -3,7 +3,7 @@ import PostList from '@/components/Post/PostList';
 import { useGetPostListByUserQuery } from '@/lib/redux';
 import { Box, Grid, useMediaQuery } from '@mui/material';
 import { useParams } from 'next/navigation';
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 
 export interface apiParams {
   pageNumber: number;

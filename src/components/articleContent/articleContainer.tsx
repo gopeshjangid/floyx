@@ -256,13 +256,12 @@ export default function ArticleContainer({
               alignItems: 'center',
             }}
           >
-            <Box>
-              <UserCard
-                name={userDetails?.name}
-                username={userDetails?.username}
-                showDate={articleDetails?.publicationDate}
-              />
-            </Box>
+            <UserCard
+              name={userDetails?.name}
+              username={userDetails?.username}
+              showDate={articleDetails?.publicationDate}
+              isArticle={true}
+            />
           </Box>
         </Box>
       </ArticleContent>

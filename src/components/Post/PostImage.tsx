@@ -6,15 +6,7 @@ import { Suspense, useEffect, useState } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
-import 'react-image-lightbox-with-rotate/style.css';
-import dynamic from 'next/dynamic'
-
-// wrap your component that uses the graph lib.
-const Lightbox = dynamic(
-  () => import('react-image-lightbox-with-rotate'),
-  { ssr: false }
-)
-
+import Lightbox from "react-image-lightbox-rotate-fixed";
 import Post from './Post';
 
 export default function PostImage({ image, link, shared, isShared }: any) {
@@ -57,10 +49,8 @@ export default function PostImage({ image, link, shared, isShared }: any) {
             src={image.thumbnailPath}
             alt="thumbnail"
           />
-          {open && mounted && typeof window !== 'undefined' && (
-            <Suspense fallback={'Loaidng'}>
-              <Lightbox mainSrc={image.path} onCloseRequest={() => setOpen(false)} />
-            </Suspense>
+          {open && mounted && (
+            <Lightbox mainSrc={image.path} onCloseRequest={() => setOpen(false)} />
           )}
         </Box>
       )}
