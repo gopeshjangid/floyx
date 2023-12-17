@@ -11,7 +11,10 @@ import ArticleContent from "@/components/articleContent";
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
   const [saveDraft, setSaveDraft] = useState(false);
+  const [isPublish, setIsPublish] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [value, setValue] = useState<string>('newArticle');
+  const [articleId, setArticleId] = useState<string | undefined>(undefined);
 
   const [getArticleList, { data: articleList, isFetching }] = useLazyGetArticleListQuery();
   const { data: articleDraftNumbers } = useGetArticleInfoQuery();
@@ -42,14 +45,21 @@ export default function Page() {
           </Typography>
           <AddArticleHead
             setSaveDraft={setSaveDraft}
+            setIsPublish={setIsPublish}
+            isDisabled={isDisabled}
             articleDraftNumbers={articleDraftNumbers}
             value={value}
             setValue={setValue}
           />
           {value === 'newArticle' && (
             <AddArticleForm
+              isPublish={isPublish}
               saveDraft={saveDraft}
+              setIsPublish={setIsPublish}
+              setIsDisabled={setIsDisabled}
               setSaveDraft={setSaveDraft}
+              articleId={articleId}
+              setArticleId={setArticleId}
             />
           )}
           {value !== 'newArticle' && (

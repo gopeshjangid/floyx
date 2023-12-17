@@ -11,13 +11,26 @@ import {
   useTheme,
 } from '@mui/material';
 
-export default function AddArticleHead({ setSaveDraft, articleDraftNumbers, value, setValue }) {
+export default function AddArticleHead({
+  setSaveDraft,
+  setIsPublish,
+  articleDraftNumbers,
+  value,
+  setValue,
+  isDisabled
+}) {
+
   const { palette } = useTheme();
 
   const handleSaveDraft = () => {
     setSaveDraft(true);
+    setIsPublish(false);
   };
 
+  const handlePublish = () => {
+    setIsPublish(true);
+    setSaveDraft(false);
+  }
   const handlePageChange = (event, newValue) => {
     setValue(newValue);
   }
@@ -58,10 +71,20 @@ export default function AddArticleHead({ setSaveDraft, articleDraftNumbers, valu
       </Stack>
       {value === 'newArticle' && (
         <Stack direction="row" gap={1} alignItems={"flex-start"}>
-          <Button variant="outlined" sx={{ borderRadius: '10px' }} onClick={handleSaveDraft}>
+          <Button
+            variant="outlined"
+            sx={{ borderRadius: '10px' }}
+            onClick={handleSaveDraft}
+            disabled={isDisabled}
+          >
             Save as Draft
           </Button>
-          <Button variant="outlined" sx={{ borderRadius: '10px' }}>
+          <Button
+            variant="outlined"
+            sx={{ borderRadius: '10px' }}
+            onClick={handlePublish}
+            disabled={isDisabled}
+          >
             Publish
           </Button>
         </Stack>

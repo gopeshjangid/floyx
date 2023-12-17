@@ -165,7 +165,7 @@ export default function FullArticle({ details }: any) {
             ))}
         </Grid>
       </Box>
-      <Box sx={{ marginTop: '20px' }}>
+      {details?.article?.coverPhotoPath && (<Box sx={{ marginTop: '20px' }}>
         <Image
           width={0}
           height={0}
@@ -174,7 +174,7 @@ export default function FullArticle({ details }: any) {
           src={details?.article?.coverPhotoPath}
           alt="thumbnail"
         />
-      </Box>
+      </Box>)}
       <Box sx={{ marginTop: '20px', wordWrap: 'break-word' }}>
         {CONTENT &&
           CONTENT.map((val: any, index: number) => (

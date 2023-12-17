@@ -122,7 +122,6 @@ export const artcileDetails = createApi({
       invalidatesTags: (_, __, arg) => arg.type === 'ArticleLike' ? ['LikeStatus'] : [],
       onQueryStarted: (arg, api) => {
         api.queryFulfilled.then(() => {
-          console.log(arg);
           if (arg.type == 'PostLike') {
             api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }, 'postDetail']))
           } else if (arg.type == 'PostCommentLiked') {
@@ -153,6 +152,7 @@ export const artcileDetails = createApi({
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
+      providesTags: ['ArticleInfoNumber'],
     }),
     checkArticleIsShared: builder.mutation<boolean, string>({
       query: articleId => ({
@@ -170,8 +170,37 @@ export const artcileDetails = createApi({
       transformResponse: (response: any) => response?.value?.data || {},
       invalidatesTags: ['LikeStatus']
     }),
+    createArticleDraft: builder.mutation<any, any>({
+      query: (payload) => ({
+        url: `${ApiEndpoint.CreateDraft}`,
+        method: 'post',
+        body:payload,
+      }),
+      transformResponse: (response: any) => {
+        return response.value.data;
+      },
+      invalidatesTags: ['ArticleInfoNumber'],
+    }),
+    updateDraftArticle: builder.mutation<any, any>({
+      query: ({ articleId, payload }) => {
+        return {
+          url: `${ApiEndpoint.UpdateDraft}/${articleId}`,
+          method: 'put',
+          body: payload,
+        }
+      },
+      transformResponse: (response: any) => response.value.data,
+    }),
+    publishArticle: builder.mutation<any, any>({
+      query: (articleId) => ({
+        url: `${ApiEndpoint.PublishDraft}/${articleId}`,
+        method: 'put',
+        body: {}
+      }),
+      transformResponse: (response: any) => response.value.data,
+    }),
   }),
-  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList'],
+  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList', 'ArticleInfoNumber'],
 });
 
 export const {
@@ -185,4 +214,7 @@ export const {
   useGetArticleListQuery,
   useLazyGetArticleListQuery,
   useGetArticleInfoQuery,
+  useCreateArticleDraftMutation,
+  useUpdateDraftArticleMutation,
+  usePublishArticleMutation,
 } = artcileDetails;
