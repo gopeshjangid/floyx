@@ -7,7 +7,9 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
+import ListItemButton, {
+  ListItemButtonProps,
+} from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -24,6 +26,9 @@ import {
   ListItemSecondaryAction,
   styled,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
 } from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
@@ -46,10 +51,15 @@ import SettingsIcon from '@/iconComponents/settingsIcon';
 import { AddCircle } from '@mui/icons-material';
 import { GradientText } from '@/components/usernameLink';
 import SidebarProfileBar from '@/components/sidebarProfileInfo';
+import AddPost from '@/components/Post/AddPost';
 
 const drawerWidth = 240;
 
 const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
+  color:
+    theme.palette.mode === 'light'
+      ? theme.palette.common.black
+      : theme.palette.common.white,
   '&:hover': {
     background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
     color:
@@ -68,8 +78,31 @@ const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
           ? theme.palette.common.white
           : theme.palette.common.black,
     },
+    '& svg': {
+      stroke:
+        theme.palette.mode === 'light'
+          ? theme.palette.common.white
+          : theme.palette.common.black,
+    },
   },
 }));
+
+interface LinkListItemButtonProps
+  extends Omit<ListItemButtonProps, 'component'> {
+  href: string;
+}
+
+const LinkListItemButton: React.FC<LinkListItemButtonProps> = ({
+  href,
+  children,
+  ...props
+}) => {
+  return (
+    <Link href={href} passHref>
+      <CustomListItemButton {...props}>{children}</CustomListItemButton>
+    </Link>
+  );
+};
 
 const CountWrapper = ({ count }: { count: number }) => (
   <Box
@@ -112,7 +145,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
   const theme = useTheme();
+  const { palette } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openWriteDialog, setOpenWriteDialog] = useState(false);
 
   const navItems = [
     {
@@ -168,9 +203,13 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     },
     {
       label: '',
-      href: '/profile',
-      icon: (fill: string) => (
-        <Button variant="outlined" startIcon={<AddCircle />}>
+      href: '',
+      icon: () => (
+        <Button
+          variant="outlined"
+          startIcon={<AddCircle />}
+          onClick={() => setOpenWriteDialog(true)}
+        >
           <GradientText>Write Post</GradientText>{' '}
         </Button>
       ),
@@ -241,28 +280,30 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       </Box>
       <List>
         {navItems.map((item, index) => (
-          <CustomListItemButton
-            key={index}
-            LinkComponent={Link}
+          <LinkListItemButton
+            key={index + 'list-item-nav-item'}
             href={
               item.label === 'Profile'
                 ? `${item.href}/${session.data?.user?.username}`
                 : item.href
             }
           >
-            <ListItemIcon>
-              {item?.icon && item?.icon(theme.palette.text.primary)}
-            </ListItemIcon>
-            <ListItemText primary={item.label} />
-            <ListItemSecondaryAction>
-              {item.label === 'Notifications' &&
-              drawerData.notificationCount > 0 ? (
-                <CountWrapper count={drawerData.notificationCount} />
-              ) : item.label === 'Messages' && drawerData.messagesCount > 0 ? (
-                <CountWrapper count={drawerData.messagesCount} />
-              ) : null}
-            </ListItemSecondaryAction>
-          </CustomListItemButton>
+            <>
+              <ListItemIcon>
+                {item?.icon && item?.icon(theme.palette.text.primary)}
+              </ListItemIcon>
+              <ListItemText primary={item.label} />
+              <ListItemSecondaryAction>
+                {item.label === 'Notifications' &&
+                drawerData.notificationCount > 0 ? (
+                  <CountWrapper count={drawerData.notificationCount} />
+                ) : item.label === 'Messages' &&
+                  drawerData.messagesCount > 0 ? (
+                  <CountWrapper count={drawerData.messagesCount} />
+                ) : null}
+              </ListItemSecondaryAction>
+            </>
+          </LinkListItemButton>
         ))}
 
         <ListItem>
@@ -373,6 +414,21 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
           </Paper>
         )}
       </nav>
+      <Dialog
+        open={openWriteDialog}
+        onClose={() => setOpenWriteDialog(false)}
+        aria-labelledby="responsive-dialog-title"
+        PaperProps={{
+          sx: { background: palette.background.default, width: '100%', },
+        }}
+      >
+        <DialogTitle sx={{textAlign:'center', paddingBottom:0}}>
+          Create Post
+        </DialogTitle>
+        <DialogContent sx={{m:0,paddingTop:0}}>
+          <AddPost writeDialog={true} setOpenWriteDialog={setOpenWriteDialog}/>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

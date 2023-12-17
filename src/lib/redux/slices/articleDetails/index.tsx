@@ -146,14 +146,15 @@ export const artcileDetails = createApi({
 
     getArticleList: builder.query<any, string|undefined>({
       query: tabName => `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ""}`,
-      providesTags: ['getArticleList'],
+      providesTags: ['getArticleList', 'deleteArticle'],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
-      providesTags: ['ArticleInfoNumber'],
+      providesTags: ['ArticleInfoNumber', 'deleteArticle'],
     }),
+
     checkArticleIsShared: builder.mutation<boolean, string>({
       query: articleId => ({
         url: `${ApiEndpoint.IsSharedPost}/${articleId}`,
@@ -199,8 +200,16 @@ export const artcileDetails = createApi({
       }),
       transformResponse: (response: any) => response.value.data,
     }),
+    deleteArticle: builder.mutation<any , string>({
+      query: (articleId)=>({
+        url:`${ApiEndpoint.DeleteArticle}/${articleId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['deleteArticle']
+
+    })
   }),
-  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList', 'ArticleInfoNumber'],
+  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList', 'deleteArticle', 'ArticleInfoNumber'],
 });
 
 export const {
@@ -217,4 +226,5 @@ export const {
   useCreateArticleDraftMutation,
   useUpdateDraftArticleMutation,
   usePublishArticleMutation,
+  useDeleteArticleMutation,
 } = artcileDetails;

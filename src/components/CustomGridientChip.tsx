@@ -11,7 +11,7 @@ const GradientText = styled('span')({
 });
 
 // Styled component for the fully rounded Chip with a semi-transparent gradient background
-const GradientChip = styled(Chip)(({ theme }) => ({
+const GradientChip = styled(Chip)(() => ({
   borderRadius: '33px', // Fully rounded ends
   background:
     'linear-gradient(to right, rgba(171, 89, 255, 0.1), rgba(133, 143, 255, 0.1), rgba(77, 154, 255, 0.1))', // Semi-transparent gradient background

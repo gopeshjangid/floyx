@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SVGUser = () => {
+const SVGUser = (props: any) => {
   return (
     <svg
       width="23"
@@ -8,6 +8,7 @@ const SVGUser = () => {
       viewBox="0 0 23 23"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g id="vuesax/linear/profile">
         <g id="profile">

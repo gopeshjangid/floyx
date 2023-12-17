@@ -5,15 +5,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DialogProps as MUIDialogProps } from '@mui/material/Dialog';
 
-interface CustomDialogProps extends MUIDialogProps {
+interface CustomDialogProps {
   title: string;
   content: React.ReactNode;
   actions: React.ReactNode;
 }
 
-const CustomDialog: React.FC<CustomDialogProps> = ({
+const CustomDialog: React.FC<CustomDialogProps & MUIDialogProps> = ({
   title,
-  content,
+  content = '',
   actions,
   ...dialogProps
 }) => {

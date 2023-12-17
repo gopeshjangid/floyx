@@ -28,7 +28,12 @@ const initialPostObj = {
   publishButtonDisabled: false,
 };
 
-export default function AddPost() {
+interface MyComponentProps {
+  writeDialog?: boolean; // Optional prop
+  setOpenWriteDialog?: any
+}
+
+export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComponentProps) {
   const toast = useToast();
   const imageFileInput = useRef<HTMLInputElement>(null);
   const [postObj, setPostObj] = useState(initialPostObj);
@@ -95,6 +100,7 @@ export default function AddPost() {
     setImagePreview('');
     setImageToUpload('');
     toast.success('Post is created successfully');
+    if (writeDialog) setOpenWriteDialog(false)
   };
 
   const publishPost = () => {
@@ -105,7 +111,7 @@ export default function AddPost() {
   return (
     <>
       <PostBox>
-        <Tabs
+        {!writeDialog && <Tabs
           value={value}
           onChange={handleChange}
           aria-label="icon tabs example"
@@ -122,7 +128,7 @@ export default function AddPost() {
             }
             href="/composer/create"
           />
-        </Tabs>
+        </Tabs>}
         <Box
           className={`input-container ${
             postObj.postTextLeft < 0

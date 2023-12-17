@@ -158,7 +158,9 @@ export default function ActionModal({
       }
       setOpenDialog(false);
     } catch (error) {
-      toast.error(`Error occured in reporting the ${item === 2 ? 'user' : 'article'}`);
+      toast.error(
+        `Error occured in reporting the ${item === 2 ? 'user' : 'article'}`
+      );
       console.error('Error reporting the user:', error);
     }
   };
@@ -191,7 +193,7 @@ export default function ActionModal({
       toast.success('Article is Published Succesfully ');
     }
     setCommentText('');
-    setOpenDialog(false)
+    setOpenDialog(false);
   };
 
   const getModalHeading = (item: number) => {
@@ -278,14 +280,14 @@ export default function ActionModal({
         return (
           <Box>
             <Box sx={{ padding: '10px' }}>
-            <AddComment
-              id={articleDetails.id}
-              commentRef={commentRef}
-              commentType={"ArticleComment"}
-              commentText={commentText}
-              setCommentText={setCommentText}
-            />
-          </Box>
+              <AddComment
+                id={articleDetails.id}
+                commentRef={commentRef}
+                commentType={'ArticleComment'}
+                commentText={commentText}
+                setCommentText={setCommentText}
+              />
+            </Box>
             <Box sx={{ padding: '10px' }}>
               <Image
                 width={0}
@@ -333,13 +335,19 @@ export default function ActionModal({
   useEffect(() => {
     if (blockError || articleError || userError)
       if (blockError) {
-        toast.error(blockError?.data.value.code[0] || "Somethinng went wrong");
+        toast.error(
+          (blockError as any)?.data.value.code[0] || 'Somethinng went wrong'
+        );
       }
     if (articleError) {
-      toast.error(articleError?.data.value.code[0] || "Somethinng went wrong");
+      toast.error(
+        (articleError as any)?.data.value.code[0] || 'Somethinng went wrong'
+      );
     }
     if (userError) {
-      toast.error(userError?.data.value.code[0] || "Somethinng went wrong");
+      toast.error(
+        (userError as any)?.data.value.code[0] || 'Somethinng went wrong'
+      );
     }
   }, [blockError, articleError, userError]);
 

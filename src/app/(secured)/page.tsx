@@ -43,8 +43,8 @@ export default function Page() {
   }, [postData]);
   const viewportHeight = window.innerHeight;
   return (
-    <Box p={isMobile ? 2 : 0} mt={2}>
-      <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+    <Box p={isMobile ? 2 : 2} mt={2}>
+      <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>
         <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
           <Box
             sx={{
@@ -66,7 +66,7 @@ export default function Page() {
               loadMore={loadMore}
               apiParams={apiParams}
               isFetching={isFetching}
-              hasMore={postData?.length === 10}
+              hasMore={ postData === undefined || postData?.length % 10 === 0}
             />
           </Box>
         </Grid>

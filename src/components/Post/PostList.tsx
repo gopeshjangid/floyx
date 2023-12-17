@@ -1,6 +1,6 @@
 'use client';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Box, CircularProgress, Skeleton, Stack } from '@mui/material';
+import { Box, Skeleton, Stack } from '@mui/material';
 
 import { PostBox } from './styledPostBox';
 import Post from './Post';
@@ -45,7 +45,7 @@ export default function PostList({
           loadMore={(e: any) => loadMore(e, apiParams?.pageNumber, isFetching)}
           hasMore={hasMore}
           useWindow={false}
-          threshold={100}
+          // threshold={100}
           loader={<LoaderSkeleton key="loader-ininfite" />}
         >
           {postData?.map((val: any) => (

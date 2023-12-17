@@ -10,7 +10,6 @@ const SVGComponent = props => (
   >
     <path
       d="M14 5h6m-6 3h3m4 3.5c0 5.25-4.25 9.5-9.5 9.5S2 16.75 2 11.5 6.25 2 11.5 2M22 22l-2-2"
-      stroke={props.stroke}
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"

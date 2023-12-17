@@ -24,7 +24,7 @@ export default function Page() {
       case "my":
         getArticleList(undefined);
         return;
-      case "":
+      case "draft":
         getArticleList(tabVal);
         return;
       default:
@@ -66,6 +66,7 @@ export default function Page() {
             <ArticleContent
               articleList={articleList}
               loadingList={isFetching}
+              addEdittype={true}
             />
           )}
           

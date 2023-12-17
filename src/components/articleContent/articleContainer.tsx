@@ -1,6 +1,17 @@
 'use client';
 
-import { Box, IconButton, Skeleton, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Skeleton,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Image from 'next/image';
 import UserCard from '../UserCard';
@@ -12,7 +23,7 @@ import FlagIcon from '@/images/image/flagIcon';
 import BlockUserIcon from '@/images/image/blockUser';
 import { useState } from 'react';
 import ActionModal from './actionModal';
-
+import { useDeleteArticleMutation } from '@/lib/redux';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -83,14 +94,31 @@ const options = [
   },
 ];
 
-export default function ArticleContainer({ articleDetails, userDetails }: any) {
+const addEditoptions = [
+  {
+    name: 'Edit',
+  },
+  {
+    name: 'Delete',
+  },
+];
+
+export default function ArticleContainer({
+  articleDetails,
+  userDetails,
+  addEdittype,
+}: any) {
+  const { palette } = useTheme();
   const [item, setItem] = useState<number>();
   const [openDialog, setOpenDialog] = useState(false);
-
+  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
   const { data: tipHistory } = useGetTipHistoryQuery();
+  const [deleteArtice] = useDeleteArticleMutation()
 
-  const content = JSON.parse(articleDetails?.content);
-  const description = content[0]?.value;
+  const content = articleDetails?.content
+    ? JSON.parse(articleDetails?.content)
+    : [];
+  const description = content.length > 0 ? content[0]?.value : '';
 
   const createMarkup = (htmlString: string) => {
     return { __html: htmlString };
@@ -113,9 +141,31 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
   };
 
   const handleOption = (index: number) => {
-    setOpenDialog(true);
-    setItem(index);
-  }
+    if (addEdittype) {
+      switch (index) {
+        case 0:
+          window.open('/composer/create');
+          return;
+        case 1:
+          setOpenConfirmationDialog(true);
+          return;
+      }
+    } else {
+      setOpenDialog(true);
+      setItem(index);
+    }
+  };
+
+  const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setOpenConfirmationDialog(false);
+  };
+
+  const handleDeleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    deleteArtice(articleDetails?.id)
+  };
+
   return (
     <>
       <ArticleContent onClick={handleClick}>
@@ -130,10 +180,13 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
                 src={articleDetails?.coverPhotoThumbnail}
                 alt="thumbnail"
               />
-              <Box sx={{position: 'absolute', top: '10px', left: '10px'}}>
-                <DottedButton options={options} setItem={setItem} handleOption={handleOption}/>
+              <Box sx={{ position: 'absolute', top: '10px', left: '10px' }}>
+                <DottedButton
+                  options={addEdittype ? addEditoptions : options}
+                  setItem={setItem}
+                  handleOption={handleOption}
+                />
               </Box>
-              <ActionModal item={item} openDialog={openDialog} setOpenDialog={setOpenDialog} articleDetails={articleDetails} username={userDetails?.username}/>
             </Box>
           ) : (
             <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
@@ -213,6 +266,29 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
           </Box>
         </Box>
       </ArticleContent>
+      <ActionModal
+        item={item}
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        articleDetails={articleDetails}
+        username={userDetails?.username}
+      />
+      <Dialog
+        open={openConfirmationDialog}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+        PaperProps={{ sx: { background: palette.background.default } }}
+        onClick={event => event.stopPropagation()}
+      >
+        <DialogTitle id="responsive-dialog-title">Please Confirm</DialogTitle>
+        <DialogContent>
+          Are you sure you want to delete this Article ?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteArticle}>Yes</Button>
+          <Button onClick={handleClose}>No</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
