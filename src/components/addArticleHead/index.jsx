@@ -16,7 +16,8 @@ export default function AddArticleHead({
   articleDraftNumbers,
   value,
   setValue,
-  isDisabled
+  isDisabled,
+  isPublished,
 }) {
 
   const { palette } = useTheme();
@@ -84,7 +85,7 @@ export default function AddArticleHead({
             onClick={handlePublish}
             disabled={isDisabled}
           >
-            Publish
+            {isPublished ? "Save Edit" : "Publish"}
           </Button>
         </Stack>
       )}

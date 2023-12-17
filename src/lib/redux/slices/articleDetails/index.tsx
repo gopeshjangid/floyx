@@ -211,6 +211,13 @@ export const artcileDetails = createApi({
       query: () => `${ApiEndpoint.AccountsToFallow}?forHome=true`,
       transformResponse: (response: any) => response?.value?.data || {},
     }),
+    getDraftDetail: builder.query<any, void>({
+      query: (articleId) => {
+        console.log(articleId);
+        return `${ApiEndpoint.GetDrafts}/${articleId}`
+      },
+      transformResponse: (response: any) => response?.value?.data || {},     
+    }),
   }),
   tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList', 'deleteArticle', 'ArticleInfoNumber'],
 });
@@ -231,4 +238,5 @@ export const {
   usePublishArticleMutation,
   useDeleteArticleMutation,
   useGetFollowMoreAccountQuery,
+  useLazyGetDraftDetailQuery,
 } = artcileDetails;

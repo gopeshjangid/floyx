@@ -55,6 +55,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     }
   }
 
+
   React.useEffect(() => {
     focus(state.index)
   }, [state.index])
@@ -471,6 +472,10 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   React.useEffect(() => {
     setState(prev => ({...prev, contentArticleCreated: articleCreated}))
   }, [articleCreated])
+
+  React.useEffect(() => {
+    setState(val => ({ ...val, inputsList: content }));
+  }, [content]);
 
   return (
     <ArticleItem>

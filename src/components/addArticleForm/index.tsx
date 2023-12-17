@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles"
 import ArticleItems from "./article-items";
 import ImageIcon from "@/assets/images/svg/image";
 import Image from "next/image";
-import { useCreateArticleDraftMutation, usePublishArticleMutation, useUpdateDraftArticleMutation } from "@/lib/redux";
+import { useCreateArticleDraftMutation, useLazyGetDraftDetailQuery, usePublishArticleMutation, useUpdateDraftArticleMutation } from "@/lib/redux";
 import { useToast } from "../Toast/useToast";
 
 export const AddArticleFormBox = styled(Box)(({ theme }) => ({
@@ -32,6 +32,8 @@ export default function AddArticleForm({
   setIsPublish,
   articleId,
   setArticleId,
+  isEditing,
+  setIsPublished,
 }: any) {
   const [articleCreated, setArticleCreated] = useState<boolean>(false);
   const [startAutoSave, setStartAutoSave] = useState<boolean>(false);
@@ -56,7 +58,8 @@ export default function AddArticleForm({
   const [createDraft] = useCreateArticleDraftMutation();
   const [updateDraft, {isLoading}] = useUpdateDraftArticleMutation();
   const [publishArticle, {isLoading: publishLoading}] = usePublishArticleMutation();
- 
+  const [getDraftDetail] = useLazyGetDraftDetailQuery();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleButtonClick = () => {
@@ -203,7 +206,6 @@ export default function AddArticleForm({
     }
   };
 
- 
   const updateDraftArticle = async (forceUpdate) => {
     const { syncContent, syncTitle, syncCoverPhoto } = state;
     if (
@@ -222,9 +224,23 @@ export default function AddArticleForm({
     }
   }
 
+  const getArticleDetail = async () => {
+    const response = await getDraftDetail(articleId);
+    if (response.data) {
+      setTitle(response.data?.title);
+      setContent(JSON.parse(response?.data?.content));
+      setImagePreview(response?.data?.coverPhotoPath || "");
+      setImageToUpload(response?.data?.coverPhotoPath || "");
+      setIsPublished(response?.data?.isPublished);
+      setStartAutoSave(true);
+      setIsDisabled(false);
+    }
+    console.log(response);
+  }
   useEffect(() => {
     const sub = setInterval(() => {
-      // updateDraftArticle(false);
+      if(startAutoSave)
+        updateDraftArticle(false);
     }, 3000); 
 
     return () => {
@@ -242,6 +258,12 @@ export default function AddArticleForm({
     }
   }, [isPublish, saveDraft, articleId, state, title, content, imageToUpload]);
 
+  useEffect(() => {
+    console.log('isEditing', isEditing);
+    if (isEditing) {
+      getArticleDetail();
+    }
+  }, [isEditing, articleId])
   return (
     <AddArticleFormBox>
       <TextField

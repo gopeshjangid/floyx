@@ -121,6 +121,9 @@ export default function ArticleContainer({
   articleDetails,
   userDetails,
   addEdittype,
+  setIsEditing,
+  setArticleId,
+  setValue,
 }: any) {
   const { palette } = useTheme();
   const [item, setItem] = useState<number>();
@@ -158,7 +161,11 @@ export default function ArticleContainer({
     if (addEdittype) {
       switch (index) {
         case 0:
-          window.open('/composer/create');
+          console.log(articleDetails?.id)
+          setArticleId(articleDetails?.id);
+          setIsEditing(true);
+          setValue('newArticle');
+          // window.open('/composer/create');
           return;
         case 1:
           setOpenConfirmationDialog(true);

@@ -15,6 +15,8 @@ export default function Page() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [value, setValue] = useState<string>('newArticle');
   const [articleId, setArticleId] = useState<string | undefined>(undefined);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isPublished, setIsPublished] = useState<boolean>(false);
 
   const [getArticleList, { data: articleList, isFetching }] = useLazyGetArticleListQuery();
   const { data: articleDraftNumbers } = useGetArticleInfoQuery();
@@ -50,6 +52,7 @@ export default function Page() {
             articleDraftNumbers={articleDraftNumbers}
             value={value}
             setValue={setValue}
+            isPublished={isPublished}
           />
           {value === 'newArticle' && (
             <AddArticleForm
@@ -60,6 +63,8 @@ export default function Page() {
               setSaveDraft={setSaveDraft}
               articleId={articleId}
               setArticleId={setArticleId}
+              isEditing={isEditing}
+              setIsPublished={setIsPublished}
             />
           )}
           {value !== 'newArticle' && (
@@ -67,6 +72,9 @@ export default function Page() {
               articleList={articleList}
               loadingList={isFetching}
               addEdittype={true}
+              setArticleId={setArticleId}
+              setIsEditing={setIsEditing}
+              setValue={setValue}
             />
           )}
           
