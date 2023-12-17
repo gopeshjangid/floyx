@@ -5,9 +5,7 @@ import {
   useTheme,
   Avatar,
   Stack,
-  Button,
   Skeleton,
-  LinearProgress,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import UsernameLink from './usernameLink';
@@ -15,6 +13,8 @@ import {
   useFollowUserMutation,
   useGetPopularAccountsToFollowQuery,
 } from '@/lib/redux/slices/profile';
+import ButtonWithLoading from './ButtonWithLoading';
+import { useState } from 'react';
 
 const AccountBox = styled(Stack)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
@@ -26,27 +26,25 @@ const AccountBox = styled(Stack)(({ theme }) => ({
 
 export default function FollowNewAccounts() {
   const theme = useTheme();
-  const [followUser, { isLoading: isFollowing, isError: followError }] =
-    useFollowUserMutation();
+  const [item, setItem] = useState('');
+  const [
+    followUser,
+    { isLoading: isFollowing, isSuccess, isError: followError },
+  ] = useFollowUserMutation();
   const { data, isLoading, isError } = useGetPopularAccountsToFollowQuery({
     param: '?forHome=true',
   });
 
-  if (isLoading) return null;
+  const followAccount = account => {
+    setItem(account.username);
+    followUser({ username: account.username });
+  };
+
+  if (isLoading || isError) return null;
 
   return (
     <Box mt={2}>
       <Typography variant="h6">Start Follow Some Accounts</Typography>
-      {(isError || followError) && (
-        <Typography variant="body2" color="error">
-          Something went wrong!
-        </Typography>
-      )}
-      {isFollowing && (
-        <Box width="100%">
-          <LinearProgress />
-        </Box>
-      )}
       <Stack direction="row" gap={1} my={2} sx={{ overflowX: 'auto' }}>
         {!isLoading && data ? (
           data?.result?.map((account, index) => (
@@ -58,7 +56,7 @@ export default function FollowNewAccounts() {
               key={`follow-account-${index}`}
             >
               <Avatar src={account.avatar} />
-              <Stack direction="row" gap={1}>
+              <Stack>
                 <Typography variant="body1">{account.name}</Typography>
                 <UsernameLink username={account.username ?? 'suername'} />
               </Stack>
@@ -77,13 +75,15 @@ export default function FollowNewAccounts() {
                   </span>
                 </Typography>
               </Stack>
-              <Button
-                onClick={() => followUser({ username: account.username })}
+              <ButtonWithLoading
+                onClick={() => followAccount({ username: account.username })}
                 variant="outlined"
-                disabled={isFollowing}
+                isLoading={isFollowing && item === account.username}
+                isSuccess={isSuccess && item === account.username}
+                isError={followError && item === account.username}
               >
-                Follow
-              </Button>
+                {isSuccess && item === account.username ? 'Followed' : 'Follow'}
+              </ButtonWithLoading>
             </AccountBox>
           ))
         ) : (

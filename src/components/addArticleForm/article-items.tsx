@@ -3,10 +3,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import ContentEditable from 'react-contenteditable';
 import YouTube from 'react-youtube';
 import Vimeo from 'react-vimeo';
-import {
-  FormGroup, Input, Typography, useTheme
-  // FormFeedback
-} from '@mui/material'
+import { Input, Typography, useTheme } from '@mui/material'
 import { v4 } from 'uuid'
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -24,7 +21,6 @@ import ImageIcon from "@/assets/images/svg/image";
 const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   const { palette } = useTheme();
   const colorVvg = palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main;
-  const imageColor = palette?.mode === 'light' ? "textPrimary" : "actionSvg";
   const [isTextSelected, setIsTextSelected] = React.useState(false);
   const [state, setState] = React.useState<any>({
     currentImgIndex: null,
@@ -59,26 +55,9 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     }
   }
 
-  const showEmojiPickers = () => {
-    setState((prev) => ({ ...prev, showEmojiPicker: !prev.showEmojiPicker }))
-  }
-
   React.useEffect(() => {
     focus(state.index)
   }, [state.index])
-
-  const selectEmoji = (index: any, emoji: any) => {
-    setState((prev) => ({ ...prev, showEmojiPicker: false }))
-    const { inputsList, previousKey } = state
-
-    inputsList.forEach((input: any) => {
-      if (input.index === index) {
-        input.value = `${input.value}${emoji.native}`
-      }
-      return input
-    })
-    setState((prev) => ({ ...prev, index, inputsList }))
-  }
 
   const initArticleComposer = () => {
     addInput(0)
@@ -384,23 +363,6 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     setState((prev) => ({ ...prev, inputsList }))
   }
 
-  const editorLinkOutline = (e: any) => {
-    const { target } = e
-    const parent = target.parentNode
-    const grandParent = parent.parentNode
-    if (
-      typeof target.className === 'string' &&
-      !(
-        target.className.includes('articles-editor__editor-link') ||
-        parent.className.includes('articles-editor__editor-link') ||
-        grandParent.className.includes('articles-editor__editor-link')
-      )
-    ) {
-      setState((prev) => ({ ...prev, showURLInput: false }))
-      document.body.removeEventListener('click', editorLinkOutline, true)
-    }
-  }
-
   const toolbarOutline = (e: any) => {
     const { target } = e
     const parent = target.parentNode
@@ -433,7 +395,9 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
           document.body.addEventListener('click', toolbarOutline, true)
         }
       }
-    } catch {}
+    } catch (error) {
+      console.error(error);
+    }
     if (!isTextSelected) {
       setIsTextSelected(isTextSelected)
       document.body.removeEventListener('click', toolbarOutline, true)
@@ -452,16 +416,6 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     handleContentChange('', inputsList)
   }
 
-  const promptForLink = (e: any) => {
-    e.preventDefault()
-    const selection = window.getSelection()
-    if (isTextSelected && selection) {
-      setIsTextSelected(false);
-      setState((prev) => ({ ...prev, selectedRange: selection.getRangeAt(0), showURLInput: true }))
-      document.body.addEventListener('click', editorLinkOutline, true)
-    }
-  }
-
   const focus = (index: number) => {
     const { inputsList } = state
     const maximumIndex: number = Math.max(...inputsList.map((item: any) => item.index))
@@ -476,7 +430,8 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   }
 
   const checkUrl = (url: string, typeField: string = 'urlValue') => {
-    let new_url = url
+    let new_url = url;
+    //eslint-disable-next-line 
     const regex = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/
 
     if (new_url.length && !new_url.match(/http/)) {
@@ -502,7 +457,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     setState((prev) => ({ ...prev, showURLInput: false, openContextLink: false, urlValue: '', nameLink: '', inputsList }))
   }
 
-  const listenerSubmit = (e: any, startMethod: Function) => {
+  const listenerSubmit = (e: any, startMethod: any) => {
     const { key } = e
     if (key === 'Enter') {
       startMethod()
@@ -517,7 +472,6 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     setState(prev => ({...prev, contentArticleCreated: articleCreated}))
   }, [articleCreated])
 
-  const { showEmojiPicker } = state
   return (
     <ArticleItem>
         <div className="articles-editor__editor">

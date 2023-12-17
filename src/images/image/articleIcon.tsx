@@ -14,7 +14,7 @@ const ArticleIcon = () => {
         stroke="#85838F"
         strokeWidth="1.5"
         stroke-miterlimit="10"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
@@ -22,7 +22,7 @@ const ArticleIcon = () => {
         stroke="#85838F"
         strokeWidth="1.5"
         stroke-miterlimit="10"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
@@ -30,7 +30,7 @@ const ArticleIcon = () => {
         stroke="#85838F"
         strokeWidth="1.5"
         stroke-miterlimit="10"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
@@ -38,7 +38,7 @@ const ArticleIcon = () => {
         stroke="#85838F"
         strokeWidth="1.5"
         stroke-miterlimit="10"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>

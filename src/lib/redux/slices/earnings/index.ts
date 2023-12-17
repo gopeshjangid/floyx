@@ -76,6 +76,14 @@ export type DailyTaskType = {
   userid: string;
 };
 
+type ActiveCurrencyType = {
+  budgetLeft: number;
+  createdDate: string;
+  currencyName: string;
+  id: string;
+  totalBudget: number;
+};
+
 type BonusTaskStatusResponse = Task[];
 type ReferralStatusResponse = ReferralHistory[];
 type TipHistoryTypeResponse = TipHistoryType[];
@@ -92,11 +100,11 @@ export const earningsService = createApi({
     getUserWallet: builder.query<Wallet, void>({
       query: () => ApiEndpoint.UserWallet,
       transformResponse: (response: any) => response?.value?.data,
+      providesTags: ['walletHistory'],
     }),
     getTipHistory: builder.query<TipHistoryTypeResponse, void>({
       query: () => ApiEndpoint.UserTipHistory,
       transformResponse: (response: ApiResponse<TipHistoryTypeResponse>) => {
-        console.log({ response });
         return response?.value?.data;
       },
     }),
@@ -114,6 +122,11 @@ export const earningsService = createApi({
       transformResponse: (response: ApiResponse<InviteHistoryResponse>) =>
         response?.value.data,
     }),
+    getActiveCurrency: builder.query<ActiveCurrencyType, void>({
+      query: () => ApiEndpoint.ActiveCurrency,
+      transformResponse: (response: ApiResponse<ActiveCurrencyType>) =>
+        response?.value.data,
+    }),
     getCompletedTaskHistory: builder.query<CompletedHistoryTypeResponse, void>({
       query: () => ApiEndpoint.CompletedTaskHistory,
       transformResponse: (
@@ -126,11 +139,20 @@ export const earningsService = createApi({
         response?.value.data,
       providesTags: ['dailTaskList'],
     }),
+    updateWallet: builder.mutation<string, { walletAddress: string }>({
+      query: walletData => ({
+        url: `${ApiEndpoint.UpdateWallet}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+        body: walletData,
+      }),
+      transformResponse: (response: ApiResponse<string>) => response.value.data,
+      invalidatesTags: ['walletHistory'],
+    }),
 
     // Add other endpoints if needed
   }),
   // Enable caching, invalidation, and other features
-  tagTypes: ['TransactionHistory', 'dailTaskList'],
+  tagTypes: ['TransactionHistory', 'dailTaskList', 'walletHistory'],
 });
 
 export const {
@@ -143,4 +165,6 @@ export const {
   useGetCompletedTaskHistoryQuery,
   useGetInviteHistoryQuery,
   useGetDailyTaskListQuery,
+  useUpdateWalletMutation,
+  useGetActiveCurrencyQuery,
 } = earningsService;

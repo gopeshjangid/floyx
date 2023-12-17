@@ -35,9 +35,7 @@ export default function ProfileArticleList() {
   //     }
   //   };
 
-  useEffect(() => {
-    console.log('postData', articleList);
-  }, [articleList]);
+  useEffect(() => {}, [articleList]);
 
   return (
     <Box p={isMobile ? 2 : 0}>

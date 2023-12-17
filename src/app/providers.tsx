@@ -2,8 +2,8 @@
 import { ThemeProvider as PreferredThemeProvider } from 'next-themes';
 import Head from 'next/head';
 import { FC } from 'react';
-import NextAppDirEmotionCacheProvider from './EmotionCache';
-import MUIThemeProvider from './MuiThemeProvider';
+import NextAppDirEmotionCacheProvider from '@/components/ThemeRegistry/EmotionCache';
+import MUIThemeProvider from '@/components/ThemeRegistry/MuiThemeProvider';
 
 interface PageProviderProps {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ const PageProvider: FC<PageProviderProps> = ({ children }) => (
     </Head>
     <MUIThemeProvider>
       {' '}
-      <PreferredThemeProvider attribute="class" defaultTheme="dark">
+      <PreferredThemeProvider attribute="class">
         {children}{' '}
       </PreferredThemeProvider>
     </MUIThemeProvider>

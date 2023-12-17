@@ -1,11 +1,19 @@
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import { Box, Skeleton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
-import Lightbox from 'react-image-lightbox-with-rotate';
 import 'react-image-lightbox-with-rotate/style.css';
+import dynamic from 'next/dynamic'
+
+// wrap your component that uses the graph lib.
+const Lightbox = dynamic(
+  () => import('react-image-lightbox-with-rotate'),
+  { ssr: false }
+)
 
 import Post from './Post';
 
@@ -14,9 +22,6 @@ export default function PostImage({ image, link, shared, isShared }: any) {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
   const handleOpen = () => {
     if (!isShared) {
       setOpen(true);
@@ -52,8 +57,10 @@ export default function PostImage({ image, link, shared, isShared }: any) {
             src={image.thumbnailPath}
             alt="thumbnail"
           />
-          {open && mounted && (
-            <Lightbox mainSrc={image.path} onCloseRequest={handleClose} />
+          {open && mounted && typeof window !== 'undefined' && (
+            <Suspense fallback={'Loaidng'}>
+              <Lightbox mainSrc={image.path} onCloseRequest={() => setOpen(false)} />
+            </Suspense>
           )}
         </Box>
       )}

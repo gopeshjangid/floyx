@@ -4,20 +4,30 @@ import Stack from '@mui/material/Stack';
 
 export default function Loading() {
   return (
-    <Stack spacing={1}>
-      <Skeleton variant="rounded" width={'100%'} height={100} />
-      <Skeleton variant="circular" width={40} height={40} />
+    <Stack spacing={1} mt={3}>
+      <Skeleton
+        animation="wave"
+        variant="rounded"
+        width={'100%'}
+        height={100}
+      />
+      <Skeleton animation="wave" variant="circular" width={40} height={40} />
       <Stack direction={'row'} spacing={2}>
-        <Skeleton variant="text" />
-        <Skeleton variant="text" />
+        <Skeleton animation="wave" variant="text" width={'100%'} />
+        <Skeleton animation="wave" variant="text" width={'100%'} />
       </Stack>
-      <Skeleton variant="rounded" width={'100%'} height={80} />
+      <Skeleton animation="wave" variant="rounded" width={'100%'} height={80} />
       <Stack direction={'row'} spacing={2}>
-        <Skeleton variant="text" />
-        <Skeleton variant="text" />
-        <Skeleton variant="text" />
+        <Skeleton animation="wave" variant="text" />
+        <Skeleton animation="wave" variant="text" />
+        <Skeleton animation="wave" variant="text" />
       </Stack>
-      <Skeleton variant="rectangular" width={'100%'} height={160} />
+      <Skeleton
+        animation="wave"
+        variant="rectangular"
+        width={'100%'}
+        height={160}
+      />
     </Stack>
   );
 }

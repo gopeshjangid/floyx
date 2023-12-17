@@ -26,7 +26,6 @@ export default function Page() {
   const { data: postData, isFetching } = useGetPostsQuery(apiParams);
 
   const loadMore = (e: any, pageNumber: number, isFetching: boolean) => {
-    console.log('load more...');
     if (postData) {
       const lastPost = postData[postData.length - 1];
       if (e > pageNumber && lastPost !== undefined && !isFetching) {
@@ -39,7 +38,6 @@ export default function Page() {
   };
 
   useEffect(() => {
-    console.log('postData', postData);
   }, [postData]);
   const viewportHeight = window.innerHeight;
   return (

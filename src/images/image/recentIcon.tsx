@@ -14,7 +14,7 @@ const RecentIcon = () => {
         stroke="white"
         stroke-opacity="0.3"
         strokeWidth="1.5"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
@@ -22,7 +22,7 @@ const RecentIcon = () => {
         stroke="white"
         stroke-opacity="0.3"
         strokeWidth="1.5"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>

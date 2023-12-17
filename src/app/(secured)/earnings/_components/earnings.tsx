@@ -31,6 +31,13 @@ import ArticleIcon from '@/iconComponents/articleIcon';
 import axios from 'axios';
 import VoteIcon from '@/iconComponents/voteIcon';
 import EarningIcon from '@/iconComponents/earningIcon';
+import {
+  ArticleHistory,
+  DailyTaskHistory,
+  TransactionHistory,
+  VoteHistory,
+  WalletHistory,
+} from './HistoryCards';
 // Styled components
 const DashboardCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -95,7 +102,6 @@ const PointsBalanceCard = () => {
         const convertedBalance = wallet
           ? wallet.availableBalance * cryptoAmountPerDollar
           : 0;
-        console.log({ convertedBalance });
         setCurrentBalance(convertedBalance);
       })
       .catch((_err: any) => {
@@ -104,7 +110,6 @@ const PointsBalanceCard = () => {
   };
 
   React.useEffect(() => {
-    console.log({ currencyResp });
     if (currencyResp?.value?.data?.currencyName) {
       getActiveCurrency(currencyResp);
     }
@@ -142,7 +147,7 @@ const PointsBalanceCard = () => {
                   gap={2}
                 >
                   <TotalPpintsIcon
-                    fill={palette.mode === 'light' ? '#fff' : null}
+                    fill={palette.mode === 'light' ? '#fff' : ''}
                   />
                   <Typography sx={{ flex: 2 }} variant="h4">
                     {walletLoading ? (
@@ -153,17 +158,7 @@ const PointsBalanceCard = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                  <Button
-                    startIcon={<AccessTimeOutlinedIcon />}
-                    sx={{
-                      textDecoration: 'underline',
-                      fontWeight: 500,
-                      color: palette.primary[700],
-                    }}
-                    variant="text"
-                  >
-                    Transaction History
-                  </Button>
+                  <TransactionHistory />
                 </Grid>
               </Grid>
             </PointsDisplay>
@@ -217,9 +212,7 @@ const PointsBalanceCard = () => {
                   </Button>
                 </Grid>
                 <Grid item sm={6} xs={6}>
-                  <Button sx={balanceButtonStyle} variant="outlined">
-                    Wallet
-                  </Button>
+                  <WalletHistory />
                 </Grid>
               </Grid>
             </PointsDisplay>
@@ -237,7 +230,7 @@ type Dashboard = {
   firstCount: string | number;
   secondTitle: string;
   secondCount: string | number;
-  onHistoryClicked: () => void;
+  historyButton: React.ReactNode;
   isLoading: boolean;
 };
 const DashboardBox: React.FC<Dashboard> = props => {
@@ -280,14 +273,7 @@ const DashboardBox: React.FC<Dashboard> = props => {
             {props.isLoading ? (
               <Skeleton sx={{ height: '25px', width: '50px' }} variant="text" />
             ) : (
-              <Button
-                onClick={props?.onHistoryClicked}
-                startIcon={<AccessTimeOutlinedIcon />}
-                variant="outlined"
-                sx={{ width: '100%' }}
-              >
-                History
-              </Button>
+              props.historyButton
             )}
           </Grid>
         </Grid>
@@ -352,7 +338,7 @@ const Earnings: React.FC = () => {
         />
         <Divider /> */}
         <DashboardBox
-          onHistoryClicked={() => {}}
+          historyButton={<ArticleHistory />}
           title="Your Articles"
           titleIcon={
             <ArticleIcon
@@ -372,7 +358,7 @@ const Earnings: React.FC = () => {
         />
         <Divider />
         <DashboardBox
-          onHistoryClicked={() => {}}
+          historyButton={<VoteHistory />}
           title="Your Votes"
           titleIcon={
             <VoteIcon
@@ -392,7 +378,7 @@ const Earnings: React.FC = () => {
         />
         <Divider />
         <DashboardBox
-          onHistoryClicked={() => {}}
+          historyButton={<DailyTaskHistory />}
           title="Earnings From Daily Task"
           titleIcon={
             <EarningIcon

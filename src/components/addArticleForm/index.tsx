@@ -1,5 +1,5 @@
 'use client';
-import { Box, Stack, Divider, Chip, TextField, Typography, useTheme, FormLabel } from '@mui/material';
+import { Box, Stack, Chip, TextField, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { styled } from "@mui/material/styles"
@@ -54,8 +54,8 @@ export default function AddArticleForm({
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('');
 
   const [createDraft] = useCreateArticleDraftMutation();
-  const [updateDraft, {isLoading, isError}] = useUpdateDraftArticleMutation();
-  const [publishArticle, {isLoading: publishLoading, isError: publishError}] = usePublishArticleMutation();
+  const [updateDraft, {isLoading}] = useUpdateDraftArticleMutation();
+  const [publishArticle, {isLoading: publishLoading}] = usePublishArticleMutation();
  
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -134,7 +134,7 @@ export default function AddArticleForm({
     }
   }
 
-  const handleContentChange = (title: string, content: any, articleCreated) => {
+  const handleContentChange = (title: string, content: any) => {
     if (!articleCreatedRef.current ) {
       createDraftArticle(title, content, imageToUpload)
     }
@@ -157,7 +157,7 @@ export default function AddArticleForm({
     }
   };
 
-  const validatePublishButton = (title: string, content: any, imageToUpload:any) => {
+  const validatePublishButton = (title: string, content: any) => {
     let contentLength = 0
     content.forEach(element => {
       if (element.type === 'paragraph') {
@@ -186,7 +186,7 @@ export default function AddArticleForm({
   }
 
   const handleSubmit = async () => {
-    if (validatePublishButton(title, content, imageToUpload)) {
+    if (validatePublishButton(title, content)) {
       const payload = createArticleData(title, content, imageToUpload);
       await updateDraft({ articleId, payload });
       const response = await publishArticle(articleId);
@@ -205,7 +205,7 @@ export default function AddArticleForm({
 
  
   const updateDraftArticle = async (forceUpdate) => {
-    const { syncContent, syncTitle, syncCoverPhoto, syncHashTag } = state;
+    const { syncContent, syncTitle, syncCoverPhoto } = state;
     if (
       (articleId &&
         (title || content) &&

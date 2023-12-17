@@ -15,6 +15,17 @@ body {
     text-decoration: none;
   }
 }
+
+:root {
+  /* Your default theme */
+  --background: white;
+  --foreground: black;
+}
+
+[data-theme='dark'] {
+  --background: black;
+  --foreground: white;
+}
 .gradient-background {
   background: var(--gradient-color) !important;
   color: #000 !important;

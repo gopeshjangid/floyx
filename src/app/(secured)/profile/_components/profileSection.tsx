@@ -43,6 +43,7 @@ import { useSession } from 'next-auth/react';
 import CustomChip from '@/components/CustomGridientChip';
 import ImageUploader from '@/components/ImageUploader';
 import TextareaAutosize from '@/components/CustomTextArea';
+import ButtonWithLoading from '@/components/ButtonWithLoading';
 
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
@@ -113,9 +114,10 @@ const ProfilePic = styled(Box)<ProfileFollowerWrapperProps>(
   })
 );
 
-const OtherUserProfileActions: React.FC<{ username: string }> = ({
-  username,
-}) => {
+const OtherUserProfileActions: React.FC<{
+  username: string;
+  allowPrivateMassages: boolean;
+}> = ({ username, allowPrivateMassages }) => {
   const toast = useToast();
   const { data: accountDetail, isError: AccountLoadError } =
     useGetProfileDetailsQuery({ username: username! });
@@ -146,27 +148,31 @@ const OtherUserProfileActions: React.FC<{ username: string }> = ({
       alignItems="center"
       direction="row"
       gap={1}
+      pr={2}
     >
       <React.Suspense fallback={<Typography>Loading...</Typography>}>
         <BlockReportUser username={username} onSuccess={() => {}} />
       </React.Suspense>
 
-      <Button
-        onClick={() => router.push('/inbox/' + username)}
-        variant="contained"
-        startIcon={<EmailOutlinedIcon color="primary" />}
-      >
-        Message
-      </Button>
-      <CustomLoadingButton
+      {allowPrivateMassages && (
+        <Button
+          onClick={() => router.push('/inbox/' + username)}
+          variant="contained"
+          startIcon={<EmailOutlinedIcon color="primary" />}
+        >
+          Message
+        </Button>
+      )}
+      <ButtonWithLoading
         isLoading={isLoading}
-        text={accountDetail?.followed ? 'Unfollow' : 'Follow'}
+        isSuccess={isSuccess}
         variant="contained"
         onClick={() => followUser({ username })}
         disabled={AccountLoadError}
+        isError={isError}
       >
-        Follow
-      </CustomLoadingButton>
+        {accountDetail?.followed ? 'Unfollow' : 'Follow'}
+      </ButtonWithLoading>
       {/* <IconButton>
         <NotificationAddOutlinedIcon color="primary" />
       </IconButton> */}
@@ -446,7 +452,10 @@ const ProfileSection: React.FC = () => {
         {!isLoading && (
           <Box mt={isMobile ? 8 : 0}>
             {!isSameuser ? (
-              <OtherUserProfileActions username={username ?? ''} />
+              <OtherUserProfileActions
+                allowPrivateMassages={!!profile?.allowPrivateMassages}
+                username={username ?? ''}
+              />
             ) : null}
           </Box>
         )}
@@ -475,7 +484,7 @@ const ProfileSection: React.FC = () => {
                 color="textPrimary"
               >
                 {isLoading ? (
-                  <Skeleton variant="rectangular" height="60px" />
+                  <Skeleton variant="rectangular" width="100%" height="60px" />
                 ) : (
                   profile?.shortDescription
                 )}
