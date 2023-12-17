@@ -39,7 +39,7 @@ export default function Page() {
   };
 
   useEffect(() => {
-    console.log('postData', postData, postData === undefined, postData?.length % 10 === 0);
+    console.log('postData', postData);
   }, [postData]);
   const viewportHeight = window.innerHeight;
   return (
