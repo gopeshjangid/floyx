@@ -14,7 +14,6 @@ import { UserCardBox } from '../UserCard';
 import UsernameLink from '../usernameLink';
 
 const FriendActivitySection = styled(Box)(() => ({
-  marginLeft: '10px',
   marginTop: '20px',
   alignItems: 'center',
   padding: '0px',
@@ -76,7 +75,7 @@ export default function FriendsActivity() {
           <Stack gap={1}>
             {friendActivity.map((card, index) => (
               <UserBox key={`friendActivity${index}`} p={1}>
-                <Stack direction={'row'} gap={1} py={1}>
+                <Stack direction={'row'} gap={1} py={1} pl={2}>
                   <Avatar />
                   <Stack justifyContent={'center'}>
                     <Typography variant="subtitle2">{card.name}</Typography>

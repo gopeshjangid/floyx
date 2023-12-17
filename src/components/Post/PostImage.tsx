@@ -1,6 +1,6 @@
 'use client';
 import { Box, Skeleton, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,6 +11,7 @@ import Post from './Post';
 
 export default function PostImage({ image, link, shared, isShared }: any) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const handleClose = () => {
@@ -21,6 +22,10 @@ export default function PostImage({ image, link, shared, isShared }: any) {
       setOpen(true);
     }
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const openInNewTab = () => {
     window.open(link.url, "_blank")
@@ -47,7 +52,7 @@ export default function PostImage({ image, link, shared, isShared }: any) {
             src={image.thumbnailPath}
             alt="thumbnail"
           />
-          {open && (
+          {open && mounted && (
             <Lightbox mainSrc={image.path} onCloseRequest={handleClose} />
           )}
         </Box>

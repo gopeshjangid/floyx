@@ -36,7 +36,7 @@ const StyledBox = ({ children }: any) => {
 };
 
 const PopularAccountsList = () => {
-  const { data, isLoading } = useGetPopularAccountsToFollowQuery();
+  const { data, isLoading } = useGetPopularAccountsToFollowQuery({ param: '' });
   const accountsList =
     isLoading && !data ? [1, 2, 3, 4, 5] : data?.result ?? [];
   return (
