@@ -4,15 +4,19 @@ import ArticleIcon from '@/images/image/articleIcon';
 import LinkIcon from '@/images/image/linkIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
 import { useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
-import { Avatar, Box, Button, Typography, Link, Grid } from '@mui/material';
+import { Avatar, Box, Button, Typography, Link, Grid, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import UsernameLink from "../usernameLink";
+import UserAvatar from "../UserAvatar";
+import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
 
-export const AuthorDetailBox = styled(Box)(() => ({
+export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   width: '100%',
   marginTop: '35px',
   border: '1px solid white',
   padding: '20px 30px',
   borderRadius: '10px',
+  background: theme.palette.background.paper,
   '& .header': {
     display: 'flex',
     justifyContent: 'space-between',
@@ -41,7 +45,7 @@ export const AuthorDetailBox = styled(Box)(() => ({
   },
 }));
 
-export default function AuthorCoulmn({ details }: any) {
+export default function AuthorCoulmn({ details, profile, aboutProfile }: any) {
   const [updatePost] = useGetFollowStatusMutation();
   return (
     <AuthorDetailBox>
@@ -75,22 +79,20 @@ export default function AuthorCoulmn({ details }: any) {
         </Box>
       </Box>
       <Box className="author-box">
-        <Box>
-          <Avatar
+        <Box sx={{marginRight: 2}}>
+          <UserAvatar
             alt={details?.user?.name}
-            src={details?.user?.avatar}
-            sx={{ width: 60, height: 60, marginRight: '10px' }}
+            src={`${ApiEndpoint.CurrentUserDetails}/avatar/${details?.user?.username}`}
+            sx={{ width: '50px', height: '50px' }}
           />
         </Box>
         <Box>
-          <Box className="name">
-            <Typography variant="subtitle1" component={'span'}>
-              <Link href="#" underline="none">
-                {details?.user?.name}
-              </Link>
-              @{details?.user?.username}
+          <Stack direction={"row"} gap={1}>
+            <Typography variant="subtitle1" component={'span'} >
+              {details?.user?.name}
             </Typography>
-          </Box>
+            <UsernameLink username={details?.user?.username} />
+          </Stack>
           <Box
             sx={{
               display: 'flex',
@@ -104,7 +106,7 @@ export default function AuthorCoulmn({ details }: any) {
                 Followers:
               </Typography>
               <Typography variant="body2">
-                {details?.user?.numberOfFollowers}
+                {profile?.numberOfFollowers}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex' }}>
@@ -113,7 +115,7 @@ export default function AuthorCoulmn({ details }: any) {
                 Articles:
               </Typography>
               <Typography variant="body2">
-                {details?.user?.numberOfArticles}
+                {profile?.numberOfArticles}
               </Typography>
             </Box>
           </Box>
@@ -121,15 +123,16 @@ export default function AuthorCoulmn({ details }: any) {
       </Box>
       <Box className="author-about">
         <Typography variant="body1">
-          {details?.user?.shortDescription}
+          {profile?.shortDescription}
         </Typography>
+        {/* {JSON.stringify(aboutProfile?.about)} */}
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ marginRight: '25px' }}>
             <Typography variant="subtitle2">
-              {details?.user?.nationality || 'Canada'}
+              {aboutProfile?.about?.location}
             </Typography>
           </Box>
-          <Box>
+          {aboutProfile?.about?.website && <Box>
             <Link
               href="#"
               underline="none"
@@ -140,12 +143,12 @@ export default function AuthorCoulmn({ details }: any) {
               }}
             >
               {<LinkIcon />}
-              {details?.user?.websites || 'www.website.com'}
+              {aboutProfile?.about?.website}
             </Link>
-          </Box>
+          </Box>}
         </Box>
       </Box>
-      <Box className="more-about-auhtor">
+      {/* <Box className="more-about-auhtor">
         <Typography variant="h5">More From Author</Typography>
         <Grid
           container
@@ -153,7 +156,7 @@ export default function AuthorCoulmn({ details }: any) {
           columns={{ xs: 4, sm: 8, md: 12 }}
           sx={{ paddingTop: '20px' }}
         >
-          {/* {authorDetails?.user && authorDetails?.user?.more && (authorDetails?.user?.more).length && (authorDetails?.user?.more).map((val: any, index: number) => (
+        {authorDetails?.user && authorDetails?.user?.more && (authorDetails?.user?.more).length && (authorDetails?.user?.more).map((val: any, index: number) => (
             <Grid item xs={2} sm={4} md={6} key={index}>
               <Box sx={{ display: 'flex', border: '1px solid white', borderRadius: '10px', padding: '15px 10px' }}>
                 <Box sx={{ marginRight: '15px' }}>
@@ -182,9 +185,9 @@ export default function AuthorCoulmn({ details }: any) {
                 </Box>
               </Box>
             </Grid>
-          ))} */}
+          ))} 
         </Grid>
-      </Box>
+      </Box> */}
     </AuthorDetailBox>
   );
 }

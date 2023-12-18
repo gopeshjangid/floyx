@@ -1,4 +1,4 @@
-import { Box, Typography, Link, Button } from '@mui/material';
+import { Box, Typography, Link, Button, useTheme } from '@mui/material';
 import DateParser from '../DateParser';
 import LikeIcon from '@/images/image/likeIcon';
 import ReplyIcon from '@/images/image/replyIcon';
@@ -16,6 +16,7 @@ export default function Comment({
 }: any) {
   const [updateLike] = usePostLikeStatusMutation();
   const session = useSession();
+  const { palette } = useTheme();
 
   const commentLikeUnlike = async () => {
     await updateLike({ articleId: comment?.comment?.id, type });
@@ -50,11 +51,9 @@ export default function Comment({
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box>
             <Typography variant="subtitle1" component={'span'}>
-              <Link href="#" underline="none">
-                {comment?.user?.name}{' '}
-              </Link>
-              <UsernameLink username={comment?.user?.username} />
+              {comment?.user?.name}{' '}
             </Typography>
+            <UsernameLink username={comment?.user?.username} />
           </Box>
           {comment?.comment?.createdDateTime && (
             <Box>
@@ -62,7 +61,13 @@ export default function Comment({
             </Box>
           )}
         </Box>
-        <Box sx={{ width: '100%', marginTop: '15px', border: '1px solid white', borderRadius: '10px', padding: '20px' }}>
+        <Box
+          sx={{
+            width: '100%',
+            borderRadius: '10px',
+            padding: '10px',
+            background: palette.background.paper,
+          }}>
           {/* <Typography>{comment?.comment?.content}</Typography> */}
           <pre
             style={{

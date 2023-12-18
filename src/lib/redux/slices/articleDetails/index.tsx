@@ -141,6 +141,7 @@ export const artcileDetails = createApi({
         method: 'POST',
         body: payload,
       }),
+      transformErrorResponse: (error: any) => error?.data?.value?.data || "",
       invalidatesTags: ['articleTip'],
     }),
 
@@ -212,10 +213,7 @@ export const artcileDetails = createApi({
       transformResponse: (response: any) => response?.value?.data || {},
     }),
     getDraftDetail: builder.query<any, void>({
-      query: (articleId) => {
-        console.log(articleId);
-        return `${ApiEndpoint.GetDrafts}/${articleId}`
-      },
+      query: (articleId) => `${ApiEndpoint.GetDrafts}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || {},     
     }),
   }),

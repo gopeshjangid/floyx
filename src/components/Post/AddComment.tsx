@@ -11,7 +11,6 @@ import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
 
 const AddCommentBox = styled(Box)(({ theme }) => ({
-  marginTop: '20px',
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
@@ -76,7 +75,6 @@ export default function AddComment({
     if (mentionValue) {
       const renderSuggestions = await getUserSuggestion(mentionValue);
       if (renderSuggestions && Array.isArray(renderSuggestions?.data)) {
-        console.log(renderSuggestions.data);
         userList = renderSuggestions?.data;
       }
       callback(userList);

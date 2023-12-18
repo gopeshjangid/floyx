@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
-import { Box, Divider, Typography, Button, Modal, Stack } from '@mui/material';
+import { Box, Divider, Typography, Button, Modal, Stack, useTheme } from '@mui/material';
 import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
@@ -45,7 +45,7 @@ export default function LikesComments({
     null
   );
   const [commentText, setCommentText] = useState('');
-
+  const { palette } = useTheme();
   const toast = useToast();
   const router = useRouter();
   const open = Boolean(anchorEl);
@@ -162,10 +162,9 @@ export default function LikesComments({
         <>
           <Box
             sx={{
-              marginTop: '40px',
-              padding: '0px 19px 17px 19px',
-              border: '1px solid white',
+              padding: '20px',
               borderRadius: '10px',
+              background: palette.background.paper,
             }}
           >
             <AddComment
