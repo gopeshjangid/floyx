@@ -1,19 +1,38 @@
 'use client';
 
-import React from 'react';
-import { Box, Typography, Button, Grid, Popover } from '@mui/material';
-import UserCard from '@/components/UserCard';
+import React, { useState } from 'react';
+import { Box, Typography, Button, Grid, Popover, Stack, useTheme, Menu, MenuItem } from '@mui/material';
 import StarIcon from '@/images/image/star';
 import BookMarkIcon from '@/images/image/bookMarkIcon';
-import FaceBookIcon from '@/images/image/facebookIcon';
-import LinkedinIcon from '@/images/image/linkedin';
-import TwitterIcon from '@/images/image/twitter';
 import {
   useGetArticleTotalEarningsQuery,
   useGetFollowStatusMutation,
 } from '@/lib/redux/slices/articleDetails';
+import Image from 'next/image';
+import UsernameLink from "../usernameLink";
+import CalendarIcon from "@/images/image/calendarIcon";
+import moment from "moment";
+import UserAvatar from "../UserAvatar";
+import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
+import { FacebookShareButton, LinkedinShareButton, TwitterShareButton, TwitterIcon, FacebookIcon, LinkedinIcon } from 'react-share'
+import TranslateIcon from "@/assets/images/svg/translateIcon";
 
 export default function FullArticle({ details }: any) {
+  const { palette } = useTheme();
+  const colorSvg = palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main;
+  const [selectedLanguage, setSelectedLanguage] = useState("EN");
+  const [languageEl, setLanguageEl] = React.useState<null | HTMLElement>(null);
+  const openLanguage = Boolean(languageEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setLanguageEl(event.currentTarget);
+  };
+  const handleClose = (lang) => {
+    if (lang) {
+      setSelectedLanguage(lang);
+    }
+    setLanguageEl(null);
+  };
+
   const CONTENT =
     details?.article?.content && JSON.parse(details?.article?.content);
   const articleId = details?.article?.id || '';
@@ -23,9 +42,9 @@ export default function FullArticle({ details }: any) {
     useGetArticleTotalEarningsQuery(articleId);
   const pointsEarned = totalEarningPoints
     ? (
-        totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +
-        totalEarningPoints?.totalEarnings[0]?.userEarnedAmount
-      ).toFixed(3)
+      totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +
+      totalEarningPoints?.totalEarnings[0]?.userEarnedAmount
+    ).toFixed(3)
     : 0;
 
   const createMarkup = (htmlString: string) => {
@@ -55,15 +74,31 @@ export default function FullArticle({ details }: any) {
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex' }}>
+        <Stack direction={"row"} gap={1}>
+          <Stack direction={"row"}>
+            <Box sx={{ marginRight: '10px' }}>
+              <UserAvatar
+                alt={details?.user?.name}
+                src={`${ApiEndpoint.CurrentUserDetails}/avatar/${details?.user?.username}`}
+                sx={{ width: '50px', height: '50px' }}
+              />
+            </Box>
+            <Box>
+              <Typography
+                variant="subtitle1"
+                component={'span'}
+                color="textPrimary"
+              >
+                {details?.user?.name}
+              </Typography>
+              <UsernameLink variant="subtitle2" username={details?.user?.username} onClick={e => e.stopPropagation()} />
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <CalendarIcon />
+                {moment(details?.article?.publicationDate).format('MMM DD, YY')}
+              </Box>
+            </Box>
+          </Stack>
           <Box>
-            <UserCard
-              name={details?.user?.name}
-              username={details?.user?.username}
-              showDate={details?.article?.publicationDate}
-            />
-          </Box>
-          <Box sx={{ padding: '20px 10px' }}>
             <Button
               variant="outlined"
               size="small"
@@ -75,7 +110,7 @@ export default function FullArticle({ details }: any) {
               {details?.user?.isFollowed ? 'Follow' : 'UnFollow'}
             </Button>
           </Box>
-        </Box>
+        </Stack>
         <Box
           sx={{
             padding: '20px 0px',
@@ -164,9 +199,16 @@ export default function FullArticle({ details }: any) {
             ))}
         </Grid>
       </Box>
-      <Box sx={{ marginTop: '20px' }}>
-        <img src={details?.article?.coverPhotoPath} width={'100%'} />
-      </Box>
+      {details?.article?.coverPhotoPath && (<Box sx={{ marginTop: '20px' }}>
+        <Image
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: '100%', height: '100%' }}
+          src={details?.article?.coverPhotoPath}
+          alt="thumbnail"
+        />
+      </Box>)}
       <Box sx={{ marginTop: '20px', wordWrap: 'break-word' }}>
         {CONTENT &&
           CONTENT.map((val: any, index: number) => (
@@ -191,22 +233,48 @@ export default function FullArticle({ details }: any) {
         }}
       >
         <Box>
-          <Button variant="text">
-            <Typography variant="subtitle2">Edit</Typography>
+          <Button
+            id="basic-button"
+            aria-controls={openLanguage ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={openLanguage ? 'true' : undefined}
+            onClick={handleClick}
+            startIcon={<TranslateIcon color={colorSvg} />}
+            sx={{textTransform: "none"}}
+          >
+            Language: {selectedLanguage}
           </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={languageEl}
+            open={openLanguage}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={() => {handleClose('EN')}}>EN</MenuItem>
+            <MenuItem onClick={() => {handleClose('GE')}}>GE</MenuItem>
+          </Menu>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box sx={{ marginRight: '5px' }}>
             <Typography variant="body1">Share:</Typography>
           </Box>
           <Box sx={{ marginRight: '5px' }}>
-            <FaceBookIcon />
+            <FacebookShareButton url={'https://www.floyx.com/article/' + details?.user?.username + '/' + details?.user?.url}>
+              <FacebookIcon size={20} round={true} />
+            </FacebookShareButton>
           </Box>
           <Box sx={{ marginRight: '5px' }}>
-            <LinkedinIcon />
+            <LinkedinShareButton url={'https://www.floyx.com/article/' + details?.user?.username + '/' + details?.user?.url}>
+              <LinkedinIcon size={20} round={true} />
+            </LinkedinShareButton>
           </Box>
           <Box sx={{ marginRight: '5px' }}>
-            <TwitterIcon />
+            <TwitterShareButton url={'https://www.floyx.com/article/' + details?.user?.username + '/' + details?.user?.url}>
+              <TwitterIcon size={20} round={true} />
+            </TwitterShareButton>
           </Box>
         </Box>
       </Box>

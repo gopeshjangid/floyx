@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
-import { Box, Divider, Typography, Button, Modal, Stack } from '@mui/material';
+import { Box, Divider, Typography, Button, Modal, Stack, useTheme } from '@mui/material';
 import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
@@ -14,8 +14,9 @@ import {
   useShareArticleMutation,
   useCheckArticleIsSharedMutation,
 } from '@/lib/redux/slices/articleDetails';
-import Comment from '../CommentLists';
-import { allRoutes } from '@/constants/allRoutes';
+import Comment from "../CommentLists";
+import { allRoutes } from "@/constants/allRoutes";
+import Image from 'next/image';
 
 const style = {
   position: 'absolute',
@@ -44,7 +45,7 @@ export default function LikesComments({
     null
   );
   const [commentText, setCommentText] = useState('');
-
+  const { palette } = useTheme();
   const toast = useToast();
   const router = useRouter();
   const open = Boolean(anchorEl);
@@ -81,16 +82,20 @@ export default function LikesComments({
   const handlePublish = async () => {
     const result: any = await checkIsShared(itemId);
     const status: boolean = result?.data;
+    const payload = {
+      content: commentText,
+    };
     if (status) {
       toast.error('This article has already been shared');
+    } else {
+      await publishArticle({ articleId: itemId, status, payload });
+      toast.success('Article is Published Succesfully ');
     }
-    const payload = {
-      content: '',
-    };
-    await publishArticle({ articleId: itemId, status, payload });
-    toast.success('Article is Published Succesfully ');
+    setCommentText('')
     setAnchorEl(null);
   };
+
+  
   const likeType = () => {
     if (isPost) {
       return 'PostLike';
@@ -138,42 +143,28 @@ export default function LikesComments({
         <Typography variant="h5" sx={{ marginTop: '40px' }}>
           Comments
         </Typography>
-      )}
-      {showComments && (
-        <Box>
-          {Array.isArray(commentList) &&
-            commentList.map((val: any, index: number) => (
-              <>
-                <Comment key={index} comment={val} />
-                {index !== commentList.length - 1 && <Divider />}
-              </>
-            ))}
-        </Box>
-      )}
-      {showComments && (
-        <Box>
-          {Array.isArray(commentList) &&
-            commentList.map((val: any, index: number) => (
-              <div key={index}>
-                <Comment
-                  comment={val}
-                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
-                  setCommentText={setCommentText}
-                  inputRef={commentRef}
-                />
-                {index !== commentList.length - 1 && <Divider />}
-              </div>
-            ))}
-        </Box>
-      )}
+      )} 
+      {showComments && <Box>
+        {Array.isArray(commentList) &&
+          commentList.map((val: any, index: number) => (
+            <div key={index}>
+              <Comment
+                comment={val}
+                type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                setCommentText={setCommentText}
+                inputRef={commentRef}
+              />
+              {index !== commentList.length - 1 && <Divider />}
+            </div>
+        ))}
+      </Box>}
       {!isPost && isShared === undefined && (
         <>
           <Box
             sx={{
-              marginTop: '40px',
-              padding: '0px 19px 17px 19px',
-              border: '1px solid white',
+              padding: '20px',
               borderRadius: '10px',
+              background: palette.background.paper,
             }}
           >
             <AddComment
@@ -207,11 +198,18 @@ export default function LikesComments({
               setCommentText={setCommentText}
             />
           </Box>
-          <Box sx={{ padding: '10px', textTransform: 'capitalize' }}>
-            <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
+          <Box sx={{ padding: '10px', marginTop:'10%' }}>
+            <Image
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: '100%', height: '100%' }}
+              src={likesCommentsDetails?.coverPhotoPath}
+              alt="thumbnail"
+            />
           </Box>
-          <Box sx={{ padding: '10px' }}>
-            <img src={likesCommentsDetails?.coverPhotoPath} width={'100%'} />
+          <Box sx={{ padding: '10px', paddingTop:'1px',textTransform: 'capitalize' }}>
+            <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
           </Box>
           <Divider />
           <Box

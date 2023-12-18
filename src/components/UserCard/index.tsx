@@ -27,6 +27,7 @@ export default function UserCard({
   shared,
   showDate,
   comment,
+  isArticle=false,
 }: {
   name: string;
   username: string;
@@ -34,6 +35,7 @@ export default function UserCard({
   shared?: any;
   showDate?: any;
   comment?: string;
+  isArticle?: boolean;
 }) {
   return (
     <UserCardBox>
@@ -44,8 +46,8 @@ export default function UserCard({
           sx={{ width: '50px', height: '50px' }}
         />
       </Box>
-      <Box justifyContent="space-between" width="100%">
-        <Box gap={1} display="flex" width="100%">
+      <Box display={"flex"} justifyContent="space-between" width="100%">
+        <Box gap={isArticle ? 0 :1} display="flex" flexDirection={isArticle ? "column" : 'row'} width="100%">
           <Typography
             variant="subtitle1"
             component={'span'}
@@ -53,7 +55,7 @@ export default function UserCard({
           >
             {name}{' '}
           </Typography>
-          <UsernameLink variant="subtitle2" username={username} />
+          <UsernameLink variant="subtitle2" username={username} onClick={e => e.stopPropagation()}/>
           {` ${shared ? ' shared a ' : ''}`}
           {shared && (
             <Link href="#" underline="none">
@@ -67,7 +69,7 @@ export default function UserCard({
           </Box>
         )}
         {showDate && (
-          <Box width="40%" sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box width="40%" sx={{ display: 'flex', alignItems: isArticle ? 'flex-end' : 'center' }}>
             <CalendarIcon />
             &nbsp;
             {moment(showDate).format('MMM DD, YY')}
