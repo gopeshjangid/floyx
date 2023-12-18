@@ -4,11 +4,12 @@ import ArticleIcon from '@/images/image/articleIcon';
 import LinkIcon from '@/images/image/linkIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
 import { useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
-import { Avatar, Box, Button, Typography, Link, Grid, Stack } from '@mui/material';
+import { Box, Button, Typography, Link, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import UsernameLink from "../usernameLink";
 import UserAvatar from "../UserAvatar";
 import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
+import { useGetProfileAboutQuery, useGetProfileDetailsQuery } from "@/lib/redux/slices/profile";
 
 export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -45,8 +46,15 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function AuthorCoulmn({ details, profile, aboutProfile }: any) {
+export default function AuthorCoulmn({ details }: any) {
   const [updatePost] = useGetFollowStatusMutation();
+  const { data: profile } = useGetProfileDetailsQuery({ username: details?.user?.username }, { skip: !details?.user?.username });
+  const { data: aboutProfile } = useGetProfileAboutQuery(
+    {
+      username: details?.user?.username ?? '',
+    },
+    { skip: !details?.user?.username }
+  );
   return (
     <AuthorDetailBox>
       <Box className="header">

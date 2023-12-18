@@ -9,7 +9,6 @@ import { Container, Box } from '@mui/material';
 import { usePathname } from 'next/navigation';
 import { useGetArticleDetailsQuery } from '@/lib/redux/slices/articleDetails';
 import { useGetCommentListQuery } from '@/lib/redux/slices/comments';
-import { useGetProfileAboutQuery, useGetProfileDetailsQuery } from "@/lib/redux/slices/profile";
 
 export default function Page() {
   const url = usePathname();
@@ -17,18 +16,7 @@ export default function Page() {
   const userName = urlArray ? urlArray[2] : '';
   const articlePuclicUrl = urlArray ? urlArray[3] : '';
   const { data: articleDetails } = useGetArticleDetailsQuery({ userName, articlePuclicUrl });
-  const { data: profile } = useGetProfileDetailsQuery(
-    { username: articleDetails?.user?.username! },
-    {
-      skip: !articleDetails?.user?.username,
-    }
-  );
-  const { data: aboutProfile } = useGetProfileAboutQuery(
-    {
-      username: articleDetails?.user?.username ?? '',
-    },
-    { skip: !articleDetails?.user?.username }
-  );
+  
   const articleId = articleDetails?.article?.id;
   const {data: commentList} = useGetCommentListQuery(articleDetails?.article?.id || '')
 
@@ -41,8 +29,6 @@ export default function Page() {
             <TipColumn details={articleDetails} articlePuclicUrl={articlePuclicUrl} articleId={articleId}/>
             <AuthorCoulmn
               details={articleDetails}
-              profile={profile}
-              aboutProfile={aboutProfile}
             />
             <LikesComments
               likesCommentsDetails={articleDetails?.article}

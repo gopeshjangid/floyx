@@ -1,4 +1,4 @@
-import { Box, Typography, Link, Button, useTheme } from '@mui/material';
+import { Box, Typography, Button, useTheme } from '@mui/material';
 import DateParser from '../DateParser';
 import LikeIcon from '@/images/image/likeIcon';
 import ReplyIcon from '@/images/image/replyIcon';

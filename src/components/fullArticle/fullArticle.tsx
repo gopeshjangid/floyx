@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Box, Typography, Button, Grid, Popover, Stack, useTheme, Menu, MenuItem } from '@mui/material';
-import UserCard from '@/components/UserCard';
 import StarIcon from '@/images/image/star';
 import BookMarkIcon from '@/images/image/bookMarkIcon';
 import {
