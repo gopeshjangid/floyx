@@ -76,18 +76,36 @@ export const postServices = createApi({
         }
         return `${apiEndPoint}?page=${pageNumber}&postCreatedDate=${postCreatedDate}`;
       },
-      providesTags: result =>
-        // is result available?
-        result
-          ? // successful query
-            [
-              ...result.map(({ id }: any) => ({ type: 'Posts' as const, id })),
-              { type: 'Posts', id: 'LIST' },
-            ]
-          : // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
-            [{ type: 'Posts', id: 'LIST' }],
-
       transformResponse: (response: any) => response?.value?.data || [],
+      onQueryStarted: async (
+        arg: PostListByUserArgs,
+        { queryFulfilled, dispatch }
+      ) => {
+        try {
+          const { data: newPosts } = await queryFulfilled;
+          console.log({ newPosts });
+          if (newPosts) {
+            dispatch(
+              postServices.util.updateQueryData(
+                'getPostListByUser',
+                arg,
+                (draft: PostDetailResult[]) => {
+                  console.log('draft : ', ...draft);
+                  // Append new posts to the existing ones in the cache
+                  if (Array.isArray(draft)) {
+                    draft.push(...newPosts);
+                  } else {
+                    // Handle the case where the draft is not an array
+                  }
+                }
+              )
+            );
+          }
+        } catch (error) {
+          // Handle the error
+        }
+      },
+      providesTags: ['PostListByUser'],
     }),
     getPosts: builder.query<PostDetailResult[], PostDetail>({
       query: ({ pageNumber, postCreatedDate }) => {
@@ -145,7 +163,7 @@ export const postServices = createApi({
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
   }),
-  tagTypes: ['Posts', 'postDetail', 'UserPostList'],
+  tagTypes: ['Posts', 'postDetail', 'UserPostList', 'PostListByUser'],
 });
 
 export const {
