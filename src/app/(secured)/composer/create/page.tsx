@@ -17,6 +17,7 @@ export default function Page() {
   const [articleId, setArticleId] = useState<string | undefined>(undefined);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isPublished, setIsPublished] = useState<boolean>(false);
+  const [isReset, setIsReset] = useState<boolean>(false);
 
   const [getArticleList, { data: articleList, isFetching }] = useLazyGetArticleListQuery();
   const { data: articleDraftNumbers } = useGetArticleInfoQuery();
@@ -53,6 +54,9 @@ export default function Page() {
             value={value}
             setValue={setValue}
             isPublished={isPublished}
+            setIsReset={setIsReset}
+            setIsEditing={setIsEditing}
+            setArticleId={setArticleId}
           />
           {value === 'newArticle' && (
             <AddArticleForm
@@ -65,6 +69,7 @@ export default function Page() {
               setArticleId={setArticleId}
               isEditing={isEditing}
               setIsPublished={setIsPublished}
+              isReset={isReset}
             />
           )}
           {value !== 'newArticle' && (
@@ -75,6 +80,7 @@ export default function Page() {
               setArticleId={setArticleId}
               setIsEditing={setIsEditing}
               setValue={setValue}
+              setIsReset={setIsReset}
             />
           )}
           

@@ -34,6 +34,7 @@ export default function AddArticleForm({
   setArticleId,
   isEditing,
   setIsPublished,
+  isReset,
 }: any) {
   const [articleCreated, setArticleCreated] = useState<boolean>(false);
   const [startAutoSave, setStartAutoSave] = useState<boolean>(false);
@@ -266,11 +267,16 @@ export default function AddArticleForm({
   }, [isPublish, saveDraft, articleId, state, title, content, imageToUpload]);
 
   useEffect(() => {
-    console.log('isEditing', isEditing);
     if (isEditing) {
       getArticleDetail();
     }
   }, [isEditing, articleId])
+
+  useEffect(() => {
+    if(isReset){
+      resetAllState();
+    }
+  }, [isReset])
   return (
     <AddArticleFormBox>
       <TextField

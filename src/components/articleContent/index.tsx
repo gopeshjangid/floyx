@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import ArticleContainer from './articleContainer';
 import Skeleton from '@mui/material/Skeleton';
 
-export default function ArticleContent({ articleList, loadingList, addEdittype=false, setIsEditing, setArticleId, setValue }: any) {
+export default function ArticleContent({ articleList, loadingList, addEdittype=false, setIsEditing, setArticleId, setValue, setIsReset }: any) {
   return (
     <Box>
       {loadingList ? (
@@ -13,12 +13,13 @@ export default function ArticleContent({ articleList, loadingList, addEdittype=f
         articleList?.map((data: any, index: number) => (
           <ArticleContainer
             key={`articleContainer${index}`}
-            articleDetails={data && data.article ? data.article : null}
+            articleDetails={data && data.article ? data.article : data}
             userDetails={data && data.user ? data.user : null}
             addEdittype={addEdittype}
             setIsEditing={setIsEditing}
             setArticleId={setArticleId}
             setValue={setValue}
+            setIsReset={setIsReset}
           />
         ))
       ) : (

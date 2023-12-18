@@ -18,6 +18,9 @@ export default function AddArticleHead({
   setValue,
   isDisabled,
   isPublished,
+  setIsReset,
+  setIsEditing,
+  setArticleId,
 }) {
 
   const { palette } = useTheme();
@@ -32,6 +35,9 @@ export default function AddArticleHead({
     setSaveDraft(false);
   }
   const handlePageChange = (event, newValue) => {
+    setIsReset(true);
+    setIsEditing(false);
+    setArticleId(undefined);
     setValue(newValue);
   }
 

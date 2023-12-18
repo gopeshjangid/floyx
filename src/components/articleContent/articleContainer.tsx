@@ -124,6 +124,7 @@ export default function ArticleContainer({
   setIsEditing,
   setArticleId,
   setValue,
+  setIsReset,
 }: any) {
   const { palette } = useTheme();
   const [item, setItem] = useState<number>();
@@ -161,9 +162,9 @@ export default function ArticleContainer({
     if (addEdittype) {
       switch (index) {
         case 0:
-          console.log(articleDetails?.id)
           setArticleId(articleDetails?.id);
           setIsEditing(true);
+          setIsReset(false);
           setValue('newArticle');
           // window.open('/composer/create');
           return;
@@ -191,14 +192,14 @@ export default function ArticleContainer({
     <>
       <ArticleContent onClick={handleClick}>
         <Box className="thumbnail">
-          {articleDetails?.coverPhotoThumbnail ? (
+          {(articleDetails?.coverPhotoThumbnail || articleDetails?.coverPhotoPath) ? (
             <Box className="thumbnailBox">
               <Image
                 width={0}
                 height={0}
                 sizes="100vw"
                 style={{ }}
-                src={articleDetails?.coverPhotoThumbnail}
+                src={articleDetails?.coverPhotoThumbnail || articleDetails?.coverPhotoPath}
                 alt="thumbnail"
               />
               <Box className="dottedButton">
@@ -210,7 +211,27 @@ export default function ArticleContainer({
               </Box>
             </Box>
           ) : (
-            <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
+              <Box className="thumbnailBox">
+                <Box
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: palette.background.paper,
+                }}>
+                  {"No Image"}
+                </Box>
+                
+                <Box className="dottedButton">
+                <DottedButton
+                  options={addEdittype ? addEditoptions : options}
+                  setItem={setItem}
+                  handleOption={handleOption}
+                />
+              </Box>
+            </Box>
           )}
         </Box>
         <Box className="details">
@@ -232,11 +253,9 @@ export default function ArticleContainer({
                   textOverflow: 'ellipsis',
                 }}
               >
-                {articleDetails?.title ? (
+                {articleDetails?.title ? 
                   articleDetails?.title
-                ) : (
-                  <Skeleton variant="text" width={400} />
-                )}
+                 : ""}
               </Typography>
               <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
                 {tipHistory ? (
@@ -270,7 +289,7 @@ export default function ArticleContainer({
               <div dangerouslySetInnerHTML={createMarkup(description)} />
             </Typography>
           </Box>
-          <Box
+          {userDetails && <Box
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -283,7 +302,7 @@ export default function ArticleContainer({
               showDate={articleDetails?.publicationDate}
               isArticle={true}
             />
-          </Box>
+          </Box>}
         </Box>
       </ArticleContent>
       <ActionModal
