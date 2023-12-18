@@ -22,23 +22,6 @@ export class TokenService {
     }
   }
 
-  //   public updateAuthData = (jwt: any) => {
-  //     const token = localStorage.getItem(TOKEN_NAME);
-
-  //     this.setAuthData(jwt, token !== null);
-  //   };
-
-  //   public getCurrentUser = () => {
-  //     requestService
-  //       .get(ApiEndpoint.CurrentUserDetails)
-  //       .success(resp => {
-  //         this.currentLoggedUser = resp.data;
-  //         this.setImage(resp.data.avatar);
-  //         this.emmitCurrentUser();
-  //       })
-  //       .error(() => this.removeAuthData());
-  //   };
-
   public getCurrentUser = () => {
     fetch(ApiEndpoint.CurrentUserDetails, {
       method: 'GET',
@@ -57,7 +40,8 @@ export class TokenService {
   };
 
   public setImage = (avatar: string) => {
-    if (this.getImage() !== avatar) localStorage.setItem('FLOYX_AVATAR', avatar);
+    if (this.getImage() !== avatar)
+      localStorage.setItem('FLOYX_AVATAR', avatar);
   };
 
   private readonly getImage = () => {
@@ -84,38 +68,9 @@ export class TokenService {
     setCookie(FLOYX_TOKEN, jsonToken);
     setCookie(FLOYX_USERNAME, floyxUsername);
     this.onNewToken.emit('TOKEN', jsonToken);
-
-    // if (remember) {
-    //   localStorage.setItem(TOKEN_NAME, jsonToken);
-    //   localStorage.setItem(FLOYX_USERNAME, floyxUsername);
-    // } else {
-    //   sessionStorage.setItem(TOKEN_NAME, jsonToken);
-    //   sessionStorage.setItem(FLOYX_USERNAME, floyxUsername);
-    // }
   };
 
   public removeAuthData = () => {
-    // localStorage.removeItem(TOKEN_NAME);
-    // sessionStorage.removeItem(TOKEN_NAME);
-    // localStorage.removeItem(FLOYX_USERNAME);
-    // localStorage.removeItem(FLOYX_USERNAME);
-    // localStorage.clear();
-    // localStorage.removeItem(ApiEndpoint.GetPopularArticles);
-    // localStorage.removeItem(ApiEndpoint.GetRecentArticles);
-    // localStorage.removeItem(ApiEndpoint.GetFollowingArticles);
-    // localStorage.removeItem(ApiEndpoint.GetLikedArticles);
-    // localStorage.removeItem(ApiEndpoint.GetPosts + '/feed/main');
-    // localStorage.removeItem(ApiEndpoint.AccountsToFallow + '?type=1');
-    // localStorage.removeItem(ApiEndpoint.AccountsToFallow + '?type=2');
-    // localStorage.removeItem('cache-' + ApiEndpoint.GetPopularEvents);
-    // localStorage.removeItem(ApiEndpoint.GetWatchingEvents);
-    // localStorage.removeItem('cache-' + ApiEndpoint.GetRecentEvents);
-    // localStorage.removeItem('cache-' + ApiEndpoint.GetFollowingEvents);
-    // localStorage.removeItem('cache-' + ApiEndpoint.GetLikedEvents);
-    // localStorage.removeItem(ApiEndpoint.TopCoinsApi);
-    // localStorage.removeItem(ApiEndpoint.GetRecentArticles + '?forHome=true');
-    // localStorage.removeItem(ApiEndpoint.AccountsToFallow + '?forHome=true');
-
     deleteCookie(FLOYX_TOKEN);
     deleteCookie(FLOYX_USERNAME);
   };

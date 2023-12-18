@@ -10,17 +10,14 @@ interface PageProviderProps {
 }
 
 const PageProvider: FC<PageProviderProps> = ({ children }) => (
-  <NextAppDirEmotionCacheProvider options={{ key: 'mui', prepend: true }}>
-    <Head>
-      <meta name="viewport" content="initial-scale=1, width=device-width" />
-    </Head>
-    <MUIThemeProvider>
-      {' '}
-      <PreferredThemeProvider attribute="class" defaultTheme="dark">
-        {children}{' '}
-      </PreferredThemeProvider>
-    </MUIThemeProvider>
-  </NextAppDirEmotionCacheProvider>
+  <PreferredThemeProvider enableSystem attribute="class" defaultTheme="dark">
+    <NextAppDirEmotionCacheProvider options={{ key: 'mui', prepend: true }}>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <MUIThemeProvider> {children} </MUIThemeProvider>
+    </NextAppDirEmotionCacheProvider>
+  </PreferredThemeProvider>
 );
 
 export default PageProvider;
