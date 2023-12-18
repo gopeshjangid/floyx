@@ -2,14 +2,7 @@
 /*  react/no-unescaped-entities */
 'use client';
 import * as React from 'react';
-import {
-  Box,
-  Typography,
-  Stack,
-  useMediaQuery,
-  Skeleton,
-  Button,
-} from '@mui/material';
+import { Box, Typography, Stack, useMediaQuery, Skeleton } from '@mui/material';
 import DailTaskSTatusIcon from '@/iconComponents/dailyTaskStatusIcon';
 import {
   DailyTaskType,
@@ -37,18 +30,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({}));
-
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
 function DailyTaskTable({ rows }: { rows: DailyTaskType[] }) {
   return (
     <TableContainer component={Paper}>
@@ -64,8 +45,8 @@ function DailyTaskTable({ rows }: { rows: DailyTaskType[] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <StyledTableRow key={row.taskReward}>
+          {rows.map((row, index) => (
+            <TableRow key={row.taskReward + 'reward-' + index}>
               <StyledTableCell component="th" scope="row">
                 <RemainingTimer />
               </StyledTableCell>
@@ -78,7 +59,7 @@ function DailyTaskTable({ rows }: { rows: DailyTaskType[] }) {
                   <GradientText>{row.taskReward}</GradientText>
                 </GradientOutlinedButton>
               </StyledTableCell>
-            </StyledTableRow>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
@@ -93,11 +74,7 @@ const DailyTask: React.FC = () => {
     isLoading: dailtyTaskLoading,
     error,
   } = useGetDailyTaskListQuery();
-  //const [_value, setValue] = React.useState(0);
   const isMobile = useMediaQuery('(max-width:480px)');
-  // const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-  //   setValue(newValue);
-  // };
 
   return (
     <Box
@@ -126,4 +103,4 @@ const DailyTask: React.FC = () => {
   );
 };
 
-export default DailyTask;
+export default React.memo(DailyTask);

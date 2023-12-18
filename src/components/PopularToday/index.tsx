@@ -1,6 +1,13 @@
 'use client';
 import { useGetArticleListQuery } from '@/lib/redux';
-import { Box, Typography, Divider, Skeleton, Stack } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Divider,
+  Skeleton,
+  Stack,
+  Alert,
+} from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 import Image from 'next/image';
@@ -35,19 +42,19 @@ function RecentArticles() {
     <PopularTodaySection>
       <Typography variant="body1">Recent Articles</Typography>
       {isError && (
-        <Typography variant="body1" color="error">
-          Something went wrong!
-        </Typography>
+        <Alert severity="error" color="error">
+          Error in loading recent articles.
+        </Alert>
       )}
       <PopularTodayListSection>
         {!isLoading && data ? (
           data.map((article, index) => (
             <Box p={2} key={`popularToday${index}`}>
-              <Link target="__blank" href={article.article.publicUrl}>
+              <Link target="__blank" href={article.article.publicUrl ?? '/'}>
                 <Stack py={1} direction="row" gap={2}>
                   <Box>
                     <Image
-                      alt={article.article.title}
+                      alt={article.article.title ?? 'article title'}
                       src={article.article?.coverPhotoThumbnail}
                       height={70}
                       width={80}

@@ -38,7 +38,7 @@ const SettingsWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
 }));
 
 function LinkTab(props: any) {
-  return <Tab component={Link} {...props} va />;
+  return <Tab component={Link} {...props} />;
 }
 
 export default function SettingLayout({

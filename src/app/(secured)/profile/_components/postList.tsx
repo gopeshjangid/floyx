@@ -3,7 +3,7 @@ import PostList from '@/components/Post/PostList';
 import { useGetPostListByUserQuery } from '@/lib/redux';
 import { Box, Grid, useMediaQuery } from '@mui/material';
 import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -13,32 +13,44 @@ export interface apiParams {
 
 function ProfilePostList() {
   const params = useParams();
-
+  const username = Array.isArray(params.username)
+    ? params.username[0]
+    : params.username;
   const [apiParams, setApiParams] = useState<apiParams>({
     pageNumber: 0,
     postCreatedDate: 0,
-    username: (params.username as any) ?? '',
+    username: username || '',
   });
 
   const isMobile = useMediaQuery('(max-width:480px)');
   const { data: postData, isFetching } = useGetPostListByUserQuery(apiParams);
 
-  const loadMore = (e: any, pageNumber: number, isFetching: boolean) => {
-    if (postData) {
-      const lastPost = postData[postData.length - 1];
-      if (e > pageNumber && lastPost !== undefined && !isFetching) {
-        setApiParams({
-          ...apiParams,
-          pageNumber: e,
-          postCreatedDate: lastPost?.post?.createdDateTime,
-        });
-      }
-    }
+  // Custom debounce function
+  const debounce = (func: (...args: any[]) => void, delay: number) => {
+    let timer: any;
+    return function (...args: any[]) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
   };
 
-  useEffect(() => {
-    console.log('postData', postData);
-  }, [postData]);
+  const loadMore = useCallback(
+    debounce((pageNumber: number) => {
+      if (postData && postData.length && !isFetching) {
+        const lastPost = postData[postData.length - 1];
+        if (pageNumber > apiParams.pageNumber && lastPost) {
+          setApiParams(prevParams => ({
+            ...prevParams,
+            pageNumber: pageNumber,
+            postCreatedDate: lastPost?.post?.createdDateTime,
+          }));
+        }
+      }
+    }, 1000),
+    [postData, isFetching, apiParams.pageNumber]
+  );
 
   return (
     <Box p={isMobile ? 2 : 0}>

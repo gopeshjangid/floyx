@@ -1,5 +1,6 @@
 import React from 'react';
 import Chip from '@mui/material/Chip';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 // Styled component for the gradient text
@@ -34,5 +35,30 @@ const CustomChip = ({ label, ...props }) => {
     />
   );
 };
+
+export const AnimatedBorderButton = styled(Button)(({ theme }) => {
+  // Define the keyframe animation
+  const borderAnimation = `
+    @keyframes borderAnimation {
+      0% { border-color: transparent; }
+      50% { border-color: ${theme.palette.secondary.main}; }
+      100% { border-color: transparent; }
+    }
+  `;
+
+  return {
+    // Inject the keyframe animation into the component
+    '@global': {
+      '.animated-border-button': borderAnimation,
+    },
+    // Apply the animation to the button
+    animation: 'borderAnimation 2s linear infinite',
+    border: '2px solid transparent',
+
+    // Additional styling for the button
+    padding: theme.spacing(1, 3),
+    margin: theme.spacing(1),
+  };
+});
 
 export default CustomChip;

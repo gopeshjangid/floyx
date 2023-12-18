@@ -14,7 +14,7 @@ const PopularIcon = () => {
         stroke="#8C61E4"
         strokeWidth="1.5"
         stroke-miterlimit="10"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
@@ -22,7 +22,7 @@ const PopularIcon = () => {
         stroke="#8C61E4"
         strokeWidth="1.5"
         stroke-miterlimit="10"
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>

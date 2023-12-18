@@ -28,6 +28,8 @@ import moment from 'moment';
 import UsernameLink from '@/components/usernameLink';
 
 const CopyableInput = () => {
+  const session = useSession();
+  const username = (session as any) ? session.data?.user.username : '';
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -56,11 +58,24 @@ const CopyableInput = () => {
     setOpenSnackbar(false);
   };
 
+  const getUrl = () => {
+    const token = btoa(
+      JSON.stringify({
+        username: username,
+      })
+    );
+    return (
+      window.location.href.replace(window.location.pathname, '') +
+      '/registration?token=' +
+      token
+    );
+  };
+
   return (
     <Box>
       <OutlinedInput
         inputRef={inputRef}
-        defaultValue="https://www.floyx.com/registration..."
+        defaultValue={getUrl()}
         endAdornment={
           <InputAdornment position="end">
             <IconButton onClick={handleCopy} edge="end">
@@ -128,6 +143,10 @@ const InvitationStatusCard = () => {
     >
       {showHistory && data && (
         <CustomDialog
+          PaperProps={{
+            elevation: 1,
+            sx: { backgroundColor: palette.primary.mainBackground },
+          }}
           content={
             <Stack gap={2}>
               <Typography variant="h6">

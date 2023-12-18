@@ -9,7 +9,7 @@ import { initializeStore, useStore } from '@/lib/redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import DefaultPageSkelton from '@/components/DefaultPageSkelton';
-
+import '../components/ThemeRegistry/global.css';
 const initializeStoreValues = {
   earningsReducer: {},
   registerReducer: {},
@@ -23,8 +23,8 @@ export default function RootLayout({
   const store = useStore(initializeStoreValues);
   const persistor = persistStore(store);
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-white dark:bg-black min-h-[100dvh]">
         <ToastProvider>
           <AuthProvider>
             <Provider store={initializeStore(initializeStoreValues)}>
