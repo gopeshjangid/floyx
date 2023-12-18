@@ -1,9 +1,10 @@
 'use client';
 import { useGetTipHistoryQuery } from '@/lib/redux/slices/earnings';
-import { Box, Typography, Slider, Button } from '@mui/material';
-import { useState } from 'react';
+import { Box, Typography, Slider, Button, useTheme } from '@mui/material';
+import { useEffect, useState } from 'react';
 import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
 import { useSetTipMutation } from '@/lib/redux/slices/articleDetails';
+import { useToast } from "../Toast/useToast";
 
 export default function TipColumn({
   details,
@@ -11,8 +12,10 @@ export default function TipColumn({
   articleId,
 }: any) {
   const [value, setValue] = useState<number>(30);
-  const [updateTip] = useSetTipMutation();
+  const [updateTip, {isError, error}] = useSetTipMutation();
   const { data: tipHistory } = useGetTipHistoryQuery();
+  const toast = useToast();
+  const { palette } = useTheme();
 
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
@@ -37,6 +40,26 @@ export default function TipColumn({
       return true;
     }
   };
+
+  useEffect(() => {
+    if (isError) {
+      if (error) {
+        let message = "";
+        switch (error as string) {
+          case "already_tipped_article":
+            message = "Already tipped this article";
+            break; 
+          case "Please_tip_after_10_minutes":
+            message = "You must wait 10 minutes to tip again";
+            break; 
+          case "you_cannot_tip_your_own_article":
+            message = "You cannot tip your own articles";
+            break; 
+        }
+        toast.error(message);
+      }
+    }
+  }, [isError, error])
   return (
     <>
       {!tippedOrNot() ? (
@@ -47,6 +70,7 @@ export default function TipColumn({
             border: '1px solid white',
             padding: '20px 40px',
             borderRadius: '10px',
+            background:palette.background.paper,
           }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -70,7 +94,7 @@ export default function TipColumn({
               aria-labelledby="discrete-slider-small-steps"
               step={10}
               marks
-              min={0}
+              min={20}
               max={100}
               valueLabelDisplay="auto"
             />
@@ -118,6 +142,7 @@ export default function TipColumn({
             padding: '20px 40px',
             borderRadius: '10px',
             textAlign: 'center',
+            background:palette.background.paper,
           }}
         >
           <Typography variant="body1">

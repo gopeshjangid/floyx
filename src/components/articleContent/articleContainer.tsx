@@ -1,11 +1,29 @@
 'use client';
 
-import { Box, IconButton, Skeleton, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Skeleton,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Image from 'next/image';
 import UserCard from '../UserCard';
 import BookMarkIcon from '@/images/image/bookMarkIcon';
 import { useGetTipHistoryQuery } from '@/lib/redux/slices/earnings';
+import DottedButton from './dottedButton';
+import ShareIcon from '@/images/image/shareIcon';
+import FlagIcon from '@/images/image/flagIcon';
+import BlockUserIcon from '@/images/image/blockUser';
+import { useState } from 'react';
+import ActionModal from './actionModal';
+import { useDeleteArticleMutation } from '@/lib/redux';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -17,6 +35,20 @@ const ArticleContent = styled(Box)(({ theme }) => ({
   },
   '& .thumbnail': {
     width: '30%',
+    "& .thumbnailBox": {
+      position: 'relative',
+      width: '100%',
+      height: '100%', 
+      "& .dottedButton": {
+        position: 'absolute',
+        top: '10px',
+        left: '10px',
+      },
+      "& img": {
+        width: '100%',
+        height: '100%',
+      }
+    },
     // img: {
     //   width: '100%',
     //   // aspectRatio: '1/1',
@@ -57,11 +89,54 @@ const ArticleContent = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function ArticleContainer({ articleDetails, userDetails }: any) {
-  const { data: tipHistory } = useGetTipHistoryQuery();
+const options = [
+  {
+    name: 'Report Article',
+    icon: <FlagIcon />,
+  },
+  {
+    name: 'Block User',
+    icon: <BlockUserIcon />,
+  },
+  {
+    name: 'Report User',
+    icon: <FlagIcon />,
+  },
+  {
+    name: 'Share Article',
+    icon: <ShareIcon />,
+  },
+];
 
-  const content = JSON.parse(articleDetails?.content);
-  const description = content[0]?.value;
+const addEditoptions = [
+  {
+    name: 'Edit',
+  },
+  {
+    name: 'Delete',
+  },
+];
+
+export default function ArticleContainer({
+  articleDetails,
+  userDetails,
+  addEdittype,
+  setIsEditing,
+  setArticleId,
+  setValue,
+  setIsReset,
+}: any) {
+  const { palette } = useTheme();
+  const [item, setItem] = useState<number>();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
+  const { data: tipHistory } = useGetTipHistoryQuery();
+  const [deleteArtice] = useDeleteArticleMutation()
+
+  const content = articleDetails?.content
+    ? JSON.parse(articleDetails?.content)
+    : [];
+  const description = content.length > 0 ? content[0]?.value : '';
 
   const createMarkup = (htmlString: string) => {
     return { __html: htmlString };
@@ -83,112 +158,176 @@ export default function ArticleContainer({ articleDetails, userDetails }: any) {
     }
   };
 
+  const handleOption = (index: number) => {
+    if (addEdittype) {
+      switch (index) {
+        case 0:
+          setArticleId(articleDetails?.id);
+          setIsEditing(true);
+          setIsReset(false);
+          setValue('newArticle');
+          // window.open('/composer/create');
+          return;
+        case 1:
+          setOpenConfirmationDialog(true);
+          return;
+      }
+    } else {
+      setOpenDialog(true);
+      setItem(index);
+    }
+  };
+
+  const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setOpenConfirmationDialog(false);
+  };
+
+  const handleDeleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    deleteArtice(articleDetails?.id)
+  };
+
   return (
-    <ArticleContent onClick={handleClick}>
-      <Box className="thumbnail">
-        {articleDetails?.coverPhotoThumbnail ? (
-          <Image
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: '100%', height: '100%' }}
-            src={articleDetails?.coverPhotoThumbnail}
-            alt="thumbnail"
-          />
-        ) : (
-          <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
-        )}
-      </Box>
-      <Box className="details">
-        <Box className="top">
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              width: '80%',
-            }}
-          >
-            <Typography
-              variant="h5"
+    <>
+      <ArticleContent onClick={handleClick}>
+        <Box className="thumbnail">
+          {(articleDetails?.coverPhotoThumbnail || articleDetails?.coverPhotoPath) ? (
+            <Box className="thumbnailBox">
+              <Image
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ }}
+                src={articleDetails?.coverPhotoThumbnail || articleDetails?.coverPhotoPath}
+                alt="thumbnail"
+              />
+              <Box className="dottedButton">
+                <DottedButton
+                  options={addEdittype ? addEditoptions : options}
+                  setItem={setItem}
+                  handleOption={handleOption}
+                />
+              </Box>
+            </Box>
+          ) : (
+              <Box className="thumbnailBox">
+                <Box
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: palette.background.paper,
+                }}>
+                  {"No Image"}
+                </Box>
+                
+                <Box className="dottedButton">
+                <DottedButton
+                  options={addEdittype ? addEditoptions : options}
+                  setItem={setItem}
+                  handleOption={handleOption}
+                />
+              </Box>
+            </Box>
+          )}
+        </Box>
+        <Box className="details">
+          <Box className="top">
+            <Box
               sx={{
-                width: 'auto',
-                textWrap: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                width: '80%',
               }}
             >
-              {articleDetails?.title ? (
-                articleDetails?.title
-              ) : (
-                <Skeleton variant="text" width={400} />
-              )}
-            </Typography>
-            <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
-              {tipHistory ? (
-                tippedOrNot() ? (
-                  '  (!You Tipped)'
+              <Typography
+                variant="h5"
+                sx={{
+                  width: 'auto',
+                  textWrap: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {articleDetails?.title ? 
+                  articleDetails?.title
+                 : ""}
+              </Typography>
+              <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
+                {tipHistory ? (
+                  tippedOrNot() ? (
+                    '  (!You Tipped)'
+                  ) : (
+                    ''
+                  )
                 ) : (
-                  ''
-                )
-              ) : (
-                <Skeleton variant="text" width={100} />
-              )}
+                  <Skeleton variant="text" width={100} />
+                )}
+              </Typography>
+            </Box>
+            <IconButton onClick={(e) => e.stopPropagation()}>
+              <BookMarkIcon />
+            </IconButton>
+          </Box>
+          <Box className="middle">
+            <Typography
+              variant="body2"
+              sx={{
+                minHeight: `${40}px`,
+                maxHeight: `${40 * 2}px`,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: 2,
+              }}
+            >
+              <div dangerouslySetInnerHTML={createMarkup(description)} />
             </Typography>
           </Box>
-          <IconButton>
-            <BookMarkIcon />
-          </IconButton>
-        </Box>
-        <Box className="middle">
-          <Typography
-            variant="body2"
+          {userDetails && <Box
             sx={{
-              minHeight: `${40}px`,
-              maxHeight: `${40 * 2}px`,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              display: '-webkit-box',
-              WebkitBoxOrient: 'vertical',
-              WebkitLineClamp: 2,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
-            <div dangerouslySetInnerHTML={createMarkup(description)} />
-          </Typography>
-        </Box>
-        <Box>
-          <Box width="100%">
             <UserCard
               name={userDetails?.name}
               username={userDetails?.username}
               showDate={articleDetails?.publicationDate}
+              isArticle={true}
             />
-          </Box>
+          </Box>}
         </Box>
-        {/* <Box className="bottom">
-          <Box className="author-details">
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <UserAvatar
-                alt="Travis Howard"
-                src={userDetails?.avatar}
-                sx={{
-                  width: { md: '40px', xs: '40px' },
-                  height: { md: '40px', xs: '40px' },
-                }}
-              />
-            </Box>
-            <Box>
-              <Typography variant="subtitle2">{userDetails?.name}</Typography>
-              <Typography variant="caption">{userDetails?.username}</Typography>
-            </Box>
-          </Box>
-          <Box className="date">
-            <CalendarMonthOutlinedIcon fontSize='small'/>
-            <Typography variant="caption" sx={{marginBottom:'0px'}}>{moment(articleDetails?.publishedDate).format('MMM DD, YY')}</Typography>
-          </Box>
-        </Box> */}
-      </Box>
-      {/* <SplitButton /> */}
-    </ArticleContent>
+      </ArticleContent>
+      <ActionModal
+        item={item}
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        articleDetails={articleDetails}
+        username={userDetails?.username}
+      />
+      <Dialog
+        open={openConfirmationDialog}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+        PaperProps={{ sx: { background: palette.background.default } }}
+        onClick={event => event.stopPropagation()}
+      >
+        <DialogTitle id="responsive-dialog-title">Please Confirm</DialogTitle>
+        <DialogContent>
+          Are you sure you want to delete this Article ?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteArticle}>Yes</Button>
+          <Button onClick={handleClose}>No</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }
