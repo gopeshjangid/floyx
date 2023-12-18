@@ -6,13 +6,11 @@ import { MentionsInput, Mention } from 'react-mentions';
 import UserAvatar from '../UserAvatar';
 import { useSession } from 'next-auth/react';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import { useCreateCommentMutation } from '@/lib/redux/slices/comments';
+import { useCreateCommentMutation, useLazyGetUserSuggestionQuery } from '@/lib/redux/slices/comments';
 import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
-import { tokenService } from '@/lib/services/new/tokenService';
 
 const AddCommentBox = styled(Box)(({ theme }) => ({
-  marginTop: '20px',
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
@@ -42,6 +40,9 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
         backgroundColor: theme.palette.background.default,
         borderRadius: '10px',
       },
+      '& .mention-input-container__suggestions': {
+        backgroundColor: `${ theme.palette.background.default } !important`,
+      }
     },
   },
 }));
@@ -63,44 +64,24 @@ export default function AddComment({
   const session = useSession();
   const toast = useToast();
   const [createComment, { isLoading }] = useCreateCommentMutation();
-  // const [getUserSuggestion, { data: renderSuggestions }] = useLazyGetUserSuggestionQuery();
+  const [getUserSuggestion ] = useLazyGetUserSuggestionQuery();
   const handlePostText = (e: any) => {
     const text = e.target.value;
     setCommentText(text);
   };
 
-  // const getUserDetails = async (mentionValue: string) => {
-  //   if (mentionValue) {
-  //     await getUserSuggestion(mentionValue);
-  //     return renderSuggestions;
-  //   }
-  //   return [];
-  // }
-
-  const getUserSuggestion = (mentionValue: string, callback: any) => {
+  const getUserDetails = async (mentionValue: string, callback: any) => {
+    let userList: any = [];
     if (mentionValue) {
-      return new Promise(() => {
-        const bearer_token = tokenService.getBearerToken();
-
-        fetch(`${ApiEndpoint.FindUserByName}/${mentionValue}`, {
-          method: 'GET',
-          headers: {
-            authorization: bearer_token,
-          },
-        })
-          .then(res => res.json())
-          .then(res =>
-            res.value.data.map((user: any) => ({
-              avatar: user.avatar,
-              display: user.name,
-              id: user.username,
-            }))
-          )
-          .then(callback);
-      });
+      const renderSuggestions = await getUserSuggestion(mentionValue);
+      if (renderSuggestions && Array.isArray(renderSuggestions?.data)) {
+        userList = renderSuggestions?.data;
+      }
+      callback(userList);
     }
-    return callback([]);
-  };
+    callback(userList);
+  }
+
   const onEnterPress = async (e: any) => {
     const addComment = {
       itemId: id,
@@ -138,14 +119,14 @@ export default function AddComment({
             onKeyDown={onEnterPress}
             placeholder={'Add a comment'}
           >
-            <Mention
-              trigger="@"
-              displayTransform={(id: string) => `@${id}`}
-              data={getUserSuggestion}
-              renderSuggestion={renderUserSuggestion}
-              appendSpaceOnAdd={true}
-            />
-          </MentionsInput>
+          <Mention
+            trigger="@"
+            displayTransform={(id: string) => `@${id}`}
+            data={getUserDetails}
+            renderSuggestion={renderUserSuggestion}
+            appendSpaceOnAdd={true}
+          />
+        </MentionsInput>
         </Box>
       </Box>
     </AddCommentBox>

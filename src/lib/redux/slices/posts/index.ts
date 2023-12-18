@@ -109,6 +109,7 @@ export const postServices = createApi({
     }),
     getPosts: builder.query<PostDetailResult[], PostDetail>({
       query: ({ pageNumber, postCreatedDate }) => {
+        console.log(pageNumber, postCreatedDate, 'paramas')
         const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {
           return apiEndPoint;
@@ -126,19 +127,19 @@ export const postServices = createApi({
           : // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
             [{ type: 'Posts', id: 'LIST' }],
       // Only have one cache entry because the arg always maps to one string
-      // serializeQueryArgs: ({ endpointName }) => {
-      //   return endpointName
-      // },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
+      },
       // // Always merge incoming data to the cache entry
-      // merge: (currentCache, newItems) => {
-      //   console.log(currentCache.response, newItems);
-      //   currentCache.push(...newItems)
-      // },
+      merge: (currentCache, newItems) => {
+        console.log('merge', currentCache, newItems);
+        currentCache.push(...newItems)
+      },
       // // Refetch when the page arg changes
-      // forceRefetch({ currentArg, previousArg }) {
-      //   console.log(currentArg, previousArg, currentArg !== previousArg);
-      //   return currentArg !== previousArg
-      // },
+      forceRefetch({ currentArg, previousArg }) {
+        console.log('forceReftch', currentArg, previousArg, currentArg !== previousArg);
+        return currentArg !== previousArg
+      },
       transformResponse: (response: any) => response?.value?.data || [],
       // {
       //   return {

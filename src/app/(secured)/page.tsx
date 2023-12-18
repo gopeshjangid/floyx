@@ -64,7 +64,7 @@ export default function Page() {
               loadMore={loadMore}
               apiParams={apiParams}
               isFetching={isFetching}
-              hasMore={postData?.length === 10}
+              hasMore={ postData === undefined || postData?.length % 10 === 0}
             />
           </Box>
         </Grid>

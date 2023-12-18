@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from "../posts";
+import { commentService } from "../comments";
 
 interface ArticleDetailsArgs {
   userName: string;
@@ -118,13 +119,15 @@ export const artcileDetails = createApi({
         url: `${ApiEndpoint.Like}/${articleId}?type=${type}`,
         method: 'POST',
       }),
-      invalidatesTags: (_, __, arg) => arg.type === 'ArticleLike' ? ['LikeStatus']: [],
+      invalidatesTags: (_, __, arg) => arg.type === 'ArticleLike' ? ['LikeStatus'] : [],
       onQueryStarted: (arg, api) => {
-        if (arg.type == 'PostLike') {
-          api.queryFulfilled.then(() => {
-            api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }]))
-          })
-        }
+        api.queryFulfilled.then(() => {
+          if (arg.type == 'PostLike') {
+            api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }, 'postDetail']))
+          } else if (arg.type == 'PostCommentLiked') {
+            api.dispatch(commentService.util.invalidateTags(['commentList']));
+          }
+        })
       },
     }),
     getArticleTotalEarnings: builder.query<any, string>({
@@ -138,17 +141,21 @@ export const artcileDetails = createApi({
         method: 'POST',
         body: payload,
       }),
+      transformErrorResponse: (error: any) => error?.data?.value?.data || "",
       invalidatesTags: ['articleTip'],
     }),
-    
-    getArticleList: builder.query<any, string>({
-      query: tabName => `${ApiEndpoint.DeleteArticle}/${tabName}`,
+
+    getArticleList: builder.query<any, string|undefined>({
+      query: tabName => `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ""}`,
+      providesTags: ['getArticleList', 'deleteArticle'],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
+      providesTags: ['ArticleInfoNumber', 'deleteArticle'],
     }),
+
     checkArticleIsShared: builder.mutation<boolean, string>({
       query: articleId => ({
         url: `${ApiEndpoint.IsSharedPost}/${articleId}`,
@@ -163,10 +170,54 @@ export const artcileDetails = createApi({
         body: payload,
       }),
       transformResponse: (response: any) => response?.value?.data || {},
-      invalidatesTags:['LikeStatus']
+      invalidatesTags: ['LikeStatus']
+    }),
+    createArticleDraft: builder.mutation<any, any>({
+      query: (payload) => ({
+        url: `${ApiEndpoint.CreateDraft}`,
+        method: 'post',
+        body:payload,
+      }),
+      transformResponse: (response: any) => {
+        return response.value.data;
+      },
+      invalidatesTags: ['ArticleInfoNumber'],
+    }),
+    updateDraftArticle: builder.mutation<any, any>({
+      query: ({ articleId, payload }) => {
+        return {
+          url: `${ApiEndpoint.UpdateDraft}/${articleId}`,
+          method: 'put',
+          body: payload,
+        }
+      },
+      transformResponse: (response: any) => response.value.data,
+    }),
+    publishArticle: builder.mutation<any, any>({
+      query: (articleId) => ({
+        url: `${ApiEndpoint.PublishDraft}/${articleId}`,
+        method: 'put',
+        body: {}
+      }),
+      transformResponse: (response: any) => response.value.data,
+    }),
+    deleteArticle: builder.mutation<any , string>({
+      query: (articleId)=>({
+        url:`${ApiEndpoint.DeleteArticle}/${articleId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['deleteArticle']
+    }),
+    getFollowMoreAccount: builder.query<any, void>({
+      query: () => `${ApiEndpoint.AccountsToFallow}?forHome=true`,
+      transformResponse: (response: any) => response?.value?.data || {},
+    }),
+    getDraftDetail: builder.query<any, void>({
+      query: (articleId) => `${ApiEndpoint.GetDrafts}/${articleId}`,
+      transformResponse: (response: any) => response?.value?.data || {},     
     }),
   }),
-  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip'],
+  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList', 'deleteArticle', 'ArticleInfoNumber'],
 });
 
 export const {
@@ -177,7 +228,13 @@ export const {
   useSetTipMutation,
   useCheckArticleIsSharedMutation,
   useShareArticleMutation,
-  useGetArticleListQuery, 
+  useGetArticleListQuery,
   useLazyGetArticleListQuery,
   useGetArticleInfoQuery,
+  useCreateArticleDraftMutation,
+  useUpdateDraftArticleMutation,
+  usePublishArticleMutation,
+  useDeleteArticleMutation,
+  useGetFollowMoreAccountQuery,
+  useLazyGetDraftDetailQuery,
 } = artcileDetails;

@@ -3,6 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { Education, Project } from '@/components/ProfileActivityInfo';
+import { artcileDetails } from './articleDetails';
 
 type ApiResponse<T> = {
   value: {
@@ -113,6 +114,11 @@ type Experience = {
 
 type ReportUser = {
   Username: string;
+  Reason: string;
+};
+
+type ReportArticle = {
+  contentId: string;
   Reason: string;
 };
 
@@ -238,8 +244,29 @@ export const profileService = createApi({
         method: 'POST', // or 'PATCH' for partial updates
         body: profileAbout,
       }),
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(() => {
+          api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
+        });
+      },
       transformResponse: (response: ApiResponse<ReportUser>) =>
         response.value.data,
+
+      invalidatesTags: ['profileAbout', 'profileDetails'],
+    }),
+    addReportArticle: builder.mutation<ReportArticle, Partial<ReportArticle>>({
+      query: profileAbout => ({
+        url: `${ApiEndpoint.ReportArticle}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+        body: profileAbout,
+      }),
+      transformResponse: (response: ApiResponse<ReportArticle>) =>
+        response.value.data,
+        onQueryStarted: (arg, api) => {
+          api.queryFulfilled.then(() => {
+            api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
+          });
+        },
       invalidatesTags: ['profileAbout', 'profileDetails'],
     }),
     blockUser: builder.mutation<ReportUser, Partial<{ username: string }>>({
@@ -248,8 +275,12 @@ export const profileService = createApi({
         method: 'POST', // or 'PATCH' for partial updates
         body: {},
       }),
-      transformResponse: (response: ApiResponse<ReportUser>) =>
-        response.value.data,
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(() => {
+          api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
+        });
+      },
+      transformResponse: (response: ApiResponse<ReportUser>) => response.value.data,
       invalidatesTags: ['profileAbout', 'profileDetails'],
     }),
     followUser: builder.mutation<void, Partial<{ username: string }>>({
@@ -287,5 +318,6 @@ export const {
   useAddReportUserMutation,
   useBlockUserMutation,
   useFollowUserMutation,
+  useAddReportArticleMutation,
   useUpdateProfileDetailMutation,
 } = profileService;
