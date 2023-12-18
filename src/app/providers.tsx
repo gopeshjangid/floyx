@@ -15,9 +15,8 @@ const PageProvider: FC<PageProviderProps> = ({ children }) => (
       <meta name="viewport" content="initial-scale=1, width=device-width" />
     </Head>
     <MUIThemeProvider>
-      {' '}
       <PreferredThemeProvider attribute="class">
-        {children}{' '}
+        {children}
       </PreferredThemeProvider>
     </MUIThemeProvider>
   </NextAppDirEmotionCacheProvider>
