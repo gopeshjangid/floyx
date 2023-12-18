@@ -474,7 +474,9 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   }, [articleCreated])
 
   React.useEffect(() => {
-    setState(val => ({ ...val, inputsList: content }));
+    if (content.length) {
+      setState(val => ({ ...val, inputsList: content }));
+    }
   }, [content]);
 
   return (

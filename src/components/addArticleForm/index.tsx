@@ -186,6 +186,11 @@ export default function AddArticleForm({
     setHashTags([]);
     setImagePreview('');
     setImageToUpload('');
+    setArticleCreated(false);
+    setIsPublish(false);
+    setIsDisabled(false);
+    setIsPublished(false);
+    setSaveDraft(false);
   }
 
   const handleSubmit = async () => {
@@ -198,7 +203,8 @@ export default function AddArticleForm({
       } else {
         resetAllState();
         const dynamicUrl = `/article/${(response as any)?.data?.publicUrl}`;
-        window.open(dynamicUrl, '_blank');
+        // redirect(dynamicUrl);
+        window.open(dynamicUrl);
         setIsPublish(false);
       }
     } else {
@@ -234,8 +240,9 @@ export default function AddArticleForm({
       setIsPublished(response?.data?.isPublished);
       setStartAutoSave(true);
       setIsDisabled(false);
+      setArticleCreated(true);
+      articleCreatedRef.current = true;
     }
-    console.log(response);
   }
   useEffect(() => {
     const sub = setInterval(() => {
