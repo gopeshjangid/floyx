@@ -32,6 +32,7 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
       '& textarea': {
         padding: '0.5rem',
         color: theme.palette.text.primary,
+        border: `1px solid ${theme.palette?.primary?.[800]}`,
         borderRadius: '10px',
       },
       '& .mention-input-container': {
@@ -39,9 +40,12 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
         padding: '0.5rem',
         backgroundColor: theme.palette.background.default,
         borderRadius: '10px',
+        "& ::placeholder": {
+          color: theme.palette.text.primary,
+        }
       },
       '& .mention-input-container__suggestions': {
-        backgroundColor: `${ theme.palette.background.default } !important`,
+        backgroundColor: `${theme.palette.background.default} !important`,
       }
     },
   },

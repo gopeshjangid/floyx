@@ -10,54 +10,15 @@ import { styled } from '@mui/material/styles';
 import CustomizedMenus from '../CustomizedButton';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import { useRouter } from 'next/navigation';
-
-const TOP_BAR = [
-  {
-    text: 'Articles/Blog',
-    icon: <DescriptionOutlinedIcon />,
-    visible: true,
-    link: '/articles',
-  },
-  {
-    text: 'Video/Live Streams',
-    icon: <VideocamIcon />,
-    visible: true,
-    link: '/article',
-  },
-  {
-    text: 'Group',
-    icon: <PeopleOutlinedIcon />,
-    visible: true,
-    link: '/article',
-  },
-  {
-    data: [
-      {
-        text: 'Crypto',
-        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-        visible: true,
-        link: '/crypto',
-      },
-      {
-        text: 'AirDrop',
-        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-        visible: true,
-        link: '/airdrop',
-      },
-      {
-        text: 'Search',
-        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-        visible: true,
-        link: '/search',
-      },
-    ],
-    visible: true,
-  },
-];
+import DocumentText from "@/assets/images/svg/documentText";
+import VideoIcon from "@/assets/images/svg/video";
+import ProfileGroup from "@/assets/images/svg/profileGroup";
+import BitCoin from "@/assets/images/svg/bitcoin";
 
 export default function Header() {
   const router = useRouter();
   const { palette } = useTheme();
+  const colorSvg = palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main;
   const HeaderSection = styled(Box)(() => ({
     display: 'flex',
     justifyContent: 'space-between',
@@ -73,6 +34,50 @@ export default function Header() {
     },
     scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.1)',
   }));
+
+  const TOP_BAR = [
+    {
+      text: 'Articles/Blog',
+      icon: <DocumentText color={colorSvg} />,
+      visible: true,
+      link: '/articles',
+    },
+    {
+      text: 'Video/Live Streams',
+      icon: <VideoIcon color={colorSvg} />,
+      visible: true,
+      link: '/article',
+    },
+    {
+      text: 'Group',
+      icon: <ProfileGroup color={colorSvg} />,
+      visible: true,
+      link: '/article',
+    },
+    {
+      data: [
+        {
+          text: 'Crypto',
+          icon: <DocumentText color={colorSvg} />,
+          visible: true,
+          link: '/crypto',
+        },
+        {
+          text: 'AirDrop',
+          icon: <DocumentText color={colorSvg} />,
+          visible: true,
+          link: '/airdrop',
+        },
+        {
+          text: 'Search',
+          icon: <DocumentText color={colorSvg} />,
+          visible: true,
+          link: '/search',
+        },
+      ],
+      visible: true,
+    },
+  ];
 
   const handleClick = (link: string | undefined) => {
     if (link) router.push(link);
@@ -95,6 +100,7 @@ export default function Header() {
                   alignItems: 'center',
                   color: palette.text.primary,
                   borderColor: palette.primary.boxBorder,
+                  background: palette.primary[700],
                   fontWeight: 500,
                   fontSize: '15px',
                 }}
@@ -106,7 +112,7 @@ export default function Header() {
             <>
               {val.visible && (
                 <CustomizedMenus
-                  startIcon={<CurrencyBitcoinIcon />}
+                  startIcon={<BitCoin color={colorSvg} />}
                   menuItem={val.data}
                 />
               )}

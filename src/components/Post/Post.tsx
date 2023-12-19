@@ -83,6 +83,7 @@ export default function Post({
             username={username}
             timestamp={createdDateTime}
             shared={shared}
+            isPost={true}
           />
           <Box sx={{ padding: '20px 0' }}>
             <SplitButton

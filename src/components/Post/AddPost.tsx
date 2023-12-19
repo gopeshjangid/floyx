@@ -21,6 +21,8 @@ import { useSession } from 'next-auth/react';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { useToast } from '../Toast/useToast';
+import { useLazyGetUserSuggestionQuery } from "@/lib/redux/slices/comments";
+import MentionItem from "../MentionItem";
 
 const initialPostObj = {
   postText: '',
@@ -44,11 +46,24 @@ export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComp
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('');
 
   const [createPost, { error, isLoading }] = useCreatePostMutation();
-
+  const [getUserSuggestion ] = useLazyGetUserSuggestionQuery();
+  
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     console.log(newValue);
     // setValue(newValue);
   };
+
+  const getUserDetails = async (mentionValue: string, callback: any) => {
+    let userList: any = [];
+    if (mentionValue) {
+      const renderSuggestions = await getUserSuggestion(mentionValue);
+      if (renderSuggestions && Array.isArray(renderSuggestions?.data)) {
+        userList = renderSuggestions?.data;
+      }
+      callback(userList);
+    }
+    callback(userList);
+  }
 
   const handleImg = (e: any) => {
     e.preventDefault();
@@ -108,6 +123,11 @@ export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComp
     publishImage();
   };
 
+  
+  const renderUserSuggestion = (user: any) => {
+    return <MentionItem user={user} />;
+  };
+
   return (
     <>
       <PostBox>
@@ -119,7 +139,7 @@ export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComp
         >
           <Tab
             sx={{ paddingX: 2 }}
-            label={<Typography variant="subtitle2">Post</Typography>}
+            label={<Typography variant="subtitle2" color="textPrimary">Post</Typography>}
           />
           <Tab
             component={Link}
@@ -160,8 +180,8 @@ export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComp
                 <Mention
                   trigger="@"
                   displayTransform={(id: string) => `@${id}`}
-                  data={[]}
-                  // renderSuggestion={[]}
+                  data={getUserDetails}
+                  renderSuggestion={renderUserSuggestion}
                   appendSpaceOnAdd={true}
                 />
               </MentionsInput>
