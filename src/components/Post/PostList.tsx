@@ -1,6 +1,6 @@
 'use client';
 //import InfiniteScroll from 'react-infinite-scroller';
-import { Box, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PostBox } from './styledPostBox';
 import Post from './Post';
@@ -13,22 +13,26 @@ interface PostProps {
   hasMore: boolean;
 }
 
-const LoaderSkeleton = () => (
-  <Box bgcolor="Background.paper" p={1}>
-    <Stack my={2} gap={1}>
-      <Stack direction="row" gap={1}>
-        <Skeleton variant="circular" width={'60px'} height={'30px'} />
-        <Skeleton variant="text" width={'100%'} height={30} />
-        <Skeleton variant="text" width={'100%'} height={30} />
+const LoaderSkeleton = () => {
+  const { palette } = useTheme();
+  return (
+    <Box sx={{ background: palette.primary.mainBackground }} p={1}>
+      <Stack my={2} gap={1}>
+        <Stack direction="row" gap={1}>
+          <Skeleton variant="circular" width={'60px'} height={'30px'} />
+          <Skeleton variant="text" width={'100%'} height={30} />
+          <Skeleton variant="text" width={'100%'} height={30} />
+        </Stack>
+        <Skeleton variant="rectangular" width={'100%'} height={100} />
+        <Skeleton variant="text" width={'100%'} height={100} />
+        <Skeleton variant="rectangular" width={'100%'} height={30} />
       </Stack>
-      <Skeleton variant="rectangular" width={'100%'} height={100} />
-      <Skeleton variant="text" width={'100%'} height={100} />
-      <Skeleton variant="rectangular" width={'100%'} height={30} />
-    </Stack>
-  </Box>
-);
+    </Box>
+  );
+};
 
 function PostList({ postData, loadMore, hasMore }: PostProps) {
+  const { palette } = useTheme();
   return (
     <>
       {Array.isArray(postData) && postData?.length ? (
@@ -40,7 +44,15 @@ function PostList({ postData, loadMore, hasMore }: PostProps) {
             loader={<LoaderSkeleton key="loader-ininfite" />}
             scrollableTarget="scrollableDiv"
             endMessage={
-              <Box p={1} mt={1}>
+              <Box
+                sx={{
+                  border: `1px solid ${palette.primary.boxBorder}`,
+                  borderRadius: '10px',
+                  background: palette.primary.mainBackground,
+                }}
+                p={1}
+                mt={1}
+              >
                 <Typography textAlign="center" variant="subtitle1" color="info">
                   Yay! You have seen it all
                 </Typography>
