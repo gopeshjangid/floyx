@@ -94,13 +94,15 @@ const ProfilePicUploader = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
 }));
 
-const ProfileCover = styled(Box)<ProfileFollowerWrapperProps>(() => ({
-  height: '280px',
-  borderRadius: '10px',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-}));
+const ProfileCover = styled(Box)<Omit<ProfileFollowerWrapperProps, 'isMobile'>>(
+  () => ({
+    height: '280px',
+    borderRadius: '10px',
+    width: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+  })
+);
 
 const ProfilePic = styled(Box)<ProfileFollowerWrapperProps>(
   ({ theme, ...props }) => ({
@@ -324,7 +326,7 @@ const ProfileSection: React.FC = () => {
             <LinearProgress />
           </Box>
         )}
-        <ProfileCover isMobile={isMobile}>
+        <ProfileCover>
           {isLoading && !profile ? (
             <Skeleton
               variant="rectangular"

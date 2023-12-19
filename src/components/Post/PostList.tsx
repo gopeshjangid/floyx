@@ -1,17 +1,15 @@
 'use client';
-import InfiniteScroll from 'react-infinite-scroller';
-import { Box, Skeleton, Stack } from '@mui/material';
-
+//import InfiniteScroll from 'react-infinite-scroller';
+import { Box, Skeleton, Stack, Typography } from '@mui/material';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { PostBox } from './styledPostBox';
 import Post from './Post';
 import { PostDetailResult } from '@/lib/redux/slices/posts';
-import { apiParams } from '@/app/(secured)/page';
+import React from 'react';
 
 interface PostProps {
   postData: PostDetailResult[];
   loadMore: any;
-  apiParams: apiParams;
-  isFetching: boolean;
   hasMore: boolean;
 }
 
@@ -30,39 +28,41 @@ const LoaderSkeleton = () => (
   </Box>
 );
 
-export default function PostList({
-  postData,
-  loadMore,
-  apiParams,
-  isFetching,
-  hasMore,
-}: PostProps) {
+function PostList({ postData, loadMore, hasMore }: PostProps) {
   return (
     <>
       {Array.isArray(postData) && postData?.length ? (
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={(e: any) => loadMore(e, apiParams?.pageNumber, isFetching)}
-          hasMore={hasMore}
-          useWindow={false}
-          // threshold={100}
-          loader={<LoaderSkeleton key="loader-ininfite" />}
-        >
-          {postData?.map((val: any) => (
-            <Post
-              key={`posts${val?.id}`}
-              name={val?.author?.name || ''}
-              username={val?.author?.username || ''}
-              createdDateTime={val?.post?.createdDateTime}
-              content={val?.post?.content}
-              shared={val?.post?.shared}
-              image={val?.post?.image}
-              link={val?.post?.link}
-              postDetails={val?.post}
-              postId={val?.id}
-            />
-          ))}
-        </InfiniteScroll>
+        <Box>
+          <InfiniteScroll
+            dataLength={postData.length} //This is important field to render the next data
+            next={loadMore}
+            hasMore={hasMore}
+            loader={<LoaderSkeleton key="loader-ininfite" />}
+            scrollableTarget="scrollableDiv"
+            endMessage={
+              <Box p={1} mt={1}>
+                <Typography textAlign="center" variant="subtitle1" color="info">
+                  Yay! You have seen it all
+                </Typography>
+              </Box>
+            }
+          >
+            {postData?.map((val: any) => (
+              <Post
+                key={`post-${val?.id}-post-created-time-${val.post?.createdDateTime}`}
+                name={val?.author?.name || ''}
+                username={val?.author?.username || ''}
+                createdDateTime={val?.post?.createdDateTime}
+                content={val?.post?.content}
+                shared={val?.post?.shared}
+                image={val?.post?.image}
+                link={val?.post?.link}
+                postDetails={val?.post}
+                postId={val?.id}
+              />
+            ))}
+          </InfiniteScroll>
+        </Box>
       ) : (
         <PostBox>
           <Box sx={{ margin: '0rem 1rem 1rem' }}>
@@ -105,3 +105,5 @@ export default function PostList({
     </>
   );
 }
+
+export default React.memo(PostList);

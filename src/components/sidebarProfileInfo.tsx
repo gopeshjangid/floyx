@@ -30,22 +30,21 @@ const SidebarProfileBar: React.FC = () => {
         padding: 1,
         borderRadius: '10px',
         border: `1px solid ${palette.primary.boxBorder}`,
-        width: '95%',
+        minWidth: '70%',
+        maxWidth: '85%',
       }}
     >
       {isLoading ? (
         <Skeleton variant="rectangular" width="100%" height={'100px'} />
       ) : (
-        <Stack direction="row" alignItems="center" gap={1}>
+        <Stack alignItems="center" gap={1}>
           <Avatar src={data?.avatar} />
-          <Stack>
-            <Box textAlign="justify">
-              <Typography variant="caption" color="textPrimary">
-                {data?.name}
-              </Typography>
-              <UsernameLink variant="caption" username={data?.username ?? ''} />
-            </Box>
-            <Box textAlign="justify" display="flex" flexDirection="column">
+          <Stack alignItems="center">
+            <Typography variant="subtitle1" color="textPrimary">
+              {data?.name}
+            </Typography>
+            <UsernameLink variant="subtitle2" username={data?.username ?? ''} />
+            <Stack direction="row" gap={1}>
               <Typography
                 display="inline-flex"
                 variant="caption"
@@ -62,7 +61,7 @@ const SidebarProfileBar: React.FC = () => {
                   {data?.numberOfFollowing}
                 </span>
               </Typography>
-            </Box>
+            </Stack>
           </Stack>
         </Stack>
       )}

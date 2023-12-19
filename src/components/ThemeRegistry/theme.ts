@@ -281,14 +281,14 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
       // },
       MuiCssBaseline: {
         styleOverrides: `
-        * {
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-          &::-webkit-scrollbar {
-            display: none;
+          * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            &::-webkit-scrollbar {
+              display: none;
+            }
           }
-        }
-      `,
+        `,
       },
       MuiTabs: {
         styleOverrides: {

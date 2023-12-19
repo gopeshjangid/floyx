@@ -1,7 +1,7 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import React, { useState, useMemo } from 'react'; // Use `useState` and `useMemo` hooks directly
+import React, { useState, useMemo, useRef } from 'react'; // Use `useState` and `useMemo` hooks directly
 import { Box } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -11,16 +11,19 @@ import { useTheme } from '@mui/material';
 import ProfileSection from '../_components/profileSection';
 import AboutSection from '../_components/about';
 import { GradientText } from '@/components/usernameLink';
-import ProfilePostList from '../_components/postList';
+import ProfilePostList from '../_components/profilePostList';
 import ProfileArticleList from '../_components/articleList';
 
 const Page: React.FC = () => {
   const { palette } = useTheme();
+  const parentRef = useRef(null);
   const [value, setValue] = useState(0); // Simplified import
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const getParentScroll = () => parentRef.current;
 
   // useMemo to avoid unnecessary re-renders of the tabs
   const tabs = useMemo(
@@ -89,7 +92,11 @@ const Page: React.FC = () => {
   }, [value]);
 
   return (
-    <Box>
+    <Box
+      sx={{ overflow: 'auto', height: window.document.body.clientHeight }}
+      ref={parentRef}
+      id="scrollableDiv"
+    >
       <ProfileSection />
       <Box sx={{ mb: 2 }}>{tabs}</Box>
       <Box>{renderSection}</Box>

@@ -55,7 +55,7 @@ export interface PostDetailResult {
 
 type PostListByUserArgs = {
   username: string;
-  pageNumber: number;
+  pageNumber?: number;
   postCreatedDate: number;
 };
 
@@ -68,7 +68,10 @@ export const postServices = createApi({
       transformResponse: (response: any) => response?.value?.data,
       providesTags: ['postDetail'],
     }),
-    getPostListByUser: builder.query<PostDetailResult[], PostListByUserArgs>({
+    getPostListByUser: builder.query<
+      { postList: PostDetailResult[]; hasMore: boolean },
+      PostListByUserArgs
+    >({
       query: ({ pageNumber, postCreatedDate, username }) => {
         const apiEndPoint = ApiEndpoint.GetPosts + `/${username}`;
         if (!pageNumber) {
@@ -76,40 +79,38 @@ export const postServices = createApi({
         }
         return `${apiEndPoint}?page=${pageNumber}&postCreatedDate=${postCreatedDate}`;
       },
-      transformResponse: (response: any) => response?.value?.data || [],
-      onQueryStarted: async (
-        arg: PostListByUserArgs,
-        { queryFulfilled, dispatch }
-      ) => {
-        try {
-          const { data: newPosts } = await queryFulfilled;
-          console.log({ newPosts });
-          if (newPosts) {
-            dispatch(
-              postServices.util.updateQueryData(
-                'getPostListByUser',
-                arg,
-                (draft: PostDetailResult[]) => {
-                  console.log('draft : ', ...draft);
-                  // Append new posts to the existing ones in the cache
-                  if (Array.isArray(draft)) {
-                    draft.push(...newPosts);
-                  } else {
-                    // Handle the case where the draft is not an array
-                  }
-                }
-              )
-            );
-          }
-        } catch (error) {
-          // Handle the error
-        }
+      transformResponse: (response: any) => ({
+        postList: response?.value?.data || [],
+        hasMore: response?.value?.hasMore,
+      }),
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
       },
+      merge: (currentCache, newItems, otherArgs) => {
+        console.log('new items Length: ', newItems.postList.length);
+        console.log('current cache hasMore', currentCache.hasMore);
+        if (currentCache) {
+          return {
+            postList: [...currentCache.postList, ...newItems.postList],
+            hasMore: newItems.postList.length === 10,
+          };
+        } else
+          return {
+            postList: [...newItems.postList],
+            hasMore: newItems.postList.length === 10,
+          };
+      },
+
+      // Refetch when the page arg changes
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+
       providesTags: ['PostListByUser'],
     }),
     getPosts: builder.query<PostDetailResult[], PostDetail>({
       query: ({ pageNumber, postCreatedDate }) => {
-        console.log(pageNumber, postCreatedDate, 'paramas')
+        console.log(pageNumber, postCreatedDate, 'paramas');
         const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {
           return apiEndPoint;
@@ -128,17 +129,22 @@ export const postServices = createApi({
             [{ type: 'Posts', id: 'LIST' }],
       // Only have one cache entry because the arg always maps to one string
       serializeQueryArgs: ({ endpointName }) => {
-        return endpointName
+        return endpointName;
       },
       // // Always merge incoming data to the cache entry
       merge: (currentCache, newItems) => {
         console.log('merge', currentCache, newItems);
-        currentCache.push(...newItems)
+        currentCache.push(...newItems);
       },
       // // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
-        console.log('forceReftch', currentArg, previousArg, currentArg !== previousArg);
-        return currentArg !== previousArg
+        console.log(
+          'forceReftch',
+          currentArg,
+          previousArg,
+          currentArg !== previousArg
+        );
+        return currentArg !== previousArg;
       },
       transformResponse: (response: any) => response?.value?.data || [],
       // {

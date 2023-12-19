@@ -23,8 +23,10 @@ function ProfilePostList() {
   });
 
   const isMobile = useMediaQuery('(max-width:480px)');
-  const { data: postData, isFetching } = useGetPostListByUserQuery(apiParams);
-
+  const { data, isFetching } = useGetPostListByUserQuery(apiParams);
+  const postData = data?.postList;
+  console.log('data: ', data);
+  const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
   // Custom debounce function
   const debounce = (func: (...args: any[]) => void, delay: number) => {
     let timer: any;
@@ -37,21 +39,27 @@ function ProfilePostList() {
   };
 
   const loadMore = useCallback(
-    debounce((pageNumber: number) => {
-      if (postData && postData.length && !isFetching) {
+    debounce(() => {
+      console.log('oad more');
+      if (postData?.length && !isFetching) {
+        console.log('calling load more');
         const lastPost = postData[postData.length - 1];
-        if (pageNumber > apiParams.pageNumber && lastPost) {
-          setApiParams(prevParams => ({
-            ...prevParams,
-            pageNumber: pageNumber,
-            postCreatedDate: lastPost?.post?.createdDateTime,
-          }));
-        }
+        setApiParams(prevParams => ({
+          ...prevParams,
+          pageNumber: prevParams.pageNumber + 1,
+          postCreatedDate: lastPost?.post?.createdDateTime,
+        }));
       }
-    }, 1000),
-    [postData, isFetching, apiParams.pageNumber]
+    }, 2000),
+    [postData, isFetching, setApiParams]
   );
 
+  console.log(
+    'postData: last hasMore ',
+    hasMore,
+    'postData length: ',
+    postData?.length
+  );
   return (
     <Box p={isMobile ? 2 : 0}>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -59,9 +67,7 @@ function ProfilePostList() {
           <PostList
             postData={postData || []}
             loadMore={loadMore}
-            apiParams={apiParams}
-            isFetching={isFetching}
-            hasMore={postData ? postData.length === 10 : false}
+            hasMore={hasMore}
           />
         </Grid>
       </Grid>
