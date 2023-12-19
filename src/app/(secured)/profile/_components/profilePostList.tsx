@@ -13,9 +13,9 @@ export interface apiParams {
 
 function ProfilePostList() {
   const params = useParams();
-  const username = Array.isArray(params.username)
+  const username = Array.isArray(params?.username)
     ? params.username[0]
-    : params.username;
+    : params?.username || '';
   const [apiParams, setApiParams] = useState<apiParams>({
     pageNumber: 0,
     postCreatedDate: 0,
@@ -25,7 +25,6 @@ function ProfilePostList() {
   const isMobile = useMediaQuery('(max-width:480px)');
   const { data, isFetching } = useGetPostListByUserQuery(apiParams);
   const postData = data?.postList;
-  console.log('data: ', data);
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
   // Custom debounce function
   const debounce = (func: (...args: any[]) => void, delay: number) => {
@@ -40,9 +39,7 @@ function ProfilePostList() {
 
   const loadMore = useCallback(
     debounce(() => {
-      console.log('oad more');
       if (postData?.length && !isFetching) {
-        console.log('calling load more');
         const lastPost = postData[postData.length - 1];
         setApiParams(prevParams => ({
           ...prevParams,
@@ -52,13 +49,6 @@ function ProfilePostList() {
       }
     }, 2000),
     [postData, isFetching, setApiParams]
-  );
-
-  console.log(
-    'postData: last hasMore ',
-    hasMore,
-    'postData length: ',
-    postData?.length
   );
   return (
     <Box p={isMobile ? 2 : 0}>

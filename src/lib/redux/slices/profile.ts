@@ -138,6 +138,10 @@ export const profileService = createApi({
       transformResponse: (response: ApiResponse<UserProfileDetails>) =>
         response?.value?.data,
       providesTags: ['profileDetails'],
+      transformErrorResponse: (error, meta) => {
+        console.log('Error: ', error);
+        return error;
+      },
     }),
     getPopularAccountsToFollow: builder.query<
       AccountApiResponse,
@@ -262,11 +266,11 @@ export const profileService = createApi({
       }),
       transformResponse: (response: ApiResponse<ReportArticle>) =>
         response.value.data,
-        onQueryStarted: (arg, api) => {
-          api.queryFulfilled.then(() => {
-            api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
-          });
-        },
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(() => {
+          api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
+        });
+      },
       invalidatesTags: ['profileAbout', 'profileDetails'],
     }),
     blockUser: builder.mutation<ReportUser, Partial<{ username: string }>>({
@@ -280,7 +284,8 @@ export const profileService = createApi({
           api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
         });
       },
-      transformResponse: (response: ApiResponse<ReportUser>) => response.value.data,
+      transformResponse: (response: ApiResponse<ReportUser>) =>
+        response.value.data,
       invalidatesTags: ['profileAbout', 'profileDetails'],
     }),
     followUser: builder.mutation<void, Partial<{ username: string }>>({

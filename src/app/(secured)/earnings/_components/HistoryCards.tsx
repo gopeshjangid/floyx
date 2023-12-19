@@ -35,7 +35,7 @@ const TransactionHistory = React.memo(() => {
   const [showHistory, setShowHistory] = useState(false);
 
   return (
-    <Box>
+    <Box textAlign="left">
       {showHistory && data && (
         <CustomDialog
           PaperProps={{
@@ -75,7 +75,7 @@ const TransactionHistory = React.memo(() => {
         />
       )}
       <Button
-        variant="outlined"
+        variant="text"
         onClick={() => setShowHistory(true)}
         startIcon={<HistoryIcon />}
         sx={{
@@ -85,7 +85,7 @@ const TransactionHistory = React.memo(() => {
           color: palette.primary[700],
         }}
       >
-        Transaction Hisotry
+        Transaction History
       </Button>
     </Box>
   );
@@ -147,6 +147,7 @@ const ArticleHistory = React.memo(() => {
       )}
       <Button
         variant="outlined"
+        fullWidth
         onClick={() => setShowHistory(true)}
         startIcon={<HistoryIcon />}
       >
@@ -212,6 +213,7 @@ const VoteHistory = React.memo(() => {
       )}
       <Button
         variant="outlined"
+        fullWidth
         onClick={() => setShowHistory(true)}
         startIcon={<HistoryIcon />}
       >
@@ -267,6 +269,7 @@ const DailyTaskHistory = React.memo(() => {
       )}
       <Button
         variant="outlined"
+        fullWidth
         onClick={() => setShowHistory(true)}
         startIcon={<HistoryIcon />}
       >
@@ -368,6 +371,7 @@ const WalletHistory = React.memo(() => {
       <Button
         sx={balanceButtonStyle}
         variant="outlined"
+        fullWidth
         onClick={() => setShowHistory(true)}
       >
         Wallet

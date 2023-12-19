@@ -87,8 +87,6 @@ export const postServices = createApi({
         return endpointName;
       },
       merge: (currentCache, newItems, otherArgs) => {
-        console.log('new items Length: ', newItems.postList.length);
-        console.log('current cache hasMore', currentCache.hasMore);
         if (currentCache) {
           return {
             postList: [...currentCache.postList, ...newItems.postList],

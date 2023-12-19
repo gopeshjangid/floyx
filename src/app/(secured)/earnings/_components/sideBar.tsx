@@ -179,6 +179,7 @@ const InvitationStatusCard = () => {
       )}
       <Button
         variant="outlined"
+        fullWidth
         onClick={() => setShowHistory(true)}
         startIcon={<HistoryIcon />}
         sx={{ marginBottom: 2 }}

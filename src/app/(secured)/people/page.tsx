@@ -180,7 +180,7 @@ const SearchComponent: React.FC<{
                 startAdornment: (
                   <InputAdornment position="end">
                     <IconButton edge="end" color="primary">
-                      <DailyTaskIcon />
+                      <DailyTaskIcon fill={'none'} />
                     </IconButton>
                   </InputAdornment>
                 ),
