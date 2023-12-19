@@ -23,8 +23,6 @@ const Page: React.FC = () => {
     setValue(newValue);
   };
 
-  const getParentScroll = () => parentRef.current;
-
   // useMemo to avoid unnecessary re-renders of the tabs
   const tabs = useMemo(
     () => (

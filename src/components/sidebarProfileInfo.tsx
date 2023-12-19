@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Box,
   Paper,
   Skeleton,
   Stack,

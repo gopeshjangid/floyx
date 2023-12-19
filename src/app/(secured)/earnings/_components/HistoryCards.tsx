@@ -1,16 +1,7 @@
 // @ts-nocheck
 'use client';
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Button,
-  Typography,
-  useTheme,
-  FormControl,
-  FormLabel,
-  Input,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Typography, useTheme, TextField } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import HistoryIcon from '@mui/icons-material/History';
@@ -29,9 +20,9 @@ import moment from 'moment';
 import Link from 'next/link';
 import ButtonWithLoading from '@/components/ButtonWithLoading';
 
-const TransactionHistory = React.memo(() => {
+const TransactionHistory = React.memo(function TransactionCard() {
   const { palette } = useTheme();
-  const { data, isLoading } = useGetTransactionHistoryQuery();
+  const { data } = useGetTransactionHistoryQuery();
   const [showHistory, setShowHistory] = useState(false);
 
   return (
@@ -91,11 +82,11 @@ const TransactionHistory = React.memo(() => {
   );
 });
 
-const ArticleHistory = React.memo(() => {
+const ArticleHistory = React.memo(function ArticleCard() {
   const { palette } = useTheme();
   const session = useSession();
   const username = (session as any) ? session.data?.user.username : '';
-  const { data, isLoading } = useGetArticleTipHistoryQuery();
+  const { data } = useGetArticleTipHistoryQuery();
   const [showHistory, setShowHistory] = useState(false);
 
   const getUrl = url => {
@@ -157,11 +148,11 @@ const ArticleHistory = React.memo(() => {
   );
 });
 
-const VoteHistory = React.memo(() => {
+const VoteHistory = React.memo(function VoteHistory() {
   const { palette } = useTheme();
   const session = useSession();
   const username = (session as any) ? session.data?.user.username : '';
-  const { data, isLoading } = useGetTipHistoryQuery();
+  const { data } = useGetTipHistoryQuery();
   const [showHistory, setShowHistory] = useState(false);
 
   const getUrl = url => {
@@ -223,11 +214,9 @@ const VoteHistory = React.memo(() => {
   );
 });
 
-const DailyTaskHistory = React.memo(() => {
+const DailyTaskHistory = React.memo(function DailyHistory() {
   const { palette } = useTheme();
-  const session = useSession();
-  const username = (session as any) ? session.data?.user.username : '';
-  const { data, isLoading } = useGetCompletedTaskHistoryQuery();
+  const { data } = useGetCompletedTaskHistoryQuery();
   const [showHistory, setShowHistory] = useState(false);
 
   return (
@@ -279,7 +268,7 @@ const DailyTaskHistory = React.memo(() => {
   );
 });
 
-const WalletHistory = React.memo(() => {
+const WalletHistory = React.memo(function WalletHistory() {
   const { palette } = useTheme();
   const balanceButtonStyle = {
     color: palette.mode === 'dark' ? '#000000' : '#ffffff',
@@ -300,7 +289,7 @@ const WalletHistory = React.memo(() => {
   useEffect(() => {
     let timer = null;
     if (isSuccess) {
-      setTimeout(() => setShowHistory(false), 2000);
+      timer = setTimeout(() => setShowHistory(false), 2000);
     }
     return () => {
       clearTimeout(timer);
