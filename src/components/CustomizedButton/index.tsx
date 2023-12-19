@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -47,7 +47,8 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }));
 
-export default function CustomizedMenus({startIcon, menuItem}: any) {
+export default function CustomizedMenus({ startIcon, menuItem }: any) {
+  const { palette } = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -69,7 +70,12 @@ export default function CustomizedMenus({startIcon, menuItem}: any) {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
         startIcon={startIcon}
-        sx={{padding: '5px 10px'}}
+        sx={{
+          padding: '5px 10px',
+          background: palette.primary[700],
+          color: palette.text.primary,
+          borderColor: palette.primary.boxBorder,
+        }}
       >
         Options
       </Button>

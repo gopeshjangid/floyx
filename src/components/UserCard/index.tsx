@@ -27,7 +27,8 @@ export default function UserCard({
   shared,
   showDate,
   comment,
-  isArticle=false,
+  isArticle = false,
+  isPost = false,
 }: {
   name: string;
   username: string;
@@ -36,6 +37,7 @@ export default function UserCard({
   showDate?: any;
   comment?: string;
   isArticle?: boolean;
+  isPost?: boolean;
 }) {
   return (
     <UserCardBox>
@@ -46,7 +48,12 @@ export default function UserCard({
           sx={{ width: '50px', height: '50px' }}
         />
       </Box>
-      <Box display={"flex"} justifyContent="space-between" width="100%">
+      <Box
+        display={"flex"}
+        flexDirection={isPost ? "column" : "row"}
+        justifyContent="space-between"
+        width="100%"
+      >
         <Box gap={isArticle ? 0 :1} display="flex" flexDirection={isArticle ? "column" : 'row'} width="100%">
           <Typography
             variant="subtitle1"
