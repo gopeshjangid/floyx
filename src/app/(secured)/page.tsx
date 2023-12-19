@@ -37,8 +37,7 @@ export default function Page() {
     }
   };
 
-  useEffect(() => {
-  }, [postData]);
+  useEffect(() => {}, [postData]);
   const viewportHeight = window.innerHeight;
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
@@ -62,9 +61,7 @@ export default function Page() {
             <PostList
               postData={postData || []}
               loadMore={loadMore}
-              apiParams={apiParams}
-              isFetching={isFetching}
-              hasMore={ postData === undefined || postData?.length % 10 === 0}
+              hasMore={postData === undefined || postData?.length % 10 === 0}
             />
           </Box>
         </Grid>
