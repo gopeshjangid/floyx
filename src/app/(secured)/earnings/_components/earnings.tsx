@@ -70,6 +70,20 @@ const PointsDisplay = styled(Box)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
 }));
 
+const EarningButtons = styled(Button)(({ theme }) => ({
+  color: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
+  border: `1.5px solid ${
+    theme.palette.mode === 'dark' ? '#000000' : '#ffffff'
+  }`,
+  borderColor: 'linear-gradient(134deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+  '&:hover': {
+    color: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
+    border: `1.5px solid ${
+      theme.palette.mode === 'dark' ? '#000000' : '#ffffff'
+    }`,
+  },
+}));
+
 const PointsBalanceCard = () => {
   const { palette } = useTheme();
   const {
@@ -81,15 +95,8 @@ const PointsBalanceCard = () => {
     data: wallet,
     isLoading: walletLoading,
     isError: walletError,
-    error,
   } = useGetUserWalletQuery();
   const [currentBalance, setCurrentBalance] = React.useState(0.0);
-  const balanceButtonStyle = {
-    color: palette.mode === 'dark' ? '#000000' : '#ffffff',
-    border: `1.5px solid`,
-    borderColor:
-      'linear-gradient(134deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
-  };
   const getActiveCurrency = (currencyResp: any) => {
     const activeCurrency = currencyResp.value.data.currencyName;
     axios
@@ -225,9 +232,7 @@ const PointsBalanceCard = () => {
                     gap={2}
                     width="100%"
                   >
-                    <Button sx={balanceButtonStyle} variant="outlined">
-                      Withdraw
-                    </Button>
+                    <EarningButtons>Withdraw</EarningButtons>
                     <WalletHistory />
                   </Stack>
                 </Grid>
@@ -258,6 +263,7 @@ const DashboardBox: React.FC<Dashboard> = props => {
         {props?.titleIcon}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Typography variant="h5">{props?.title}</Typography>
       </Box>
+
       <Box
         display="flex"
         padding={1}

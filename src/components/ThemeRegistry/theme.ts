@@ -267,6 +267,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               opacity: 0.8,
               border: `1px solid rgba(77, 154, 255, 1)`,
             },
+            '& svg': {
+              stroke: '#5798FF',
+            },
           },
         },
       },

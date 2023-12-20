@@ -11,6 +11,7 @@ import EaringTabIcon from '@/iconComponents/earningTabIcon';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import DailyTask from './_components/dailyTask';
+import { GradientText } from '@/components/usernameLink';
 
 const Page: React.FC = () => {
   const { palette } = useTheme();
@@ -34,13 +35,21 @@ const Page: React.FC = () => {
             icon={
               <EaringTabIcon fill={value === 0 && palette.background.paper} />
             }
-            label="Earnings"
+            label={
+              value === 0 ? <GradientText>Earnings</GradientText> : 'Earnings'
+            }
             aria-label="phone"
           />
           <Tab
             iconPosition="start"
             icon={<DailyIcon fill={value === 1 && palette.background.paper} />}
-            label="Daily Task"
+            label={
+              value === 1 ? (
+                <GradientText>Daily Task</GradientText>
+              ) : (
+                'Daily Task'
+              )
+            }
             aria-label="favorite"
           />
         </Tabs>

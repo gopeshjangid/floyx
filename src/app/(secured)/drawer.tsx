@@ -84,12 +84,6 @@ const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
           ? theme.palette.common.white
           : theme.palette.common.black,
     },
-    '& svg.plus-icon': {
-      fill:
-        theme.palette.mode === 'light'
-          ? theme.palette.common.white
-          : theme.palette.common.black,
-    },
   },
 }));
 
@@ -304,7 +298,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
         <ListItem>
           <Button
             variant="outlined"
-            startIcon={<AddCircleOutline className="plus-icon" />}
+            startIcon={<AddCircleOutline color="secondary" />}
             onClick={() => setOpenWriteDialog(true)}
           >
             <GradientText>Write Post</GradientText>{' '}
