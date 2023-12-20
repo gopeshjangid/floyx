@@ -51,7 +51,7 @@ const TOP_BAR = [
         link: '/search',
       },
     ],
-    visible: true,
+    visible: false,
   },
 ];
 
@@ -60,7 +60,8 @@ export default function Header() {
   const { palette } = useTheme();
   const HeaderSection = styled(Box)(() => ({
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    gap: 1,
     width: '100%',
     overflowY: 'auto',
     '&::-webkit-scrollbar': {

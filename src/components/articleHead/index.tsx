@@ -9,6 +9,7 @@ import LikeIcon from '@/images/image/likeIcon';
 import RecentIcon from '@/images/image/recentIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
 import PopularIcon from '@/images/image/popularIcon';
+import { GradientText } from '../GradientComponents';
 
 const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
@@ -47,35 +48,75 @@ export default function ArticleHead({ setTabName }: any) {
         >
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Popular</Typography>}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'popular' ? (
+                  <GradientText>Popular</GradientText>
+                ) : (
+                  'Popular'
+                )}
+              </Typography>
+            }
             icon={<PopularIcon />}
             iconPosition="start"
             value={'popular'}
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Following</Typography>}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'following' ? (
+                  <GradientText>Following</GradientText>
+                ) : (
+                  'Following'
+                )}
+              </Typography>
+            }
             icon={<ProfileTickIcon />}
             iconPosition="start"
             value={'following'}
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Recent</Typography>}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'recent' ? (
+                  <GradientText>Recent</GradientText>
+                ) : (
+                  'Recent'
+                )}
+              </Typography>
+            }
             icon={<RecentIcon />}
             iconPosition="start"
             value={'recent'}
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Liked</Typography>}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'liked' ? (
+                  <GradientText>Liked</GradientText>
+                ) : (
+                  'Liked'
+                )}
+              </Typography>
+            }
             icon={<LikeIcon />}
             iconPosition="start"
             value={'liked'}
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Bookmark</Typography>}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'bookmark' ? (
+                  <GradientText>Bookmark</GradientText>
+                ) : (
+                  'Bookmark'
+                )}
+              </Typography>
+            }
             icon={<BookMarkIcon />}
             iconPosition="start"
             value={'bookmark'}
@@ -88,7 +129,7 @@ export default function ArticleHead({ setTabName }: any) {
           target="_blank"
           href="/composer/create"
         >
-          New Articles
+          <GradientText> New Articles</GradientText>
         </Button>
       </ArticleHeadContainer>
       <Divider sx={{ color: 'white' }} />

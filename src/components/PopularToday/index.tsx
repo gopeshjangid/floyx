@@ -9,7 +9,7 @@ import {
   Alert,
 } from '@mui/material';
 
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -34,6 +34,7 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 }));
 
 function RecentArticles() {
+  const { palette } = useTheme();
   const { data, isLoading, isError } = useGetArticleListQuery(
     'recent?forHome=true'
   );
@@ -63,14 +64,17 @@ function RecentArticles() {
                   </Box>
                   <Box>
                     <Typography
-                      sx={{ wordBreak: 'break-all' }}
+                      sx={{
+                        wordBreak: 'break-all',
+                        color: palette.primary.fontLightColor,
+                      }}
                       variant="body2"
                       gutterBottom={false}
                     >
-                      {article.article.title}...
+                      {article.article.title ?? '(No title)'}...
                     </Typography>
-                    <Typography sx={{ opacity: 0.6 }} variant="caption">
-                      {article.article.title?.slice(0, 20)}...
+                    <Typography color="textPrimary" variant="caption">
+                      {article.article.title?.slice(0, 30)}...
                     </Typography>
                   </Box>
                 </Stack>
