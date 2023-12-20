@@ -23,9 +23,6 @@ const CustomTypographyWithIcon: React.FC<CustomTypographyProps> = ({
     >
       {icon && iconPosition === 'start' && <span>{icon}</span>}
       {children}
-      {/* {icon && iconPosition === 'end' && (
-        <span style={{ marginLeft: '8px', ...sxIcon }}>{icon}</span>
-      )} */}
     </Typography>
   );
 };
