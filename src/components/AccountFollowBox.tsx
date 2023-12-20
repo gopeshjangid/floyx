@@ -21,7 +21,7 @@ const AccountBox = styled(Stack)(({ theme }) => ({
   borderRadius: '10px',
   width: '25%',
   minWidth: '250px',
-  background: theme.palette.primary[700],
+  background: theme.palette.primary.mainBackground,
 }));
 
 export default function FollowNewAccounts() {

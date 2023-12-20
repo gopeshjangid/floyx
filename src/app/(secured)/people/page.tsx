@@ -14,7 +14,7 @@ import {
   IconButton,
 } from '@mui/material';
 import Chip from '@mui/material/Chip';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchResultItems from '@/components/search/FoundResultList';
@@ -244,6 +244,7 @@ const SearchComponent: React.FC<{
 
 // Main Component that uses SearchComponent and ProfileCard with TypeScript
 const MainComponent: React.FC = () => {
+  const { palette } = useTheme();
   const { data, isLoading, error, fetchData } = useQuery<{
     value: {
       data: UserProfilesResponse;
@@ -269,8 +270,9 @@ const MainComponent: React.FC = () => {
         sx={{
           padding: '16px',
           marginBottom: '24px',
-          border: '1px solid rgba(255, 255, 255, .1)',
+          border: `1px solid ${palette.primary.boxBorder}`,
           borderRadius: '10px',
+          background: palette.primary.mainBackground,
         }}
         elevation={0}
       >

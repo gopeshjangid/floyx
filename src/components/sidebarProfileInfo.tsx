@@ -25,7 +25,7 @@ const SidebarProfileBar: React.FC = () => {
     <Paper
       elevation={0}
       sx={{
-        backgroundColor: 'none',
+        backgroundColor: palette.primary.mainBackground,
         padding: 1,
         borderRadius: '10px',
         border: `1px solid ${palette.primary.boxBorder}`,
