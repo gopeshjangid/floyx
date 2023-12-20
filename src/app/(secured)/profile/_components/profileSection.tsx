@@ -43,6 +43,7 @@ import CustomChip from '@/components/CustomGridientChip';
 import ImageUploader from '@/components/ImageUploader';
 import TextareaAutosize from '@/components/CustomTextArea';
 import ButtonWithLoading from '@/components/ButtonWithLoading';
+import { RoundPrimaryButton } from '@/components/CustomButtons';
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
   top?: string;
@@ -61,7 +62,7 @@ const ProfileFollowerWrapper = styled(Box)<ProfileFollowerWrapperProps>(
     borderRadius: '10px',
     overflow: 'hidden',
     border: '1px solid rgba(255, 255, 255, 0.18)',
-    backgroundColor: 'rgba(11, 8, 31, 0.38)',
+    backgroundColor: 'rgba(11, 8, 31, 0.7)',
   })
 );
 
@@ -155,13 +156,13 @@ const OtherUserProfileActions: React.FC<{
       </React.Suspense>
 
       {allowPrivateMassages && (
-        <Button
+        <RoundPrimaryButton
           onClick={() => router.push('/inbox/' + username)}
           variant="contained"
           startIcon={<EmailOutlinedIcon color="primary" />}
         >
           Message
-        </Button>
+        </RoundPrimaryButton>
       )}
       <ButtonWithLoading
         isLoading={isLoading}
@@ -385,7 +386,7 @@ const ProfileSection: React.FC = () => {
                   top="4%"
                   sx={{ top: '16px', right: '16px' }}
                 >
-                  <Box display="flex" p={1} gap={1} bgcolor="#0B081F">
+                  <Box display="flex" p={1} gap={1}>
                     <Button
                       onClick={() => setIsEdit(true)}
                       color="inherit"
@@ -397,20 +398,20 @@ const ProfileSection: React.FC = () => {
                 </ProfileFollowerWrapper>
               )}
               <ProfileFollowerWrapper top="70%" isMobile={isMobile}>
-                <Box
-                  display="flex"
-                  p={1}
-                  alignItems="center"
-                  gap={1}
-                  bgcolor="#0B081F"
-                >
+                <Box display="flex" p={1} alignItems="center" gap={1}>
                   <Typography variant="subtitle2">Following</Typography>
-                  <Typography variant="subtitle2" color="primary">
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
+                  >
                     {profile?.numberOfFollowing}
                   </Typography>
                   <Typography>|</Typography>
                   <Typography variant="subtitle2">Followers</Typography>
-                  <Typography variant="subtitle2" color="primary">
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
+                  >
                     {profile?.numberOfFollowers}
                   </Typography>
                 </Box>

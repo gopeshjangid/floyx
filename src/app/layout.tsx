@@ -8,7 +8,7 @@ import { ToastProvider } from '@/components/Toast/useToast';
 import { initializeStore, useStore } from '@/lib/redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import DefaultPageSkelton from '@/components/DefaultPageSkelton';
+import { DefaultCircularProgress } from '@/components/DefaultPageSkelton';
 import '../components/ThemeRegistry/global.css';
 const initializeStoreValues = {
   earningsReducer: {},
@@ -29,7 +29,7 @@ export default function RootLayout({
           <AuthProvider>
             <Provider store={initializeStore(initializeStoreValues)}>
               <PersistGate
-                loading={<DefaultPageSkelton />}
+                loading={<DefaultCircularProgress />}
                 persistor={persistor}
               >
                 <PageProvider>{children}</PageProvider>

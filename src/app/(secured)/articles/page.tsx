@@ -7,13 +7,14 @@ import PostHeader from '@/components/PostHeader';
 import SearchBarArcticleRight from '@/components/searchBar/searchBarArcticleRight';
 import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
 import WhoToFollow from '@/components/whoToFollow';
-import WhoToFollowLoader from "@/components/whoToFollow/loader";
+import WhoToFollowLoader from '@/components/whoToFollow/loader';
 import { useLazyGetArticleListQuery } from '@/lib/redux';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
   const [tabName, setTabName] = useState('liked?limited=true');
-  const [getArticleList ,{ data: articleList, isFetching }] = useLazyGetArticleListQuery();
+  const [getArticleList, { data: articleList, isFetching }] =
+    useLazyGetArticleListQuery();
 
   useEffect(() => {
     getArticleList(tabName);
@@ -25,9 +26,7 @@ export default function Page() {
         <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
           <Grid sx={{ width: { xs: '100%', sm: '100%' }, padding: '0 20px' }}>
             <PostHeader />
-            <ArticleHead
-              setTabName={setTabName}
-            />
+            <ArticleHead setTabName={setTabName} />
             <ArticleContent
               articleList={articleList}
               loadingList={isFetching}
@@ -35,12 +34,12 @@ export default function Page() {
           </Grid>
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1} paddingLeft={1}>
-            <SearchBarArcticleRight />
-            <RecommendedTopics />
-            <Suspense fallback={<WhoToFollowLoader />}>
-              <WhoToFollow />
-            </Suspense>
-          </Grid>
+          <SearchBarArcticleRight />
+          <RecommendedTopics />
+          <Suspense fallback={<WhoToFollowLoader />}>
+            <WhoToFollow />
+          </Suspense>
+        </Grid>
       </Grid>
     </Box>
   );

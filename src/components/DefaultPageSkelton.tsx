@@ -1,7 +1,15 @@
 import * as React from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
-import { Box, Grid } from '@mui/material';
+import { Box, CircularProgress, Grid } from '@mui/material';
+
+export const DefaultCircularProgress = () => {
+  return (
+    <Box pt={4} width={'100%'} textAlign={'center'}>
+      <CircularProgress />
+    </Box>
+  );
+};
 
 export default function DefaultPageSkelton({
   showOnlyContent,
