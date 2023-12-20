@@ -38,13 +38,11 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import BlockReportUser from './blockReportUser';
 import UsernameLink from '@/components/usernameLink';
 import { useToast } from '@/components/Toast/useToast';
-import CustomLoadingButton from '@/components/LoadingButton';
 import { useSession } from 'next-auth/react';
 import CustomChip from '@/components/CustomGridientChip';
 import ImageUploader from '@/components/ImageUploader';
 import TextareaAutosize from '@/components/CustomTextArea';
 import ButtonWithLoading from '@/components/ButtonWithLoading';
-
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
   top?: string;
@@ -94,13 +92,15 @@ const ProfilePicUploader = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
 }));
 
-const ProfileCover = styled(Box)<ProfileFollowerWrapperProps>(() => ({
-  height: '280px',
-  borderRadius: '10px',
-  width: '100%',
-  overflow: 'hidden',
-  position: 'relative',
-}));
+const ProfileCover = styled(Box)<Omit<ProfileFollowerWrapperProps, 'isMobile'>>(
+  () => ({
+    height: '280px',
+    borderRadius: '10px',
+    width: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+  })
+);
 
 const ProfilePic = styled(Box)<ProfileFollowerWrapperProps>(
   ({ theme, ...props }) => ({
@@ -183,6 +183,8 @@ const OtherUserProfileActions: React.FC<{
 // Example usage of the styled components
 const ProfileSection: React.FC = () => {
   const params = useParams();
+  const router = useRouter();
+  const { palette } = useTheme();
   const toast = useToast();
   const [isEdit, setIsEdit] = React.useState(false);
   const [form, setForm] = React.useState<Partial<ProfileInfoType>>({
@@ -249,7 +251,6 @@ const ProfileSection: React.FC = () => {
   };
   const { data: profileAbout, isLoading: aboutLoading } =
     useGetProfileAboutQuery({ username: username! });
-  const { palette } = useTheme();
 
   const onUpdateSubmit = () => {
     const formData = new FormData();
@@ -275,13 +276,20 @@ const ProfileSection: React.FC = () => {
           ) : (
             <>
               {!isEdit && (
-                <Stack direction="row" gap={1} alignItems={'center'}>
-                  <IconButton sx={{ marginBottom: '4px' }}>
+                <Stack direction="row" gap={0} alignItems={'center'}>
+                  <IconButton
+                    onClick={() => router.back()}
+                    sx={{ marginBottom: '4px' }}
+                  >
                     <ChevronLeft fontSize="medium" color="secondary" />
                   </IconButton>
-                  <Typography variant="body2" color="textPrimary">
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ color: palette.primary.fontLightColor }}
+                  >
                     {profile?.name}
                   </Typography>
+                  &nbsp;
                   <UsernameLink username={profile?.username ?? ''} />
                 </Stack>
               )}
@@ -317,6 +325,7 @@ const ProfileSection: React.FC = () => {
           borderRadius: '10px',
           position: 'relative',
           border: `1px solid ${palette.primary.boxBorder}`,
+          background: palette.primary.mainBackground,
         }}
       >
         {isUpdating && (
@@ -324,7 +333,7 @@ const ProfileSection: React.FC = () => {
             <LinearProgress />
           </Box>
         )}
-        <ProfileCover isMobile={isMobile}>
+        <ProfileCover>
           {isLoading && !profile ? (
             <Skeleton
               variant="rectangular"
@@ -469,7 +478,10 @@ const ProfileSection: React.FC = () => {
               />
             ) : (
               <>
-                <Typography variant="body2" color="textPrimary">
+                <Typography
+                  variant="body2"
+                  sx={{ color: palette.primary.fontLightColor }}
+                >
                   {profile?.name}
                 </Typography>
                 <UsernameLink username={profile?.username ?? ''} />

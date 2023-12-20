@@ -13,8 +13,8 @@ export default function RootLayout({
   const isMobile = useMediaQuery('(max-width:480px)');
   return (
     <Box p={isMobile ? 2 : 0}>
-      <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12} sm={9}>
+      <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>
+        <Grid item xs={12} sm={8.5}>
           {children}
         </Grid>
         <Grid item xs={12} sm={3}>

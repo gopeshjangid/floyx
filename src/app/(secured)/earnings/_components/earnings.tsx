@@ -13,24 +13,26 @@ import {
   Skeleton,
   Grid,
   useMediaQuery,
+  Stack,
 } from '@mui/material';
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import AvailableBalanceicon from '@/iconComponents/availableBalanceBadgeIcon';
 import {
   useGetArticleTipHistoryQuery,
   useGetCompletedTaskHistoryQuery,
   useGetTipHistoryQuery,
-  useGetTransactionHistoryQuery,
   useGetUserWalletQuery,
 } from '@/lib/redux/slices/earnings';
 import useQuery from '@/lib/hooks/useFetch';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
-import SubscriptionIcon from '@/iconComponents/subscriptionIcon';
-import TotalPpintsIcon from '@/iconComponents/totalPointsIcon';
+// import SubscriptionIcon from '@/iconComponents/subscriptionIcon';
+// import TotalPpintsIcon from '@/iconComponents/totalPointsIcon';
 import ArticleIcon from '@/iconComponents/articleIcon';
 import axios from 'axios';
 import VoteIcon from '@/iconComponents/voteIcon';
 import EarningIcon from '@/iconComponents/earningIcon';
+import AccountPointDarkIcon from '@/assets/images/AccountPointDark.png';
+import AccountBalanceDarkIcon from '@/assets/images/AccountBalanceDark.png';
+import AccountBalanceLightIcon from '@/assets/images/AccountBalanceLight.png';
+import AccountPointLightIcon from '@/assets/images/AccountPointLight.png';
 import {
   ArticleHistory,
   DailyTaskHistory,
@@ -38,6 +40,7 @@ import {
   VoteHistory,
   WalletHistory,
 } from './HistoryCards';
+import Image from 'next/image';
 // Styled components
 const DashboardCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -146,10 +149,17 @@ const PointsBalanceCard = () => {
                   display={'flex'}
                   gap={2}
                 >
-                  <TotalPpintsIcon
-                    fill={palette.mode === 'light' ? '#fff' : ''}
+                  <Image
+                    alt="accountpoint "
+                    height={40}
+                    width={40}
+                    src={
+                      palette.mode === 'light'
+                        ? AccountPointLightIcon
+                        : AccountPointDarkIcon
+                    }
                   />
-                  <Typography sx={{ flex: 2 }} variant="h4">
+                  <Typography sx={{ flex: 2 }} variant="subtitle2">
                     {walletLoading ? (
                       <Skeleton variant="text" />
                     ) : (
@@ -157,7 +167,7 @@ const PointsBalanceCard = () => {
                     )}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={12}>
                   <TransactionHistory />
                 </Grid>
               </Grid>
@@ -177,42 +187,49 @@ const PointsBalanceCard = () => {
                 <Grid item xs={12} sm={12}>
                   <Typography variant="h6">Available balance</Typography>
                 </Grid>
-                <Grid item sm={3} xs={3}>
-                  <AvailableBalanceicon
-                    fill={palette.mode === 'light' && '#fff'}
-                  />
+                <Grid item sm={12} xs={12}>
+                  <Stack direction="row" gap={1} width={'100%'}>
+                    <Image
+                      alt="accountbalance "
+                      height={40}
+                      width={40}
+                      src={
+                        palette.mode === 'light'
+                          ? AccountBalanceLightIcon
+                          : AccountBalanceDarkIcon
+                      }
+                    />
+
+                    <Stack gap={0} width="100%">
+                      <Typography variant="subtitle2">
+                        {walletLoading ? (
+                          <Skeleton variant="text" />
+                        ) : (
+                          wallet?.availableBalance + ' Points'
+                        )}{' '}
+                        <br />
+                        Currently: $
+                        {isLoading ? (
+                          <Skeleton variant="text" />
+                        ) : (
+                          currentBalance.toFixed(10)
+                        )}
+                      </Typography>
+                    </Stack>
+                  </Stack>
                 </Grid>
-                <Grid item sm={9} xs={9}>
-                  <Box
+                <Grid item sm={12} xs={12}>
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    gap={2}
                     width="100%"
-                    flexDirection="column"
-                    display="flex"
-                    justifyContent="center"
                   >
-                    <Typography variant="h4">
-                      {walletLoading ? (
-                        <Skeleton variant="text" />
-                      ) : (
-                        wallet?.availableBalance + ' Points'
-                      )}{' '}
-                    </Typography>
-                    <Typography variant="subtitle1">
-                      Currently: $
-                      {isLoading ? (
-                        <Skeleton variant="text" />
-                      ) : (
-                        currentBalance.toFixed(10)
-                      )}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item sm={6} xs={6}>
-                  <Button sx={balanceButtonStyle} variant="outlined">
-                    Withdraw
-                  </Button>
-                </Grid>
-                <Grid item sm={6} xs={6}>
-                  <WalletHistory />
+                    <Button sx={balanceButtonStyle} variant="outlined">
+                      Withdraw
+                    </Button>
+                    <WalletHistory />
+                  </Stack>
                 </Grid>
               </Grid>
             </PointsDisplay>
@@ -241,9 +258,14 @@ const DashboardBox: React.FC<Dashboard> = props => {
         {props?.titleIcon}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <Typography variant="h5">{props?.title}</Typography>
       </Box>
-      <Box display="flex" width="100%" justifyContent="space-between">
-        <Grid container>
-          <Grid item xs={12} sm={10}>
+      <Box
+        display="flex"
+        padding={1}
+        width="100%"
+        justifyContent="space-between"
+      >
+        <Grid container spacing={1} alignItems="center">
+          <Grid item xs={12} sm={9}>
             <Box display="flex">
               <Typography variant="subtitle2">
                 {props?.firstCountTitle}:&nbsp;&nbsp;&nbsp;
@@ -269,7 +291,7 @@ const DashboardBox: React.FC<Dashboard> = props => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={3}>
             {props.isLoading ? (
               <Skeleton sx={{ height: '25px', width: '50px' }} variant="text" />
             ) : (
@@ -322,7 +344,7 @@ const Earnings: React.FC = () => {
       : 0.0;
   return (
     <Box sx={{ p: isMobile ? 0 : 2 }}>
-      <Box>
+      <Box mb={1}>
         <PointsBalanceCard />
       </Box>
       <DashboardCard>
