@@ -13,7 +13,7 @@ export interface apiParams {
 
 export default function ProfileArticleList() {
   const params = useParams();
-  const username = Array.isArray(params) ? params[0] : params.username ?? '';
+  const username = Array.isArray(params) ? params[0] : params?.username ?? '';
   //   const [apiParams, setApiParams] = useState<apiParams>({
   //     pageNumber: 0,
   //     postCreatedDate: 0,

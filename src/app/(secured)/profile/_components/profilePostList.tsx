@@ -14,7 +14,7 @@ export interface apiParams {
 function ProfilePostList() {
   const params = useParams();
   const username = Array.isArray(params?.username)
-    ? params.username[0]
+    ? params?.username[0]
     : params?.username || '';
   const [apiParams, setApiParams] = useState<apiParams>({
     pageNumber: 0,
