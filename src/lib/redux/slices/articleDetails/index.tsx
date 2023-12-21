@@ -2,8 +2,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
-import { postServices } from "../posts";
-import { commentService } from "../comments";
+import { postServices } from '../posts';
+import { commentService } from '../comments';
 
 interface ArticleDetailsArgs {
   userName: string;
@@ -104,7 +104,7 @@ export const artcileDetails = createApi({
       query: ({ userName, articlePuclicUrl }) =>
         `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`,
       transformResponse: (response: any) => response?.value?.data,
-      providesTags: ['FollowStatus', 'LikeStatus'],
+      providesTags: ['LikeStatus'],
     }),
     getFollowStatus: builder.mutation<any, string>({
       query: userName => ({
@@ -112,22 +112,28 @@ export const artcileDetails = createApi({
         method: 'POST',
         body: {},
       }),
-      invalidatesTags: ['FollowStatus'],
+      providesTags: ['FollowStatus'],
     }),
     postLikeStatus: builder.mutation<LikeStatusData, LikeStatusArgs>({
       query: ({ articleId, type }) => ({
         url: `${ApiEndpoint.Like}/${articleId}?type=${type}`,
         method: 'POST',
       }),
-      invalidatesTags: (_, __, arg) => arg.type === 'ArticleLike' ? ['LikeStatus'] : [],
+      invalidatesTags: (_, __, arg) =>
+        arg.type === 'ArticleLike' ? ['LikeStatus'] : [],
       onQueryStarted: (arg, api) => {
         api.queryFulfilled.then(() => {
           if (arg.type == 'PostLike') {
-            api.dispatch(postServices.util.invalidateTags([{ type: 'Posts', id: 'LIST' }, 'postDetail']))
+            api.dispatch(
+              postServices.util.invalidateTags([
+                { type: 'Posts', id: 'LIST' },
+                'postDetail',
+              ])
+            );
           } else if (arg.type == 'PostCommentLiked') {
             api.dispatch(commentService.util.invalidateTags(['commentList']));
           }
-        })
+        });
       },
     }),
     getArticleTotalEarnings: builder.query<any, string>({
@@ -141,13 +147,14 @@ export const artcileDetails = createApi({
         method: 'POST',
         body: payload,
       }),
-      transformErrorResponse: (error: any) => error?.data?.value?.data || "",
+      transformErrorResponse: (error: any) => error?.data?.value?.data || '',
       invalidatesTags: ['articleTip'],
     }),
 
-    getArticleList: builder.query<any, string|undefined>({
-      query: tabName => `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ""}`,
-      providesTags: ['getArticleList', 'deleteArticle'],
+    getArticleList: builder.query<any, string | undefined>({
+      query: tabName =>
+        `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ''}`,
+      providesTags: ['getArticleList'],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
@@ -170,13 +177,13 @@ export const artcileDetails = createApi({
         body: payload,
       }),
       transformResponse: (response: any) => response?.value?.data || {},
-      invalidatesTags: ['LikeStatus']
+      invalidatesTags: ['LikeStatus'],
     }),
     createArticleDraft: builder.mutation<any, any>({
-      query: (payload) => ({
+      query: payload => ({
         url: `${ApiEndpoint.CreateDraft}`,
         method: 'post',
-        body:payload,
+        body: payload,
       }),
       transformResponse: (response: any) => {
         return response.value.data;
@@ -189,35 +196,42 @@ export const artcileDetails = createApi({
           url: `${ApiEndpoint.UpdateDraft}/${articleId}`,
           method: 'put',
           body: payload,
-        }
+        };
       },
       transformResponse: (response: any) => response.value.data,
     }),
     publishArticle: builder.mutation<any, any>({
-      query: (articleId) => ({
+      query: articleId => ({
         url: `${ApiEndpoint.PublishDraft}/${articleId}`,
         method: 'put',
-        body: {}
+        body: {},
       }),
       transformResponse: (response: any) => response.value.data,
     }),
-    deleteArticle: builder.mutation<any , string>({
-      query: (articleId)=>({
-        url:`${ApiEndpoint.DeleteArticle}/${articleId}`,
+    deleteArticle: builder.mutation<any, string>({
+      query: articleId => ({
+        url: `${ApiEndpoint.DeleteArticle}/${articleId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['deleteArticle']
+      invalidatesTags: ['deleteArticle'],
     }),
     getFollowMoreAccount: builder.query<any, void>({
       query: () => `${ApiEndpoint.AccountsToFallow}?forHome=true`,
       transformResponse: (response: any) => response?.value?.data || {},
     }),
     getDraftDetail: builder.query<any, void>({
-      query: (articleId) => `${ApiEndpoint.GetDrafts}/${articleId}`,
-      transformResponse: (response: any) => response?.value?.data || {},     
+      query: articleId => `${ApiEndpoint.GetDrafts}/${articleId}`,
+      transformResponse: (response: any) => response?.value?.data || {},
     }),
   }),
-  tagTypes: ['FollowStatus', 'LikeStatus', 'articleTip', 'getArticleList', 'deleteArticle', 'ArticleInfoNumber'],
+  tagTypes: [
+    'FollowStatus',
+    'LikeStatus',
+    'articleTip',
+    'getArticleList',
+    'deleteArticle',
+    'ArticleInfoNumber',
+  ],
 });
 
 export const {
