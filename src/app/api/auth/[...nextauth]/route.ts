@@ -9,7 +9,7 @@ import socialSignIn from '@/lib/auth/socialSignIn';
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: 'credentials',
       type: 'credentials',
       credentials: {
         email: {},
