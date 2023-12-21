@@ -112,7 +112,7 @@ export const artcileDetails = createApi({
         method: 'POST',
         body: {},
       }),
-      providesTags: ['FollowStatus'],
+      // providesTags: ['FollowStatus']!,
     }),
     postLikeStatus: builder.mutation<LikeStatusData, LikeStatusArgs>({
       query: ({ articleId, type }) => ({
