@@ -29,6 +29,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             boxBackground: '#fff',
             iconFontColor: '#fff',
             mainBackground: '#fff',
+            iconSelectedColor: "#A75FFF",
           },
           secondary: {
             main: '#ADB3C6', // Text Guide
@@ -82,6 +83,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             boxBackground: '#0B081F',
             iconFontColor: '#0B081F',
             mainBackground: '#0B081F',
+            iconSelectedColor: "#A75FFF",
           },
           secondary: {
             main: '#A75FFF', // Primary Purple

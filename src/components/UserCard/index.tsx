@@ -1,5 +1,5 @@
 'use client';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DateParser from '../DateParser';
 import moment from 'moment';
@@ -38,7 +38,9 @@ export default function UserCard({
   comment?: string;
   isArticle?: boolean;
   isPost?: boolean;
-}) {
+  }) {
+  const { palette } = useTheme();
+
   return (
     <UserCardBox>
       <Box sx={{ marginRight: '10px' }}>
@@ -58,7 +60,7 @@ export default function UserCard({
           <Typography
             variant="subtitle1"
             component={'span'}
-            color="textPrimary"
+            color={palette.mode === "light" ? "primary" : "textPrimary"}
           >
             {name}{' '}
           </Typography>
@@ -79,7 +81,14 @@ export default function UserCard({
           <Box width="40%" sx={{ display: 'flex', alignItems: isArticle ? 'flex-end' : 'center' }}>
             <CalendarIcon />
             &nbsp;
-            {moment(showDate).format('MMM DD, YY')}
+            <Typography
+              variant="caption"
+              component={'span'}
+              color="textPrimary"
+              marginBottom={0}
+            >
+              {moment(showDate).format('MMM DD, YY')}
+              </Typography>
           </Box>
         )}
         {comment && (

@@ -1,4 +1,5 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, useTheme } from '@mui/material';
+import CustomChip from "../CustomGridientChip";
 
 const recommendedTopics = [
   {
@@ -32,29 +33,27 @@ const recommendedTopics = [
 ];
 
 export default function RecommendedTopics() {
+  const { palette } = useTheme();
+
   return (
     <Box sx={{ marginTop: '30px', width: '100%' }}>
-      <Typography variant="h5">Recommended Topics</Typography>
+      <Typography
+        color={palette.mode === "light" ? "primary" : "textPrimary"}
+        variant="h5"
+      >
+        Hot Topics
+      </Typography>
       <Box sx={{marginTop:'20px'}}>
         <Grid container>
-          {recommendedTopics.map(val => (
-            <Grid
-              item
-              xs="auto"
-              key={val.value}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '20px',
-                border: '1px solid white',
-                padding: '10px 10px 5px 10px',
-                width: 'fit-Content',
-                margin: '10px',
-              }}
-            >
-              <Typography variant="body2">{val.text}</Typography>
-            </Grid>
+          {recommendedTopics.map((val, index) => (
+            <CustomChip
+              key={'topics' + index}
+              label={val?.text}
+              component="a"
+              href="#basic-chip"
+              clickable
+              style={{ marginBottom: 10, marginRight: 10 }}
+            />
           ))}
         </Grid>
       </Box>

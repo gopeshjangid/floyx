@@ -70,7 +70,7 @@ const ThemeSwitch = () => {
         <MaterialUISwitch
           sx={{ m: 2 }}
           checked={theme === 'dark'}
-          defaultChecked={theme === 'dark'}
+          // defaultChecked={theme === 'dark'}
           onChange={() => {
             if (theme === 'dark') {
               setTheme('light');

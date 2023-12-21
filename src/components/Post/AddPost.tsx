@@ -23,6 +23,7 @@ import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { useToast } from '../Toast/useToast';
 import { useLazyGetUserSuggestionQuery } from "@/lib/redux/slices/comments";
 import MentionItem from "../MentionItem";
+import { GradientText } from "../usernameLink";
 
 const initialPostObj = {
   postText: '',
@@ -139,7 +140,9 @@ export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComp
         >
           <Tab
             sx={{ paddingX: 2 }}
-            label={<Typography variant="subtitle2" color="textPrimary">Post</Typography>}
+            label={
+              <GradientText>Post</GradientText>
+            }
           />
           <Tab
             component={Link}

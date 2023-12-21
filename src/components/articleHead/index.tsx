@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Tabs, Tab, Typography, Button, Divider } from '@mui/material';
+import { Box, Tabs, Tab, Typography, Button, Divider, useTheme } from '@mui/material';
 import React, { useState, SyntheticEvent } from 'react';
 import { styled } from '@mui/material/styles';
 
@@ -9,6 +9,8 @@ import LikeIcon from '@/images/image/likeIcon';
 import RecentIcon from '@/images/image/recentIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
 import PopularIcon from '@/images/image/popularIcon';
+import { GradientText } from "../usernameLink";
+import { GradientButton } from "../gradientButton";
 
 const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
@@ -26,15 +28,15 @@ const ArticleHeadContainer = styled(Box)(() => ({
 }));
 
 export default function ArticleHead({ setTabName }: any) {
-  const [value, setValue] = useState('popular');
+  const [value, setValue] = useState('liked?limited=true');
+  const { palette } = useTheme();
+  const getColorSvg = () => {
+    return (palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main);
+  }
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    if (newValue === 'popular') {
-      setTabName('liked?limited=true');
-    } else {
-      setTabName(newValue);
-    }
+    setTabName(newValue);
   };
 
   return (
@@ -47,49 +49,65 @@ export default function ArticleHead({ setTabName }: any) {
         >
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Popular</Typography>}
-            icon={<PopularIcon />}
+            icon={<PopularIcon fill={value === "liked?limited=true" ? "#A75FFF" : getColorSvg()}/>}
             iconPosition="start"
-            value={'popular'}
+            value="liked?limited=true"
+            label={
+              value === "liked?limited=true" ? (
+              <GradientText>Popular</GradientText>
+              ) : (
+                'Popular'
+              )
+            }
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Following</Typography>}
-            icon={<ProfileTickIcon />}
+            icon={<ProfileTickIcon fill={value === "following"  ? "#A75FFF" : getColorSvg()}/>}
             iconPosition="start"
-            value={'following'}
+            value="following"
+            label={
+              value === "following" ? (
+              <GradientText>Following</GradientText>
+              ) : (
+                'Following'
+              )
+            }
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Recent</Typography>}
-            icon={<RecentIcon />}
+            icon={<RecentIcon fill={value === "recent"  ? "#A75FFF" : getColorSvg()}/>}
             iconPosition="start"
-            value={'recent'}
+            value="recent"
+            label={value === 'recent' ? (
+              <GradientText>Recent</GradientText>
+              ) : (
+                'Recent'
+              )}
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Liked</Typography>}
-            icon={<LikeIcon />}
+            icon={<BookMarkIcon fill={value === "bookmark"  ? "#A75FFF" : getColorSvg()}/>}
             iconPosition="start"
-            value={'liked'}
-          />
-          <Tab
-            className="tab"
-            label={<Typography variant="subtitle2">Bookmark</Typography>}
-            icon={<BookMarkIcon />}
-            iconPosition="start"
-            value={'bookmark'}
+            value="bookmark"
+            label={value === "bookmark" ? (
+                <GradientText>Bookmark</GradientText>
+              ) : (
+                'Bookmark'
+              )}
           />
         </Tabs>
-        <Button
+        <GradientButton
           variant="outlined"
           color="primary"
-          sx={{ border: '1px solid white' }}
-          target="_blank"
+          // sx={{ border: '1px solid white' }}
+          // target="_blank"
           href="/composer/create"
+          isSelected
         >
-          New Articles
-        </Button>
+          <span>
+            New Articles
+          </span>
+        </GradientButton>
       </ArticleHeadContainer>
       <Divider sx={{ color: 'white' }} />
     </>
