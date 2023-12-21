@@ -259,6 +259,7 @@ export default function ArticleContainer({
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                 }}
+                color={palette.mode === "light" ? "primary" : "textPrimary"}
               >
                 {articleDetails?.title ? articleDetails?.title : ''}
               </Typography>
@@ -281,6 +282,8 @@ export default function ArticleContainer({
           <Box className="middle">
             <Typography
               variant="body2"
+              // color={"textPrimary"}
+              color={palette.mode === "light" ? "primary" : "textPrimary"}
               sx={{
                 minHeight: `${40}px`,
                 maxHeight: `${40 * 2}px`,

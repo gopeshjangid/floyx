@@ -1,32 +1,45 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
+import { Search } from "@mui/icons-material";
+import { Box, IconButton, InputAdornment, TextField, Typography, useTheme } from '@mui/material';
 import { Mention, MentionsInput } from 'react-mentions';
 
 export default function SearchBarArcticleRight() {
-  function handleArticleSearch(e:any) {
+  const { palette } = useTheme();
+
+  function handleArticleSearch(e: any) {
     console.log(e.target.value);
   }
 
   return (
     <Box>
-      <Typography variant="h5">Search for Arcticles</Typography>
-      <MentionsInput
-        className="mention-input-container"
-        singleLine={false}
-        value={""}
-        onChange={handleArticleSearch}
-        placeholder={'Search articles...'}
-        style={{ padding: '10px', display: 'flex', alignItem: 'centre', justifyContent: 'space-between' }}
+      <Typography
+        variant="h5"
+        color={palette.mode=== "light" ? "primary": "textPrimary"}
       >
-        <Mention
-          trigger="@"
-          // displayTransform={(id: string) => `@${id}`}
-          data={[]}
-          // renderSuggestion={[]}
-          appendSpaceOnAdd={true}
-        />
-      </MentionsInput>
+        Search for Arcticles
+      </Typography>
+      <TextField
+        name="email"
+        fullWidth
+        hiddenLabel
+        placeholder="Search articles..."
+        onChange={handleArticleSearch}
+        sx={{
+          ".MuiOutlinedInput-root": {
+            background: palette.primary[700],
+          }
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="end">
+              <IconButton edge="end" color="primary">
+                <Search />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
     </Box>
   );
 }

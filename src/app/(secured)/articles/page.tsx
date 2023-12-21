@@ -20,18 +20,31 @@ export default function Page() {
     getArticleList(tabName);
   }, [tabName]);
 
+  const viewportHeight = window.innerHeight;
+
   return (
-    <Box p={isMobile ? 2 : 0}>
+    <Box p={isMobile ? 2 : 2} mt={2}>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
-          <Grid sx={{ width: { xs: '100%', sm: '100%' }, padding: '0 20px' }}>
+        <Grid item xs={12} sm={9} marginBottom={2}>
+           <Box
+            sx={{
+              overflow: 'auto',
+              maxHeight: viewportHeight,
+              overflowY: 'auto',
+              scrollbarWidth: 'none', // For Firefox
+              msOverflowStyle: 'none', // For IE 10+
+              '&::-webkit-scrollbar': {
+                display: 'none', // For Chrome, Safari, and newer versions of Edge
+              },
+            }}
+          >
             <PostHeader />
             <ArticleHead setTabName={setTabName} />
             <ArticleContent
               articleList={articleList}
               loadingList={isFetching}
             />
-          </Grid>
+          </Box>
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1} paddingLeft={1}>
           <SearchBarArcticleRight />

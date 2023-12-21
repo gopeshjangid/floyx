@@ -2,62 +2,27 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { Button, useTheme } from '@mui/material';
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import VideocamIcon from '@mui/icons-material/Videocam';
-import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
+import { useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CustomizedMenus from '../CustomizedButton';
-import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
-import { useRouter } from 'next/navigation';
-
-const TOP_BAR = [
-  {
-    text: 'Articles/Blog',
-    icon: <DescriptionOutlinedIcon />,
-    visible: true,
-    link: '/articles',
-  },
-  {
-    text: 'Video/Live Streams',
-    icon: <VideocamIcon />,
-    visible: true,
-    link: '/article',
-  },
-  {
-    text: 'Group',
-    icon: <PeopleOutlinedIcon />,
-    visible: true,
-    link: '/article',
-  },
-  {
-    data: [
-      {
-        text: 'Crypto',
-        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-        visible: true,
-        link: '/crypto',
-      },
-      {
-        text: 'AirDrop',
-        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-        visible: true,
-        link: '/airdrop',
-      },
-      {
-        text: 'Search',
-        icon: <DescriptionOutlinedIcon sx={{ marginRight: 1 }} />,
-        visible: true,
-        link: '/search',
-      },
-    ],
-    visible: false,
-  },
-];
+import { usePathname, useRouter } from 'next/navigation';
+import DocumentText from "@/assets/images/svg/documentText";
+import VideoIcon from "@/assets/images/svg/video";
+import ProfileGroup from "@/assets/images/svg/profileGroup";
+import BitCoin from "@/assets/images/svg/bitcoin";
+import { GradientButton } from "../gradientButton";
 
 export default function Header() {
   const router = useRouter();
+  const pathName = usePathname();
+
   const { palette } = useTheme();
+  const getColorSvg = (path) => {
+    if (pathName === path) {
+      return palette.primary.iconSelectedColor;
+    }
+    return (palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main);
+  }
   const HeaderSection = styled(Box)(() => ({
     display: 'flex',
     justifyContent: 'flex-start',
@@ -75,6 +40,50 @@ export default function Header() {
     scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.1)',
   }));
 
+  const TOP_BAR = [
+    {
+      text: 'Articles/Blog',
+      icon: <DocumentText color={getColorSvg('/articles')} />,
+      visible: true,
+      link: '/articles',
+    },
+    {
+      text: 'Video/Live Streams',
+      icon: <VideoIcon color={getColorSvg('/article')} />,
+      visible: true,
+      link: '/article',
+    },
+    {
+      text: 'Group',
+      icon: <ProfileGroup color={getColorSvg('/article')} />,
+      visible: true,
+      link: '/article',
+    },
+    {
+      data: [
+        {
+          text: 'Crypto',
+          icon: <DocumentText color={getColorSvg('/crypto')} />,
+          visible: true,
+          link: '/crypto',
+        },
+        {
+          text: 'AirDrop',
+          icon: <DocumentText color={getColorSvg('/crypto')} />,
+          visible: true,
+          link: '/airdrop',
+        },
+        {
+          text: 'Search',
+          icon: <DocumentText color={getColorSvg('/crypto')} />,
+          visible: true,
+          link: '/search',
+        },
+      ],
+      visible: true,
+    },
+  ];
+
   const handleClick = (link: string | undefined) => {
     if (link) router.push(link);
   };
@@ -85,29 +94,22 @@ export default function Header() {
         <Box key={`headerBar${index}`}>
           {!Array.isArray(val?.data) ? (
             val.visible && (
-              <Button
+              <GradientButton
                 variant="outlined"
                 onClick={() => handleClick(val?.link)}
                 startIcon={val.icon}
-                sx={{
-                  marginRight: 1,
-                  padding: '5px 10px',
-                  whiteSpace: 'nowrap',
-                  alignItems: 'center',
-                  color: palette.text.primary,
-                  borderColor: palette.primary.boxBorder,
-                  fontWeight: 500,
-                  fontSize: '15px',
-                }}
+                isSelected={pathName === val.link}
               >
-                {val.text}
-              </Button>
+                <span>
+                  {val.text}
+               </span>
+              </GradientButton>
             )
           ) : (
             <>
               {val.visible && (
                 <CustomizedMenus
-                  startIcon={<CurrencyBitcoinIcon />}
+                  startIcon={<BitCoin color={getColorSvg(val.link)} />}
                   menuItem={val.data}
                 />
               )}

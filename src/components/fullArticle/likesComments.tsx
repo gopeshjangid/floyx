@@ -118,7 +118,9 @@ export default function LikesComments({
           onClick={handleArticleLike}
           sx={{ padding: 0 }}
         >
-          {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
+          <Typography component={"span"} color={"textPrimary"} textTransform={"none"}>
+            {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
+          </Typography>
         </Button>
         <Button
           variant="text"
@@ -128,7 +130,9 @@ export default function LikesComments({
             isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
           }
         >
-          {formatIndianNumber(likesCommentsDetails?.numberOfComments)} Comments
+          <Typography component={"span"} color={"textPrimary"} textTransform={"none"}>
+            {formatIndianNumber(likesCommentsDetails?.numberOfComments)} Comments
+          </Typography>
         </Button>
         <Button
           sx={{ padding: 0 }}
@@ -136,7 +140,9 @@ export default function LikesComments({
           startIcon={<ShareIcon />}
           onClick={handleClick}
         >
-          {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
+          <Typography component={"span"} color={"textPrimary"} textTransform={"none"}>
+            {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
+          </Typography>
         </Button>
       </Stack>
       {!isPost && isShared === undefined && (

@@ -37,8 +37,8 @@ export default function Page() {
     }
   };
 
-  useEffect(() => {}, [postData]);
   const viewportHeight = window.innerHeight;
+
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
       <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>

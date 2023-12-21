@@ -1,5 +1,5 @@
 'use client';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DateParser from '../DateParser';
 import moment from 'moment';
@@ -27,7 +27,8 @@ export default function UserCard({
   shared,
   showDate,
   comment,
-  isArticle=false,
+  isArticle = false,
+  isPost = false,
 }: {
   name: string;
   username: string;
@@ -36,7 +37,10 @@ export default function UserCard({
   showDate?: any;
   comment?: string;
   isArticle?: boolean;
-}) {
+  isPost?: boolean;
+  }) {
+  const { palette } = useTheme();
+
   return (
     <UserCardBox>
       <Box sx={{ marginRight: '10px' }}>
@@ -46,12 +50,17 @@ export default function UserCard({
           sx={{ width: '50px', height: '50px' }}
         />
       </Box>
-      <Box display={"flex"} justifyContent="space-between" width="100%">
+      <Box
+        display={"flex"}
+        flexDirection={isPost ? "column" : "row"}
+        justifyContent="space-between"
+        width="100%"
+      >
         <Box gap={isArticle ? 0 :1} display="flex" flexDirection={isArticle ? "column" : 'row'} width="100%">
           <Typography
             variant="subtitle1"
             component={'span'}
-            color="textPrimary"
+            color={palette.mode === "light" ? "primary" : "textPrimary"}
           >
             {name}{' '}
           </Typography>
@@ -72,7 +81,14 @@ export default function UserCard({
           <Box width="40%" sx={{ display: 'flex', alignItems: isArticle ? 'flex-end' : 'center' }}>
             <CalendarIcon />
             &nbsp;
-            {moment(showDate).format('MMM DD, YY')}
+            <Typography
+              variant="caption"
+              component={'span'}
+              color="textPrimary"
+              marginBottom={0}
+            >
+              {moment(showDate).format('MMM DD, YY')}
+              </Typography>
           </Box>
         )}
         {comment && (
