@@ -258,31 +258,23 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               opacity: 0.9, // Or any other styling you want on hover
             },
           },
+          outlined: {
+            fontWeight: 500,
+            border: '1px solid #5798FF',
+            background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            color: 'white',
+            '&:hover': {
+              opacity: 0.8,
+              border: `1px solid rgba(77, 154, 255, 1)`,
+            },
+            '& svg': {
+              stroke: '#5798FF',
+            },
+          },
         },
       },
-      // MuiTypography: {
-      //   styleOverrides: {
-      //     root: {
-      //       // Apply bottom margin to all Typography components
-      //       marginBottom: '0.35em', // Adjust the value to your preference
-      //     },
-      //     // If you want to apply it conditionally based on the `gutterBottom` prop:
-      //     gutterBottom: {
-      //       marginBottom: '0.35em', // Adjust the value to match the theme's spacing
-      //     },
-      //   },
-      // },
-      // MuiLink: {
-      //   styleOverrides: {
-      //     root: {
-      //       color: palette?.primary?.main, // Use the dynamic color for links
-      //       textDecoration: 'none',
-      //       '&:hover': {
-      //         textDecoration: 'underline',
-      //       },
-      //     },
-      //   },
-      // },
       MuiCssBaseline: {
         styleOverrides: `
           * {

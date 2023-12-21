@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { Button, useTheme } from '@mui/material';
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import { useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CustomizedMenus from '../CustomizedButton';
 import { usePathname, useRouter } from 'next/navigation';
@@ -26,7 +25,8 @@ export default function Header() {
   }
   const HeaderSection = styled(Box)(() => ({
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    gap: 1,
     width: '100%',
     overflowY: 'auto',
     '&::-webkit-scrollbar': {

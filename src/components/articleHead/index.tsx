@@ -9,8 +9,8 @@ import LikeIcon from '@/images/image/likeIcon';
 import RecentIcon from '@/images/image/recentIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
 import PopularIcon from '@/images/image/popularIcon';
-import { GradientText } from "../usernameLink";
 import { GradientButton } from "../gradientButton";
+import { GradientText } from '../GradientComponents';
 
 const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
@@ -50,6 +50,16 @@ export default function ArticleHead({ setTabName }: any) {
           <Tab
             className="tab"
             icon={<PopularIcon fill={value === "liked?limited=true" ? "#A75FFF" : getColorSvg()}/>}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'popular' ? (
+                  <GradientText>Popular</GradientText>
+                ) : (
+                  'Popular'
+                )}
+              </Typography>
+            }
+            icon={<PopularIcon />}
             iconPosition="start"
             value="liked?limited=true"
             label={
@@ -63,37 +73,65 @@ export default function ArticleHead({ setTabName }: any) {
           <Tab
             className="tab"
             icon={<ProfileTickIcon fill={value === "following"  ? "#A75FFF" : getColorSvg()}/>}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'following' ? (
+                  <GradientText>Following</GradientText>
+                ) : (
+                  'Following'
+                )}
+              </Typography>
+            }
+            
             iconPosition="start"
             value="following"
-            label={
-              value === "following" ? (
-              <GradientText>Following</GradientText>
-              ) : (
-                'Following'
-              )
-            }
           />
           <Tab
             className="tab"
             icon={<RecentIcon fill={value === "recent"  ? "#A75FFF" : getColorSvg()}/>}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'recent' ? (
+                  <GradientText>Recent</GradientText>
+                ) : (
+                  'Recent'
+                )}
+              </Typography>
+            }
             iconPosition="start"
             value="recent"
-            label={value === 'recent' ? (
-              <GradientText>Recent</GradientText>
-              ) : (
-                'Recent'
-              )}
           />
           <Tab
             className="tab"
-            icon={<BookMarkIcon fill={value === "bookmark"  ? "#A75FFF" : getColorSvg()}/>}
             iconPosition="start"
             value="bookmark"
-            label={value === "bookmark" ? (
-                <GradientText>Bookmark</GradientText>
-              ) : (
-                'Bookmark'
-              )}
+            label={
+              <Typography variant="subtitle2">
+                {value === 'liked' ? (
+                  <GradientText>Liked</GradientText>
+                ) : (
+                  'Liked'
+                )}
+              </Typography>
+            }
+            icon={<LikeIcon />}
+            iconPosition="start"
+            value={'liked'}
+          />
+          <Tab
+            className="tab"
+            label={
+              <Typography variant="subtitle2">
+                {value === 'bookmark' ? (
+                  <GradientText>Bookmark</GradientText>
+                ) : (
+                  'Bookmark'
+                )}
+              </Typography>
+            }
+            icon={<BookMarkIcon />}
+            iconPosition="start"
+            value={'bookmark'}
           />
         </Tabs>
         <GradientButton

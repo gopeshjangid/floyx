@@ -48,7 +48,7 @@ import { INotification } from './notifications/types';
 import CustomPopover from '@/components/PopoverOptions';
 import LogoutIcon from '@/iconComponents/logOut';
 import SettingsIcon from '@/iconComponents/settingsIcon';
-import { AddCircle } from '@mui/icons-material';
+import { AddCircle, AddCircleOutline, AddOutlined } from '@mui/icons-material';
 import { GradientText } from '@/components/usernameLink';
 import SidebarProfileBar from '@/components/sidebarProfileInfo';
 import AddPost from '@/components/Post/AddPost';
@@ -72,7 +72,7 @@ const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
           ? theme.palette.common.white
           : theme.palette.common.black,
     },
-    '.MuiListItemText-primary': {
+    '.MuiListItemText-primary, span': {
       color:
         theme.palette.mode === 'light'
           ? theme.palette.common.white
@@ -204,19 +204,6 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
         />
       ),
     },
-    {
-      label: '',
-      href: '',
-      icon: () => (
-        <Button
-          variant="outlined"
-          startIcon={<AddCircle />}
-          onClick={() => setOpenWriteDialog(true)}
-        >
-          <GradientText>Write Post</GradientText>{' '}
-        </Button>
-      ),
-    },
   ];
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
@@ -308,7 +295,15 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             </>
           </LinkListItemButton>
         ))}
-
+        <ListItem>
+          <Button
+            variant="outlined"
+            startIcon={<AddCircleOutline color="secondary" />}
+            onClick={() => setOpenWriteDialog(true)}
+          >
+            <GradientText>Write Post</GradientText>{' '}
+          </Button>
+        </ListItem>
         <ListItem>
           <ThemeSwitch />
         </ListItem>
@@ -422,14 +417,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
         onClose={() => setOpenWriteDialog(false)}
         aria-labelledby="responsive-dialog-title"
         PaperProps={{
-          sx: { background: palette.background.default, width: '100%', },
+          sx: { background: palette.background.default, width: '100%' },
         }}
       >
-        <DialogTitle sx={{textAlign:'center', paddingBottom:0}}>
+        <DialogTitle sx={{ textAlign: 'center', paddingBottom: 0 }}>
           Create Post
         </DialogTitle>
-        <DialogContent sx={{m:0,paddingTop:0}}>
-          <AddPost writeDialog={true} setOpenWriteDialog={setOpenWriteDialog}/>
+        <DialogContent sx={{ m: 0, paddingTop: 0 }}>
+          <AddPost writeDialog={true} setOpenWriteDialog={setOpenWriteDialog} />
         </DialogContent>
       </Dialog>
     </>

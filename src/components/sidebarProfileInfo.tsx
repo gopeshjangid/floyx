@@ -30,7 +30,7 @@ const SidebarProfileBar: React.FC = () => {
         borderRadius: '10px',
         border: `1px solid ${palette.primary.boxBorder}`,
         minWidth: '70%',
-        maxWidth: '85%',
+        maxWidth: '90%',
       }}
     >
       {isLoading ? (
@@ -38,25 +38,37 @@ const SidebarProfileBar: React.FC = () => {
       ) : (
         <Stack alignItems="center" gap={1}>
           <Avatar src={data?.avatar} />
-          <Stack alignItems="center">
-            <Typography variant="subtitle1" color="textPrimary">
+          <Stack alignItems="center" justifyContent="center">
+            <Typography
+              variant="subtitle2"
+              sx={{
+                color: palette.primary.fontLightColor,
+                textAlign: 'center',
+              }}
+            >
               {data?.name}
+              <br />
+              <UsernameLink
+                variant="subtitle2"
+                username={data?.username ?? ''}
+              />
             </Typography>
-            <UsernameLink variant="subtitle2" username={data?.username ?? ''} />
+
             <Stack direction="row" gap={1}>
               <Typography
                 display="inline-flex"
                 variant="caption"
                 color="textPrimary"
               >
-                Followers &nbsp;
+                Followers
                 <span style={{ color: palette.primary.main }}>
-                  {data?.numberOfFollowers}
+                  &nbsp;{data?.numberOfFollowers}
                 </span>
               </Typography>
               <Typography variant="caption" color="textPrimary">
-                Following &nbsp;
+                Following
                 <span style={{ color: palette.primary.main }}>
+                  {' '}
                   {data?.numberOfFollowing}
                 </span>
               </Typography>

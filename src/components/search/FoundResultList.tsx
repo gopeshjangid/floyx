@@ -114,7 +114,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                     fontWeight={'400'}
                     icon={
                       <DailyTaskIcon
-                        fill={theme.palette.action.svg}
+                        fill={theme.palette.action.svg ?? 'none'}
                         width={'20px'}
                         height={'20px'}
                       />

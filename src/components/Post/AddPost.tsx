@@ -7,6 +7,7 @@ import {
   Tabs,
   Typography,
   CircularProgress,
+  Divider,
 } from '@mui/material';
 import { SyntheticEvent, useRef, useState } from 'react';
 import Image from 'next/image';
@@ -33,10 +34,13 @@ const initialPostObj = {
 
 interface MyComponentProps {
   writeDialog?: boolean; // Optional prop
-  setOpenWriteDialog?: any
+  setOpenWriteDialog?: any;
 }
 
-export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComponentProps) {
+export default function AddPost({
+  writeDialog = false,
+  setOpenWriteDialog,
+}: MyComponentProps) {
   const toast = useToast();
   const imageFileInput = useRef<HTMLInputElement>(null);
   const [postObj, setPostObj] = useState(initialPostObj);
@@ -116,7 +120,7 @@ export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComp
     setImagePreview('');
     setImageToUpload('');
     toast.success('Post is created successfully');
-    if (writeDialog) setOpenWriteDialog(false)
+    if (writeDialog) setOpenWriteDialog(false);
   };
 
   const publishPost = () => {
@@ -132,26 +136,27 @@ export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComp
   return (
     <>
       <PostBox>
-        {!writeDialog && <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="icon tabs example"
-          sx={{ paddingX: 2 }}
-        >
-          <Tab
+        {!writeDialog && (
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="icon tabs example"
             sx={{ paddingX: 2 }}
-            label={
-              <GradientText>Post</GradientText>
-            }
-          />
-          <Tab
-            component={Link}
-            label={
-              <Typography variant="subtitle2">Write an article</Typography>
-            }
-            href="/composer/create"
-          />
-        </Tabs>}
+          >
+            <Tab
+              sx={{ paddingX: 2 }}
+              label={
+                <GradientText>Post</GradientText>
+              }
+            />
+            <Tab
+              component={Link}
+              label={
+                <Typography variant="subtitle2">Write an article</Typography>
+              }
+              href="/composer/create"
+            />
+        </Tabs>)}
         <Box
           className={`input-container ${
             postObj.postTextLeft < 0
@@ -219,6 +224,7 @@ export default function AddPost({writeDialog=false, setOpenWriteDialog} : MyComp
             />
           )}
         </Box>
+        <Divider />
         <Box className="upload-media">
           <Box>
             <input

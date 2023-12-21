@@ -19,7 +19,6 @@ export const PostBox = styled(Box)(({ theme }) => ({
     borderBottomLeftRadius: '10px',
     borderBottomRightRadius: '10px',
     display: 'flex',
-    backgroundColor: theme.palette.background.default,
     padding: '1rem 2rem',
     '& .file-imput': {
       display: 'none',
