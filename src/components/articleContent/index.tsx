@@ -1,14 +1,20 @@
 import { Box, Typography } from '@mui/material';
 import ArticleContainer from './articleContainer';
-import Skeleton from '@mui/material/Skeleton';
+import ArticleCardSkeleton from '../ArticleCardSkeleton';
 
-export default function ArticleContent({ articleList, loadingList, addEdittype=false, setIsEditing, setArticleId, setValue, setIsReset }: any) {
+export default function ArticleContent({
+  articleList,
+  loadingList,
+  addEdittype = false,
+  setIsEditing,
+  setArticleId,
+  setValue,
+  setIsReset,
+}: any) {
   return (
     <Box>
       {loadingList ? (
-        <Box sx={{ marginTop: 'px' }}>
-          <Skeleton variant="rounded" width={'100%'} height={300} />
-        </Box>
+        <ArticleCardSkeleton repeats={2} />
       ) : articleList && articleList.length !== 0 ? (
         articleList?.map((data: any, index: number) => (
           <ArticleContainer
@@ -24,7 +30,12 @@ export default function ArticleContent({ articleList, loadingList, addEdittype=f
         ))
       ) : (
         <Box
-          sx={{ display: 'flex', justifyContent: 'center', marginTop: '10%' }}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '10%',
+            height: '100px',
+          }}
         >
           <Typography variant="h5">There are no articles yet</Typography>
         </Box>
