@@ -107,31 +107,37 @@ export const earningsService = createApi({
       transformResponse: (response: ApiResponse<TipHistoryTypeResponse>) => {
         return response?.value?.data;
       },
+      providesTags: ['tipHistory'],
     }),
     getArticleTipHistory: builder.query<ArticleHistry[], void>({
       query: () => ApiEndpoint.UserArticleTipHistory,
       transformResponse: (response: any) => response?.value?.data,
+      providesTags: ['articleTipHistory'],
     }),
     getBonusTaskStatus: builder.query<BonusTaskStatusResponse, void>({
       query: () => ApiEndpoint.BonusTaskStatus,
       transformResponse: (response: ApiResponse<BonusTaskStatusResponse>) =>
         response?.value.data,
+      providesTags: ['bonusTask'],
     }),
     getInviteHistory: builder.query<InviteHistoryResponse, void>({
       query: () => ApiEndpoint.GetInviteHistory,
       transformResponse: (response: ApiResponse<InviteHistoryResponse>) =>
         response?.value.data,
+      providesTags: ['inviteHistory'],
     }),
     getActiveCurrency: builder.query<ActiveCurrencyType, void>({
       query: () => ApiEndpoint.ActiveCurrency,
       transformResponse: (response: ApiResponse<ActiveCurrencyType>) =>
         response?.value.data,
+      providesTags: ['activeCurrency'],
     }),
     getCompletedTaskHistory: builder.query<CompletedHistoryTypeResponse, void>({
       query: () => ApiEndpoint.CompletedTaskHistory,
       transformResponse: (
         response: ApiResponse<CompletedHistoryTypeResponse>
       ) => response?.value.data,
+      providesTags: ['completedTaskHistory'],
     }),
     getDailyTaskList: builder.query<DailyTaskType[], void>({
       query: () => ApiEndpoint.DailyTaskStatus,
@@ -152,7 +158,17 @@ export const earningsService = createApi({
     // Add other endpoints if needed
   }),
   // Enable caching, invalidation, and other features
-  tagTypes: ['TransactionHistory', 'dailTaskList', 'walletHistory'],
+  tagTypes: [
+    'TransactionHistory',
+    'dailTaskList',
+    'walletHistory',
+    'articleTipHistory',
+    'tipHistory',
+    'bonusTask',
+    'inviteHistory',
+    'activeCurrency',
+    'completedTaskHistory',
+  ],
 });
 
 export const {

@@ -21,7 +21,7 @@ const FriendActivitySection = styled(Box)(() => ({
 
 const UserBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
-  background: theme.palette.background.paper,
+  background: theme.palette.primary.mainBackground,
   borderRadius: '10px',
 }));
 

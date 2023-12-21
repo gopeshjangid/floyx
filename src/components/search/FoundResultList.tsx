@@ -26,10 +26,7 @@ interface SearchResultProps {
 }
 
 const StyledCard = styled(Card)(({ theme }: { theme: Theme }) => ({
-  backgroundColor:
-    theme.palette.mode === 'dark'
-      ? theme.palette.background.default
-      : theme.palette.background.paper,
+  backgroundColor: theme.palette.primary.mainBackground,
   marginBottom: theme.spacing(2),
 }));
 
@@ -58,7 +55,14 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
             ) : (
               <Box mb={2}>
                 <Stack alignItems="center" direction="row" gap={1}>
-                  <Typography variant="h6">{profile.name}</Typography>
+                  <Typography
+                    sx={{
+                      color: theme.palette.primary.fontLightColor,
+                    }}
+                    variant="h6"
+                  >
+                    {profile.name}
+                  </Typography>
                   <UsernameLink username={profile.username} />
                 </Stack>
                 <Typography variant="subtitle1">

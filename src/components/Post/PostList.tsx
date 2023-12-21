@@ -1,68 +1,80 @@
 'use client';
-import InfiniteScroll from 'react-infinite-scroller';
-import { Box, Skeleton, Stack } from '@mui/material';
-
+//import InfiniteScroll from 'react-infinite-scroller';
+import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { PostBox } from './styledPostBox';
 import Post from './Post';
 import { PostDetailResult } from '@/lib/redux/slices/posts';
-import { apiParams } from '@/app/(secured)/page';
+import React from 'react';
 
 interface PostProps {
   postData: PostDetailResult[];
   loadMore: any;
-  apiParams: apiParams;
-  isFetching: boolean;
   hasMore: boolean;
 }
 
-const LoaderSkeleton = () => (
-  <Box bgcolor="Background.paper" p={1}>
-    <Stack my={2} gap={1}>
-      <Stack direction="row" gap={1}>
-        <Skeleton variant="circular" width={'60px'} height={'30px'} />
-        <Skeleton variant="text" width={'100%'} height={30} />
-        <Skeleton variant="text" width={'100%'} height={30} />
+const LoaderSkeleton = () => {
+  const { palette } = useTheme();
+  return (
+    <Box sx={{ background: palette.primary.mainBackground }} p={1}>
+      <Stack my={2} gap={1}>
+        <Stack direction="row" gap={1}>
+          <Skeleton variant="circular" width={'60px'} height={'30px'} />
+          <Skeleton variant="text" width={'100%'} height={30} />
+          <Skeleton variant="text" width={'100%'} height={30} />
+        </Stack>
+        <Skeleton variant="rectangular" width={'100%'} height={100} />
+        <Skeleton variant="text" width={'100%'} height={100} />
+        <Skeleton variant="rectangular" width={'100%'} height={30} />
       </Stack>
-      <Skeleton variant="rectangular" width={'100%'} height={100} />
-      <Skeleton variant="text" width={'100%'} height={100} />
-      <Skeleton variant="rectangular" width={'100%'} height={30} />
-    </Stack>
-  </Box>
-);
+    </Box>
+  );
+};
 
-export default function PostList({
-  postData,
-  loadMore,
-  apiParams,
-  isFetching,
-  hasMore,
-}: PostProps) {
+function PostList({ postData, loadMore, hasMore }: PostProps) {
+  const { palette } = useTheme();
   return (
     <>
       {Array.isArray(postData) && postData?.length ? (
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={(e: any) => loadMore(e, apiParams?.pageNumber, isFetching)}
-          hasMore={hasMore}
-          useWindow={false}
-          // threshold={100}
-          loader={<LoaderSkeleton key="loader-ininfite" />}
-        >
-          {postData?.map((val: any) => (
-            <Post
-              key={`posts${val?.id}`}
-              name={val?.author?.name || ''}
-              username={val?.author?.username || ''}
-              createdDateTime={val?.post?.createdDateTime}
-              content={val?.post?.content}
-              shared={val?.post?.shared}
-              image={val?.post?.image}
-              link={val?.post?.link}
-              postDetails={val?.post}
-              postId={val?.id}
-            />
-          ))}
-        </InfiniteScroll>
+        <Box>
+          <InfiniteScroll
+            dataLength={postData.length} //This is important field to render the next data
+            next={loadMore}
+            hasMore={hasMore}
+            loader={<LoaderSkeleton key="loader-ininfite" />}
+            scrollableTarget="scrollableDiv"
+            endMessage={
+              <Box
+                sx={{
+                  border: `1px solid ${palette.primary.boxBorder}`,
+                  borderRadius: '10px',
+                  background: palette.primary.mainBackground,
+                }}
+                p={1}
+                mt={1}
+              >
+                <Typography textAlign="center" variant="subtitle1" color="info">
+                  Yay! You have seen it all
+                </Typography>
+              </Box>
+            }
+          >
+            {postData?.map((val: any) => (
+              <Post
+                key={`post-${val?.id}-post-created-time-${val.post?.createdDateTime}`}
+                name={val?.author?.name || ''}
+                username={val?.author?.username || ''}
+                createdDateTime={val?.post?.createdDateTime}
+                content={val?.post?.content}
+                shared={val?.post?.shared}
+                image={val?.post?.image}
+                link={val?.post?.link}
+                postDetails={val?.post}
+                postId={val?.id}
+              />
+            ))}
+          </InfiniteScroll>
+        </Box>
       ) : (
         <PostBox>
           <Box sx={{ margin: '0rem 1rem 1rem' }}>
@@ -105,3 +117,5 @@ export default function PostList({
     </>
   );
 }
+
+export default React.memo(PostList);

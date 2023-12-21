@@ -243,7 +243,7 @@ const ReferralCard = () => {
 const EarningsSideBar = () => {
   const { status, data } = useSession();
   return (
-    <Stack spacing={2} mt={3} paddingTop="24px">
+    <Stack spacing={2} mt={2} paddingTop="24px">
       <Typography variant="h6" color="textPrimary">
         {status === 'loading' ? (
           <Skeleton variant="rectangular" sx={{ width: '200px' }} />

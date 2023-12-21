@@ -2,10 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button, { ButtonProps } from '@mui/material/Button';
-import { IconButton, Tooltip, useTheme } from '@mui/material';
-import Fab from '@mui/material/Fab';
+import { Tooltip, useTheme } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
-import { ErrorOutline, ErrorOutlineOutlined } from '@mui/icons-material';
+import { ErrorOutlineOutlined } from '@mui/icons-material';
 
 export default function ButtonWithLoading({
   isLoading,

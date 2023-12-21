@@ -28,6 +28,8 @@ import { useDeleteArticleMutation } from '@/lib/redux';
 const ArticleContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   marginTop: '40px',
+  background: theme.palette.primary.mainBackground,
+  border: `1px solid ${theme.palette.primary.boxBorder}`,
   borderRadius: '10px',
   cursor: 'pointer',
   '&:hover': {
@@ -35,19 +37,19 @@ const ArticleContent = styled(Box)(({ theme }) => ({
   },
   '& .thumbnail': {
     width: '30%',
-    "& .thumbnailBox": {
+    '& .thumbnailBox': {
       position: 'relative',
       width: '100%',
-      height: '100%', 
-      "& .dottedButton": {
+      height: '100%',
+      '& .dottedButton': {
         position: 'absolute',
         top: '10px',
         left: '10px',
       },
-      "& img": {
+      '& img': {
         width: '100%',
         height: '100%',
-      }
+      },
     },
     // img: {
     //   width: '100%',
@@ -131,7 +133,7 @@ export default function ArticleContainer({
   const [openDialog, setOpenDialog] = useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
   const { data: tipHistory } = useGetTipHistoryQuery();
-  const [deleteArtice] = useDeleteArticleMutation()
+  const [deleteArtice] = useDeleteArticleMutation();
 
   const content = articleDetails?.content
     ? JSON.parse(articleDetails?.content)
@@ -185,21 +187,25 @@ export default function ArticleContainer({
 
   const handleDeleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    deleteArtice(articleDetails?.id)
+    deleteArtice(articleDetails?.id);
   };
 
   return (
     <>
       <ArticleContent onClick={handleClick}>
         <Box className="thumbnail">
-          {(articleDetails?.coverPhotoThumbnail || articleDetails?.coverPhotoPath) ? (
+          {articleDetails?.coverPhotoThumbnail ||
+          articleDetails?.coverPhotoPath ? (
             <Box className="thumbnailBox">
               <Image
                 width={0}
                 height={0}
                 sizes="100vw"
-                style={{ }}
-                src={articleDetails?.coverPhotoThumbnail || articleDetails?.coverPhotoPath}
+                style={{}}
+                src={
+                  articleDetails?.coverPhotoThumbnail ||
+                  articleDetails?.coverPhotoPath
+                }
                 alt="thumbnail"
               />
               <Box className="dottedButton">
@@ -211,20 +217,21 @@ export default function ArticleContainer({
               </Box>
             </Box>
           ) : (
-              <Box className="thumbnailBox">
-                <Box
+            <Box className="thumbnailBox">
+              <Box
                 sx={{
                   width: '100%',
                   height: '100%',
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                   backgroundColor: palette.background.paper,
-                }}>
-                  {"No Image"}
-                </Box>
-                
-                <Box className="dottedButton">
+                }}
+              >
+                {'No Image'}
+              </Box>
+
+              <Box className="dottedButton">
                 <DottedButton
                   options={addEdittype ? addEditoptions : options}
                   setItem={setItem}
@@ -254,9 +261,7 @@ export default function ArticleContainer({
                 }}
                 color={palette.mode === "light" ? "primary" : "textPrimary"}
               >
-                {articleDetails?.title ? 
-                  articleDetails?.title
-                 : ""}
+                {articleDetails?.title ? articleDetails?.title : ''}
               </Typography>
               <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
                 {tipHistory ? (
@@ -270,7 +275,7 @@ export default function ArticleContainer({
                 )}
               </Typography>
             </Box>
-            <IconButton onClick={(e) => e.stopPropagation()}>
+            <IconButton onClick={e => e.stopPropagation()}>
               <BookMarkIcon />
             </IconButton>
           </Box>
@@ -292,20 +297,22 @@ export default function ArticleContainer({
               <div dangerouslySetInnerHTML={createMarkup(description)} />
             </Typography>
           </Box>
-          {userDetails && <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <UserCard
-              name={userDetails?.name}
-              username={userDetails?.username}
-              showDate={articleDetails?.publicationDate}
-              isArticle={true}
-            />
-          </Box>}
+          {userDetails && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <UserCard
+                name={userDetails?.name}
+                username={userDetails?.username}
+                showDate={articleDetails?.publicationDate}
+                isArticle={true}
+              />
+            </Box>
+          )}
         </Box>
       </ArticleContent>
       <ActionModal

@@ -16,6 +16,7 @@ declare module '@mui/material/styles' {
     iconFontColor: string;
     mainBackground: string;
     iconSelectedColor: string;
+    fontLightColor: string;
     // Add other custom properties as needed
   }
 

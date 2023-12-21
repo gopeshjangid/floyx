@@ -61,9 +61,7 @@ export default function Page() {
             <PostList
               postData={postData || []}
               loadMore={loadMore}
-              apiParams={apiParams}
-              isFetching={isFetching}
-              hasMore={ postData === undefined || postData?.length % 10 === 0}
+              hasMore={postData === undefined || postData?.length % 10 === 0}
             />
           </Box>
         </Grid>
