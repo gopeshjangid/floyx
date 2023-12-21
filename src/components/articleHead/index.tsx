@@ -49,30 +49,23 @@ export default function ArticleHead({ setTabName }: any) {
         >
           <Tab
             className="tab"
-            icon={<PopularIcon fill={value === "liked?limited=true" ? "#A75FFF" : getColorSvg()}/>}
+            icon={<PopularIcon fill={value === "liked?limited=true" ? "#A75FFF" : getColorSvg()} />}
+            iconPosition="start"
+            value="liked?limited=true"
             label={
               <Typography variant="subtitle2">
-                {value === 'popular' ? (
+                {value === "liked?limited=true" ? (
                   <GradientText>Popular</GradientText>
                 ) : (
                   'Popular'
                 )}
               </Typography>
             }
-            icon={<PopularIcon />}
-            iconPosition="start"
-            value="liked?limited=true"
-            label={
-              value === "liked?limited=true" ? (
-              <GradientText>Popular</GradientText>
-              ) : (
-                'Popular'
-              )
-            }
+
           />
           <Tab
             className="tab"
-            icon={<ProfileTickIcon fill={value === "following"  ? "#A75FFF" : getColorSvg()}/>}
+            icon={<ProfileTickIcon fill={value === "following" ? "#A75FFF" : getColorSvg()} />}
             label={
               <Typography variant="subtitle2">
                 {value === 'following' ? (
@@ -82,13 +75,13 @@ export default function ArticleHead({ setTabName }: any) {
                 )}
               </Typography>
             }
-            
+
             iconPosition="start"
             value="following"
           />
           <Tab
             className="tab"
-            icon={<RecentIcon fill={value === "recent"  ? "#A75FFF" : getColorSvg()}/>}
+            icon={<RecentIcon fill={value === "recent" ? "#A75FFF" : getColorSvg()} />}
             label={
               <Typography variant="subtitle2">
                 {value === 'recent' ? (
@@ -104,7 +97,6 @@ export default function ArticleHead({ setTabName }: any) {
           <Tab
             className="tab"
             iconPosition="start"
-            value="bookmark"
             label={
               <Typography variant="subtitle2">
                 {value === 'liked' ? (
@@ -115,7 +107,6 @@ export default function ArticleHead({ setTabName }: any) {
               </Typography>
             }
             icon={<LikeIcon />}
-            iconPosition="start"
             value={'liked'}
           />
           <Tab
