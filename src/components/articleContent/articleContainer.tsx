@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Grid,
   IconButton,
   Skeleton,
   Typography,
@@ -21,22 +22,25 @@ import DottedButton from './dottedButton';
 import ShareIcon from '@/images/image/shareIcon';
 import FlagIcon from '@/images/image/flagIcon';
 import BlockUserIcon from '@/images/image/blockUser';
-import { useState } from 'react';
+import { DOMElement, useRef, useState } from 'react';
 import ActionModal from './actionModal';
 import { useDeleteArticleMutation } from '@/lib/redux';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
-  display: 'flex',
   marginTop: '40px',
+  height: '100%',
+  width: '100%',
   background: theme.palette.primary.mainBackground,
   border: `1px solid ${theme.palette.primary.boxBorder}`,
   borderRadius: '10px',
+  overflow: 'hidden',
   cursor: 'pointer',
   '&:hover': {
     cursor: 'pointer',
   },
   '& .thumbnail': {
-    width: '30%',
+    height: '100%',
+    width: '100%',
     '& .thumbnailBox': {
       position: 'relative',
       width: '100%',
@@ -57,10 +61,9 @@ const ArticleContent = styled(Box)(({ theme }) => ({
     // },
   },
   '& .details': {
-    width: '70%',
-    padding: '18px',
-    border: `1px solid ${theme.palette.primary.boxBorder}`,
     borderRadius: '0 10px 10px 0',
+    height: '100%',
+    width: '100%',
     '& .date': {
       display: 'flex',
       justifyContent: 'centre',
@@ -129,6 +132,7 @@ export default function ArticleContainer({
   setIsReset,
 }: any) {
   const { palette } = useTheme();
+  const ref = useRef<HTMLElement>(null);
   const [item, setItem] = useState<number>();
   const [openDialog, setOpenDialog] = useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
@@ -189,128 +193,139 @@ export default function ArticleContainer({
     event.stopPropagation();
     deleteArtice(articleDetails?.id);
   };
-
+  const { offsetHeight, offsetWidth } = ref?.current ?? {
+    offsetHeight: 0,
+    offsetWidth: 0,
+  };
   return (
     <>
       <ArticleContent onClick={handleClick}>
-        <Box className="thumbnail">
-          {articleDetails?.coverPhotoThumbnail ||
-          articleDetails?.coverPhotoPath ? (
-            <Box className="thumbnailBox">
-              <Image
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{}}
-                src={
-                  articleDetails?.coverPhotoThumbnail ||
-                  articleDetails?.coverPhotoPath
-                }
-                alt="thumbnail"
-              />
-              <Box className="dottedButton">
-                <DottedButton
-                  options={addEdittype ? addEditoptions : options}
-                  setItem={setItem}
-                  handleOption={handleOption}
-                />
-              </Box>
-            </Box>
-          ) : (
-            <Box className="thumbnailBox">
-              <Box
-                sx={{
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: palette.background.paper,
-                }}
-              >
-                {'No Image'}
-              </Box>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={5}>
+            <Box className="thumbnail" ref={ref}>
+              {articleDetails?.coverPhotoThumbnail ||
+              articleDetails?.coverPhotoPath ? (
+                <Box className="thumbnailBox">
+                  <Image
+                    width={offsetWidth ?? 0}
+                    height={offsetHeight ?? 0}
+                    src={
+                      articleDetails?.coverPhotoThumbnail ||
+                      articleDetails?.coverPhotoPath
+                    }
+                    alt="thumbnail"
+                  />
+                  <Box className="dottedButton">
+                    <DottedButton
+                      options={addEdittype ? addEditoptions : options}
+                      setItem={setItem}
+                      handleOption={handleOption}
+                    />
+                  </Box>
+                </Box>
+              ) : (
+                <Box className="thumbnailBox">
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: palette.background.paper,
+                    }}
+                  >
+                    {'No Image'}
+                  </Box>
 
-              <Box className="dottedButton">
-                <DottedButton
-                  options={addEdittype ? addEditoptions : options}
-                  setItem={setItem}
-                  handleOption={handleOption}
-                />
+                  <Box className="dottedButton">
+                    <DottedButton
+                      options={addEdittype ? addEditoptions : options}
+                      setItem={setItem}
+                      handleOption={handleOption}
+                    />
+                  </Box>
+                </Box>
+              )}
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={7}>
+            <Box className="details" p={1}>
+              <Box className="top">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    width: '80%',
+                  }}
+                >
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      width: 'auto',
+                      textWrap: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                    color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
+                  >
+                    {articleDetails?.title ? articleDetails?.title : ''}
+                  </Typography>
+                  <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
+                    {tipHistory ? (
+                      tippedOrNot() ? (
+                        '  (!You Tipped)'
+                      ) : (
+                        ''
+                      )
+                    ) : (
+                      <Skeleton variant="text" width={100} />
+                    )}
+                  </Typography>
+                </Box>
+                <IconButton onClick={e => e.stopPropagation()}>
+                  <BookMarkIcon />
+                </IconButton>
               </Box>
+              <Box className="middle">
+                <Typography
+                  variant="body2"
+                  // color={"textPrimary"}
+                  color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
+                  sx={{
+                    minHeight: `${40}px`,
+                    maxHeight: `${40 * 2}px`,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2,
+                  }}
+                >
+                  <div dangerouslySetInnerHTML={createMarkup(description)} />
+                </Typography>
+              </Box>
+              {userDetails && (
+                <Box
+                  py={1}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <UserCard
+                    name={userDetails?.name}
+                    username={userDetails?.username}
+                    showDate={articleDetails?.publicationDate}
+                    isArticle={true}
+                  />
+                </Box>
+              )}
             </Box>
-          )}
-        </Box>
-        <Box className="details">
-          <Box className="top">
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                width: '80%',
-              }}
-            >
-              <Typography
-                variant="h5"
-                sx={{
-                  width: 'auto',
-                  textWrap: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {articleDetails?.title ? articleDetails?.title : ''}
-              </Typography>
-              <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
-                {tipHistory ? (
-                  tippedOrNot() ? (
-                    '  (!You Tipped)'
-                  ) : (
-                    ''
-                  )
-                ) : (
-                  <Skeleton variant="text" width={100} />
-                )}
-              </Typography>
-            </Box>
-            <IconButton onClick={e => e.stopPropagation()}>
-              <BookMarkIcon />
-            </IconButton>
-          </Box>
-          <Box className="middle">
-            <Typography
-              variant="body2"
-              sx={{
-                minHeight: `${40}px`,
-                maxHeight: `${40 * 2}px`,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                display: '-webkit-box',
-                WebkitBoxOrient: 'vertical',
-                WebkitLineClamp: 2,
-              }}
-            >
-              <div dangerouslySetInnerHTML={createMarkup(description)} />
-            </Typography>
-          </Box>
-          {userDetails && (
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <UserCard
-                name={userDetails?.name}
-                username={userDetails?.username}
-                showDate={articleDetails?.publicationDate}
-                isArticle={true}
-              />
-            </Box>
-          )}
-        </Box>
+          </Grid>
+        </Grid>
       </ArticleContent>
       <ActionModal
         item={item}

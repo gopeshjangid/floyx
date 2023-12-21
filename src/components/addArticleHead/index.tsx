@@ -9,6 +9,7 @@ import {
   Stack,
   useTheme,
 } from '@mui/material';
+import { GradientText } from "../usernameLink";
 
 export default function AddArticleHead({
   setSaveDraft,
@@ -57,13 +58,25 @@ export default function AddArticleHead({
         >
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">My Articles [{articleDraftNumbers?.info?.numberOfArticles}]</Typography>}
+            label={
+              value === "my" ? (
+                <GradientText>My Articles [{articleDraftNumbers?.info?.numberOfArticles}]</GradientText>
+              ) : (
+                <Typography variant="subtitle2">My Articles [{articleDraftNumbers?.info?.numberOfArticles}]</Typography>
+              )
+            }
             value={'my'}
             sx={{ paddingTop: '16px' }}
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]</Typography>}
+            label={
+              value === "draft" ? (
+                <GradientText>My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]</GradientText>
+              ) : (
+                <Typography variant="subtitle2">My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]</Typography>
+              )
+            }
             value={'draft'}
             sx={{ paddingTop: '16px' }}
           />

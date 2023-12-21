@@ -29,6 +29,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             boxBackground: '#fff',
             iconFontColor: '#fff',
             mainBackground: '#fff',
+            iconSelectedColor: "#A75FFF",
             fontLightColor: 'rgba(47, 46, 65, 1)',
           },
           secondary: {
@@ -83,6 +84,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             boxBackground: '#0B081F',
             iconFontColor: '#0B081F',
             mainBackground: '#0B081F',
+            iconSelectedColor: "#A75FFF",
             fontLightColor: 'rgba(255, 255, 255, 1)',
           },
           secondary: {

@@ -9,6 +9,7 @@ import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics'
 import WhoToFollow from '@/components/whoToFollow';
 import WhoToFollowLoader from '@/components/whoToFollow/loader';
 import { useLazyGetArticleListQuery } from '@/lib/redux';
+import { GradientButton } from '@/components/gradientButton';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -20,18 +21,48 @@ export default function Page() {
     getArticleList(tabName);
   }, [tabName]);
 
+  const viewportHeight = window.innerHeight;
+
   return (
-    <Box p={isMobile ? 2 : 0}>
+    <Box p={isMobile ? 2 : 2} mt={2}>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
-          <Grid sx={{ width: { xs: '100%', sm: '100%' }, padding: '0 20px' }}>
+        <Grid item xs={12} sm={9} marginBottom={2}>
+          <Box
+            sx={{
+              overflow: 'auto',
+              maxHeight: viewportHeight,
+              overflowY: 'auto',
+              scrollbarWidth: 'none', // For Firefox
+              msOverflowStyle: 'none', // For IE 10+
+              '&::-webkit-scrollbar': {
+                display: 'none', // For Chrome, Safari, and newer versions of Edge
+              },
+            }}
+          >
             <PostHeader />
             <ArticleHead setTabName={setTabName} />
+            <Box
+              width="100%"
+              textAlign={'right'}
+              pt={1}
+              sx={{ display: { xs: 'block', sm: 'none' } }}
+            >
+              <GradientButton
+                variant="outlined"
+                color="primary"
+                // sx={{ border: '1px solid white' }}
+                // target="_blank"
+                href="/composer/create"
+                isSelected
+              >
+                <span>New Articles</span>
+              </GradientButton>
+            </Box>
             <ArticleContent
               articleList={articleList}
               loadingList={isFetching}
             />
-          </Grid>
+          </Box>
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1} paddingLeft={1}>
           <SearchBarArcticleRight />
