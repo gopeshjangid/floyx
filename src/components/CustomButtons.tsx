@@ -7,7 +7,7 @@ const StyledRoundPrimaryButton = styled(Button)(({ theme }) => ({
   borderRadius: '24px',
   fontWeight: 500,
   color: 'rgba(87, 152, 255, 1)',
-  padding: '6px, 19px, 6px, 19px',
+  padding: '3px 12px !important',
   size: '1rem',
   textTransform: 'none',
   '&:hover': {

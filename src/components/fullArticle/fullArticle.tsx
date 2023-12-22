@@ -1,7 +1,15 @@
-'use client';
-
-import React, { useState } from 'react';
-import { Box, Typography, Button, Grid, Popover, Stack, useTheme, Menu, MenuItem } from '@mui/material';
+import React, { Suspense } from 'react';
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Popover,
+  Stack,
+  useTheme,
+  Menu,
+  MenuItem,
+} from '@mui/material';
 import StarIcon from '@/images/image/star';
 import BookMarkIcon from '@/images/image/bookMarkIcon';
 import {
@@ -9,73 +17,82 @@ import {
   useGetFollowStatusMutation,
 } from '@/lib/redux/slices/articleDetails';
 import Image from 'next/image';
-import UsernameLink from "../usernameLink";
-import CalendarIcon from "@/images/image/calendarIcon";
-import moment from "moment";
-import UserAvatar from "../UserAvatar";
-import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
-import { FacebookShareButton, LinkedinShareButton, TwitterShareButton, TwitterIcon, FacebookIcon, LinkedinIcon } from 'react-share'
-import TranslateIcon from "@/assets/images/svg/translateIcon";
+import UsernameLink from '../usernameLink';
+import CalendarIcon from '@/images/image/calendarIcon';
+import moment from 'moment';
+import UserAvatar from '../UserAvatar';
+import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  TwitterIcon,
+  FacebookIcon,
+  LinkedinIcon,
+} from 'react-share';
+import TranslateIcon from '@/assets/images/svg/translateIcon';
+import SocialButts from './socialMediaButtons';
 
 export default function FullArticle({ details }: any) {
-  const { palette } = useTheme();
-  const colorSvg = palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main;
-  const [selectedLanguage, setSelectedLanguage] = useState("EN");
-  const [languageEl, setLanguageEl] = React.useState<null | HTMLElement>(null);
-  const openLanguage = Boolean(languageEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setLanguageEl(event.currentTarget);
-  };
-  const handleClose = (lang) => {
-    if (lang) {
-      setSelectedLanguage(lang);
-    }
-    setLanguageEl(null);
-  };
+  //const { palette } = useTheme();
+  // const colorSvg =
+  //   palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main;
+  //const [selectedLanguage, setSelectedLanguage] = useState("EN");
+  //const [languageEl, setLanguageEl] = React.useState<null | HTMLElement>(null);
+  //const openLanguage = Boolean(languageEl);
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setLanguageEl(event.currentTarget);
+  // };
+  // const handleClose = (lang) => {
+  //   if (lang) {
+  //     setSelectedLanguage(lang);
+  //   }
+  //   setLanguageEl(null);
+  // };
 
   const CONTENT =
     details?.article?.content && JSON.parse(details?.article?.content);
   const articleId = details?.article?.id || '';
 
-  const [updatefollowUnfolow] = useGetFollowStatusMutation();
-  const { data: totalEarningPoints } =
-    useGetArticleTotalEarningsQuery(articleId);
-  const pointsEarned = totalEarningPoints
-    ? (
-      totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +
-      totalEarningPoints?.totalEarnings[0]?.userEarnedAmount
-    ).toFixed(3)
-    : 0;
+  //const [updatefollowUnfolow] = useGetFollowStatusMutation();
+  // const { data: totalEarningPoints } =
+  //   useGetArticleTotalEarningsQuery(articleId);
+  // const pointsEarned = totalEarningPoints
+  //   ? (
+  //       totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +
+  //       totalEarningPoints?.totalEarnings[0]?.userEarnedAmount
+  //     ).toFixed(3)
+  //   : 0;
 
   const createMarkup = (htmlString: string) => {
     return { __html: htmlString };
   };
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  // const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+  // const handlePopoverClose = () => {
+  //   setAnchorEl(null);
+  // };
 
-  const open = Boolean(anchorEl);
+  //const open = Boolean(anchorEl);
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box>
-        <Button variant="text" startIcon={<BookMarkIcon />}>
+        {/* <Button variant="text" startIcon={<BookMarkIcon />}>
           Bookmark
-        </Button>
+        </Button> */}
         <Typography variant="h1" sx={{ textTransform: 'capitalize' }}>
           {details?.article?.title}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Stack direction={"row"} gap={1}>
-          <Stack direction={"row"}>
+        <Stack direction={'row'} gap={1}>
+          <Stack direction={'row'}>
             <Box sx={{ marginRight: '10px' }}>
               <UserAvatar
                 alt={details?.user?.name}
@@ -91,14 +108,18 @@ export default function FullArticle({ details }: any) {
               >
                 {details?.user?.name}
               </Typography>
-              <UsernameLink variant="subtitle2" username={details?.user?.username} onClick={e => e.stopPropagation()} />
+              {/* <UsernameLink
+                variant="subtitle2"
+                username={details?.user?.username}
+                onClick={e => e.stopPropagation()}
+              /> */}
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <CalendarIcon />
                 {moment(details?.article?.publicationDate).format('MMM DD, YY')}
               </Box>
             </Box>
           </Stack>
-          <Box>
+          {/* <Box>
             <Button
               variant="outlined"
               size="small"
@@ -109,7 +130,7 @@ export default function FullArticle({ details }: any) {
             >
               {details?.user?.isFollowed ? 'Follow' : 'UnFollow'}
             </Button>
-          </Box>
+          </Box> */}
         </Stack>
         <Box
           sx={{
@@ -119,7 +140,7 @@ export default function FullArticle({ details }: any) {
             justifyContent: 'flex-end',
           }}
         >
-          <Button
+          {/* <Button
             variant="outlined"
             size="small"
             startIcon={<StarIcon />}
@@ -131,8 +152,8 @@ export default function FullArticle({ details }: any) {
             <Typography variant="button">
               {`${pointsEarned} Points`}{' '}
             </Typography>
-          </Button>
-          <Popover
+          </Button> */}
+          {/* <Popover
             id="mouse-over-popover"
             sx={{
               pointerEvents: 'none',
@@ -172,7 +193,7 @@ export default function FullArticle({ details }: any) {
                 </Typography>
               </Box>
             </Box>
-          </Popover>
+          </Popover> */}
         </Box>
       </Box>
       <Box sx={{ display: 'flex' }}>
@@ -199,16 +220,18 @@ export default function FullArticle({ details }: any) {
             ))}
         </Grid>
       </Box>
-      {details?.article?.coverPhotoPath && (<Box sx={{ marginTop: '20px' }}>
-        <Image
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: '100%', height: '100%' }}
-          src={details?.article?.coverPhotoPath}
-          alt="thumbnail"
-        />
-      </Box>)}
+      {details?.article?.coverPhotoPath && (
+        <Box sx={{ marginTop: '20px' }}>
+          <Image
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: '100%', height: '100%' }}
+            src={details?.article?.coverPhotoPath}
+            alt="thumbnail"
+          />
+        </Box>
+      )}
       <Box sx={{ marginTop: '20px', wordWrap: 'break-word' }}>
         {CONTENT &&
           CONTENT.map((val: any, index: number) => (
@@ -232,7 +255,7 @@ export default function FullArticle({ details }: any) {
           alignItems: 'center',
         }}
       >
-        <Box>
+        {/* <Box>
           <Button
             id="basic-button"
             aria-controls={openLanguage ? 'basic-menu' : undefined}
@@ -256,27 +279,10 @@ export default function FullArticle({ details }: any) {
             <MenuItem onClick={() => {handleClose('EN')}}>EN</MenuItem>
             <MenuItem onClick={() => {handleClose('GE')}}>GE</MenuItem>
           </Menu>
-        </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ marginRight: '5px' }}>
-            <Typography variant="body1">Share:</Typography>
-          </Box>
-          <Box sx={{ marginRight: '5px' }}>
-            <FacebookShareButton url={'https://www.floyx.com/article/' + details?.user?.username + '/' + details?.user?.url}>
-              <FacebookIcon size={20} round={true} />
-            </FacebookShareButton>
-          </Box>
-          <Box sx={{ marginRight: '5px' }}>
-            <LinkedinShareButton url={'https://www.floyx.com/article/' + details?.user?.username + '/' + details?.user?.url}>
-              <LinkedinIcon size={20} round={true} />
-            </LinkedinShareButton>
-          </Box>
-          <Box sx={{ marginRight: '5px' }}>
-            <TwitterShareButton url={'https://www.floyx.com/article/' + details?.user?.username + '/' + details?.user?.url}>
-              <TwitterIcon size={20} round={true} />
-            </TwitterShareButton>
-          </Box>
-        </Box>
+        </Box> */}
+        <Suspense fallback={<Typography>Loading...</Typography>}>
+          <SocialButts details={details} />
+        </Suspense>
       </Box>
     </Box>
   );

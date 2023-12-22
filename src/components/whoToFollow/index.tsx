@@ -1,19 +1,34 @@
-"use client"
-import { Box, Button, Divider, Typography } from '@mui/material';
+'use client';
+import {
+  Box,
+  Button,
+  Divider,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import UserAvatar from '../UserAvatar';
-import { useGetFollowMoreAccountQuery } from "@/lib/redux/slices/articleDetails";
+import { useGetFollowMoreAccountQuery } from '@/lib/redux/slices/articleDetails';
+import UsernameLink from '../usernameLink';
+import { RoundPrimaryButton } from '../CustomButtons';
 
 export default function WhoToFollow() {
-  const {data: whoToFollow } = useGetFollowMoreAccountQuery()
+  const { palette } = useTheme();
+  const { data: whoToFollow } = useGetFollowMoreAccountQuery();
 
   return (
-    <Box sx={{ marginTop: '40px' }}>
-      <Typography>Who to follow</Typography>
-      <Box sx={{ marginTop: '30px', padding: '0 10px 10px 0' }}>
-        {/* {JSON.stringify(whoToFollow)} */}
-        {whoToFollow !== undefined && whoToFollow?.result && whoToFollow?.result?.length > 0 && whoToFollow?.result.map((val, index) => (
-          <div key={`whoToFollow${index}`}>
-            <Box sx={{ display: 'flex', marginTop: '10px' }}>
+    <Box mt={4}>
+      <Typography
+        sx={{ marginLeft: '12px', color: palette.primary.fontLightColor }}
+      >
+        Who to follow
+      </Typography>
+      {whoToFollow !== undefined &&
+        whoToFollow?.result &&
+        whoToFollow?.result?.length > 0 &&
+        whoToFollow?.result.map((val, index) => (
+          <Box p={1} key={`whoToFollow${index}`}>
+            <Stack pb={1} direction="row" gap={1}>
               <Box>
                 <UserAvatar
                   alt={val?.name}
@@ -25,26 +40,31 @@ export default function WhoToFollow() {
                 />
               </Box>
               <Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Box>
-                    <Typography variant="h5">{val?.name}</Typography>
-                    <Typography variant="body2">@{val?.username}</Typography>
+                <Stack direction="row" gap={1}>
+                  <Box width="60%">
+                    <Typography
+                      sx={{ color: palette.primary.fontLightColor }}
+                      variant="subtitle2"
+                    >
+                      {val?.name}
+                      <br />
+                      <UsernameLink username={val.username} />
+                    </Typography>
                   </Box>
                   <Box>
-                    <Button variant="outlined" size="small">
-                      Follow
-                    </Button>
+                    <RoundPrimaryButton size="small">Follow</RoundPrimaryButton>
                   </Box>
-                </Box>
+                </Stack>
                 <Box>
-                  <Typography>{val?.shortDescription}</Typography>
+                  <Typography color="textPrimary" variant="caption">
+                    {val?.shortDescription?.slice(0, 30)}...
+                  </Typography>
                 </Box>
               </Box>
-            </Box>
+            </Stack>
             <Divider />
-          </div>
+          </Box>
         ))}
-      </Box>
     </Box>
   );
 }

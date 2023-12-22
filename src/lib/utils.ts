@@ -4,7 +4,7 @@ import moment from 'moment';
 import { getCookie, deleteCookie } from 'cookies-next';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { signOut } from 'next-auth/react';
-import router from 'next/router';
+import { redirect } from 'next/navigation';
 export const getRelativeTime = (date: string) => {
   const dateObject = new Date(date);
   const sec = dateObject.getSeconds();
@@ -30,6 +30,14 @@ export const showErrorMessages = (errorKeys: string[]): string => {
 // Define a helper function to check if we're on the server
 const isServer = () => typeof window === 'undefined';
 
+const logout = async () => {
+  deleteCookie('FLOYX_TOKEN');
+  deleteCookie('next-auth.session-token');
+  await signOut({ redirect: true });
+  redirect('/login', 'push');
+  return;
+};
+
 export const baseQuery = fetchBaseQuery({
   baseUrl: '/',
   prepareHeaders: (headers, { getState }) => {
@@ -40,22 +48,33 @@ export const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     } else {
-      router.push('/login');
+      logout();
     }
     return headers;
   },
   responseHandler: async response => {
     if (response.status === 401) {
-      deleteCookie('FLOYX_TOKEN');
-      deleteCookie('next-auth.session-token');
-      await signOut({ redirect: true });
-      router.push('/login');
+      logout();
+      //router.push('/login');
       return;
     }
     // You need to return a valid response format here
     return response.json();
   },
 });
+
+export const fetchServerData = async (
+  url: string
+): { isError: boolean; data: any } => {
+  const res = await fetch(url, {
+    cache: 'force-cache',
+  });
+  if (!res.ok) {
+    return { isError: true, data: null };
+  }
+  const data = await res.json();
+  return { isError: false, data: data?.value?.data };
+};
 
 export const months = [
   { label: 'January', value: '01' },
