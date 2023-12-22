@@ -150,7 +150,6 @@ export const artcileDetails = createApi({
       transformErrorResponse: (error: any) => error?.data?.value?.data || '',
       invalidatesTags: ['articleTip'],
     }),
-
     getArticleList: builder.query<any, string | undefined>({
       query: tabName =>
         `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ''}`,
@@ -164,7 +163,6 @@ export const artcileDetails = createApi({
       transformResponse: (response: any) => response?.value?.data || {},
       providesTags: ['ArticleInfoNumber', 'deleteArticle'],
     }),
-
     checkArticleIsShared: builder.mutation<boolean, string>({
       query: articleId => ({
         url: `${ApiEndpoint.IsSharedPost}/${articleId}`,
