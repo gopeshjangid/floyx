@@ -5,6 +5,7 @@ import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Typography, useTheme } from "@mui/material";
+import { GradientButton } from "../gradientButton";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -60,25 +61,15 @@ export default function CustomizedMenus({ startIcon, menuItem }: any) {
 
   return (
     <div>
-      <Button
-        id="demo-customized-button"
-        aria-controls={open ? 'demo-customized-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+      <GradientButton
         variant="outlined"
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
         startIcon={startIcon}
-        sx={{
-          padding: '5px 10px',
-          background: palette.primary[700],
-          color: palette.text.primary,
-          borderColor: palette.primary.boxBorder,
-        }}
       >
-        Options
-      </Button>
+        <span>Options</span>
+      </GradientButton>
       <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{
