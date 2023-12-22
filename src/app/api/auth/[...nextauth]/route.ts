@@ -17,6 +17,7 @@ const handler = NextAuth({
         remember: {},
       },
       async authorize(credentials) {
+        console.log('process.env.NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET);
         const { email, password, remember }: any = credentials;
         return signIn(email, password, remember);
       },
@@ -30,7 +31,7 @@ const handler = NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET || '',
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: 'HBgBGs3QXQ7Efmu/FFyzXcKGnhbipvw0ArDme0SYD2o=',
   session: {
     strategy: 'jwt',
   },
