@@ -9,7 +9,7 @@ import PostHeader from '@/components/PostHeader';
 import { useGetPostsQuery } from '@/lib/redux';
 
 import { Box, Grid, useMediaQuery } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -23,19 +23,33 @@ export default function Page() {
   });
 
   const isMobile = useMediaQuery('(max-width:480px)');
-  const { data: postData, isFetching } = useGetPostsQuery(apiParams);
-
-  const loadMore = (e: any, pageNumber: number, isFetching: boolean) => {
-    if (postData) {
-      const lastPost = postData[postData.length - 1];
-      if (e > pageNumber && lastPost !== undefined && !isFetching) {
-        setApiParams({
-          pageNumber: e,
-          postCreatedDate: lastPost?.post?.createdDateTime,
-        });
-      }
-    }
+  const { data, isFetching } = useGetPostsQuery(apiParams);
+  const postData = data?.postList;
+  const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
+ 
+  const debounce = (func: (...args: any[]) => void, delay: number) => {
+    let timer: any;
+    return function (...args: any[]) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
   };
+
+  const loadMore = useCallback(
+    debounce(() => {
+      if (postData?.length && !isFetching) {
+        const lastPost = postData[postData.length - 1];
+        setApiParams(prevParams => ({
+          ...prevParams,
+          pageNumber: prevParams.pageNumber + 1,
+          postCreatedDate: lastPost?.post?.createdDateTime,
+        }));
+      }
+    }, 2000),
+    [postData, isFetching, setApiParams]
+  );
 
   const viewportHeight = window.innerHeight;
 
@@ -61,7 +75,7 @@ export default function Page() {
             <PostList
               postData={postData || []}
               loadMore={loadMore}
-              hasMore={postData === undefined || postData?.length % 10 === 0}
+              hasMore={hasMore}
             />
           </Box>
         </Grid>

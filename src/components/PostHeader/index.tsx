@@ -28,7 +28,7 @@ export default function Header() {
   const HeaderSection = styled(Box)(() => ({
     display: 'flex',
     justifyContent: 'space-between',
-    gap: '4px',
+    gap: 1,
     width: '100%',
     overflowY: 'auto',
     '&::-webkit-scrollbar': {
@@ -51,35 +51,35 @@ export default function Header() {
     },
     {
       text: 'Video/Live Streams',
-      icon: <VideoIcon color={getColorSvg('/article')} />,
+      icon: <VideoIcon color={getColorSvg('#')} />,
       visible: true,
-      link: '/article',
+      link: '#',
     },
     {
       text: 'Group',
-      icon: <ProfileGroup color={getColorSvg('/article')} />,
+      icon: <ProfileGroup color={getColorSvg('#')} />,
       visible: true,
-      link: '/article',
+      link: '#',
     },
     {
       data: [
         {
           text: 'Crypto',
-          icon: <DocumentText color={getColorSvg('/crypto')} />,
+          icon: <DocumentText color={getColorSvg('#')} />,
           visible: true,
-          link: '/crypto',
+          link: '#',
         },
         {
           text: 'AirDrop',
-          icon: <DocumentText color={getColorSvg('/crypto')} />,
+          icon: <DocumentText color={getColorSvg('#')} />,
           visible: true,
-          link: '/airdrop',
+          link: '#',
         },
         {
           text: 'Search',
-          icon: <DocumentText color={getColorSvg('/crypto')} />,
+          icon: <DocumentText color={getColorSvg('#')} />,
           visible: true,
-          link: '/search',
+          link: '#',
         },
       ],
       visible: true,

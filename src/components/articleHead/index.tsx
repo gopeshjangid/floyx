@@ -123,7 +123,7 @@ export default function ArticleHead({ setTabName }: any) {
             icon={<LikeIcon />}
             value={'liked'}
           />
-          <Tab
+          {/* <Tab
             className="tab"
             label={
               <Typography variant="subtitle2">
@@ -137,7 +137,7 @@ export default function ArticleHead({ setTabName }: any) {
             icon={<BookMarkIcon />}
             iconPosition="start"
             value={'bookmark'}
-          />
+          /> */}
         </Tabs>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           <GradientButton

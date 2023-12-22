@@ -18,7 +18,11 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         const { email, password, remember }: any = credentials;
-        return signIn(email, password, remember);
+        const user = await signIn(email, password, remember);
+        if (user?.value?.code === 'success') {
+          return user.value.data;
+        }
+        return null;
       },
     }),
     GoogleProvider({
@@ -30,13 +34,13 @@ const handler = NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET || '',
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: 'HBgBGs3QXQ7Efmu/FFyzXcKGnhbipvw0ArDme0SYD2o=',
   session: {
     strategy: 'jwt',
   },
   pages: {
     signIn: '/login',
-    error: '/social-login',
+    // error: '/social-login',
   },
 
   callbacks: {

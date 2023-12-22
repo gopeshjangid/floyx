@@ -106,51 +106,38 @@ export const postServices = createApi({
 
       providesTags: ['PostListByUser'],
     }),
-    getPosts: builder.query<PostDetailResult[], PostDetail>({
+    getPosts: builder.query<{ postList: PostDetailResult[]; hasMore: boolean }, PostDetail>({
       query: ({ pageNumber, postCreatedDate }) => {
-        console.log(pageNumber, postCreatedDate, 'paramas');
         const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {
           return apiEndPoint;
         }
         return `${apiEndPoint}?page=${pageNumber}&postCreatedDate=${postCreatedDate}`;
       },
-      providesTags: result =>
-        // is result available?
-        result
-          ? // successful query
-            [
-              ...result.map(({ id }: any) => ({ type: 'Posts' as const, id })),
-              { type: 'Posts', id: 'LIST' },
-            ]
-          : // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
-            [{ type: 'Posts', id: 'LIST' }],
-      // Only have one cache entry because the arg always maps to one string
+      transformResponse: (response: any) => ({
+        postList: response?.value?.data || [],
+        hasMore: response?.value?.hasMore,
+      }),
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
-      // // Always merge incoming data to the cache entry
-      merge: (currentCache, newItems) => {
-        console.log('merge', currentCache, newItems);
-        currentCache.push(...newItems);
+      merge: (currentCache, newItems, otherArgs) => {
+        if (currentCache) {
+          return {
+            postList: [...currentCache.postList, ...newItems.postList],
+            hasMore: newItems.postList.length === 10,
+          };
+        } else
+          return {
+            postList: [...newItems.postList],
+            hasMore: newItems.postList.length === 10,
+          };
       },
-      // // Refetch when the page arg changes
+
+      // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
-        console.log(
-          'forceReftch',
-          currentArg,
-          previousArg,
-          currentArg !== previousArg
-        );
         return currentArg !== previousArg;
       },
-      transformResponse: (response: any) => response?.value?.data || [],
-      // {
-      //   return {
-      //     response: response?.value?.data || [],
-      //     allPostRecived: response?.value?.data < 10,
-      //   }
-      // },
     }),
     createPost: builder.mutation<any, FormData>({
       query: initialPost => ({

@@ -4,8 +4,9 @@ import { NextRequest, NextResponse, userAgent } from 'next/server';
 export default withAuth({
   pages: {
     signIn: '/login',
-    error: '/social-login',
+    // error: '/social-login',
   },
+  secret: 'HBgBGs3QXQ7Efmu/FFyzXcKGnhbipvw0ArDme0SYD2o=',
 });
 
 export function middleware(request: NextRequest) {
