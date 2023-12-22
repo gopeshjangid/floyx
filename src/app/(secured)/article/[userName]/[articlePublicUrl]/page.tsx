@@ -4,11 +4,10 @@ import FullArticle from '@/components/fullArticle/fullArticle';
 import LikesComments from '@/components/fullArticle/likesComments';
 import TipColumn from '@/components/fullArticle/tipCoumn';
 import { Container, Box, Alert, Skeleton } from '@mui/material';
-import { useGetCommentListQuery } from '@/lib/redux/slices/comments';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
-async function Page({ params, page, get }) {
+async function Page({ params, page, get } : any) {
   const userName = params?.userName;
   const articlePuclicUrl = params?.articlePublicUrl;
   const { data: articleDetails, isError } = await fetchServerData(
