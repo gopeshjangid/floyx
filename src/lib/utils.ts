@@ -33,9 +33,8 @@ const isServer = () => typeof window === 'undefined';
 const logout = async () => {
   deleteCookie('FLOYX_TOKEN');
   deleteCookie('next-auth.session-token');
-  await signOut({ redirect: true });
-  redirect('/login', 'push');
-  return;
+  await signOut({ redirect: false });
+  //redirect('/login', 'push');
 };
 
 export const baseQuery = fetchBaseQuery({
@@ -55,8 +54,6 @@ export const baseQuery = fetchBaseQuery({
   responseHandler: async response => {
     if (response.status === 401) {
       logout();
-      //router.push('/login');
-      return;
     }
     // You need to return a valid response format here
     return response.json();

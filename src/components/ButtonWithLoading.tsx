@@ -5,17 +5,20 @@ import Button, { ButtonProps } from '@mui/material/Button';
 import { Tooltip, useTheme } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { ErrorOutlineOutlined } from '@mui/icons-material';
+import { RoundPrimaryButton } from './CustomButtons';
 
 export default function ButtonWithLoading({
   isLoading,
   children,
   isSuccess,
   isError,
+  buttonType = 'DEFAULT',
   ...props
 }: ButtonProps & {
   isLoading: boolean;
   isSuccess?: boolean;
   isError: boolean;
+  buttonType?: 'ROUND' | 'DEFAULT';
 }) {
   const { palette } = useTheme();
   const [status, setStatus] = React.useState('');
@@ -37,11 +40,11 @@ export default function ButtonWithLoading({
     status === 'ERROR' ? (
       <ErrorOutlineOutlined fontSize="large" sx={{ color: 'white' }} />
     ) : (
-      <CheckIcon fontSize="large" sx={{ color: 'white' }} />
+      <CheckIcon fontSize="large" sx={{ color: 'white', height: '22px' }} />
     );
-  return (
-    <Box sx={{ position: 'relative' }}>
-      <Tooltip title={status === 'ERROR' ? 'Error occured!' : ''}>
+  const getButtonType = () => {
+    if (buttonType === 'DEFAULT') {
+      return (
         <Button
           color={
             status === 'ERROR'
@@ -56,6 +59,29 @@ export default function ButtonWithLoading({
         >
           {status ? statusIcon : children}
         </Button>
+      );
+    }
+    return (
+      <RoundPrimaryButton
+        color={
+          status === 'ERROR'
+            ? 'error'
+            : status === 'SUCCESS'
+              ? 'success'
+              : 'primary'
+        }
+        disabled={isLoading}
+        {...props}
+      >
+        {status ? statusIcon : children}
+      </RoundPrimaryButton>
+    );
+  };
+
+  return (
+    <Box sx={{ position: 'relative' }}>
+      <Tooltip title={status === 'ERROR' ? 'Error occured!' : ''}>
+        {getButtonType()}
       </Tooltip>
       {isLoading && (
         <CircularProgress

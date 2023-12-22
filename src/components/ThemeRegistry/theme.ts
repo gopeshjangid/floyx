@@ -22,6 +22,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             100: '#777D88',
             200: '#0B081F',
             300: '#85838F',
+            400: '#fff',
             700: '#fff',
             800: '#E7F0FC',
             900: '#fff',
@@ -29,7 +30,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             boxBackground: '#fff',
             iconFontColor: '#fff',
             mainBackground: '#fff',
-            iconSelectedColor: "#A75FFF",
+            iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(47, 46, 65, 1)',
           },
           secondary: {
@@ -77,6 +78,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             100: '#D1D0D5',
             200: '#0B081F',
             300: '#777D88',
+            400: '#1B1830',
             700: '#0B081F',
             800: '#0B081F',
             900: '#fff',
@@ -84,7 +86,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             boxBackground: '#0B081F',
             iconFontColor: '#0B081F',
             mainBackground: '#0B081F',
-            iconSelectedColor: "#A75FFF",
+            iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(255, 255, 255, 1)',
           },
           secondary: {

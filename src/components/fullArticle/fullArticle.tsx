@@ -1,200 +1,81 @@
 import React, { Suspense } from 'react';
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  Popover,
-  Stack,
-  useTheme,
-  Menu,
-  MenuItem,
-} from '@mui/material';
-import StarIcon from '@/images/image/star';
-import BookMarkIcon from '@/images/image/bookMarkIcon';
-import {
-  useGetArticleTotalEarningsQuery,
-  useGetFollowStatusMutation,
-} from '@/lib/redux/slices/articleDetails';
+import { Box, Typography, Grid, Stack, Skeleton } from '@mui/material';
 import Image from 'next/image';
 import UsernameLink from '../usernameLink';
 import CalendarIcon from '@/images/image/calendarIcon';
 import moment from 'moment';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import {
-  FacebookShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  TwitterIcon,
-  FacebookIcon,
-  LinkedinIcon,
-} from 'react-share';
-import TranslateIcon from '@/assets/images/svg/translateIcon';
 import SocialButts from './socialMediaButtons';
+import AuthorPoints from './authorPoints';
+import FollowUser from '../FollowUser';
+import TranslateIcon from '@/assets/images/svg/translateIcon';
 
 export default function FullArticle({ details }: any) {
-  //const { palette } = useTheme();
-  // const colorSvg =
-  //   palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main;
-  //const [selectedLanguage, setSelectedLanguage] = useState("EN");
-  //const [languageEl, setLanguageEl] = React.useState<null | HTMLElement>(null);
-  //const openLanguage = Boolean(languageEl);
-  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setLanguageEl(event.currentTarget);
-  // };
-  // const handleClose = (lang) => {
-  //   if (lang) {
-  //     setSelectedLanguage(lang);
-  //   }
-  //   setLanguageEl(null);
-  // };
-
   const CONTENT =
     details?.article?.content && JSON.parse(details?.article?.content);
-  const articleId = details?.article?.id || '';
-
-  //const [updatefollowUnfolow] = useGetFollowStatusMutation();
-  // const { data: totalEarningPoints } =
-  //   useGetArticleTotalEarningsQuery(articleId);
-  // const pointsEarned = totalEarningPoints
-  //   ? (
-  //       totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +
-  //       totalEarningPoints?.totalEarnings[0]?.userEarnedAmount
-  //     ).toFixed(3)
-  //   : 0;
-
   const createMarkup = (htmlString: string) => {
     return { __html: htmlString };
   };
 
-  // const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-
-  // const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handlePopoverClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  //const open = Boolean(anchorEl);
-
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box>
       <Box>
-        {/* <Button variant="text" startIcon={<BookMarkIcon />}>
-          Bookmark
-        </Button> */}
         <Typography variant="h1" sx={{ textTransform: 'capitalize' }}>
           {details?.article?.title}
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Stack direction={'row'} gap={1}>
-          <Stack direction={'row'}>
-            <Box sx={{ marginRight: '10px' }}>
-              <UserAvatar
-                alt={details?.user?.name}
-                src={`${ApiEndpoint.CurrentUserDetails}/avatar/${details?.user?.username}`}
-                sx={{ width: '50px', height: '50px' }}
-              />
-            </Box>
-            <Box>
-              <Typography
-                variant="subtitle1"
-                component={'span'}
-                color="textPrimary"
-              >
-                {details?.user?.name}
-              </Typography>
-              {/* <UsernameLink
-                variant="subtitle2"
-                username={details?.user?.username}
-                onClick={e => e.stopPropagation()}
-              /> */}
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <CalendarIcon />
-                {moment(details?.article?.publicationDate).format('MMM DD, YY')}
-              </Box>
-            </Box>
-          </Stack>
-          {/* <Box>
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{ borderRadius: '30px', padding: '3px 15px' }}
-              onClick={() => {
-                updatefollowUnfolow(details?.user?.username);
-              }}
+      <Box py={2}>
+        <Grid container spacing={1}>
+          <Grid item xs={2} sm={1}>
+            <UserAvatar
+              alt={details?.user?.name}
+              src={`${ApiEndpoint.CurrentUserDetails}/avatar/${details?.user?.username}`}
+              sx={{ width: '50px', height: '50px' }}
+            />
+          </Grid>
+          <Grid item xs={6} sm={4}>
+            <Typography
+              variant="subtitle1"
+              component={'span'}
+              color="textPrimary"
             >
-              {details?.user?.isFollowed ? 'Follow' : 'UnFollow'}
-            </Button>
-          </Box> */}
-        </Stack>
-        <Box
-          sx={{
-            padding: '20px 0px',
-            width: 'auto',
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
-        >
-          {/* <Button
-            variant="outlined"
-            size="small"
-            startIcon={<StarIcon />}
-            aria-owns={open ? 'mouse-over-popover' : undefined}
-            aria-haspopup="true"
-            onMouseEnter={handlePopoverOpen}
-            onMouseLeave={handlePopoverClose}
-          >
-            <Typography variant="button">
-              {`${pointsEarned} Points`}{' '}
+              {details?.user?.name}
             </Typography>
-          </Button> */}
-          {/* <Popover
-            id="mouse-over-popover"
-            sx={{
-              pointerEvents: 'none',
-            }}
-            open={open}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            onClose={handlePopoverClose}
-            disableRestoreFocus
-          >
-            <Box>
-              <Box>
-                <Typography sx={{ p: 1 }} variant="button">
-                  Past Payouts {pointsEarned} points
-                </Typography>
-              </Box>
-              <Box>
-                <Typography sx={{ p: 1 }} variant="button">
-                  - Author{' '}
-                  {totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount ||
-                    0}{' '}
-                  points
-                </Typography>
-              </Box>
-              <Box>
-                <Typography sx={{ p: 1 }} variant="button">
-                  - Voters{' '}
-                  {totalEarningPoints?.totalEarnings[0]?.userEarnedAmount || 0}{' '}
-                  points
-                </Typography>
-              </Box>
-            </Box>
-          </Popover> */}
-        </Box>
+            <UsernameLink
+              variant="subtitle2"
+              username={details?.user?.username}
+            />
+            <Stack direction="row" gap={0.5} alignItems="center">
+              <CalendarIcon />
+              <Typography
+                variant="caption"
+                sx={{ opacity: 0.6, marginTop: '8px' }}
+              >
+                {moment(details?.article?.publicationDate).format('MMM DD, YY')}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Suspense
+              fallback={<Skeleton variant="text" width="100px" height="30px" />}
+            >
+              <FollowUser
+                isFollowed={details?.user?.isFollowed}
+                username={details?.user?.username}
+              />
+            </Suspense>
+          </Grid>
+          <Grid item xs={12} sm={5}>
+            <Suspense
+              fallback={
+                <Skeleton variant="text" width={'100%'} height="40px" />
+              }
+            >
+              <AuthorPoints details={details} />
+            </Suspense>
+          </Grid>
+        </Grid>
       </Box>
       <Box sx={{ display: 'flex' }}>
         <Grid container>
@@ -221,7 +102,7 @@ export default function FullArticle({ details }: any) {
         </Grid>
       </Box>
       {details?.article?.coverPhotoPath && (
-        <Box sx={{ marginTop: '20px' }}>
+        <Box>
           <Image
             width={0}
             height={0}
@@ -248,38 +129,12 @@ export default function FullArticle({ details }: any) {
             </Box>
           ))}
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        {/* <Box>
-          <Button
-            id="basic-button"
-            aria-controls={openLanguage ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={openLanguage ? 'true' : undefined}
-            onClick={handleClick}
-            startIcon={<TranslateIcon color={colorSvg} />}
-            sx={{textTransform: "none"}}
-          >
-            Language: {selectedLanguage}
-          </Button>
-          <Menu
-            id="basic-menu"
-            anchorEl={languageEl}
-            open={openLanguage}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <MenuItem onClick={() => {handleClose('EN')}}>EN</MenuItem>
-            <MenuItem onClick={() => {handleClose('GE')}}>GE</MenuItem>
-          </Menu>
-        </Box> */}
+      <Box display={'flex'} py={1}>
+        <TranslateIcon />
+        &nbsp;
+        <Typography variant="body2">EN</Typography>
+      </Box>
+      <Box py={1}>
         <Suspense fallback={<Typography>Loading...</Typography>}>
           <SocialButts details={details} />
         </Suspense>

@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { Typography, TypographyProps, styled } from '@mui/material';
 import React from 'react';

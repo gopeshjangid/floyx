@@ -13,7 +13,7 @@ const CalendarIcon = () => {
         d="M6.66675 1.66663V4.16663"
         stroke="#9D9CA5"
         strokeWidth="1.2"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -21,7 +21,7 @@ const CalendarIcon = () => {
         d="M13.3333 1.66663V4.16663"
         stroke="#9D9CA5"
         strokeWidth="1.2"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -29,7 +29,7 @@ const CalendarIcon = () => {
         d="M2.91675 7.57495H17.0834"
         stroke="#9D9CA5"
         strokeWidth="1.2"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -37,7 +37,7 @@ const CalendarIcon = () => {
         d="M17.5 7.08329V14.1666C17.5 16.6666 16.25 18.3333 13.3333 18.3333H6.66667C3.75 18.3333 2.5 16.6666 2.5 14.1666V7.08329C2.5 4.58329 3.75 2.91663 6.66667 2.91663H13.3333C16.25 2.91663 17.5 4.58329 17.5 7.08329Z"
         stroke="#9D9CA5"
         strokeWidth="1.2"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

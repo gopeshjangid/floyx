@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 const ProfileTickIcon = (props: any) => {
-
   return (
     <svg
       width="24"
@@ -9,6 +8,7 @@ const ProfileTickIcon = (props: any) => {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M14.4399 19.05L15.9599 20.57L18.9999 17.53"

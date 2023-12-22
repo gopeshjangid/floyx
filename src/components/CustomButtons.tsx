@@ -15,10 +15,10 @@ const StyledRoundPrimaryButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-function RoundPrimaryButton(props: ButtonProps) {
+function RoundPrimaryButton({ children, ...props }: ButtonProps) {
   return (
-    <StyledRoundPrimaryButton variant="text">
-      {props.children}
+    <StyledRoundPrimaryButton {...props} variant="text">
+      {children}
     </StyledRoundPrimaryButton>
   );
 }
