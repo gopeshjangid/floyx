@@ -3,7 +3,7 @@ import { withAuth } from 'next-auth/middleware';
 export default withAuth({
   pages: {
     signIn: '/login',
-    error: '/social-login',
+    // error: '/social-login',
   },
   secret: 'HBgBGs3QXQ7Efmu/FFyzXcKGnhbipvw0ArDme0SYD2o=',
 });
