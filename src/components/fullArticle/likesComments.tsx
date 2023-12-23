@@ -5,7 +5,17 @@ import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
-import { Box, Divider, Typography, Button, Modal, Stack, useTheme } from '@mui/material';
+import { useGetCommentListQuery } from '@/lib/redux/slices/comments';
+import {
+  Box,
+  Divider,
+  Typography,
+  Button,
+  Modal,
+  Stack,
+  useTheme,
+  Skeleton,
+} from '@mui/material';
 import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
@@ -14,8 +24,8 @@ import {
   useShareArticleMutation,
   useCheckArticleIsSharedMutation,
 } from '@/lib/redux/slices/articleDetails';
-import Comment from "../CommentLists";
-import { allRoutes } from "@/constants/allRoutes";
+import Comment from '../CommentLists';
+import { allRoutes } from '@/constants/allRoutes';
 import Image from 'next/image';
 
 const style = {
@@ -33,16 +43,19 @@ const style = {
   m: 2,
 };
 
-export default function LikesComments({
-  commentList,
+function LikesComments({
   likesCommentsDetails,
   itemId,
   isPost = false,
   isShared = undefined,
   showComments = undefined,
+  articleId,
 }: any) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
+  );
+  const { data: commentList, isLoading } = useGetCommentListQuery(
+    articleId! || ''
   );
   const [commentText, setCommentText] = useState('');
   const { palette } = useTheme();
@@ -91,11 +104,10 @@ export default function LikesComments({
       await publishArticle({ articleId: itemId, status, payload });
       toast.success('Article is Published Succesfully ');
     }
-    setCommentText('')
+    setCommentText('');
     setAnchorEl(null);
   };
 
-  
   const likeType = () => {
     if (isPost) {
       return 'PostLike';
@@ -111,14 +123,19 @@ export default function LikesComments({
 
   return (
     <Box sx={{ marginTop: '35px', width: '100%' }}>
-      <Stack direction="row" gap={2}>
+      <Divider />
+      <Stack direction="row" gap={2} py={1}>
         <Button
           variant="text"
           startIcon={<LikeIcon />}
           onClick={handleArticleLike}
           sx={{ padding: 0 }}
         >
-          <Typography component={"span"} color={"textPrimary"} textTransform={"none"}>
+          <Typography
+            component={'span'}
+            color={'textPrimary'}
+            textTransform={'none'}
+          >
             {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
           </Typography>
         </Button>
@@ -130,8 +147,13 @@ export default function LikesComments({
             isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
           }
         >
-          <Typography component={"span"} color={"textPrimary"} textTransform={"none"}>
-            {formatIndianNumber(likesCommentsDetails?.numberOfComments)} Comments
+          <Typography
+            component={'span'}
+            color={'textPrimary'}
+            textTransform={'none'}
+          >
+            {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
+            Comments
           </Typography>
         </Button>
         <Button
@@ -140,30 +162,43 @@ export default function LikesComments({
           startIcon={<ShareIcon />}
           onClick={handleClick}
         >
-          <Typography component={"span"} color={"textPrimary"} textTransform={"none"}>
+          <Typography
+            component={'span'}
+            color={'textPrimary'}
+            textTransform={'none'}
+          >
             {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
           </Typography>
         </Button>
       </Stack>
+      <Divider />
       {!isPost && isShared === undefined && (
         <Typography variant="h5" sx={{ marginTop: '40px' }}>
           Comments
         </Typography>
-      )} 
-      {showComments && <Box>
-        {Array.isArray(commentList) &&
-          commentList.map((val: any, index: number) => (
-            <div key={index}>
-              <Comment
-                comment={val}
-                type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
-                setCommentText={setCommentText}
-                inputRef={commentRef}
-              />
-              {index !== commentList.length - 1 && <Divider />}
-            </div>
-        ))}
-      </Box>}
+      )}
+      {isLoading && (
+        <Stack gap={1}>
+          <Skeleton width="100%" height="50px" />
+          <Skeleton width="100%" height="50px" />
+        </Stack>
+      )}
+      {showComments && (
+        <Box>
+          {Array.isArray(commentList) &&
+            commentList.map((val: any, index: number) => (
+              <div key={index}>
+                <Comment
+                  comment={val}
+                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                  setCommentText={setCommentText}
+                  inputRef={commentRef}
+                />
+                {index !== commentList.length - 1 && <Divider />}
+              </div>
+            ))}
+        </Box>
+      )}
       {!isPost && isShared === undefined && (
         <>
           <Box
@@ -204,7 +239,7 @@ export default function LikesComments({
               setCommentText={setCommentText}
             />
           </Box>
-          <Box sx={{ padding: '10px', marginTop:'10%' }}>
+          <Box sx={{ padding: '10px', marginTop: '10%' }}>
             <Image
               width={0}
               height={0}
@@ -214,7 +249,13 @@ export default function LikesComments({
               alt="thumbnail"
             />
           </Box>
-          <Box sx={{ padding: '10px', paddingTop:'1px',textTransform: 'capitalize' }}>
+          <Box
+            sx={{
+              padding: '10px',
+              paddingTop: '1px',
+              textTransform: 'capitalize',
+            }}
+          >
             <Typography variant="h1">{likesCommentsDetails?.title}</Typography>
           </Box>
           <Divider />
@@ -234,3 +275,5 @@ export default function LikesComments({
     </Box>
   );
 }
+
+export default React.memo(LikesComments);

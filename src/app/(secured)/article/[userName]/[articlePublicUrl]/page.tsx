@@ -3,37 +3,28 @@ import AuthorCoulmn from '@/components/fullArticle/authorColumn';
 import FullArticle from '@/components/fullArticle/fullArticle';
 import LikesComments from '@/components/fullArticle/likesComments';
 import TipColumn from '@/components/fullArticle/tipCoumn';
-import { Container, Box, Alert, Skeleton } from '@mui/material';
+import { Alert, Skeleton } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
-async function Page({ params, page, get } : any) {
+async function Page({ params, ...props }) {
   const userName = params?.userName;
   const articlePuclicUrl = params?.articlePublicUrl;
   const { data: articleDetails, isError } = await fetchServerData(
     `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
   );
 
-  console.log('data', articleDetails);
   const articleId = articleDetails?.article?.id;
-  // const { data: commentList } = useGetCommentListQuery(
-  //   articleDetails?.article?.id || ''
-  // );
 
   return (
-    <Container
-      sx={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Box sx={{ width: '70%' }}>
-        {isError && <Alert severity="error">Something went wrong</Alert>}
-        {articleId && (
-          <>
+    <>
+      {isError && <Alert severity="error">Something went wrong</Alert>}
+      {articleId && (
+        <>
+          <section>
             <FullArticle details={articleDetails} />
+          </section>
+          <section>
             <Suspense
               fallback={
                 <Skeleton variant="rectangular" width="100%" height="30px" />
@@ -45,6 +36,8 @@ async function Page({ params, page, get } : any) {
                 articleId={articleId}
               />
             </Suspense>
+          </section>
+          <section>
             <Suspense
               fallback={
                 <Skeleton variant="rectangular" width="100%" height="300px" />
@@ -52,7 +45,8 @@ async function Page({ params, page, get } : any) {
             >
               <AuthorCoulmn details={articleDetails} />
             </Suspense>
-
+          </section>
+          <section>
             <Suspense
               fallback={
                 <Skeleton variant="rectangular" width="100%" height="60px" />
@@ -62,15 +56,63 @@ async function Page({ params, page, get } : any) {
                 likesCommentsDetails={articleDetails?.article}
                 userDetail={articleDetails?.user?.avatar}
                 itemId={articleId}
-                commentList={[]}
                 showComments={true}
+                articleId={articleId}
               />
             </Suspense>
-          </>
-        )}
-      </Box>
-    </Container>
+          </section>
+        </>
+      )}
+    </>
   );
+}
+
+import { Metadata, ResolvingMetadata } from 'next';
+
+type Props = {
+  params: { userName: string; articlePublicUrl: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const userName = params?.userName;
+  const articlePuclicUrl = params?.articlePublicUrl;
+  const { data: articleDetails } = await fetchServerData(
+    `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
+  );
+  return {
+    title: articleDetails?.article.title,
+    openGraph: {
+      images: [articleDetails?.article?.coverPhotoPath],
+    },
+
+    generator: 'Next.js',
+    applicationName: 'Floyx',
+    referrer: 'origin-when-cross-origin',
+    keywords: articleDetails?.article?.tags ?? [],
+    authors: [
+      {
+        name: articleDetails?.author?.name,
+        url: articleDetails?.author?.avatar,
+      },
+    ],
+    creator: articleDetails?.author?.name,
+    publisher: articleDetails?.author?.name,
+    alternates: {
+      canonical: '/',
+      languages: {
+        'en-US': '/en-US',
+      },
+    },
+    // formatDetection: {
+    //   email: false,
+    //   address: false,
+    //   telephone: false,
+    // },
+  };
 }
 
 export default Page;

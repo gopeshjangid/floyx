@@ -29,6 +29,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  Container,
 } from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
@@ -144,6 +145,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     messagesCount: 0,
     notifications: [],
   });
+  console.log('drawer');
   const session = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -151,7 +153,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const { palette } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openWriteDialog, setOpenWriteDialog] = useState(false);
-
+  const isLoggedIn: boolean = session.status === 'authenticated';
   const navItems = [
     {
       label: 'Home',
@@ -212,7 +214,6 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const homeRedirect = () => {
     router.push('/');
   };
-
   useEffect(() => {
     if (session.data?.expires) {
       if (moment(session.data.expires).isBefore(moment())) {
@@ -311,7 +312,36 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     </Box>
   );
 
+  const getDesktopLayout = () => {
+    if (isLoggedIn) {
+      return (
+        <Grid container columnSpacing={{ sm: 2, md: 3 }}>
+          <Grid item sm={3} md={4} lg={2}>
+            <Paper
+              elevation={0}
+              sx={{
+                height: '100%',
+                width: '100%',
+                paddingTop: 1,
+                pl: 1,
+                bgcolor: 'primary.700',
+              }}
+            >
+              {drawer}
+              <SidebarProfileBar />
+            </Paper>
+          </Grid>
+          <Grid item sm={9} md={8} lg={10}>
+            {children}
+          </Grid>
+        </Grid>
+      );
+    }
+    return <Container maxWidth="lg">{children}</Container>;
+  };
+
   const container = undefined;
+
   return (
     <>
       {isMobile && (
@@ -385,26 +415,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
           </Drawer>
         )}
         {!isMobile ? (
-          <Grid container columnSpacing={{ sm: 2, md: 3 }}>
-            <Grid item sm={3} md={4} lg={2}>
-              <Paper
-                elevation={0}
-                sx={{
-                  height: '100%',
-                  width: '100%',
-                  paddingTop: 1,
-                  pl: 1,
-                  bgcolor: 'primary.700',
-                }}
-              >
-                {drawer}
-                <SidebarProfileBar />
-              </Paper>
-            </Grid>
-            <Grid item sm={9} md={8} lg={10}>
-              {children}
-            </Grid>
-          </Grid>
+          getDesktopLayout()
         ) : (
           <Paper>
             <Toolbar />

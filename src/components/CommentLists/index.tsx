@@ -25,17 +25,17 @@ export default function Comment({
   const onReply = () => {
     setCommentText(`@${(session as any)?.data?.user?.username}`);
     inputRef.current.focus();
-  }
+  };
 
   const addLinks = (content: any) => {
     if (!content) {
-      return ''
+      return '';
     }
-    const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm
-    const link = '<a href="/profile/$2">@$2</a>'
-    const urlRegex = /(https?:\/\/[^\s]+)/g
-    const urlLink = '<a href="$1" target="_blank">$1</a>'
-    return content.replace(urlRegex, urlLink).replace(profileRegex, link)
+    const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm;
+    const link = '<a href="/profile/$2">@$2</a>';
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urlLink = '<a href="$1" target="_blank">$1</a>';
+    return content.replace(urlRegex, urlLink).replace(profileRegex, link);
   };
 
   return (
@@ -48,7 +48,7 @@ export default function Comment({
         />
       </Box>
       <Box sx={{ width: '100%', marginLeft: '16px' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }} pb={1}>
           <Box>
             <Typography variant="subtitle1" component={'span'}>
               {comment?.user?.name}{' '}
@@ -65,18 +65,19 @@ export default function Comment({
           sx={{
             width: '100%',
             borderRadius: '10px',
-            padding: '10px',
+            padding: '4px 8px',
             background: palette.background.paper,
-          }}>
+          }}
+        >
           {/* <Typography>{comment?.comment?.content}</Typography> */}
           <pre
             style={{
               whiteSpace: 'pre-wrap',
               fontFamily: 'inherit',
-              fontSize: '1em'
+              fontSize: '1em',
             }}
             dangerouslySetInnerHTML={{
-              __html: addLinks(comment?.comment?.content)
+              __html: addLinks(comment?.comment?.content),
             }}
           />
         </Box>
