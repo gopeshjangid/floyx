@@ -4,7 +4,7 @@ import React from 'react';
 function Layout({ children, ...props }) {
   const cookieStore = cookies();
   const deviceType = cookieStore.get('deviceType');
-  const padding = deviceType && deviceType.value !== 'desktop' ? 8 : 1.5;
+  const padding = deviceType && deviceType.value === 'desktop' ? 8 : 1.5;
   return (
     <Box mt={2} p={2} px={padding} mx={padding}>
       {children}

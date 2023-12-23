@@ -102,7 +102,7 @@ export default function FullArticle({ details }: any) {
         </Grid>
       </Box>
       {details?.article?.coverPhotoPath && (
-        <Box>
+        <Box sx={{ borderRadius: '8px', overflow: 'hidden' }}>
           <Image
             width={0}
             height={0}
