@@ -106,6 +106,15 @@ export const artcileDetails = createApi({
       transformResponse: (response: any) => response?.value?.data,
       providesTags: ['LikeStatus'],
     }),
+    getArticlesByAuthor: builder.query<
+      ArticleData[],
+      { username: string; pageSize: number }
+    >({
+      query: ({ username, pageSize }) =>
+        `${ApiEndpoint.GetArticles}/${username}?count=${pageSize}`,
+      transformResponse: (response: any) => response?.value?.data,
+      providesTags: ['articleListByuser'],
+    }),
     getFollowStatus: builder.mutation<any, string>({
       query: userName => ({
         url: `${ApiEndpoint.Follow}/${userName}`,
@@ -237,6 +246,7 @@ export const artcileDetails = createApi({
     'getArticleList',
     'deleteArticle',
     'ArticleInfoNumber',
+    'articleListByuser',
   ],
 });
 
@@ -257,4 +267,5 @@ export const {
   useDeleteArticleMutation,
   useGetFollowMoreAccountQuery,
   useLazyGetDraftDetailQuery,
+  useGetArticlesByAuthorQuery,
 } = artcileDetails;

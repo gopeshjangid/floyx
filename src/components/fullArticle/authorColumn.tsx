@@ -16,6 +16,7 @@ import {
 import { RoundPrimaryButton } from '../CustomButtons';
 import { useRouter } from 'next/navigation';
 import FollowUser from '../FollowUser';
+import AuthorArticles from './authorArticles';
 
 export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -166,60 +167,7 @@ export default function AuthorCoulmn({ details }: any) {
         </Box>
       </Box>
       <Box className="more-about-auhtor">
-        <Typography variant="h5">More From Author</Typography>
-        {/* <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-          sx={{ paddingTop: '20px' }}
-        >
-          {authorDetails?.user &&
-            authorDetails?.user?.more &&
-            (authorDetails?.user?.more).length &&
-            (authorDetails?.user?.more).map((val: any, index: number) => (
-              <Grid item xs={2} sm={4} md={6} key={index}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    border: '1px solid white',
-                    borderRadius: '10px',
-                    padding: '15px 10px',
-                  }}
-                >
-                  <Box sx={{ marginRight: '15px' }}>
-                    <img src={val?.thumbnail} width={60} height={60} />
-                    <Image
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      style={{ width: '100%', height: '100%' }}
-                      src={val?.thumbnail}
-                      alt="thumbnail"
-                    />
-                  </Box>
-                  <Box>
-                    <Box>
-                      <Typography variant="subtitle2">{val?.title}</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex' }}>
-                      <Box>
-                        <Avatar
-                          alt={details?.user?.name}
-                          src={details?.user?.avatar}
-                          sx={{ width: 20, height: 20, marginRight: '10px' }}
-                        />
-                      </Box>
-                      <Box>
-                        <Typography variant="caption">
-                          by {details?.user?.name}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              </Grid>
-            ))}
-        </Grid> */}
+        <AuthorArticles username={details?.user?.username} />
       </Box>
     </AuthorDetailBox>
   );

@@ -118,13 +118,15 @@ export default function FullArticle({ details }: any) {
           CONTENT.map((val: any, index: number) => (
             <Box sx={{ padding: '10px 0' }} key={`articleDetail${index}`}>
               {val?.type === 'paragraph' ? (
-                <Typography variant="body1">
-                  <div dangerouslySetInnerHTML={createMarkup(val?.value)} />
-                </Typography>
+                <Typography
+                  variant="body1"
+                  dangerouslySetInnerHTML={createMarkup(val?.value)}
+                />
               ) : (
-                <Typography variant="h2">
-                  <div dangerouslySetInnerHTML={createMarkup(val?.value)} />
-                </Typography>
+                <Typography
+                  variant="body1"
+                  dangerouslySetInnerHTML={createMarkup(val?.value)}
+                />
               )}
             </Box>
           ))}

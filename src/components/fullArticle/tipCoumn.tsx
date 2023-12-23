@@ -1,6 +1,13 @@
 'use client';
 import { useGetTipHistoryQuery } from '@/lib/redux/slices/earnings';
-import { Box, Typography, Slider, Button, useTheme } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Slider,
+  Button,
+  useTheme,
+  Skeleton,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
 import { useSetTipMutation } from '@/lib/redux/slices/articleDetails';
@@ -13,7 +20,7 @@ export default function TipColumn({
 }: any) {
   const [value, setValue] = useState<number>(30);
   const [updateTip, { isError, error }] = useSetTipMutation();
-  const { data: tipHistory } = useGetTipHistoryQuery();
+  const { data: tipHistory, isLoading } = useGetTipHistoryQuery();
   const toast = useToast();
   const { palette } = useTheme();
 
@@ -60,6 +67,10 @@ export default function TipColumn({
       }
     }
   }, [isError, error]);
+  if (isLoading)
+    return <Skeleton variant="rectangular" width="100%" height="50px" />;
+
+  if (!tipHistory) return null;
   return (
     <Box
       p={2}
