@@ -34,7 +34,7 @@ const handler = NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET || '',
     }),
   ],
-  secret: 'HBgBGs3QXQ7Efmu/FFyzXcKGnhbipvw0ArDme0SYD2o=',
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
   },
