@@ -21,7 +21,7 @@ export default function Page() {
     getArticleList(tabName);
   }, [tabName]);
 
-  const viewportHeight = window.innerHeight;
+  const viewportHeight = (typeof window === "undefined" ? 1000 : window.innerHeight);
 
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>

@@ -9,7 +9,7 @@ import PostHeader from '@/components/PostHeader';
 import { useGetPostsQuery } from '@/lib/redux';
 
 import { Box, Grid, useMediaQuery } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -51,7 +51,7 @@ export default function Page() {
     [postData, isFetching, setApiParams]
   );
 
-  const viewportHeight = window.innerHeight;
+  const viewportHeight = (typeof window === "undefined" ? 1000 : window.innerHeight);
 
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
