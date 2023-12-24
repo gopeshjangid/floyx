@@ -12,7 +12,7 @@ export const commentService = createApi({
     getCommentList: builder.query<UserComment[], string>({
       query: articleId => `${ApiEndpoint.GetComments}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || [],
-      providesTags: ['commentList'],
+      providesTags: ['CommentList'],
     }),
     createComment: builder.mutation<any, any>({
       query: commantData => ({
@@ -31,12 +31,13 @@ export const commentService = createApi({
               ])
             );
           } else {
-            api.dispatch(artcileDetails.util.invalidateTags(['LikeStatus']));
+            api.dispatch(artcileDetails.util.invalidateTags(['ArticleDetail']));
+            api.dispatch(commentService.util.invalidateTags(['CommentList']))
           }
         });
       },
       invalidatesTags: (meta, args, type) => {
-        return [{ type: 'commentList', id: type }];
+        return [{ type: 'CommentList', id: type }];
       },
     }),
     getUserSuggestion: builder.query<any, any>({
@@ -51,7 +52,7 @@ export const commentService = createApi({
         }),
     }),
   }),
-  tagTypes: ['commentList'],
+  tagTypes: ['CommentList'],
 });
 
 export const {

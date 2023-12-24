@@ -104,7 +104,7 @@ export const artcileDetails = createApi({
       query: ({ userName, articlePuclicUrl }) =>
         `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`,
       transformResponse: (response: any) => response?.value?.data,
-      providesTags: ['LikeStatus'],
+      providesTags: ['ArticleDetail'],
     }),
     getArticlesByAuthor: builder.query<
       ArticleData[],
@@ -129,7 +129,7 @@ export const artcileDetails = createApi({
         method: 'POST',
       }),
       invalidatesTags: (_, __, arg) =>
-        arg.type === 'ArticleLike' ? ['LikeStatus'] : [],
+        arg.type === 'ArticleLike' ? ['ArticleDetail'] : [],
       onQueryStarted: (arg, api) => {
         api.queryFulfilled.then(() => {
           if (arg.type == 'PostLike') {
@@ -140,7 +140,7 @@ export const artcileDetails = createApi({
               ])
             );
           } else if (arg.type == 'PostCommentLiked') {
-            api.dispatch(commentService.util.invalidateTags(['commentList']));
+            api.dispatch(commentService.util.invalidateTags(['CommentList']));
           }
         });
       },
@@ -186,7 +186,7 @@ export const artcileDetails = createApi({
         body: payload,
       }),
       transformResponse: (response: any) => response?.value?.data || {},
-      invalidatesTags: ['LikeStatus'],
+      invalidatesTags: ['ArticleDetail'],
     }),
     createArticleDraft: builder.mutation<any, any>({
       query: payload => ({
@@ -229,10 +229,7 @@ export const artcileDetails = createApi({
       }),
       invalidatesTags: ['deleteArticle'],
     }),
-    getFollowMoreAccount: builder.query<any, void>({
-      query: () => `${ApiEndpoint.AccountsToFallow}?forHome=true`,
-      transformResponse: (response: any) => response?.value?.data || {},
-    }),
+    
     getDraftDetail: builder.query<any, void>({
       query: articleId => `${ApiEndpoint.GetDrafts}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || {},
@@ -246,7 +243,7 @@ export const artcileDetails = createApi({
     }),
   }),
   tagTypes: [
-    'LikeStatus',
+    'ArticleDetail',
     'ArticleList',
     'FollowStatus',
     'articleTip',
@@ -254,6 +251,7 @@ export const artcileDetails = createApi({
     'deleteArticle',
     'ArticleInfoNumber',
     'articleListByuser',
+    'FollowedAccount',
   ],
 });
 
@@ -272,7 +270,6 @@ export const {
   useUpdateDraftArticleMutation,
   usePublishArticleMutation,
   useDeleteArticleMutation,
-  useGetFollowMoreAccountQuery,
   useLazyGetDraftDetailQuery,
   useGetArticlesByAuthorQuery,
   useLazyGetSearchArticleQuery,
