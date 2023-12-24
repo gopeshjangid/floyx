@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { cookies } from 'next/headers';
 import React from 'react';
-function Layout({ children, ...props }) {
+function Layout({ children }: any) {
   const cookieStore = cookies();
   const deviceType = cookieStore.get('deviceType');
   const padding = deviceType && deviceType.value === 'desktop' ? 8 : 1.5;

@@ -7,7 +7,7 @@ import { Alert, Skeleton } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
-async function Page({ params, ...props }) {
+async function Page({ params }: any) {
   const userName = params?.userName;
   const articlePuclicUrl = params?.articlePublicUrl;
   const { data: articleDetails, isError } = await fetchServerData(
