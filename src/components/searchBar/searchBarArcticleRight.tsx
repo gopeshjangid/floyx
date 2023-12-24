@@ -4,11 +4,30 @@ import { Search } from "@mui/icons-material";
 import { Box, IconButton, InputAdornment, TextField, Typography, useTheme } from '@mui/material';
 import { Mention, MentionsInput } from 'react-mentions';
 
-export default function SearchBarArcticleRight() {
+export default function SearchBarArcticleRight({setDynamicTab}) {
   const { palette } = useTheme();
 
+  const debounce = (func: (...args: any[]) => void, delay: number) => {
+    let timer: any;
+    return function (...args: any[]) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  const handleInputChange = debounce((value) => {
+    setDynamicTab({
+      searchBy: 'search',
+      value: value,
+      tagId: value,
+    })
+  }, 500); 
+
   function handleArticleSearch(e: any) {
-    console.log(e.target.value);
+    console.log('sdddddd', e);
+    handleInputChange(e.target.value);
   }
 
   return (

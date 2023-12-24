@@ -237,6 +237,13 @@ export const artcileDetails = createApi({
       query: articleId => `${ApiEndpoint.GetDrafts}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || {},
     }),
+    getSearchArticle: builder.query<any, any>({
+      query: ({searchString}) => `${ApiEndpoint.SearchArticle}?query=${searchString}`,
+      providesTags: (result, error, type) => [
+        { type: 'ArticleList', id: type },
+      ],
+      transformResponse: (response: any) => response?.value?.data || [],
+    }),
   }),
   tagTypes: [
     'LikeStatus',
@@ -268,4 +275,5 @@ export const {
   useGetFollowMoreAccountQuery,
   useLazyGetDraftDetailQuery,
   useGetArticlesByAuthorQuery,
+  useLazyGetSearchArticleQuery,
 } = artcileDetails;

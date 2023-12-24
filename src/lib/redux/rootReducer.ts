@@ -8,11 +8,13 @@ import { commentService } from './slices/comments';
 import { profileService } from './slices/profile';
 import { registrationService } from './slices/registration';
 import { accountSettingService } from './slices/accountSetting';
+import { tagServices } from "./slices/tags";
 
 export const reducer = combineReducers({
   [earningsService.reducerPath]: earningsService.reducer,
   [postServices.reducerPath]: postServices.reducer,
   [artcileDetails.reducerPath]: artcileDetails.reducer,
+  [tagServices.reducerPath]: tagServices.reducer,
   [userService.reducerPath]: userService.reducer,
   [commentService.reducerPath] : commentService.reducer,
   [profileService.reducerPath]: profileService.reducer,

@@ -121,6 +121,12 @@ export class ApiEndpoint {
 
   // End
 
+  // Tags Api Start
+  public static GetPopularTags = ApiEndpoint.BasePath + '/api/v1/Articles/popularTags';
+  public static GetArticleByTag = ApiEndpoint.BasePath + '/api/v1/Articles/getArticlesByTag';
+  public static SearchArticle = ApiEndpoint.BasePath + '/api/v1/Articles/searchArticles';
+  
+  //End
   // Post Api Start
   public static AddNewPost = ApiEndpoint.BasePath + '/api/v1/posts';
   public static GetPosts = ApiEndpoint.BasePath + '/api/v1/posts';

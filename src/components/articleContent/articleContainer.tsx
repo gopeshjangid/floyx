@@ -292,6 +292,7 @@ export default function ArticleContainer({
                 <Typography
                   variant="body2"
                   // color={"textPrimary"}
+                  component={'span'} 
                   color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
                   sx={{
                     minHeight: `${40}px`,

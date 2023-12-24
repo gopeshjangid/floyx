@@ -216,7 +216,7 @@ function LikesComments({
               setCommentText={setCommentText}
             />
           </Box>
-          <RecommendedTopics />
+          {/* <RecommendedTopics /> */}
         </>
       )}
       {isPost && !isShared && (
