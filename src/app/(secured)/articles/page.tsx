@@ -38,11 +38,8 @@ export default function Page() {
     }
   }, [tabName]);
 
-  const viewportHeight = window.innerHeight;
-  
-  useEffect(() => {
-    console.log(dynamicTab, tabName, 'dynamicTab')
-  }, [dynamicTab, tabName])
+  const viewportHeight = (typeof window === "undefined" ? 1000 : window.innerHeight);
+
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
