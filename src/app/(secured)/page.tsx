@@ -9,7 +9,7 @@ import PostHeader from '@/components/PostHeader';
 import { useGetPostsQuery } from '@/lib/redux';
 
 import { Box, Grid, useMediaQuery } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -26,7 +26,7 @@ export default function Page() {
   const { data, isFetching } = useGetPostsQuery(apiParams);
   const postData = data?.postList;
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
- 
+
   const debounce = (func: (...args: any[]) => void, delay: number) => {
     let timer: any;
     return function (...args: any[]) {
