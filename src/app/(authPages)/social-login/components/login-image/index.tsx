@@ -43,12 +43,21 @@ const LoginImage = () => {
           },
         }}
       >
-        <Image src={imgLoginBG} alt="login bg" className="img-overlay" priority />
-        <Box position="relative" padding={{ md: '110px 15px 10px', xs: '38px 15px 0' }}>
+        <Image
+          src={imgLoginBG}
+          alt="login bg"
+          className="img-overlay"
+          priority
+        />
+        <Box
+          position="relative"
+          padding={{ md: '110px 15px 10px', xs: '38px 15px 0' }}
+        >
           <Box className="login-image-content" textAlign="center">
             <Image src={iconLogo} alt="logo" loading="lazy" />
             <Typography variant="h5" fontWeight="500">
-              No <span className="gradient-text">censorship </span> & Strong <span className="gradient-text">Security</span>
+              We are <span className="gradient-text">One </span> Instead of{' '}
+              <span className="gradient-text">Many</span>
             </Typography>
           </Box>
           <ImageLogin>
