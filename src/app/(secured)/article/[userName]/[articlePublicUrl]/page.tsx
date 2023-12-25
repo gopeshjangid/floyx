@@ -18,6 +18,7 @@ async function Page({ params }: any) {
 
   return (
     <>
+      <LoginHeader />
       {isError && <Alert severity="error">Something went wrong</Alert>}
       {articleId && (
         <>
@@ -68,6 +69,7 @@ async function Page({ params }: any) {
 }
 
 import { Metadata, ResolvingMetadata } from 'next';
+import LoginHeader from '@/components/LoginHeader';
 
 type Props = {
   params: { userName: string; articlePublicUrl: string };
