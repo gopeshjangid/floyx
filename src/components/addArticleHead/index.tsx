@@ -10,6 +10,10 @@ import {
   useTheme,
 } from '@mui/material';
 import { GradientText } from "../usernameLink";
+import DocumentText from "@/assets/images/svg/documentText";
+import EditIcon from "@/assets/images/svg/editIcon";
+import { GradientButton } from "../gradientButton";
+import AddIcon from "@/assets/images/svg/addIcon";
 
 export default function AddArticleHead({
   setSaveDraft,
@@ -26,6 +30,11 @@ export default function AddArticleHead({
 
   const { palette } = useTheme();
 
+  const getColorSvg = _ => {
+    return palette?.mode === 'light'
+      ? palette.text.primary
+      : palette?.primary?.main;
+  };
   const handleSaveDraft = () => {
     setSaveDraft(true);
     setIsPublish(false);
@@ -58,6 +67,8 @@ export default function AddArticleHead({
         >
           <Tab
             className="tab"
+            iconPosition="start"
+            icon={<DocumentText color={value === "my"  ? palette.primary.iconSelectedColor : palette?.action?.svg} />}
             label={
               value === "my" ? (
                 <GradientText>My Articles [{articleDraftNumbers?.info?.numberOfArticles}]</GradientText>
@@ -70,6 +81,8 @@ export default function AddArticleHead({
           />
           <Tab
             className="tab"
+            iconPosition="start"
+            icon={<EditIcon color={value === "draft"  ? palette.primary.iconSelectedColor : palette?.action?.svg} />}
             label={
               value === "draft" ? (
                 <GradientText>My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]</GradientText>
@@ -82,29 +95,40 @@ export default function AddArticleHead({
           />
           <Tab
             className="tab"
-            label={<Typography variant="subtitle2">Write New</Typography>}
+            iconPosition="start"
+            icon={<AddIcon color={value === "newArticle"  ? palette.primary.iconSelectedColor : palette?.action?.svg} />}
+            label={
+              value === "newArticle" ? (
+                <GradientText>Write New</GradientText>
+              ) : (
+                <Typography variant="subtitle2">Write New</Typography>
+              )
+            }
             value={'newArticle'}
             sx={{ paddingTop: '16px' }}
           />
         </Tabs>
       </Stack>
       {value === 'newArticle' && (
-        <Stack direction="row" gap={1} alignItems={"flex-start"}>
-          <Button
+        <Stack direction="row" gap={1} alignItems={"flex-end"} marginBottom={1}>
+          <GradientButton
             variant="outlined"
-            sx={{ borderRadius: '10px' }}
             onClick={handleSaveDraft}
             disabled={isDisabled}
+            isBorderRadius
+            isSelected
           >
-            Save as Draft
-          </Button>
+            <span>
+              Save as Draft
+            </span>
+          </GradientButton>
           <Button
-            variant="outlined"
-            sx={{ borderRadius: '10px' }}
+            variant="contained"
+            sx={{ borderRadius: '10px'}}
             onClick={handlePublish}
             disabled={isDisabled}
           >
-            {isPublished ? "Save Edit" : "Publish"}
+              {isPublished ? "Save Edit" : "Publish"}
           </Button>
         </Stack>
       )}

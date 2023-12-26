@@ -259,6 +259,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
                 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
               opacity: 0.9, // Or any other styling you want on hover
             },
+            "&:disabled": {
+              color: mode === 'light' ?'white': '#0B081F',
+            }
           },
           outlined: {
             fontWeight: 500,

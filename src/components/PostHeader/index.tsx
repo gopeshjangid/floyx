@@ -23,7 +23,7 @@ export default function Header() {
     }
     return palette?.mode === 'light'
       ? palette.text.primary
-      : palette?.primary?.main;
+      : palette?.primary.fontLightColor;
   };
   const HeaderSection = styled(Box)(() => ({
     display: 'flex',

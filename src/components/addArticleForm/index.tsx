@@ -284,7 +284,18 @@ export default function AddArticleForm({
         fullWidth
         value={title}
         onChange={(e) => handleTitleChange(e, articleCreated)}
-        sx={{ marginBottom: 2, backgroundColor: palette.background.default }}
+        sx={{
+          // backgroundColor: palette.background.default,
+          ".MuiOutlinedInput-root": {
+            border: '0px',
+          },
+          ".MuiOutlinedInput-input": {
+            backgroundColor: palette.background.default,
+            fontWeight: '600',
+            fontSize: '38px',
+            paddingLeft: 0,
+          }
+        }}
       />
       <Typography variant="h5" color="textPrimary">
         Add hashtags
@@ -345,7 +356,7 @@ export default function AddArticleForm({
             <ImageIcon
               color={palette?.mode === 'light' ? palette.text.primary : palette?.action?.svg}
             />
-            <Typography className="photoImage" variant="subtitle2">Cover Photo</Typography>
+            <Typography className="photoImage" variant="subtitle2">Cover Photo (optional)</Typography>
           </Stack>
         </>}
       </Stack>
