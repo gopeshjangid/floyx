@@ -1,4 +1,14 @@
-import { Box, Button, ListItem, ListItemAvatar, ListItemText, Theme, Typography, styled, useTheme } from '@mui/material';
+import {
+  Box,
+  Button,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Theme,
+  Typography,
+  styled,
+  useTheme,
+} from '@mui/material';
 import React, { useState } from 'react';
 // import DeleteIcon from '@mui/icons-material/Delete';
 import Link from 'next/link';
@@ -8,7 +18,6 @@ import { allRoutes } from '@/constants/allRoutes';
 import UserAvatar from '@/components/UserAvatar';
 import { iconTrash } from '@/assets/images';
 import { getRelativeTime } from '@/lib/utils';
-import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import DeleteModal from '../delete-modal';
 
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
@@ -33,7 +42,13 @@ interface IChatCard {
   handleDelete: () => void;
 }
 
-const ChatHeader = ({ name, username, lastMessageDate, handleDelete, deleteLoading }: IChatCard) => {
+const ChatHeader = ({
+  name,
+  username,
+  lastMessageDate,
+  handleDelete,
+  deleteLoading,
+}: IChatCard) => {
   const { palette } = useTheme();
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -43,13 +58,19 @@ const ChatHeader = ({ name, username, lastMessageDate, handleDelete, deleteLoadi
 
   return (
     <>
-      {deleteModal && <DeleteModal onClose={() => setDeleteModal(false)} onConfirm={handleDelete} isLoading={deleteLoading} />}
+      {deleteModal && (
+        <DeleteModal
+          onClose={() => setDeleteModal(false)}
+          onConfirm={handleDelete}
+          isLoading={deleteLoading}
+        />
+      )}
       <ChatWrapper>
-        <Link href={allRoutes.messages}>
+        <Link href={`${allRoutes.profile}/${username}`}>
           <ListItemAvatar>
             <UserAvatar
               alt="Travis Howard"
-              src={`${ApiEndpoint.ProfileDetails}/avatar/${username}`}
+              src={`${allRoutes.profile}/${username}`}
               sx={{
                 width: { md: '59px', xs: '50px' },
                 height: { md: '59px', xs: '50px' },
@@ -59,12 +80,27 @@ const ChatHeader = ({ name, username, lastMessageDate, handleDelete, deleteLoadi
         </Link>
         <ListItemText
           primary={
-            <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
-              <Link href={allRoutes.messages}>
-                <Typography color={palette?.mode === 'light' ? '#2F2E41' : '#fff'} fontSize="16px" fontWeight={500} component="span">
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              flexWrap="wrap"
+            >
+              <Link href={`${allRoutes.profile}/${username}`}>
+                <Typography
+                  color={palette?.mode === 'light' ? '#2F2E41' : '#fff'}
+                  fontSize="16px"
+                  fontWeight={500}
+                  component="span"
+                >
                   {name?.split(' ')[0]}
                 </Typography>
-                <Typography fontSize="14px" fontWeight={400} component="span" className="gradient-text">
+                <Typography
+                  fontSize="14px"
+                  fontWeight={400}
+                  component="span"
+                  className="gradient-text"
+                >
                   @{username}
                 </Typography>
               </Link>
@@ -92,7 +128,9 @@ const ChatHeader = ({ name, username, lastMessageDate, handleDelete, deleteLoadi
               fontSize="14px"
               fontWeight={500}
             >
-              {lastMessageDate ? `Last chat ${getRelativeTime(lastMessageDate)}` : ''}
+              {lastMessageDate
+                ? `Last chat ${getRelativeTime(lastMessageDate)}`
+                : ''}
             </Typography>
           }
         />

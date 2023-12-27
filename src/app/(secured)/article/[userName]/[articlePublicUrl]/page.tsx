@@ -6,8 +6,11 @@ import TipColumn from '@/components/fullArticle/tipCoumn';
 import { Alert, Skeleton } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
+import { Metadata, ResolvingMetadata } from 'next';
+import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
+import LoginHeader from '@/components/LoginHeader';
 
-async function Page({ params, ...props }) {
+async function Page({ params }: any) {
   const userName = params?.userName;
   const articlePuclicUrl = params?.articlePublicUrl;
   const { data: articleDetails, isError } = await fetchServerData(
@@ -17,6 +20,7 @@ async function Page({ params, ...props }) {
   const articleId = articleDetails?.article?.id;
   return (
     <>
+      <LoginHeader />
       {isError && <Alert severity="error">Something went wrong</Alert>}
       {articleId && (
         <>
@@ -74,9 +78,6 @@ async function Page({ params, ...props }) {
     </>
   );
 }
-
-import { Metadata, ResolvingMetadata } from 'next';
-import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
 
 type Props = {
   params: { userName: string; articlePublicUrl: string };

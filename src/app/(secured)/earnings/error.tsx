@@ -8,10 +8,19 @@ function Error({ statusCode }: any) {
     <Container
       component="main"
       maxWidth="md"
-      sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh' }}
+      sx={{
+        mt: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '80vh',
+      }}
     >
       <Typography variant="h1" component="h2" gutterBottom>
-        {statusCode ? `An error ${statusCode} occurred on server` : 'An error occurred on client'}
+        {statusCode
+          ? `An error ${statusCode} occurred on server`
+          : 'An error occurred on client'}
       </Typography>
       <Typography variant="h5" gutterBottom>
         Something went wrong.

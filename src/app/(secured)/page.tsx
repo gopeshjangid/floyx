@@ -26,7 +26,7 @@ export default function Page() {
   const { data, isFetching } = useGetPostsQuery(apiParams);
   const postData = data?.postList;
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
- 
+
   const debounce = (func: (...args: any[]) => void, delay: number) => {
     let timer: any;
     return function (...args: any[]) {
@@ -51,7 +51,7 @@ export default function Page() {
     [postData, isFetching, setApiParams]
   );
 
-  const viewportHeight = window.innerHeight;
+  const viewportHeight = (typeof window === "undefined" ? 1000 : window.innerHeight);
 
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>

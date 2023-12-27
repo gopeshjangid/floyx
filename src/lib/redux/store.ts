@@ -26,6 +26,7 @@ import { reducer } from './rootReducer';
 import { registrationService } from './slices/registration';
 import { accountSettingService } from './slices/accountSetting';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+import { notificationApiService } from './slices/notification';
 const createNoopStorage = () => {
   return {
     getItem() {
@@ -55,6 +56,7 @@ const persistConfig = {
     registrationService.reducerPath,
     accountSettingService.reducerPath,
     commentService.reducerPath,
+    notificationApiService.reducerPath,
   ],
 };
 
@@ -79,7 +81,8 @@ function makeStore(initialState = {}) {
         .concat(commentService.middleware)
         .concat(profileService.middleware)
         .concat(registrationService.middleware)
-        .concat(accountSettingService.middleware),
+        .concat(accountSettingService.middleware)
+        .concat(notificationApiService.middleware),
   });
 }
 

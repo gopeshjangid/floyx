@@ -17,4 +17,5 @@ export const allRoutes = {
     help: '/settings/help',
   },
   post: '/post',
+  profile: '/profile',
 };

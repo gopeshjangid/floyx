@@ -38,7 +38,7 @@ interface IFormError {
 }
 
 const Login: FC = () => {
-  console.log('NEXT_PUBLIC_VERCEL_URL', process.env.NEXT_PUBLIC_VERCEL_URL);
+  console.log('NEXT_PUBLIC_VERCEL_URL 1', process.env.NEXT_PUBLIC_VERCEL_URL);
   console.log('VERCEL_URL', process.env.VERCEL_URL);
   console.log('NEXTAUTH_URL', process.env.NEXTAUTH_URL);
   console.log('NEXT_PUBLIC_NEXTAUTH_URL', process.env.NEXT_PUBLIC_NEXTAUTH_URL);
