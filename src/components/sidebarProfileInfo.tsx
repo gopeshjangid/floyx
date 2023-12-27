@@ -15,12 +15,13 @@ const SidebarProfileBar: React.FC = () => {
   const { palette } = useTheme();
   const session = useSession();
   const username = (session as any)?.data?.user?.username ?? '';
-  const { data, isLoading } = useGetProfileDetailsQuery(
+  const { data, isLoading, error } = useGetProfileDetailsQuery(
     {
       username: username!,
     },
     { skip: !username }
   );
+  console.log('data: sidebar', data, 'error:', error, 'username: ', session);
   return (
     <Paper
       elevation={0}

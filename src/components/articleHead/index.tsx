@@ -29,23 +29,23 @@ const ArticleHeadContainer = styled(Box)(() => ({
 
 const defaultTab = [
   {
-    label: "Popular",
-    value: "liked?limited=true",
+    label: 'Popular',
+    value: 'liked?limited=true',
     icon: (fill: string) => <PopularIcon fill={fill} />,
   },
   {
-    label: "Following",
-    value: "following",
+    label: 'Following',
+    value: 'following',
     icon: (fill: string) => <ProfileTickIcon fill={fill} />,
-  }, 
+  },
   {
-    label: "Recent",
-    value: "recent",
+    label: 'Recent',
+    value: 'recent',
     icon: (fill: string) => <RecentIcon fill={fill} />,
-  }, 
+  },
   {
-    label: "Liked",
-    value: "liked",
+    label: 'Liked',
+    value: 'liked',
     icon: (fill: string) => <LikeIcon fill={fill} />,
   },
   // {
@@ -53,8 +53,12 @@ const defaultTab = [
   //   value: "bookmark",
   //   icon: (fill: string) => <BookMarkIcon fill={fill} />,
   // }
-]
-export default function ArticleHead({ setTabName, dynamicTab, dynamicTabType }: any) {
+];
+export default function ArticleHead({
+  setTabName,
+  dynamicTab,
+  dynamicTabType,
+}: any) {
   const [value, setValue] = useState('liked?limited=true');
   const [articleTabs, setArticleTabs] = useState(defaultTab);
 
@@ -79,7 +83,7 @@ export default function ArticleHead({ setTabName, dynamicTab, dynamicTabType }: 
           value: dynamicTabType,
         },
         ...defaultTab,
-      ])
+      ]);
       setValue(dynamicTabType);
       setTabName(dynamicTabType);
     } else {
@@ -87,7 +91,7 @@ export default function ArticleHead({ setTabName, dynamicTab, dynamicTabType }: 
       setValue('liked?limited=true');
       setTabName('liked?limited=true');
     }
-  }, [dynamicTab])
+  }, [dynamicTab]);
   return (
     <>
       <ArticleHeadContainer>
@@ -100,7 +104,12 @@ export default function ArticleHead({ setTabName, dynamicTab, dynamicTabType }: 
             <Tab
               key={`articleTab${index}`}
               className="tab"
-              icon={item?.icon && item?.icon(value === 'liked?limited=true' ? '#A75FFF' : getColorSvg())}
+              icon={
+                item?.icon &&
+                item?.icon(
+                  value === 'liked?limited=true' ? '#A75FFF' : getColorSvg()
+                )
+              }
               iconPosition="start"
               value={item.value}
               label={
@@ -114,7 +123,6 @@ export default function ArticleHead({ setTabName, dynamicTab, dynamicTabType }: 
               }
             />
           ))}
-          
         </Tabs>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           <GradientButton

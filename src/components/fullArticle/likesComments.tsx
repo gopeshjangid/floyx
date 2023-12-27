@@ -43,19 +43,30 @@ const style = {
   m: 2,
 };
 
+type LikeCommentType = {
+  likesCommentsDetails: any;
+  itemId: string;
+  isPost?: boolean;
+  isShared?: boolean;
+  showComments?: boolean | undefined;
+  articleId: string;
+  isArticle?: boolean;
+};
 function LikesComments({
   likesCommentsDetails,
   itemId,
   isPost = false,
-  isShared = undefined,
+  isShared = false,
   showComments = undefined,
   articleId,
-}: any) {
+  isArticle = false,
+}: LikeCommentType) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
   const { data: commentList, isLoading } = useGetCommentListQuery(
-    articleId! || ''
+    articleId! || '',
+    { skip: !articleId }
   );
   const [commentText, setCommentText] = useState('');
   const { palette } = useTheme();
@@ -123,7 +134,7 @@ function LikesComments({
 
   return (
     <Box sx={{ marginTop: '35px', width: '100%' }}>
-      <Divider />
+      {isArticle && <Divider />}
       <Stack direction="row" gap={2} py={1}>
         <Button
           variant="text"
@@ -171,7 +182,7 @@ function LikesComments({
           </Typography>
         </Button>
       </Stack>
-      <Divider />
+      {isArticle && <Divider />}
       {!isPost && isShared === undefined && (
         <Typography variant="h5" sx={{ marginTop: '40px' }}>
           Comments

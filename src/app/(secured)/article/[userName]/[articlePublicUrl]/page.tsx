@@ -16,7 +16,6 @@ async function Page({ params }: any) {
   const { data: articleDetails, isError } = await fetchServerData(
     `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
   );
-  console.log('article details: ', articleDetails);
   const articleId = articleDetails?.article?.id;
   return (
     <>
@@ -57,10 +56,10 @@ async function Page({ params }: any) {
             >
               <LikesComments
                 likesCommentsDetails={articleDetails?.article}
-                userDetail={articleDetails?.user?.avatar}
                 itemId={articleId}
                 showComments={true}
                 articleId={articleId}
+                isArticle
               />
             </Suspense>
           </section>

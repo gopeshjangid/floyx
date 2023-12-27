@@ -22,9 +22,9 @@ import { useSession } from 'next-auth/react';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { useToast } from '../Toast/useToast';
-import { useLazyGetUserSuggestionQuery } from "@/lib/redux/slices/comments";
-import MentionItem from "../MentionItem";
-import { GradientText } from "../usernameLink";
+import { useLazyGetUserSuggestionQuery } from '@/lib/redux/slices/comments';
+import MentionItem from '../MentionItem';
+import { GradientText } from '../usernameLink';
 
 const initialPostObj = {
   postText: '',
@@ -51,8 +51,8 @@ export default function AddPost({
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('');
 
   const [createPost, { error, isLoading }] = useCreatePostMutation();
-  const [getUserSuggestion ] = useLazyGetUserSuggestionQuery();
-  
+  const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
+
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     console.log(newValue);
     // setValue(newValue);
@@ -68,7 +68,7 @@ export default function AddPost({
       callback(userList);
     }
     callback(userList);
-  }
+  };
 
   const handleImg = (e: any) => {
     e.preventDefault();
@@ -128,11 +128,9 @@ export default function AddPost({
     publishImage();
   };
 
-  
   const renderUserSuggestion = (user: any) => {
     return <MentionItem user={user} />;
   };
-
   return (
     <>
       <PostBox>
@@ -145,9 +143,7 @@ export default function AddPost({
           >
             <Tab
               sx={{ paddingX: 2 }}
-              label={
-                <GradientText>Post</GradientText>
-              }
+              label={<GradientText>Post</GradientText>}
             />
             <Tab
               component={Link}
@@ -156,7 +152,8 @@ export default function AddPost({
               }
               href="/composer/create"
             />
-        </Tabs>)}
+          </Tabs>
+        )}
         <Box
           className={`input-container ${
             postObj.postTextLeft < 0

@@ -1,3 +1,4 @@
+'use client';
 import {
   Box,
   Grid,
@@ -30,10 +31,9 @@ export default function RecommendedTopics({ setDynamicTab }) {
       <Stack
         flexWrap="wrap"
         my={2}
-        display="flex"
         direction="row"
         justifyContent="flex-start"
-        rowGap={2}
+        rowGap={1}
       >
         {isLoading && (
           <Skeleton variant="rectangular" width="100%" height="100px" />

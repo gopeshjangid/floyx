@@ -261,9 +261,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
                 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
               opacity: 0.9, // Or any other styling you want on hover
             },
-            "&:disabled": {
-              color: mode === 'light' ?'white': '#0B081F',
-            }
+            '&:disabled': {
+              color: mode === 'light' ? 'white' : '#0B081F',
+            },
           },
           outlined: {
             fontWeight: 500,
@@ -344,6 +344,23 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
           asterisk: {
             color: palette?.action?.error,
+          },
+        },
+      },
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            '&:hover': {
+              backgroundColor: '#5798FF', // Example hover background color for MenuItem
+              color: mode === 'dark' ? '#000000' : 'white', // Example hover text color for MenuItem
+            },
+          },
+        },
+      },
+      MuiMenu: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: palette.primary[400], // Example background color for the Menu
           },
         },
       },

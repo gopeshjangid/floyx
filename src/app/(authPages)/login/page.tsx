@@ -38,15 +38,15 @@ interface IFormError {
 }
 
 const Login: FC = () => {
-  console.log('NEXT_PUBLIC_VERCEL_URL 1', process.env.NEXT_PUBLIC_VERCEL_URL);
-  console.log('VERCEL_URL', process.env.VERCEL_URL);
-  console.log('NEXTAUTH_URL', process.env.NEXTAUTH_URL);
-  console.log('NEXT_PUBLIC_NEXTAUTH_URL', process.env.NEXT_PUBLIC_NEXTAUTH_URL);
-  console.log('NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET);
-  console.log(
-    'NEXT_PUBLIC_NEXTAUTH_SECRET',
-    process.env.NEXT_PUBLIC_NEXTAUTH_SECRET
-  );
+  // console.log('NEXT_PUBLIC_VERCEL_URL 1', process.env.NEXT_PUBLIC_VERCEL_URL);
+  // console.log('VERCEL_URL', process.env.VERCEL_URL);
+  // console.log('NEXTAUTH_URL', process.env.NEXTAUTH_URL);
+  // console.log('NEXT_PUBLIC_NEXTAUTH_URL', process.env.NEXT_PUBLIC_NEXTAUTH_URL);
+  // console.log('NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET);
+  // console.log(
+  //   'NEXT_PUBLIC_NEXTAUTH_SECRET',
+  //   process.env.NEXT_PUBLIC_NEXTAUTH_SECRET
+  // );
 
   const toast = useToast();
   const { palette } = useTheme();
@@ -261,9 +261,9 @@ const Login: FC = () => {
               sx={{ '& a': { color: '#5798FF' } }}
             >
               By signing up,you agree to
-              <Link href="/"> Terms of Service </Link> and
-              <Link href="/"> Privacy Policy, </Link>
-              including <Link href="/"> Cookie Use.</Link>
+              <Link href="/termsOfService"> Terms of Service </Link> and
+              <Link href="/privacyPolicy"> Privacy Policy, </Link>
+              including <Link href="/cookiePolicy"> Cookie Use.</Link>
             </Typography>
           </Box>
           <Box mt="20px" textAlign="left">

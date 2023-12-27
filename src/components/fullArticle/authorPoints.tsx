@@ -4,11 +4,15 @@ import { Box, Typography, Button, Popover, useTheme } from '@mui/material';
 import StarIcon from '@/images/image/star';
 import { useGetArticleTotalEarningsQuery } from '@/lib/redux/slices/articleDetails';
 import { RoundPrimaryButton } from '../CustomButtons';
+import { useSession } from 'next-auth/react';
 
 export default function AuthorPoints({ details }: any) {
+  const session = useSession();
   const articleId = details?.article?.id || '';
-  const { data: totalEarningPoints } =
-    useGetArticleTotalEarningsQuery(articleId);
+  const { data: totalEarningPoints } = useGetArticleTotalEarningsQuery(
+    articleId,
+    { skip: session.status !== 'unauthenticated' }
+  );
   const pointsEarned = totalEarningPoints
     ? (
         totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +

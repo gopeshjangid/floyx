@@ -1,19 +1,12 @@
 'use client';
 
 import React from 'react';
-import {
-  Button,
-  Typography,
-  Tabs,
-  Tab,
-  Stack,
-  useTheme,
-} from '@mui/material';
-import { GradientText } from "../usernameLink";
-import DocumentText from "@/assets/images/svg/documentText";
-import EditIcon from "@/assets/images/svg/editIcon";
-import { GradientButton } from "../gradientButton";
-import AddIcon from "@/assets/images/svg/addIcon";
+import { Button, Typography, Tabs, Tab, Stack, useTheme } from '@mui/material';
+import { GradientText } from '../usernameLink';
+import DocumentText from '@/assets/images/svg/documentText';
+import EditIcon from '@/assets/images/svg/editIcon';
+import { GradientButton } from '../gradientButton';
+import AddIcon from '@/assets/images/svg/addIcon';
 
 export default function AddArticleHead({
   setSaveDraft,
@@ -27,7 +20,6 @@ export default function AddArticleHead({
   setIsEditing,
   setArticleId,
 }) {
-
   const { palette } = useTheme();
 
   const getColorSvg = _ => {
@@ -43,13 +35,13 @@ export default function AddArticleHead({
   const handlePublish = () => {
     setIsPublish(true);
     setSaveDraft(false);
-  }
+  };
   const handlePageChange = (event, newValue) => {
     setIsReset(true);
     setIsEditing(false);
     setArticleId(undefined);
     setValue(newValue);
-  }
+  };
 
   return (
     <Stack
@@ -57,6 +49,7 @@ export default function AddArticleHead({
       gap={1}
       justifyContent="space-between"
       mb={2}
+      flexWrap="wrap-reverse"
       sx={{ borderBottom: `1px solid ${palette.action.border}` }}
     >
       <Stack>
@@ -68,12 +61,24 @@ export default function AddArticleHead({
           <Tab
             className="tab"
             iconPosition="start"
-            icon={<DocumentText color={value === "my"  ? palette.primary.iconSelectedColor : palette?.action?.svg} />}
+            icon={
+              <DocumentText
+                color={
+                  value === 'my'
+                    ? palette.primary.iconSelectedColor
+                    : palette?.action?.svg
+                }
+              />
+            }
             label={
-              value === "my" ? (
-                <GradientText>My Articles [{articleDraftNumbers?.info?.numberOfArticles}]</GradientText>
+              value === 'my' ? (
+                <GradientText>
+                  My Articles [{articleDraftNumbers?.info?.numberOfArticles}]
+                </GradientText>
               ) : (
-                <Typography variant="subtitle2">My Articles [{articleDraftNumbers?.info?.numberOfArticles}]</Typography>
+                <Typography variant="subtitle2">
+                  My Articles [{articleDraftNumbers?.info?.numberOfArticles}]
+                </Typography>
               )
             }
             value={'my'}
@@ -82,12 +87,24 @@ export default function AddArticleHead({
           <Tab
             className="tab"
             iconPosition="start"
-            icon={<EditIcon color={value === "draft"  ? palette.primary.iconSelectedColor : palette?.action?.svg} />}
+            icon={
+              <EditIcon
+                color={
+                  value === 'draft'
+                    ? palette.primary.iconSelectedColor
+                    : palette?.action?.svg
+                }
+              />
+            }
             label={
-              value === "draft" ? (
-                <GradientText>My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]</GradientText>
+              value === 'draft' ? (
+                <GradientText>
+                  My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]
+                </GradientText>
               ) : (
-                <Typography variant="subtitle2">My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]</Typography>
+                <Typography variant="subtitle2">
+                  My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]
+                </Typography>
               )
             }
             value={'draft'}
@@ -96,9 +113,17 @@ export default function AddArticleHead({
           <Tab
             className="tab"
             iconPosition="start"
-            icon={<AddIcon color={value === "newArticle"  ? palette.primary.iconSelectedColor : palette?.action?.svg} />}
+            icon={
+              <AddIcon
+                color={
+                  value === 'newArticle'
+                    ? palette.primary.iconSelectedColor
+                    : palette?.action?.svg
+                }
+              />
+            }
             label={
-              value === "newArticle" ? (
+              value === 'newArticle' ? (
                 <GradientText>Write New</GradientText>
               ) : (
                 <Typography variant="subtitle2">Write New</Typography>
@@ -110,7 +135,7 @@ export default function AddArticleHead({
         </Tabs>
       </Stack>
       {value === 'newArticle' && (
-        <Stack direction="row" gap={1} alignItems={"flex-end"} marginBottom={1}>
+        <Stack direction="row" gap={1} alignItems={'flex-end'} marginBottom={1}>
           <GradientButton
             variant="outlined"
             onClick={handleSaveDraft}
@@ -118,17 +143,15 @@ export default function AddArticleHead({
             isBorderRadius
             isSelected
           >
-            <span>
-              Save as Draft
-            </span>
+            <span>Save as Draft</span>
           </GradientButton>
           <Button
             variant="contained"
-            sx={{ borderRadius: '10px'}}
+            sx={{ borderRadius: '10px' }}
             onClick={handlePublish}
             disabled={isDisabled}
           >
-              {isPublished ? "Save Edit" : "Publish"}
+            {isPublished ? 'Save Edit' : 'Publish'}
           </Button>
         </Stack>
       )}

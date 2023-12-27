@@ -563,7 +563,7 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.3.tgz"
   integrity sha512-ehPtgRgaULsFG8x0NeYJvmyH1hmlfsNLujHe9dQEia/7MAJYdzMSi19JtchUHjmBA6XC/75dK55mzZH+RyieSg==
 
-"@types/nprogress@^0.2.0":
+"@types/nprogress@^0.2.1":
   version "0.2.3"
   resolved "https://registry.npmjs.org/@types/nprogress/-/nprogress-0.2.3.tgz"
   integrity sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==
@@ -3093,12 +3093,12 @@ next@14.0.2:
     "@next/swc-win32-ia32-msvc" "14.0.2"
     "@next/swc-win32-x64-msvc" "14.0.2"
 
-nextjs-progressbar@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.npmjs.org/nextjs-progressbar/-/nextjs-progressbar-0.0.16.tgz"
-  integrity sha512-GV0fD38EMD3vSDCmkq+tObmoup6QA91a6a9MxGuhJZuRk/9TNsrHGnIQQQ/sggkMkXuT4fBgF6jRjFwScDT3zA==
+nextjs-toploader@^1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/nextjs-toploader/-/nextjs-toploader-1.6.4.tgz#1a498fc8c9b073d937fb932382aeb5bb1d007339"
+  integrity sha512-KYLQ+0MvGdFk9JwOQfRtaYBAsyuX67Ca5QTa51RGNO4gQx64KLSE+ryHjUQ5LcDczHotp0l32GgksQW9vucUkw==
   dependencies:
-    "@types/nprogress" "^0.2.0"
+    "@types/nprogress" "^0.2.1"
     nprogress "^0.2.0"
     prop-types "^15.8.1"
 

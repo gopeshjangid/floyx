@@ -39,7 +39,7 @@
     "next": "14.0.2",
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
-    "nextjs-progressbar": "^0.0.16",
+    "nextjs-toploader": "^1.6.4",
     "node-sass": "^9.0.0",
     "react": "18.2.0",
     "react-contenteditable": "^3.3.7",

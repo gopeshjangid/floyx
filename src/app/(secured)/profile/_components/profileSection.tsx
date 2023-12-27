@@ -355,7 +355,8 @@ const ProfileSection: React.FC = () => {
                 {profile?.backgroundImage ? (
                   <Image
                     alt="profile image"
-                    layout="fill"
+                    //layout="fill"
+                    fill
                     objectFit="cover"
                     objectPosition="center"
                     src={

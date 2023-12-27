@@ -49,7 +49,7 @@ import { INotification } from './notifications/types';
 import CustomPopover from '@/components/PopoverOptions';
 import LogoutIcon from '@/iconComponents/logOut';
 import SettingsIcon from '@/iconComponents/settingsIcon';
-import { AddCircle, AddCircleOutline, AddOutlined } from '@mui/icons-material';
+import { AddCircleOutline } from '@mui/icons-material';
 import { GradientText } from '@/components/usernameLink';
 import SidebarProfileBar from '@/components/sidebarProfileInfo';
 import AddPost from '@/components/Post/AddPost';
@@ -247,6 +247,12 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       }));
     }
   };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/login');
+    }
+  }, [isLoggedIn]);
 
   const getMessageCount = () => {
     setDrawerData(prev => ({

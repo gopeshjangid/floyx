@@ -19,7 +19,7 @@ import {
 import { earningsService } from './slices/earnings';
 import { profileService } from './slices/profile';
 import { postServices } from './slices/posts';
-import { tagServices } from "./slices/tags";
+import { tagServices } from './slices/tags';
 import { artcileDetails } from './slices/articleDetails';
 import { userService } from './slices/user';
 import { commentService } from './slices/comments';
@@ -28,6 +28,7 @@ import { registrationService } from './slices/registration';
 import { accountSettingService } from './slices/accountSetting';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { notificationApiService } from './slices/notification';
+import { authMiddleware } from './authMiddleware';
 const createNoopStorage = () => {
   return {
     getItem() {
@@ -76,6 +77,7 @@ function makeStore(initialState = {}) {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       })
+        .concat(authMiddleware)
         .concat(earningsService.middleware)
         .concat(postServices.middleware)
         .concat(tagServices.middleware)

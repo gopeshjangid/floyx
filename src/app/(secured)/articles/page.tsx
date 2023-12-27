@@ -14,6 +14,7 @@ import {
 } from '@/lib/redux';
 import { GradientButton } from '@/components/gradientButton';
 import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
+import Link from 'next/link';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -85,6 +86,7 @@ export default function Page() {
                 // target="_blank"
                 href="/composer/create"
                 isSelected
+                LinkComponent={Link}
               >
                 <span>New Articles</span>
               </GradientButton>
