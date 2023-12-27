@@ -16,7 +16,7 @@ async function Page({ params }: any) {
   const { data: articleDetails, isError } = await fetchServerData(
     `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
   );
-
+  console.log('article details: ', articleDetails);
   const articleId = articleDetails?.article?.id;
   return (
     <>
