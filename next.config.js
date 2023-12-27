@@ -11,7 +11,7 @@ const nextConfig = {
     },
   },
   images: {
-    domains: ['floyx-beta.s3.us-east-2.amazonaws.com'],
+    //domains: ['floyx-beta.s3.us-east-2.amazonaws.com'],
     remotePatterns: [
       {
         protocol: 'https',

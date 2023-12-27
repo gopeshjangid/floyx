@@ -145,7 +145,6 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     messagesCount: 0,
     notifications: [],
   });
-  console.log('drawer');
   const session = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');

@@ -206,6 +206,7 @@ function LikesComments({
               padding: '20px',
               borderRadius: '10px',
               background: palette.background.paper,
+              border: `1px solid ${palette.primary.boxBorder}`,
             }}
           >
             <AddComment

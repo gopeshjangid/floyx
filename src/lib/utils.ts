@@ -63,14 +63,19 @@ export const baseQuery = fetchBaseQuery({
 export const fetchServerData = async (
   url: string
 ): { isError: boolean; data: any } => {
-  const res = await fetch(url, {
-    cache: 'force-cache',
-  });
-  if (!res.ok) {
-    return { isError: true, data: null };
+  try {
+    const res = await fetch(url, {
+      cache: 'force-cache',
+    });
+    if (!res.ok) {
+      return { isError: true, data: null };
+    }
+    const data = await res.json();
+    return { isError: false, data: data?.value?.data };
+  } catch (e) {
+    console.log('Fetch Error:', e);
+    return { isError: true, data: data?.value?.data };
   }
-  const data = await res.json();
-  return { isError: false, data: data?.value?.data };
 };
 
 export const months = [

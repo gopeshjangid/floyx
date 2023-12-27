@@ -6,7 +6,7 @@ export default withAuth({
     signIn: '/login',
     // error: '/social-login',
   },
-  secret: 'HBgBGs3QXQ7Efmu/FFyzXcKGnhbipvw0ArDme0SYD2o=',
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export function middleware(request: NextRequest) {

@@ -1,6 +1,14 @@
 'use client';
 
-import { Box, IconButton, InputAdornment, TextField, debounce, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  TextField,
+  debounce,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
@@ -11,11 +19,10 @@ import { messageService } from '@/lib/services/new/messageService';
 import { tokenService } from '@/lib/services/new/tokenService';
 import { IInboxData, IThread, IUser } from './types';
 import MessageLoader from './components/message-loader';
-import useQuery from '@/lib/hooks/useFetch';
-import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
+import { useLazyGetUserBySearchQuery } from '@/lib/redux/slices/notification';
 
 const Default = () => {
-  const { data = [], isLoading, fetchData } = useQuery();
+  const [fetchUsers, { data, isFetching }] = useLazyGetUserBySearchQuery();
   const params = useParams();
   const { palette, breakpoints } = useTheme();
   const isMobile = useMediaQuery(breakpoints.down('md'));
@@ -64,7 +71,9 @@ const Default = () => {
       (data as any)?.value?.data?.map((user: IUser) => {
         if (
           user.username !== currentLoggedUser &&
-          (user.accountType === 0 || user.official === true || user.allowPrivateMassages === true)
+          (user.accountType === 0 ||
+            user.official === true ||
+            user.allowPrivateMassages === true)
         ) {
           newUsers.push({ user });
         }
@@ -79,10 +88,7 @@ const Default = () => {
 
   const userSearch = (text: string) => {
     if (text) {
-      fetchData({
-        method: 'GET',
-        urlEndPoint: `${ApiEndpoint.FindUserByName}/${text}/true`,
-      });
+      fetchUsers(text);
     } else {
       setInboxData(prevState => ({ ...prevState, users: [] }));
     }
@@ -104,9 +110,15 @@ const Default = () => {
 
   return (
     <Wrapper>
-      <Box borderBottom={`1px solid ${palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`} padding="18px 20px 15px">
+      <Box
+        borderBottom={`1px solid ${
+          palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+        }`}
+        padding="18px 20px 15px"
+      >
         <TextField
           name="search"
+          type="search"
           fullWidth
           hiddenLabel
           placeholder="Search people..."
@@ -124,7 +136,7 @@ const Default = () => {
         />
       </Box>
 
-      {(inboxData?.dataLoading || isLoading) && <MessageLoader />}
+      {(inboxData?.dataLoading || isFetching) && <MessageLoader />}
 
       {!inboxData?.dataLoading && (
         <Box
@@ -135,12 +147,19 @@ const Default = () => {
           }}
         >
           {inboxData?.users?.map(({ user }: any, index: number) => {
-            return <ChatCard key={index} username={user.username} name={user.name} />;
+            return (
+              <ChatCard key={index} username={user.username} name={user.name} />
+            );
           })}
 
           {inboxData?.threads?.map((thread: IThread, index: number) => {
             return (
-              <ChatCard key={index} username={thread.user?.username} name={thread?.user?.name} lastMessageDate={thread.lastMessageDate} />
+              <ChatCard
+                key={index}
+                username={thread.user?.username}
+                name={thread?.user?.name}
+                lastMessageDate={thread.lastMessageDate}
+              />
             );
           })}
         </Box>

@@ -8,9 +8,12 @@ import SearchBarArcticleRight from '@/components/searchBar/searchBarArcticleRigh
 import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
 import WhoToFollow from '@/components/whoToFollow';
 import WhoToFollowLoader from '@/components/whoToFollow/loader';
-import { useLazyGetArticleListQuery, useLazyGetSearchArticleQuery } from '@/lib/redux';
+import {
+  useLazyGetArticleListQuery,
+  useLazyGetSearchArticleQuery,
+} from '@/lib/redux';
 import { GradientButton } from '@/components/gradientButton';
-import { useLazyGetArticleByTagsQuery } from "@/lib/redux/slices/tags";
+import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -25,20 +28,27 @@ export default function Page() {
   const [getArticleList, { data: articleList, isFetching }] =
     useLazyGetArticleListQuery();
 
-  const [getArticlesByTag, { data: articleListByTags, isFetching: articleListFetching }] = useLazyGetArticleByTagsQuery();
-  const [searchArticle, { data: searchedArticle, isFetching: searchIsFetching }] = useLazyGetSearchArticleQuery();
+  const [
+    getArticlesByTag,
+    { data: articleListByTags, isFetching: articleListFetching },
+  ] = useLazyGetArticleByTagsQuery();
+  const [
+    searchArticle,
+    { data: searchedArticle, isFetching: searchIsFetching },
+  ] = useLazyGetSearchArticleQuery();
 
   useEffect(() => {
     if (tabName !== dynamicTab.tagId) {
       getArticleList(tabName);
-    } else if (dynamicTab.searchBy === "tag" && dynamicTab.tagId) {
+    } else if (dynamicTab.searchBy === 'tag' && dynamicTab.tagId) {
       getArticlesByTag({ tagId: dynamicTab.tagId });
-    } else if (dynamicTab.searchBy === "search" && dynamicTab.tagId) {
-      searchArticle({searchString: dynamicTab.value})
+    } else if (dynamicTab.searchBy === 'search' && dynamicTab.tagId) {
+      searchArticle({ searchString: dynamicTab.value });
     }
   }, [tabName]);
 
-  const viewportHeight = (typeof window === "undefined" ? 1000 : window.innerHeight);
+  const viewportHeight =
+    typeof window === 'undefined' ? 1000 : window.innerHeight;
 
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
@@ -80,18 +90,26 @@ export default function Page() {
               </GradientButton>
             </Box>
             <ArticleContent
-              articleList={tabName !== dynamicTab.tagId ? articleList : (dynamicTab.searchBy === "tag" && dynamicTab.tagId ? articleListByTags : searchedArticle)}
-              loadingList={tabName !== dynamicTab.tagId ? isFetching :  (dynamicTab.searchBy === "tag" && dynamicTab.tagId ? articleListFetching: searchIsFetching)}
+              articleList={
+                tabName !== dynamicTab.tagId
+                  ? articleList
+                  : dynamicTab.searchBy === 'tag' && dynamicTab.tagId
+                    ? articleListByTags
+                    : searchedArticle
+              }
+              loadingList={
+                tabName !== dynamicTab.tagId
+                  ? isFetching
+                  : dynamicTab.searchBy === 'tag' && dynamicTab.tagId
+                    ? articleListFetching
+                    : searchIsFetching
+              }
             />
           </Box>
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1} paddingLeft={1}>
-          <SearchBarArcticleRight
-            setDynamicTab={setDynamicTab}
-          />
-          <RecommendedTopics
-            setDynamicTab={setDynamicTab}
-          />
+          <SearchBarArcticleRight setDynamicTab={setDynamicTab} />
+          <RecommendedTopics setDynamicTab={setDynamicTab} />
           <Suspense fallback={<WhoToFollowLoader />}>
             <WhoToFollow />
           </Suspense>

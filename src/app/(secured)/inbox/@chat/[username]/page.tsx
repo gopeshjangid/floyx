@@ -9,12 +9,14 @@ import ChatInput from '@/app/(secured)/inbox/components/chat-input';
 import Wrapper from '@/components/wrapper';
 import { tokenService } from '@/lib/services/new/tokenService';
 import { messageService } from '@/lib/services/new/messageService';
-import useQuery from '@/lib/hooks/useFetch';
-import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import MessageLoading from '../../loading';
 import ChatBox from '../../components/chat-box';
 import { IUser } from '../../types';
 import { allRoutes } from '@/constants/allRoutes';
+import {
+  useDeleteMessageMutation,
+  useLazyGetUserBySearchQuery,
+} from '@/lib/redux/slices/notification';
 
 interface IChatPageData {
   conversation: any[];
@@ -31,8 +33,10 @@ const ChatPage = () => {
   const params = useParams();
   const username: string = params?.username?.toString() || '';
 
-  const { data = [], isLoading: chatUserDataLoading, fetchData } = useQuery();
-  const { data: deleteData, isLoading: deleteLoading, fetchData: deleteConversation } = useQuery();
+  const [fetchUsers, { data, isFetching: chatUserDataLoading }] =
+    useLazyGetUserBySearchQuery();
+  const [deleteConversation, { data: deleteData, isLoading: deleteLoading }] =
+    useDeleteMessageMutation();
 
   const [chatUserData, setChatUserData] = useState<IUser>(data as any);
   const [chatPageData, setChatPageData] = useState<IChatPageData>({
@@ -44,7 +48,8 @@ const ChatPage = () => {
     allPostReceived: false,
   });
   const [sendBtnDisabled, setSendBtnDisabled] = useState<boolean>(true);
-  const [shouldScrollToBottom, setShouldScrollToBottom] = useState<boolean>(false);
+  const [shouldScrollToBottom, setShouldScrollToBottom] =
+    useState<boolean>(false);
 
   const mountedRef = useRef(true);
   const wrapperRef = useRef<HTMLElement>(null);
@@ -91,11 +96,18 @@ const ChatPage = () => {
     };
   }, [username]);
 
-  const newMessage = (data: { user: { username: any }; oppositUser: { username: any }; id: any }) => {
+  const newMessage = (data: {
+    user: { username: any };
+    oppositUser: { username: any };
+    id: any;
+  }) => {
     if (!mountedRef.current) {
       return;
     }
-    if (data.user.username === username || data.oppositUser.username === username) {
+    if (
+      data.user.username === username ||
+      data.oppositUser.username === username
+    ) {
       setChatPageData(prevState => ({
         ...prevState,
         conversation: [...prevState.conversation, data],
@@ -139,10 +151,7 @@ const ChatPage = () => {
   };
 
   const onDeleteConversation = () => {
-    deleteConversation({
-      method: 'DELETE',
-      urlEndPoint: `${ApiEndpoint.DeleteMessage}/${username}`,
-    });
+    deleteConversation({ username });
   };
 
   const sendMessage = (text: string) => {
@@ -169,10 +178,7 @@ const ChatPage = () => {
   };
 
   const getUserByUserName = (username: string) => {
-    fetchData({
-      method: 'GET',
-      urlEndPoint: `${ApiEndpoint.FindUserByName}/${username}/true`,
-    });
+    fetchUsers(username);
   };
 
   const onMessageChange = (message: string) => {
@@ -210,7 +216,11 @@ const ChatPage = () => {
             deleteLoading={deleteLoading}
             name={chatUserData?.name}
             username={chatUserData?.username}
-            lastMessageDate={chatPageData?.conversation?.[chatPageData?.conversation?.length - 1]?.time}
+            lastMessageDate={
+              chatPageData?.conversation?.[
+                chatPageData?.conversation?.length - 1
+              ]?.time
+            }
             handleDelete={onDeleteConversation}
           />
         )}
@@ -232,11 +242,20 @@ const ChatPage = () => {
                 loadMoreMessageBtn={!chatPageData.allPostReceived}
               />
             )}
-            <div className="message-list-end" style={{ float: 'left', clear: 'both' }} />
+            <div
+              className="message-list-end"
+              style={{ float: 'left', clear: 'both' }}
+            />
           </Box>
         </Box>
       </Wrapper>
-      {!isChatLoading && <ChatInput onSubmit={sendMessage} disabled={sendBtnDisabled} onMessageChange={onMessageChange} />}
+      {!isChatLoading && (
+        <ChatInput
+          onSubmit={sendMessage}
+          disabled={sendBtnDisabled}
+          onMessageChange={onMessageChange}
+        />
+      )}
     </>
   );
 };
