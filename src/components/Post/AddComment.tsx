@@ -6,7 +6,10 @@ import { MentionsInput, Mention } from 'react-mentions';
 import UserAvatar from '../UserAvatar';
 import { useSession } from 'next-auth/react';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import { useCreateCommentMutation, useLazyGetUserSuggestionQuery } from '@/lib/redux/slices/comments';
+import {
+  useCreateCommentMutation,
+  useLazyGetUserSuggestionQuery,
+} from '@/lib/redux/slices/comments';
 import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
 
@@ -34,19 +37,25 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
         color: theme.palette.text.primary,
         border: `1px solid ${theme.palette?.primary?.[800]}`,
         borderRadius: '10px',
+        paddingLeft: '16px',
+        outline: 0,
+        '&:hover': {
+          border: `1px solid ${theme.palette?.primary.boxBorder}`,
+        },
       },
       '& .mention-input-container': {
         width: '100%',
         padding: '0.5rem',
         backgroundColor: theme.palette.background.default,
         borderRadius: '10px',
-        "& ::placeholder": {
+        outline: 0,
+        '& ::placeholder': {
           color: theme.palette.text.primary,
-        }
+        },
       },
       '& .mention-input-container__suggestions': {
         backgroundColor: `${theme.palette.background.default} !important`,
-      }
+      },
     },
   },
 }));
@@ -68,7 +77,7 @@ export default function AddComment({
   const session = useSession();
   const toast = useToast();
   const [createComment, { isLoading }] = useCreateCommentMutation();
-  const [getUserSuggestion ] = useLazyGetUserSuggestionQuery();
+  const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
   const handlePostText = (e: any) => {
     const text = e.target.value;
     setCommentText(text);
@@ -84,7 +93,7 @@ export default function AddComment({
       callback(userList);
     }
     callback(userList);
-  }
+  };
 
   const onEnterPress = async (e: any) => {
     const addComment = {
@@ -123,14 +132,14 @@ export default function AddComment({
             onKeyDown={onEnterPress}
             placeholder={'Add a comment'}
           >
-          <Mention
-            trigger="@"
-            displayTransform={(id: string) => `@${id}`}
-            data={getUserDetails}
-            renderSuggestion={renderUserSuggestion}
-            appendSpaceOnAdd={true}
-          />
-        </MentionsInput>
+            <Mention
+              trigger="@"
+              displayTransform={(id: string) => `@${id}`}
+              data={getUserDetails}
+              renderSuggestion={renderUserSuggestion}
+              appendSpaceOnAdd={true}
+            />
+          </MentionsInput>
         </Box>
       </Box>
     </AddCommentBox>

@@ -15,7 +15,6 @@ async function Page({ params, ...props }) {
   );
 
   const articleId = articleDetails?.article?.id;
-
   return (
     <>
       {isError && <Alert severity="error">Something went wrong</Alert>}
@@ -61,6 +60,15 @@ async function Page({ params, ...props }) {
               />
             </Suspense>
           </section>
+          <section>
+            <Suspense
+              fallback={
+                <Skeleton variant="rectangular" width="100%" height="60px" />
+              }
+            >
+              <RecommendedTopics tags={articleDetails?.article?.tags ?? []} />
+            </Suspense>
+          </section>
         </>
       )}
     </>
@@ -68,6 +76,7 @@ async function Page({ params, ...props }) {
 }
 
 import { Metadata, ResolvingMetadata } from 'next';
+import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
 
 type Props = {
   params: { userName: string; articlePublicUrl: string };

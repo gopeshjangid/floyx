@@ -32,6 +32,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             mainBackground: '#fff',
             iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(47, 46, 65, 1)',
+            commentFontColor: '#ADB3C6',
           },
           secondary: {
             main: '#ADB3C6', // Text Guide
@@ -88,6 +89,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             mainBackground: '#0B081F',
             iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(255, 255, 255, 1)',
+            commentFontColor: '#D9D9D9',
           },
           secondary: {
             main: '#A75FFF', // Primary Purple
@@ -98,7 +100,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             400: '#AB59FF',
           },
           background: {
-            default: '#1B1830', // Dark - Background
+            default: '#100D26', // Dark - Background
             paper: '#0B081F', // Dark - Background 2
           },
           // Define other palette properties like error, warning, info, success, etc., if necessary

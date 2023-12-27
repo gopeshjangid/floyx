@@ -66,7 +66,7 @@ export default function Page() {
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1} paddingLeft={1}>
           <SearchBarArcticleRight />
-          <RecommendedTopics />
+          <RecommendedTopics tags={[]} />
           <Suspense fallback={<WhoToFollowLoader />}>
             <WhoToFollow />
           </Suspense>
