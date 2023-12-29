@@ -2,7 +2,7 @@ import { Skeleton, Stack, Box } from '@mui/material';
 import React from 'react';
 function Loading() {
   return (
-    <Stack gap={1} direction="row">
+    <Stack gap={1} direction="row" width={'100%'}>
       <Stack spacing={2} my={2}>
         <Stack direction="row" gap={1}>
           <Skeleton variant="circular" width={'40px'} height={40} />
@@ -21,13 +21,5 @@ function Loading() {
     </Stack>
   );
 }
-
-// In a server component or loader function
-
-export const loader = ({ request }) => {
-  const deviceType = request.cookies.get('deviceType');
-  console.log({ deviceType });
-  // ... rest of the loader logic
-};
 
 export default Loading;

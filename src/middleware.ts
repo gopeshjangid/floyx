@@ -11,9 +11,16 @@ export default withAuth({
 
 export function middleware(request: NextRequest) {
   const uaString = request.headers.get('user-agent') || '';
+  const hasSession = request.cookies.get('next-auth.session-token');
+  const isPrivateRoute = config.matcher.includes(request.nextUrl.pathname);
   const isMobile = /mobile/i.test(uaString);
   const deviceType = isMobile ? 'mobile' : 'desktop';
 
+  if (!hasSession?.value && isPrivateRoute) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/login'; // The login page route
+    return NextResponse.redirect(url);
+  }
   // Store the device type in a cookie or a custom header
   const response = NextResponse.next();
   response.cookies.set('deviceType', deviceType);
@@ -30,5 +37,6 @@ export const config = {
     '/inbox',
     '/earnings',
     '/profile',
+    '/composer/create',
   ],
 };

@@ -32,6 +32,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             mainBackground: '#fff',
             iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(47, 46, 65, 1)',
+            commentFontColor: '#ADB3C6',
           },
           secondary: {
             main: '#ADB3C6', // Text Guide
@@ -88,6 +89,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             mainBackground: '#0B081F',
             iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(255, 255, 255, 1)',
+            commentFontColor: '#D9D9D9',
           },
           secondary: {
             main: '#A75FFF', // Primary Purple
@@ -98,7 +100,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             400: '#AB59FF',
           },
           background: {
-            default: '#1B1830', // Dark - Background
+            default: '#100D26', // Dark - Background
             paper: '#0B081F', // Dark - Background 2
           },
           // Define other palette properties like error, warning, info, success, etc., if necessary
@@ -259,6 +261,9 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
                 'linear-gradient(90deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
               opacity: 0.9, // Or any other styling you want on hover
             },
+            '&:disabled': {
+              color: mode === 'light' ? 'white' : '#0B081F',
+            },
           },
           outlined: {
             fontWeight: 500,
@@ -339,6 +344,23 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
           asterisk: {
             color: palette?.action?.error,
+          },
+        },
+      },
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            '&:hover': {
+              backgroundColor: '#5798FF', // Example hover background color for MenuItem
+              color: mode === 'dark' ? '#000000' : 'white', // Example hover text color for MenuItem
+            },
+          },
+        },
+      },
+      MuiMenu: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: palette.primary[400], // Example background color for the Menu
           },
         },
       },

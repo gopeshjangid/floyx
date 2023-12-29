@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Tabs, Tab, Typography, Divider, useTheme } from '@mui/material';
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 
 import BookMarkIcon from '@/images/image/bookMarkIcon';
@@ -27,8 +27,41 @@ const ArticleHeadContainer = styled(Box)(() => ({
   },
 }));
 
-export default function ArticleHead({ setTabName }: any) {
+const defaultTab = [
+  {
+    label: 'Popular',
+    value: 'liked?limited=true',
+    icon: (fill: string) => <PopularIcon fill={fill} />,
+  },
+  {
+    label: 'Following',
+    value: 'following',
+    icon: (fill: string) => <ProfileTickIcon fill={fill} />,
+  },
+  {
+    label: 'Recent',
+    value: 'recent',
+    icon: (fill: string) => <RecentIcon fill={fill} />,
+  },
+  {
+    label: 'Liked',
+    value: 'liked',
+    icon: (fill: string) => <LikeIcon fill={fill} />,
+  },
+  // {
+  //   label: "Bookmark",
+  //   value: "bookmark",
+  //   icon: (fill: string) => <BookMarkIcon fill={fill} />,
+  // }
+];
+export default function ArticleHead({
+  setTabName,
+  dynamicTab,
+  dynamicTabType,
+}: any) {
   const [value, setValue] = useState('liked?limited=true');
+  const [articleTabs, setArticleTabs] = useState(defaultTab);
+
   const { palette } = useTheme();
   const getColorSvg = () => {
     return palette?.mode === 'light'
@@ -41,6 +74,24 @@ export default function ArticleHead({ setTabName }: any) {
     setTabName(newValue);
   };
 
+  useEffect(() => {
+    if (dynamicTabType) {
+      setArticleTabs([
+        {
+          icon: () => <></>,
+          label: dynamicTab,
+          value: dynamicTabType,
+        },
+        ...defaultTab,
+      ]);
+      setValue(dynamicTabType);
+      setTabName(dynamicTabType);
+    } else {
+      setArticleTabs(defaultTab);
+      setValue('liked?limited=true');
+      setTabName('liked?limited=true');
+    }
+  }, [dynamicTab]);
   return (
     <>
       <ArticleHeadContainer>
@@ -49,95 +100,29 @@ export default function ArticleHead({ setTabName }: any) {
           onChange={handleChange}
           aria-label="icon position tabs example"
         >
-          <Tab
-            className="tab"
-            icon={
-              <PopularIcon
-                fill={
+          {articleTabs.map((item, index) => (
+            <Tab
+              key={`articleTab${index}`}
+              className="tab"
+              icon={
+                item?.icon &&
+                item?.icon(
                   value === 'liked?limited=true' ? '#A75FFF' : getColorSvg()
-                }
-              />
-            }
-            iconPosition="start"
-            value="liked?limited=true"
-            label={
-              <Typography variant="subtitle2">
-                {value === 'liked?limited=true' ? (
-                  <GradientText>Popular</GradientText>
-                ) : (
-                  'Popular'
-                )}
-              </Typography>
-            }
-          />
-          <Tab
-            className="tab"
-            icon={
-              <ProfileTickIcon
-                fill={value === 'following' ? '#A75FFF' : getColorSvg()}
-              />
-            }
-            label={
-              <Typography variant="subtitle2">
-                {value === 'following' ? (
-                  <GradientText>Following</GradientText>
-                ) : (
-                  'Following'
-                )}
-              </Typography>
-            }
-            iconPosition="start"
-            value="following"
-          />
-          <Tab
-            className="tab"
-            icon={
-              <RecentIcon
-                fill={value === 'recent' ? '#A75FFF' : getColorSvg()}
-              />
-            }
-            label={
-              <Typography variant="subtitle2">
-                {value === 'recent' ? (
-                  <GradientText>Recent</GradientText>
-                ) : (
-                  'Recent'
-                )}
-              </Typography>
-            }
-            iconPosition="start"
-            value="recent"
-          />
-          <Tab
-            className="tab"
-            iconPosition="start"
-            label={
-              <Typography variant="subtitle2">
-                {value === 'liked' ? (
-                  <GradientText>Liked</GradientText>
-                ) : (
-                  'Liked'
-                )}
-              </Typography>
-            }
-            icon={<LikeIcon />}
-            value={'liked'}
-          />
-          {/* <Tab
-            className="tab"
-            label={
-              <Typography variant="subtitle2">
-                {value === 'bookmark' ? (
-                  <GradientText>Bookmark</GradientText>
-                ) : (
-                  'Bookmark'
-                )}
-              </Typography>
-            }
-            icon={<BookMarkIcon />}
-            iconPosition="start"
-            value={'bookmark'}
-          /> */}
+                )
+              }
+              iconPosition="start"
+              value={item.value}
+              label={
+                <Typography variant="subtitle2">
+                  {value === item.value ? (
+                    <GradientText>{item.label}</GradientText>
+                  ) : (
+                    item.label
+                  )}
+                </Typography>
+              }
+            />
+          ))}
         </Tabs>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           <GradientButton

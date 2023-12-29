@@ -99,15 +99,20 @@ export default function Post({
             {content}
           </Typography>
         </Box>
-        <PostImage image={image} link={link} shared={shared} isShared={isShared} />
+        <PostImage
+          image={image}
+          link={link}
+          shared={shared}
+          isShared={isShared}
+        />
         {(!isShared || showComments) && (
           <LikesComments
             likesCommentsDetails={isShared ? postDetails?.shared : postDetails}
             itemId={postId}
+            articleId={postId}
             isPost={true}
             isShared={isShared}
             showComments={showComments}
-            commentList={commentList}
           />
         )}
       </Box>

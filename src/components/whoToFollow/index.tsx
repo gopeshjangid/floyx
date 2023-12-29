@@ -8,9 +8,10 @@ import {
   useTheme,
 } from '@mui/material';
 import UserAvatar from '../UserAvatar';
-import { useGetFollowMoreAccountQuery } from '@/lib/redux/slices/articleDetails';
 import UsernameLink from '../usernameLink';
 import { RoundPrimaryButton } from '../CustomButtons';
+import FollowUser from "../FollowUser";
+import { useGetFollowMoreAccountQuery } from "@/lib/redux/slices/profile";
 
 export default function WhoToFollow() {
   const { palette } = useTheme();
@@ -52,7 +53,10 @@ export default function WhoToFollow() {
                     </Typography>
                   </Box>
                   <Box>
-                    <RoundPrimaryButton size="small">Follow</RoundPrimaryButton>
+                    <FollowUser
+                      isFollowed={val?.followed}
+                      username={val?.username}
+                    />
                   </Box>
                 </Stack>
                 <Box>

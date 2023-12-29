@@ -47,21 +47,25 @@ export const PostBox = styled(Box)(({ theme }) => ({
         flexDirection: 'column',
         '& textarea': {
           padding: '0.5rem',
+          outline: 0,
           color: theme.palette.text.primary,
           borderRadius: '10px',
           border: `1px solid ${theme.palette?.primary?.[800]}`,
+          '&:hover': {
+            border: `1px solid ${theme.palette?.primary.boxBorder}`,
+          },
         },
         '& .mention-input-container': {
           width: '100%',
           padding: '0.5rem',
           backgroundColor: theme.palette.background.default,
           borderRadius: '10px',
-          "& ::placeholder": {
+          '& ::placeholder': {
             color: theme.palette.text.primary,
           },
           '& .mention-input-container__suggestions': {
             backgroundColor: `${theme.palette.background.default} !important`,
-          }
+          },
         },
       },
     },

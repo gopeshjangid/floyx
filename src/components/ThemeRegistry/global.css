@@ -23,3 +23,7 @@ a {
     --fg: #fff;
     --bg: #000;
 }
+
+.mention-input-container__input {
+    outline: none;
+}

@@ -6,6 +6,9 @@ import TipColumn from '@/components/fullArticle/tipCoumn';
 import { Alert, Skeleton } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
+import { Metadata, ResolvingMetadata } from 'next';
+import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
+import LoginHeader from '@/components/LoginHeader';
 
 async function Page({ params }: any) {
   const userName = params?.userName;
@@ -13,9 +16,7 @@ async function Page({ params }: any) {
   const { data: articleDetails, isError } = await fetchServerData(
     `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
   );
-
   const articleId = articleDetails?.article?.id;
-
   return (
     <>
       <LoginHeader />
@@ -55,11 +56,20 @@ async function Page({ params }: any) {
             >
               <LikesComments
                 likesCommentsDetails={articleDetails?.article}
-                userDetail={articleDetails?.user?.avatar}
                 itemId={articleId}
                 showComments={true}
                 articleId={articleId}
+                isArticle
               />
+            </Suspense>
+          </section>
+          <section>
+            <Suspense
+              fallback={
+                <Skeleton variant="rectangular" width="100%" height="60px" />
+              }
+            >
+              <RecommendedTopics tags={articleDetails?.article?.tags ?? []} />
             </Suspense>
           </section>
         </>
@@ -67,9 +77,6 @@ async function Page({ params }: any) {
     </>
   );
 }
-
-import { Metadata, ResolvingMetadata } from 'next';
-import LoginHeader from '@/components/LoginHeader';
 
 type Props = {
   params: { userName: string; articlePublicUrl: string };

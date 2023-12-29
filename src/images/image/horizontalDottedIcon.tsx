@@ -9,7 +9,7 @@ const HorizontalDottedIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect width="36" height="20" rx="10" fill="white" fill-opacity="0.16" />
+      <rect width="36" height="20" rx="10" fill="white" fillOpacity="0.16" />
       <path
         d="M9 12C10.1046 12 11 11.1046 11 10C11 8.89543 10.1046 8 9 8C7.89543 8 7 8.89543 7 10C7 11.1046 7.89543 12 9 12Z"
         fill="#5798FF"

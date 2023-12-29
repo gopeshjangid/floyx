@@ -81,6 +81,8 @@ export default function FollowNewAccounts() {
                 isLoading={isFollowing && item === account.username}
                 isSuccess={isSuccess && item === account.username}
                 isError={followError && item === account.username}
+                buttonType="ROUND"
+                sx={{ borderRadius: '4px' }}
               >
                 {isSuccess && item === account.username ? 'Followed' : 'Follow'}
               </ButtonWithLoading>

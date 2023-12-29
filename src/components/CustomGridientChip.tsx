@@ -2,6 +2,7 @@ import React from 'react';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { CloseOutlined } from '@mui/icons-material';
 
 // Styled component for the gradient text
 const GradientText = styled('span')({
@@ -30,7 +31,8 @@ const CustomChip = ({ label, ...props }) => {
   return (
     <GradientChip
       label={<GradientText>{label}</GradientText>}
-      variant="outlined"
+      variant="filled"
+      deleteIcon={<CloseOutlined />}
       {...props}
     />
   );

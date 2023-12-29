@@ -11,7 +11,7 @@ const nextConfig = {
     },
   },
   images: {
-    domains: ['floyx-beta.s3.us-east-2.amazonaws.com'],
+    //domains: ['floyx-beta.s3.us-east-2.amazonaws.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -50,18 +50,6 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-  },
-  async rewrites() {
-    return [
-      {
-        source: `/api/:path*`,
-        destination: `/api/:path*`,
-      },
-      {
-        source: `/:path*`,
-        destination: `https://floyx.vercel.app/:path*`,
-      },
-    ];
   },
 };
 

@@ -6,6 +6,7 @@ import '../index.scss';
 import AuthProvider from './context/AuthProvider';
 import { ToastProvider } from '@/components/Toast/useToast';
 import { initializeStore } from '@/lib/redux';
+import NextTopLoader from 'nextjs-toploader';
 //import { PersistGate } from 'redux-persist/integration/react';
 //import { DefaultCircularProgress } from '@/components/DefaultPageSkelton';
 import '../components/ThemeRegistry/global.css';
@@ -23,7 +24,7 @@ export default function RootLayout({
 }) {
   const { resolvedTheme } = useTheme();
   const [currentTheme, setCurrentTheme] = useState('dark');
-  console.log('currentTheme:', currentTheme);
+  //console.log('currentTheme:', currentTheme);
 
   useEffect(() => {
     if (!resolvedTheme) return;
@@ -38,6 +39,19 @@ export default function RootLayout({
         <ToastProvider>
           <AuthProvider>
             <Provider store={initializeStore(initializeStoreValues)}>
+              <NextTopLoader
+                color="#2299DD"
+                initialPosition={0.08}
+                crawlSpeed={200}
+                height={3}
+                crawl={true}
+                showSpinner={true}
+                easing="ease"
+                speed={200}
+                shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+                zIndex={1600}
+                //showAtBottom={false}
+              />
               {/* <PersistGate
                 loading={<DefaultCircularProgress />}
                 persistor={persistor}

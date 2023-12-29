@@ -65,8 +65,8 @@ export default function Comment({
           sx={{
             width: '100%',
             borderRadius: '10px',
-            padding: '4px 8px',
-            background: palette.background.paper,
+            padding: '4px 12px',
+            background: palette.mode == 'dark' ? '#1B1830' : '#fff',
           }}
         >
           {/* <Typography>{comment?.comment?.content}</Typography> */}
@@ -75,6 +75,7 @@ export default function Comment({
               whiteSpace: 'pre-wrap',
               fontFamily: 'inherit',
               fontSize: '1em',
+              color: palette.primary.commentFontColor,
             }}
             dangerouslySetInnerHTML={{
               __html: addLinks(comment?.comment?.content),

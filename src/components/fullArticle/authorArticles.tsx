@@ -13,7 +13,6 @@ export default function AuthorArticles({ username }: { username: string }) {
     username: username,
     pageSize: 6,
   });
-  console.log({ articleList });
   return (
     <Box>
       <Typography variant="h5">More From Author</Typography>
@@ -31,7 +30,9 @@ export default function AuthorArticles({ username }: { username: string }) {
         {articleList &&
           articleList.map(({ article, user }: any, index: number) => (
             <Grid
-              onClick={() => router.push('/article/' + article.publicUrl)}
+              onClick={() =>
+                router.push('/article/' + username + '/' + article.publicUrl)
+              }
               item
               xs={12}
               sm={6}

@@ -25,6 +25,7 @@ import BlockUserIcon from '@/images/image/blockUser';
 import { DOMElement, useRef, useState } from 'react';
 import ActionModal from './actionModal';
 import { useDeleteArticleMutation } from '@/lib/redux';
+import { useRouter } from 'next/navigation';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',
@@ -133,6 +134,8 @@ export default function ArticleContainer({
 }: any) {
   const { palette } = useTheme();
   const ref = useRef<HTMLElement>(null);
+  const router = useRouter();
+
   const [item, setItem] = useState<number>();
   const [openDialog, setOpenDialog] = useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
@@ -150,7 +153,7 @@ export default function ArticleContainer({
 
   const handleClick = () => {
     const dynamicUrl = `/article/${userDetails?.username}/${articleDetails?.publicUrl}`;
-    window.open(dynamicUrl, '_blank');
+    router.push(dynamicUrl);
   };
 
   const tippedOrNot = () => {
@@ -292,6 +295,7 @@ export default function ArticleContainer({
                 <Typography
                   variant="body2"
                   // color={"textPrimary"}
+                  component={'span'} 
                   color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
                   sx={{
                     minHeight: `${40}px`,

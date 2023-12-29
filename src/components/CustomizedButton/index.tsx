@@ -65,7 +65,7 @@ export default function CustomizedMenus({ startIcon, menuItem }: any) {
         variant="outlined"
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
+        endIcon={<KeyboardArrowDownIcon sx={{ stroke: palette.primary.fontLightColor}} />}
         startIcon={startIcon}
       >
         <span>Options</span>

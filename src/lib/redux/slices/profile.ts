@@ -295,7 +295,12 @@ export const profileService = createApi({
         body: {},
       }),
       transformResponse: (response: any) => response.value,
-      invalidatesTags: ['profileAbout', 'profileDetails', 'PopularAccount'],
+      invalidatesTags: ['profileAbout', 'profileDetails', 'PopularAccount', 'FollowedAccount'],
+    }),
+    getFollowMoreAccount: builder.query<any, void>({
+      query: () => `${ApiEndpoint.AccountsToFallow}?forHome=true`,
+      transformResponse: (response: any) => response?.value?.data || {},
+      providesTags: ['FollowedAccount'],
     }),
   }),
   tagTypes: [
@@ -304,6 +309,7 @@ export const profileService = createApi({
     'profileAbout',
     'PopularAccount',
     'profileDetails',
+    'FollowedAccount',
   ],
 });
 
@@ -325,4 +331,5 @@ export const {
   useFollowUserMutation,
   useAddReportArticleMutation,
   useUpdateProfileDetailMutation,
+  useGetFollowMoreAccountQuery
 } = profileService;

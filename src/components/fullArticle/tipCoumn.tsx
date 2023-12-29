@@ -12,15 +12,19 @@ import { useEffect, useState } from 'react';
 import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
 import { useSetTipMutation } from '@/lib/redux/slices/articleDetails';
 import { useToast } from '../Toast/useToast';
+import { useSession } from 'next-auth/react';
 
 export default function TipColumn({
   details,
   articlePuclicUrl,
   articleId,
 }: any) {
+  const session = useSession();
   const [value, setValue] = useState<number>(30);
   const [updateTip, { isError, error }] = useSetTipMutation();
-  const { data: tipHistory, isLoading } = useGetTipHistoryQuery();
+  const { data: tipHistory, isLoading } = useGetTipHistoryQuery(undefined, {
+    skip: session?.status !== 'authenticated',
+  });
   const toast = useToast();
   const { palette } = useTheme();
 
