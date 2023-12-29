@@ -7,13 +7,9 @@ import { useSession } from 'next-auth/react';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import UsernameLink from '../usernameLink';
+import React from 'react';
 
-export default function Comment({
-  comment,
-  inputRef,
-  type,
-  setCommentText,
-}: any) {
+function Comment({ comment, inputRef, type, setCommentText }: any) {
   const [updateLike] = usePostLikeStatusMutation();
   const session = useSession();
   const { palette } = useTheme();
@@ -37,7 +33,7 @@ export default function Comment({
     const urlLink = '<a href="$1" target="_blank">$1</a>';
     return content.replace(urlRegex, urlLink).replace(profileRegex, link);
   };
-
+  console.log('comment list: ', comment);
   return (
     <Box sx={{ display: 'flex', marginTop: '30px' }}>
       <Box>
@@ -104,3 +100,5 @@ export default function Comment({
     </Box>
   );
 }
+
+export default React.memo(Comment);

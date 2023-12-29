@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
@@ -22,6 +22,7 @@ import {
   usePostLikeStatusMutation,
   useShareArticleMutation,
   useCheckArticleIsSharedMutation,
+  UserComment,
 } from '@/lib/redux/slices/articleDetails';
 import Comment from '../CommentLists';
 import { allRoutes } from '@/constants/allRoutes';
@@ -47,7 +48,7 @@ type LikeCommentType = {
   itemId: string;
   isPost?: boolean;
   isShared?: boolean;
-  showComments?: boolean | undefined;
+  showComments?: boolean;
   articleId: string;
   isArticle?: boolean;
 };
@@ -56,7 +57,7 @@ function LikesComments({
   itemId,
   isPost = false,
   isShared = false,
-  showComments = undefined,
+  showComments = false,
   articleId,
   isArticle = false,
 }: LikeCommentType) {
@@ -65,9 +66,16 @@ function LikesComments({
   );
   const { data: commentList, isLoading } = useGetCommentListQuery(
     articleId! || '',
-    { skip: !articleId }
+    { skip: !showComments }
   );
   const [commentText, setCommentText] = useState('');
+  const [newCreatedComments, setNewCreatedComments] = useState<{
+    isAdding: boolean;
+    newComments: UserComment[];
+  }>({
+    isAdding: false,
+    newComments: [],
+  });
   const { palette } = useTheme();
   const toast = useToast();
   const router = useRouter();
@@ -134,6 +142,30 @@ function LikesComments({
     updateLike({ articleId: itemId, type });
   };
 
+  const commentTextHandler = useCallback(
+    text => {
+      setCommentText(text);
+    },
+    [setCommentText]
+  );
+
+  const onCreatedNewComment = useCallback(
+    (commentData, isLoading) => {
+      if (isLoading) {
+        setNewCreatedComments(comments => ({
+          ...comments,
+          isAdding: isLoading,
+        }));
+      } else if (commentData) {
+        setNewCreatedComments(comments => ({
+          ...comments,
+          isAdding: false,
+          newComments: [...comments.newComments, commentData],
+        }));
+      }
+    },
+    [setNewCreatedComments]
+  );
   return (
     <Box sx={{ marginTop: '35px', width: '100%' }}>
       {isArticle && <Divider />}
@@ -148,6 +180,7 @@ function LikesComments({
             component={'span'}
             color={'textPrimary'}
             textTransform={'none'}
+            marginBottom={0}
           >
             {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
           </Typography>
@@ -160,14 +193,19 @@ function LikesComments({
             isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
           }
         >
-          <Typography
-            component={'span'}
-            color={'textPrimary'}
-            textTransform={'none'}
-          >
-            {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
-            Comments
-          </Typography>
+          {newCreatedComments?.isAdding ? (
+            <Skeleton variant="text" width="100%" height="40px" />
+          ) : (
+            <Typography
+              component={'span'}
+              color={'textPrimary'}
+              textTransform={'none'}
+              marginBottom={0}
+            >
+              {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
+              Comments
+            </Typography>
+          )}
         </Button>
         <Button
           sx={{ padding: 0 }}
@@ -179,6 +217,7 @@ function LikesComments({
             component={'span'}
             color={'textPrimary'}
             textTransform={'none'}
+            marginBottom={0}
           >
             {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
           </Typography>
@@ -200,14 +239,32 @@ function LikesComments({
         <Box>
           {Array.isArray(commentList) &&
             commentList.map((val: any, index: number) => (
-              <div key={index}>
+              <div key={'comment-list-item-' + index}>
                 <Comment
                   comment={val}
                   type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
-                  setCommentText={setCommentText}
+                  setCommentText={commentTextHandler}
                   inputRef={commentRef}
                 />
                 {index !== commentList.length - 1 && <Divider />}
+              </div>
+            ))}
+        </Box>
+      )}
+      {newCreatedComments?.newComments.length > 0 && (
+        <Box>
+          {Array.isArray(newCreatedComments?.newComments) &&
+            newCreatedComments?.newComments.map((val: any, index: number) => (
+              <div key={'new-comment-list-item-' + index}>
+                <Comment
+                  comment={val}
+                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                  setCommentText={commentTextHandler}
+                  inputRef={commentRef}
+                />
+                {index !== newCreatedComments?.newComments.length - 1 && (
+                  <Divider />
+                )}
               </div>
             ))}
         </Box>
@@ -227,7 +284,7 @@ function LikesComments({
               commentRef={commentRef}
               commentType="ArticleComment"
               commentText={commentText}
-              setCommentText={setCommentText}
+              setCommentText={commentTextHandler}
             />
           </Box>
           {/* <RecommendedTopics /> */}
@@ -239,7 +296,8 @@ function LikesComments({
           commentRef={commentRef}
           commentType="PostComment"
           commentText={commentText}
-          setCommentText={setCommentText}
+          setCommentText={commentTextHandler}
+          onCreatedNewComment={onCreatedNewComment}
         />
       )}
       <Modal open={open} onClose={handleClose}>
@@ -250,7 +308,7 @@ function LikesComments({
               commentRef={commentRef}
               commentType={isPost ? 'PostComment' : 'ArticleComment'}
               commentText={commentText}
-              setCommentText={setCommentText}
+              setCommentText={commentTextHandler}
             />
           </Box>
           <Box sx={{ padding: '10px', marginTop: '10%' }}>

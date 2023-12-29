@@ -6,10 +6,10 @@ import RecentArticles from '@/components/PopularToday';
 import AddPost from '@/components/Post/AddPost';
 import PostList from '@/components/Post/PostList';
 import PostHeader from '@/components/PostHeader';
-import { useGetPostsQuery } from '@/lib/redux';
+import { useGetPostsQuery, usePollLatestPostQuery } from '@/lib/redux';
 
 import { Box, Grid, Skeleton, useMediaQuery } from '@mui/material';
-import { Suspense, useCallback, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -30,6 +30,24 @@ export default function Page() {
   const { data, isFetching } = useGetPostsQuery(apiParams);
   const postData = data?.postList;
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
+
+  //const [latestPostDateTime, setLatestPostDateTime] = useState(Date.now());
+  // const { data: latestPosts, refetch } = usePollLatestPostQuery(
+  //   { postCreatedDate: latestPostDateTime },
+  //   {
+  //     pollingInterval: 60000, // Poll every 60 seconds
+  //     //skip: false, // Replace with your logic to determine if the screen is focused
+  //   }
+  // );
+
+  // // Logic to update latestPostDateTime based on the latest post received
+  // useEffect(() => {
+  //   if (latestPosts?.length) {
+  //     setLatestPostDateTime(
+  //       latestPosts[latestPosts.length - 1].post.createdDateTime
+  //     );
+  //   }
+  // }, [latestPosts]);
 
   const debounce = (func: (...args: any[]) => void, delay: number) => {
     let timer: any;

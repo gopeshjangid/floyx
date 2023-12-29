@@ -21,7 +21,6 @@ const SidebarProfileBar: React.FC = () => {
     },
     { skip: !username }
   );
-  console.log('data: sidebar', data, 'error:', error, 'username: ', session);
   return (
     <Paper
       elevation={0}

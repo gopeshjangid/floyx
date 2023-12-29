@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import { Avatar } from '@mui/material';
 import { SVGUser } from '@/assets/images';
+import { useSession } from 'next-auth/react';
 
 interface UserAvatarProps {
   src: string | StaticImageData;
@@ -24,18 +25,19 @@ interface UserAvatarProps {
   };
 }
 const UserAvatar = ({ src, alt, sx }: UserAvatarProps) => {
+  const { status } = useSession();
   const [loading, setLoading] = useState<boolean>(true);
 
   return (
     <Avatar sx={sx}>
-      {!loading && <SVGUser />}
-      {loading && (
+      {(!loading || status === 'loading') && <SVGUser />}
+      {loading && status !== 'loading' && (
         <Image
           src={src}
           alt={alt}
           fill
-          onLoadingComplete={result => {
-            if (result.naturalWidth === 0) {
+          onLoad={result => {
+            if (result.currentTarget.naturalWidth === 0) {
               setLoading(false);
             }
           }}
