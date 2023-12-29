@@ -20,7 +20,7 @@ const handler = NextAuth({
         const { email, password, remember }: any = credentials;
         const user = await signIn(email, password, remember);
         if (user?.value?.code === 'success') {
-          return user.value.data;
+          return user;
         }
         return null;
       },
