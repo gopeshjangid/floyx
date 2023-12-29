@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import { Avatar } from '@mui/material';
-import { SVGUser } from "@/assets/images";
+import { SVGUser } from '@/assets/images';
 
 interface UserAvatarProps {
   src: string | StaticImageData;
@@ -29,19 +29,21 @@ const UserAvatar = ({ src, alt, sx }: UserAvatarProps) => {
   return (
     <Avatar sx={sx}>
       {!loading && <SVGUser />}
-      {loading && <Image
-        src={src}
-        alt={alt}
-        layout="fill"
-        onLoadingComplete={(result) => {
-          if (result.naturalWidth === 0) {
+      {loading && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          onLoadingComplete={result => {
+            if (result.naturalWidth === 0) {
+              setLoading(false);
+            }
+          }}
+          onError={() => {
             setLoading(false);
-          }
-        }}
-        onError={() => {
-          setLoading(false);
-        }}
-      />}
+          }}
+        />
+      )}
     </Avatar>
   );
 };

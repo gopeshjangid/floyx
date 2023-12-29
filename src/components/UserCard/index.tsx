@@ -7,6 +7,7 @@ import CalendarIcon from '@/images/image/calendarIcon';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import UsernameLink from '../usernameLink';
+import React from 'react';
 
 export const UserCardBox = styled(Box)(() => ({
   display: 'flex',
@@ -20,7 +21,7 @@ export const UserCardBox = styled(Box)(() => ({
   },
 }));
 
-export default function UserCard({
+function UserCard({
   name,
   username,
   timestamp,
@@ -38,7 +39,7 @@ export default function UserCard({
   comment?: string;
   isArticle?: boolean;
   isPost?: boolean;
-  }) {
+}) {
   const { palette } = useTheme();
 
   return (
@@ -51,20 +52,29 @@ export default function UserCard({
         />
       </Box>
       <Box
-        display={"flex"}
-        flexDirection={isPost ? "column" : "row"}
+        display={'flex'}
+        flexDirection={isPost ? 'column' : 'row'}
         justifyContent="space-between"
         width="100%"
       >
-        <Box gap={isArticle ? 0 :1} display="flex" flexDirection={isArticle ? "column" : 'row'} width="100%">
+        <Box
+          gap={isArticle ? 0 : 1}
+          display="flex"
+          flexDirection={isArticle ? 'column' : 'row'}
+          width="100%"
+        >
           <Typography
             variant="subtitle1"
             component={'span'}
-            color={palette.mode === "light" ? "primary" : "textPrimary"}
+            color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
           >
             {name}{' '}
           </Typography>
-          <UsernameLink variant="subtitle2" username={username} onClick={e => e.stopPropagation()}/>
+          <UsernameLink
+            variant="subtitle2"
+            username={username}
+            onClick={e => e.stopPropagation()}
+          />
           {` ${shared ? ' shared a ' : ''}`}
           {shared && (
             <Link href="#" underline="none">
@@ -78,7 +88,13 @@ export default function UserCard({
           </Box>
         )}
         {showDate && (
-          <Box width="40%" sx={{ display: 'flex', alignItems: isArticle ? 'flex-end' : 'center' }}>
+          <Box
+            width="40%"
+            sx={{
+              display: 'flex',
+              alignItems: isArticle ? 'flex-end' : 'center',
+            }}
+          >
             <CalendarIcon />
             &nbsp;
             <Typography
@@ -88,7 +104,7 @@ export default function UserCard({
               marginBottom={0}
             >
               {moment(showDate).format('MMM DD, YY')}
-              </Typography>
+            </Typography>
           </Box>
         )}
         {comment && (
@@ -100,3 +116,5 @@ export default function UserCard({
     </UserCardBox>
   );
 }
+
+export default React.memo(UserCard);

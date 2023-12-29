@@ -30,6 +30,8 @@ import {
   DialogTitle,
   DialogContent,
   Container,
+  Skeleton,
+  Stack,
 } from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
@@ -248,11 +250,11 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     }
   };
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.push('/login');
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     //router.push('/login');
+  //   }
+  // }, [isLoggedIn]);
 
   const getMessageCount = () => {
     setDrawerData(prev => ({
@@ -318,10 +320,22 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   );
 
   const getDesktopLayout = () => {
-    if (isLoggedIn) {
-      return (
-        <Grid container columnSpacing={{ sm: 2, md: 3 }}>
-          <Grid item sm={3} md={4} lg={2}>
+    return (
+      <Grid container columnSpacing={{ sm: 2, md: 3 }}>
+        <Grid item sm={3} md={4} lg={2}>
+          {session.status === 'loading' ? (
+            <Stack gap={2} mt={6} height="100vh" p={2}>
+              {[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
+                <Skeleton
+                  key={'skeleton-' + item}
+                  variant="rectangular"
+                  width="100%"
+                  height="40px"
+                  animation="wave"
+                />
+              ))}
+            </Stack>
+          ) : isLoggedIn ? (
             <Paper
               elevation={0}
               sx={{
@@ -335,14 +349,15 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               {drawer}
               <SidebarProfileBar />
             </Paper>
-          </Grid>
-          <Grid item sm={9} md={8} lg={10}>
-            {children}
-          </Grid>
+          ) : (
+            <>&nbsp;</>
+          )}
         </Grid>
-      );
-    }
-    return <Container maxWidth="lg">{children}</Container>;
+        <Grid item sm={9} md={8} lg={10}>
+          {children}
+        </Grid>
+      </Grid>
+    );
   };
 
   const container = undefined;

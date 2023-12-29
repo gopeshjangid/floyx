@@ -1,12 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
 import AddArticleHead from '@/components/addArticleHead';
 import AddArticleForm from '@/components/addArticleForm';
-import { useGetArticleInfoQuery, useLazyGetArticleListQuery } from '@/lib/redux/slices/articleDetails';
-import ArticleContent from "@/components/articleContent";
+import {
+  useGetArticleInfoQuery,
+  useLazyGetArticleListQuery,
+} from '@/lib/redux/slices/articleDetails';
+import ArticleContent from '@/components/articleContent';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -19,45 +22,52 @@ export default function Page() {
   const [isPublished, setIsPublished] = useState<boolean>(false);
   const [isReset, setIsReset] = useState<boolean>(false);
 
-  const [getArticleList, { data: articleList, isFetching }] = useLazyGetArticleListQuery();
+  const [getArticleList, { data: articleList, isFetching }] =
+    useLazyGetArticleListQuery();
   const { data: articleDraftNumbers } = useGetArticleInfoQuery();
 
-  const getAllArticleList = (tabVal) => {
+  const getAllArticleList = tabVal => {
     switch (tabVal) {
-      case "my":
+      case 'my':
         getArticleList(undefined);
         return;
-      case "draft":
+      case 'draft':
         getArticleList(tabVal);
         return;
       default:
         return;
-        
     }
-  }
+  };
   useEffect(() => {
     getAllArticleList(value);
   }, [value]);
 
   return (
     <Box p={isMobile ? 2 : 0}>
-      <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} display={"flex"} justifyContent={"center"}>
-        <Grid item xs={12} sm={9} marginTop={2} marginBottom={2} >
+      <Grid
+        container
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        display={'flex'}
+        justifyContent={'center'}
+      >
+        <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
           <Typography variant="h5" sx={{ padding: '15px 20px 0 0' }}>
             Article Editor
           </Typography>
-          <AddArticleHead
-            setSaveDraft={setSaveDraft}
-            setIsPublish={setIsPublish}
-            isDisabled={isDisabled}
-            articleDraftNumbers={articleDraftNumbers}
-            value={value}
-            setValue={setValue}
-            isPublished={isPublished}
-            setIsReset={setIsReset}
-            setIsEditing={setIsEditing}
-            setArticleId={setArticleId}
-          />
+          <Suspense fallback={<Typography>Loading...</Typography>}>
+            <AddArticleHead
+              setSaveDraft={setSaveDraft}
+              setIsPublish={setIsPublish}
+              isDisabled={isDisabled}
+              articleDraftNumbers={articleDraftNumbers}
+              value={value}
+              setValue={setValue}
+              isPublished={isPublished}
+              setIsReset={setIsReset}
+              setIsEditing={setIsEditing}
+              setArticleId={setArticleId}
+            />
+          </Suspense>
           {value === 'newArticle' && (
             <AddArticleForm
               isPublish={isPublish}
@@ -83,7 +93,6 @@ export default function Page() {
               setIsReset={setIsReset}
             />
           )}
-          
         </Grid>
       </Grid>
     </Box>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
@@ -16,7 +16,6 @@ import {
   useTheme,
   Skeleton,
 } from '@mui/material';
-import RecommendedTopics from '../recommendedTopics/recommendedTopics';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
 import {
@@ -87,21 +86,24 @@ function LikesComments({
     setAnchorEl(null);
   };
 
-  function formatIndianNumber(num: number) {
-    if (num < 1000) {
-      return num;
-    } else if (num >= 1000 && num <= 9999) {
-      return Math.floor(num / 1000) + 'K';
-    } else if (num >= 10000 && num <= 999999) {
-      return Math.floor(num / 1000) + 'K+';
-    } else if (num >= 1000000 && num <= 9999999) {
-      return Math.floor(num / 1000000) + 'M';
-    } else if (num >= 10000000 && num <= 999999999) {
-      return Math.floor(num / 1000000) + 'M+';
-    } else {
-      return num;
-    }
-  }
+  const formatIndianNumber = useMemo(
+    () => (num: number) => {
+      if (num < 1000) {
+        return num;
+      } else if (num >= 1000 && num <= 9999) {
+        return Math.floor(num / 1000) + 'K';
+      } else if (num >= 10000 && num <= 999999) {
+        return Math.floor(num / 1000) + 'K+';
+      } else if (num >= 1000000 && num <= 9999999) {
+        return Math.floor(num / 1000000) + 'M';
+      } else if (num >= 10000000 && num <= 999999999) {
+        return Math.floor(num / 1000000) + 'M+';
+      } else {
+        return num;
+      }
+    },
+    []
+  );
 
   const handlePublish = async () => {
     const result: any = await checkIsShared(itemId);
@@ -183,7 +185,7 @@ function LikesComments({
         </Button>
       </Stack>
       {isArticle && <Divider />}
-      {!isPost && isShared === undefined && (
+      {!isPost && !isShared && (
         <Typography variant="h5" sx={{ marginTop: '40px' }}>
           Comments
         </Typography>
@@ -210,7 +212,7 @@ function LikesComments({
             ))}
         </Box>
       )}
-      {!isPost && isShared === undefined && (
+      {!isPost && !isShared && (
         <>
           <Box
             sx={{

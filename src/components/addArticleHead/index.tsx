@@ -8,7 +8,7 @@ import EditIcon from '@/assets/images/svg/editIcon';
 import { GradientButton } from '../gradientButton';
 import AddIcon from '@/assets/images/svg/addIcon';
 
-export default function AddArticleHead({
+function AddArticleHead({
   setSaveDraft,
   setIsPublish,
   articleDraftNumbers,
@@ -21,12 +21,6 @@ export default function AddArticleHead({
   setArticleId,
 }) {
   const { palette } = useTheme();
-
-  const getColorSvg = _ => {
-    return palette?.mode === 'light'
-      ? palette.text.primary
-      : palette?.primary?.main;
-  };
   const handleSaveDraft = () => {
     setSaveDraft(true);
     setIsPublish(false);
@@ -140,7 +134,6 @@ export default function AddArticleHead({
             variant="outlined"
             onClick={handleSaveDraft}
             disabled={isDisabled}
-            isBorderRadius
             isSelected
           >
             <span>Save as Draft</span>
@@ -158,3 +151,5 @@ export default function AddArticleHead({
     </Stack>
   );
 }
+
+export default React.memo(AddArticleHead);
