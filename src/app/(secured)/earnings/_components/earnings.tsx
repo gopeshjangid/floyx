@@ -317,8 +317,8 @@ const Earnings: React.FC = () => {
   const isMobile = useMediaQuery('(max-width:480px)');
   const {
     data: completedHistory,
-    // isLoading: completedLoading,
-    // isError: completedError,
+    isLoading: completedLoading,
+    isError: completedError,
   } = useGetCompletedTaskHistoryQuery();
   const {
     data: tipHistory,
