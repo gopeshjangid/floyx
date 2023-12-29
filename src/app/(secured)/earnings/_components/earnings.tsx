@@ -257,7 +257,7 @@ type Dashboard = {
 };
 const DashboardBox: React.FC<Dashboard> = props => {
   const isMobile = useMediaQuery('(max-width:480px)');
-  const { palette } = useTheme();
+  //const { palette } = useTheme();
   return (
     <Box padding={isMobile ? 0 : '16px'}>
       <Box width="100%" height="80px" alignItems="center" display="flex">

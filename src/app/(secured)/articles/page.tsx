@@ -44,7 +44,7 @@ export default function Page() {
     } else if (dynamicTab.searchBy === 'tag' && dynamicTab.tagId) {
       getArticlesByTag({ tagId: dynamicTab.tagId });
     } else if (dynamicTab.searchBy === 'search' && dynamicTab.tagId) {
-      searchArticle({ searchString: dynamicTab.value });
+      searchArticle({ searchString: dynamicTab.value ?? '' });
     }
   }, [tabName]);
 

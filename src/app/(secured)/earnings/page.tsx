@@ -9,7 +9,7 @@ import DailyIcon from '@/iconComponents/dailyTaskIcon';
 import Earnings from './_components/earnings';
 import EaringTabIcon from '@/iconComponents/earningTabIcon';
 import { useMediaQuery } from '@mui/material';
-import { useTheme } from '@emotion/react';
+import { useTheme } from '@mui/material';
 import DailyTask from './_components/dailyTask';
 import { GradientText } from '@/components/usernameLink';
 
