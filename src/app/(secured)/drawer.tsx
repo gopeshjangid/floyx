@@ -1,8 +1,8 @@
 'use client';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { useRouter } from 'next/navigation';
+import { redirect, usePathname, useRouter } from 'next/navigation';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -15,7 +15,7 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSession } from 'next-auth/react';
 import moment from 'moment';
-import { getCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import Link from 'next/link';
 import {
   useTheme,
@@ -29,7 +29,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Container,
   Skeleton,
   Stack,
 } from '@mui/material';
@@ -55,6 +54,7 @@ import { AddCircleOutline } from '@mui/icons-material';
 import { GradientText } from '@/components/usernameLink';
 import SidebarProfileBar from '@/components/sidebarProfileInfo';
 import AddPost from '@/components/Post/AddPost';
+import { config } from '@/middleware';
 
 const drawerWidth = 240;
 
@@ -147,6 +147,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     messagesCount: 0,
     notifications: [],
   });
+  const pathname = usePathname();
   const session = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -250,11 +251,15 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     }
   };
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     //router.push('/login');
-  //   }
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    const isPrivate = config.matcher.includes(pathname);
+    if (!isLoggedIn && !pathname.includes('/login') && isPrivate) {
+      deleteCookie('FLOYX_TOKEN');
+      deleteCookie('next-auth.session-token');
+      deleteCookie('next-auth.csrf-token');
+      router.push('/login');
+    }
+  }, [isLoggedIn]);
 
   const getMessageCount = () => {
     setDrawerData(prev => ({
@@ -325,15 +330,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
         <Grid item sm={3} md={4} lg={2}>
           {session.status === 'loading' ? (
             <Stack gap={2} mt={6} height="100vh" p={2}>
-              {[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
-                <Skeleton
-                  key={'skeleton-' + item}
-                  variant="rectangular"
-                  width="100%"
-                  height="40px"
-                  animation="wave"
-                />
-              ))}
+              <Skeleton variant="rectangular" width="100%" height="100vh" />
             </Stack>
           ) : isLoggedIn ? (
             <Paper

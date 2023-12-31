@@ -12,9 +12,9 @@ export default withAuth({
 export function middleware(request: NextRequest) {
   const hasSession = request.cookies.get('next-auth.session-token');
   const isPrivateRoute = config.matcher.includes(request.nextUrl.pathname);
-
+  const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
   // Redirect to login page if trying to access a private route without a session
-  if (!hasSession?.value && isPrivateRoute) {
+  if (!hasSession?.value && isPrivateRoute && !isPublicRoute) {
     const url = request.nextUrl.clone();
     url.pathname = '/login'; // The login page route
     return NextResponse.redirect(url);
@@ -26,8 +26,12 @@ export function middleware(request: NextRequest) {
   const deviceType = isMobile ? 'mobile' : 'desktop';
   const currentDeviceType = request.cookies.get('deviceType');
 
+  const response = NextResponse.next();
+  response.cookies.set(
+    'routeType',
+    isPrivateRoute ? 'private' : isPublicRoute ? 'public' : 'private'
+  );
   if (currentDeviceType?.value !== deviceType) {
-    const response = NextResponse.next();
     response.cookies.set('deviceType', deviceType);
     return response;
   }
@@ -41,9 +45,12 @@ export const config = {
     '/notifications',
     '/people',
     '/settings',
+    '/articles',
     '/inbox',
     '/earnings',
     '/profile',
     '/composer/create',
   ],
 };
+
+const publicRoutes = ['/post', '/article', '/profile'];

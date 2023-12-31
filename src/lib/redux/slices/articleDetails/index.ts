@@ -194,7 +194,7 @@ export const artcileDetails = createApi({
       query: payload => ({
         url: `${ApiEndpoint.CreateDraft}`,
         method: 'post',
-        body: payload,
+        body: { ...payload, articleTags: payload.articleTags.split(',') },
       }),
       transformResponse: (response: any) => {
         return response.value.data;
@@ -206,7 +206,7 @@ export const artcileDetails = createApi({
         return {
           url: `${ApiEndpoint.UpdateDraft}/${articleId}`,
           method: 'put',
-          body: payload,
+          body: { ...payload, articleTags: payload.articleTags.split(',') },
         };
       },
       transformResponse: (response: any) => response.value.data,

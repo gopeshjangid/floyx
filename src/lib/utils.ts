@@ -95,3 +95,13 @@ export const years = Array.from({ length: 2023 - 2000 + 1 }, (_, index) => ({
   label: String(index + 2000),
   value: String(index + 2000),
 }));
+
+export const debounce = (func: (...args: any[]) => void, delay: number) => {
+  let timer: any;
+  return function (...args: any[]) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
