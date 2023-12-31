@@ -13,7 +13,7 @@ import ListItemButton, {
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import moment from 'moment';
 import { deleteCookie, getCookie } from 'cookies-next';
 import Link from 'next/link';
@@ -254,10 +254,11 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   useEffect(() => {
     const isPrivate = config.matcher.includes(pathname);
     if (!isLoggedIn && !pathname.includes('/login') && isPrivate) {
+      console.log('login redirect =>>>');
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
-      deleteCookie('next-auth.csrf-token');
-      router.push('/login');
+      signOut({ redirect: true });
+      //router.push('/login');
     }
   }, [isLoggedIn]);
 
