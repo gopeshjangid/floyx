@@ -83,8 +83,8 @@ export const postServices = createApi({
         postList: response?.value?.data || [],
         hasMore: response?.value?.hasMore,
       }),
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
+      serializeQueryArgs: ({ queryArgs }) => {
+        return JSON.stringify(queryArgs);
       },
       merge: (currentCache, newItems, otherArgs) => {
         if (currentCache) {
