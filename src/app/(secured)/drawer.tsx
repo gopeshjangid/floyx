@@ -1,5 +1,5 @@
 'use client';
-import React, { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import { redirect, usePathname, useRouter } from 'next/navigation';
@@ -254,7 +254,6 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   useEffect(() => {
     const isPrivate = config.matcher.includes(pathname);
     if (!isLoggedIn && !pathname.includes('/login') && isPrivate) {
-      console.log('login redirect =>>>');
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
       signOut({ redirect: true });
@@ -328,7 +327,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const getDesktopLayout = () => {
     return (
       <Grid container columnSpacing={{ sm: 2, md: 3 }}>
-        <Grid item sm={3} md={4} lg={2}>
+        <Grid item sm={3} md={3} lg={2}>
           {session.status === 'loading' ? (
             <Stack gap={2} mt={6} height="100vh" p={2}>
               <Skeleton variant="rectangular" width="100%" height="100vh" />

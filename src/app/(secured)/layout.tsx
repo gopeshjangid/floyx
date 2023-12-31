@@ -10,7 +10,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = cookies();
-  const routeType = cookieStore.get('routeType');
   return (
     <Box component="main" minHeight="100vh">
       <DrawerAppBar>{children}</DrawerAppBar>

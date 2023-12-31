@@ -1,7 +1,7 @@
 'use client';
 
 import FollowNewAccounts from '@/components/AccountFollowBox';
-import NewRegisteredUsers from '@/components/FriendsActivity';
+//import NewRegisteredUsers from '@/components/FriendsActivity';
 import RecentArticles from '@/components/PopularToday';
 import AddPost from '@/components/Post/AddPost';
 import PostList from '@/components/Post/PostList';
@@ -9,7 +9,7 @@ import PostHeader from '@/components/PostHeader';
 import { useGetPostsQuery, usePollLatestPostQuery } from '@/lib/redux';
 
 import { Box, Grid, Skeleton, useMediaQuery } from '@mui/material';
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useState } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -110,9 +110,9 @@ export default function Page() {
           <Suspense fallback={<SectionSkeleton />}>
             <RecentArticles />
           </Suspense>
-          <Suspense fallback={<SectionSkeleton />}>
+          {/* <Suspense fallback={<SectionSkeleton />}>
             <NewRegisteredUsers />
-          </Suspense>
+          </Suspense> */}
         </Grid>
       </Grid>
     </Box>

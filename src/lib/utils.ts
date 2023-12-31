@@ -42,11 +42,8 @@ export const baseQuery = fetchBaseQuery({
       'FLOYX_TOKEN',
       isServer() ? getState()?.req : getCookie('FLOYX_TOKEN')
     );
-    if (token) {
-      headers.set('authorization', `Bearer ${token}`);
-    } else {
-      logout();
-    }
+    console.log({ token });
+    headers.set('authorization', `Bearer ${token}`);
     return headers;
   },
   responseHandler: async response => {

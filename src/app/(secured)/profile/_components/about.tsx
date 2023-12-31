@@ -35,6 +35,7 @@ import { useToast } from '@/components/Toast/useToast';
 import TextareaAutosize from '@/components/CustomTextArea';
 import { useParams } from 'next/navigation';
 import CustomChip from '@/components/CustomGridientChip';
+import { useSession } from 'next-auth/react';
 
 type ActivityChipEditInfoProps = {
   label: string;
@@ -91,19 +92,23 @@ const ActivityChipEditInfo: React.FC<ActivityChipEditInfoProps> = ({
           />
         )}
         <Stack direction="row" gap={1}>
-          {list.map((skill, index) => {
-            if (isEdit) {
-              return (
-                <CustomChip
-                  onDelete={() => handleDeleteSkill(skill, activityKey)}
-                  deleteIcon={<CloseIcon fontSize="small" />}
-                  key={index}
-                  label={skill}
-                />
-              );
-            }
-            return <CustomChip key={index} label={skill} />;
-          })}
+          {list.length > 0 ? (
+            list.map((skill, index) => {
+              if (isEdit) {
+                return (
+                  <CustomChip
+                    onDelete={() => handleDeleteSkill(skill, activityKey)}
+                    deleteIcon={<CloseIcon fontSize="small" />}
+                    key={index}
+                    label={skill}
+                  />
+                );
+              }
+              return <CustomChip key={index} label={skill} />;
+            })
+          ) : (
+            <Typography variant="subtitle2">{`No ${name} available`}</Typography>
+          )}
         </Stack>
       </Grid>
     </>
@@ -125,9 +130,10 @@ const PersonalInfo: React.FC = () => {
   const params = useParams<{ username: string }>();
   const [isEdit, setIsEdit] = React.useState(false);
   const toast = useToast();
+  const username = params?.username ?? '';
   const { data, isLoading } = useGetProfileAboutQuery(
     {
-      username: params?.username ?? '',
+      username,
     },
     { skip: !params?.username }
   );
@@ -135,6 +141,9 @@ const PersonalInfo: React.FC = () => {
     updateAbout,
     { isLoading: isUpdating, error: aboutUpdateError, isSuccess: aboutSuccess },
   ] = useUpdateAboutInfoMutation();
+  const session = useSession();
+  const isSameuser =
+    session.status !== 'loading' && session.data?.user.username === username;
   const [formValues, setFormValues] = React.useState<PersonalInfoType>({
     location: '',
     website: '',
@@ -222,9 +231,8 @@ const PersonalInfo: React.FC = () => {
     });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log('event: ', event);
     if (!validate()) return;
     updateAbout(formValues);
   };
@@ -254,7 +262,7 @@ const PersonalInfo: React.FC = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      <form onSubmit={handleSubmit}>
+      <form>
         <Box
           py={2}
           mb={3}
@@ -271,28 +279,29 @@ const PersonalInfo: React.FC = () => {
             <Typography variant="h5" color="textPrimary">
               About
             </Typography>
-            <Stack gap={1} direction="row">
-              {isEdit ? (
-                <>
-                  <Button variant="outlined" type="submit">
-                    Save
+            {isSameuser && (
+              <Stack gap={1} direction="row">
+                {isEdit ? (
+                  <>
+                    <Button onClick={handleSubmit} variant="outlined">
+                      Save
+                    </Button>
+                    <Button onClick={() => setIsEdit(false)} variant="text">
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    sx={{ borderRadius: '29px' }}
+                    startIcon={<BorderColorOutlined />}
+                    variant="outlined"
+                    onClick={() => setIsEdit(true)}
+                  >
+                    Edit Section
                   </Button>
-                  <Button onClick={() => setIsEdit(false)} variant="text">
-                    Cancel
-                  </Button>
-                </>
-              ) : (
-                <Button
-                  sx={{ borderRadius: '29px' }}
-                  startIcon={<BorderColorOutlined />}
-                  variant="outlined"
-                  type="button"
-                  onClick={() => setIsEdit(true)}
-                >
-                  Edit Section
-                </Button>
-              )}
-            </Stack>
+                )}
+              </Stack>
+            )}
           </Stack>
         </Box>
         <Grid container justifyContent={'center'} spacing={2}>

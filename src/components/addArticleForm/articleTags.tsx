@@ -37,7 +37,7 @@ const TagAutocomplete = ({
   const debouncedSearchTag = useCallback(
     debounce(newInputValue => {
       searchTag({ tag: newInputValue });
-    }, 2000),
+    }, 1500),
     [] // Dependencies array
   );
 
@@ -54,7 +54,6 @@ const TagAutocomplete = ({
   }, [selectedTags]);
 
   const handleChange = (event, newValue, reason) => {
-    console.log({ reason, newValue });
     if (reason === 'selectOption') {
       setSelectedTags(prevTags => [...prevTags, newValue]);
     } else if (reason === 'createOption') {

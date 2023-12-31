@@ -26,6 +26,7 @@ import DynamicForm from './addEditActivity';
 import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
 import { useParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const elements = [
   {
@@ -96,13 +97,16 @@ const ExperienceForm: React.FC = () => {
   const toast = useToast();
   const params = useParams<{ username: string }>();
   const [action, setAction] = React.useState('');
+  const username = params?.username ?? '';
   const { data, isError, isLoading, error } = useGetProfileAboutQuery({
-    username: params?.username ?? '',
+    username,
   });
 
   const [addExperience, { isLoading: isAdding, error: addError, isSuccess }] =
     useAddExperienceMutation();
-
+  const session = useSession();
+  const isSameuser =
+    session.status !== 'loading' && session.data?.user.username === username;
   const [
     updateExperience,
     { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSuccess },
@@ -174,13 +178,17 @@ const ExperienceForm: React.FC = () => {
               </Typography>
             </Grid>{' '}
             <Grid item xs={8} textAlign="right">
-              <Button variant="outlined" onClick={() => setAction('ADD')}>
-                Add New
-              </Button>
+              {isSameuser ? (
+                <Button variant="outlined" onClick={() => setAction('ADD')}>
+                  Add New
+                </Button>
+              ) : (
+                ''
+              )}
             </Grid>
           </Grid>
         </Box>
-        {data?.experiences ? (
+        {data?.experiences && data?.experiences.length > 0 ? (
           data?.experiences?.map((experience, index) => (
             <ProfileActivityInfo
               onEdit={onEditHandler}
