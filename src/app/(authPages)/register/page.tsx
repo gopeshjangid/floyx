@@ -39,13 +39,19 @@ const RegisterPage = () => {
   const router = useRouter();
   const { palette } = useTheme();
 
-  const [verifyOtp, { data: verifyOtpData, isLoading: verifyOtpLoading, error: verifyOtpError }] = useVerifyOtpMutation();
-  const [checkUserName, { data: checkUserNameData }] = useCheckUsernameMutation();
+  const [
+    verifyOtp,
+    { data: verifyOtpData, isLoading: verifyOtpLoading, error: verifyOtpError },
+  ] = useVerifyOtpMutation();
+  const [checkUserName, { data: checkUserNameData }] =
+    useCheckUsernameMutation();
   const [checkPhone, { data: checkPhoneData }] = useLazyCheckPhoneQuery();
   const [checkEmail, { data: checkEmailData }] = useCheckEmailMutation();
-  const [registerUser, { data: registrationData, error, isLoading }] = useRegisterMutation();
+  const [registerUser, { data: registrationData, error, isLoading }] =
+    useRegisterMutation();
 
-  const [isRegisteredSuccess, setIsRegisteredSuccess] = useState<boolean>(false);
+  const [isRegisteredSuccess, setIsRegisteredSuccess] =
+    useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
 
   const debouncedCheckUserName = useCallback(
@@ -146,15 +152,22 @@ const RegisterPage = () => {
   const validateForm = () => {
     const tempErrors: any = {};
     if (!formData.name) tempErrors.name = 'Name is required!';
-    if (formData.name.length > 25) tempErrors.name = 'Name must be less than 25 characters long';
+    if (formData.name.length > 25)
+      tempErrors.name = 'Name must be less than 25 characters long';
     if (!formData.username) tempErrors.username = 'Username is required!';
-    if (formData.username.length > 25) tempErrors.username = 'Username must be less than 25 characters long';
+    if (formData.username.length > 25)
+      tempErrors.username = 'Username must be less than 25 characters long';
     if (!formData.email) tempErrors.email = 'Email is required!';
-    if (!formData.email.match(/^\S+@\S+$/i)) tempErrors.email = 'Email is invalid';
-    if (formData.email !== formData.confirmEmail) tempErrors.confirmEmail = 'Emails do not match';
-    if (!formData.password || formData.password.length < 6) tempErrors.password = 'Password must be at least 6 characters long';
-    if (formData.recommendedMe && !formData.recommended) tempErrors.recommended = 'Please enter who recommended you to Floyx';
-    if (formData.recommendedMe && formData.recommended.length > 25) tempErrors.recommended = 'Name must be less than 25 characters long';
+    if (!formData.email.match(/^\S+@\S+$/i))
+      tempErrors.email = 'Email is invalid';
+    if (formData.email !== formData.confirmEmail)
+      tempErrors.confirmEmail = 'Emails do not match';
+    if (!formData.password || formData.password.length < 6)
+      tempErrors.password = 'Password must be at least 6 characters long';
+    if (formData.recommendedMe && !formData.recommended)
+      tempErrors.recommended = 'Please enter who recommended you to Floyx';
+    if (formData.recommendedMe && formData.recommended.length > 25)
+      tempErrors.recommended = 'Name must be less than 25 characters long';
 
     setFormError(tempErrors);
     return Object.values(tempErrors).every(value => value === '');
@@ -178,7 +191,9 @@ const RegisterPage = () => {
     }
   };
 
-  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     if (event.target.name === 'recommendedMe') {
       const copy: any = { ...formData };
 
@@ -216,10 +231,21 @@ const RegisterPage = () => {
       )}
       {!isRegisteredSuccess && (
         <>
-          <Typography variant="h3" gutterBottom color="textPrimary" align="center">
+          <Typography
+            variant="h3"
+            gutterBottom
+            color="textPrimary"
+            align="center"
+          >
             Create your account
           </Typography>
-          <Typography variant="h6" gutterBottom color="textPrimary" align="center" mt={3}>
+          <Typography
+            variant="h6"
+            gutterBottom
+            color="textPrimary"
+            align="center"
+            mt={3}
+          >
             Join for free today and keep your data safe in the digital space.
           </Typography>
           <Box
@@ -231,7 +257,12 @@ const RegisterPage = () => {
             border={`1px solid ${palette.action?.border}`}
             borderRadius="20px"
           >
-            <Typography align="center" variant="h4" gutterBottom color="textPrimary">
+            <Typography
+              align="center"
+              variant="h4"
+              gutterBottom
+              color="textPrimary"
+            >
               Personal account
             </Typography>
             <FormControl>
@@ -296,7 +327,9 @@ const RegisterPage = () => {
             <FormControl>
               <FormControlLabel
                 name="recommendedMe"
-                control={<Checkbox defaultChecked={false} onChange={onChangeHandler} />}
+                control={
+                  <Checkbox defaultChecked={false} onChange={onChangeHandler} />
+                }
                 label="Someone recommended Floyx to me (optional)"
               />
             </FormControl>
@@ -325,9 +358,15 @@ const RegisterPage = () => {
                     ),
                   }}
                 />
-                <Phone value={formData.phone} onChange={onChangeHandler} checkPhone={checkPhone} error={formError.phone} />
               </>
             )}
+
+            <Phone
+              value={formData.phone}
+              onChange={onChangeHandler}
+              checkPhone={checkPhone}
+              error={formError.phone}
+            />
 
             <FormControl>
               <FormLabel required>Email address</FormLabel>
@@ -401,15 +440,26 @@ const RegisterPage = () => {
             </FormControl>
             <FormControlLabel
               label={
-                <Typography fontSize="16px" fontWeight="400" sx={{ '& a': { color: '#5798FF', margin: '0 5px' } }}>
+                <Typography
+                  fontSize="16px"
+                  fontWeight="400"
+                  sx={{ '& a': { color: '#5798FF', margin: '0 5px' } }}
+                >
                   {'By Clicking "Sign Up" You agree to Floyx\'s'}
-                  <Link href={allRoutes.termsAndConditions}>Terms of Service</Link>,
-                  <Link href={allRoutes.privacyPolicy}>Privacy Policy</Link>
+                  <Link href={allRoutes.termsAndConditions}>
+                    Terms of Service
+                  </Link>
+                  ,<Link href={allRoutes.privacyPolicy}>Privacy Policy</Link>
                   {'and'}
                   <Link href={allRoutes.cookiesPolicy}>Cookie Policy</Link>
                 </Typography>
               }
-              control={<Checkbox checked={termsAndConditions} onChange={e => setTermsAndCondition(e.target.checked)} />}
+              control={
+                <Checkbox
+                  checked={termsAndConditions}
+                  onChange={e => setTermsAndCondition(e.target.checked)}
+                />
+              }
             />
             <Button
               type="submit"
@@ -422,7 +472,12 @@ const RegisterPage = () => {
               Sign Up
             </Button>
 
-            <Typography fontSize="16px" fontWeight="400" sx={{ '& a': { color: '#5798FF' } }} align="center">
+            <Typography
+              fontSize="16px"
+              fontWeight="400"
+              sx={{ '& a': { color: '#5798FF' } }}
+              align="center"
+            >
               Already have an account?
               <Link href={allRoutes.socialLogin}> Sign in</Link>
             </Typography>
@@ -435,11 +490,23 @@ const RegisterPage = () => {
               borderRadius: '20px',
             }}
           >
-            <Typography variant="body2" gutterBottom align="center" color={palette.primary[300]} sx={{ '& a': { color: '#5798FF' } }}>
-              Administrator the body responsible for administration of data as per Article 4 (7) of GDPR, namely Floyx LLC. – owner and
-              operator of Floyx platform and services, located in 16192 Coastal Highway, Lewes, Delaware 19958, County of Sussex, registered
-              by the Delaware Registered as a Limited Liability Company under Companies Act, 1961, registration number 6099676 (
-              <Link href={allRoutes.login}>more about processing your data.</Link>)
+            <Typography
+              variant="body2"
+              gutterBottom
+              align="center"
+              color={palette.primary[300]}
+              sx={{ '& a': { color: '#5798FF' } }}
+            >
+              Administrator the body responsible for administration of data as
+              per Article 4 (7) of GDPR, namely Floyx LLC. – owner and operator
+              of Floyx platform and services, located in 16192 Coastal Highway,
+              Lewes, Delaware 19958, County of Sussex, registered by the
+              Delaware Registered as a Limited Liability Company under Companies
+              Act, 1961, registration number 6099676 (
+              <Link href={allRoutes.login}>
+                more about processing your data.
+              </Link>
+              )
             </Typography>
           </Box>
 
