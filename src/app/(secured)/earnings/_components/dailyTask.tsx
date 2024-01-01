@@ -2,7 +2,14 @@
 /*  react/no-unescaped-entities */
 'use client';
 import * as React from 'react';
-import { Box, Typography, Stack, useMediaQuery, Skeleton } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Stack,
+  useMediaQuery,
+  Skeleton,
+  useTheme,
+} from '@mui/material';
 import DailTaskSTatusIcon from '@/iconComponents/dailyTaskStatusIcon';
 import {
   DailyTaskType,
@@ -22,11 +29,13 @@ import RemainingTimer from './remainingTimer';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor:
+      theme.palette.mode === 'dark' ? '#1B1830' : 'rgba(161, 197, 255, 0.13)',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor:
+      theme.palette.mode === 'dark' ? 'rgba(11, 8, 31, 1)' : '#fff',
   },
 }));
 
@@ -69,6 +78,7 @@ function DailyTaskTable({ rows }: { rows: DailyTaskType[] }) {
 
 // Example usage of the styled components
 const DailyTask: React.FC = () => {
+  const { palette } = useTheme();
   const {
     data: itemsdailyTaskList,
     isLoading: dailtyTaskLoading,
@@ -78,12 +88,16 @@ const DailyTask: React.FC = () => {
 
   return (
     <Box
-      sx={{ p: isMobile ? 0 : 2, overflow: 'hidden', borderRadius: '10px' }}
-      bgcolor="background.paper"
+      sx={{
+        p: isMobile ? 0 : 2,
+        overflow: 'hidden',
+        borderRadius: '10px',
+        backgroundColor: palette.primary.mainBackground,
+      }}
     >
       <Box p={1}>
         <Stack gap={2} alignItems="center" display="flex" direction="row">
-          <DailTaskSTatusIcon />
+          <DailTaskSTatusIcon fill={palette.background.default} />
           <Typography variant="body2" color="textPrimary">
             Every 24 hours the daily task system is reset. Those task you
             don&apos;t finish disappear and new ones appear. After restarting,
@@ -96,7 +110,12 @@ const DailyTask: React.FC = () => {
         {!dailtyTaskLoading && itemsdailyTaskList ? (
           <DailyTaskTable rows={itemsdailyTaskList} />
         ) : (
-          <Skeleton variant="rectangular" width="100%" height={'300px'} />
+          <Stack gap={1}>
+            <Skeleton variant="rectangular" width="100%" height={'60px'} />
+            <Skeleton variant="rectangular" width="100%" height={'60px'} />
+            <Skeleton variant="rectangular" width="100%" height={'30px'} />
+            <Skeleton variant="rectangular" width="100%" height={'30px'} />
+          </Stack>
         )}
       </Box>
     </Box>

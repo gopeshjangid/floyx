@@ -12,18 +12,31 @@ export const commentService = createApi({
     getCommentList: builder.query<UserComment[], string>({
       query: articleId => `${ApiEndpoint.GetComments}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || [],
-      providesTags: ['CommentList'],
+      providesTags: (result, error, articleId) => [
+        { type: 'CommentList', id: articleId },
+      ],
     }),
-    createComment: builder.mutation<any, any>({
+    createComment: builder.mutation<UserComment, any>({
       query: commantData => ({
         url: `${ApiEndpoint.AddComment}`,
         method: 'POST',
         body: commantData,
       }),
+      transformResponse: (response: any) => response?.value?.data,
       onQueryStarted: (arg, api) => {
-        api.queryFulfilled.then(() => {
-          console.log(arg.type);
+        api.queryFulfilled.then(response => {
           if (arg.type === 'PostComment') {
+            api.dispatch(
+              postServices.util.updateQueryData('getPosts', arg, draft => {
+                // Find the article in the draft data and update its comment count
+                const article = draft.postList.find(
+                  article => article.id === response.data.comment.itemId
+                );
+                if (article) {
+                  article.post.numberOfComments += 1;
+                }
+              })
+            );
             api.dispatch(
               postServices.util.invalidateTags([
                 { type: 'Posts', id: 'LIST' },
@@ -32,7 +45,7 @@ export const commentService = createApi({
             );
           } else {
             api.dispatch(artcileDetails.util.invalidateTags(['ArticleDetail']));
-            api.dispatch(commentService.util.invalidateTags(['CommentList']))
+            api.dispatch(commentService.util.invalidateTags(['CommentList']));
           }
         });
       },

@@ -113,7 +113,9 @@ export const artcileDetails = createApi({
       query: ({ username, pageSize }) =>
         `${ApiEndpoint.GetArticles}/${username}?count=${pageSize}`,
       transformResponse: (response: any) => response?.value?.data,
-      providesTags: ['articleListByuser'],
+      providesTags: (result, error, arg) => [
+        { type: 'articleListByuser', id: arg.username },
+      ],
     }),
     getFollowStatus: builder.mutation<any, string>({
       query: userName => ({
@@ -148,7 +150,7 @@ export const artcileDetails = createApi({
     getArticleTotalEarnings: builder.query<any, string>({
       query: articleId => `${ApiEndpoint.ArticleTotalEarning}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data,
-      providesTags: ['articleTip'],
+      providesTags: (result, error, arg) => [{ type: 'articleTip', id: arg }],
     }),
     setTip: builder.mutation<any, string>({
       query: payload => ({
@@ -170,7 +172,7 @@ export const artcileDetails = createApi({
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
-      providesTags: ['ArticleInfoNumber', 'deleteArticle'],
+      providesTags: ['ArticleInfoNumber'],
     }),
     checkArticleIsShared: builder.mutation<boolean, string>({
       query: articleId => ({
@@ -192,7 +194,7 @@ export const artcileDetails = createApi({
       query: payload => ({
         url: `${ApiEndpoint.CreateDraft}`,
         method: 'post',
-        body: payload,
+        body: { ...payload, articleTags: payload.articleTags.split(',') },
       }),
       transformResponse: (response: any) => {
         return response.value.data;
@@ -204,7 +206,7 @@ export const artcileDetails = createApi({
         return {
           url: `${ApiEndpoint.UpdateDraft}/${articleId}`,
           method: 'put',
-          body: payload,
+          body: { ...payload, articleTags: payload.articleTags.split(',') },
         };
       },
       transformResponse: (response: any) => response.value.data,
@@ -216,11 +218,7 @@ export const artcileDetails = createApi({
         body: {},
       }),
       transformResponse: (response: any) => response.value.data,
-      invalidatesTags: [
-        { type: 'ArticleList', id: 'popular' },
-        { type: 'ArticleList', id: 'recent' },
-        { type: 'ArticleList', id: 'following' },
-      ],
+      invalidatesTags: [{ type: 'ArticleList', id: 'recent' }],
     }),
     deleteArticle: builder.mutation<any, string>({
       query: articleId => ({
@@ -229,15 +227,16 @@ export const artcileDetails = createApi({
       }),
       invalidatesTags: ['deleteArticle'],
     }),
-    
+
     getDraftDetail: builder.query<any, void>({
       query: articleId => `${ApiEndpoint.GetDrafts}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || {},
     }),
-    getSearchArticle: builder.query<any, any>({
-      query: ({searchString}) => `${ApiEndpoint.SearchArticle}?query=${searchString}`,
+    getSearchArticle: builder.query<any, { searchString: string }>({
+      query: ({ searchString }) =>
+        `${ApiEndpoint.SearchArticle}?query=${searchString}`,
       providesTags: (result, error, type) => [
-        { type: 'ArticleList', id: type },
+        { type: 'SearchArticle', id: type.searchString },
       ],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
@@ -252,6 +251,7 @@ export const artcileDetails = createApi({
     'ArticleInfoNumber',
     'articleListByuser',
     'FollowedAccount',
+    'SearchArticle',
   ],
 });
 

@@ -1,5 +1,5 @@
-import * as React from "react";
-const VoteIcon = (props : any) => (
+import * as React from 'react';
+const VoteIcon = (props: any) => (
   <svg
     width={56}
     height={56}
@@ -8,8 +8,16 @@ const VoteIcon = (props : any) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <rect x={0.5} y={0.5} width={55} height={55} rx={8.5} fill="#F2F7FF" />
-    <rect x={0.5} y={0.5} width={55} height={55} rx={8.5} strokeWidth={'1px'} stroke={props.stroke} />
+    <rect x={0.5} y={0.5} width={55} height={55} rx={8.5} fill={props.fill} />
+    <rect
+      x={0.5}
+      y={0.5}
+      width={55}
+      height={55}
+      rx={8.5}
+      strokeWidth={'1px'}
+      stroke={props.stroke}
+    />
     <path
       d="M35.5 36.575H34.55C33.55 36.575 32.6 36.9625 31.9 37.6625L29.7625 39.775C28.7875 40.7375 27.2 40.7375 26.225 39.775L24.0875 37.6625C23.3875 36.9625 22.425 36.575 21.4375 36.575H20.5C18.425 36.575 16.75 34.9125 16.75 32.8625V19.225C16.75 17.175 18.425 15.5125 20.5 15.5125H35.5C37.575 15.5125 39.25 17.175 39.25 19.225V32.8625C39.25 34.9 37.575 36.575 35.5 36.575Z"
       stroke="url(#paint0_linear_307_10044)"

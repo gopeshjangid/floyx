@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { cookies } from 'next/headers';
 import React from 'react';
 function Layout({ children }: any) {
@@ -6,8 +6,15 @@ function Layout({ children }: any) {
   const deviceType = cookieStore.get('deviceType');
   const padding = deviceType && deviceType.value === 'desktop' ? 8 : 1.5;
   return (
-    <Box mt={2} p={2} px={padding} mx={padding}>
-      {children}
+    <Box mt={2} p={2}>
+      <Grid container>
+        <Grid item sm={10} xs={12}>
+          {children}
+        </Grid>
+        <Grid item sm={1} xs={12}>
+          &nbsp;
+        </Grid>
+      </Grid>
     </Box>
   );
 }

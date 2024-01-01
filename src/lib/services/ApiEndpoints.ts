@@ -122,10 +122,14 @@ export class ApiEndpoint {
   // End
 
   // Tags Api Start
-  public static GetPopularTags = ApiEndpoint.BasePath + '/api/v1/Articles/popularTags';
-  public static GetArticleByTag = ApiEndpoint.BasePath + '/api/v1/Articles/getArticlesByTag';
-  public static SearchArticle = ApiEndpoint.BasePath + '/api/v1/Articles/searchArticles';
-  
+  public static GetPopularTags =
+    ApiEndpoint.BasePath + '/api/v1/Articles/popularTags';
+  public static GetArticleByTag =
+    ApiEndpoint.BasePath + '/api/v1/Articles/getArticlesByTag';
+  public static SearchArticle =
+    ApiEndpoint.BasePath + '/api/v1/Articles/searchArticles';
+  public static SearchTag = ApiEndpoint.BasePath + '/api/v1/Articles/searchTag';
+
   //End
   // Post Api Start
   public static AddNewPost = ApiEndpoint.BasePath + '/api/v1/posts';

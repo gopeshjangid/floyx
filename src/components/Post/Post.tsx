@@ -1,12 +1,11 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
-
 import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';
 import PostImage from './PostImage';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import PostActionModal from './PostActionModal';
 import { useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
@@ -32,7 +31,7 @@ interface postDetail {
   showComments?: boolean | undefined;
 }
 
-export default function Post({
+function Post({
   name,
   username,
   createdDateTime,
@@ -129,3 +128,5 @@ export default function Post({
     </PostBox>
   );
 }
+
+export default React.memo(Post);

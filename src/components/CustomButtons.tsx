@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { styled } from '@mui/material';
 
-const StyledRoundPrimaryButton = styled(Button)(({ theme }) => ({
+const StyledRoundPrimaryButton = styled(Button)(() => ({
   backgroundColor: 'rgba(87, 152, 255, 0.23)',
   borderRadius: '24px',
   fontWeight: 500,

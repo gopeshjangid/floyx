@@ -257,6 +257,7 @@ type Dashboard = {
 };
 const DashboardBox: React.FC<Dashboard> = props => {
   const isMobile = useMediaQuery('(max-width:480px)');
+  //const { palette } = useTheme();
   return (
     <Box padding={isMobile ? 0 : '16px'}>
       <Box width="100%" height="80px" alignItems="center" display="flex">
@@ -276,9 +277,9 @@ const DashboardBox: React.FC<Dashboard> = props => {
               <Typography variant="subtitle2">
                 {props?.firstCountTitle}:&nbsp;&nbsp;&nbsp;
               </Typography>
-              <Typography variant="subtitle2" color="primary">
+              <Typography variant="subtitle2" sx={{ color: '#5798FF' }}>
                 {props.isLoading ? (
-                  <Skeleton sx={{ width: '25px' }} variant="text" />
+                  <Skeleton sx={{ width: '35px' }} variant="text" />
                 ) : (
                   props?.firstCount
                 )}
@@ -288,9 +289,9 @@ const DashboardBox: React.FC<Dashboard> = props => {
               <Typography variant="subtitle2">
                 {props?.secondTitle}:&nbsp;&nbsp;&nbsp;
               </Typography>
-              <Typography variant="subtitle2" color="primary">
+              <Typography variant="subtitle2" sx={{ color: '#5798FF' }}>
                 {props.isLoading ? (
-                  <Skeleton sx={{ width: '25px' }} variant="text" />
+                  <Skeleton sx={{ width: '35px' }} variant="text" />
                 ) : (
                   props?.secondCount
                 )}
@@ -299,7 +300,7 @@ const DashboardBox: React.FC<Dashboard> = props => {
           </Grid>
           <Grid item xs={12} sm={3}>
             {props.isLoading ? (
-              <Skeleton sx={{ height: '25px', width: '50px' }} variant="text" />
+              <Skeleton sx={{ height: '25px', width: '60px' }} variant="text" />
             ) : (
               props.historyButton
             )}
@@ -349,7 +350,7 @@ const Earnings: React.FC = () => {
         }, 0)
       : 0.0;
   return (
-    <Box sx={{ p: isMobile ? 0 : 2 }}>
+    <Box sx={{ p: isMobile ? 0 : 4 }}>
       <Box mb={1}>
         <PointsBalanceCard />
       </Box>
@@ -391,7 +392,7 @@ const Earnings: React.FC = () => {
           titleIcon={
             <VoteIcon
               fill={palette.background.paper}
-              stroke={palette.action.activatedOpacity}
+              stroke={palette.primary.boxBorder}
             />
           }
           firstCountTitle="Number of all votes cast"

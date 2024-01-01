@@ -11,6 +11,7 @@ import ProfileTickIcon from '@/images/image/profileTick';
 import PopularIcon from '@/images/image/popularIcon';
 import { GradientButton } from '../gradientButton';
 import { GradientText } from '../GradientComponents';
+import Link from 'next/link';
 
 const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
@@ -125,16 +126,11 @@ export default function ArticleHead({
           ))}
         </Tabs>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-          <GradientButton
-            variant="outlined"
-            color="primary"
-            // sx={{ border: '1px solid white' }}
-            // target="_blank"
-            href="/composer/create"
-            isSelected
-          >
-            <span>New Articles</span>
-          </GradientButton>
+          <Link href="/composer/create">
+            <GradientButton variant="outlined" color="primary" isSelected>
+              <span>New Article</span>
+            </GradientButton>
+          </Link>
         </Box>
       </ArticleHeadContainer>
       <Divider sx={{ color: 'white' }} />

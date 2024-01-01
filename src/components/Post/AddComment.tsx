@@ -1,7 +1,7 @@
 'use client';
 
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
 import UserAvatar from '../UserAvatar';
 import { useSession } from 'next-auth/react';
@@ -10,8 +10,10 @@ import {
   useCreateCommentMutation,
   useLazyGetUserSuggestionQuery,
 } from '@/lib/redux/slices/comments';
-import { useToast } from '../Toast/useToast';
+//import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
+import React, { useEffect } from 'react';
+import { UserComment } from '@/lib/redux';
 
 const AddCommentBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -26,6 +28,7 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
   '& .styled-input-container': {
     display: 'flex',
     width: '100%',
+    position: 'relative',
     alignItems: 'center',
     justifyContent: 'space-between',
     '& .mention-input': {
@@ -66,17 +69,23 @@ interface Props {
   commentText: string;
   setCommentText: any;
   commentRef: any;
+  onCreatedNewComment?: (
+    commentData: UserComment | undefined,
+    isLoading: boolean
+  ) => void;
 }
-export default function AddComment({
+function AddComment({
   id,
   commentRef,
   commentType,
   commentText,
   setCommentText,
+  onCreatedNewComment = (isLoading, comment) => {},
 }: Props) {
   const session = useSession();
-  const toast = useToast();
-  const [createComment, { isLoading }] = useCreateCommentMutation();
+  //const toast = useToast();
+  const [createComment, { isLoading, isSuccess, data: createdComment }] =
+    useCreateCommentMutation();
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
   const handlePostText = (e: any) => {
     const text = e.target.value;
@@ -95,6 +104,12 @@ export default function AddComment({
     callback(userList);
   };
 
+  useEffect(() => {
+    if (onCreatedNewComment && (isLoading || isSuccess)) {
+      onCreatedNewComment(createdComment, isLoading);
+    }
+  }, [isLoading, isSuccess, createdComment]);
+
   const onEnterPress = async (e: any) => {
     const addComment = {
       itemId: id,
@@ -103,7 +118,7 @@ export default function AddComment({
     };
     if (e.keyCode === 13 && e.shiftKey === false && commentText.length > 0) {
       await createComment(addComment);
-      toast.success('Comment is added successfully');
+      //toast.success('Comment is added successfully');
       setCommentText('');
     }
   };
@@ -121,6 +136,11 @@ export default function AddComment({
           alt={(session as any)?.data?.user?.username}
           sx={{ width: '49px', height: '49px' }}
         />
+        {isLoading && (
+          <Box sx={{ position: 'absolute', zIndex: 999, left: '13%' }}>
+            <CircularProgress thickness={2} size={30} />
+          </Box>
+        )}
         <Box className="mention-input">
           <MentionsInput
             inputRef={commentRef}
@@ -145,3 +165,5 @@ export default function AddComment({
     </AddCommentBox>
   );
 }
+
+export default React.memo(AddComment);

@@ -42,11 +42,8 @@ export const baseQuery = fetchBaseQuery({
       'FLOYX_TOKEN',
       isServer() ? getState()?.req : getCookie('FLOYX_TOKEN')
     );
-    if (token) {
-      headers.set('authorization', `Bearer ${token}`);
-    } else {
-      logout();
-    }
+    console.log({ token });
+    headers.set('authorization', `Bearer ${token}`);
     return headers;
   },
   responseHandler: async response => {
@@ -95,3 +92,13 @@ export const years = Array.from({ length: 2023 - 2000 + 1 }, (_, index) => ({
   label: String(index + 2000),
   value: String(index + 2000),
 }));
+
+export const debounce = (func: (...args: any[]) => void, delay: number) => {
+  let timer: any;
+  return function (...args: any[]) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};

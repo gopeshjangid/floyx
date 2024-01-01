@@ -12,7 +12,7 @@ type ApiResponse<T> = {
   };
 };
 
-type UserProfileDetails = {
+export type UserProfileDetails = {
   accountType: number;
   allowPrivateMassages: boolean;
   avatar: string;
@@ -137,9 +137,10 @@ export const profileService = createApi({
         ApiEndpoint.ProfileDetails + '/' + params?.username,
       transformResponse: (response: ApiResponse<UserProfileDetails>) =>
         response?.value?.data,
-      providesTags: ['profileDetails'],
+      providesTags: (result, data, type) => [
+        { type: 'profileDetails', id: type.username },
+      ],
       transformErrorResponse: (error, meta) => {
-        console.log('Error: ', error);
         return error;
       },
     }),
@@ -234,13 +235,15 @@ export const profileService = createApi({
     }),
     updateProfileDetail: builder.mutation<boolean, any>({
       query: profileDetail => ({
-        url: `${ApiEndpoint.ProfileDetails}`, // Assuming `id` is part of investmentData
-        method: 'POST', // or 'PATCH' for partial updates
+        url: `${ApiEndpoint.ProfileDetails}`,
+        method: 'POST',
         body: profileDetail,
       }),
       transformResponse: (response: ApiResponse<boolean>) =>
         response.value.data,
-      invalidatesTags: ['profileDetails'],
+      invalidatesTags: (result, error, arg) => [
+        { type: 'profileDetails', id: arg.username },
+      ],
     }),
     addReportUser: builder.mutation<ReportUser, Partial<ReportUser>>({
       query: profileAbout => ({
@@ -295,7 +298,12 @@ export const profileService = createApi({
         body: {},
       }),
       transformResponse: (response: any) => response.value,
-      invalidatesTags: ['profileAbout', 'profileDetails', 'PopularAccount', 'FollowedAccount'],
+      invalidatesTags: [
+        'profileAbout',
+        'profileDetails',
+        'PopularAccount',
+        'FollowedAccount',
+      ],
     }),
     getFollowMoreAccount: builder.query<any, void>({
       query: () => `${ApiEndpoint.AccountsToFallow}?forHome=true`,
@@ -331,5 +339,5 @@ export const {
   useFollowUserMutation,
   useAddReportArticleMutation,
   useUpdateProfileDetailMutation,
-  useGetFollowMoreAccountQuery
+  useGetFollowMoreAccountQuery,
 } = profileService;

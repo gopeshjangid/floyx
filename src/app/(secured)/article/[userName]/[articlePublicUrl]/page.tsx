@@ -64,13 +64,15 @@ async function Page({ params }: any) {
             </Suspense>
           </section>
           <section>
-            <Suspense
+            {/* <Suspense
               fallback={
                 <Skeleton variant="rectangular" width="100%" height="60px" />
               }
             >
-              <RecommendedTopics tags={articleDetails?.article?.tags ?? []} />
-            </Suspense>
+              <RecommendedTopics
+                setDynamicTab={articleDetails?.article?.tags ?? []}
+              />
+            </Suspense> */}
           </section>
         </>
       )}

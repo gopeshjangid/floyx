@@ -9,8 +9,7 @@ import {
   FormControl,
   FormLabel,
 } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
-
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import ArticleItems from './article-items';
 import ImageIcon from '@/assets/images/svg/image';
@@ -22,8 +21,7 @@ import {
   useUpdateDraftArticleMutation,
 } from '@/lib/redux';
 import { useToast } from '../Toast/useToast';
-import CustomChip from '../CustomGridientChip';
-import CustomTextField from '../CustomTextField';
+import TagAutocomplete from './articleTags';
 
 export const AddArticleFormBox = styled(Box)(({ theme }) => ({
   '& h5': {
@@ -67,7 +65,6 @@ export default function AddArticleForm({
 
   const [content, setContent] = useState<any>([]);
   const [title, setTitle] = useState<string>('');
-  const [hashtagValue, setHashTagValue] = useState<string>('');
   const [hashtags, setHashTags] = useState<string[]>([]);
   const [imagePreview, setImagePreview] = useState<any>('');
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('');
@@ -89,7 +86,7 @@ export default function AddArticleForm({
   const createArticleData = (title: string, content: any, file: any) => {
     const formData = new FormData();
     formData.append('title', title);
-    // formData.append('hashTags', hashtags);
+    formData.append('articleTags', hashtags.join(','));
     formData.append('content', JSON.stringify(content));
     formData.append('coverPhoto', file);
 
@@ -133,22 +130,6 @@ export default function AddArticleForm({
 
     if (!articleCreated) {
       createDraftArticle(value, content, imageToUpload);
-    }
-  };
-
-  const handleHashTags = event => {
-    setHashTagValue(event.target.value);
-    if (!articleCreated) {
-      // createDraftArticle(title, content)
-    }
-  };
-
-  const keyPress = event => {
-    if (event.keyCode == 13) {
-      if (event.target.value) {
-        setHashTags(val => [...val, event.target.value]);
-        setHashTagValue('');
-      }
     }
   };
 
@@ -199,7 +180,6 @@ export default function AddArticleForm({
   const resetAllState = () => {
     setContent([]);
     setTitle('');
-    setHashTagValue('');
     setHashTags([]);
     setImagePreview('');
     setImageToUpload('');
@@ -298,6 +278,13 @@ export default function AddArticleForm({
       resetAllState();
     }
   }, [isReset]);
+
+  const onSelectTags = useCallback(
+    tags => {
+      setHashTags(tags);
+    },
+    [setHashTags]
+  );
   return (
     <AddArticleFormBox>
       <TextField
@@ -320,16 +307,9 @@ export default function AddArticleForm({
       />
       <FormControl>
         <FormLabel>Add hashtags</FormLabel>
-        <CustomTextField
-          placeholder="Type a hashtag and press enter"
-          fullWidth
-          value={hashtagValue}
-          onChange={handleHashTags}
-          onKeyDown={keyPress}
-          sx={{ marginBottom: 2 }}
-        />
+        <TagAutocomplete onSelectTags={onSelectTags} />
       </FormControl>
-      {hashtags && hashtags.length > 0 && (
+      {/* {hashtags && hashtags.length > 0 && (
         <Stack flexWrap={'wrap'} direction={'row'} gap={1} marginBottom={2}>
           {hashtags.map((val, index) => (
             <CustomChip
@@ -342,7 +322,7 @@ export default function AddArticleForm({
             />
           ))}
         </Stack>
-      )}
+      )} */}
       <Stack
         mb={2}
         border={`2px dashed ${palette.action.border}`}

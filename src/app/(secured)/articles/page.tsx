@@ -44,7 +44,7 @@ export default function Page() {
     } else if (dynamicTab.searchBy === 'tag' && dynamicTab.tagId) {
       getArticlesByTag({ tagId: dynamicTab.tagId });
     } else if (dynamicTab.searchBy === 'search' && dynamicTab.tagId) {
-      searchArticle({ searchString: dynamicTab.value });
+      searchArticle({ searchString: dynamicTab.value ?? '' });
     }
   }, [tabName]);
 
@@ -79,17 +79,11 @@ export default function Page() {
               pt={1}
               sx={{ display: { xs: 'block', sm: 'none' } }}
             >
-              <GradientButton
-                variant="outlined"
-                color="primary"
-                // sx={{ border: '1px solid white' }}
-                // target="_blank"
-                href="/composer/create"
-                isSelected
-                LinkComponent={Link}
-              >
-                <span>New Articles</span>
-              </GradientButton>
+              <Link href="/composer/create">
+                <GradientButton variant="outlined" color="primary" isSelected>
+                  <span>New Articles</span>
+                </GradientButton>
+              </Link>
             </Box>
             <ArticleContent
               articleList={

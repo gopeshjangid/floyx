@@ -6,6 +6,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import HistoryIcon from '@mui/icons-material/History';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import {
   useGetActiveCurrencyQuery,
   useGetArticleTipHistoryQuery,
@@ -84,15 +85,16 @@ const TransactionHistory = React.memo(function TransactionCard() {
 
 const ArticleHistory = React.memo(function ArticleCard() {
   const { palette } = useTheme();
+  const router = useRouter();
   const session = useSession();
   const username = (session as any) ? session.data?.user.username : '';
   const { data } = useGetArticleTipHistoryQuery();
   const [showHistory, setShowHistory] = useState(false);
 
   const getUrl = url => {
-    return `${window.location.protocol}//${
-      window.location.host
-    }/article/${encodeURIComponent(username)}/${encodeURIComponent(url)}`;
+    return `${router.asPath}/article/${encodeURIComponent(
+      username
+    )}/${encodeURIComponent(url)}`;
   };
   return (
     <Box>
@@ -140,7 +142,7 @@ const ArticleHistory = React.memo(function ArticleCard() {
         variant="outlined"
         fullWidth
         onClick={() => setShowHistory(true)}
-        startIcon={<HistoryIcon />}
+        startIcon={<HistoryIcon sx={{ fill: '#5798FF', stroke: 'none' }} />}
       >
         History
       </Button>
@@ -150,15 +152,16 @@ const ArticleHistory = React.memo(function ArticleCard() {
 
 const VoteHistory = React.memo(function VoteHistory() {
   const { palette } = useTheme();
+  const router = useRouter();
   const session = useSession();
   const username = (session as any) ? session.data?.user.username : '';
   const { data } = useGetTipHistoryQuery();
   const [showHistory, setShowHistory] = useState(false);
 
   const getUrl = url => {
-    return `${window.location.protocol}//${
-      window.location.host
-    }/article/${encodeURIComponent(username)}/${encodeURIComponent(url)}`;
+    return `${router.asPath}/article/${encodeURIComponent(
+      username
+    )}/${encodeURIComponent(url)}`;
   };
   return (
     <Box>
@@ -206,7 +209,7 @@ const VoteHistory = React.memo(function VoteHistory() {
         variant="outlined"
         fullWidth
         onClick={() => setShowHistory(true)}
-        startIcon={<HistoryIcon />}
+        startIcon={<HistoryIcon sx={{ fill: '#5798FF', stroke: 'none' }} />}
       >
         History
       </Button>
@@ -260,7 +263,7 @@ const DailyTaskHistory = React.memo(function DailyHistory() {
         variant="outlined"
         fullWidth
         onClick={() => setShowHistory(true)}
-        startIcon={<HistoryIcon />}
+        startIcon={<HistoryIcon sx={{ fill: '#5798FF', stroke: 'none' }} />}
       >
         History
       </Button>

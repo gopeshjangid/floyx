@@ -1,6 +1,7 @@
 'use client';
 import { useFollowUserMutation } from '@/lib/redux/slices/profile';
 import ButtonWithLoading from './ButtonWithLoading';
+import { RefreshOutlined } from '@mui/icons-material';
 
 export default function FollowUser({
   username,
@@ -26,8 +27,13 @@ export default function FollowUser({
       isSuccess={isSuccess}
       isError={followError}
       buttonType="ROUND"
+      startIcon={followError && <RefreshOutlined />}
     >
-      {isFollowed ? 'Unfollow' : 'Follow'}
+      {followError
+        ? 'Retry'
+        : isFollowed
+          ? `Unfollow${isFollowing ? 'ing' : ''}`
+          : `Follow${isFollowing ? 'ing' : ''}`}
     </ButtonWithLoading>
   );
 }

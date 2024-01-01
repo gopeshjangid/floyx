@@ -91,7 +91,13 @@ const Page: React.FC = () => {
 
   return (
     <Box
-      sx={{ overflow: 'auto', height: window.document.body.clientHeight }}
+      sx={{
+        overflow: 'auto',
+        height:
+          typeof window !== undefined
+            ? window?.document?.body?.clientHeight
+            : 200,
+      }}
       ref={parentRef}
       id="scrollableDiv"
     >

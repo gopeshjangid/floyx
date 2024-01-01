@@ -83,8 +83,8 @@ export const postServices = createApi({
         postList: response?.value?.data || [],
         hasMore: response?.value?.hasMore,
       }),
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
+      serializeQueryArgs: ({ queryArgs }) => {
+        return JSON.stringify(queryArgs);
       },
       merge: (currentCache, newItems, otherArgs) => {
         if (currentCache) {
@@ -104,9 +104,17 @@ export const postServices = createApi({
         return currentArg !== previousArg;
       },
 
-      providesTags: ['PostListByUser'],
+      providesTags: (result, error, arg) => [
+        {
+          type: 'PostListByUser',
+          id: `${arg.username}-${arg.pageNumber}-${arg.postCreatedDate}`,
+        },
+      ],
     }),
-    getPosts: builder.query<{ postList: PostDetailResult[]; hasMore: boolean }, PostDetail>({
+    getPosts: builder.query<
+      { postList: PostDetailResult[]; hasMore: boolean },
+      PostDetail
+    >({
       query: ({ pageNumber, postCreatedDate }) => {
         const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
         if (!pageNumber) {
@@ -133,10 +141,45 @@ export const postServices = createApi({
             hasMore: newItems.postList.length === 10,
           };
       },
-
+      providesTags: (result, error, arg) => [
+        {
+          type: 'MainFeedList',
+          id: `main-feed-${arg.pageNumber}-${arg.postCreatedDate}`,
+        },
+      ],
       // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
+      },
+    }),
+    pollLatestPost: builder.query<
+      PostDetailResult[],
+      Omit<PostDetail, 'pageNumber'>
+    >({
+      query: ({ postCreatedDate }) => {
+        const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
+        return `${apiEndPoint}?page=0&postCreatedDate=${postCreatedDate}`;
+      },
+      transformResponse: (response: any) => response?.value?.data,
+      providesTags: (result, error, arg) => ['LatestMainFeedList'],
+      onQueryStarted: async (arg, { queryFulfilled, dispatch, getState }) => {
+        try {
+          const { data } = await queryFulfilled;
+          if (data?.length) {
+            //const currentState = getState().postsReducer;
+            dispatch(
+              postServices.util.updateQueryData(
+                'getPosts',
+                { ...arg, pageNumber: 0 },
+                draft => {
+                  draft.postList = [...data, ...draft.postList];
+                }
+              )
+            );
+          }
+        } catch (error) {
+          console.error('Failed to fetch latest posts:', error);
+        }
       },
     }),
     createPost: builder.mutation<any, FormData>({
@@ -145,7 +188,7 @@ export const postServices = createApi({
         method: 'POST',
         body: initialPost,
       }),
-      invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+      invalidatesTags: ['Posts', 'MainFeedList'],
     }),
     deletePost: builder.mutation<any, string>({
       query: id => ({
@@ -155,7 +198,14 @@ export const postServices = createApi({
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
   }),
-  tagTypes: ['Posts', 'postDetail', 'UserPostList', 'PostListByUser'],
+  tagTypes: [
+    'Posts',
+    'postDetail',
+    'UserPostList',
+    'PostListByUser',
+    'MainFeedList',
+    'LatestMainFeedList',
+  ],
 });
 
 export const {
@@ -164,4 +214,5 @@ export const {
   useCreatePostMutation,
   useDeletePostMutation,
   useGetPostListByUserQuery,
+  usePollLatestPostQuery,
 } = postServices;

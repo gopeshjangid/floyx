@@ -1,15 +1,13 @@
-// @ts-nocheck
-/* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+// @ts-check
 import { Box, Skeleton, Typography } from '@mui/material';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
-import Lightbox from "react-image-lightbox-rotate-fixed";
+import Lightbox from 'react-image-lightbox-rotate-fixed';
 import Post from './Post';
 
-export default function PostImage({ image, link, shared, isShared }: any) {
+export default function PostImage({ image, link, shared, isShared }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -25,8 +23,8 @@ export default function PostImage({ image, link, shared, isShared }: any) {
   }, []);
 
   const openInNewTab = () => {
-    window.open(link.url, "_blank")
-  }
+    window.open(link.url, '_blank');
+  };
 
   const handleImageLoad = () => {
     setLoading(false);
@@ -44,13 +42,17 @@ export default function PostImage({ image, link, shared, isShared }: any) {
             onLoad={handleImageLoad}
             height={0}
             sizes="100vw"
-            style={{ width: '100%', height: 'auto' }} // optional
+            style={{ width: '100%', height: 'auto' }}
             onClick={handleOpen}
             src={image.thumbnailPath}
             alt="thumbnail"
+            loading="lazy" // Lazy loading
           />
           {open && mounted && (
-            <Lightbox mainSrc={image.path} onCloseRequest={() => setOpen(false)} />
+            <Lightbox
+              mainSrc={image.path}
+              onCloseRequest={() => setOpen(false)}
+            />
           )}
         </Box>
       )}
@@ -61,13 +63,14 @@ export default function PostImage({ image, link, shared, isShared }: any) {
               width={0}
               height={0}
               sizes="100vw"
-              style={{ width: '100%', height: 'auto' }} // optional
+              style={{ width: '100%', height: 'auto' }}
               src={link.thumbnailPath}
               alt="thumbnail"
+              loading="lazy" // Lazy loading
             />
           )}
           <Box mt={1}>
-            <Typography component={'span'} sx={{ wordWrap: 'break-word' }}>
+            <Typography component="span" sx={{ wordWrap: 'break-word' }}>
               {link.startDate &&
                 moment(link.startDate).format('DD MMM YYYY - ')}{' '}
               {link.title}
@@ -77,21 +80,19 @@ export default function PostImage({ image, link, shared, isShared }: any) {
         </Box>
       )}
       {shared && !isShared && (
-        <>
-          <Link href={`/post/${shared?.post?.id}`}>
-            <Post
-              name={shared?.author?.name || ''}
-              username={shared?.author?.username || ''}
-              createdDateTime={shared?.post?.createdDateTime}
-              content={shared?.post?.content}
-              shared={shared?.post?.shared}
-              image={shared?.post?.image}
-              link={shared?.post?.link}
-              postId={shared?.post?.id}
-              isShared={true}
-            />
-          </Link>
-        </>
+        <Link href={`/post/${shared?.post?.id}`}>
+          <Post
+            name={shared?.author?.name || ''}
+            username={shared?.author?.username || ''}
+            createdDateTime={shared?.post?.createdDateTime}
+            content={shared?.post?.content}
+            shared={shared?.post?.shared}
+            image={shared?.post?.image}
+            link={shared?.post?.link}
+            postId={shared?.post?.id}
+            isShared={true}
+          />
+        </Link>
       )}
     </Box>
   );

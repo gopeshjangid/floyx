@@ -2,7 +2,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { useRouter } from 'next/navigation';
+import { redirect, usePathname, useRouter } from 'next/navigation';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -13,9 +13,9 @@ import ListItemButton, {
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import moment from 'moment';
-import { getCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import Link from 'next/link';
 import {
   useTheme,
@@ -29,7 +29,8 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Container,
+  Skeleton,
+  Stack,
 } from '@mui/material';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
@@ -53,6 +54,7 @@ import { AddCircleOutline } from '@mui/icons-material';
 import { GradientText } from '@/components/usernameLink';
 import SidebarProfileBar from '@/components/sidebarProfileInfo';
 import AddPost from '@/components/Post/AddPost';
+import { config } from '@/middleware';
 
 const drawerWidth = 240;
 
@@ -145,6 +147,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     messagesCount: 0,
     notifications: [],
   });
+  const pathname = usePathname();
   const session = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -249,8 +252,12 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      router.push('/login');
+    const isPrivate = config.matcher.includes(pathname);
+    if (!isLoggedIn && !pathname.includes('/login') && isPrivate) {
+      deleteCookie('FLOYX_TOKEN');
+      deleteCookie('next-auth.session-token');
+      signOut({ redirect: true });
+      //router.push('/login');
     }
   }, [isLoggedIn]);
 
@@ -318,10 +325,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   );
 
   const getDesktopLayout = () => {
-    if (isLoggedIn) {
-      return (
-        <Grid container columnSpacing={{ sm: 2, md: 3 }}>
-          <Grid item sm={3} md={4} lg={2}>
+    return (
+      <Grid container columnSpacing={{ sm: 2, md: 3 }}>
+        <Grid item sm={3} md={3} lg={2}>
+          {session.status === 'loading' ? (
+            <Stack gap={2} mt={6} height="100vh" p={2}>
+              <Skeleton variant="rectangular" width="100%" height="100vh" />
+            </Stack>
+          ) : isLoggedIn ? (
             <Paper
               elevation={0}
               sx={{
@@ -335,14 +346,15 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               {drawer}
               <SidebarProfileBar />
             </Paper>
-          </Grid>
-          <Grid item sm={9} md={8} lg={10}>
-            {children}
-          </Grid>
+          ) : (
+            <>&nbsp;</>
+          )}
         </Grid>
-      );
-    }
-    return <Container maxWidth="lg">{children}</Container>;
+        <Grid item sm={9} md={8} lg={10}>
+          {children}
+        </Grid>
+      </Grid>
+    );
   };
 
   const container = undefined;

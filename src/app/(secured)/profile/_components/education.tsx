@@ -25,6 +25,7 @@ import { months, years } from '@/lib/utils';
 import { useToast } from '@/components/Toast/useToast';
 import { useParams } from 'next/navigation';
 import { Education } from '@/components/ProfileActivityInfo';
+import { useSession } from 'next-auth/react';
 const elements = [
   {
     label: 'School',
@@ -92,16 +93,20 @@ const EducationForm: React.FC = () => {
   const toast = useToast();
   const params = useParams<{ username: string }>();
   const [action, setAction] = React.useState('');
+
+  const username = params?.username ?? '';
   const { data, isError, isLoading, error } = useGetProfileAboutQuery(
     {
-      username: params?.username ?? '',
+      username,
     },
     { skip: !params?.username }
   );
 
   const [addEducation, { isLoading: isAdding, error: addError, isSuccess }] =
     useAddEducationMutation();
-
+  const session = useSession();
+  const isSameuser =
+    session.status !== 'loading' && session.data?.user.username === username;
   const [
     updateEducation,
     { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSucess },
@@ -175,13 +180,17 @@ const EducationForm: React.FC = () => {
               </Typography>
             </Grid>{' '}
             <Grid item xs={8} textAlign="right">
-              <Button variant="outlined" onClick={() => setAction('ADD')}>
-                Add New
-              </Button>
+              {isSameuser ? (
+                <Button variant="outlined" onClick={() => setAction('ADD')}>
+                  Add New
+                </Button>
+              ) : (
+                ''
+              )}
             </Grid>
           </Grid>
         </Box>
-        {data?.educations ? (
+        {data?.educations && data?.educations.length > 0 ? (
           data?.educations?.map((education, index) => (
             <ProfileActivityInfo
               onEdit={onEditHandler}

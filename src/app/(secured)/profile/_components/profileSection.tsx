@@ -15,6 +15,7 @@ import {
   Button,
   BoxProps,
   LinearProgress,
+  Alert,
 } from '@mui/material';
 import {
   BorderColorOutlined,
@@ -23,7 +24,6 @@ import {
 } from '@mui/icons-material';
 import {
   ProfileInfoType,
-  useFollowUserMutation,
   //useGetCurrentProfileDetailsQuery,
   useGetProfileAboutQuery,
   useGetProfileDetailsQuery,
@@ -41,9 +41,9 @@ import { useToast } from '@/components/Toast/useToast';
 import { useSession } from 'next-auth/react';
 import CustomChip from '@/components/CustomGridientChip';
 import ImageUploader from '@/components/ImageUploader';
-import TextareaAutosize from '@/components/CustomTextArea';
-import ButtonWithLoading from '@/components/ButtonWithLoading';
 import { RoundPrimaryButton } from '@/components/CustomButtons';
+import FollowUser from '@/components/FollowUser';
+import TextareaAutosize from '@/components/CustomTextArea';
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
   top?: string;
@@ -119,29 +119,13 @@ const OtherUserProfileActions: React.FC<{
   username: string;
   allowPrivateMassages: boolean;
 }> = ({ username, allowPrivateMassages }) => {
-  const toast = useToast();
-  const { data: accountDetail, isError: AccountLoadError } =
-    useGetProfileDetailsQuery({ username: username! });
-
-  const [followUser, { isSuccess, isLoading, isError }] =
-    useFollowUserMutation();
+  const {
+    data: accountDetail,
+    isError: AccountLoadError,
+    isLoading,
+  } = useGetProfileDetailsQuery({ username: username! });
   const router = useRouter();
 
-  React.useEffect(() => {
-    if (isSuccess) {
-      toast.success(
-        `${!accountDetail?.followed ? 'Followed' : 'UnFollowed'} successfully`
-      );
-    }
-
-    if (isError) {
-      toast.error(
-        `Error occured in ${
-          !accountDetail?.followed ? 'Following' : 'UnFollowing'
-        }`
-      );
-    }
-  }, [isSuccess, isError]);
   return (
     <Stack
       justifyContent="flex-end"
@@ -151,29 +135,36 @@ const OtherUserProfileActions: React.FC<{
       gap={1}
       pr={2}
     >
-      <React.Suspense fallback={<Typography>Loading...</Typography>}>
-        <BlockReportUser username={username} onSuccess={() => {}} />
-      </React.Suspense>
-
-      {allowPrivateMassages && (
-        <RoundPrimaryButton
-          onClick={() => router.push('/inbox/' + username)}
-          variant="contained"
-          startIcon={<EmailOutlinedIcon color="primary" />}
-        >
-          Message
-        </RoundPrimaryButton>
+      {AccountLoadError && !accountDetail && (
+        <Box>
+          <Alert variant="outlined" severity="error">
+            Error in loading profile
+          </Alert>
+        </Box>
       )}
-      <ButtonWithLoading
-        isLoading={isLoading}
-        isSuccess={isSuccess}
-        variant="contained"
-        onClick={() => followUser({ username })}
-        disabled={AccountLoadError}
-        isError={isError}
-      >
-        {accountDetail?.followed ? 'Unfollow' : 'Follow'}
-      </ButtonWithLoading>
+      {isLoading && <Skeleton width="100%" height="40px" />}
+      {!isLoading && accountDetail && (
+        <>
+          <React.Suspense fallback={<Typography>Loading...</Typography>}>
+            <BlockReportUser username={username} onSuccess={() => {}} />
+          </React.Suspense>
+
+          {allowPrivateMassages && (
+            <RoundPrimaryButton
+              onClick={() => router.push('/inbox/' + username)}
+              variant="contained"
+              startIcon={<EmailOutlinedIcon color="primary" />}
+            >
+              Message
+            </RoundPrimaryButton>
+          )}
+          <FollowUser
+            username={username}
+            isFollowed={accountDetail?.followed}
+          />
+        </>
+      )}
+
       {/* <IconButton>
         <NotificationAddOutlinedIcon color="primary" />
       </IconButton> */}
@@ -262,6 +253,7 @@ const ProfileSection: React.FC = () => {
     formData.append('shortDescription', String(form.shortDescription));
     formData.append('deleteAvatar', Boolean(form.deleteAvatar) as any); // Convert boolean to string
     formData.append('deleteBgImage', Boolean('') as any); // Convert boolean to string
+    formData.append('username', username);
     updateProfile(formData);
   };
 
@@ -381,7 +373,7 @@ const ProfileSection: React.FC = () => {
                   />
                 </ProfileCoverUploader>
               )}
-              {!isEdit && (
+              {!isEdit && isSameuser && (
                 <ProfileFollowerWrapper
                   isMobile={isMobile}
                   top="4%"

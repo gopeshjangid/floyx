@@ -22,7 +22,7 @@ import DottedButton from './dottedButton';
 import ShareIcon from '@/images/image/shareIcon';
 import FlagIcon from '@/images/image/flagIcon';
 import BlockUserIcon from '@/images/image/blockUser';
-import { DOMElement, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ActionModal from './actionModal';
 import { useDeleteArticleMutation } from '@/lib/redux';
 import { useRouter } from 'next/navigation';
@@ -56,10 +56,6 @@ const ArticleContent = styled(Box)(({ theme }) => ({
         height: '100%',
       },
     },
-    // img: {
-    //   width: '100%',
-    //   // aspectRatio: '1/1',
-    // },
   },
   '& .details': {
     borderRadius: '0 10px 10px 0',
@@ -238,9 +234,8 @@ export default function ArticleContainer({
                       backgroundColor: palette.background.paper,
                     }}
                   >
-                    {'No Image'}
+                    <Typography variant="body2">No Image</Typography>
                   </Box>
-
                   <Box className="dottedButton">
                     <DottedButton
                       options={addEdittype ? addEditoptions : options}
@@ -295,7 +290,7 @@ export default function ArticleContainer({
                 <Typography
                   variant="body2"
                   // color={"textPrimary"}
-                  component={'span'} 
+                  component={'span'}
                   color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
                   sx={{
                     minHeight: `${40}px`,

@@ -8,6 +8,11 @@ interface PopularTags {
   tagName: string;
 }
 
+interface TagType {
+  name: string;
+  tagCount: number;
+}
+
 export const tagServices = createApi({
   reducerPath: 'tagsReducer',
   baseQuery: baseQuery,
@@ -20,7 +25,11 @@ export const tagServices = createApi({
     getArticleByTags: builder.query<any, any>({
       query: ({ tagId }) => `${ApiEndpoint.GetArticleByTag}?tagId=${tagId}`,
       transformResponse: (response: any) => response?.value?.data,
-    })
+    }),
+    searchArticleTags: builder.query<TagType[], { tag: string }>({
+      query: ({ tag }) => `${ApiEndpoint.SearchTag}?tag=${tag}`,
+      transformResponse: (response: any) => response?.value?.data,
+    }),
   }),
   tagTypes: ['popularTags'],
 });
@@ -28,4 +37,5 @@ export const tagServices = createApi({
 export const {
   useGetPopularTagsQuery,
   useLazyGetArticleByTagsQuery,
+  useLazySearchArticleTagsQuery,
 } = tagServices;

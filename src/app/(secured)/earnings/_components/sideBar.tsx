@@ -26,9 +26,11 @@ import {
 import CustomDialog from '@/components/CustomDialog';
 import moment from 'moment';
 import UsernameLink from '@/components/usernameLink';
+import { useRouter } from 'next/navigation';
 
 const CopyableInput = () => {
   const session = useSession();
+  const router = useRouter();
   const username = (session as any) ? session.data?.user.username : '';
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -64,11 +66,7 @@ const CopyableInput = () => {
         username: username,
       })
     );
-    return (
-      window.location.href.replace(window.location.pathname, '') +
-      '/registration?token=' +
-      token
-    );
+    return `${router.asPath}/${'registration?token=' + token}}`;
   };
 
   return (

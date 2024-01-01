@@ -21,6 +21,7 @@ import ProfileActivityInfo, { Project } from '@/components/ProfileActivityInfo';
 import DynamicForm from './addEditActivity';
 import { useToast } from '@/components/Toast/useToast';
 import { useParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const elements = [
   {
@@ -76,7 +77,9 @@ const InvestmentForm: React.FC = () => {
     },
     { skip: !username }
   );
-
+  const session = useSession();
+  const isSameuser =
+    session.status !== 'loading' && session.data?.user.username === username;
   const [addInvestment, { isLoading: isAdding, error: addError, isSuccess }] =
     useAddInvestmentMutation();
   const [
@@ -153,13 +156,17 @@ const InvestmentForm: React.FC = () => {
               </Typography>
             </Grid>{' '}
             <Grid item xs={8} textAlign="right">
-              <Button variant="outlined" onClick={() => setAction('ADD')}>
-                Add New
-              </Button>
+              {isSameuser ? (
+                <Button variant="outlined" onClick={() => setAction('ADD')}>
+                  Add New
+                </Button>
+              ) : (
+                ''
+              )}
             </Grid>
           </Grid>
         </Box>
-        {data?.investments ? (
+        {data?.investments && data?.investments.length > 0 ? (
           data?.investments?.map((investment, index) => (
             <ProfileActivityInfo
               onEdit={onEditHandler}
