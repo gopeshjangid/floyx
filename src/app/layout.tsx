@@ -56,7 +56,9 @@ export default function RootLayout({
                 loading={<DefaultCircularProgress />}
                 persistor={persistor}
               > */}
-              <PageProvider>{children}</PageProvider>
+              <PageProvider>
+                {children}
+              </PageProvider>
               {/* </PersistGate> */}
             </Provider>
           </AuthProvider>
