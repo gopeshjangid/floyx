@@ -7,17 +7,23 @@ import { useSession } from 'next-auth/react';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import UsernameLink from '../usernameLink';
-import React from 'react';
-import { formatIndianNumber } from "@/lib/utils";
+import React, { useEffect } from 'react';
+import { formatIndianNumber } from '@/lib/utils';
 
-function Comment({ comment, inputRef, type, setCommentText }: any) {
-  const [updateLike] = useLikeItemMutation();
+function Comment({ comment, inputRef, type, onAction, setCommentText }: any) {
+  const [updateLike, { data, isSuccess }] = useLikeItemMutation();
   const session = useSession();
   const { palette } = useTheme();
 
   const commentLikeUnlike = async () => {
     await updateLike({ articleId: comment?.comment?.id, type });
   };
+
+  useEffect(() => {
+    if (onAction && isSuccess && data) {
+      onAction({ ...data, id: comment?.comment?.id });
+    }
+  }, [isSuccess, data]);
 
   const onReply = () => {
     setCommentText(`@${(session as any)?.data?.user?.username}`);
@@ -92,8 +98,7 @@ function Comment({ comment, inputRef, type, setCommentText }: any) {
               textTransform={'none'}
               marginBottom={0}
             >
-              {formatIndianNumber(comment?.comment?.numberOfLikes)}{' '}
-              Like
+              {formatIndianNumber(comment?.comment?.numberOfLikes)} Like
             </Typography>
           </Button>
           <Button

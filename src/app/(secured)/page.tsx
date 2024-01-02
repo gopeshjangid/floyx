@@ -6,11 +6,18 @@ import RecentArticles from '@/components/PopularToday';
 import AddPost from '@/components/Post/AddPost';
 import PostList from '@/components/Post/PostList';
 import PostHeader from '@/components/PostHeader';
-import { useGetPostsQuery, usePollLatestPostQuery } from '@/lib/redux';
+import {
+  PostDetailResult,
+  postServices,
+  useGetPostsQuery,
+  useStore,
+} from '@/lib/redux';
 
 import { Box, Grid, Skeleton, useMediaQuery } from '@mui/material';
-import { Suspense, useCallback, useState } from 'react';
-
+import { Suspense, useCallback, useEffect, useState } from 'react';
+import * as signalR from '@microsoft/signalr';
+import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
+import { getCookie } from 'cookies-next';
 export interface apiParams {
   pageNumber: number;
   postCreatedDate: number;
@@ -26,28 +33,47 @@ export default function Page() {
     postCreatedDate: 0,
   });
 
+  const store = useStore({});
   const isMobile = useMediaQuery('(max-width:480px)');
   const { data, isFetching } = useGetPostsQuery(apiParams);
   const postData = data?.postList;
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
-
-  //const [latestPostDateTime, setLatestPostDateTime] = useState(Date.now());
-  // const { data: latestPosts, refetch } = usePollLatestPostQuery(
-  //   { postCreatedDate: latestPostDateTime },
-  //   {
-  //     pollingInterval: 60000, // Poll every 60 seconds
-  //     //skip: false, // Replace with your logic to determine if the screen is focused
-  //   }
-  // );
-
-  // // Logic to update latestPostDateTime based on the latest post received
-  // useEffect(() => {
-  //   if (latestPosts?.length) {
-  //     setLatestPostDateTime(
-  //       latestPosts[latestPosts.length - 1].post.createdDateTime
-  //     );
-  //   }
-  // }, [latestPosts]);
+  const initSignalR = () => {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(ApiEndpoint.BasePath + '/posthub', {
+        accessTokenFactory: async () => {
+          const token = getCookie('FLOYX_TOKEN');
+          return token ?? '';
+        },
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets,
+      })
+      .build();
+    connection.start().catch(err => console.log(err));
+    connection.on('UpdatePost', (newPost: PostDetailResult) => {
+      const { dispatch } = store;
+      dispatch(
+        postServices.util.updateQueryData(
+          'getPosts',
+          {
+            pageNumber: 1,
+            postCreatedDate: postData ? postData[0].post.createdDateTime : 0,
+          },
+          draft => {
+            draft.postList.map(post => {
+              if (post.id === newPost.id) {
+                return { ...post, ...newPost };
+              }
+              return post;
+            });
+          }
+        )
+      );
+    });
+  };
+  useEffect(() => {
+    initSignalR();
+  }, []);
 
   const debounce = (func: (...args: any[]) => void, delay: number) => {
     let timer: any;

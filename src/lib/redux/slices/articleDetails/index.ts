@@ -124,28 +124,31 @@ export const artcileDetails = createApi({
       }),
       transformResponse: (response: any) => response?.value?.data,
       invalidatesTags: (_, __, arg) =>
-        arg.type === 'ArticleLike' ? ['ArticleDetail'] : [],
+        arg.type === 'ArticleLike'
+          ? ['ArticleDetail']
+          : [{ type: 'CommentList', id: arg.articleId }],
       onQueryStarted: (arg, api) => {
-        api.queryFulfilled.then((response) => {
+        api.queryFulfilled.then(response => {
           if (arg.type == 'PostLike') {
             api.dispatch(
-              postServices.util.updateQueryData('getPosts', {
-                pageNumber: 0,
-                postCreatedDate: 0
-              }, draft => {
-                // Find the article in the draft data and update its comment count
-                const article = draft.postList.find(
-                  article => article.id === arg.articleId
-                );
-                if (article) {
-                  console.log(article.post)
-                  article.post.numberOfLikes = response?.data?.numberOfLikes;
+              postServices.util.updateQueryData(
+                'getPosts',
+                {
+                  pageNumber: 0,
+                  postCreatedDate: 0,
+                },
+                draft => {
+                  // Find the article in the draft data and update its comment count
+                  const article = draft.postList.find(
+                    article => article.id === arg.articleId
+                  );
+                  if (article) {
+                    article.post.numberOfLikes = response?.data?.numberOfLikes;
+                  }
                 }
-              }),
+              )
             );
-            api.dispatch(
-              postServices.util.invalidateTags(['postDetail']),
-            );
+            api.dispatch(postServices.util.invalidateTags(['postDetail']));
           } else if (arg.type == 'PostCommentLiked') {
             api.dispatch(commentService.util.invalidateTags(['CommentList']));
           }
@@ -257,6 +260,7 @@ export const artcileDetails = createApi({
     'articleListByuser',
     'FollowedAccount',
     'SearchArticle',
+    'CommentList',
   ],
 });
 

@@ -42,7 +42,6 @@ export const baseQuery = fetchBaseQuery({
       'FLOYX_TOKEN',
       isServer() ? getState()?.req : getCookie('FLOYX_TOKEN')
     );
-    console.log({ token });
     headers.set('authorization', `Bearer ${token}`);
     return headers;
   },
@@ -117,4 +116,4 @@ export const formatIndianNumber = (num: number) => {
   } else {
     return num;
   }
-}
+};
