@@ -20,16 +20,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { MoreHorizOutlined } from '@mui/icons-material';
 import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
 import OutlinedFlagOutlinedIcon from '@mui/icons-material/OutlinedFlagOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import TextareaAutosize from '@/components/CustomTextArea';
 import {
   useAddReportUserMutation,
   useBlockUserMutation,
 } from '@/lib/redux/slices/profile';
 import { useToast } from '@/components/Toast/useToast';
+import DeleteModal from '../../inbox/components/delete-modal';
 
 interface UserActionModalProps {
   onSuccess: (status: string) => void;
   username: string;
+  isDeleteUser?: boolean;
+  handleDelete?: () => void;
+  deleteLoading?: boolean;
 }
 
 const BlockUserDisclaimer = () => {
@@ -118,13 +123,21 @@ const ReportUserDisclaimer: React.FC<{
 // The component itself
 const BlockReportUser: React.FC<UserActionModalProps> = ({
   username,
+  isDeleteUser,
   onSuccess,
+  handleDelete,
+  deleteLoading,
 }) => {
   const toast = useToast();
   const { palette } = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const onDelete = () => {
+    setDeleteModal(true);
+  };
 
   const [blockUser, { isSuccess: isBlocked }] = useBlockUserMutation();
   const [reportUser, { isSuccess: isReported }] = useAddReportUserMutation();
@@ -186,6 +199,14 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
 
   return (
     <>
+      {deleteModal && (
+        <DeleteModal
+          onClose={() => setDeleteModal(false)}
+          onConfirm={handleDelete!}
+          isLoading={deleteLoading}
+        />
+      )}
+
       <Box position="relative">
         <IconButton onClick={handleClick}>
           <MoreHorizOutlined color="primary" />
@@ -224,6 +245,17 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
               >
                 Report User
               </Button>
+
+              {isDeleteUser && (
+                <Button
+                  onClick={() => onDelete()}
+                  color="inherit"
+                  sx={{ fontSize: '12px' }}
+                  startIcon={<DeleteOutlinedIcon />}
+                >
+                  Delete Chat
+                </Button>
+              )}
             </Stack>
           </Paper>
         </Popover>
