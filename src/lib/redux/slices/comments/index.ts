@@ -27,7 +27,10 @@ export const commentService = createApi({
         api.queryFulfilled.then(response => {
           if (arg.type === 'PostComment') {
             api.dispatch(
-              postServices.util.updateQueryData('getPosts', arg, draft => {
+              postServices.util.updateQueryData('getPosts', {
+                pageNumber: 0,
+                postCreatedDate: 0
+              }, draft => {
                 // Find the article in the draft data and update its comment count
                 const article = draft.postList.find(
                   article => article.id === response.data.comment.itemId

@@ -9,6 +9,7 @@ import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { Metadata, ResolvingMetadata } from 'next';
 import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
 import LoginHeader from '@/components/LoginHeader';
+import ArticleLikeCommnent from "@/components/fullArticle/ArticleLikeComment";
 
 async function Page({ params }: any) {
   const userName = params?.userName;
@@ -54,12 +55,9 @@ async function Page({ params }: any) {
                 <Skeleton variant="rectangular" width="100%" height="60px" />
               }
             >
-              <LikesComments
-                likesCommentsDetails={articleDetails?.article}
-                itemId={articleId}
-                showComments={true}
-                articleId={articleId}
-                isArticle
+              <ArticleLikeCommnent
+                userName={userName}
+                articlePuclicUrl={articlePuclicUrl}
               />
             </Suspense>
           </section>

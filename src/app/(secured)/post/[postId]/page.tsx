@@ -13,12 +13,6 @@ export default function Page({ params }: { params: { postId: string } }) {
   return (
     <>
       <LoginHeader />
-      <Grid
-        sx={{
-          width: { xs: '100%', sm: '70%' },
-        }}
-        marginBottom={2}
-      >
         {isLoading ? (
           <DefaultPageSkelton showOnlyContent />
         ) : (
@@ -33,12 +27,10 @@ export default function Page({ params }: { params: { postId: string } }) {
               link={postDetail?.post?.link}
               postDetails={postDetail?.post}
               postId={postDetail?.id}
-              commentList={commentList}
               showComments={true}
             />
           )
         )}
-      </Grid>
     </>
   );
 }

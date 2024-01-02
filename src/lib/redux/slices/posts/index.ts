@@ -59,6 +59,13 @@ type PostListByUserArgs = {
   postCreatedDate: number;
 };
 
+interface sharePostArgs {
+  postId: string;
+  payload: {
+    content: string;
+  };
+}
+
 export const postServices = createApi({
   reducerPath: 'postsReducer',
   baseQuery: baseQuery,
@@ -67,6 +74,15 @@ export const postServices = createApi({
       query: id => `${ApiEndpoint.GetPosts}/post/${id}`,
       transformResponse: (response: any) => response?.value?.data,
       providesTags: ['postDetail'],
+    }),
+    sharePost: builder.mutation<any, sharePostArgs>({
+      query: ({ postId, payload }) => ({
+        url: `${ApiEndpoint.SharePost}/${postId}`,
+        method: 'POST',
+        body: payload,
+      }),
+      transformResponse: (response: any) => response?.value?.data || {},
+      invalidatesTags: ['MainFeedList'],
     }),
     getPostListByUser: builder.query<
       { postList: PostDetailResult[]; hasMore: boolean },
@@ -215,4 +231,5 @@ export const {
   useDeletePostMutation,
   useGetPostListByUserQuery,
   usePollLatestPostQuery,
+  useSharePostMutation,
 } = postServices;

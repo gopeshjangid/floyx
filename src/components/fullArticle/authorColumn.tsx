@@ -3,7 +3,6 @@
 import ArticleIcon from '@/images/image/articleIcon';
 import LinkIcon from '@/images/image/linkIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
-import { useGetFollowStatusMutation } from '@/lib/redux/slices/articleDetails';
 import { Box, Typography, Link, Stack, Divider } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import UsernameLink from '../usernameLink';
@@ -54,7 +53,6 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
 }));
 
 export default function AuthorCoulmn({ details }: any) {
-  const [updatePost] = useGetFollowStatusMutation();
   const { palette } = useTheme();
   const router = useRouter();
   const { data: profile } = useGetProfileDetailsQuery(

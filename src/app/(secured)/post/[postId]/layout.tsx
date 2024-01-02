@@ -1,15 +1,18 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { getMetaData } from '@/lib/SEO';
-import { cookies } from 'next/headers';
 
 export default function RootLayout({ children }: any) {
-  const cookieStore = cookies();
-  const deviceType = cookieStore.get('deviceType');
-  const padding = deviceType && deviceType.value === 'desktop' ? 8 : 1.5;
   return (
-    <Box py={0} px={padding}>
-      {children}
+    <Box mt={2} p={2}>
+      <Grid container>
+        <Grid item sm={10} xs={12}>
+          {children}
+        </Grid>
+        <Grid item sm={1} xs={12}>
+          &nbsp;
+        </Grid>
+      </Grid>
     </Box>
   );
 }
