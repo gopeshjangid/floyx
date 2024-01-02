@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -9,16 +8,13 @@ import {
   styled,
   useTheme,
 } from '@mui/material';
-import React, { useState } from 'react';
-// import DeleteIcon from '@mui/icons-material/Delete';
+import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { allRoutes } from '@/constants/allRoutes';
 import UserAvatar from '@/components/UserAvatar';
-import { iconTrash } from '@/assets/images';
 import { getRelativeTime } from '@/lib/utils';
-import DeleteModal from '../delete-modal';
+import BlockReportUser from '@/app/(secured)/profile/_components/blockReportUser';
 
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
@@ -50,21 +46,9 @@ const ChatHeader = ({
   deleteLoading,
 }: IChatCard) => {
   const { palette } = useTheme();
-  const [deleteModal, setDeleteModal] = useState(false);
-
-  const onDelete = () => {
-    setDeleteModal(true);
-  };
 
   return (
     <>
-      {deleteModal && (
-        <DeleteModal
-          onClose={() => setDeleteModal(false)}
-          onConfirm={handleDelete}
-          isLoading={deleteLoading}
-        />
-      )}
       <ChatWrapper>
         <Link href={`${allRoutes.profile}/${username}`}>
           <ListItemAvatar>
@@ -105,18 +89,13 @@ const ChatHeader = ({
                 </Typography>
               </Link>
 
-              <Button
-                size="small"
-                sx={{
-                  color: '#FA6B7C',
-                  fontWeight: 500,
-                  alignItems: 'flex-start',
-                }}
-                startIcon={<Image src={iconTrash} alt="trash" />}
-                onClick={onDelete}
-              >
-                Delete
-              </Button>
+              <BlockReportUser
+                username={username}
+                onSuccess={() => {}}
+                isDeleteUser
+                handleDelete={handleDelete}
+                deleteLoading={deleteLoading}
+              />
             </Box>
           }
           secondary={
