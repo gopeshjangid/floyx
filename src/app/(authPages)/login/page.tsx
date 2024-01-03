@@ -163,7 +163,7 @@ const Login: FC = () => {
             color={palette.text.primary}
             textAlign="left"
           >
-            Login to your accountsss
+            Login to your account
           </Typography>
           <Box component="form" m={0} noValidate onSubmit={login}>
             <FormControl>

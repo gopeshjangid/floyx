@@ -51,7 +51,7 @@ const SocialLogin: FC = () => {
             color={palette.text.primary}
             textAlign="left"
           >
-            Login to your accountssa
+            Login to your account
           </Typography>
           <SignInGoogle />
           <SignInFacebook />
