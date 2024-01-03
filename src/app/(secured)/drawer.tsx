@@ -253,13 +253,18 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const isPrivate = config.matcher.includes(pathname);
-    if (!isLoggedIn && !pathname.includes('/login') && isPrivate) {
+    if (
+      session.status !== 'loading' &&
+      !isLoggedIn &&
+      !pathname.includes('/login') &&
+      isPrivate
+    ) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
       signOut({ redirect: true });
       //router.push('/login');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, session.status]);
 
   const getMessageCount = () => {
     setDrawerData(prev => ({
