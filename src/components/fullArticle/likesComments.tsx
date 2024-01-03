@@ -340,7 +340,6 @@ function LikesComments({
           </>)}
           {!isArticle && (
             <>
-              {/* {JSON.stringify(likesCommentsDetails)} */}
               <AddComment
                 id={itemId}
                 commentRef={commentRef}

@@ -118,3 +118,14 @@ export const formatIndianNumber = (num: number) => {
     return num;
   }
 }
+
+  export const addLinks = (content: any) => {
+    if (!content) {
+      return '';
+    }
+    const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm;
+    const link = '<a href="/profile/$2">@$2</a>';
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urlLink = '<a href="$1" target="_blank">$1</a>';
+    return content.replace(urlRegex, urlLink).replace(profileRegex, link);
+  };

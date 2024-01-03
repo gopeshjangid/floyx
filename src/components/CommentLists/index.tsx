@@ -8,7 +8,7 @@ import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import UsernameLink from '../usernameLink';
 import React from 'react';
-import { formatIndianNumber } from "@/lib/utils";
+import { addLinks, formatIndianNumber } from "@/lib/utils";
 
 function Comment({ comment, inputRef, type, setCommentText }: any) {
   const [updateLike] = useLikeItemMutation();
@@ -22,17 +22,6 @@ function Comment({ comment, inputRef, type, setCommentText }: any) {
   const onReply = () => {
     setCommentText(`@${(session as any)?.data?.user?.username}`);
     inputRef.current.focus();
-  };
-
-  const addLinks = (content: any) => {
-    if (!content) {
-      return '';
-    }
-    const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm;
-    const link = '<a href="/profile/$2">@$2</a>';
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const urlLink = '<a href="$1" target="_blank">$1</a>';
-    return content.replace(urlRegex, urlLink).replace(profileRegex, link);
   };
 
   return (
