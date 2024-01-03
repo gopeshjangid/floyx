@@ -93,13 +93,13 @@ function Post({
           </Box>
         </Box>
         <Box>
-          <Typography sx={{ wordWrap: 'break-word' }} variant="h6">
-            <pre
-              dangerouslySetInnerHTML={{
+          <Typography
+            sx={{ wordWrap: 'break-word' }}
+            variant="h6"
+            dangerouslySetInnerHTML={{
               __html: addLinks(content),
-              }}
-            />
-          </Typography>
+            }}
+          />         
         </Box>
         <PostImage
           image={image}

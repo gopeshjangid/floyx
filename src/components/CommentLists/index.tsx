@@ -55,7 +55,6 @@ function Comment({ comment, inputRef, type, setCommentText }: any) {
             background: palette.mode == 'dark' ? '#1B1830' : '#fff',
           }}
         >
-          {/* <Typography>{comment?.comment?.content}</Typography> */}
           <pre
             style={{
               whiteSpace: 'pre-wrap',
