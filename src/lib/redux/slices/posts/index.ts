@@ -179,7 +179,7 @@ export const postServices = createApi({
         try {
           const { data } = await queryFulfilled;
           const currentState = getState().postsReducer;
-          console.log('Query updating postsReducer====', currentState);
+          console.log('Query updating onquery satrted====', currentState);
           dispatch(
             postServices.util.updateQueryData(
               'getPosts',
