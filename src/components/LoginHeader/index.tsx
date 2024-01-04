@@ -45,8 +45,6 @@ const LoginHeader = () => {
       const response = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
-        // redirect: false,
-        callbackUrl: `${window.location.origin}/`,
       });
 
       setLoading(false);
