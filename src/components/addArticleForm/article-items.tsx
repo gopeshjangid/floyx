@@ -201,7 +201,6 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   };
 
   const addInput = (index: number) => {
-    console.trace();
     let { inputsList } = state;
     const arrayIndex = inputsList.findIndex((x: any) => x.index === index);
     let maximumIndex: number = Math.max(
