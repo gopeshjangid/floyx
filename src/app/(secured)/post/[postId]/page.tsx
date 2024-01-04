@@ -2,13 +2,10 @@
 import DefaultPageSkelton from '@/components/DefaultPageSkelton';
 import LoginHeader from '@/components/LoginHeader';
 import Post from '@/components/Post/Post';
-import { useGetCommentListQuery } from '@/lib/redux/slices/comments';
 import { useGetPostDetailQuery } from '@/lib/redux/slices/posts';
-import { Grid } from '@mui/material';
 
 export default function Page({ params }: { params: { postId: string } }) {
   const { data: postDetail, isLoading } = useGetPostDetailQuery(params.postId);
-  const { data: commentList } = useGetCommentListQuery(params.postId);
 
   return (
     <>

@@ -5,7 +5,7 @@ import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';
 import PostImage from './PostImage';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PostActionModal from './PostActionModal';
 import { useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';

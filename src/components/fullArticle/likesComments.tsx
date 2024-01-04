@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
@@ -28,7 +28,6 @@ import Comment from '../CommentLists';
 import { allRoutes } from '@/constants/allRoutes';
 import Image from 'next/image';
 import Post from "../Post/Post";
-import { useDispatch } from "react-redux";
 import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
 
@@ -71,7 +70,6 @@ function LikesComments({
   const {
     data: commentList,
     isLoading,
-    refetch,
   } = useGetCommentListQuery(articleId! || '', { skip: !showComments });
   const [commentText, setCommentText] = useState('');
   const [newCreatedComments, setNewCreatedComments] = useState<{
@@ -86,7 +84,6 @@ function LikesComments({
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
-  const dispatch = useDispatch();
 
   const [updateLike] = useLikeItemMutation();
   const [checkIsShared] = useCheckArticleIsSharedMutation();

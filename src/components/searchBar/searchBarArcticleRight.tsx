@@ -2,7 +2,6 @@
 
 import { Search } from "@mui/icons-material";
 import { Box, IconButton, InputAdornment, TextField, Typography, useTheme } from '@mui/material';
-import { Mention, MentionsInput } from 'react-mentions';
 
 export default function SearchBarArcticleRight({setDynamicTab}) {
   const { palette } = useTheme();
