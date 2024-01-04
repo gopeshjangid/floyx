@@ -50,7 +50,7 @@ function RecentArticles() {
       <PopularTodayListSection>
         {!isLoading && data ? (
           data.map((article, index) => (
-            <Box p={2} key={`popularToday${index}`}>
+            <Box p={2} key={`recent-article-${index}`}>
               <Link target="__blank" href={article.article.publicUrl ?? '/'}>
                 <Stack py={1} direction="row" gap={2}>
                   <Box>
@@ -84,49 +84,39 @@ function RecentArticles() {
           ))
         ) : (
           <>
-            <Box p={2} className="box">
-              <Skeleton
-                variant="text"
-                height={35}
-                width={'70%'}
-                animation="wave"
-              />
-              <Skeleton
-                variant="text"
-                height={30}
-                width={'50%'}
-                animation="wave"
-              />
-              <Divider />
-            </Box>
-            <Box p={2} className="box">
-              <Skeleton
-                variant="text"
-                height={35}
-                width={'70%'}
-                animation="wave"
-              />
-              <Skeleton
-                variant="text"
-                height={30}
-                width={'50%'}
-                animation="wave"
-              />
-              <Divider />
-            </Box>
-            <Box p={2} className="box">
-              <Skeleton
-                variant="text"
-                height={35}
-                width={'70%'}
-                animation="wave"
-              />
-              <Skeleton
-                variant="text"
-                height={30}
-                width={'50%'}
-                animation="wave"
-              />
+            <Box p={2} display="flex" flexDirection={'column'} gap={2}>
+              {[1, 2, 3].map(index => (
+                <>
+                  <Stack
+                    alignItems={'center'}
+                    gap={2}
+                    direction="row"
+                    key={'item- article-' + index}
+                  >
+                    <Skeleton
+                      variant="rectangular"
+                      height={60}
+                      width={'35%'}
+                      animation="wave"
+                    />
+                    <Stack width={'65%'}>
+                      <Skeleton
+                        variant="text"
+                        height={35}
+                        width={'100%'}
+                        animation="wave"
+                      />
+                      <Skeleton
+                        variant="text"
+                        height={35}
+                        width={'100%'}
+                        animation="wave"
+                      />
+                    </Stack>
+                  </Stack>
+                  <Divider />
+                </>
+              ))}
             </Box>
           </>
         )}

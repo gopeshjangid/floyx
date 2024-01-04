@@ -84,8 +84,12 @@ type ActiveCurrencyType = {
   totalBudget: number;
 };
 
+export type EarningStopped = {
+  comment: string;
+  stopEarings: boolean;
+};
+
 type BonusTaskStatusResponse = Task[];
-type ReferralStatusResponse = ReferralHistory[];
 type TipHistoryTypeResponse = TipHistoryType[];
 type CompletedHistoryTypeResponse = CompletedTaskHistory[];
 
@@ -132,6 +136,12 @@ export const earningsService = createApi({
         response?.value.data,
       providesTags: ['activeCurrency'],
     }),
+    getIsEarningStopped: builder.query<EarningStopped, void>({
+      query: () => ApiEndpoint.IsEarningStopped,
+      transformResponse: (response: ApiResponse<EarningStopped>) =>
+        response?.value.data,
+      providesTags: ['IsEarningStopped'],
+    }),
     getCompletedTaskHistory: builder.query<CompletedHistoryTypeResponse, void>({
       query: () => ApiEndpoint.CompletedTaskHistory,
       transformResponse: (
@@ -168,6 +178,7 @@ export const earningsService = createApi({
     'inviteHistory',
     'activeCurrency',
     'completedTaskHistory',
+    'IsEarningStopped',
   ],
 });
 
@@ -183,4 +194,5 @@ export const {
   useGetDailyTaskListQuery,
   useUpdateWalletMutation,
   useGetActiveCurrencyQuery,
+  useGetIsEarningStoppedQuery,
 } = earningsService;

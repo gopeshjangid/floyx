@@ -12,6 +12,7 @@ import {
   Theme,
   InputAdornment,
   IconButton,
+  Stack,
 } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import { styled, useTheme } from '@mui/material/styles';
@@ -24,7 +25,8 @@ import { SVGUser } from '@/assets/images';
 import { FlagOutlined } from '@mui/icons-material';
 import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
 import { UserDetailsType } from '@/lib/redux/slices/profile';
-
+import SearchIcon from '@/iconComponents/searchIcon';
+import useDevice from '@/lib/hooks/useDevice';
 const SearchBoxWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   '& .MuiInputBase-root': {
     background: theme.palette.background.default,
@@ -117,12 +119,12 @@ const SearchComponent: React.FC<{
       sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
     >
       <SearchBoxWrapper>
-        <Grid container justifyContent={'center'} spacing={2}>
-          <Grid xs={3} item>
+        <Grid container justifyContent={'center'} spacing={1}>
+          <Grid sm={3} xs={12} item>
             {' '}
             <InputLabel htmlFor="Name">Name</InputLabel>
           </Grid>
-          <Grid xs={9} item>
+          <Grid sm={9} xs={12} item>
             {' '}
             <TextField
               variant="outlined"
@@ -141,11 +143,11 @@ const SearchComponent: React.FC<{
               }}
             />
           </Grid>
-          <Grid xs={3} item>
+          <Grid sm={3} xs={12} item>
             {' '}
             <InputLabel htmlFor="Country">Country</InputLabel>
           </Grid>
-          <Grid xs={9} item>
+          <Grid sm={9} xs={12} item>
             {' '}
             <TextField
               variant="outlined"
@@ -164,11 +166,11 @@ const SearchComponent: React.FC<{
               }}
             />
           </Grid>
-          <Grid xs={3} item>
+          <Grid sm={3} xs={12} item>
             {' '}
             <InputLabel htmlFor="Skill">Skill</InputLabel>
           </Grid>
-          <Grid xs={9} item>
+          <Grid sm={9} xs={12} item>
             <TextField
               variant="outlined"
               name="skill"
@@ -195,11 +197,11 @@ const SearchComponent: React.FC<{
               />
             ))}
           </Grid>
-          <Grid xs={3} item>
+          <Grid sm={3} xs={12} item>
             {' '}
             &nbsp;
           </Grid>
-          <Grid xs={9} item>
+          <Grid sm={9} xs={12} item>
             {' '}
             <FormControlLabel
               control={
@@ -216,7 +218,7 @@ const SearchComponent: React.FC<{
             {' '}
             &nbsp;
           </Grid>
-          <Grid xs={9} item>
+          <Grid xs={12} sm={9} item>
             <Button
               variant="contained"
               color="primary"
@@ -250,7 +252,7 @@ const MainComponent: React.FC = () => {
       data: UserProfilesResponse;
     };
   }>(ApiEndpoint.SearchPeople);
-
+  const { isMobile } = useDevice();
   const handleSearch = (criteria: SearchCriteria) => {
     fetchData({
       method: 'POST',
@@ -265,7 +267,13 @@ const MainComponent: React.FC = () => {
   };
   const result = data?.value.data ?? ({} as UserProfilesResponse);
   return (
-    <Box mt={5}>
+    <Box mt={isMobile ? 2 : 5}>
+      <Box pb={1} sx={{ display: { xs: 'block', sm: 'none' } }}>
+        <Stack direction="row" gap={1} justifyContent="center">
+          <SearchIcon stroke={palette.mode == 'light' ? '#1B1830' : '#fff'} />
+          <Typography variant="h5">Search People</Typography>
+        </Stack>
+      </Box>
       <Paper
         sx={{
           padding: '16px',
@@ -278,14 +286,19 @@ const MainComponent: React.FC = () => {
       >
         <SearchComponent isLoading={isLoading} onSearch={handleSearch} />
       </Paper>
-      {error && <Typography color="error">{error}</Typography>}
-      {isLoading && <Typography color="info">Searching...</Typography>}
-      {!error && !isLoading && (
-        <Typography color="success">{`Found ${
-          result?.total ?? 0
-        } results`}</Typography>
-      )}
-      <SearchResultItems results={result?.result ?? []} isLoading={isLoading} />
+      <Box p={isMobile ? 1 : 0}>
+        {error && <Typography color="error">{error}</Typography>}
+        {isLoading && <Typography color="info">Searching...</Typography>}
+        {!error && !isLoading && (
+          <Typography color="success">{`Found ${
+            result?.total ?? 0
+          } results`}</Typography>
+        )}
+        <SearchResultItems
+          results={result?.result ?? []}
+          isLoading={isLoading}
+        />
+      </Box>
     </Box>
   );
 };

@@ -1,10 +1,17 @@
 'use client';
 
-import { Search } from "@mui/icons-material";
-import { Box, IconButton, InputAdornment, TextField, Typography, useTheme } from '@mui/material';
+import { Search } from '@mui/icons-material';
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { Mention, MentionsInput } from 'react-mentions';
 
-export default function SearchBarArcticleRight({setDynamicTab}) {
+export default function SearchBarArcticleRight({ setDynamicTab }) {
   const { palette } = useTheme();
 
   const debounce = (func: (...args: any[]) => void, delay: number) => {
@@ -17,13 +24,13 @@ export default function SearchBarArcticleRight({setDynamicTab}) {
     };
   };
 
-  const handleInputChange = debounce((value) => {
+  const handleInputChange = debounce(value => {
     setDynamicTab({
       searchBy: 'search',
       value: value,
       tagId: value,
-    })
-  }, 500); 
+    });
+  }, 500);
 
   function handleArticleSearch(e: any) {
     console.log('sdddddd', e);
@@ -32,12 +39,7 @@ export default function SearchBarArcticleRight({setDynamicTab}) {
 
   return (
     <Box>
-      <Typography
-        variant="h5"
-        color={palette.mode=== "light" ? "primary": "textPrimary"}
-      >
-        Search for Arcticles
-      </Typography>
+      <Typography variant="subtitle1">Search for Arcticles</Typography>
       <TextField
         name="email"
         fullWidth
@@ -45,9 +47,9 @@ export default function SearchBarArcticleRight({setDynamicTab}) {
         placeholder="Search articles..."
         onChange={handleArticleSearch}
         sx={{
-          ".MuiOutlinedInput-root": {
-            background: palette.primary[700],
-          }
+          '.MuiOutlinedInput-root': {
+            background: palette.primary[400],
+          },
         }}
         InputProps={{
           startAdornment: (

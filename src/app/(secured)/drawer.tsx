@@ -2,7 +2,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { redirect, usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -355,7 +355,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <>&nbsp;</>
           )}
         </Grid>
-        <Grid item sm={9} md={8} lg={10}>
+        <Grid item sm={9} md={9} lg={10}>
           {children}
         </Grid>
       </Grid>
@@ -401,7 +401,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 edge="end"
                 onClick={handleDrawerToggle}
               >
-                <MenuIcon />
+                <MenuIcon color="" />
               </IconButton>
             </Box>
           </Box>
