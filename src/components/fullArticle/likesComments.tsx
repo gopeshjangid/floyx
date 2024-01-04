@@ -30,6 +30,7 @@ import Image from 'next/image';
 import { formatIndianNumber } from "@/lib/utils";
 import Post from "../Post/Post";
 import { useSharePostMutation } from "@/lib/redux";
+import { useDispatch } from "react-redux";
 
 const style = {
   position: 'absolute',
@@ -55,6 +56,7 @@ type LikeCommentType = {
   showComments?: boolean;
   articleId: string;
   isArticle?: boolean;
+  revalidate?: any,
 };
 function LikesComments({
   likesCommentsDetails,
@@ -64,6 +66,7 @@ function LikesComments({
   showComments = false,
   articleId,
   isArticle = false,
+  revalidate
 }: LikeCommentType) {
 
   const { data: commentList, isLoading } = useGetCommentListQuery(
@@ -83,6 +86,7 @@ function LikesComments({
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
+  const dispatch = useDispatch();
 
   const [updateLike] = useLikeItemMutation();
   const [checkIsShared] = useCheckArticleIsSharedMutation();
@@ -112,6 +116,7 @@ function LikesComments({
       }
     } else {
       if (isArticle) {
+        revalidate()
         await publishArticle({ articleId: itemId, status, payload });
         toast.success('Article is Published Succesfully ');
       } else {
@@ -131,9 +136,12 @@ function LikesComments({
     }
   };
 
-  const handleArticleLike = () => {
+  const handleArticleLike = async () => {
     const type: string = likeType();
-    updateLike({ articleId: itemId, type });
+    await updateLike({ articleId: itemId, type });
+    if (isArticle) {
+      revalidate();
+    }
   };
 
   const commentTextHandler = useCallback(
@@ -141,6 +149,15 @@ function LikesComments({
       setCommentText(text);
     },
     [setCommentText]
+  );
+
+  const onCreatedArticleComment = useCallback(
+    (commentData) => {
+      if (commentData && isArticle) {
+        revalidate();
+      } 
+    },
+    [setNewCreatedComments]
   );
 
   const onCreatedNewComment = useCallback(
@@ -279,6 +296,7 @@ function LikesComments({
               commentType="ArticleComment"
               commentText={commentText}
               setCommentText={commentTextHandler}
+              onCreatedNewComment={onCreatedArticleComment}
             />
           </Box>
           {/* <RecommendedTopics /> */}

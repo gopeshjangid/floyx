@@ -60,7 +60,7 @@ export const fetchServerData = async (
 ): { isError: boolean; data: any } => {
   try {
     const res = await fetch(url, {
-      cache: 'force-cache',
+      next: {tags: ['articleDetail']},
     });
     if (!res.ok) {
       return { isError: true, data: null };

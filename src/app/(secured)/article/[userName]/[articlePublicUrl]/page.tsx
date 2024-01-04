@@ -9,7 +9,7 @@ import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { Metadata, ResolvingMetadata } from 'next';
 import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
 import LoginHeader from '@/components/LoginHeader';
-import ArticleLikeCommnent from "@/components/fullArticle/ArticleLikeComment";
+import { revalidateTag } from "next/cache";
 
 async function Page({ params }: any) {
   const userName = params?.userName;
@@ -18,6 +18,12 @@ async function Page({ params }: any) {
     `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
   );
   const articleId = articleDetails?.article?.id;
+
+  async function revalidate() {
+    "use server";
+    revalidateTag('articleDetail');
+  }
+
   return (
     <>
       <LoginHeader />
@@ -55,9 +61,13 @@ async function Page({ params }: any) {
                 <Skeleton variant="rectangular" width="100%" height="60px" />
               }
             >
-              <ArticleLikeCommnent
-                userName={userName}
-                articlePuclicUrl={articlePuclicUrl}
+              <LikesComments
+                likesCommentsDetails={articleDetails?.article}
+                itemId={articleId}
+                showComments={true}
+                articleId={articleId}
+                isArticle
+                revalidate={revalidate}
               />
             </Suspense>
           </section>
