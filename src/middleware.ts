@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { getToken } from 'next-auth/jwt';
 import { withAuth } from 'next-auth/middleware';
-import { NextRequest, NextResponse, userAgent } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export default withAuth({
   pages: {
@@ -10,15 +10,15 @@ export default withAuth({
   secret: process.env.NEXTAUTH_SECRET,
 });
 
-export function middleware(request: NextRequest) {
-  const hasSession = request.cookies.get('next-auth.session-token');
+export async function middleware(request: NextRequest) {
+  const token = await getToken({ req: request });
   const isPrivateRoute = config.matcher.includes(request.nextUrl.pathname);
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
   // Redirect to login page if trying to access a private route without a session
-  if (!hasSession?.value && isPrivateRoute && !isPublicRoute) {
+  if (!token && isPrivateRoute && !isPublicRoute) {
     const url = request.nextUrl.clone();
-    // url.pathname = '/login'; // The login page route
-    // return NextResponse.redirect(url);
+    url.pathname = '/login'; // The login page route
+    return NextResponse.redirect(url);
   }
 
   // Set device type cookie if not set or different
