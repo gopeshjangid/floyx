@@ -42,7 +42,6 @@ export const baseQuery = fetchBaseQuery({
       'FLOYX_TOKEN',
       isServer() ? getState()?.req : getCookie('FLOYX_TOKEN')
     );
-    console.log({ token });
     headers.set('authorization', `Bearer ${token}`);
     return headers;
   },
@@ -101,4 +100,20 @@ export const debounce = (func: (...args: any[]) => void, delay: number) => {
       func(...args);
     }, delay);
   };
+};
+
+export const formatIndianNumber = (num: number) => {
+  if (num < 1000) {
+    return num;
+  } else if (num >= 1000 && num <= 9999) {
+    return Math.floor(num / 1000) + 'K';
+  } else if (num >= 10000 && num <= 999999) {
+    return Math.floor(num / 1000) + 'K+';
+  } else if (num >= 1000000 && num <= 9999999) {
+    return Math.floor(num / 1000000) + 'M';
+  } else if (num >= 10000000 && num <= 999999999) {
+    return Math.floor(num / 1000000) + 'M+';
+  } else {
+    return num;
+  }
 };

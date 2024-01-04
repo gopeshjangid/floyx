@@ -64,7 +64,10 @@ export default function ArticleHead({
   const [articleTabs, setArticleTabs] = useState(defaultTab);
 
   const { palette } = useTheme();
-  const getColorSvg = () => {
+  const getColorSvg = itemValue => {
+    if (itemValue !== value) {
+      return palette?.mode === 'light' ? '#7C93AE' : 'rgba(255, 255, 255, 0.3)';
+    }
     return palette?.mode === 'light'
       ? palette.text.primary
       : palette?.primary?.main;
@@ -99,18 +102,13 @@ export default function ArticleHead({
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="icon position tabs example"
+          aria-label="icon position tabs"
         >
           {articleTabs.map((item, index) => (
             <Tab
               key={`articleTab${index}`}
               className="tab"
-              icon={
-                item?.icon &&
-                item?.icon(
-                  value === 'liked?limited=true' ? '#A75FFF' : getColorSvg()
-                )
-              }
+              icon={item?.icon && item?.icon(getColorSvg(item.value))}
               iconPosition="start"
               value={item.value}
               label={

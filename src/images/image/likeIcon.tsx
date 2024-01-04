@@ -2,7 +2,13 @@ import * as React from 'react';
 
 const LikeIcon = (props: any) => {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -10,10 +16,17 @@ const LikeIcon = (props: any) => {
         fill="url(#paint0_linear_973_5213)"
       />
       <defs>
-        <linearGradient id="paint0_linear_973_5213" x1="2.25" y1="21.75" x2="23.0535" y2="20.4973" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#AB59FF" />
-          <stop offset="0.567907" stopColor="#858FFF" />
-          <stop offset="1" stopColor="#4D9AFF" />
+        <linearGradient
+          id="paint0_linear_973_5213"
+          x1="2.25"
+          y1="21.75"
+          x2="23.0535"
+          y2="20.4973"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor={props?.fill ?? '#AB59FF'} />
+          <stop offset="0.567907" stopColor={props?.fill ?? '#AB59FF'} />
+          <stop offset="1" stopColor={props?.fill ?? '#AB59FF'} />
         </linearGradient>
       </defs>
     </svg>

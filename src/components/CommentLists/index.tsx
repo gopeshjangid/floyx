@@ -2,21 +2,28 @@ import { Box, Typography, Button, useTheme } from '@mui/material';
 import DateParser from '../DateParser';
 import LikeIcon from '@/images/image/likeIcon';
 import ReplyIcon from '@/images/image/replyIcon';
-import { usePostLikeStatusMutation } from '@/lib/redux';
+import { useLikeItemMutation } from '@/lib/redux';
 import { useSession } from 'next-auth/react';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import UsernameLink from '../usernameLink';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { formatIndianNumber } from '@/lib/utils';
 
-function Comment({ comment, inputRef, type, setCommentText }: any) {
-  const [updateLike] = usePostLikeStatusMutation();
+function Comment({ comment, inputRef, type, onAction, setCommentText }: any) {
+  const [updateLike, { data, isSuccess }] = useLikeItemMutation();
   const session = useSession();
   const { palette } = useTheme();
 
   const commentLikeUnlike = async () => {
     await updateLike({ articleId: comment?.comment?.id, type });
   };
+
+  useEffect(() => {
+    if (onAction && isSuccess && data) {
+      onAction({ ...data, id: comment?.comment?.id });
+    }
+  }, [isSuccess, data]);
 
   const onReply = () => {
     setCommentText(`@${(session as any)?.data?.user?.username}`);
@@ -33,7 +40,7 @@ function Comment({ comment, inputRef, type, setCommentText }: any) {
     const urlLink = '<a href="$1" target="_blank">$1</a>';
     return content.replace(urlRegex, urlLink).replace(profileRegex, link);
   };
-  console.log('comment list: ', comment);
+
   return (
     <Box sx={{ display: 'flex', marginTop: '30px' }}>
       <Box>
@@ -85,7 +92,14 @@ function Comment({ comment, inputRef, type, setCommentText }: any) {
             sx={{ marginRight: '25px' }}
             onClick={commentLikeUnlike}
           >
-            {comment?.comment?.numberOfLikes} Like
+            <Typography
+              component={'span'}
+              color={'textPrimary'}
+              textTransform={'none'}
+              marginBottom={0}
+            >
+              {formatIndianNumber(comment?.comment?.numberOfLikes)} Like
+            </Typography>
           </Button>
           <Button
             variant="text"
@@ -93,7 +107,14 @@ function Comment({ comment, inputRef, type, setCommentText }: any) {
             onClick={onReply}
             sx={{ marginRight: '25px' }}
           >
-            Reply
+            <Typography
+              component={'span'}
+              color={'textPrimary'}
+              textTransform={'none'}
+              marginBottom={0}
+            >
+              Reply
+            </Typography>
           </Button>
         </Box>
       </Box>

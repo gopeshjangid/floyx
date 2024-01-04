@@ -59,6 +59,13 @@ type PostListByUserArgs = {
   postCreatedDate: number;
 };
 
+interface sharePostArgs {
+  postId: string;
+  payload: {
+    content: string;
+  };
+}
+
 export const postServices = createApi({
   reducerPath: 'postsReducer',
   baseQuery: baseQuery,
@@ -67,6 +74,42 @@ export const postServices = createApi({
       query: id => `${ApiEndpoint.GetPosts}/post/${id}`,
       transformResponse: (response: any) => response?.value?.data,
       providesTags: ['postDetail'],
+    }),
+    sharePost: builder.mutation<any, sharePostArgs>({
+      query: ({ postId, payload }) => ({
+        url: `${ApiEndpoint.SharePost}/${postId}`,
+        method: 'POST',
+        body: payload,
+      }),
+      transformResponse: (response: any) => response?.value?.data || {},
+      invalidatesTags: ['MainFeedList'],
+      onQueryStarted: async (arg, { queryFulfilled, dispatch, getState }) => {
+        try {
+          const { data } = await queryFulfilled;
+          const currentState = getState().postsReducer;
+          dispatch(
+            postServices.util.updateQueryData(
+              'getPosts',
+              {
+                pageNumber: 1,
+                postCreatedDate: (currentState.queries['getPosts'] as any)?.data
+                  .postList[0]?.post.createdDateTime,
+              },
+              draft => {
+                draft.postList.map(post => {
+                  if (post.id === arg.postId) {
+                    post.post.numberOfShares = post.post.numberOfShares + 1;
+                  }
+                });
+                draft.postList.unshift(data);
+              }
+            )
+          );
+          //}
+        } catch (error) {
+          console.error('Failed to fetch latest posts:', error);
+        }
+      },
     }),
     getPostListByUser: builder.query<
       { postList: PostDetailResult[]; hasMore: boolean },
@@ -152,43 +195,36 @@ export const postServices = createApi({
         return currentArg !== previousArg;
       },
     }),
-    pollLatestPost: builder.query<
-      PostDetailResult[],
-      Omit<PostDetail, 'pageNumber'>
-    >({
-      query: ({ postCreatedDate }) => {
-        const apiEndPoint = ApiEndpoint.GetPosts + `/feed/main`;
-        return `${apiEndPoint}?page=0&postCreatedDate=${postCreatedDate}`;
-      },
-      transformResponse: (response: any) => response?.value?.data,
-      providesTags: (result, error, arg) => ['LatestMainFeedList'],
-      onQueryStarted: async (arg, { queryFulfilled, dispatch, getState }) => {
-        try {
-          const { data } = await queryFulfilled;
-          if (data?.length) {
-            //const currentState = getState().postsReducer;
-            dispatch(
-              postServices.util.updateQueryData(
-                'getPosts',
-                { ...arg, pageNumber: 0 },
-                draft => {
-                  draft.postList = [...data, ...draft.postList];
-                }
-              )
-            );
-          }
-        } catch (error) {
-          console.error('Failed to fetch latest posts:', error);
-        }
-      },
-    }),
     createPost: builder.mutation<any, FormData>({
       query: initialPost => ({
         url: `${ApiEndpoint.AddNewPost}`,
         method: 'POST',
         body: initialPost,
       }),
-      invalidatesTags: ['Posts', 'MainFeedList'],
+      transformResponse: (response: any) => response?.value?.data,
+      onQueryStarted: async (arg, { queryFulfilled, dispatch, getState }) => {
+        try {
+          const { data } = await queryFulfilled;
+          const currentState = getState().postsReducer;
+          console.log('Query updating onquery satrted====', currentState);
+          dispatch(
+            postServices.util.updateQueryData(
+              'getPosts',
+              {
+                pageNumber: 1,
+                postCreatedDate: (currentState.queries['getPosts'] as any)?.data
+                  .postList[0]?.post.createdDateTime,
+              },
+              draft => {
+                draft.postList.unshift(data);
+              }
+            )
+          );
+          //}
+        } catch (error) {
+          console.error('Failed to fetch latest posts:', error);
+        }
+      },
     }),
     deletePost: builder.mutation<any, string>({
       query: id => ({
@@ -214,5 +250,5 @@ export const {
   useCreatePostMutation,
   useDeletePostMutation,
   useGetPostListByUserQuery,
-  usePollLatestPostQuery,
+  useSharePostMutation,
 } = postServices;

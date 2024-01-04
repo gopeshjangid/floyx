@@ -9,7 +9,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import PostActionModal from './PostActionModal';
 import { useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
-import { Post as PostDetail, UserComment } from '@/lib/redux';
+import { Post as PostDetail } from '@/lib/redux';
 import { useSession } from 'next-auth/react';
 import LikesComments from '../fullArticle/likesComments';
 // import { useSession } from "next-auth/react";
@@ -27,7 +27,6 @@ interface postDetail {
   isShared?: boolean;
   postDetails?: PostDetail;
   postId: string;
-  commentList?: UserComment[];
   showComments?: boolean | undefined;
 }
 
@@ -42,7 +41,6 @@ function Post({
   isShared,
   postDetails,
   postId,
-  commentList,
   showComments,
 }: postDetail) {
   const session = useSession();
@@ -106,7 +104,7 @@ function Post({
         />
         {(!isShared || showComments) && (
           <LikesComments
-            likesCommentsDetails={isShared ? postDetails?.shared : postDetails}
+            likesCommentsDetails={isShared ? postDetails?.shared : {...postDetails, name, username}}
             itemId={postId}
             articleId={postId}
             isPost={true}

@@ -5,7 +5,7 @@ import { baseQuery } from '@/lib/utils';
 import { postServices } from '../posts';
 import { commentService } from '../comments';
 
-interface ArticleDetailsArgs {
+export interface ArticleDetailsArgs {
   userName: string;
   articlePuclicUrl: string;
 }
@@ -117,30 +117,38 @@ export const artcileDetails = createApi({
         { type: 'articleListByuser', id: arg.username },
       ],
     }),
-    getFollowStatus: builder.mutation<any, string>({
-      query: userName => ({
-        url: `${ApiEndpoint.Follow}/${userName}`,
-        method: 'POST',
-        body: {},
-      }),
-      // providesTags: ['FollowStatus']!,
-    }),
-    postLikeStatus: builder.mutation<LikeStatusData, LikeStatusArgs>({
+    likeItem: builder.mutation<LikeStatusData, LikeStatusArgs>({
       query: ({ articleId, type }) => ({
         url: `${ApiEndpoint.Like}/${articleId}?type=${type}`,
         method: 'POST',
       }),
+      transformResponse: (response: any) => response?.value?.data,
       invalidatesTags: (_, __, arg) =>
-        arg.type === 'ArticleLike' ? ['ArticleDetail'] : [],
+        arg.type === 'ArticleLike'
+          ? ['ArticleDetail']
+          : [{ type: 'CommentList', id: arg.articleId }],
       onQueryStarted: (arg, api) => {
-        api.queryFulfilled.then(() => {
+        api.queryFulfilled.then(response => {
           if (arg.type == 'PostLike') {
             api.dispatch(
-              postServices.util.invalidateTags([
-                { type: 'Posts', id: 'LIST' },
-                'postDetail',
-              ])
+              postServices.util.updateQueryData(
+                'getPosts',
+                {
+                  pageNumber: 0,
+                  postCreatedDate: 0,
+                },
+                draft => {
+                  // Find the article in the draft data and update its comment count
+                  const article = draft.postList.find(
+                    article => article.id === arg.articleId
+                  );
+                  if (article) {
+                    article.post.numberOfLikes = response?.data?.numberOfLikes;
+                  }
+                }
+              )
             );
+            api.dispatch(postServices.util.invalidateTags(['postDetail']));
           } else if (arg.type == 'PostCommentLiked') {
             api.dispatch(commentService.util.invalidateTags(['CommentList']));
           }
@@ -252,13 +260,13 @@ export const artcileDetails = createApi({
     'articleListByuser',
     'FollowedAccount',
     'SearchArticle',
+    'CommentList',
   ],
 });
 
 export const {
   useGetArticleDetailsQuery,
-  useGetFollowStatusMutation,
-  usePostLikeStatusMutation,
+  useLikeItemMutation,
   useGetArticleTotalEarningsQuery,
   useSetTipMutation,
   useCheckArticleIsSharedMutation,

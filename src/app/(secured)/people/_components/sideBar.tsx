@@ -26,6 +26,7 @@ import {
 import CustomDialog from '@/components/CustomDialog';
 import moment from 'moment';
 import UsernameLink from '@/components/usernameLink';
+import useDevice from '@/lib/hooks/useDevice';
 
 const CopyableInput = () => {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -90,10 +91,12 @@ const CopyableInput = () => {
 
 const StyledBox = ({ children }: any) => {
   const { palette } = useTheme();
+  const { isMobile } = useDevice();
   return (
     <Box
       sx={{
-        maxWidth: 360,
+        maxWidth: isMobile ? '100%' : '360',
+        margin: isMobile ? 1 : 0,
         backgroundColor: palette.primary[700], // Adjust the color based on your design
         borderRadius: '8px', // Adjust border radius based on your design
         border: `1px solid ${palette.action.border}`, // Adjust border color based on your design
@@ -243,7 +246,7 @@ const ReferralCard = () => {
 const EarningsSideBar = () => {
   const { status, data } = useSession();
   return (
-    <Stack spacing={2} mt={2} paddingTop="24px">
+    <Stack spacing={2} m={1} mt={2} paddingTop="24px">
       <Typography variant="h6" color="textPrimary">
         {status === 'loading' ? (
           <Skeleton variant="rectangular" sx={{ width: '200px' }} />

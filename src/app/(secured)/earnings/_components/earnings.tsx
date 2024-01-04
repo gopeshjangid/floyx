@@ -18,6 +18,7 @@ import {
 import {
   useGetArticleTipHistoryQuery,
   useGetCompletedTaskHistoryQuery,
+  useGetIsEarningStoppedQuery,
   useGetTipHistoryQuery,
   useGetUserWalletQuery,
 } from '@/lib/redux/slices/earnings';
@@ -96,9 +97,13 @@ const PointsBalanceCard = () => {
     isLoading: walletLoading,
     isError: walletError,
   } = useGetUserWalletQuery();
+  const { data: isEarningStopped, isLoading: isEarningStoppedLoading } =
+    useGetIsEarningStoppedQuery();
   const [currentBalance, setCurrentBalance] = React.useState(0.0);
   const getActiveCurrency = (currencyResp: any) => {
     const activeCurrency = currencyResp.value.data.currencyName;
+    if (walletError) return;
+
     axios
       .get(
         'https://min-api.cryptocompare.com/data/pricemulti?fsyms=USD&tsyms=' +
@@ -129,15 +134,6 @@ const PointsBalanceCard = () => {
     fetchData({ method: 'GET', urlEndPoint: ApiEndpoint.ActiveCurrency });
   }, []);
 
-  if (walletError) {
-    // return (
-    //   <Box p="16px">
-    //     <Typography color="error" variant="h6">
-    //       Something went wrong!
-    //     </Typography>
-    //   </Box>
-    // );
-  }
   return (
     <GradientCard>
       <CardContent sx={{ display: 'flex', width: '100%' }}>
@@ -232,7 +228,9 @@ const PointsBalanceCard = () => {
                     gap={2}
                     width="100%"
                   >
-                    <EarningButtons>Withdraw</EarningButtons>
+                    <EarningButtons disabled={isEarningStopped?.stopEarings}>
+                      {isEarningStoppedLoading ? 'Loading...' : 'Withdraw'}
+                    </EarningButtons>
                     <WalletHistory />
                   </Stack>
                 </Grid>
