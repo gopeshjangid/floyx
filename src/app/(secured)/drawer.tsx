@@ -401,7 +401,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 edge="end"
                 onClick={handleDrawerToggle}
               >
-                <MenuIcon color="" />
+                <MenuIcon />
               </IconButton>
             </Box>
           </Box>
