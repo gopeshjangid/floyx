@@ -23,7 +23,7 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.mainBackground,
   borderRadius: '10px',
   marginTop: '25px',
-  maxHeight: '35vh',
+  maxHeight: '100vh',
   overflowY: 'auto',
   '& .box': {
     marginTop: '10px',

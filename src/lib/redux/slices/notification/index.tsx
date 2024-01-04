@@ -3,14 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { FLOYX_TOKEN } from '@/constants';
-
-const baseQuery = fetchBaseQuery({
-  baseUrl: '/',
-  prepareHeaders: headers => {
-    headers.set('authorization', `Bearer ${getCookie(FLOYX_TOKEN)}`);
-    return headers;
-  },
-});
+import { baseQuery } from '@/lib/utils';
 
 export const notificationApiService = createApi({
   reducerPath: 'notification',
