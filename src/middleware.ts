@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse, userAgent } from 'next/server';
 
@@ -16,8 +17,8 @@ export function middleware(request: NextRequest) {
   // Redirect to login page if trying to access a private route without a session
   if (!hasSession?.value && isPrivateRoute && !isPublicRoute) {
     const url = request.nextUrl.clone();
-    url.pathname = '/login'; // The login page route
-    return NextResponse.redirect(url);
+    // url.pathname = '/login'; // The login page route
+    // return NextResponse.redirect(url);
   }
 
   // Set device type cookie if not set or different
