@@ -83,6 +83,33 @@ export const postServices = createApi({
       }),
       transformResponse: (response: any) => response?.value?.data || {},
       invalidatesTags: ['MainFeedList'],
+      onQueryStarted: async (arg, { queryFulfilled, dispatch, getState }) => {
+        try {
+          const { data } = await queryFulfilled;
+          const currentState = getState().postsReducer;
+          dispatch(
+            postServices.util.updateQueryData(
+              'getPosts',
+              {
+                pageNumber: 1,
+                postCreatedDate: (currentState.queries['getPosts'] as any)?.data
+                  .postList[0]?.post.createdDateTime,
+              },
+              draft => {
+                draft.postList.map(post => {
+                  if (post.id === arg.postId) {
+                    post.post.numberOfShares = post.post.numberOfShares + 1;
+                  }
+                });
+                draft.postList.unshift(data);
+              }
+            )
+          );
+          //}
+        } catch (error) {
+          console.error('Failed to fetch latest posts:', error);
+        }
+      },
     }),
     getPostListByUser: builder.query<
       { postList: PostDetailResult[]; hasMore: boolean },

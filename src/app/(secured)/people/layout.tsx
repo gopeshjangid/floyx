@@ -3,16 +3,14 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ReferralCard from './_components/sideBar';
-import { useMediaQuery } from '@mui/material';
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const isMobile = useMediaQuery('(max-width:480px)');
   return (
-    <Box p={isMobile ? 2 : 0}>
+    <Box>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={12} sm={9}>
           {children}

@@ -512,8 +512,9 @@ const ProfileSection: React.FC = () => {
           <Stack
             direction="row"
             flexWrap="wrap"
+            justifyContent={'flex-start'}
             gap={1}
-            spacing={{ xs: 0, sm: 3, md: 4 }}
+            spacing={{ xs: 0, sm: 1, md: 2 }}
           >
             {aboutLoading ? (
               <Skeleton variant="rectangular" height={'30px'} width="100%" />

@@ -52,13 +52,13 @@ export default function Header() {
     {
       text: 'Video/Live Streams',
       icon: <VideoIcon color={getColorSvg('#')} />,
-      visible: true,
+      visible: false,
       link: '#',
     },
     {
       text: 'Group',
       icon: <ProfileGroup color={getColorSvg('#')} />,
-      visible: true,
+      visible: false,
       link: '#',
     },
     {
@@ -82,7 +82,7 @@ export default function Header() {
           link: '#',
         },
       ],
-      visible: true,
+      visible: false,
     },
   ];
 
