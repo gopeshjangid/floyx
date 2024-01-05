@@ -26,7 +26,7 @@ function Comment({ comment, inputRef, type, onAction, setCommentText }: any) {
   }, [isSuccess, data]);
 
   const onReply = () => {
-    setCommentText(`@${(session as any)?.data?.user?.username}`);
+    setCommentText(`@[${(session as any)?.data?.user?.username}](${(session as any)?.data?.user?.username})`);
     inputRef.current.focus();
   };
 

@@ -123,7 +123,7 @@ export const addLinks = (content: any) => {
     return '';
   }
   const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm;
-  const link = '<a href="/profile/$2">@$2</a>';
+  const link = '<a href="/profile/$2" style="background:linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF); -webkit-background-clip: text;-webkit-text-fill-color: transparent;font-weight: normal;color: white;">@$2</a>';
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const urlLink = '<a href="$1" target="_blank">$1</a>';
   return content.replace(urlRegex, urlLink).replace(profileRegex, link);

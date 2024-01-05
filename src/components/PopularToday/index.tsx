@@ -85,7 +85,7 @@ function RecentArticles() {
           <>
             <Box p={2} display="flex" flexDirection={'column'} gap={2}>
               {[1, 2, 3].map(index => (
-                <>
+                <Box key={`skelton-${index}`}>
                   <Stack
                     alignItems={'center'}
                     gap={2}
@@ -114,7 +114,7 @@ function RecentArticles() {
                     </Stack>
                   </Stack>
                   <Divider />
-                </>
+                </Box>
               ))}
             </Box>
           </>

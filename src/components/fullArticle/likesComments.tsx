@@ -30,6 +30,7 @@ import Image from 'next/image';
 import Post from "../Post/Post";
 import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
+import Link from "next/link";
 
 const style = {
   position: 'absolute',
@@ -208,7 +209,10 @@ function LikesComments({
             {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
           </Typography>
         </Button>
-        <Button
+        <Link href={
+          isPost ? `${allRoutes.post}/${itemId}` : '#'
+        }>
+          <Button
           variant="text"
           startIcon={<CommentIcon />}
           sx={{ padding: 0 }}
@@ -229,7 +233,8 @@ function LikesComments({
               Comments
             </Typography>
           )}
-        </Button>
+          </Button>
+        </Link>
         <Button
           sx={{ padding: 0 }}
           variant="text"
