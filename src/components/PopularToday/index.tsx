@@ -15,7 +15,6 @@ import Link from 'next/link';
 
 const PopularTodaySection = styled(Box)(() => ({
   alignItems: 'center',
-  marginTop: '1rem',
 }));
 
 const PopularTodayListSection = styled(Box)(({ theme }) => ({
@@ -51,7 +50,7 @@ function RecentArticles() {
         {!isLoading && data ? (
           data.map((article, index) => (
             <Box p={2} key={`recent-article-${index}`}>
-              <Link target="__blank" href={article.article.publicUrl ?? '/'}>
+              <Link target="_blank" href={article.article.publicUrl ? '/article/' + article.user.username + '/' + article.article.publicUrl : '/'}>
                 <Stack py={1} direction="row" gap={2}>
                   <Box>
                     <Image

@@ -252,8 +252,8 @@ export default function AddPost({
             sx={{ marginTop: 1 }}
             onClick={publishPost}
           >
-            {isLoading && <CircularProgress />}
-            {!isLoading && 'Publish Post'}
+            {isLoading && <CircularProgress size={24} color="inherit" />}
+            Publish Post
           </Button>
         )}
       </Box>

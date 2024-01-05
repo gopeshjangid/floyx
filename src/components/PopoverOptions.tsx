@@ -12,28 +12,24 @@ type PopoverOption = {
 interface CustomPopoverProps {
   options: PopoverOption[];
   actionOriginIcon?: React.ReactNode | React.ReactElement;
+  open: boolean,
+  id: string | undefined,
+  handleClose: any,
+  anchorEl: HTMLButtonElement | null,
 }
 
 const CustomPopover: React.FC<CustomPopoverProps> = ({
   options,
   actionOriginIcon,
+  open,
+  id,
+  handleClose,
+  anchorEl,
 }) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
+  
   return (
     <Box position="relative">
-      <IconButton onClick={handleClick}>
+      <IconButton sx={{padding: 0}}>
         {actionOriginIcon ? (
           actionOriginIcon
         ) : (

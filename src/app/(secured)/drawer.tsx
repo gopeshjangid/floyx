@@ -187,27 +187,6 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       href: '/profile',
       icon: (fill: string) => <ProfileIcon stroke={fill} />,
     },
-    {
-      label: 'More',
-      href: 'more',
-      icon: (fill: string) => (
-        <CustomPopover
-          actionOriginIcon={<MoreIcon fill={fill} />}
-          options={[
-            {
-              label: 'Settings',
-              startIcon: <SettingsIcon />,
-              onClick: () => router.push(`/settings/account`),
-            },
-            {
-              label: 'Logout',
-              startIcon: <LogoutIcon />,
-              onClick: () => router.push(`/api/auth/signout`),
-            },
-          ]}
-        />
-      ),
-    },
   ];
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
@@ -216,6 +195,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const homeRedirect = () => {
     router.push('/');
   };
+
   useEffect(() => {
     if (session.data?.expires) {
       if (moment(session.data.expires).isBefore(moment())) {
@@ -251,6 +231,47 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     }
   };
 
+  const MoreButton = () => {
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const handleClick = (event:any) => {
+      setAnchorEl(prev => prev ? null : event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+    return (
+      <CustomListItemButton
+        onClick={handleClick}
+      >
+        <ListItemIcon>
+          <CustomPopover
+            open={open}
+            id={id}
+            handleClose={handleClose}
+            anchorEl={anchorEl}
+            actionOriginIcon={<MoreIcon fill={theme.palette.text.primary} />}
+            options={[
+              {
+                label: 'Settings',
+                startIcon: <SettingsIcon />,
+                onClick: () => router.push(`/settings/account`),
+              },
+              {
+                label: 'Logout',
+                startIcon: <LogoutIcon />,
+                onClick: () => router.push(`/api/auth/signout`),
+              },
+            ]}
+          />
+        </ListItemIcon>
+        <ListItemText primary={'More'} />
+        </CustomListItemButton>
+
+    )
+  }
   useEffect(() => {
     const isPrivate = config.matcher.includes(pathname);
     if (
@@ -303,7 +324,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               <ListItemText primary={item.label} />
               <ListItemSecondaryAction>
                 {item.label === 'Notifications' &&
-                drawerData.notificationCount > 0 ? (
+                  drawerData.notificationCount > 0 ? (
                   <CountWrapper count={drawerData.notificationCount} />
                 ) : item.label === 'Messages' &&
                   drawerData.messagesCount > 0 ? (
@@ -313,6 +334,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             </>
           </LinkListItemButton>
         ))}
+        <MoreButton />
         <ListItem>
           <Button
             variant="outlined"
@@ -332,7 +354,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const getDesktopLayout = () => {
     return (
       <Grid container columnSpacing={{ sm: 2, md: 3 }}>
-        <Grid item sm={3} md={3} lg={2}>
+        <Grid item sm={3} md={3} lg={2.5}>
           {session.status === 'loading' ? (
             <Stack gap={2} mt={6} height="100vh" p={2}>
               <Skeleton variant="rectangular" width="100%" height="100vh" />
@@ -355,7 +377,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <>&nbsp;</>
           )}
         </Grid>
-        <Grid item sm={9} md={9} lg={10}>
+        <Grid item sm={9} md={9} lg={9.5}>
           {children}
         </Grid>
       </Grid>

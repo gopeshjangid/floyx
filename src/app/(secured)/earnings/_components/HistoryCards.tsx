@@ -112,7 +112,7 @@ const ArticleHistory = React.memo(function ArticleCard() {
                     {moment(item.earnedOn).format('YYYY/MM/YY')} &nbsp; You
                     article{' '}
                     <Link
-                      target="__blank"
+                      target="_blank"
                       style={{ textDecoration: 'underline', color: 'blue' }}
                       href={getUrl(item.articleUrl)}
                     >
@@ -179,7 +179,7 @@ const VoteHistory = React.memo(function VoteHistory() {
                     {moment(item.earnedOn).format('YYYY/MM/YY')} &nbsp; Your
                     voted{' '}
                     <Link
-                      target="__blank"
+                      target="_blank"
                       style={{ textDecoration: 'underline', color: 'blue' }}
                       href={getUrl(item.articlePublicUrl)}
                     >

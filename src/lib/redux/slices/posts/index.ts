@@ -232,6 +232,29 @@ export const postServices = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+      onQueryStarted: async (arg, { queryFulfilled, dispatch, getState }) => {
+        try {
+          await queryFulfilled;
+          const currentState = getState().postsReducer;
+          dispatch(
+            postServices.util.updateQueryData(
+              'getPosts',
+              {
+                pageNumber: 1,
+                postCreatedDate: (currentState.queries['getPosts'] as any)?.data
+                  .postList[0]?.post.createdDateTime,
+              },
+              draft => {
+                draft.postList = draft?.postList.filter(val => val.id !== arg) || [];
+                return draft;
+              }
+            )
+          );
+          //}
+        } catch (error) {
+          console.error('Failed to fetch latest posts:', error);
+        }
+      },
     }),
   }),
   tagTypes: [
