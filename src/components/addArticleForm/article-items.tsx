@@ -36,7 +36,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     errors_urlValue: false,
     errors: {},
     showEmojiPicker: false,
-    index: 0,
+    index: '',
     nameLink: '',
     contentArticleCreated: articleCreated,
   });
@@ -125,11 +125,11 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   };
 
   const handleKey = (index: any, e: any) => {
-    const { inputsList, previousKey, contentArticleCreated } = state;
+    const { inputsList, previousKey } = state;
     const { key, shiftKey } = e;
     const { name, value } = e.target;
     const item = inputsList.find((x: any) => x.index === index);
-    handleContentChange('', inputsList, contentArticleCreated);
+    handleContentChange('', inputsList);
     const isList = item.type === 'ul' || item.type === 'ol';
     if (isList) {
       if (key === 'Enter') {
@@ -220,7 +220,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
       },
       ...inputsList.slice(arrayIndex + 1),
     ];
-    setState(prev => ({ ...prev, index, inputsList }));
+    setState(prev => ({ ...prev, index: maximumIndex, inputsList }));
   };
 
   const deleteInput = (index: number) => {

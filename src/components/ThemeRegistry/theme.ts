@@ -395,7 +395,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           input: {
             '&:-webkit-autofill': {
-              '-webkit-box-shadow': `0 0 0 100px ${palette.background.paper} inset`,
+              WebkitBoxShadow: `0 0 0 100px ${palette.background.paper} inset`,
               WebkitTextFillColor: mode === 'light' ? '#ADB3C6' : '#D1D0D5',
               borderRadius: '0',
             },
