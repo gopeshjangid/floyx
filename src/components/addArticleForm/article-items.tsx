@@ -17,6 +17,7 @@ import VideoIcon from '@/assets/images/svg/video';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { ArticleItem } from './styled-article-items';
 import ImageIcon from '@/assets/images/svg/image';
+import Image from 'next/image';
 
 const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   const { palette } = useTheme();
@@ -732,11 +733,13 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
               <div>
                 {input.value && (
                   <div className="articles-editor__photo articles-editor__item toggle-media">
-                    <img
+                    <Image
                       className={
                         'articles-editor__photo-preview toggle-media ' +
                         (input.active ? 'active' : '')
                       }
+                      fill
+                      alt="image-article"
                       src={input.value}
                       onClick={() => toggleMediaActive(input.index)}
                     />
