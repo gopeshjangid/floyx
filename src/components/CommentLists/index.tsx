@@ -8,7 +8,7 @@ import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import UsernameLink from '../usernameLink';
 import React, { useEffect } from 'react';
-import { formatIndianNumber } from '@/lib/utils';
+import { addLinks, formatIndianNumber } from "@/lib/utils";
 
 function Comment({ comment, inputRef, type, onAction, setCommentText }: any) {
   const [updateLike, { data, isSuccess }] = useLikeItemMutation();
@@ -26,19 +26,8 @@ function Comment({ comment, inputRef, type, onAction, setCommentText }: any) {
   }, [isSuccess, data]);
 
   const onReply = () => {
-    setCommentText(`@${(session as any)?.data?.user?.username}`);
+    setCommentText(`@[${(session as any)?.data?.user?.username}](${(session as any)?.data?.user?.username})`);
     inputRef.current.focus();
-  };
-
-  const addLinks = (content: any) => {
-    if (!content) {
-      return '';
-    }
-    const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm;
-    const link = '<a href="/profile/$2">@$2</a>';
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const urlLink = '<a href="$1" target="_blank">$1</a>';
-    return content.replace(urlRegex, urlLink).replace(profileRegex, link);
   };
 
   return (
@@ -72,7 +61,6 @@ function Comment({ comment, inputRef, type, onAction, setCommentText }: any) {
             background: palette.mode == 'dark' ? '#1B1830' : '#fff',
           }}
         >
-          {/* <Typography>{comment?.comment?.content}</Typography> */}
           <pre
             style={{
               whiteSpace: 'pre-wrap',

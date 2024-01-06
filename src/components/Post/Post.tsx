@@ -12,6 +12,7 @@ import { allRoutes } from '@/constants/allRoutes';
 import { Post as PostDetail } from '@/lib/redux';
 import { useSession } from 'next-auth/react';
 import LikesComments from '../fullArticle/likesComments';
+import { addLinks } from '@/lib/utils';
 // import { useSession } from "next-auth/react";
 interface postDetail {
   name: string;
@@ -102,9 +103,13 @@ function Post({
           </Box>
         </Box>
         <Box>
-          <Typography sx={{ wordWrap: 'break-word' }} variant="h6">
-            {content}
-          </Typography>
+          <Typography
+            sx={{ wordWrap: 'break-word' }}
+            variant="h6"
+            dangerouslySetInnerHTML={{
+              __html: addLinks(content),
+            }}
+          />
         </Box>
         <PostImage
           image={image}

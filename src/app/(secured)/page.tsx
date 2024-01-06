@@ -13,7 +13,7 @@ import {
   useStore,
 } from '@/lib/redux';
 
-import { Box, Grid, Skeleton, useMediaQuery } from '@mui/material';
+import { Box, Grid, Skeleton } from '@mui/material';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import * as signalR from '@microsoft/signalr';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
@@ -34,7 +34,6 @@ export default function Page() {
   });
 
   const store = useStore({});
-  const isMobile = useMediaQuery('(max-width:480px)');
   const { data, isFetching } = useGetPostsQuery(apiParams);
   const postData = data?.postList;
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
@@ -103,9 +102,9 @@ export default function Page() {
     typeof window === 'undefined' ? 1000 : window.innerHeight;
 
   return (
-    <Box p={isMobile ? 2 : 4} mt={2}>
+    <Box p={2} mt={2}>
       <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>
-        <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
+        <Grid item xs={12} sm={9} marginTop={0} marginBottom={2}>
           <Box
             sx={{
               overflow: 'auto',

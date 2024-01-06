@@ -27,9 +27,9 @@ export const GradientButton = styled(
     borderRadius: isBorderRadius ? '10px': '5px',
     padding: '1px',
     background: isSelected ? 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)': '',
-    '-webkit-mask': 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
     // '-webkit-mask-composite': 'xor',
-    'mask-composite': 'exclude',
+    maskComposite: 'exclude',
     border: isSelected ? "0px" : `1px solid ${theme.palette.primary.boxBorder}`,
   },
   "& span": {

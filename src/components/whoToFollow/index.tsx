@@ -1,7 +1,6 @@
 'use client';
 import {
   Box,
-  Button,
   Divider,
   Stack,
   Typography,
@@ -9,7 +8,6 @@ import {
 } from '@mui/material';
 import UserAvatar from '../UserAvatar';
 import UsernameLink from '../usernameLink';
-import { RoundPrimaryButton } from '../CustomButtons';
 import FollowUser from "../FollowUser";
 import { useGetFollowMoreAccountQuery } from "@/lib/redux/slices/profile";
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
@@ -27,9 +27,10 @@ import {
 import Comment from '../CommentLists';
 import { allRoutes } from '@/constants/allRoutes';
 import Image from 'next/image';
+import Post from "../Post/Post";
 import { formatIndianNumber } from '@/lib/utils';
-import Post from '../Post/Post';
 import { useSharePostMutation } from '@/lib/redux';
+import Link from "next/link";
 
 const style = {
   position: 'absolute',
@@ -55,6 +56,7 @@ type LikeCommentType = {
   showComments?: boolean;
   articleId: string;
   isArticle?: boolean;
+  revalidate?: any,
 };
 function LikesComments({
   likesCommentsDetails,
@@ -64,11 +66,11 @@ function LikesComments({
   showComments = false,
   articleId,
   isArticle = false,
+  revalidate
 }: LikeCommentType) {
   const {
     data: commentList,
     isLoading,
-    refetch,
   } = useGetCommentListQuery(articleId! || '', { skip: !showComments });
   const [commentText, setCommentText] = useState('');
   const [newCreatedComments, setNewCreatedComments] = useState<{
@@ -111,6 +113,7 @@ function LikesComments({
       }
     } else {
       if (isArticle) {
+        revalidate()
         await publishArticle({ articleId: itemId, status, payload });
         toast.success('Article is Published Succesfully ');
       } else {
@@ -130,9 +133,12 @@ function LikesComments({
     }
   };
 
-  const handleArticleLike = () => {
+  const handleArticleLike = async () => {
     const type: string = likeType();
-    updateLike({ articleId: itemId, type });
+    await updateLike({ articleId: itemId, type });
+    if (isArticle) {
+      revalidate();
+    }
   };
 
   const commentTextHandler = useCallback(
@@ -140,6 +146,15 @@ function LikesComments({
       setCommentText(text);
     },
     [setCommentText]
+  );
+
+  const onCreatedArticleComment = useCallback(
+    (commentData) => {
+      if (commentData && isArticle) {
+        revalidate();
+      } 
+    },
+    [setNewCreatedComments]
   );
 
   const onCreatedNewComment = useCallback(
@@ -194,7 +209,10 @@ function LikesComments({
             {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
           </Typography>
         </Button>
-        <Button
+        <Link href={
+          isPost ? `${allRoutes.post}/${itemId}` : '#'
+        }>
+          <Button
           variant="text"
           startIcon={<CommentIcon />}
           sx={{ padding: 0 }}
@@ -215,7 +233,8 @@ function LikesComments({
               Comments
             </Typography>
           )}
-        </Button>
+          </Button>
+        </Link>
         <Button
           sx={{ padding: 0 }}
           variant="text"
@@ -295,6 +314,7 @@ function LikesComments({
               commentType="ArticleComment"
               commentText={commentText}
               setCommentText={commentTextHandler}
+              onCreatedNewComment={onCreatedArticleComment}
             />
           </Box>
           {/* <RecommendedTopics /> */}
@@ -362,7 +382,6 @@ function LikesComments({
           )}
           {!isArticle && (
             <>
-              {/* {JSON.stringify(likesCommentsDetails)} */}
               <AddComment
                 id={itemId}
                 commentRef={commentRef}

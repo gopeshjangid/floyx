@@ -6,6 +6,7 @@ import { useGetPostDetailQuery } from '@/lib/redux/slices/posts';
 
 export default function Page({ params }: { params: { postId: string } }) {
   const { data: postDetail, isLoading } = useGetPostDetailQuery(params.postId);
+
   return (
     <>
       <LoginHeader />
