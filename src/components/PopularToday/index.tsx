@@ -94,7 +94,7 @@ function RecentArticles() {
                     key={'item- article-' + index}
                   >
                     <Skeleton
-                      variant="rectangular"
+                      variant="rounded"
                       height={60}
                       width={'35%'}
                       animation="wave"

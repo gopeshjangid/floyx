@@ -27,6 +27,7 @@ import CustomDialog from '@/components/CustomDialog';
 import moment from 'moment';
 import UsernameLink from '@/components/usernameLink';
 import { useRouter } from 'next/navigation';
+import useDevice from '@/lib/hooks/useDevice';
 
 const CopyableInput = () => {
   const session = useSession();
@@ -103,10 +104,11 @@ const CopyableInput = () => {
 
 const StyledBox = ({ children }: any) => {
   const { palette } = useTheme();
+  const { isMobile } = useDevice();
   return (
     <Box
       sx={{
-        maxWidth: 360,
+        maxWidth: isMobile ? '100%' : 360,
         backgroundColor: palette.primary[700], // Adjust the color based on your design
         borderRadius: '8px', // Adjust border radius based on your design
         border: `1px solid ${palette.action.border}`, // Adjust border color based on your design

@@ -30,7 +30,7 @@
     "@microsoft/signalr": "^8.0.0",
     "@mui/icons-material": "5.14.18",
     "@mui/material": "5.14.18",
-    "@reduxjs/toolkit": "1.9.5",
+    "@reduxjs/toolkit": "^2.0.1",
     "@types/uuid": "^9.0.7",
     "axios": "^1.6.0",
     "cookies-next": "^4.0.0",

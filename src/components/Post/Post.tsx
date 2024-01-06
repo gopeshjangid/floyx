@@ -5,9 +5,9 @@ import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';
 import PostImage from './PostImage';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import PostActionModal from './PostActionModal';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
 import { Post as PostDetail } from '@/lib/redux';
 import { useSession } from 'next-auth/react';
@@ -45,7 +45,7 @@ function Post({
 }: postDetail) {
   const session = useSession();
   const userDetail = (session as any)?.data?.user?.username;
-
+  const pathname = usePathname();
   const router = useRouter();
   const [buttonOptions, setButtonOptions] = useState(['Direct Link']);
   const [buttonAction, setButtonAction] = useState('');
@@ -62,9 +62,19 @@ function Post({
 
   useEffect(() => {
     if (username === userDetail) {
-      setButtonOptions(['Delete Post', 'Direct Link']);
+      const actions = ['Delete Post'];
+      if (pathname.indexOf('post') === -1) {
+        actions.push('Direct Link');
+      }
+      setButtonOptions(actions);
     }
   }, [username]);
+
+  const onDeletedPost = useCallback(() => {
+    if (pathname.indexOf('post') > -1) {
+      router.push('/');
+    }
+  }, []);
 
   return (
     <PostBox>
@@ -104,7 +114,11 @@ function Post({
         />
         {(!isShared || showComments) && (
           <LikesComments
-            likesCommentsDetails={isShared ? postDetails?.shared : {...postDetails, name, username}}
+            likesCommentsDetails={
+              isShared
+                ? postDetails?.shared
+                : { ...postDetails, name, username }
+            }
             itemId={postId}
             articleId={postId}
             isPost={true}
@@ -121,6 +135,7 @@ function Post({
           setOpen={setOpen}
           action={buttonAction}
           postId={postId}
+          onDeleted={onDeletedPost}
         />
       </React.Suspense>
     </PostBox>

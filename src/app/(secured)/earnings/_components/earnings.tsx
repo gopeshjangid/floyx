@@ -85,7 +85,7 @@ const EarningButtons = styled(Button)(({ theme }) => ({
   },
 }));
 
-const PointsBalanceCard = () => {
+const PointsBalanceCard = React.memo(() => {
   const { palette } = useTheme();
   const {
     data: currencyResp,
@@ -241,7 +241,7 @@ const PointsBalanceCard = () => {
       </CardContent>
     </GradientCard>
   );
-};
+});
 
 type Dashboard = {
   titleIcon: React.ReactNode;
@@ -425,4 +425,4 @@ const Earnings: React.FC = () => {
   );
 };
 
-export default Earnings;
+export default React.memo(Earnings);

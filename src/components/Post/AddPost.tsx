@@ -8,8 +8,9 @@ import {
   Typography,
   CircularProgress,
   Divider,
+  useTheme,
 } from '@mui/material';
-import { SyntheticEvent, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -37,7 +38,7 @@ interface MyComponentProps {
   setOpenWriteDialog?: any;
 }
 
-export default function AddPost({
+function AddPost({
   writeDialog = false,
   setOpenWriteDialog,
 }: MyComponentProps) {
@@ -45,19 +46,13 @@ export default function AddPost({
   const imageFileInput = useRef<HTMLInputElement>(null);
   const [postObj, setPostObj] = useState(initialPostObj);
   const session = useSession();
+  const { palette } = useTheme();
   const value = 0;
-  const isAuthorizedUser = false;
   const [imagePreview, setImagePreview] = useState<any>('');
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('');
 
   const [createPost, { error, isLoading }] = useCreatePostMutation();
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
-
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    console.log(newValue);
-    // setValue(newValue);
-  };
-
   const getUserDetails = async (mentionValue: string, callback: any) => {
     let userList: any = [];
     if (mentionValue) {
@@ -83,21 +78,6 @@ export default function AddPost({
     }
   };
 
-  const handlePostText = (e: any, newValue: any, newPlainTextValue: any) => {
-    const text = e.target.value;
-
-    setPostObj(prev => {
-      return {
-        ...prev,
-        postText: text,
-        postTextLeft: 280 - calulcateLength(newPlainTextValue),
-        publishButtonDisabled: !isAuthorizedUser
-          ? true
-          : 280 - calulcateLength(newPlainTextValue) < 0,
-      };
-    });
-  };
-
   const calulcateLength = (str: string) => {
     const output = str.replace(
       /([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2694-\u2697]|\uD83E[\uDD10-\uDD5D])/g,
@@ -106,6 +86,24 @@ export default function AddPost({
     const total = fancyCount(str) - fancyCount(output) + fancyCount(output);
     return total;
   };
+
+  const handlePostText = useCallback(
+    (e: any, newValue: any, newPlainTextValue: any) => {
+      const text = e.target.value;
+
+      setPostObj(prev => {
+        return {
+          ...prev,
+          postText: text,
+          postTextLeft: 280 - calulcateLength(newPlainTextValue),
+          publishButtonDisabled: true
+            ? true
+            : 280 - calulcateLength(newPlainTextValue) < 0,
+        };
+      });
+    },
+    [setPostObj, calulcateLength]
+  );
 
   const fancyCount = (str: any) => {
     return Array.from(str.split(/[\ufe00-\ufe0f]/).join('')).length;
@@ -119,7 +117,7 @@ export default function AddPost({
     setPostObj(initialPostObj);
     setImagePreview('');
     setImageToUpload('');
-    toast.success('Post is created successfully');
+    toast.success('Post is published successfully');
     if (writeDialog) setOpenWriteDialog(false);
   };
 
@@ -137,7 +135,6 @@ export default function AddPost({
         {!writeDialog && (
           <Tabs
             value={value}
-            onChange={handleChange}
             aria-label="icon tabs example"
             sx={{ paddingX: 2 }}
           >
@@ -243,20 +240,40 @@ export default function AddPost({
           </Box>
         </Box>
       </PostBox>
-      <Box>
+      <Box position={'relative'}>
         {(imagePreview || postObj.postText !== '') && (
           <Button
             variant="contained"
             fullWidth
             disabled={isLoading}
-            sx={{ marginTop: 1 }}
+            sx={{
+              marginTop: 1,
+              color:
+                palette.mode === 'light'
+                  ? palette.common.white
+                  : palette.common.black,
+              textTransform: 'capitalize',
+            }}
             onClick={publishPost}
           >
-            {isLoading && <CircularProgress />}
-            {!isLoading && 'Publish Post'}
+            {!isLoading ? 'Publish Post' : 'Please wait'}
           </Button>
+        )}
+        {isLoading && (
+          <CircularProgress
+            sx={{
+              color: palette.secondary.main,
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              marginTop: '-12px',
+              marginLeft: '-12px',
+            }}
+          />
         )}
       </Box>
     </>
   );
 }
+
+export default React.memo(AddPost);

@@ -295,6 +295,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 ? `${item.href}/${session.data?.user?.username}`
                 : item.href
             }
+            onClick={() => setMobileOpen(false)}
           >
             <>
               <ListItemIcon>
@@ -401,7 +402,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 edge="end"
                 onClick={handleDrawerToggle}
               >
-                <MenuIcon />
+                <MenuIcon
+                  sx={{
+                    color:
+                      theme.palette.mode === 'dark'
+                        ? theme.palette.common.white
+                        : theme.palette.common.black,
+                  }}
+                />
               </IconButton>
             </Box>
           </Box>

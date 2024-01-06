@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 
@@ -66,6 +66,88 @@ interface sharePostArgs {
   };
 }
 
+const onCreateQueryStarted = async (
+  currentArg,
+  { queryFulfilled, dispatch, getState }
+) => {
+  // Optimistic update: remove the post from cache immediately
+  let patchGetPostResult = { undo: () => {} };
+  let patchGetPostListByUserResult = { undo: () => {} };
+  try {
+    const { data } = await queryFulfilled;
+    const currentState = getState();
+    // Assuming these functions return an array of args
+    const postListByUserArgs = postServices.util.selectCachedArgsForQuery(
+      currentState,
+      'getPostListByUser'
+    );
+    const getPostsArgs = postServices.util.selectCachedArgsForQuery(
+      currentState,
+      'getPosts'
+    );
+
+    const appendGetPost = arg => {
+      patchGetPostResult = dispatch(
+        postServices.util.updateQueryData('getPosts', arg, draft => {
+          draft.postList.map(post => {
+            if (post.id === currentArg?.postId) {
+              post.post.numberOfShares = post.post.numberOfShares + 1;
+            }
+            return post;
+          });
+          draft.postList = [data, ...draft.postList];
+        })
+      );
+    };
+
+    const appendPostByUser = arg => {
+      patchGetPostListByUserResult = dispatch(
+        postServices.util.updateQueryData('getPostListByUser', arg, draft => {
+          draft.postList.map(post => {
+            if (post.id === currentArg?.postId) {
+              post.post.numberOfShares = post.post.numberOfShares + 1;
+            }
+            return post;
+          });
+          draft.postList.unshift(data);
+        })
+      );
+    };
+
+    // console.log('getPostsArgs: ', getPostsArgs);
+    // console.log('postListByUserArgs: ', postListByUserArgs);
+    if (getPostsArgs.length > 0) {
+      getPostsArgs.forEach(arg => {
+        if (arg.pageNumber === 0) {
+          appendGetPost(arg);
+        }
+      });
+    } else {
+      appendGetPost({
+        pageNumber: 0,
+        postCreatedDate: data.post.createdDateTime,
+      });
+    }
+
+    postListByUserArgs.forEach(arg => {
+      if (arg.pageNumber === 0) {
+        appendPostByUser(arg);
+      }
+    });
+
+    if (postListByUserArgs.length === 0) {
+      appendPostByUser({
+        username: data.author.username,
+        pageNumber: 0,
+        postCreatedDate: data.post.createdDateTime,
+      });
+    }
+  } catch (error) {
+    if (patchGetPostResult) patchGetPostResult.undo();
+    if (patchGetPostListByUserResult) patchGetPostListByUserResult.undo();
+  }
+};
+
 export const postServices = createApi({
   reducerPath: 'postsReducer',
   baseQuery: baseQuery,
@@ -82,34 +164,7 @@ export const postServices = createApi({
         body: payload,
       }),
       transformResponse: (response: any) => response?.value?.data || {},
-      invalidatesTags: ['MainFeedList'],
-      onQueryStarted: async (arg, { queryFulfilled, dispatch, getState }) => {
-        try {
-          const { data } = await queryFulfilled;
-          const currentState = getState().postsReducer;
-          dispatch(
-            postServices.util.updateQueryData(
-              'getPosts',
-              {
-                pageNumber: 1,
-                postCreatedDate: (currentState.queries['getPosts'] as any)?.data
-                  .postList[0]?.post.createdDateTime,
-              },
-              draft => {
-                draft.postList.map(post => {
-                  if (post.id === arg.postId) {
-                    post.post.numberOfShares = post.post.numberOfShares + 1;
-                  }
-                });
-                draft.postList.unshift(data);
-              }
-            )
-          );
-          //}
-        } catch (error) {
-          console.error('Failed to fetch latest posts:', error);
-        }
-      },
+      onQueryStarted: onCreateQueryStarted,
     }),
     getPostListByUser: builder.query<
       { postList: PostDetailResult[]; hasMore: boolean },
@@ -187,7 +242,7 @@ export const postServices = createApi({
       providesTags: (result, error, arg) => [
         {
           type: 'MainFeedList',
-          id: `main-feed-${arg.pageNumber}-${arg.postCreatedDate}`,
+          id: `${arg.pageNumber}-${arg.postCreatedDate}`,
         },
       ],
       // Refetch when the page arg changes
@@ -195,43 +250,73 @@ export const postServices = createApi({
         return currentArg !== previousArg;
       },
     }),
-    createPost: builder.mutation<any, FormData>({
+    createPost: builder.mutation<PostDetailResult, FormData>({
       query: initialPost => ({
         url: `${ApiEndpoint.AddNewPost}`,
         method: 'POST',
         body: initialPost,
       }),
       transformResponse: (response: any) => response?.value?.data,
-      onQueryStarted: async (arg, { queryFulfilled, dispatch, getState }) => {
-        try {
-          const { data } = await queryFulfilled;
-          const currentState = getState().postsReducer;
-          console.log('Query updating onquery satrted====', currentState);
-          dispatch(
-            postServices.util.updateQueryData(
-              'getPosts',
-              {
-                pageNumber: 1,
-                postCreatedDate: (currentState.queries['getPosts'] as any)?.data
-                  .postList[0]?.post.createdDateTime,
-              },
-              draft => {
-                draft.postList.unshift(data);
-              }
-            )
-          );
-          //}
-        } catch (error) {
-          console.error('Failed to fetch latest posts:', error);
-        }
-      },
+      onQueryStarted: onCreateQueryStarted,
     }),
     deletePost: builder.mutation<any, string>({
       query: id => ({
         url: `${ApiEndpoint.DeletePost}/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+      onQueryStarted: async (
+        currentArg,
+        { queryFulfilled, dispatch, getState }
+      ) => {
+        // Optimistic update: remove the post from cache immediately
+        let patchGetPostResult = { undo: () => {} };
+        let patchGetPostListByUserResult = { undo: () => {} };
+        try {
+          const currentState = getState();
+          // Assuming these functions return an array of args
+          const postListByUserArgs = postServices.util.selectCachedArgsForQuery(
+            currentState,
+            'getPostListByUser'
+          );
+          const getPostsArgs = postServices.util.selectCachedArgsForQuery(
+            currentState,
+            'getPosts'
+          );
+          getPostsArgs.forEach(arg => {
+            patchGetPostResult = dispatch(
+              postServices.util.updateQueryData('getPosts', arg, draft => {
+                const deletedIndex = draft.postList.findIndex(
+                  item => item.id === currentArg
+                );
+                if (deletedIndex !== -1) {
+                  draft.postList.splice(deletedIndex, 1);
+                }
+              })
+            );
+          });
+          postListByUserArgs.forEach(arg => {
+            patchGetPostListByUserResult = dispatch(
+              postServices.util.updateQueryData(
+                'getPostListByUser',
+                arg,
+                draft => {
+                  const deletedIndex = draft.postList.findIndex(
+                    item => item.id === currentArg
+                  );
+                  if (deletedIndex !== -1) {
+                    draft.postList.splice(deletedIndex, 1);
+                  }
+                }
+              )
+            );
+          });
+
+          await queryFulfilled;
+        } catch (error) {
+          if (patchGetPostResult) patchGetPostResult.undo();
+          if (patchGetPostListByUserResult) patchGetPostListByUserResult.undo();
+        }
+      },
     }),
   }),
   tagTypes: [
