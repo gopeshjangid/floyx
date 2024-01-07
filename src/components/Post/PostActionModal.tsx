@@ -35,7 +35,6 @@ export default function PostActionModal({
   };
 
   useEffect(() => {
-    console.log('isSuccess: ', isSuccess);
     if (isSuccess) {
       onDeleted();
       setOpen(false);

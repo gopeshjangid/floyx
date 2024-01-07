@@ -15,6 +15,7 @@ import {
   Stack,
   useTheme,
   Skeleton,
+  useMediaQuery,
 } from '@mui/material';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
@@ -27,10 +28,10 @@ import {
 import Comment from '../CommentLists';
 import { allRoutes } from '@/constants/allRoutes';
 import Image from 'next/image';
-import Post from "../Post/Post";
+import Post from '../Post/Post';
 import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
-import Link from "next/link";
+import Link from 'next/link';
 
 const style = {
   position: 'absolute',
@@ -56,7 +57,7 @@ type LikeCommentType = {
   showComments?: boolean;
   articleId: string;
   isArticle?: boolean;
-  revalidate?: any,
+  revalidate?: any;
 };
 function LikesComments({
   likesCommentsDetails,
@@ -66,12 +67,13 @@ function LikesComments({
   showComments = false,
   articleId,
   isArticle = false,
-  revalidate
+  revalidate,
 }: LikeCommentType) {
-  const {
-    data: commentList,
-    isLoading,
-  } = useGetCommentListQuery(articleId! || '', { skip: !showComments });
+  const { data: commentList, isLoading } = useGetCommentListQuery(
+    articleId! || '',
+    { skip: !showComments }
+  );
+  const isSmallDevice = useMediaQuery('(max-width:400px)');
   const [commentText, setCommentText] = useState('');
   const [newCreatedComments, setNewCreatedComments] = useState<{
     isAdding: boolean;
@@ -113,7 +115,7 @@ function LikesComments({
       }
     } else {
       if (isArticle) {
-        revalidate()
+        revalidate();
         await publishArticle({ articleId: itemId, status, payload });
         toast.success('Article is Published Succesfully ');
       } else {
@@ -149,10 +151,10 @@ function LikesComments({
   );
 
   const onCreatedArticleComment = useCallback(
-    (commentData) => {
+    commentData => {
       if (commentData && isArticle) {
         revalidate();
-      } 
+      }
     },
     [setNewCreatedComments]
   );
@@ -191,7 +193,7 @@ function LikesComments({
     [setNewCreatedComments, newCreatedComments]
   );
   return (
-    <Box sx={{ marginTop: '35px', width: '100%' }}>
+    <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
       <Stack direction="row" gap={2} py={1}>
         <Button
@@ -205,34 +207,34 @@ function LikesComments({
             color={'textPrimary'}
             textTransform={'none'}
             marginBottom={0}
+            sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
             {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
           </Typography>
         </Button>
-        <Link href={
-          isPost ? `${allRoutes.post}/${itemId}` : '#'
-        }>
+        <Link href={isPost ? `${allRoutes.post}/${itemId}` : '#'}>
           <Button
-          variant="text"
-          startIcon={<CommentIcon />}
-          sx={{ padding: 0 }}
-          onClick={() =>
-            isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
-          }
-        >
-          {newCreatedComments?.isAdding ? (
-            <Skeleton variant="text" width="100%" height="40px" />
-          ) : (
-            <Typography
-              component={'span'}
-              color={'textPrimary'}
-              textTransform={'none'}
-              marginBottom={0}
-            >
-              {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
-              Comments
-            </Typography>
-          )}
+            variant="text"
+            startIcon={<CommentIcon />}
+            sx={{ padding: 0 }}
+            onClick={() =>
+              isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
+            }
+          >
+            {newCreatedComments?.isAdding ? (
+              <Skeleton variant="text" width="100%" height="40px" />
+            ) : (
+              <Typography
+                component={'span'}
+                color={'textPrimary'}
+                textTransform={'none'}
+                marginBottom={0}
+                sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
+              >
+                {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
+                Comments
+              </Typography>
+            )}
           </Button>
         </Link>
         <Button
@@ -246,6 +248,7 @@ function LikesComments({
             color={'textPrimary'}
             textTransform={'none'}
             marginBottom={0}
+            sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
             {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
           </Typography>
@@ -321,14 +324,16 @@ function LikesComments({
         </>
       )}
       {isPost && !isShared && (
-        <AddComment
-          id={itemId}
-          commentRef={commentRef}
-          commentType="PostComment"
-          commentText={commentText}
-          setCommentText={commentTextHandler}
-          onCreatedNewComment={onCreatedNewComment}
-        />
+        <Box mt={2}>
+          <AddComment
+            id={itemId}
+            commentRef={commentRef}
+            commentType="PostComment"
+            commentText={commentText}
+            setCommentText={commentTextHandler}
+            onCreatedNewComment={onCreatedNewComment}
+          />
+        </Box>
       )}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>

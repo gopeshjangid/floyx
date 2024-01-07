@@ -60,7 +60,6 @@ function Post({
       router.push(`${allRoutes.post}/${postId}`);
     }
   };
-
   useEffect(() => {
     if (username === userDetail) {
       const actions = ['Delete Post'];
