@@ -1,15 +1,20 @@
 'use client';
+import { useMediaQuery } from '@mui/material';
+
 import DefaultPageSkelton from '@/components/DefaultPageSkelton';
 import LoginHeader from '@/components/LoginHeader';
+import LoginModal from '@/components/LoginModal';
 import Post from '@/components/Post/Post';
 import { useGetPostDetailQuery } from '@/lib/redux/slices/posts';
 
 export default function Page({ params }: { params: { postId: string } }) {
   const { data: postDetail, isLoading } = useGetPostDetailQuery(params.postId);
+  const isMobile = useMediaQuery('(max-width:480px)');
 
   return (
     <>
-      <LoginHeader />
+      {!isMobile && <LoginHeader />}
+      {isMobile && <LoginModal />}
       {isLoading ? (
         <DefaultPageSkelton showOnlyContent />
       ) : (
