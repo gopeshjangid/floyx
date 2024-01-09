@@ -33,6 +33,8 @@ export class ApiEndpoint {
     ApiEndpoint.BasePath + '/api/v1/identity/resetPassword/verify';
   public static UpdateSettings =
     ApiEndpoint.BasePath + '/api/v1/identity/settings';
+  public static VerifyToken =
+    ApiEndpoint.BasePath + '/api/v1/identity/verifyToken';
   // End
 
   // Users Api Start
