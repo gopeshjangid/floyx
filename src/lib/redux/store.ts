@@ -29,6 +29,7 @@ import { accountSettingService } from './slices/accountSetting';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { notificationApiService } from './slices/notification';
 import { authMiddleware } from './authMiddleware';
+
 const createNoopStorage = () => {
   return {
     getItem() {
@@ -67,7 +68,7 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 
 let store: any;
 
-function makeStore(initialState = {}) {
+function makeStore(initialState) {
   return configureStore({
     reducer: persistedReducer,
     preloadedState: initialState,

@@ -11,6 +11,7 @@ import VideoIcon from '@/assets/images/svg/video';
 import ProfileGroup from '@/assets/images/svg/profileGroup';
 import BitCoin from '@/assets/images/svg/bitcoin';
 import { GradientButton } from '../gradientButton';
+import Link from 'next/link';
 
 export default function Header() {
   const router = useRouter();
@@ -95,15 +96,17 @@ export default function Header() {
       {TOP_BAR.map((val, index) => (
         <Box key={`headerBar${index}`}>
           {!Array.isArray(val?.data) ? (
-            val.visible && (
-              <GradientButton
-                variant="outlined"
-                onClick={() => handleClick(val?.link)}
-                startIcon={val.icon}
-                isSelected={pathName === val.link}
-              >
-                <span>{val.text}</span>
-              </GradientButton>
+            val.visible &&
+            val.link && (
+              <Link href={val.link}>
+                <GradientButton
+                  variant="outlined"
+                  startIcon={val.icon}
+                  isSelected={pathName === val.link}
+                >
+                  <span>{val.text}</span>
+                </GradientButton>
+              </Link>
             )
           ) : (
             <>

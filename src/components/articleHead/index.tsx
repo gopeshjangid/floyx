@@ -102,6 +102,7 @@ export default function ArticleHead({
         <Tabs
           value={value}
           onChange={handleChange}
+          variant="scrollable"
           aria-label="icon position tabs"
         >
           {articleTabs.map((item, index) => (

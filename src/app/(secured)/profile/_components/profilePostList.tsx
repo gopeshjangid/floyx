@@ -51,7 +51,7 @@ function ProfilePostList() {
     [postData, isFetching, setApiParams]
   );
   return (
-    <Box p={isMobile ? 2 : 0}>
+    <Box>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={12} sm={12} marginTop={2} marginBottom={2}>
           <PostList

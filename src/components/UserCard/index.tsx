@@ -1,5 +1,5 @@
 'use client';
-import { Box, Link, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Link, Stack, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DateParser from '../DateParser';
 import moment from 'moment';
@@ -8,6 +8,7 @@ import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import UsernameLink from '../usernameLink';
 import React from 'react';
+import { GradientText } from '../GradientComponents';
 
 export const UserCardBox = styled(Box)(() => ({
   display: 'flex',
@@ -27,7 +28,6 @@ function UserCard({
   timestamp,
   shared,
   showDate,
-  comment,
   isArticle = false,
   isPost = false,
 }: {
@@ -36,11 +36,23 @@ function UserCard({
   timestamp?: number;
   shared?: any;
   showDate?: any;
-  comment?: string;
   isArticle?: boolean;
   isPost?: boolean;
 }) {
   const { palette } = useTheme();
+
+  const getSharedLink = () => (
+    <Stack direction="row" gap={1}>
+      <Typography variant="subtitle1">
+        {` ${shared ? ' shared a ' : ''}`}
+      </Typography>
+      {shared && (
+        <Link href={`/post/${shared.id}`} underline="none">
+          <GradientText>post</GradientText>
+        </Link>
+      )}
+    </Stack>
+  );
 
   return (
     <UserCardBox>
@@ -57,61 +69,65 @@ function UserCard({
         justifyContent="space-between"
         width="100%"
       >
-        <Box
-          gap={isArticle ? 0 : 1}
-          display="flex"
-          flexDirection={isArticle ? 'column' : 'row'}
-          width="100%"
-        >
-          <Typography
-            variant="subtitle1"
-            component={'span'}
-            color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
-          >
-            {name}{' '}
-          </Typography>
-          <UsernameLink
-            variant="subtitle2"
-            username={username}
-            onClick={e => e.stopPropagation()}
-          />
-          {` ${shared ? ' shared a ' : ''}`}
-          {shared && (
-            <Link href="#" underline="none">
-              post
-            </Link>
-          )}
-        </Box>
-        {timestamp && (
-          <Box>
-            <DateParser date={timestamp} />
-          </Box>
-        )}
-        {showDate && (
-          <Box
-            width="40%"
-            sx={{
-              display: 'flex',
-              alignItems: isArticle ? 'flex-end' : 'center',
-            }}
-          >
-            <CalendarIcon />
-            &nbsp;
-            <Typography
-              variant="caption"
-              component={'span'}
-              color="textPrimary"
-              marginBottom={0}
-            >
-              {moment(showDate).format('MMM DD, YY')}
-            </Typography>
-          </Box>
-        )}
-        {comment && (
-          <Box>
-            <Typography>{comment}</Typography>
-          </Box>
-        )}
+        <Stack direction="row" width={'100%'}>
+          <Grid container spacing={0} width={'100%'}>
+            <Grid item xs={showDate ? 6 : 12} sm={showDate ? 7 : 12}>
+              <Stack
+                direction={isArticle ? 'column' : 'row'}
+                gap={isArticle ? 0 : 0.5}
+                flexWrap={'wrap'}
+                alignItems={'center'}
+              >
+                <Typography
+                  variant="subtitle1"
+                  component={'span'}
+                  color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
+                >
+                  {name}{' '}
+                </Typography>
+                <UsernameLink
+                  variant="subtitle2"
+                  username={username}
+                  onClick={e => e.stopPropagation()}
+                />
+                {shared && (
+                  <Box display={{ xs: 'none', sm: 'block' }}>
+                    {getSharedLink()}
+                  </Box>
+                )}
+              </Stack>
+              <Stack direction="row" gap={1} alignItems={'flex-start'}>
+                {timestamp && (
+                  <Box>
+                    <DateParser date={timestamp} />
+                  </Box>
+                )}
+                {shared && (
+                  <Box display={{ xs: 'block', sm: 'none' }}>
+                    {getSharedLink()}
+                  </Box>
+                )}
+              </Stack>
+            </Grid>
+
+            {showDate && (
+              <Grid item xs={5}>
+                <Box display="flex" justifyContent={'center'}>
+                  <CalendarIcon />
+                  &nbsp;
+                  <Typography
+                    variant="caption"
+                    component={'span'}
+                    color="textPrimary"
+                    marginBottom={0}
+                  >
+                    {moment(showDate).format('MMM DD, YY')}
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
+          </Grid>
+        </Stack>
       </Box>
     </UserCardBox>
   );

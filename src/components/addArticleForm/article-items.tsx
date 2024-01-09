@@ -17,6 +17,7 @@ import VideoIcon from '@/assets/images/svg/video';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { ArticleItem } from './styled-article-items';
 import ImageIcon from '@/assets/images/svg/image';
+import Image from 'next/image';
 
 const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   const { palette } = useTheme();
@@ -36,7 +37,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     errors_urlValue: false,
     errors: {},
     showEmojiPicker: false,
-    index: 0,
+    index: '',
     nameLink: '',
     contentArticleCreated: articleCreated,
   });
@@ -125,11 +126,11 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   };
 
   const handleKey = (index: any, e: any) => {
-    const { inputsList, previousKey, contentArticleCreated } = state;
+    const { inputsList, previousKey } = state;
     const { key, shiftKey } = e;
     const { name, value } = e.target;
     const item = inputsList.find((x: any) => x.index === index);
-    handleContentChange('', inputsList, contentArticleCreated);
+    handleContentChange('', inputsList);
     const isList = item.type === 'ul' || item.type === 'ol';
     if (isList) {
       if (key === 'Enter') {
@@ -220,7 +221,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
       },
       ...inputsList.slice(arrayIndex + 1),
     ];
-    setState(prev => ({ ...prev, index, inputsList }));
+    setState(prev => ({ ...prev, index: maximumIndex, inputsList }));
   };
 
   const deleteInput = (index: number) => {
@@ -732,11 +733,13 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
               <div>
                 {input.value && (
                   <div className="articles-editor__photo articles-editor__item toggle-media">
-                    <img
+                    <Image
                       className={
                         'articles-editor__photo-preview toggle-media ' +
                         (input.active ? 'active' : '')
                       }
+                      fill
+                      alt="image-article"
                       src={input.value}
                       onClick={() => toggleMediaActive(input.index)}
                     />

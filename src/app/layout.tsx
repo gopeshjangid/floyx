@@ -15,6 +15,7 @@ import { useTheme } from 'next-themes';
 const initializeStoreValues = {
   earningsReducer: {},
   registerReducer: {},
+  postsReducer: {},
 };
 
 export default function RootLayout({
@@ -56,9 +57,7 @@ export default function RootLayout({
                 loading={<DefaultCircularProgress />}
                 persistor={persistor}
               > */}
-              <PageProvider>
-                {children}
-              </PageProvider>
+              <PageProvider>{children}</PageProvider>
               {/* </PersistGate> */}
             </Provider>
           </AuthProvider>

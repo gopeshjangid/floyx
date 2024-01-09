@@ -11,7 +11,6 @@ export default withAuth(customMiddleware, {
 
 export async function customMiddleware(request: NextRequest) {
   const token = await getToken({ req: request });
-  console.log('middleware ~ token:', token);
   const isPrivateRoute = config.matcher.includes(request.nextUrl.pathname);
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
   // Redirect to login page if trying to access a private route without a session

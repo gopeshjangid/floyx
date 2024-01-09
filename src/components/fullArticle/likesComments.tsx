@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
@@ -15,6 +15,7 @@ import {
   Stack,
   useTheme,
   Skeleton,
+  useMediaQuery,
 } from '@mui/material';
 import AddComment from '../Post/AddComment';
 import { useToast } from '../Toast/useToast';
@@ -27,9 +28,10 @@ import {
 import Comment from '../CommentLists';
 import { allRoutes } from '@/constants/allRoutes';
 import Image from 'next/image';
-import { formatIndianNumber } from '@/lib/utils';
 import Post from '../Post/Post';
+import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
+import Link from 'next/link';
 
 const style = {
   position: 'absolute',
@@ -55,6 +57,7 @@ type LikeCommentType = {
   showComments?: boolean;
   articleId: string;
   isArticle?: boolean;
+  revalidate?: any;
 };
 function LikesComments({
   likesCommentsDetails,
@@ -64,12 +67,13 @@ function LikesComments({
   showComments = false,
   articleId,
   isArticle = false,
+  revalidate,
 }: LikeCommentType) {
-  const {
-    data: commentList,
-    isLoading,
-    refetch,
-  } = useGetCommentListQuery(articleId! || '', { skip: !showComments });
+  const { data: commentList, isLoading } = useGetCommentListQuery(
+    articleId! || '',
+    { skip: !showComments }
+  );
+  const isSmallDevice = useMediaQuery('(max-width:400px)');
   const [commentText, setCommentText] = useState('');
   const [newCreatedComments, setNewCreatedComments] = useState<{
     isAdding: boolean;
@@ -111,6 +115,7 @@ function LikesComments({
       }
     } else {
       if (isArticle) {
+        revalidate();
         await publishArticle({ articleId: itemId, status, payload });
         toast.success('Article is Published Succesfully ');
       } else {
@@ -130,9 +135,12 @@ function LikesComments({
     }
   };
 
-  const handleArticleLike = () => {
+  const handleArticleLike = async () => {
     const type: string = likeType();
-    updateLike({ articleId: itemId, type });
+    await updateLike({ articleId: itemId, type });
+    if (isArticle) {
+      revalidate();
+    }
   };
 
   const commentTextHandler = useCallback(
@@ -140,6 +148,15 @@ function LikesComments({
       setCommentText(text);
     },
     [setCommentText]
+  );
+
+  const onCreatedArticleComment = useCallback(
+    commentData => {
+      if (commentData && isArticle) {
+        revalidate();
+      }
+    },
+    [setNewCreatedComments]
   );
 
   const onCreatedNewComment = useCallback(
@@ -176,7 +193,7 @@ function LikesComments({
     [setNewCreatedComments, newCreatedComments]
   );
   return (
-    <Box sx={{ marginTop: '35px', width: '100%' }}>
+    <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
       <Stack direction="row" gap={2} py={1}>
         <Button
@@ -190,32 +207,36 @@ function LikesComments({
             color={'textPrimary'}
             textTransform={'none'}
             marginBottom={0}
+            sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
             {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
           </Typography>
         </Button>
-        <Button
-          variant="text"
-          startIcon={<CommentIcon />}
-          sx={{ padding: 0 }}
-          onClick={() =>
-            isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
-          }
-        >
-          {newCreatedComments?.isAdding ? (
-            <Skeleton variant="text" width="100%" height="40px" />
-          ) : (
-            <Typography
-              component={'span'}
-              color={'textPrimary'}
-              textTransform={'none'}
-              marginBottom={0}
-            >
-              {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
-              Comments
-            </Typography>
-          )}
-        </Button>
+        <Link href={isPost ? `${allRoutes.post}/${itemId}` : '#'}>
+          <Button
+            variant="text"
+            startIcon={<CommentIcon />}
+            sx={{ padding: 0 }}
+            onClick={() =>
+              isPost ? router.push(`${allRoutes.post}/${itemId}`) : ''
+            }
+          >
+            {newCreatedComments?.isAdding ? (
+              <Skeleton variant="text" width="100%" height="40px" />
+            ) : (
+              <Typography
+                component={'span'}
+                color={'textPrimary'}
+                textTransform={'none'}
+                marginBottom={0}
+                sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
+              >
+                {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
+                Comments
+              </Typography>
+            )}
+          </Button>
+        </Link>
         <Button
           sx={{ padding: 0 }}
           variant="text"
@@ -227,6 +248,7 @@ function LikesComments({
             color={'textPrimary'}
             textTransform={'none'}
             marginBottom={0}
+            sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
             {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
           </Typography>
@@ -295,20 +317,23 @@ function LikesComments({
               commentType="ArticleComment"
               commentText={commentText}
               setCommentText={commentTextHandler}
+              onCreatedNewComment={onCreatedArticleComment}
             />
           </Box>
           {/* <RecommendedTopics /> */}
         </>
       )}
       {isPost && !isShared && (
-        <AddComment
-          id={itemId}
-          commentRef={commentRef}
-          commentType="PostComment"
-          commentText={commentText}
-          setCommentText={commentTextHandler}
-          onCreatedNewComment={onCreatedNewComment}
-        />
+        <Box mt={2}>
+          <AddComment
+            id={itemId}
+            commentRef={commentRef}
+            commentType="PostComment"
+            commentText={commentText}
+            setCommentText={commentTextHandler}
+            onCreatedNewComment={onCreatedNewComment}
+          />
+        </Box>
       )}
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
@@ -362,7 +387,6 @@ function LikesComments({
           )}
           {!isArticle && (
             <>
-              {/* {JSON.stringify(likesCommentsDetails)} */}
               <AddComment
                 id={itemId}
                 commentRef={commentRef}
