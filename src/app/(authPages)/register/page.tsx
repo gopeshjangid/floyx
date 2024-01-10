@@ -28,11 +28,13 @@ import {
   useCheckUsernameMutation,
   useLazyCheckPhoneQuery,
   useRegisterMutation,
+  useResendMailMutation,
   useVerifyOtpMutation,
 } from '@/lib/redux/slices/registration';
 import { useToast } from '@/components/Toast/useToast';
 import { showErrorMessages } from '@/lib/utils';
 import VerifyPhone from './components/verify-phone';
+import VerifyEmail from './components/verify-email';
 
 const RegisterPage = () => {
   const toast = useToast();
@@ -49,9 +51,13 @@ const RegisterPage = () => {
   const [checkEmail, { data: checkEmailData }] = useCheckEmailMutation();
   const [registerUser, { data: registrationData, error, isLoading }] =
     useRegisterMutation();
+  const [resendEmail] = useResendMailMutation();
+  const [isReferred, setIsReferred] = useState<boolean>(false);
 
-  const [isRegisteredSuccess, setIsRegisteredSuccess] =
-    useState<boolean>(false);
+  const [isRegisteredSuccess, setIsRegisteredSuccess] = useState({
+    value: false,
+    type: '',
+  });
   const [otp, setOtp] = useState<string>('');
 
   const debouncedCheckUserName = useCallback(
@@ -78,14 +84,32 @@ const RegisterPage = () => {
   const [formError, setFormError] = useState<any>({});
 
   useEffect(() => {
+    if (formData.recommendedMe) {
+      setIsReferred(true);
+    } else {
+      setIsReferred(false);
+    }
+  }, [formData.recommendedMe]);
+
+  useEffect(() => {
     if (verifyOtpData === 'success') {
       router.push(allRoutes.login);
     }
   }, [verifyOtpData]);
 
   useEffect(() => {
-    if (registrationData === 'success') {
-      setIsRegisteredSuccess(true);
+    if (registrationData === 'success' && isReferred) {
+      setIsRegisteredSuccess({
+        value: true,
+        type: 'phone',
+      });
+    }
+
+    if (registrationData === 'success' && !isReferred) {
+      setIsRegisteredSuccess({
+        value: true,
+        type: 'email',
+      });
     }
   }, [registrationData]);
 
@@ -212,24 +236,37 @@ const RegisterPage = () => {
     }
   };
 
+  const onResendMail = () => {
+    resendEmail({
+      mail: formData.email,
+    });
+  };
+
   return (
     <Container component="main" maxWidth="sm" sx={{ pt: 10 }}>
-      {isRegisteredSuccess && (
-        <VerifyPhone
-          value={otp}
-          onChange={e => setOtp(e.target.value)}
-          submitLoading={verifyOtpLoading}
-          onSubmit={e => {
-            e.preventDefault();
-            if (!otp) return;
-            verifyOtp({
-              usernameOrEmail: formData.username,
-              otp: otp,
-            });
-          }}
-        />
-      )}
-      {!isRegisteredSuccess && (
+      {isRegisteredSuccess.value === true &&
+        isRegisteredSuccess.type === 'phone' && (
+          <VerifyPhone
+            value={otp}
+            onChange={e => setOtp(e.target.value)}
+            submitLoading={verifyOtpLoading}
+            onSubmit={e => {
+              e.preventDefault();
+              if (!otp) return;
+              verifyOtp({
+                usernameOrEmail: formData.username,
+                otp: otp,
+              });
+            }}
+          />
+        )}
+
+      {isRegisteredSuccess.value === true &&
+        isRegisteredSuccess.type === 'email' && (
+          <VerifyEmail onResendMail={onResendMail} />
+        )}
+
+      {!isRegisteredSuccess.value && (
         <>
           <Typography
             variant="h3"
@@ -358,15 +395,15 @@ const RegisterPage = () => {
                     ),
                   }}
                 />
+
+                <Phone
+                  value={formData.phone}
+                  onChange={onChangeHandler}
+                  checkPhone={checkPhone}
+                  error={formError.phone}
+                />
               </>
             )}
-
-            <Phone
-              value={formData.phone}
-              onChange={onChangeHandler}
-              checkPhone={checkPhone}
-              error={formError.phone}
-            />
 
             <FormControl>
               <FormLabel required>Email address</FormLabel>

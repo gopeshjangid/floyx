@@ -3,15 +3,17 @@ import AuthorCoulmn from '@/components/fullArticle/authorColumn';
 import FullArticle from '@/components/fullArticle/fullArticle';
 import LikesComments from '@/components/fullArticle/likesComments';
 import TipColumn from '@/components/fullArticle/tipCoumn';
-import { Alert, Skeleton } from '@mui/material';
+import { Alert, Skeleton, useMediaQuery } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { Metadata, ResolvingMetadata } from 'next';
-import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
+// import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
 import LoginHeader from '@/components/LoginHeader';
-import { revalidateTag } from "next/cache";
+import { revalidateTag } from 'next/cache';
+import LoginModal from '@/components/LoginModal';
 
 async function Page({ params }: any) {
+  const isMobile = useMediaQuery('(max-width:480px)');
   const userName = params?.userName;
   const articlePuclicUrl = params?.articlePublicUrl;
   const { data: articleDetails, isError } = await fetchServerData(
@@ -20,13 +22,14 @@ async function Page({ params }: any) {
   const articleId = articleDetails?.article?.id;
 
   async function revalidate() {
-    "use server";
+    'use server';
     revalidateTag('articleDetail');
   }
 
   return (
     <>
-      <LoginHeader />
+      {!isMobile && <LoginHeader />}
+      {isMobile && <LoginModal />}
       {isError && <Alert severity="error">Something went wrong</Alert>}
       {articleId && (
         <>
