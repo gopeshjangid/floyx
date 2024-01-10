@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { TypographyProps } from '@mui/material/Typography';
 import { SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles';
+import { Stack } from '@mui/material';
 
 interface CustomTypographyProps extends TypographyProps {
   icon?: React.ReactElement;
@@ -17,13 +18,10 @@ const CustomTypographyWithIcon: React.FC<CustomTypographyProps> = ({
   ...typographyProps
 }) => {
   return (
-    <Typography
-      sx={{ display: 'flex', alignItems: 'center' }}
-      {...typographyProps}
-    >
-      {icon && iconPosition === 'start' && <span>{icon}</span>}
-      {children}
-    </Typography>
+    <Stack direction="row" alignItems="flex-start">
+      {icon}
+      <Typography {...typographyProps}>{children}</Typography>
+    </Stack>
   );
 };
 

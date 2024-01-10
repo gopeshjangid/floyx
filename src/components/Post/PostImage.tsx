@@ -33,7 +33,7 @@ export default function PostImage({ image, link, shared, isShared }) {
   return (
     <Box>
       {image && (
-        <Box>
+        <Box sx={{ borderRadius: '4px', overflow: 'hidden' }}>
           {loading && (
             <Skeleton variant="rounded" height={300} animation="wave" />
           )}
@@ -57,7 +57,10 @@ export default function PostImage({ image, link, shared, isShared }) {
         </Box>
       )}
       {link && (
-        <Box onClick={openInNewTab}>
+        <Box
+          onClick={openInNewTab}
+          sx={{ borderRadius: '4px', overflow: 'hidden' }}
+        >
           {link.thumbnailPath && (
             <Image
               width={0}

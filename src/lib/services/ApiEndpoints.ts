@@ -118,6 +118,8 @@ export class ApiEndpoint {
     ApiEndpoint.BasePath + '/api/v1/Tasks/getCompletedTaskHistory';
   public static BonusTaskStatus =
     ApiEndpoint.BasePath + '/api/v1/Tasks/getBonusTaskStatus';
+  public static isUserFollowedBy =
+    ApiEndpoint.BasePath + '/api/v1/Users/isUserFollowedBy';
 
   // End
 

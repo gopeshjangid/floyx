@@ -135,8 +135,8 @@ const SearchComponent: React.FC<{
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="end">
-                    <IconButton edge="end" color="primary">
-                      <SVGUser />
+                    <IconButton edge="end">
+                      <SVGUser fill="#A75FFF" />
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -158,8 +158,8 @@ const SearchComponent: React.FC<{
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="end">
-                    <IconButton edge="end" color="primary">
-                      <FlagOutlined />
+                    <IconButton edge="end">
+                      <FlagOutlined fill="#A75FFF" />
                     </IconButton>
                   </InputAdornment>
                 ),
