@@ -6,6 +6,7 @@ export default withAuth(customMiddleware, {
   pages: {
     signIn: '/social-login',
     error: '/login',
+    signOut: '/sign-out',
   },
 });
 
