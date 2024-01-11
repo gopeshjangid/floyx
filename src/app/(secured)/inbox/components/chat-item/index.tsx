@@ -86,6 +86,7 @@ const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
                   fontWeight={400}
                   component="span"
                   className="gradient-text"
+                  ml={1}
                 >
                   @{username}
                 </Typography>

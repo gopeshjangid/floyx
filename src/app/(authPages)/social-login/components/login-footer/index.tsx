@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import styled from '@emotion/styled';
+import { allRoutes } from '@/constants/allRoutes';
 
 const LoginFooterWrapper = styled(Box)(() => ({
   marginTop: '54px',
@@ -30,9 +31,9 @@ const LoginFooter = () => {
         justifyContent="center"
         flexWrap="wrap"
       >
-        <Link href="/"> Terms of service</Link>
-        <Link href="/"> Privacy Policy</Link>
-        <Link href="/"> Cookie use</Link>
+        <Link href={allRoutes.termsAndConditions}>Terms of service</Link>
+        <Link href={allRoutes.privacyPolicy}>Privacy Policy</Link>
+        <Link href={allRoutes.cookiesPolicy}>Cookie Use</Link>
       </Stack>
       <Typography
         variant="h6"
@@ -42,7 +43,7 @@ const LoginFooter = () => {
         color={palette.primary[300]}
         sx={{ '& a': { color: '#5798FF' } }}
       >
-        © {new Date().getFullYear()} Powered by Floyx, LLC & <Link href="/"> Polygon.</Link>
+        © {new Date().getFullYear()} Powered by Floyx, LLC.
       </Typography>
     </LoginFooterWrapper>
   );

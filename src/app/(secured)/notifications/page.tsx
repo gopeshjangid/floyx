@@ -1,6 +1,13 @@
 'use client';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { Box, Button, CircularProgress, Tab, Tabs, styled } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Tab,
+  Tabs,
+  styled,
+} from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
 import { tokenService } from '@/lib/services/new/tokenService';
@@ -16,7 +23,9 @@ import { Theme } from '@mui/system';
 const NotificationsWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   borderBottom: 1,
   paddingInline: '20px',
-  border: `1px solid ${theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'}`,
+  border: `1px solid ${
+    theme.palette?.mode === 'light' ? '#E7F0FC' : 'rgba(255, 255, 255, 0.15)'
+  }`,
   '& .notifications-header': {
     '& .MuiButton-root': {
       padding: '0',
@@ -55,7 +64,13 @@ function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
       {value === index && <Box sx={{ p: { md: 4, xs: 2 } }}>{children}</Box>}
     </div>
   );
@@ -79,7 +94,9 @@ const Notifications = () => {
     notifications: [],
   });
   const [markAllAsReadLoading, setMarkAllAsReadLoading] = useState(false);
-  const unReadNotifications = notificationData.notifications.filter((x: INotification) => x.state === 1);
+  const unReadNotifications = notificationData.notifications.filter(
+    (x: INotification) => x.state === 1
+  );
 
   useEffect(() => {
     tokenService.onNewToken.on('USER', setCurrenUser);
@@ -107,7 +124,8 @@ const Notifications = () => {
       setNotificationData({
         ...notificationData,
         notifications: res.value.data,
-        notificationCount: res.value.data.filter((x: any) => x.state == 1).length,
+        notificationCount: res.value.data.filter((x: any) => x.state == 1)
+          .length,
       });
     } else {
       toast.error('Error getting notifications');
@@ -145,7 +163,10 @@ const Notifications = () => {
 
   const saveConversations = (threads: any) => {
     threads.sort(function (a: any, b: any) {
-      return new Date(b.lastMessageDate).getTime() - new Date(a.lastMessageDate).getTime();
+      return (
+        new Date(b.lastMessageDate).getTime() -
+        new Date(a.lastMessageDate).getTime()
+      );
     });
 
     setNotificationPageData(prev => ({
@@ -160,7 +181,9 @@ const Notifications = () => {
 
   const markAllAsRead = async () => {
     setMarkAllAsReadLoading(true);
-    const response = await notificationService.markAllAsRead(notificationData.notifications);
+    const response = await notificationService.markAllAsRead(
+      notificationData.notifications
+    );
     if (!response?.success) {
       toast.error('Error marking all as read');
     }
@@ -169,17 +192,38 @@ const Notifications = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper
+      sx={{
+        maxWidth: {
+          md: '100%',
+          lg: '75%',
+        },
+      }}
+    >
       <NotificationsWrapper>
-        <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap="10px">
-          <Tabs value={value} onChange={handleChange} aria-label="notification tabs">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          gap="10px"
+        >
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="notification tabs"
+          >
             <Tab label="All" />
             <Tab label="Unread" />
           </Tabs>
 
           <Box className="notifications-header">
             <Button onClick={markAllAsRead}>
-              {markAllAsReadLoading ? <CircularProgress size={20} color="inherit" /> : <SVGCheck />}
+              {markAllAsReadLoading ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                <SVGCheck />
+              )}
               <span className="gradient-text">Mark all as read</span>
             </Button>
           </Box>
@@ -187,10 +231,18 @@ const Notifications = () => {
       </NotificationsWrapper>
       <Box className="notifications-content">
         <CustomTabPanel value={value} index={0}>
-          {isLoading ? <NotificationLoader /> : <NotificationList notifications={notificationData.notifications} />}
+          {isLoading ? (
+            <NotificationLoader />
+          ) : (
+            <NotificationList notifications={notificationData.notifications} />
+          )}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          {isLoading ? <NotificationLoader /> : <NotificationList notifications={unReadNotifications} />}
+          {isLoading ? (
+            <NotificationLoader />
+          ) : (
+            <NotificationList notifications={unReadNotifications} />
+          )}
         </CustomTabPanel>
       </Box>
     </Wrapper>

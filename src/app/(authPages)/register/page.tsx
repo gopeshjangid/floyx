@@ -37,6 +37,7 @@ import VerifyPhone from './components/verify-phone';
 import VerifyEmail from './components/verify-email';
 
 const RegisterPage = () => {
+  const theme = useTheme();
   const toast = useToast();
   const router = useRouter();
   const { palette } = useTheme();
@@ -422,7 +423,7 @@ const RegisterPage = () => {
                   startAdornment: (
                     <InputAdornment position="end">
                       <IconButton edge="end" color="primary">
-                        <SVGEmail />
+                        <SVGEmail color={theme.palette.primary[100]} />
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -444,7 +445,7 @@ const RegisterPage = () => {
                   startAdornment: (
                     <InputAdornment position="end">
                       <IconButton edge="end" color="primary">
-                        <SVGEmail />
+                        <SVGEmail color={theme.palette.primary[100]} />
                       </IconButton>
                     </InputAdornment>
                   ),
