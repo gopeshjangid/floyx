@@ -1,30 +1,63 @@
-import { Box, Typography, useTheme } from '@mui/material';
+import UserAvatar from '@/components/UserAvatar';
+import { allRoutes } from '@/constants/allRoutes';
+import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
+import { Box, ListItemAvatar, Typography, useTheme } from '@mui/material';
 import moment from 'moment';
+import Link from 'next/link';
 import React from 'react';
 
-const ChatSenderCard = ({ message, time }: { message: string; time: string }) => {
+const ChatSenderCard = ({
+  message,
+  time,
+  username,
+}: {
+  message: string;
+  time: string;
+  username: string;
+}) => {
   const { palette } = useTheme();
 
   return (
     <Box width="fit-content" alignSelf="flex-end">
       <Box
         sx={{
-          background: 'linear-gradient(87deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '10px',
         }}
-        padding={{ md: '12px 23px', xs: '12px 15px' }}
-        borderRadius="10px 0px 10px 10px"
       >
-        <Typography
-          variant="body1"
-          color={palette?.mode === 'light' ? '#fff' : '#0B081F'}
-          fontSize="15px"
-          fontWeight="400"
-          lineHeight={{ md: '28px', xs: '24px' }}
-          margin={0}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            background:
+              'linear-gradient(87deg, #AB59FF 0%, #858FFF 57.35%, #4D9AFF 100.99%)',
+          }}
+          padding={{ md: '12px 23px', xs: '12px 15px' }}
+          borderRadius="10px 0px 10px 10px"
         >
-          {message}
-        </Typography>
+          <Typography
+            variant="body1"
+            color={palette?.mode === 'light' ? '#fff' : '#0B081F'}
+            fontSize="15px"
+            fontWeight="400"
+            lineHeight={{ md: '28px', xs: '24px' }}
+            margin={0}
+          >
+            {message}
+          </Typography>
+        </Box>
+
+        <Link href={`${allRoutes.profile}/${username}`}>
+          <ListItemAvatar>
+            <UserAvatar
+              alt=""
+              src={`${ApiEndpoint.ProfileDetails}/avatar/${username}`}
+            />
+          </ListItemAvatar>
+        </Link>
       </Box>
+
       <Typography
         variant="body2"
         color={palette?.mode === 'light' ? '#7C93AE' : '#878D9A'}

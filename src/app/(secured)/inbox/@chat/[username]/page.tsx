@@ -140,7 +140,7 @@ const ChatPage = () => {
   };
 
   const loadMore = () => {
-    const date = moment(chatPageData.conversation[0].time).utc();
+    const date = moment(chatPageData?.conversation?.[0].time).utc();
     messageService.loadMessages(username, date).then((resp: any) => {
       setChatPageData(prevState => ({
         ...prevState,

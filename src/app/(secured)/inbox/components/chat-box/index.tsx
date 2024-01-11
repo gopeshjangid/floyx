@@ -38,11 +38,21 @@ const groupMessagesByDate = (conversations: IMessage[]): GroupedMessages => {
   return grouped;
 };
 
-const ChatBox = ({ conversations, receiverUsername, loadMore, loadMoreMessageBtn }: IChatBox) => {
+const ChatBox = ({
+  conversations,
+  receiverUsername,
+  loadMore,
+  loadMoreMessageBtn,
+}: IChatBox) => {
   const groupedConversations = groupMessagesByDate(conversations);
 
   return (
-    <Box display="flex" flexDirection="column" justifyContent="flex-end" gap={2}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="flex-end"
+      gap={2}
+    >
       {loadMoreMessageBtn && (
         <Button
           color="secondary"
@@ -78,9 +88,17 @@ const ChatBox = ({ conversations, receiverUsername, loadMore, loadMoreMessageBtn
           {groupedConversations?.[dateLabel].map(conversation => (
             <Fragment key={conversation.id}>
               {conversation.oppositUser.username === receiverUsername ? (
-                <ChatSenderCard message={conversation.text} time={conversation.time} />
+                <ChatSenderCard
+                  message={conversation.text}
+                  time={conversation.time}
+                  username={conversation.user.username}
+                />
               ) : (
-                <ChatReceiverCard message={conversation.text} time={conversation.time} />
+                <ChatReceiverCard
+                  message={conversation.text}
+                  time={conversation.time}
+                  username={conversation.user.username}
+                />
               )}
             </Fragment>
           ))}

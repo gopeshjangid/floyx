@@ -13,6 +13,7 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  useTheme,
 } from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
@@ -45,6 +46,7 @@ interface ISettingAccountFormError {
 }
 
 const AccountSetting = () => {
+  const theme = useTheme();
   const {
     data: settingsData,
     isLoading: getSettingLoading,
@@ -237,7 +239,7 @@ const AccountSetting = () => {
                   startAdornment: (
                     <InputAdornment position="end">
                       <IconButton edge="end" color="primary">
-                        <SVGEmail />
+                        <SVGEmail color={theme.palette.primary[100]} />
                       </IconButton>
                     </InputAdornment>
                   ),

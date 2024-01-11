@@ -72,14 +72,13 @@ const Login: FC = () => {
         redirect: false,
       });
 
-      setLoading(false);
-
       if (response?.ok) {
         router.replace(allRoutes.home);
         toast.success('Login successfully!');
       } else {
         console.log('login error response', JSON.stringify(response));
         toast.error(response?.error || 'Something went wrong!');
+        setLoading(false);
       }
     }
   };
@@ -260,10 +259,14 @@ const Login: FC = () => {
               color={palette.primary[300]}
               sx={{ '& a': { color: '#5798FF' } }}
             >
-              By signing up,you agree to
-              <Link href="/termsOfService"> Terms of Service </Link> and
-              <Link href="/privacyPolicy"> Privacy Policy, </Link>
-              including <Link href="/cookiePolicy"> Cookie Use.</Link>
+              By signing in, you agree to
+              <Link href={allRoutes.termsAndConditions}>
+                Terms of Service{' '}
+              </Link>{' '}
+              and
+              <Link href={allRoutes.privacyPolicy}> Privacy Policy, </Link>
+              including
+              <Link href={allRoutes.cookiesPolicy}> Cookie Use.</Link>
             </Typography>
           </Box>
           <Box mt="20px" textAlign="left">

@@ -74,9 +74,13 @@ const SocialLogin: FC = () => {
               sx={{ '& a': { color: '#5798FF' } }}
             >
               By signing up,you agree to
-              <Link href="/termsOfService"> Terms of Service </Link> and
-              <Link href="/privacyPolicy"> Privacy Policy, </Link>
-              including <Link href="/cookiePolicy"> Cookie Use.</Link>
+              <Link href={allRoutes.termsAndConditions}>
+                Terms of Service{' '}
+              </Link>{' '}
+              and
+              <Link href={allRoutes.privacyPolicy}> Privacy Policy, </Link>
+              including
+              <Link href={allRoutes.cookiesPolicy}> Cookie Use.</Link>
             </Typography>
           </Box>
         </Box>

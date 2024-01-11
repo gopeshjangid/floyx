@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 interface UserAvatarProps {
   src: string | StaticImageData;
   alt: string;
-  sx: {
+  sx?: {
     width:
       | {
           md?: string;
