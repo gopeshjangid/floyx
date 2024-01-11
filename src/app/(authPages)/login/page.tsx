@@ -72,14 +72,13 @@ const Login: FC = () => {
         redirect: false,
       });
 
-      setLoading(false);
-
       if (response?.ok) {
         router.replace(allRoutes.home);
         toast.success('Login successfully!');
       } else {
         console.log('login error response', JSON.stringify(response));
         toast.error(response?.error || 'Something went wrong!');
+        setLoading(false);
       }
     }
   };
