@@ -154,6 +154,19 @@ export const profileService = createApi({
       },
       providesTags: ['PopularAccount'],
     }),
+    isUserFollowed: builder.query<
+      boolean,
+      { userId: string; followedId: string }
+    >({
+      query: ({ userId, followedId }) =>
+        ApiEndpoint.isUserFollowedBy + '/' + userId + '/' + followedId,
+      transformResponse: (response: ApiResponse<boolean>) => {
+        return response?.value?.data;
+      },
+      providesTags: (resul, data, arg) => [
+        { type: 'isUserFollowedBy', id: arg.followedId + '/' + arg.userId },
+      ],
+    }),
     getProfileAbout: builder.query<AboutType, { username: string }>({
       query: params => ApiEndpoint.GetAboutProfile + '/' + params?.username,
       transformResponse: (response: ApiResponse<AboutType>) =>
@@ -318,6 +331,7 @@ export const profileService = createApi({
     'PopularAccount',
     'profileDetails',
     'FollowedAccount',
+    'isUserFollowedBy',
   ],
 });
 
@@ -340,4 +354,5 @@ export const {
   useAddReportArticleMutation,
   useUpdateProfileDetailMutation,
   useGetFollowMoreAccountQuery,
+  useIsUserFollowedQuery,
 } = profileService;

@@ -7,6 +7,7 @@ const TextareaAutosize = styled(BaseTextareaAutosize)(
   color: #85838F;
   background: ${theme.palette.background.default};
   border: 1px solid ${theme.palette.primary[800]};
+  fon-size: 1rem;
   padding: 16px;
   &:hover {
     border-color: ${theme.palette.primary.main};

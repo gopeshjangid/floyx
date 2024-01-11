@@ -24,9 +24,11 @@ import {
 } from '@mui/icons-material';
 import {
   ProfileInfoType,
+  useGetCurrentProfileDetailsQuery,
   //useGetCurrentProfileDetailsQuery,
   useGetProfileAboutQuery,
   useGetProfileDetailsQuery,
+  useIsUserFollowedQuery,
   useUpdateProfileDetailMutation,
 } from '@/lib/redux/slices/profile';
 import { useParams, useRouter } from 'next/navigation';
@@ -44,6 +46,7 @@ import ImageUploader from '@/components/ImageUploader';
 import { RoundPrimaryButton } from '@/components/CustomButtons';
 import FollowUser from '@/components/FollowUser';
 import TextareaAutosize from '@/components/CustomTextArea';
+import Link from 'next/link';
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
   top?: string;
@@ -193,6 +196,7 @@ const ProfileSection: React.FC = () => {
     ? params?.username[0] ?? ''
     : params?.username || '';
   const session = useSession();
+  const { data: currentUser } = useGetCurrentProfileDetailsQuery();
   const isSameuser = session.data?.user.username === username;
   const isMobile = useMediaQuery('(max-width:480px)');
   const { data: profile, isLoading } = useGetProfileDetailsQuery(
@@ -200,6 +204,11 @@ const ProfileSection: React.FC = () => {
     {
       skip: !username,
     }
+  );
+
+  const { data: isFollwed } = useIsUserFollowedQuery(
+    { userId: profile?.id ?? '', followedId: currentUser?.userId ?? '' },
+    { skip: !currentUser?.userId || !profile?.id || isSameuser }
   );
   const [
     updateProfile,
@@ -255,6 +264,10 @@ const ProfileSection: React.FC = () => {
     formData.append('deleteBgImage', Boolean('') as any); // Convert boolean to string
     formData.append('username', username);
     updateProfile(formData);
+  };
+
+  const handleUrl = url => {
+    router.push(url);
   };
 
   return (
@@ -462,7 +475,7 @@ const ProfileSection: React.FC = () => {
             ) : null}
           </Box>
         )}
-        <Box mt={6} p={2} textAlign="center">
+        <Box mt={6} p={2} pt={isEdit ? 5 : 2} textAlign="center">
           <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
             {isLoading ? (
               <Skeleton
@@ -479,6 +492,14 @@ const ProfileSection: React.FC = () => {
                   {profile?.name}
                 </Typography>
                 <UsernameLink username={profile?.username ?? ''} />
+                {isFollwed && (
+                  <>
+                    &nbsp;|
+                    <Typography color="primary" variant="body2">
+                      Follows you
+                    </Typography>
+                  </>
+                )}
               </>
             )}
           </Stack>
@@ -505,16 +526,18 @@ const ProfileSection: React.FC = () => {
                 }
                 placeholder="Enter short description..."
                 value={form.shortDescription}
-                minRows={2}
+                minRows={5}
+                maxLength={200}
               />
             )}
           </Box>
           <Stack
             direction="row"
             flexWrap="wrap"
+            alignItems="center"
             justifyContent={'flex-start'}
-            gap={1}
-            spacing={{ xs: 0, sm: 1, md: 2 }}
+            gap={0.5}
+            spacing={{ xs: 0, sm: 1, md: 1 }}
           >
             {aboutLoading ? (
               <Skeleton variant="rectangular" height={'30px'} width="100%" />
@@ -527,10 +550,15 @@ const ProfileSection: React.FC = () => {
                   </Typography>
                 </Box>
                 <Box display="flex" gap={1}>
-                  <Image src={LinkIcon} alt="website link icon" />
-                  <Typography variant="subtitle2" color="textPrimary">
+                  <Button
+                    variant="text"
+                    size="small"
+                    startIcon={<Image src={LinkIcon} alt="website link icon" />}
+                    onClick={() => handleUrl(profileAbout?.about?.website)}
+                    sx={{ fontSize: '.825rem', textTransform: 'none' }}
+                  >
                     {profileAbout?.about?.website}
-                  </Typography>
+                  </Button>
                 </Box>
                 <Box display="flex" gap={1}>
                   <Image src={Calender} alt="Calender Icon" />

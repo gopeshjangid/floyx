@@ -75,10 +75,10 @@ const ActivityChipEditInfo: React.FC<ActivityChipEditInfoProps> = ({
   };
   return (
     <>
-      <Grid item xs={3}>
+      <Grid item sm={3} xs={12}>
         <InputLabel htmlFor={name}>{label}</InputLabel>
       </Grid>
-      <Grid item xs={9}>
+      <Grid item sm={9} xs={12}>
         {isEdit && (
           <TextField
             fullWidth
@@ -89,9 +89,10 @@ const ActivityChipEditInfo: React.FC<ActivityChipEditInfoProps> = ({
             inputProps={{ maxLength: 20 }}
             onChange={handleInputChange}
             onKeyUp={handleSkillKeyPress}
+            disabled={list.length === 3}
           />
         )}
-        <Stack direction="row" gap={1}>
+        <Stack flexWrap={'wrap'} direction="row" gap={1}>
           {list.length > 0 ? (
             list.map((skill, index) => {
               if (isEdit) {
@@ -304,12 +305,12 @@ const PersonalInfo: React.FC = () => {
             )}
           </Stack>
         </Box>
-        <Grid container justifyContent={'center'} spacing={2}>
-          <Grid xs={3} item>
+        <Grid container justifyContent={'center'} spacing={1}>
+          <Grid xs={12} sm={3} item>
             {' '}
             <InputLabel htmlFor="Country">Location</InputLabel>
           </Grid>
-          <Grid xs={9} item>
+          <Grid xs={12} sm={9} item>
             {' '}
             <FormControl fullWidth>
               <Select
@@ -330,11 +331,10 @@ const PersonalInfo: React.FC = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid xs={3} item>
-            {' '}
+          <Grid sm={3} xs={12} item>
             <InputLabel htmlFor="Country">Website</InputLabel>
           </Grid>
-          <Grid xs={9} item>
+          <Grid xs={12} sm={9} item>
             {' '}
             <TextField
               variant="outlined"
@@ -356,19 +356,22 @@ const PersonalInfo: React.FC = () => {
             handleAddSkill={addSkillHandler}
             activityKey={'skills'}
           />
-          <Grid xs={12} item>
+          <Grid xs={12} sm={3} item>
             <InputLabel
               sx={{ textAlign: 'left', py: 2 }}
               htmlFor="Type interest and press enter"
             >
               Description
             </InputLabel>
+          </Grid>
+          <Grid xs={12} item sm={9}>
             {isEdit ? (
               <TextareaAutosize
                 name="country"
                 placeholder="Enter description..."
                 value={formValues.description}
-                minRows={4}
+                minRows={8}
+                maxLength={200}
               />
             ) : (
               <Box sx={{ border: `1px solid ${palette.action.border}` }} p={2}>

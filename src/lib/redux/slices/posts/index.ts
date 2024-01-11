@@ -227,6 +227,7 @@ export const postServices = createApi({
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
+
       merge: (currentCache, newItems, otherArgs) => {
         if (currentCache) {
           return {

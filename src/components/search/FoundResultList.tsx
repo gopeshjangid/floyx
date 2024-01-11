@@ -19,6 +19,7 @@ import { SVGUser } from '@/assets/images';
 import CustomTypographyWithIcon from '../typographyWithIcon';
 import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
 import ArticleSvgIcon from '@/iconComponents/articleSvgIcon';
+import Link from 'next/link';
 
 interface SearchResultProps {
   profile: UserDetailsType;
@@ -45,27 +46,29 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
             {isLoading ? (
               <Skeleton variant="circular" width={40} height={40} />
             ) : (
-              <StyledAvatar>{profile.avatar}</StyledAvatar>
+              <StyledAvatar alt={profile.name} src={profile.avatar} />
             )}
             {isLoading ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Skeleton width="30%" />
-                <Skeleton width="10%" />
+                <Skeleton width="30%" height="30px" />
+                <Skeleton width="40%" height="30px" />
               </Box>
             ) : (
               <Box mb={2}>
                 <Stack alignItems="center" direction="row" gap={1}>
-                  <Typography
-                    sx={{
-                      color: theme.palette.primary.fontLightColor,
-                    }}
-                    variant="h6"
-                  >
-                    {profile.name}
-                  </Typography>
+                  <Link href={`/profile/${profile.username}`}>
+                    <Typography
+                      sx={{
+                        color: theme.palette.primary.fontLightColor,
+                      }}
+                      variant="h6"
+                    >
+                      {profile.name}
+                    </Typography>
+                  </Link>
                   <UsernameLink username={profile.username} />
                 </Stack>
-                <Typography variant="subtitle1">
+                <Typography variant="subtitle2">
                   {profile.shortDescription}
                 </Typography>
               </Box>
@@ -98,7 +101,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                 ) : (
                   <CustomTypographyWithIcon
                     fontWeight={'400'}
-                    icon={<SVGUser fill={theme.palette.action.svg} />}
+                    icon={<SVGUser fill="#A75FFF" height={'20px'} />}
                     variant="body2"
                   >
                     {' '}
@@ -114,9 +117,9 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                     fontWeight={'400'}
                     icon={
                       <DailyTaskIcon
-                        fill={theme.palette.action.svg ?? 'none'}
-                        width={'20px'}
-                        height={'20px'}
+                        fill="#A75FFF"
+                        width={'18px'}
+                        height={'18px'}
                       />
                     }
                     variant="body2"
@@ -131,7 +134,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                 ) : (
                   <CustomTypographyWithIcon
                     fontWeight={'400'}
-                    icon={<ArticleSvgIcon width="20px" />}
+                    icon={<ArticleSvgIcon stroke="#A75FFF" width="18px" />}
                     variant="body2"
                   >{`Articles: ${profile.numberOfArticles}`}</CustomTypographyWithIcon>
                 )}
@@ -155,7 +158,7 @@ const SearchResultsComponent: React.FC<SearchResultsComponentProps> = ({
 }) => {
   const data = isLoading ? [{ name: '' }, { name: '' }, { name: '' }] : results;
   return (
-    <Box>
+    <Box p={0.5}>
       {data.map((item, key) => (
         <SearchResult
           key={key + '-search'}
