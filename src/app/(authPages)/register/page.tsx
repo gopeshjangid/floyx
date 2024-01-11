@@ -246,7 +246,7 @@ const RegisterPage = () => {
 
   return (
     <>
-      <ProfileSetupModal open={true} handleClose={() => {}} />
+      <ProfileSetupModal open={false} handleClose={() => {}} />
       <Container component="main" maxWidth="sm" sx={{ pt: 10 }}>
         {isRegisteredSuccess.value === true &&
           isRegisteredSuccess.type === 'phone' && (
