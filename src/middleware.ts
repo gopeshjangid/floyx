@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export default withAuth(customMiddleware, {
   pages: {
-    signIn: '/social-login',
-    error: '/login',
+    signIn: '/login',
+    error: '/social-login',
   },
 });
 

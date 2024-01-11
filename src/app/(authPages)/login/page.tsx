@@ -260,7 +260,10 @@ const Login: FC = () => {
               color={palette.primary[300]}
               sx={{ '& a': { color: '#5798FF' } }}
             >
-              <Link href={allRoutes.termsAndConditions}>Terms of Service </Link>{' '}
+              By signing in, you agree to
+              <Link href={allRoutes.termsAndConditions}>
+                Terms of Service{' '}
+              </Link>{' '}
               and
               <Link href={allRoutes.privacyPolicy}> Privacy Policy, </Link>
               including
