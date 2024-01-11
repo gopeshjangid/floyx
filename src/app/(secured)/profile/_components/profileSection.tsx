@@ -101,14 +101,13 @@ const ProfileCover = styled(Box)<Omit<ProfileFollowerWrapperProps, 'isMobile'>>(
     height: '280px',
     borderRadius: '10px',
     width: '100%',
-    overflow: 'hidden',
     position: 'relative',
   })
 );
 
 const ProfilePic = styled(Box)<ProfileFollowerWrapperProps>(
   ({ theme, ...props }) => ({
-    top: props?.isMobile ? '32%' : '39%',
+    top: '82%',
     left: '13px',
     background: theme.palette.background.default,
     borderRadius: '50px',
@@ -291,7 +290,10 @@ const ProfileSection: React.FC = () => {
                   </IconButton>
                   <Typography
                     variant="subtitle1"
-                    sx={{ color: palette.primary.fontLightColor }}
+                    sx={{
+                      color: palette.primary.fontLightColor,
+                      fontWeight: 500,
+                    }}
                   >
                     {profile?.name}
                   </Typography>
@@ -347,7 +349,7 @@ const ProfileSection: React.FC = () => {
               sx={{ width: '100%', height: '200px' }}
             />
           ) : (
-            <>
+            <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
               <React.Suspense
                 fallback={
                   <Skeleton
@@ -358,18 +360,20 @@ const ProfileSection: React.FC = () => {
                 }
               >
                 {profile?.backgroundImage ? (
-                  <Image
-                    alt="profile image"
-                    //layout="fill"
-                    fill
-                    objectFit="cover"
-                    objectPosition="center"
-                    src={
-                      isEdit && imagePreview.cover
-                        ? imagePreview.cover
-                        : profile?.backgroundImage
-                    }
-                  />
+                  <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
+                    <Image
+                      alt="profile image"
+                      //layout="fill"
+                      fill
+                      objectFit="cover"
+                      objectPosition="center"
+                      src={
+                        isEdit && imagePreview.cover
+                          ? imagePreview.cover
+                          : profile?.backgroundImage
+                      }
+                    />
+                  </Box>
                 ) : (
                   <Skeleton
                     animation="wave"
@@ -422,49 +426,50 @@ const ProfileSection: React.FC = () => {
                   </Typography>
                 </Box>
               </ProfileFollowerWrapper>
-            </>
+            </Box>
           )}
-        </ProfileCover>
-        <ProfilePic isMobile={isMobile}>
-          {isLoading && !profile ? (
-            <Skeleton
-              variant="circular"
-              animation="wave"
-              sx={{
-                width: '92%',
-                height: '92%',
-                left: '3.5%',
-                top: '3%',
-                position: 'relative',
-              }}
-            />
-          ) : (
-            <Box sx={{ position: 'relative', height: '100%', width: '100%' }}>
-              <Avatar
-                src={
-                  isEdit && imagePreview.profile
-                    ? imagePreview.profile
-                    : profile?.avatar
-                }
+          <ProfilePic isMobile={isMobile}>
+            {isLoading && !profile ? (
+              <Skeleton
+                variant="circular"
+                animation="wave"
                 sx={{
                   width: '92%',
                   height: '92%',
                   left: '3.5%',
                   top: '3%',
-                  border: `3px solid ${palette.primary.main}`,
+                  position: 'relative',
                 }}
               />
-              {isEdit && (
-                <ProfilePicUploader>
-                  <ImageUploader
-                    onImageUpload={onProfileUploaded}
-                    getPreviewData={getProfilePreviewData}
-                  />
-                </ProfilePicUploader>
-              )}
-            </Box>
-          )}
-        </ProfilePic>
+            ) : (
+              <Box sx={{ position: 'relative', height: '100%', width: '100%' }}>
+                <Avatar
+                  src={
+                    isEdit && imagePreview.profile
+                      ? imagePreview.profile
+                      : profile?.avatar
+                  }
+                  sx={{
+                    width: '92%',
+                    height: '92%',
+                    left: '3.5%',
+                    top: '3%',
+                    border: `3px solid ${palette.primary.main}`,
+                  }}
+                />
+                {isEdit && (
+                  <ProfilePicUploader>
+                    <ImageUploader
+                      onImageUpload={onProfileUploaded}
+                      getPreviewData={getProfilePreviewData}
+                    />
+                  </ProfilePicUploader>
+                )}
+              </Box>
+            )}
+          </ProfilePic>
+        </ProfileCover>
+
         {!isLoading && (
           <Box mt={isMobile ? 8 : 0}>
             {!isSameuser ? (
@@ -475,7 +480,7 @@ const ProfileSection: React.FC = () => {
             ) : null}
           </Box>
         )}
-        <Box mt={6} p={2} pt={isEdit ? 5 : 2} textAlign="center">
+        <Box mt={1} p={2} pt={isEdit ? 5 : 2} textAlign="center">
           <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
             {isLoading ? (
               <Skeleton
@@ -508,7 +513,10 @@ const ProfileSection: React.FC = () => {
               <Typography
                 textAlign="justify"
                 variant="subtitle2"
-                color="textPrimary"
+                sx={{
+                  opacity: 0.9,
+                  color: palette.mode === 'dark' ? '#fff' : '#000',
+                }}
               >
                 {isLoading ? (
                   <Skeleton variant="rectangular" width="100%" height="60px" />
@@ -528,6 +536,7 @@ const ProfileSection: React.FC = () => {
                 value={form.shortDescription}
                 minRows={5}
                 maxLength={200}
+                sx={{ color: palette.mode === 'dark' ? '#fff' : '#000' }}
               />
             )}
           </Box>
