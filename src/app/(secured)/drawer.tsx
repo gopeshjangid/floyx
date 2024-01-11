@@ -260,7 +260,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               {
                 label: 'Logout',
                 startIcon: <LogoutIcon />,
-                onClick: () => router.push(`sign-out`),
+                onClick: () => router.push(`/sign-out`),
               },
             ]}
           />
