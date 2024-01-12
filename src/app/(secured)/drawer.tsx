@@ -104,7 +104,7 @@ const LinkListItemButton: React.FC<LinkListItemButtonProps> = ({
     return <CustomListItemButton {...props}>{children}</CustomListItemButton>;
   }
   return (
-    <Link href={href} passHref>
+    <Link href={href} passHref prefetch={false}>
       <CustomListItemButton {...props}>{children}</CustomListItemButton>
     </Link>
   );

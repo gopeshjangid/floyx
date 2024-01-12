@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
-import { getMetaData } from '@/lib/SEO';
 
 const CookiesPage = () => {
   return (
@@ -70,8 +69,3 @@ const CookiesPage = () => {
 };
 
 export default CookiesPage;
-
-export const metadata = getMetaData({
-  title: 'Floyx | Decentralized World',
-  description: 'Floyx | Decentralized World',
-});

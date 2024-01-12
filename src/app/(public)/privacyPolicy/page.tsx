@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
-import { getMetaData } from '@/lib/SEO';
 
 const PrivacyPolicyPage = () => {
   return (
@@ -297,8 +296,3 @@ const PrivacyPolicyPage = () => {
 };
 
 export default PrivacyPolicyPage;
-
-export const metadata = getMetaData({
-  title: 'Floyx | Decentralized World',
-  description: 'Floyx | Decentralized World',
-});
