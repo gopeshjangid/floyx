@@ -477,7 +477,11 @@ const ProfileSection: React.FC = () => {
                 allowPrivateMassages={!!profile?.allowPrivateMassages}
                 username={username ?? ''}
               />
-            ) : null}
+            ) : (
+              <Box height="50px" width="100%">
+                &nbsp;
+              </Box>
+            )}
           </Box>
         )}
         <Box mt={1} p={2} pt={isEdit ? 5 : 2} textAlign="center">

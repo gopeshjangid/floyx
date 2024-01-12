@@ -375,7 +375,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <>&nbsp;</>
           )}
         </Grid>
-        <Grid item sm={9} md={9} lg={9.5}>
+        <Grid item sm={8} md={8} lg={8.5}>
           {children}
         </Grid>
       </Grid>

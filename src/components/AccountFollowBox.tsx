@@ -57,7 +57,9 @@ export default function FollowNewAccounts() {
             >
               <Avatar src={account.avatar} />
               <Stack>
-                <Typography variant="body1">{account.name}</Typography>
+                <Typography textAlign="center" variant="body1">
+                  {account.name}
+                </Typography>
                 <UsernameLink username={account.username ?? 'suername'} />
               </Stack>
               <Stack direction="row" gap={1} alignItems="flex-start">
