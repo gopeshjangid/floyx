@@ -490,12 +490,17 @@ const RegisterPage = () => {
                     sx={{ '& a': { color: '#5798FF', margin: '0 5px' } }}
                   >
                     {'By Clicking "Sign Up" You agree to Floyx\'s'}
-                    <Link href={allRoutes.termsAndConditions}>
+                    <Link prefetch={false} href={allRoutes.termsAndConditions}>
                       Terms of Service
                     </Link>
-                    ,<Link href={allRoutes.privacyPolicy}>Privacy Policy</Link>
+                    ,
+                    <Link prefetch={false} href={allRoutes.privacyPolicy}>
+                      Privacy Policy
+                    </Link>
                     {'and'}
-                    <Link href={allRoutes.cookiesPolicy}>Cookie Policy</Link>
+                    <Link prefetch={false} href={allRoutes.cookiesPolicy}>
+                      Cookie Policy
+                    </Link>
                   </Typography>
                 }
                 control={
@@ -523,7 +528,10 @@ const RegisterPage = () => {
                 align="center"
               >
                 Already have an account?
-                <Link href={allRoutes.socialLogin}> Sign in</Link>
+                <Link prefetch={false} href={allRoutes.socialLogin}>
+                  {' '}
+                  Sign in
+                </Link>
               </Typography>
             </Box>
 
@@ -547,7 +555,7 @@ const RegisterPage = () => {
                 Coastal Highway, Lewes, Delaware 19958, County of Sussex,
                 registered by the Delaware Registered as a Limited Liability
                 Company under Companies Act, 1961, registration number 6099676 (
-                <Link href={allRoutes.login}>
+                <Link prefetch={false} href={allRoutes.login}>
                   more about processing your data.
                 </Link>
                 )
@@ -563,13 +571,19 @@ const RegisterPage = () => {
               justifyContent="center"
               alignItems="center"
             >
-              <Link href={allRoutes.login}>Old Token Panel</Link>
+              <Link prefetch={false} href={allRoutes.login}>
+                Old Token Panel
+              </Link>
               <Box display="flex" gap="20px">
-                <Link href={allRoutes.termsAndConditions}>
+                <Link prefetch={false} href={allRoutes.termsAndConditions}>
                   Terms of service
                 </Link>
-                <Link href={allRoutes.privacyPolicy}>Privacy Policy</Link>
-                <Link href={allRoutes.cookiesPolicy}>Cookie Use</Link>
+                <Link prefetch={false} href={allRoutes.privacyPolicy}>
+                  Privacy Policy
+                </Link>
+                <Link prefetch={false} href={allRoutes.cookiesPolicy}>
+                  Cookie Use
+                </Link>
               </Box>
               <Typography variant="body1">2024 Powered by Floyx LLC</Typography>
             </Box>
