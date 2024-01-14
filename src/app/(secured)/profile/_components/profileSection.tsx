@@ -16,6 +16,7 @@ import {
   BoxProps,
   LinearProgress,
   Alert,
+  Tooltip,
 } from '@mui/material';
 import {
   BorderColorOutlined,
@@ -363,7 +364,7 @@ const ProfileSection: React.FC = () => {
                   <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
                     <Image
                       alt="profile image"
-                      //layout="fill"
+                      style={{ borderRadius: '10px' }}
                       fill
                       objectFit="cover"
                       objectPosition="center"
@@ -383,12 +384,14 @@ const ProfileSection: React.FC = () => {
                 )}
               </React.Suspense>
               {isEdit && (
-                <ProfileCoverUploader>
-                  <ImageUploader
-                    onImageUpload={onCoverUploaded}
-                    getPreviewData={getCoverPreviewData}
-                  />
-                </ProfileCoverUploader>
+                <Tooltip title="Please use a background photo with a minimum resolution of 1200x900 pixels or higher for the best results">
+                  <ProfileCoverUploader>
+                    <ImageUploader
+                      onImageUpload={onCoverUploaded}
+                      getPreviewData={getCoverPreviewData}
+                    />
+                  </ProfileCoverUploader>
+                </Tooltip>
               )}
               {!isEdit && isSameuser && (
                 <ProfileFollowerWrapper
@@ -458,12 +461,14 @@ const ProfileSection: React.FC = () => {
                   }}
                 />
                 {isEdit && (
-                  <ProfilePicUploader>
-                    <ImageUploader
-                      onImageUpload={onProfileUploaded}
-                      getPreviewData={getProfilePreviewData}
-                    />
-                  </ProfilePicUploader>
+                  <Tooltip title="For optimal profile picture quality, use a minimum resolution of 400x400 pixels or higher.">
+                    <ProfilePicUploader>
+                      <ImageUploader
+                        onImageUpload={onProfileUploaded}
+                        getPreviewData={getProfilePreviewData}
+                      />
+                    </ProfilePicUploader>
+                  </Tooltip>
                 )}
               </Box>
             )}
@@ -573,9 +578,9 @@ const ProfileSection: React.FC = () => {
                     {profileAbout?.about?.website}
                   </Button>
                 </Box>
-                <Box display="flex" gap={1}>
+                <Box display="flex" gap={1} alignItems={'flex-start'}>
                   <Image src={Calender} alt="Calender Icon" />
-                  <Typography variant="subtitle2" color="primary">
+                  <Typography variant="subtitle2" sx={{ color: 'grey' }}>
                     Joined Sept 1990
                   </Typography>
                 </Box>

@@ -5,14 +5,16 @@ import React, { useState, useMemo, useRef } from 'react'; // Use `useState` and 
 import { Box } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import DailyIcon from '@/iconComponents/dailyTaskIcon';
-import EaringTabIcon from '@/iconComponents/earningTabIcon';
 import { useTheme } from '@mui/material';
 import ProfileSection from '../_components/profileSection';
 import AboutSection from '../_components/about';
 import { GradientText } from '@/components/usernameLink';
 import ProfilePostList from '../_components/profilePostList';
 import ProfileArticleList from '../_components/articleList';
+import PostIcon from '@/assets/images/svg/postIcon';
+import ArticleIcon from '@/iconComponents/articleIcon';
+import AboutIcon from '@/assets/images/svg/aboutIcon';
+import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
 
 const Page: React.FC = () => {
   const { palette } = useTheme();
@@ -34,9 +36,7 @@ const Page: React.FC = () => {
       >
         <Tab
           iconPosition="start"
-          icon={
-            <EaringTabIcon fill={value === 0 && palette.background.paper} />
-          }
+          icon={<PostIcon active={value === 0} />}
           label={
             value === 0 ? (
               <GradientText fontWeight="normal">Posts</GradientText>
@@ -48,7 +48,7 @@ const Page: React.FC = () => {
         />
         <Tab
           iconPosition="start"
-          icon={<DailyIcon fill={value === 1 && palette.background.paper} />}
+          icon={<ArticleProfileIcon active={value === 1} />}
           label={
             value === 1 ? (
               <GradientText fontWeight="normal">Articles</GradientText>
@@ -60,7 +60,7 @@ const Page: React.FC = () => {
         />
         <Tab
           iconPosition="start"
-          icon={<DailyIcon fill={value === 1 && palette.background.paper} />}
+          icon={<AboutIcon active={value === 2} />}
           label={
             value === 2 ? (
               <GradientText fontWeight="normal">About</GradientText>
