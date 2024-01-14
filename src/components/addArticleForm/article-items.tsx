@@ -31,9 +31,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
   const [uploadImage] = useUploadArticleImageMutation()
   React.useEffect(() => {
     document.addEventListener('mousedown', handleClick, false);
-    console.log(state.inputsList.length, 'state.inputsList.length')
     if (!state.inputsList.length) {
-      console.log('sdfgd');
       initArticleComposer();
     }
     return () => document.removeEventListener('mousedown', handleClick, false);
@@ -55,7 +53,6 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
   };
 
   const handleText = (index: number, e: any) => {
-    // console.log(e.currentTarget);
     if (!e.currentTarget.className.includes('contenteditable')) {
       e.preventDefault();
     }
@@ -212,7 +209,6 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       },
       ...inputsList.slice(arrayIndex + 1),
     ];
-    console.log(inputsList);
     setState((prev: any) => ({ ...prev, index: maximumIndex, inputsList }));
   };
 
@@ -258,14 +254,12 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
   };
 
   const saveImgIndex = (index: number) => {
-    console.log('index')
     const { inputsList } = state;
     const arrayIndex = inputsList.findIndex((x: any) => x.index === index);
     setState((prev: any) => ({ ...prev, currentImgIndex: arrayIndex }));
   };
 
   const handleImg = (e: any) => {
-    console.log('wwwwww');
     e.preventDefault();
     if (e.target.files.length) {
       const reader = new FileReader();

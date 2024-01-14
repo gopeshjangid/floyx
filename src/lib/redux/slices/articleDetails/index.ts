@@ -203,7 +203,7 @@ export const artcileDetails = createApi({
       query: payload => ({
         url: `${ApiEndpoint.CreateDraft}`,
         method: 'post',
-        body: { ...payload, articleTags: payload.articleTags.split(',') },
+        body: payload,
       }),
       transformResponse: (response: any) => {
         return response.value.data;
@@ -239,7 +239,7 @@ export const artcileDetails = createApi({
         body: {},
       }),
       transformResponse: (response: any) => response.value.data,
-      invalidatesTags: [{ type: 'ArticleList', id: 'recent' }],
+      invalidatesTags: [{ type: 'ArticleList', id: 'recent' }, 'ArticleInfoNumber'],
     }),
     deleteArticle: builder.mutation<any, string>({
       query: articleId => ({

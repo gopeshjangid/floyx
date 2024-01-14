@@ -84,6 +84,7 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
     },
     '.input-item': {
       paddingTop: '3px',
+      // paddingBottom: '3px',
       position: 'relative',
       "& [contentEditable='true']": {
         '&:empty::before': {
@@ -231,6 +232,9 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
         textDecoration: 'underline',
       },
       '.articles-editor__item': {
+        background: theme.palette.primary[400],
+        borderRadius: '10px',
+        padding: '2px 0',
         fontSize: '18px',
         marginBottom: '15px',
       },

@@ -113,13 +113,11 @@ export default function AddArticleForm({
     const articleTags = syncHashTag.split(',');
     const formData = new FormData();
     formData.append('title', title);
-    // formData.append('articleTags', syncHashTag);
     formData.append('content', JSON.stringify(content));
     formData.append('coverPhoto', file);
     for (var i = 0;i < articleTags.length;i++) {
       formData.append('articleTags[]', articleTags[i]);
     }
-    // console.log('formData', formData.values())
     return formData;
   };
 
@@ -136,9 +134,9 @@ export default function AddArticleForm({
     });
   };
 
-  const createDraftArticle = async (title: string, content: any, file: any, hashtags) => {
+  const createDraftArticle = async (title: string, content: any, file: any, hashtags: string) => {
     setArticleCreated(true);
-    const formData = createArticleData(title, content, file, hashtags ? hashtags.join(',') : '');
+    const formData = createArticleData(title, content, file, hashtags);
     const createdDraftData = await createDraft(formData);
     setArticleId((createdDraftData as any)?.data?.id);
     articleCreatedRef.current = true;
@@ -249,7 +247,6 @@ export default function AddArticleForm({
       } else {
         resetAllState();
         const dynamicUrl = `/article/${(response as any)?.data?.publicUrl}`;
-        // redirect(dynamicUrl);
         window.open(dynamicUrl);
         setIsPublish(false);
       }
@@ -346,7 +343,6 @@ export default function AddArticleForm({
         value={title}
         onChange={e => handleTitleChange(e, articleCreated)}
         sx={{
-          // backgroundColor: palette.background.default,
           '.MuiOutlinedInput-root': {
             border: '0px',
           },
@@ -360,22 +356,8 @@ export default function AddArticleForm({
       />
       <FormControl>
         <FormLabel sx={{ color: palette.text.primary }}>Add hashtags</FormLabel>
-        <TagAutocomplete onSelectTags={onSelectTags} />
+        <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={3} />
       </FormControl>
-      {/* {hashtags && hashtags.length > 0 && (
-        <Stack flexWrap={'wrap'} direction={'row'} gap={1} marginBottom={2}>
-          {hashtags.map((val, index) => (
-            <CustomChip
-              key={'hashtags' + index}
-              label={val}
-              clickable
-              onDelete={deleted => {
-                deleteTagHandler(val);
-              }}
-            />
-          ))}
-        </Stack>
-      )} */}
       <Stack
         mb={2}
         border={`2px dashed ${palette.action.border}`}

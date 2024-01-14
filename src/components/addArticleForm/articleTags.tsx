@@ -6,6 +6,7 @@ import CustomChip from '../CustomGridientChip';
 import { Button, CircularProgress, Stack, styled } from '@mui/material';
 import { GradientText } from '../GradientComponents';
 import { debounce } from '@/lib/utils';
+import { useToast } from "../Toast/useToast";
 
 const RenderOptionWrapper = styled(Stack)(({ theme }) => ({
   '&:hover': {
@@ -26,14 +27,16 @@ const CustomAutoComplete = styled(Autocomplete)(({ theme }) => ({
 
 const TagAutocomplete = ({
   onSelectTags,
+  maxSelectedTag,
 }: {
-  onSelectTags: (tags: string[]) => void;
+    onSelectTags: (tags: string[]) => void;
+    maxSelectedTag?: number;
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[] | never[]>([]);
   const [searchTag, { data: tags, isLoading, isFetching }] =
     useLazySearchArticleTagsQuery();
-
+  const toast = useToast();
   const debouncedSearchTag = useCallback(
     debounce(newInputValue => {
       searchTag({ tag: newInputValue });
@@ -42,10 +45,14 @@ const TagAutocomplete = ({
   );
 
   const handleInputChange = (event, newInputValue, reason) => {
-    console.log({ newInputValue, reason });
-    setInputValue(newInputValue);
-    if (reason === 'input') {
-      debouncedSearchTag(newInputValue);
+    if (maxSelectedTag === undefined || maxSelectedTag > selectedTags.length) {
+      setInputValue(newInputValue);
+      if (reason === 'input') {
+        debouncedSearchTag(newInputValue);
+      }
+    } else {
+      setInputValue('');
+      toast.error(`Max ${maxSelectedTag} tags are allowed`)
     }
   };
 
