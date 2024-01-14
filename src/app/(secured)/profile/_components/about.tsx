@@ -312,38 +312,44 @@ const PersonalInfo: React.FC = () => {
           </Grid>
           <Grid xs={12} sm={9} item>
             {' '}
-            <FormControl fullWidth>
-              <Select
-                name={'location'}
-                disabled={!isEdit}
-                value={formValues.location}
-                defaultValue={formValues.location}
-                onChange={handleSelectChange}
-              >
-                <MenuItem disabled value="">
-                  <em>Select</em>
-                </MenuItem>
-                {data?.listOfLocations?.map((option: string) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+            {isEdit ? (
+              <FormControl fullWidth>
+                <Select
+                  name={'location'}
+                  value={formValues.location}
+                  defaultValue={formValues.location}
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem disabled value="">
+                    <em>Select</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  {data?.listOfLocations?.map((option: string) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : (
+              <Typography variant="subtitle2">{formValues.location}</Typography>
+            )}
           </Grid>
           <Grid sm={3} xs={12} item>
             <InputLabel htmlFor="Country">Website</InputLabel>
           </Grid>
           <Grid xs={12} sm={9} item>
             {' '}
-            <TextField
-              variant="outlined"
-              name="website"
-              disabled={!isEdit}
-              placeholder="Ex. Canada"
-              value={formValues.website}
-              onChange={handleInputChange}
-            />
+            {isEdit ? (
+              <TextField
+                variant="outlined"
+                name="website"
+                placeholder="Ex. Canada"
+                value={formValues.website}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <Typography variant="subtitle2">{formValues.website}</Typography>
+            )}
           </Grid>
           <ActivityChipEditInfo
             handleDeleteSkill={handleDeleteChip}
@@ -356,7 +362,7 @@ const PersonalInfo: React.FC = () => {
             handleAddSkill={addSkillHandler}
             activityKey={'skills'}
           />
-          <Grid xs={12} sm={3} item>
+          <Grid xs={12} sm={3} mt={1} item>
             <InputLabel
               sx={{ textAlign: 'left', py: 2 }}
               htmlFor="Type interest and press enter"
@@ -364,7 +370,7 @@ const PersonalInfo: React.FC = () => {
               Description
             </InputLabel>
           </Grid>
-          <Grid xs={12} item sm={9}>
+          <Grid mt={2} xs={12} item sm={9}>
             {isEdit ? (
               <TextareaAutosize
                 name="country"

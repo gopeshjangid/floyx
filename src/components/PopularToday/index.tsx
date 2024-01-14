@@ -41,23 +41,28 @@ function RecentArticles() {
   return (
     <PopularTodaySection>
       <Typography variant="body1">Recent Articles</Typography>
-      {isError && (
-        <Alert severity="error" color="error">
-          Error in loading recent articles.
-        </Alert>
-      )}
       <PopularTodayListSection>
         {!isLoading && data ? (
           data.map((article, index) => (
             <Box p={2} key={`recent-article-${index}`}>
-              <Link target="_blank" href={article.article.publicUrl ? '/article/' + article.user.username + '/' + article.article.publicUrl : '/'}>
-                <Stack py={1} direction="row" gap={2}>
-                  <Box>
+              <Link
+                target="_blank"
+                href={
+                  article.article.publicUrl
+                    ? '/article/' +
+                      article.user.username +
+                      '/' +
+                      article.article.publicUrl
+                    : '/'
+                }
+              >
+                <Stack py={1} gap={2}>
+                  <Box width={'100%'} height="200px" position="relative">
                     <Image
                       alt={article.article.title ?? 'article title'}
                       src={article.article?.coverPhotoThumbnail}
-                      height={70}
-                      width={80}
+                      objectFit="contain"
+                      layout="fill"
                       style={{ borderRadius: '3px' }}
                     />
                   </Box>
@@ -73,7 +78,7 @@ function RecentArticles() {
                       {article.article.title ?? '(No title)'}...
                     </Typography>
                     <Typography color="textPrimary" variant="caption">
-                      {article.article.title?.slice(0, 30)}...
+                      {article.article.title?.slice(0, 100)}...
                     </Typography>
                   </Box>
                 </Stack>
@@ -89,16 +94,15 @@ function RecentArticles() {
                   <Stack
                     alignItems={'center'}
                     gap={2}
-                    direction="row"
                     key={'item- article-' + index}
                   >
                     <Skeleton
                       variant="rounded"
-                      height={60}
-                      width={'35%'}
+                      height={100}
+                      width={'100%'}
                       animation="wave"
                     />
-                    <Stack width={'65%'}>
+                    <Stack width={'100%'}>
                       <Skeleton
                         variant="text"
                         height={35}

@@ -18,6 +18,7 @@ import { Suspense, useCallback, useEffect, useState } from 'react';
 import * as signalR from '@microsoft/signalr';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { getCookie } from 'cookies-next';
+import useDevice from '@/lib/hooks/useDevice';
 export interface apiParams {
   pageNumber: number;
   postCreatedDate: number;
@@ -32,7 +33,7 @@ export default function Page() {
     pageNumber: 0,
     postCreatedDate: 0,
   });
-
+  const { isMobile } = useDevice();
   const store = useStore({});
   const { data, isFetching } = useGetPostsQuery(apiParams);
   const postData = data?.postList;
@@ -102,9 +103,14 @@ export default function Page() {
     typeof window === 'undefined' ? 1000 : window.innerHeight;
 
   return (
-    <Box p={2} mt={2}>
+    <Box p={2} mt={isMobile ? 0 : 2}>
       <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>
-        <Grid item xs={12} sm={9} marginTop={0} marginBottom={2}>
+        <Grid item xs={12}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <PostHeader />
+          </Suspense>
+        </Grid>
+        <Grid item xs={12} sm={9}>
           <Box
             sx={{
               overflow: 'auto',
@@ -117,9 +123,6 @@ export default function Page() {
               },
             }}
           >
-            <Suspense fallback={<SectionSkeleton />}>
-              <PostHeader />
-            </Suspense>
             <AddPost />
             <Suspense fallback={<SectionSkeleton />}>
               <FollowNewAccounts />
@@ -131,7 +134,7 @@ export default function Page() {
             />
           </Box>
         </Grid>
-        <Grid item xs={12} sm={3} paddingRight={1}>
+        <Grid paddingTop={2} item xs={12} sm={3} paddingRight={1}>
           <Suspense fallback={<SectionSkeleton />}>
             <RecentArticles />
           </Suspense>

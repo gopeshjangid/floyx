@@ -195,6 +195,7 @@ const ExperienceForm: React.FC = () => {
               key={'experience-' + index}
               {...experience}
               type="Experience"
+              isSameuser={isSameuser}
             />
           ))
         ) : (
