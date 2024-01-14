@@ -5,7 +5,7 @@ import { baseQuery } from '@/lib/utils';
 import { Education, Project } from '@/components/ProfileActivityInfo';
 import { artcileDetails } from './articleDetails';
 
-type ApiResponse<T> = {
+export type ApiResponse<T> = {
   value: {
     data: T;
     code: string;

@@ -9,6 +9,39 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
   },
   '.articles-editor__editor': {
     position: 'relative',
+    '.articles-editor__photo': {
+      marginBottom: '35px',
+      '.articles-editor__photo-preview': {
+        height: 'auto',
+        marginBottom: '7px',
+        width: '100%',
+        '& :hover': {
+          outline: '3px solid #e6e6e6',
+        },
+        '.active': {
+          outline: '3px solid #4956d0',
+        },
+      },
+      '.articles-editor__caption': {
+        width: '100%',
+        background: theme.palette.primary[400],
+        padding: '12px',
+        border: 'none',
+        outline: 'none',
+        color: '#85838F',
+        borderRadius: '10px',
+        fontSize: '18px',
+        '& :not(:focus)::placeholder': {
+          color: '#9b9bab',
+        },
+        '& :focus::placeholder': {
+          color: 'transparent',
+        },
+        '&::placeholder': {
+          color: '#85838F',
+        },
+      },
+    },
     '.articles-editor__toolbar': {
       backgroundColor: '#191b33',
       display: 'inline-block',
@@ -72,17 +105,16 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
         fontSize: '24px',
         left: '-44px',
         position: 'absolute',
-        top: '0',
+        top: '10px',
       },
       '.articles-editor__change-type': {
         // backgroundColor: '#000000',
         width: 'max-content',
         backgroundColor: theme.palette.background.default, //'#171A3A',
-        border: `1px solid ${
-          theme.palette.mode === 'light'
-            ? theme.palette?.primary?.[800]
-            : theme.palette.primary.main
-        }`,
+        border: `1px solid ${theme.palette.mode === 'light'
+          ? theme.palette?.primary?.[800]
+          : theme.palette.primary.main
+          }`,
         borderRadius: '4px',
         color: '#ffffff',
         display: 'inline-block',
@@ -98,9 +130,8 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
           marginLeft: '-16px',
           borderWidth: '8px',
           borderStyle: 'solid',
-          borderColor: `transparent ${
-            theme.palette?.mode === 'light' ? 'white' : '#1B1830'
-          } transparent transparent`,
+          borderColor: `transparent ${theme.palette?.mode === 'light' ? 'white' : '#1B1830'
+            } transparent transparent`,
         },
         '&:before': {
           content: "''",
@@ -110,9 +141,8 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
           marginLeft: '-18px',
           borderWidth: '9px',
           borderStyle: 'solid',
-          borderColor: `transparent ${
-            theme.palette?.mode === 'light' ? '#E7F0FC' : '#5798FF'
-          } transparent transparent`,
+          borderColor: `transparent ${theme.palette?.mode === 'light' ? '#E7F0FC' : '#5798FF'
+            } transparent transparent`,
         },
         '& span': {
           paddingRight: '26px',
@@ -172,7 +202,78 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
           },
         },
       },
+      '.articles-editor__ul': {
+        outline: 'none',
+        '& ul': {
+          paddingLeft: '33px',
+        },
+        '& ul li': {
+          paddingLeft: '10px',
+        },
+      },
+      '.articles-editor__ol': {
+         outline: 'none',
+        '& ol': {
+          listStylePosition: 'outside',
+          listStyleType: 'decimal',
+          margin: '0 0 0 17px',
+          padding: 0,
+          wordBreak: 'break-all',
+        },
+        '& ol li': {
+          paddingLeft: '10px',
+        },
+      },
+      '.articles-editor__link': {
+        fontSize: '18px',
+        marginBottom: '15px',
+        padding: 0,
+        textDecoration: 'underline',
+      },
+      '.articles-editor__item': {
+        fontSize: '18px',
+        marginBottom: '15px',
+      },
+
+      '.articles-editor__video': {
+        marginBottom: '50px',
+        width: '100%',
+        '.articles-editor__video-link': {
+            width: '100%',
+            fontSize: '18px',
+            padding: 0,
+          },
+        '.articles-editor__iframe-container': {
+          // height: '600px',
+          '& :hover iframe': {
+            outline: '3px solid #e6e6e6',
+          },
+          '& .active iframe': {
+            outline: '3px solid #4956d0',
+          },
+          '& :before': {
+            bottom: 0,
+            content: "''",
+            left: 0,
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            zIndex: 400,
+          },
+          '.articles-editor__iframe': {
+            position: 'relative',
+            width: '100%',
+          },
+          
+        },
+      },
       '& .articles-editor__paragraph': {
+        "& a": {
+          color:
+            theme.palette?.mode === 'light'
+              ? theme.palette.text.primary
+              : theme.palette?.action?.svg,
+        },
         fontSize: '18px',
         marginBottom: '15px',
         wordBreak: 'break-word',
@@ -186,12 +287,14 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
         },
       },
       '& .articles-editor__subtitle': {
+        outline: 'none',
         fontSize: '24px',
         fontWeight: '500',
         margin: '-4px 0 22px',
         padding: 0,
       },
       '& .articles-editor__quote': {
+        outline: 'none',
         fontSize: '24px',
         fontStyle: 'italic',
         lineHeight: '34px',
@@ -207,87 +310,6 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
           left: 0,
           position: 'absolute',
           top: '3px',
-        },
-        '.articles-editor__ul': {
-          '& ul': {
-            paddingLeft: '33px',
-          },
-          '& ul li': {
-            paddingLeft: '10px',
-          },
-        },
-        '.articles-editor__ol': {
-          '& ol': {
-            listStylePosition: 'outside',
-            listStyleType: 'decimal',
-            margin: '0 0 0 17px',
-            padding: 0,
-            wordBreak: 'break-all',
-          },
-          '& ol li': {
-            paddingLeft: '10px',
-          },
-        },
-        '.articles-editor__link': {
-          fontSize: '18px',
-          marginBottom: '15px',
-          padding: 0,
-          textDecoration: 'underline',
-        },
-        '.articles-editor__item': {
-          fontSize: '18px',
-          marginBottom: '15px',
-        },
-        '.articles-editor__photo': {
-          marginBottom: '35px',
-          '.articles-editor__photo-preview': {
-            height: 'auto',
-            marginBottom: '7px',
-            width: '100%',
-            '& :hover': {
-              outline: '3px solid #e6e6e6',
-            },
-            '.active': {
-              outline: '3px solid #4956d0',
-            },
-          },
-          '.articles-editor__caption': {
-            '& :not(:focus)::placeholder': {
-              color: '#9b9bab',
-            },
-            '& :focus::placeholder': {
-              color: 'transparent',
-            },
-          },
-        },
-        '.articles-editor__video': {
-          marginBottom: '50px',
-          '.articles-editor__iframe-container': {
-            height: '600px',
-            '& :hover iframe': {
-              outline: '3px solid #e6e6e6',
-            },
-            '& .active iframe': {
-              outline: '3px solid #4956d0',
-            },
-            '& :before': {
-              bottom: 0,
-              content: "''",
-              left: 0,
-              position: 'absolute',
-              right: 0,
-              top: 0,
-              zIndex: 400,
-            },
-            '.articles-editor__iframe': {
-              position: 'relative',
-              width: '100%',
-            },
-            '.articles-editor__video-link': {
-              fontSize: '18px',
-              padding: 0,
-            },
-          },
         },
       },
     },

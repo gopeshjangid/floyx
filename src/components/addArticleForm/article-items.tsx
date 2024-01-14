@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import ContentEditable from 'react-contenteditable';
+// import ContentEditable from 'react-contenteditable';
 import YouTube from 'react-youtube';
 import Vimeo from 'react-vimeo';
 import { Input, Typography, useTheme } from '@mui/material';
@@ -18,34 +18,22 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { ArticleItem } from './styled-article-items';
 import ImageIcon from '@/assets/images/svg/image';
 import Image from 'next/image';
+import ContentEditable from "../wrapped-content-editable";
+import { useUploadArticleImageMutation } from "@/lib/redux";
 
-const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
+const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) => {
   const { palette } = useTheme();
   const colorVvg =
     palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main;
   const [isTextSelected, setIsTextSelected] = React.useState(false);
-  const [state, setState] = React.useState<any>({
-    currentImgIndex: null,
-    inputsList: content !== '' ? content : [],
-    previousKey: null,
-    selectedPosition: {
-      left: 0,
-      top: 0,
-    },
-    urlValue: '',
-    openContextLink: false,
-    errors_urlValue: false,
-    errors: {},
-    showEmojiPicker: false,
-    index: '',
-    nameLink: '',
-    contentArticleCreated: articleCreated,
-  });
+  
   const wrapperRef: any = React.useRef(null);
-
+  const [uploadImage] = useUploadArticleImageMutation()
   React.useEffect(() => {
     document.addEventListener('mousedown', handleClick, false);
+    console.log(state.inputsList.length, 'state.inputsList.length')
     if (!state.inputsList.length) {
+      console.log('sdfgd');
       initArticleComposer();
     }
     return () => document.removeEventListener('mousedown', handleClick, false);
@@ -53,12 +41,13 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
 
   const handleClick = (e: any) => {
     if (wrapperRef && !wrapperRef?.current?.contains(e.target)) {
-      setState(prev => ({ ...prev, showEmojiPicker: false }));
+      setState((prev: any) => ({ ...prev, showEmojiPicker: false }));
     }
   };
 
   React.useEffect(() => {
     focus(state.index);
+    // toggleTooltipIcon(state.index);
   }, [state.index]);
 
   const initArticleComposer = () => {
@@ -66,6 +55,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   };
 
   const handleText = (index: number, e: any) => {
+    // console.log(e.currentTarget);
     if (!e.currentTarget.className.includes('contenteditable')) {
       e.preventDefault();
     }
@@ -95,7 +85,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     }
     item[name] = html;
 
-    setState(prev => ({ ...prev, inputsList, contentArticleCreated: true }));
+    setState((prev: any) => ({ ...prev, inputsList, contentArticleCreated: true }));
 
     if (item.type === 'youtube') {
       handleYT(index);
@@ -113,14 +103,14 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
 
       const youtubeID = ytID.split('&')[0];
       item.ytID = youtubeID;
-      setState(prev => ({ ...prev, index: item.index, inputsList }));
+      setState((prev: any) => ({ ...prev, index: item.index, inputsList }));
       // focus(item.index)
     }
 
     if (vimeoID) {
       item.active = false;
       item.vimeoID = vimeoID;
-      setState(prev => ({ ...prev, index: item.index, inputsList }));
+      setState((prev: any) => ({ ...prev, index: item.index, inputsList }));
       // focus(item.index)
     }
   };
@@ -152,9 +142,9 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
           changeInputType(index, 'paragraph');
         }
       }
-      setState(prev => ({ ...prev, previousKey: key }));
+      setState((prev: any) => ({ ...prev, previousKey: key }));
     } else {
-      setState(prev => ({ ...prev, previousKey: null }));
+      setState((prev: any) => ({ ...prev, previousKey: null }));
       if (key === 'Enter' && !shiftKey) {
         e.preventDefault();
         addInput(item.index);
@@ -188,11 +178,11 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     item.tooltip = !visible;
 
     clearUrlContext();
-    setState(prev => ({ ...prev, inputsList }));
+    setState((prev: any) => ({ ...prev, inputsList }));
   };
 
   const clearUrlContext = () => {
-    setState(prev => ({
+    setState((prev: any) => ({
       ...prev,
       openContextLink: false,
       errors: {},
@@ -216,12 +206,14 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
         index: maximumIndex,
         key: v4(),
         tooltip: false,
+        tooltipIcon: true,
         type: 'paragraph',
         value: '',
       },
       ...inputsList.slice(arrayIndex + 1),
     ];
-    setState(prev => ({ ...prev, index: maximumIndex, inputsList }));
+    console.log(inputsList);
+    setState((prev: any) => ({ ...prev, index: maximumIndex, inputsList }));
   };
 
   const deleteInput = (index: number) => {
@@ -257,46 +249,47 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
             }
           }, 0);
         }
-        setState(prev => ({ ...prev, inputsList }));
+        setState((prev: any) => ({ ...prev, inputsList }));
       }
     } else {
-      setState(prev => ({ ...prev, inputsList: [] }));
+      setState((prev: any) => ({ ...prev, inputsList: [] }));
       addInput(0);
     }
   };
 
   const saveImgIndex = (index: number) => {
+    console.log('index')
     const { inputsList } = state;
     const arrayIndex = inputsList.findIndex((x: any) => x.index === index);
-    setState(prev => ({ ...prev, currentImgIndex: arrayIndex }));
+    setState((prev: any) => ({ ...prev, currentImgIndex: arrayIndex }));
   };
 
   const handleImg = (e: any) => {
+    console.log('wwwwww');
     e.preventDefault();
     if (e.target.files.length) {
       const reader = new FileReader();
       const img = e.target.files[0];
       reader.readAsDataURL(img);
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const formData = new FormData();
         formData.set('file', img);
-        // requestService.post(ApiEndpoint.UploadArticleImage, formData).success((resp) => {
-        //   const imageUrl = resp.data
-        //   const { currentImgIndex, inputsList } = state
-        //   let maximumIndex: number = Math.max(...inputsList.map((item: any) => item.index))
-        //   maximumIndex = maximumIndex === -Infinity ? 0 : maximumIndex
-        //   inputsList[currentImgIndex] = {
-        //     active: false,
-        //     captionFocused: true,
-        //     index: maximumIndex,
-        //     key: v4(),
-        //     value: imageUrl,
-        //     tooltip: false,
-        //     type: 'image'
-        //   }
-        //   setState((prev) => ({ ...prev, currentImgIndex: null, inputsList }))
-        //   addInput(currentImgIndex)
-        // })
+        const resp = await uploadImage(formData);
+        const imageUrl = (resp as any)?.data;
+        const { currentImgIndex, inputsList } = state
+        let maximumIndex: number = Math.max(...inputsList.map((item: any) => item.index))
+        maximumIndex = maximumIndex === -Infinity ? 0 : maximumIndex
+        inputsList[currentImgIndex] = {
+          active: false,
+          captionFocused: true,
+          index: maximumIndex,
+          key: v4(),
+          value: imageUrl,
+          tooltip: false,
+          type: 'image'
+        }
+        setState((prev: any) => ({ ...prev, currentImgIndex: null, inputsList }))
+        addInput(currentImgIndex)
       };
     }
   };
@@ -313,7 +306,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
       document.body.removeEventListener('click', imgComposerOutline, true);
       document.body.removeEventListener('keydown', keyDownImgComposer, true);
     }
-    setState(prev => ({ ...prev, inputsList }));
+    setState((prev: any) => ({ ...prev, inputsList }));
   };
 
   const keyDownImgComposer = (e: any) => {
@@ -334,7 +327,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
       document.body.removeEventListener('click', imgComposerOutline, true);
       document.body.removeEventListener('keydown', keyDownImgComposer, true);
       item.active = false;
-      setState(prev => ({ ...prev, inputsList }));
+      setState((prev: any) => ({ ...prev, inputsList }));
       addInput(item.index);
     }
   };
@@ -345,7 +338,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
 
     if (inputsList[arrayIndex]) {
       inputsList[arrayIndex].active = !inputsList[arrayIndex].active;
-      setState(prev => ({ ...prev, inputsList }));
+      setState((prev: any) => ({ ...prev, inputsList }));
       if (inputsList[arrayIndex].active) {
         document.body.addEventListener('click', imgComposerOutline, true);
         document.body.addEventListener('keydown', keyDownImgComposer, true);
@@ -368,21 +361,23 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
     if (type == 'ol') {
       item.value = '<ol><li><br></li></ol>';
     }
-    setState(prev => ({ ...prev, index: item.index, inputsList }));
+    setState((prev: any) => ({ ...prev, index: item.index, inputsList }));
     // focus(item.index)
   };
 
   const toggleTooltipIcon = (index: number) => {
-    const { inputsList } = state;
-    const item = inputsList.find((x: any) => x.index === index);
+    // const { inputsList } = state;
+    // if (inputsList.length) {
+    //   const item = inputsList.find((x: any) => x.index === index);
 
-    inputsList.forEach((input: any) => {
-      input.tooltip = false;
-      input.tooltipIcon = false;
-    });
+    //   inputsList.forEach((input: any) => {
+    //     input.tooltip = false;
+    //     input.tooltipIcon = false;
+    //   });
 
-    item.tooltipIcon = true;
-    setState(prev => ({ ...prev, inputsList }));
+    //   item.tooltipIcon = true;
+    //   setState(prev => ({ ...prev, inputsList }));
+    // }
   };
 
   const toolbarOutline = (e: any) => {
@@ -412,7 +407,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
             left: position.left - 36,
             top: position.top - 60,
           };
-          setState(prev => ({ ...prev, selectedPosition }));
+          setState((prev: any) => ({ ...prev, selectedPosition }));
           setIsTextSelected(isTextSelected);
           document.body.addEventListener('click', toolbarOutline, true);
         }
@@ -433,7 +428,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
 
   const onURLChange = (e: any) => {
     const { name, value } = e.target;
-    setState(prev => ({ ...prev, [name]: value }));
+    setState((prev: any) => ({ ...prev, [name]: value }));
     const { inputsList } = state;
     handleContentChange('', inputsList);
   };
@@ -488,7 +483,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
       nameLink || urlValue
     }</a>`;
 
-    setState(prev => ({
+    setState((prev: any) => ({
       ...prev,
       showURLInput: false,
       openContextLink: false,
@@ -506,18 +501,18 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
   };
 
   const openContextLink = () => {
-    setState(prev => ({ ...prev, openContextLink: true }));
+    setState((prev: any) => ({ ...prev, openContextLink: true }));
   };
 
   React.useEffect(() => {
-    setState(prev => ({ ...prev, contentArticleCreated: articleCreated }));
+    setState((prev: any) => ({ ...prev, contentArticleCreated: articleCreated }));
   }, [articleCreated]);
 
-  React.useEffect(() => {
-    if (content.length) {
-      setState(val => ({ ...val, inputsList: content }));
-    }
-  }, [content]);
+  // React.useEffect(() => {
+  //   if (content.length) {
+  //     setState(val => ({ ...val, inputsList: content }));
+  //   }
+  // }, [content]);
 
   return (
     <ArticleItem>
@@ -582,13 +577,15 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                   <QuoteRightIcon color={colorVvg} />
                 </span>
 
-                <span
+                <label
                   className="change-type__item"
                   onClick={() => saveImgIndex(input.index)}
+                  htmlFor="img"
                 >
-                  <ImageIcon color={colorVvg} />
-                </span>
-                <Input id="img" type="file" onChange={handleImg} />
+                   <ImageIcon color={colorVvg} />
+                  <input id="img" type="file" onChange={handleImg} />
+                </label>
+               
                 <span
                   className="change-type__item"
                   onClick={() => changeInputType(input.index, 'youtube')}
@@ -614,7 +611,7 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                         />
                         {/* <Input name="website" value={props.website} onChange={handleAbout} invalid={state.errors.website}/> */}
                         {state.errors.urlValue && (
-                          <Typography>URL is invalid</Typography>
+                          <Typography color={"error"}>URL is invalid</Typography>
                         )}
                       </React.Fragment>
                       <Input
@@ -646,11 +643,11 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                 }
                 html={input.value}
                 disabled={false}
-                onChange={e => handleText(input.index, e)}
+                onChange={(e: any) => handleText(input.index, e)}
                 onKeyUp={openTextSelected}
                 onMouseUp={openTextSelected}
-                onKeyDown={e => handleKey(input.index, e)}
-                onFocus={() => toggleTooltipIcon(input.index)}
+                onKeyDown={(e: any) => handleKey(input.index, e)}
+                // onBlur={() => toggleTooltipIcon(input.index)}
                 placeholder="Type any text"
                 name="value"
                 value={input.value}
@@ -662,11 +659,10 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                 className="articles-editor__subtitle contenteditable articles-editor__item"
                 html={input.value}
                 disabled={false}
-                onChange={e => handleText(input.index, e)}
+                onChange={(e: any) => handleText(input.index, e)}
                 onKeyUp={openTextSelected}
                 onMouseUp={openTextSelected}
-                onKeyDown={e => handleKey(input.index, e)}
-                onFocus={() => toggleTooltipIcon(input.index)}
+                onKeyDown={(e: any) => handleKey(input.index, e)}
                 placeholder="Subtitle"
                 name="value"
                 value={input.value}
@@ -677,11 +673,10 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                 className="articles-editor__quote contenteditable articles-editor__item"
                 html={input.value}
                 disabled={false}
-                onChange={e => handleText(input.index, e)}
+                onChange={(e: any) => handleText(input.index, e)}
                 onKeyUp={openTextSelected}
                 onMouseUp={openTextSelected}
-                onKeyDown={e => handleKey(input.index, e)}
-                onFocus={() => toggleTooltipIcon(input.index)}
+                onKeyDown={(e: any) => handleKey(input.index, e)}
                 placeholder="Add quote"
                 name="value"
                 value={input.value}
@@ -692,11 +687,10 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                 className="articles-editor__ul contenteditable articles-editor__item"
                 html={input.value}
                 disabled={false}
-                onChange={e => handleText(input.index, e)}
+                onChange={(e: any) => handleText(input.index, e)}
                 onKeyUp={openTextSelected}
                 onMouseUp={openTextSelected}
-                onKeyDown={e => handleKey(input.index, e)}
-                onFocus={() => toggleTooltipIcon(input.index)}
+                onKeyDown={(e: any) => handleKey(input.index, e)}
                 placeholder="Let's create your unordered list"
                 name="value"
                 value={input.value}
@@ -707,11 +701,10 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                 className="articles-editor__ol contenteditable articles-editor__item"
                 html={input.value}
                 disabled={false}
-                onChange={e => handleText(input.index, e)}
+                onChange={(e: any) => handleText(input.index, e)}
                 onKeyUp={openTextSelected}
                 onMouseUp={openTextSelected}
-                onKeyDown={e => handleKey(input.index, e)}
-                onFocus={() => toggleTooltipIcon(input.index)}
+                onKeyDown={(e: any) => handleKey(input.index, e)}
                 placeholder="Let's create your ordered list"
                 name="value"
                 value={input.value}
@@ -738,7 +731,11 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                         'articles-editor__photo-preview toggle-media ' +
                         (input.active ? 'active' : '')
                       }
-                      fill
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{ width: '100%', height: 'auto' }}
+                      // fill
                       alt="image-article"
                       src={input.value}
                       onClick={() => toggleMediaActive(input.index)}
@@ -746,8 +743,8 @@ const ArticleItems = ({ content, handleContentChange, articleCreated }) => {
                     {(input.caption || input.captionFocused) && (
                       <TextareaAutosize
                         className="articles-editor__caption"
-                        onChange={e => handleText(input.index, e)}
-                        onKeyDown={e => handleKey(input.index, e)}
+                        onChange={(e: any) => handleText(input.index, e)}
+                        onKeyDown={(e: any) => handleKey(input.index, e)}
                         placeholder="Add caption (optional)"
                         name="caption"
                         value={input.caption}

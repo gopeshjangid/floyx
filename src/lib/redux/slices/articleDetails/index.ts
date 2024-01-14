@@ -4,6 +4,7 @@ import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from '../posts';
 import { commentService } from '../comments';
+import { ApiResponse } from "../profile";
 
 export interface ArticleDetailsArgs {
   userName: string;
@@ -209,12 +210,24 @@ export const artcileDetails = createApi({
       },
       invalidatesTags: ['ArticleInfoNumber'],
     }),
+    uploadArticleImage: builder.mutation<ApiResponse<string>, FormData>({
+      query: payload => ({
+        url: `${ApiEndpoint.UploadArticleImage}`,
+        method: 'post',
+        body: payload,
+      }),
+      transformResponse: (response: any) => {
+        return response.value.data;
+      },
+    }),
     updateDraftArticle: builder.mutation<any, any>({
       query: ({ articleId, payload }) => {
+        console.log(payload);
         return {
           url: `${ApiEndpoint.UpdateDraft}/${articleId}`,
           method: 'put',
-          body: { ...payload, articleTags: payload.articleTags.split(',') },
+          // body: { ...payload, articleTags: payload.articleTags ? payload.articleTags.split(','): [] },
+          body: payload,
         };
       },
       transformResponse: (response: any) => response.value.data,
@@ -281,4 +294,5 @@ export const {
   useLazyGetDraftDetailQuery,
   useGetArticlesByAuthorQuery,
   useLazyGetSearchArticleQuery,
+  useUploadArticleImageMutation,
 } = artcileDetails;

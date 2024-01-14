@@ -1,4 +1,6 @@
 'use client';
+import { v4 } from 'uuid';
+
 import {
   Box,
   Stack,
@@ -54,20 +56,45 @@ export default function AddArticleForm({
   const articleCreatedRef = useRef(false);
   const toast = useToast();
 
-  const [state, setState] = useState<any>({
+  const [syncState, setSyncState] = useState<any>({
     syncContent: '',
     syncCoverPhoto: '',
     syncTitle: '',
     syncHashTag: '',
   });
   const { palette } = useTheme();
-
+  const initialSate = {
+    autoFocus: true,
+    index: 0,
+    key: v4(),
+    tooltip: false,
+    tooltipIcon: true,
+    type: 'paragraph',
+    value: '',
+  };
   const [content, setContent] = useState<any>([]);
   const [title, setTitle] = useState<string>('');
   const [hashtags, setHashTags] = useState<string[]>([]);
   const [imagePreview, setImagePreview] = useState<any>('');
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('');
 
+  const [state, setState] = React.useState<any>({
+    currentImgIndex: null,
+    inputsList: content !== '' ? content : [],
+    previousKey: null,
+    selectedPosition: {
+      left: 0,
+      top: 0,
+    },
+    urlValue: '',
+    openContextLink: false,
+    errors_urlValue: false,
+    errors: {},
+    showEmojiPicker: false,
+    index: '',
+    nameLink: '',
+    contentArticleCreated: articleCreated,
+  });
   const [createDraft] = useCreateArticleDraftMutation();
   const [updateDraft, { isLoading }] = useUpdateDraftArticleMutation();
   const [publishArticle, { isLoading: publishLoading }] =
@@ -82,20 +109,26 @@ export default function AddArticleForm({
     }
   };
 
-  const createArticleData = (title: string, content: any, file: any) => {
+  const createArticleData = (title: string, content: any, file: any, syncHashTag: string) => {
+    const articleTags = syncHashTag.split(',');
     const formData = new FormData();
     formData.append('title', title);
-    formData.append('articleTags', hashtags.join(','));
+    // formData.append('articleTags', syncHashTag);
     formData.append('content', JSON.stringify(content));
     formData.append('coverPhoto', file);
-
+    for (var i = 0;i < articleTags.length;i++) {
+      formData.append('articleTags[]', articleTags[i]);
+    }
+    // console.log('formData', formData.values())
     return formData;
   };
 
   const getArticleRequestData = () => {
     const tempAray: any = [];
-    content.forEach((element: any) => tempAray.push(element));
-    setState({
+    if (content && content.length > 0) {
+      content.forEach((element: any) => tempAray.push(element));
+    }
+    setSyncState({
       syncContent: JSON.stringify(content),
       syncTitle: title,
       syncCoverPhoto: imageToUpload,
@@ -103,9 +136,9 @@ export default function AddArticleForm({
     });
   };
 
-  const createDraftArticle = async (title: string, content: any, file: any) => {
+  const createDraftArticle = async (title: string, content: any, file: any, hashtags) => {
     setArticleCreated(true);
-    const formData = createArticleData(title, content, file);
+    const formData = createArticleData(title, content, file, hashtags ? hashtags.join(',') : '');
     const createdDraftData = await createDraft(formData);
     setArticleId((createdDraftData as any)?.data?.id);
     articleCreatedRef.current = true;
@@ -117,7 +150,7 @@ export default function AddArticleForm({
     const { value } = event.target;
     let valueValidated = true;
     const iChars = '!@#$%^&*+=[]\\\';/{}|":<>?';
-    for (let i = 0; i < value.length; i++) {
+    for (let i = 0;i < value.length;i++) {
       if (iChars.includes(value.charAt(i))) {
         valueValidated = false;
         break;
@@ -128,13 +161,13 @@ export default function AddArticleForm({
     }
 
     if (!articleCreated) {
-      createDraftArticle(value, content, imageToUpload);
+      createDraftArticle(value, content, imageToUpload, hashtags.join(','));
     }
   };
 
   const handleContentChange = (title: string, content: any) => {
     if (!articleCreatedRef.current) {
-      createDraftArticle(title, content, imageToUpload);
+      createDraftArticle(title, content, imageToUpload, hashtags.join(','));
     }
     setContent(content);
   };
@@ -149,7 +182,7 @@ export default function AddArticleForm({
         setImageToUpload(img);
         setImagePreview(reader.result || '');
         if (!articleCreated) {
-          createDraftArticle(title, content, img);
+          createDraftArticle(title, content, img, hashtags.join(','));
         }
       };
     }
@@ -187,11 +220,28 @@ export default function AddArticleForm({
     setIsDisabled(false);
     setIsPublished(false);
     setSaveDraft(false);
+    setState({
+      currentImgIndex: null,
+      inputsList: [initialSate],
+      previousKey: null,
+      selectedPosition: {
+        left: 0,
+        top: 0,
+      },
+      urlValue: '',
+      openContextLink: false,
+      errors_urlValue: false,
+      errors: {},
+      showEmojiPicker: false,
+      index: '',
+      nameLink: '',
+      contentArticleCreated: articleCreated,
+    })
   };
 
   const handleSubmit = async () => {
     if (validatePublishButton(title, content)) {
-      const payload = createArticleData(title, content, imageToUpload);
+      const payload = createArticleData(title, content, imageToUpload, hashtags ? hashtags.join(',') : '');
       await updateDraft({ articleId, payload });
       const response = await publishArticle(articleId);
       if ((response as any)?.error) {
@@ -209,16 +259,17 @@ export default function AddArticleForm({
   };
 
   const updateDraftArticle = async forceUpdate => {
-    const { syncContent, syncTitle, syncCoverPhoto } = state;
+    const { syncContent, syncTitle, syncCoverPhoto, syncHashTag } = syncState;
     if (
       (articleId &&
         (title || content) &&
+        (syncHashTag !== hashtags) ||
         (JSON.stringify(content) !== syncContent ||
           title !== syncTitle ||
           imageToUpload !== syncCoverPhoto)) ||
       forceUpdate
     ) {
-      const payload = createArticleData(title, content, imageToUpload);
+      const payload = createArticleData(title, content, imageToUpload, hashtags ? hashtags.join(',') : '');
       getArticleRequestData();
       await updateDraft({ articleId, payload });
       setSaveDraft(false);
@@ -233,6 +284,9 @@ export default function AddArticleForm({
     if (response.data) {
       setTitle(response.data?.title);
       setContent(JSON.parse(response?.data?.content));
+      setState(prev => ({
+        ...prev, inputsList: Array.isArray(JSON.parse(response?.data?.content)) ? JSON.parse(response?.data?.content) : [initialSate]
+      }));
       setImagePreview(response?.data?.coverPhotoPath || '');
       setImageToUpload(response?.data?.coverPhotoPath || '');
       setIsPublished(response?.data?.isPublished);
@@ -252,7 +306,7 @@ export default function AddArticleForm({
 
       setStartAutoSave(false);
     };
-  }, [startAutoSave, articleId, state, title, content, imageToUpload]);
+  }, [startAutoSave, articleId, syncState, title, content, imageToUpload]);
 
   useEffect(() => {
     if (saveDraft && !isLoading) {
@@ -260,7 +314,7 @@ export default function AddArticleForm({
     } else if (isPublish && !publishLoading) {
       handleSubmit();
     }
-  }, [isPublish, saveDraft, articleId, state, title, content, imageToUpload]);
+  }, [isPublish, saveDraft, articleId, syncState, title, content, imageToUpload]);
 
   useEffect(() => {
     if (isEditing) {
@@ -305,7 +359,7 @@ export default function AddArticleForm({
         }}
       />
       <FormControl>
-        <FormLabel>Add hashtags</FormLabel>
+        <FormLabel sx={{ color: palette.text.primary }}>Add hashtags</FormLabel>
         <TagAutocomplete onSelectTags={onSelectTags} />
       </FormControl>
       {/* {hashtags && hashtags.length > 0 && (
@@ -370,9 +424,10 @@ export default function AddArticleForm({
         )}
       </Stack>
       <ArticleItems
-        content={content}
         articleCreated={articleCreatedRef}
         handleContentChange={handleContentChange}
+        state={state}
+        setState={setState}
       />
     </AddArticleFormBox>
   );
