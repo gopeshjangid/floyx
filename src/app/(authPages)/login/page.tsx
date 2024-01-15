@@ -288,7 +288,7 @@ const Login: FC = () => {
             </Link>
           </Box>
         </Box>
-        <LoginFooter />
+        <LoginFooter hideLinks />
       </Box>
     </Grid>
   );

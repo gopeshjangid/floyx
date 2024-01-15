@@ -90,7 +90,7 @@ const SocialLogin: FC = () => {
             </Typography>
           </Box>
         </Box>
-        <LoginFooter />
+        <LoginFooter hideLinks />
       </Box>
     </Grid>
   );
