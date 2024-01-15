@@ -412,7 +412,9 @@ const ProfileSection: React.FC = () => {
               )}
               <ProfileFollowerWrapper top="70%" isMobile={isMobile}>
                 <Box display="flex" p={1} alignItems="center" gap={1}>
-                  <Typography variant="subtitle2">Following</Typography>
+                  <Link href={`/profile/${username}/following`}>
+                    <Typography variant="subtitle2">Following</Typography>
+                  </Link>
                   <Typography
                     variant="subtitle2"
                     sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
@@ -420,7 +422,9 @@ const ProfileSection: React.FC = () => {
                     {profile?.numberOfFollowing}
                   </Typography>
                   <Typography>|</Typography>
-                  <Typography variant="subtitle2">Followers</Typography>
+                  <Link href={`/profile/${username}/followers`}>
+                    <Typography variant="subtitle2">Followers</Typography>
+                  </Link>
                   <Typography
                     variant="subtitle2"
                     sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}

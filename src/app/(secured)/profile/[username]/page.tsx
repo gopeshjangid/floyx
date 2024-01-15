@@ -1,7 +1,7 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import React, { useState, useMemo, useRef } from 'react'; // Use `useState` and `useMemo` hooks directly
+import React, { useState, useMemo, useRef, useEffect } from 'react'; // Use `useState` and `useMemo` hooks directly
 import { Box } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -19,11 +19,16 @@ import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
 const Page: React.FC = () => {
   const { palette } = useTheme();
   const parentRef = useRef(null);
+  const [clientHeight, setClientHeight] = useState(200);
   const [value, setValue] = useState(0); // Simplified import
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    setClientHeight(window?.document?.body?.clientHeight ?? 200);
+  }, []);
 
   // useMemo to avoid unnecessary re-renders of the tabs
   const tabs = useMemo(
@@ -93,10 +98,7 @@ const Page: React.FC = () => {
     <Box
       sx={{
         overflow: 'auto',
-        height:
-          typeof window !== undefined
-            ? window?.document?.body?.clientHeight
-            : 200,
+        height: clientHeight,
       }}
       ref={parentRef}
       id="scrollableDiv"
