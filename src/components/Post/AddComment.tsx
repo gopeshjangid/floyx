@@ -1,7 +1,7 @@
 'use client';
 
 import { styled } from '@mui/material/styles';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
 import UserAvatar from '../UserAvatar';
 import { useSession } from 'next-auth/react';
@@ -9,6 +9,7 @@ import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import {
   useCreateCommentMutation,
   useLazyGetUserSuggestionQuery,
+  useUpdateCommentMutation,
 } from '@/lib/redux/slices/comments';
 //import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
@@ -19,7 +20,7 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
-  alignItems: 'center',
+  flexDirection: "column",
   '& .avatar': {
     width: 49,
     height: 49,
@@ -65,7 +66,7 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
 
 interface Props {
   id: string;
-  commentType: string;
+  commentType?: string;
   commentText: string;
   setCommentText: any;
   commentRef: any;
@@ -73,6 +74,12 @@ interface Props {
     commentData: UserComment | undefined,
     isLoading: boolean
   ) => void;
+  commentAction?: (
+    comment: any,
+  ) => void;
+  isEditing?: boolean;
+  setIsEditing?: any;
+  isNewComment?: boolean;
 }
 function AddComment({
   id,
@@ -80,13 +87,17 @@ function AddComment({
   commentType,
   commentText,
   setCommentText,
-  onCreatedNewComment = (isLoading, comment) => {},
+  onCreatedNewComment = (comment, isLoading) => { },
+  commentAction = (comment) => {},
+  isEditing,
+  setIsEditing,
+  isNewComment,
 }: Props) {
   const session = useSession();
-  //const toast = useToast();
   const [createComment, { isLoading, isSuccess, data: createdComment }] =
     useCreateCommentMutation();
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
+  const [updateComment, { isLoading: updateLoading }] = useUpdateCommentMutation();
   const handlePostText = (e: any) => {
     const text = e.target.value;
     setCommentText(text);
@@ -117,11 +128,18 @@ function AddComment({
       content: commentText,
     };
     if (e.keyCode === 13 && e.shiftKey === false && commentText.length > 0) {
-      await createComment(addComment);
-      //toast.success('Comment is added successfully');
-      setCommentText('');
+      if (!isEditing) {
+        await createComment(addComment);
+        setCommentText('');
+      }
     }
   };
+
+  const handleEditSubmit = async () => {
+    const data = await updateComment({ commentId: id, content: commentText, isNewComment: isNewComment });
+    commentAction({ id: id, content: commentText })
+    setIsEditing(false);
+  }
 
   const renderUserSuggestion = (user: any) => {
     return <MentionItem user={user} />;
@@ -136,7 +154,7 @@ function AddComment({
           alt={(session as any)?.data?.user?.username}
           sx={{ width: '49px', height: '49px' }}
         />
-        {isLoading && (
+        {(isLoading || updateLoading) && (
           <Box sx={{ position: 'absolute', zIndex: 999, left: '13%' }}>
             <CircularProgress thickness={2} size={30} />
           </Box>
@@ -162,6 +180,27 @@ function AddComment({
           </MentionsInput>
         </Box>
       </Box>
+      {isEditing && (
+        <Stack
+          direction={"row"}
+          justifyContent={"flex-end"}
+          gap={1}
+          marginTop={1}
+        >
+          <Button
+            variant="outlined"
+            onClick={handleEditSubmit}
+          >
+            Update
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={()=> setIsEditing(false)}
+          >
+            Cancel
+          </Button>
+        </Stack>
+      )}
     </AddCommentBox>
   );
 }
