@@ -10,10 +10,6 @@ const WrapperContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
   }`,
   marginTop: '20px',
   maxWidth: '96%',
-
-  [theme.breakpoints.down('lg')]: {
-    maxWidth: '90%',
-  },
 }));
 const Wrapper = ({
   children,

@@ -574,18 +574,8 @@ const RegisterPage = () => {
               <Link prefetch={false} href={allRoutes.login}>
                 Old Token Panel
               </Link>
-              <Box display="flex" gap="20px">
-                <Link prefetch={false} href={allRoutes.termsAndConditions}>
-                  Terms of service
-                </Link>
-                <Link prefetch={false} href={allRoutes.privacyPolicy}>
-                  Privacy Policy
-                </Link>
-                <Link prefetch={false} href={allRoutes.cookiesPolicy}>
-                  Cookie Use
-                </Link>
-              </Box>
-              <Typography variant="body1">2024 Powered by Floyx LLC</Typography>
+              
+              <Typography variant="body1">2024 Powered by Floyx LLC.</Typography>
             </Box>
           </>
         )}

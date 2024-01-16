@@ -193,7 +193,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   };
 
   const homeRedirect = () => {
-    router.push('/');
+    router.push('/', { scroll: true });
   };
 
   useEffect(() => {

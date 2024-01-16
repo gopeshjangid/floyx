@@ -21,7 +21,7 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
   backgroundColor: theme.palette.primary.mainBackground,
   borderRadius: '10px',
-  marginTop: '25px',
+  marginTop: '16px',
   maxHeight: '100vh',
   overflowY: 'auto',
   '& .box': {
@@ -40,7 +40,9 @@ function RecentArticles() {
 
   return (
     <PopularTodaySection>
-      <Typography variant="body1">Recent Articles</Typography>
+      <Typography textAlign={'center'} variant="body1">
+        Recent Articles
+      </Typography>
       <PopularTodayListSection>
         {!isLoading && data ? (
           data.map((article, index) => (
@@ -56,8 +58,8 @@ function RecentArticles() {
                     : '/'
                 }
               >
-                <Stack py={1} gap={2}>
-                  <Box width={'100%'} height="200px" position="relative">
+                <Stack gap={2}>
+                  <Box width={'100%'} height="90px" position="relative">
                     <Image
                       alt={article.article.title ?? 'article title'}
                       src={article.article?.coverPhotoThumbnail}
@@ -66,7 +68,7 @@ function RecentArticles() {
                       style={{ borderRadius: '3px' }}
                     />
                   </Box>
-                  <Box>
+                  <Box paddingBottom={1}>
                     <Typography
                       sx={{
                         wordBreak: 'break-all',

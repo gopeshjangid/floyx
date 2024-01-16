@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material';
+import { Button, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CustomizedMenus from '../CustomizedButton';
 import { usePathname, useRouter } from 'next/navigation';
@@ -10,11 +10,24 @@ import DocumentText from '@/assets/images/svg/documentText';
 import VideoIcon from '@/assets/images/svg/video';
 import ProfileGroup from '@/assets/images/svg/profileGroup';
 import BitCoin from '@/assets/images/svg/bitcoin';
-import { GradientButton } from '../gradientButton';
 import Link from 'next/link';
-
+const HeaderSection = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  gap: 1,
+  width: '100%',
+  overflowY: 'auto',
+  '&::-webkit-scrollbar': {
+    width: '.5rem',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    borderRadius: '10px',
+  },
+  scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.1)',
+}));
 export default function Header() {
-  const router = useRouter();
   const pathName = usePathname();
 
   const { palette } = useTheme();
@@ -26,27 +39,11 @@ export default function Header() {
       ? palette.text.primary
       : palette?.primary.fontLightColor;
   };
-  const HeaderSection = styled(Box)(() => ({
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: 1,
-    width: '100%',
-    overflowY: 'auto',
-    '&::-webkit-scrollbar': {
-      width: '.5rem',
-      backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0, 0, 0, 0.4)',
-      borderRadius: '10px',
-    },
-    scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.1)',
-  }));
 
   const TOP_BAR = [
     {
       text: 'Articles/Blog',
-      icon: <DocumentText color={getColorSvg('/articles')} />,
+      icon: <DocumentText />,
       visible: true,
       link: '/articles',
     },
@@ -87,25 +84,22 @@ export default function Header() {
     },
   ];
 
-  const handleClick = (link: string | undefined) => {
-    if (link) router.push(link);
-  };
-
   return (
-    <HeaderSection>
+    <HeaderSection pb={1.5}>
       {TOP_BAR.map((val, index) => (
         <Box key={`headerBar${index}`}>
           {!Array.isArray(val?.data) ? (
             val.visible &&
             val.link && (
               <Link href={val.link}>
-                <GradientButton
+                <Button
+                  sx={{ color: palette.mode === 'light' ? '#000' : '#fff' }}
                   variant="outlined"
+                  color="primary"
                   startIcon={val.icon}
-                  isSelected={pathName === val.link}
                 >
-                  <span>{val.text}</span>
-                </GradientButton>
+                  {val.text}
+                </Button>
               </Link>
             )
           ) : (

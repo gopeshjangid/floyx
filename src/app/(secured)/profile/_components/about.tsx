@@ -256,6 +256,16 @@ const PersonalInfo: React.FC = () => {
       />
     );
   }
+
+  const handleExternalLink = e => {
+    e.preventDefault();
+    const url = formValues.website;
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      window.open(`http://${url}`, '_blank', 'noopener,noreferrer');
+    }
+  };
   return (
     <>
       {isUpdating && (
@@ -348,7 +358,16 @@ const PersonalInfo: React.FC = () => {
                 onChange={handleInputChange}
               />
             ) : (
-              <Typography variant="subtitle2">{formValues.website}</Typography>
+              <a
+                rel="noopener noreferrer"
+                href={formValues.website}
+                onClick={handleExternalLink}
+                target="__blank"
+              >
+                <Typography variant="subtitle2">
+                  {formValues.website}
+                </Typography>
+              </a>
             )}
           </Grid>
           <ActivityChipEditInfo
