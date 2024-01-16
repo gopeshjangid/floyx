@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import UserAvatar from "../UserAvatar";
 
 export default function MentionItem(user: any) {
-  console.log(user.user);
+
   return (
     <Box
       display={"flex"}

@@ -33,7 +33,6 @@ export default function SearchBarArcticleRight({ setDynamicTab }) {
   }, 500);
 
   function handleArticleSearch(e: any) {
-    console.log('sdddddd', e);
     handleInputChange(e.target.value);
   }
 

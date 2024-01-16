@@ -25,7 +25,7 @@ import {
   useCheckArticleIsSharedMutation,
   UserComment,
 } from '@/lib/redux/slices/articleDetails';
-import Comment from '../CommentLists';
+import Comment from '../Comment';
 import { allRoutes } from '@/constants/allRoutes';
 import Image from 'next/image';
 import Post from '../Post/Post';
@@ -293,6 +293,7 @@ function LikesComments({
                   setCommentText={commentTextHandler}
                   inputRef={commentRef}
                   onAction={commentAction}
+                  isNewComment={true}
                 />
                 {index !== newCreatedComments?.newComments.length - 1 && (
                   <Divider />

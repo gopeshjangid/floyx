@@ -222,7 +222,6 @@ export const artcileDetails = createApi({
     }),
     updateDraftArticle: builder.mutation<any, any>({
       query: ({ articleId, payload }) => {
-        console.log(payload);
         return {
           url: `${ApiEndpoint.UpdateDraft}/${articleId}`,
           method: 'put',
