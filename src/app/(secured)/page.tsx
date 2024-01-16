@@ -134,7 +134,7 @@ export default function Page() {
             />
           </Box>
         </Grid>
-        <Grid paddingTop={2} item xs={12} sm={3} paddingRight={1}>
+        <Grid item xs={12} sm={3} paddingRight={1}>
           <Suspense fallback={<SectionSkeleton />}>
             <RecentArticles />
           </Suspense>

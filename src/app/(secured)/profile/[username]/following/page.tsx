@@ -13,12 +13,13 @@ import {
   Divider,
 } from '@mui/material';
 import {
-  useGetCurrentProfileDetailsQuery,
+  useGetProfileDetailsQuery,
   useUserFollowedAccountsQuery,
 } from '@/lib/redux/slices/profile';
 import { useParams } from 'next/navigation';
 import UsernameLink from '@/components/usernameLink';
 import FollowUser from '@/components/FollowUser';
+import Link from 'next/link';
 
 const MyFollowers: React.FC = () => {
   const params = useParams();
@@ -26,16 +27,19 @@ const MyFollowers: React.FC = () => {
   const username = Array.isArray(params?.username)
     ? params?.username[0] ?? ''
     : params?.username || '';
-  const { data: currentUser } = useGetCurrentProfileDetailsQuery();
+  const { data: currentUser } = useGetProfileDetailsQuery(
+    { username },
+    { skip: !username }
+  );
   const isMobile = useMediaQuery('(max-width:480px)');
   const {
     currentData: following = [1, 2, 3],
     isLoading,
     isUninitialized,
   } = useUserFollowedAccountsQuery(
-    { userId: currentUser?.userId!, pageNumber: 1 },
+    { userId: currentUser?.id!, pageNumber: 1 },
     {
-      skip: !currentUser?.userId,
+      skip: !currentUser?.id,
     }
   );
 
@@ -43,7 +47,7 @@ const MyFollowers: React.FC = () => {
 
   return (
     <Box mt={4}>
-      <Box py={2}>
+      <Box py={2} pl={8}>
         <Typography variant="h6">Following</Typography>
       </Box>
       <Paper
@@ -53,6 +57,7 @@ const MyFollowers: React.FC = () => {
           border: `1px solid ${palette.primary.boxBorder}`,
           background: palette.primary.mainBackground,
           maxWidth: isMobile ? '100%' : '80%',
+          margin: '0 auto',
         }}
       >
         {following.map((follower, index) => (
@@ -97,12 +102,14 @@ const MyFollowers: React.FC = () => {
                     <Skeleton variant="text" width="200px" height="40px" />
                   ) : (
                     <>
-                      <Typography
-                        variant="subtitle2"
-                        sx={{ color: palette.primary.fontLightColor }}
-                      >
-                        Followers: {follower.numberOfFollowers}
-                      </Typography>{' '}
+                      <Link href={`/profile/${follower?.username}/followers`}>
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ color: palette.primary.fontLightColor }}
+                        >
+                          Followers: {follower.numberOfFollowers}
+                        </Typography>
+                      </Link>{' '}
                       |
                       <Typography
                         variant="subtitle2"
@@ -129,7 +136,7 @@ const MyFollowers: React.FC = () => {
             <Box display="flex" mb={1.5}>
               <Box width="11%">&nbsp;</Box>
               <Box width="89%" textAlign="left">
-                <Typography variant="subtitle2">
+                <Typography sx={{ wordBreak: 'break-all' }} variant="subtitle2">
                   {follower.shortDescription}
                 </Typography>
               </Box>

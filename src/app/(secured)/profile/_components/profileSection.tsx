@@ -17,6 +17,7 @@ import {
   LinearProgress,
   Alert,
   Tooltip,
+  FormHelperText,
 } from '@mui/material';
 import {
   BorderColorOutlined,
@@ -267,7 +268,11 @@ const ProfileSection: React.FC = () => {
   };
 
   const handleUrl = url => {
-    router.push(url);
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      window.open(`http://${url}`, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -529,6 +534,7 @@ const ProfileSection: React.FC = () => {
                 sx={{
                   opacity: 0.9,
                   color: palette.mode === 'dark' ? '#fff' : '#000',
+                  wordBreak: 'break-all',
                 }}
               >
                 {isLoading ? (
@@ -538,19 +544,24 @@ const ProfileSection: React.FC = () => {
                 )}
               </Typography>
             ) : (
-              <TextareaAutosize
-                onChange={event =>
-                  setForm(form => ({
-                    ...form,
-                    shortDescription: event.target.value,
-                  }))
-                }
-                placeholder="Enter short description..."
-                value={form.shortDescription}
-                minRows={5}
-                maxLength={200}
-                sx={{ color: palette.mode === 'dark' ? '#fff' : '#000' }}
-              />
+              <>
+                <TextareaAutosize
+                  onChange={event =>
+                    setForm(form => ({
+                      ...form,
+                      shortDescription: event.target.value,
+                    }))
+                  }
+                  placeholder="Enter short description..."
+                  value={form.shortDescription}
+                  minRows={5}
+                  maxLength={500}
+                  sx={{ color: palette.mode === 'dark' ? '#fff' : '#000' }}
+                />
+                <FormHelperText sx={{ textAlign: 'right' }}>
+                  {`${form.shortDescription?.length ?? 0}/500`}
+                </FormHelperText>
+              </>
             )}
           </Box>
           <Stack

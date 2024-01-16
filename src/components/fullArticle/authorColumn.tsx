@@ -136,7 +136,10 @@ export default function AuthorCoulmn({ details }: any) {
         </Stack>
       </Box>
       <Box className="author-about">
-        <Typography sx={{ color: palette.primary[300] }} variant="body1">
+        <Typography
+          sx={{ wordBreak: 'break-all', color: palette.primary[300] }}
+          variant="body1"
+        >
           {profile?.shortDescription}
         </Typography>
         {/* {JSON.stringify(aboutProfile?.about)} */}

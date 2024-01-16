@@ -38,15 +38,19 @@ function RecentArticles() {
     'recent?forHome=true'
   );
 
+  const createMarkup = (content: string) => {
+    const CONTENT = content ? JSON.parse(content) : [];
+    console.log({ CONTENT });
+    return { __html: CONTENT[0]?.value?.slice(0, 25) + '...' ?? '' };
+  };
+
   return (
     <PopularTodaySection>
-      <Typography textAlign={'center'} variant="body1">
-        Recent Articles
-      </Typography>
+      <Typography variant="body1">Recent Articles</Typography>
       <PopularTodayListSection>
         {!isLoading && data ? (
           data.map((article, index) => (
-            <Box p={2} key={`recent-article-${index}`}>
+            <Box p={1} py={2} key={`recent-article-${index}`}>
               <Link
                 target="_blank"
                 href={
@@ -58,31 +62,35 @@ function RecentArticles() {
                     : '/'
                 }
               >
-                <Stack gap={2}>
-                  <Box width={'100%'} height="90px" position="relative">
+                <Stack gap={0.8} direction="row" pb={0.5}>
+                  <Box width={'40%'}>
                     <Image
                       alt={article.article.title ?? 'article title'}
                       src={article.article?.coverPhotoThumbnail}
-                      objectFit="contain"
-                      layout="fill"
-                      style={{ borderRadius: '3px' }}
+                      width={80}
+                      height={60}
+                      style={{ borderRadius: '5px' }}
                     />
                   </Box>
-                  <Box paddingBottom={1}>
+                  <Stack gap={0}>
                     <Typography
                       sx={{
                         wordBreak: 'break-all',
                         color: palette.primary.fontLightColor,
                       }}
-                      variant="body2"
+                      variant="subtitle2"
                       gutterBottom={false}
                     >
                       {article.article.title ?? '(No title)'}...
                     </Typography>
-                    <Typography color="textPrimary" variant="caption">
-                      {article.article.title?.slice(0, 100)}...
-                    </Typography>
-                  </Box>
+                    <Typography
+                      color="textPrimary"
+                      variant="caption"
+                      dangerouslySetInnerHTML={createMarkup(
+                        article.article.content
+                      )}
+                    />
+                  </Stack>
                 </Stack>
               </Link>
               <Divider />
@@ -96,6 +104,7 @@ function RecentArticles() {
                   <Stack
                     alignItems={'center'}
                     gap={2}
+                    direction="row"
                     key={'item- article-' + index}
                   >
                     <Skeleton

@@ -1,15 +1,9 @@
 'use client';
-import {
-  Box,
-  Divider,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Divider, Stack, Typography, useTheme } from '@mui/material';
 import UserAvatar from '../UserAvatar';
 import UsernameLink from '../usernameLink';
-import FollowUser from "../FollowUser";
-import { useGetFollowMoreAccountQuery } from "@/lib/redux/slices/profile";
+import FollowUser from '../FollowUser';
+import { useGetFollowMoreAccountQuery } from '@/lib/redux/slices/profile';
 
 export default function WhoToFollow() {
   const { palette } = useTheme();
@@ -58,7 +52,11 @@ export default function WhoToFollow() {
                   </Box>
                 </Stack>
                 <Box>
-                  <Typography color="textPrimary" variant="caption">
+                  <Typography
+                    sx={{ wordBreak: 'break-all' }}
+                    color="textPrimary"
+                    variant="caption"
+                  >
                     {val?.shortDescription?.slice(0, 30)}...
                   </Typography>
                 </Box>

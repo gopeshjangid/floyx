@@ -68,7 +68,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                   </Link>
                   <UsernameLink username={profile.username} />
                 </Stack>
-                <Typography variant="subtitle2">
+                <Typography sx={{ wordBreak: 'break-all' }} variant="subtitle2">
                   {profile.shortDescription}
                 </Typography>
               </Box>
