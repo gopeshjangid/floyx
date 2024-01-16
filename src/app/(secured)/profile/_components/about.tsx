@@ -37,6 +37,7 @@ import TextareaAutosize from '@/components/CustomTextArea';
 import { useParams } from 'next/navigation';
 import CustomChip from '@/components/CustomGridientChip';
 import { useSession } from 'next-auth/react';
+import CustomDescription from '@/components/customDescription';
 
 type ActivityChipEditInfoProps = {
   label: string;
@@ -412,10 +413,10 @@ const PersonalInfo: React.FC = () => {
                 </FormHelperText>
               </>
             ) : (
-              <Box p={2}>
-                <Typography sx={{ wordBreak: 'break-all' }} variant="subtitle2">
+              <Box p={2} pl={0}>
+                <CustomDescription variant="subtitle2">
                   {formValues.description}
-                </Typography>
+                </CustomDescription>
               </Box>
             )}
           </Grid>

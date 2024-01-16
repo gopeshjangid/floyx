@@ -22,6 +22,7 @@ import UsernameLink from '@/components/usernameLink';
 import FollowUser from '@/components/FollowUser';
 import Link from 'next/link';
 import StyledNextLink from '@/components/styledLink';
+import UserAvatar from '@/components/UserAvatar';
 
 const MyFollowers: React.FC = () => {
   const params = useParams();
@@ -29,10 +30,8 @@ const MyFollowers: React.FC = () => {
   const username = Array.isArray(params?.username)
     ? params?.username[0] ?? ''
     : params?.username || '';
-  const { data: currentUser } = useGetProfileDetailsQuery(
-    { username },
-    { skip: !username }
-  );
+  const { data: currentUser, isLoading: currentLoading } =
+    useGetProfileDetailsQuery({ username }, { skip: !username });
   const isMobile = useMediaQuery('(max-width:480px)');
   const {
     currentData: followers = [1, 2, 3],
@@ -47,10 +46,48 @@ const MyFollowers: React.FC = () => {
 
   const loading = isLoading || isUninitialized;
   return (
-    <Box mt={4}>
-      <Box py={2} pl={8}>
-        <Typography variant="h6">My Followers</Typography>
+    <Box mt={4} pt={3}>
+      <Box
+        sx={{
+          border: `1px solid ${palette.primary.boxBorder}`,
+          background: palette.primary.mainBackground,
+          maxWidth: isMobile ? '100%' : '80%',
+          margin: '0 auto',
+          borderRadius: '10px',
+        }}
+        py={2}
+        pl={8}
+      >
+        <Stack direction={'row'} gap={1} mb={1}>
+          <UserAvatar
+            alt={currentUser?.name ?? ''}
+            src={currentUser?.avatar ?? ''}
+            sx={{ width: '50px', height: '50px' }}
+          />
+          <Stack>
+            {currentLoading || !currentUser ? (
+              <Skeleton variant="text" width="100px" height="40px" />
+            ) : (
+              <Typography
+                variant="body2"
+                sx={{ color: palette.primary.fontLightColor }}
+              >
+                {currentUser.name}
+              </Typography>
+            )}
+            {currentLoading || !currentUser ? (
+              <Skeleton variant="text" width="100px" height="40px" />
+            ) : (
+              <UsernameLink username={currentUser?.username ?? ''} />
+            )}
+          </Stack>
+        </Stack>
+        <Divider />
+        <Typography py={1} variant="h6">
+          Followers
+        </Typography>
       </Box>
+      <Box height="10px">&nbsp;</Box>
       <Paper
         sx={{
           borderRadius: '10px',
@@ -69,7 +106,7 @@ const MyFollowers: React.FC = () => {
             p={2}
             textAlign="center"
           >
-            <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
+            <Stack direction="row" spacing={{ xs: 2, sm: 1, md: 1 }}>
               <Box width="10%">
                 {loading ? (
                   <Skeleton variant="circular" width="40px" height="40px" />
@@ -80,7 +117,7 @@ const MyFollowers: React.FC = () => {
                   />
                 )}
               </Box>
-              <Stack width="70%" justifyContent={'center'} gap={1}>
+              <Stack width="60%" justifyContent={'center'} gap={1}>
                 <Stack direction="row" gap={1}>
                   {loading ? (
                     <Skeleton variant="text" width="100px" height="40px" />

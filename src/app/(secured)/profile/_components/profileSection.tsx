@@ -49,6 +49,7 @@ import { RoundPrimaryButton } from '@/components/CustomButtons';
 import FollowUser from '@/components/FollowUser';
 import TextareaAutosize from '@/components/CustomTextArea';
 import Link from 'next/link';
+import CustomDescription from '@/components/customDescription';
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
   top?: string;
@@ -528,13 +529,12 @@ const ProfileSection: React.FC = () => {
           </Stack>
           <Box my={2}>
             {!isEdit ? (
-              <Typography
+              <CustomDescription
                 textAlign="justify"
                 variant="subtitle2"
                 sx={{
                   opacity: 0.9,
                   color: palette.mode === 'dark' ? '#fff' : '#000',
-                  wordBreak: 'break-all',
                 }}
               >
                 {isLoading ? (
@@ -542,7 +542,7 @@ const ProfileSection: React.FC = () => {
                 ) : (
                   profile?.shortDescription
                 )}
-              </Typography>
+              </CustomDescription>
             ) : (
               <>
                 <TextareaAutosize
