@@ -103,7 +103,7 @@ export default function Page() {
     typeof window === 'undefined' ? 1000 : window.innerHeight;
 
   return (
-    <Box p={2} mt={isMobile ? 0 : 2}>
+    <Box p={2} mt={isMobile ? 0 : 1}>
       <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>
         <Grid item xs={12}>
           <Suspense fallback={<SectionSkeleton />}>
@@ -135,12 +135,11 @@ export default function Page() {
           </Box>
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1}>
-          <Suspense fallback={<SectionSkeleton />}>
-            <RecentArticles />
-          </Suspense>
-          {/* <Suspense fallback={<SectionSkeleton />}>
-            <NewRegisteredUsers />
-          </Suspense> */}
+          <Box display={{ xs: 'none', sm: 'block' }}>
+            <Suspense fallback={<SectionSkeleton />}>
+              <RecentArticles />
+            </Suspense>
+          </Box>
         </Grid>
       </Grid>
     </Box>

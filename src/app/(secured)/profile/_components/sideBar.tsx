@@ -41,7 +41,10 @@ const PopularAccountsList = () => {
   const accountsList =
     isLoading && !data ? [1, 2, 3, 4, 5] : data?.result ?? [];
   return (
-    <Stack gap={2}>
+    <Stack
+      gap={2}
+      sx={{ maxHeight: '90vh', paddingBottom: '12px', overflowY: 'auto' }}
+    >
       {accountsList.map((account, index) => (
         <StyledBox key={'accont-' + index}>
           <Link href={`/profile/${account.username}`}>

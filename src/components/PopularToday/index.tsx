@@ -6,12 +6,13 @@ import {
   Divider,
   Skeleton,
   Stack,
-  Alert,
+  Button,
 } from '@mui/material';
 
 import { styled, useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const PopularTodaySection = styled(Box)(() => ({
   alignItems: 'center',
@@ -21,7 +22,6 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
   backgroundColor: theme.palette.primary.mainBackground,
   borderRadius: '10px',
-  marginTop: '16px',
   maxHeight: '100vh',
   overflowY: 'auto',
   '& .box': {
@@ -34,6 +34,7 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 
 function RecentArticles() {
   const { palette } = useTheme();
+  const router = useRouter();
   const { data, isLoading, isError } = useGetArticleListQuery(
     'recent?forHome=true'
   );
@@ -46,8 +47,10 @@ function RecentArticles() {
 
   return (
     <PopularTodaySection>
-      <Typography variant="body1">Recent Articles</Typography>
-      <PopularTodayListSection>
+      <Box display={{ xs: 'block', sm: 'none' }}>
+        <Typography variant="body1">Recent Articles</Typography>
+      </Box>
+      <PopularTodayListSection mt={4}>
         {!isLoading && data ? (
           data.map((article, index) => (
             <Box p={1} py={2} key={`recent-article-${index}`}>
@@ -90,6 +93,21 @@ function RecentArticles() {
                         article.article.content
                       )}
                     />
+                    <Button
+                      variant="text"
+                      size="small"
+                      sx={{ fontSize: '.65rem' }}
+                      onClick={() =>
+                        router.push(
+                          '/article/' +
+                            article.user.username +
+                            '/' +
+                            article.article.publicUrl
+                        )
+                      }
+                    >
+                      show more
+                    </Button>
                   </Stack>
                 </Stack>
               </Link>

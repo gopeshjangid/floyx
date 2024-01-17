@@ -209,7 +209,7 @@ const ProfileSection: React.FC = () => {
   );
 
   const { data: isFollwed } = useIsUserFollowedQuery(
-    { userId: profile?.id ?? '', followedId: currentUser?.userId ?? '' },
+    { userId: currentUser?.userId ?? '', followedId: profile?.id ?? '' },
     { skip: !currentUser?.userId || !profile?.id || isSameuser }
   );
   const [
@@ -500,7 +500,11 @@ const ProfileSection: React.FC = () => {
           </Box>
         )}
         <Box mt={1} p={2} pt={isEdit ? 5 : 2} textAlign="center">
-          <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
+          <Stack
+            alignItems={'center'}
+            direction="row"
+            spacing={{ xs: 1, sm: 1, md: 1 }}
+          >
             {isLoading ? (
               <Skeleton
                 animation="wave"
@@ -515,7 +519,7 @@ const ProfileSection: React.FC = () => {
                 >
                   {profile?.name}
                 </Typography>
-                <UsernameLink username={profile?.username ?? ''} />
+                <UsernameLink variant="h6" username={profile?.username ?? ''} />
                 {isFollwed && (
                   <>
                     &nbsp;|
