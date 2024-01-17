@@ -340,6 +340,9 @@ export default function AddArticleForm({
       <TextField
         placeholder="Title"
         fullWidth
+        inputProps={{
+          maxLength: 50,
+        }}
         value={title}
         onChange={e => handleTitleChange(e, articleCreated)}
         sx={{

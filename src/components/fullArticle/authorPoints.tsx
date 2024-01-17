@@ -37,6 +37,8 @@ export default function AuthorPoints({ details }: any) {
   return (
     <Stack
       justifyContent={'flex-end'}
+      alignItems={'flex-end'}
+      gap={1}
     >
       <Button
         variant="outlined"

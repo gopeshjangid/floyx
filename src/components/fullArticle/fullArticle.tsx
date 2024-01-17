@@ -23,7 +23,7 @@ export default function FullArticle({ details }: any) {
   return (
     <Box>
       <Box>
-        <Typography variant="h1" sx={{ textTransform: 'capitalize' }}>
+        <Typography variant="h1" sx={{ textTransform: 'capitalize', wordBreak: 'break-all', whiteSpace: 'pre-line' }}>
           {details?.article?.title}
         </Typography>
       </Box>
