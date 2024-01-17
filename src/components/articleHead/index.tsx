@@ -12,6 +12,7 @@ import PopularIcon from '@/images/image/popularIcon';
 import { GradientButton } from '../gradientButton';
 import { GradientText } from '../GradientComponents';
 import Link from 'next/link';
+import SearchIcon from '@/assets/images/svg/search';
 
 const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
@@ -82,7 +83,7 @@ export default function ArticleHead({
     if (dynamicTabType) {
       setArticleTabs([
         {
-          icon: () => <></>,
+          icon: (fill: string) => <SearchIcon fill={fill} />,
           label: dynamicTab,
           value: dynamicTabType,
         },

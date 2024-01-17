@@ -1,6 +1,7 @@
 'use client';
 
-import { Search } from '@mui/icons-material';
+// import { Search } from '@mui/icons-material';
+import Search from '@/assets/images/svg/search';
 import {
   Box,
   IconButton,
@@ -38,7 +39,7 @@ export default function SearchBarArcticleRight({ setDynamicTab }) {
 
   return (
     <Box>
-      <Typography variant="subtitle1">Search for Arcticles</Typography>
+      <Typography variant="subtitle1">Search for Articles</Typography>
       <TextField
         name="email"
         fullWidth

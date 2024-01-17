@@ -16,11 +16,13 @@ export default function DeleteComment({
   setOpen,
   commentId,
   commentType,
+  onAction,
 }: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   commentId: string;
   commentType: string;
+  onAction: (comment) => void;
 }) {
   const toast = useToast();
   const [deletComment, { isLoading: isDeleting }] =
@@ -30,6 +32,7 @@ export default function DeleteComment({
     const post = 'post';
     await deletComment({commentId: commentId, type: (commentType.toLowerCase()).includes(post)});
     setOpen(false);
+    onAction({id: commentId, isDeleted: true })
     toast.success('Comment is deleted successfully.');
   };
 

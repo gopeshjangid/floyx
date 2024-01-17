@@ -5,10 +5,15 @@ import { Box, Typography, Grid, Stack, Avatar, Skeleton } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import UserAvatar from "../UserAvatar";
+import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
+import { useSession } from 'next-auth/react';
 
 export default function AuthorArticles({ username }: { username: string }) {
   const { palette } = useTheme();
   const router = useRouter();
+  const session = useSession();
+
   const { data: articleList, isLoading } = useGetArticlesByAuthorQuery({
     username: username,
     pageSize: 6,
@@ -39,6 +44,8 @@ export default function AuthorArticles({ username }: { username: string }) {
               md={6}
               key={index + 'article-'}
             >
+        {/* {JSON.stringify(article)}
+        {JSON.stringify(user)} */}
               <Stack
                 sx={{
                   border: `1px solid ${palette.primary.boxBorder}`,
@@ -77,15 +84,21 @@ export default function AuthorArticles({ username }: { username: string }) {
                   </Box>
                   <Stack direction="row" sx={{ display: 'flex' }}>
                     <Box>
+                      <UserAvatar
+                        src={`${ApiEndpoint.ProfileDetails}/avatar/${user?.username}`}
+                        alt={user?.name}
+                        sx={{ width: '25px', height: '25px' }}
+                      />
+                    {/* 
                       <Avatar
                         alt={user?.name}
                         src={user?.avatar}
                         sx={{ width: 25, height: 25, marginRight: '5px' }}
-                      />
+                      />*/}
                     </Box>
                     <Box>
-                      <Typography variant="caption">by {user?.name}</Typography>
-                    </Box>
+                      <Typography variant="caption">&nbsp;&nbsp;&nbsp;by {user?.name}</Typography>
+                    </Box> 
                   </Stack>
                 </Box>
               </Stack>
