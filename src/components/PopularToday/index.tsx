@@ -97,14 +97,6 @@ function RecentArticles() {
                       variant="text"
                       size="small"
                       sx={{ fontSize: '.65rem' }}
-                      onClick={() =>
-                        router.push(
-                          '/article/' +
-                            article.user.username +
-                            '/' +
-                            article.article.publicUrl
-                        )
-                      }
                     >
                       show more
                     </Button>
