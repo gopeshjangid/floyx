@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 
 export default function Loading() {
   return (
-    <Stack spacing={1} mt={3}>
+    <Stack spacing={1} mt={3} pt={2}>
       <Skeleton
         animation="wave"
         variant="rounded"

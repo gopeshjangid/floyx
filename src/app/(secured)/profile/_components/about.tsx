@@ -20,6 +20,7 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  FormHelperText,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ExperienceSection from './experience';
@@ -36,6 +37,7 @@ import TextareaAutosize from '@/components/CustomTextArea';
 import { useParams } from 'next/navigation';
 import CustomChip from '@/components/CustomGridientChip';
 import { useSession } from 'next-auth/react';
+import CustomDescription from '@/components/customDescription';
 
 type ActivityChipEditInfoProps = {
   label: string;
@@ -391,18 +393,30 @@ const PersonalInfo: React.FC = () => {
           </Grid>
           <Grid mt={2} xs={12} item sm={9}>
             {isEdit ? (
-              <TextareaAutosize
-                name="country"
-                placeholder="Enter description..."
-                value={formValues.description}
-                minRows={8}
-                maxLength={200}
-              />
+              <>
+                <TextareaAutosize
+                  name="country"
+                  placeholder="Enter description..."
+                  value={formValues.description}
+                  minRows={8}
+                  onChange={event =>
+                    setFormValues(form => ({
+                      ...form,
+                      description: event.target.value,
+                    }))
+                  }
+                  maxLength={500}
+                />
+                <FormHelperText>
+                  you can enter upto max 500 characters.{' '}
+                  {`${formValues.description.length}/500`}
+                </FormHelperText>
+              </>
             ) : (
-              <Box sx={{ border: `1px solid ${palette.action.border}` }} p={2}>
-                <Typography variant="subtitle2">
+              <Box p={2} pl={0}>
+                <CustomDescription variant="subtitle2">
                   {formValues.description}
-                </Typography>
+                </CustomDescription>
               </Box>
             )}
           </Grid>

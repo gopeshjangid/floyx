@@ -12,6 +12,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { useGetPopularAccountsToFollowQuery } from '@/lib/redux/slices/profile';
 import UsernameLink from '@/components/usernameLink';
+import Link from 'next/link';
 
 const StyledBox = ({ children }: any) => {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -43,38 +44,49 @@ const PopularAccountsList = () => {
     <Stack gap={2}>
       {accountsList.map((account, index) => (
         <StyledBox key={'accont-' + index}>
-          <Box key={index} sx={{ width: '100%' }}>
-            <Stack direction="row" gap={1}>
-              {account?.avatar ? (
-                <Avatar sx={{ width: 55, height: 55 }} src={account?.avatar} />
-              ) : (
-                <Skeleton width={55} variant="circular" height={55} />
-              )}
-              <Box display="flex" flexDirection="column" alignItems={'center'}>
-                {isLoading ? (
-                  <Skeleton
-                    width={'100%'}
-                    animation="pulse"
-                    variant="rectangular"
-                    height={'65px'}
+          <Link href={`/profile/${account.username}`}>
+            <Box key={index} sx={{ width: '100%' }}>
+              <Stack direction="row" gap={1}>
+                {account?.avatar ? (
+                  <Avatar
+                    sx={{ width: 55, height: 55 }}
+                    src={account?.avatar}
                   />
                 ) : (
-                  account && (
-                    <>
-                      <Typography
-                        textAlign={'justify'}
-                        variant="subtitle2"
-                        color="textPrimary"
-                      >
-                        {account?.name}
-                      </Typography>
-                      <UsernameLink username={account?.username} />
-                    </>
-                  )
+                  <Skeleton width={55} variant="circular" height={55} />
                 )}
-              </Box>
-            </Stack>
-          </Box>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  alignItems={'center'}
+                >
+                  {isLoading ? (
+                    <Skeleton
+                      width={'100%'}
+                      animation="pulse"
+                      variant="rectangular"
+                      height={'65px'}
+                    />
+                  ) : (
+                    account && (
+                      <Stack alignItems={'flex-start'}>
+                        <Typography
+                          textAlign={'left'}
+                          variant="subtitle2"
+                          color="textPrimary"
+                        >
+                          {account?.name}
+                        </Typography>
+                        <Box textAlign={'left'}>
+                          <UsernameLink username={account?.username} />
+                        </Box>
+                      </Stack>
+                    )
+                  )}
+                </Box>
+              </Stack>
+            </Box>
+          </Link>
         </StyledBox>
       ))}
     </Stack>
