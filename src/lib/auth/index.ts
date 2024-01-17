@@ -8,6 +8,14 @@ export const setAccessTokenCookie = (accessToken: string): void => {
   });
 };
 
+export const setCheckMailCookie = (email: string): void => {
+  cookies().set('CHECK_EMAIL', email, {
+    path: '/',
+    httpOnly: false,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  });
+};
+
 export const getAccessTokenCookie = () => {
   return cookies().get('FLOYX_TOKEN');
 };
