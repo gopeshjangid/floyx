@@ -122,7 +122,7 @@ const AccountSetting = () => {
         email: settingsData.email,
         name: settingsData.name,
         enableMessage: getMessageSettingData?.allowPrivateMassages,
-        username: settingsData?.username,
+        username: settingsData?.login,
       });
     }
   }, [settingsData, getMessageSettingData]);
@@ -138,10 +138,9 @@ const AccountSetting = () => {
   //     toast.success('Message settings updated successfully!');
   //   }
   // }, [messageSettingUpdateData]);
-
   useEffect(() => {
     if (settingUpdateError) {
-      toast.error(showErrorMessages(settingUpdateError as string[]));
+      toast.error(settingUpdateError as string);
     }
   }, [settingUpdateError]);
 
