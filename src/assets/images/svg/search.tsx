@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SVGSearch = () => {
+const SVGSearch = ({fill}: {fill?: string}) => {
   return (
     <svg
       width="24"
@@ -14,7 +14,7 @@ const SVGSearch = () => {
           <path
             id="Vector"
             d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-            stroke="currentColor"
+            stroke={fill ?? "currentColor"}
             // stroke-opacity="0.3"
             strokeWidth="1.5"
             strokeLinecap="round"
@@ -23,7 +23,7 @@ const SVGSearch = () => {
           <path
             id="Vector_2"
             d="M22 22L20 20"
-            stroke="currentColor"
+            stroke={fill ?? 'currentColor'}
             // stroke-opacity="0.3"
             strokeWidth="1.5"
             strokeLinecap="round"

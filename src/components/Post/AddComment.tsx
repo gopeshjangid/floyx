@@ -137,7 +137,7 @@ function AddComment({
 
   const handleEditSubmit = async () => {
     const data = await updateComment({ commentId: id, content: commentText, isNewComment: isNewComment });
-    commentAction({ id: id, content: commentText })
+    commentAction({ id: id, content: commentText, isDeleted: true })
     setIsEditing(false);
   }
 

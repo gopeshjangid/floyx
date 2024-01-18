@@ -1,13 +1,15 @@
 'use client';
 import React from 'react';
-import { Box, Typography, Button, Popover, useTheme } from '@mui/material';
+import { Box, Typography, Button, Popover, useTheme, Stack } from '@mui/material';
 import StarIcon from '@/images/image/star';
 import { useGetArticleTotalEarningsQuery } from '@/lib/redux/slices/articleDetails';
 import { RoundPrimaryButton } from '../CustomButtons';
 import { useSession } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 
 export default function AuthorPoints({ details }: any) {
   const session = useSession();
+  const router = useRouter();
   const articleId = details?.article?.id || '';
   const { data: totalEarningPoints } = useGetArticleTotalEarningsQuery(
     articleId,
@@ -33,14 +35,24 @@ export default function AuthorPoints({ details }: any) {
   const open = Boolean(anchorEl);
 
   return (
-    <Box
-      sx={{
-        padding: '20px 0px',
-        width: 'auto',
-        display: 'flex',
-        justifyContent: 'flex-end',
-      }}
+    <Stack
+      justifyContent={'flex-end'}
+      alignItems={'flex-end'}
+      gap={1}
     >
+      <Button
+        variant="outlined"
+        size="small"
+        aria-haspopup="true"
+        sx={{ borderRadius: '3px' }}
+        onClick={() => {
+          router.back();
+        }}
+      >
+        <Typography mb={0} variant="button">
+          {`Go To Back`}
+        </Typography>
+      </Button>
       <RoundPrimaryButton
         size="small"
         startIcon={<StarIcon />}
@@ -94,6 +106,6 @@ export default function AuthorPoints({ details }: any) {
           </Box>
         </Box>
       </Popover>
-    </Box>
+    </Stack>
   );
 }

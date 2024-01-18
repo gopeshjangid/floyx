@@ -154,6 +154,7 @@ function Comment({ comment, inputRef, type, onAction, setCommentText, isNewComme
         setOpen={setOpen}
         commentId={comment?.comment?.id}
         commentType={type}
+        onAction={onAction}
       />
     </Box>
   );
