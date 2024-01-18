@@ -8,10 +8,8 @@ import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import SocialButts from './socialMediaButtons';
 import AuthorPoints from './authorPoints';
-import FollowUser from '../FollowUser';
+import FollowUserFetched from "./followUserFetched";
 import TranslateIcon from '@/assets/images/svg/translateIcon';
-import { RoundPrimaryButton } from "../CustomButtons";
-import { useRouter } from 'next/navigation'
 
 export default function FullArticle({ details }: any) {
   const CONTENT =
@@ -62,8 +60,7 @@ export default function FullArticle({ details }: any) {
             <Suspense
               fallback={<Skeleton variant="text" width="100px" height="30px" />}
             >
-              <FollowUser
-                isFollowed={details?.user?.isFollowed}
+              <FollowUserFetched
                 username={details?.user?.username}
               />
             </Suspense>

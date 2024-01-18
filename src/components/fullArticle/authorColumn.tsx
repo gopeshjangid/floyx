@@ -85,7 +85,7 @@ export default function AuthorCoulmn({ details }: any) {
           <Divider variant="middle" />
           <Box>
             <FollowUser
-              isFollowed={details?.user?.isFollowed}
+              isFollowed={profile?.followed}
               username={details?.user?.username}
             />
           </Box>

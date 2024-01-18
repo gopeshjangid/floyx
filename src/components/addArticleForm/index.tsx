@@ -279,10 +279,13 @@ export default function AddArticleForm({
   const getArticleDetail = async () => {
     const response = await getDraftDetail(articleId);
     if (response.data) {
+      let responseContent = JSON.parse(response?.data?.content);
+      responseContent = Array.isArray(responseContent) ? responseContent : [initialSate];
+      responseContent = responseContent.length === 0 ? [initialSate] : responseContent;
       setTitle(response.data?.title);
       setContent(JSON.parse(response?.data?.content));
       setState(prev => ({
-        ...prev, inputsList: Array.isArray(JSON.parse(response?.data?.content)) ? JSON.parse(response?.data?.content) : [initialSate]
+        ...prev, inputsList: responseContent,
       }));
       setImagePreview(response?.data?.coverPhotoPath || '');
       setImageToUpload(response?.data?.coverPhotoPath || '');
@@ -293,6 +296,7 @@ export default function AddArticleForm({
       articleCreatedRef.current = true;
     }
   };
+
   useEffect(() => {
     const sub = setInterval(() => {
       if (startAutoSave) updateDraftArticle(false);
@@ -319,10 +323,6 @@ export default function AddArticleForm({
     }
   }, [isEditing, articleId]);
 
-  const deleteTagHandler = deleted => {
-    setHashTags(tags => tags.filter(item => item !== deleted));
-  };
-
   useEffect(() => {
     if (isReset) {
       resetAllState();
@@ -335,13 +335,14 @@ export default function AddArticleForm({
     },
     [setHashTags]
   );
+
   return (
     <AddArticleFormBox>
       <TextField
         placeholder="Title"
         fullWidth
         inputProps={{
-          maxLength: 50,
+          maxLength: 200,
         }}
         value={title}
         onChange={e => handleTitleChange(e, articleCreated)}
@@ -354,12 +355,14 @@ export default function AddArticleForm({
             fontWeight: '600',
             fontSize: '38px',
             paddingLeft: 0,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           },
         }}
       />
       <FormControl>
         <FormLabel sx={{ color: palette.text.primary }}>Add hashtags</FormLabel>
-        <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={3} />
+        <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={5} />
       </FormControl>
       <Stack
         mb={2}

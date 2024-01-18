@@ -148,8 +148,12 @@ export default function ArticleContainer({
   };
 
   const handleClick = () => {
-    const dynamicUrl = `/article/${userDetails?.username}/${articleDetails?.publicUrl}`;
-    router.push(dynamicUrl);
+    if (userDetails) {
+      const dynamicUrl = `/article/${userDetails?.username}/${articleDetails?.publicUrl}`;
+      router.push(dynamicUrl);
+    } else {
+      handleOption(0);
+    }
   };
 
   const tippedOrNot = () => {
