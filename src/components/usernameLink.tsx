@@ -22,7 +22,7 @@ const UsernameLink: React.FC<UsernameLinkProps & TypographyProps> = ({
   return (
     <Typography
       component="span"
-      variant="subtitle2"
+      variant="subtitle1"
       color="primary"
       sx={{ cursor: 'pointer', textDecoration: 'none' }}
       {...props}

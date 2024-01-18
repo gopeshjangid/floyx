@@ -43,7 +43,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             400: '#AB59FF',
           },
           text: {
-            primary: '#7C93AE', // Body Text
+            primary: '#000', // Body Text
             secondary: '#777D88',
             // Define other text colors like 'secondary', 'disabled', etc., if necessary
           },
@@ -107,7 +107,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           // Since you have not specified text colors for dark mode, you may want to choose colors that have enough contrast against the dark backgrounds
           text: {
             //primary: '#D1D0D5', // Assuming white text for dark mode for better readability
-            primary: '#85838F',
+            primary: '#fff',
             secondary: 'rgba(255, 255, 255, 0.7)', // Lighter text for secondary text
           },
           action: {

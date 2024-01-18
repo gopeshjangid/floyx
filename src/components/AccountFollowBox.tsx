@@ -15,6 +15,7 @@ import {
 } from '@/lib/redux/slices/profile';
 import ButtonWithLoading from './ButtonWithLoading';
 import { useState } from 'react';
+import Link from 'next/link';
 
 const AccountBox = styled(Stack)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
@@ -44,7 +45,7 @@ export default function FollowNewAccounts() {
 
   return (
     <Box mt={2}>
-      <Typography variant="h6">Start Follow Some Accounts</Typography>
+      <Typography variant="h6">Follow Accounts</Typography>
       <Stack direction="row" gap={1} my={2} sx={{ overflowX: 'auto' }}>
         {!isLoading && data ? (
           data?.result?.map((account, index) => (
@@ -55,28 +56,36 @@ export default function FollowNewAccounts() {
               gap={2}
               key={`follow-account-${index}`}
             >
-              <Avatar src={account.avatar} />
+              <Link href={`/profile/${account.username}`}>
+                <Avatar src={account.avatar} />
+              </Link>
               <Stack>
-                <Typography textAlign="center" variant="body1">
-                  {account.name}
-                </Typography>
+                {account.name && (
+                  <Link href={`/profile/${account.username}`}>
+                    <Typography textAlign="center" variant="body1">
+                      {account.name}
+                    </Typography>
+                  </Link>
+                )}
                 <UsernameLink username={account.username ?? 'suername'} />
               </Stack>
-              <Stack direction="row" gap={1} alignItems="flex-start">
-                <Typography variant="caption">
-                  Followers{'  '}
-                  <span style={{ color: theme.palette.primary.main }}>
-                    {account.numberOfFollowers}
-                  </span>
-                </Typography>
-                <Typography variant="caption">
-                  Following{'  '}
-                  <span style={{ color: theme.palette.primary.main }}>
-                    {' '}
-                    {account.numberOfFollowing}
-                  </span>
-                </Typography>
-              </Stack>
+              <Link href={`/profile/${account.username}`}>
+                <Stack direction="row" gap={1} alignItems="flex-start">
+                  <Typography variant="caption">
+                    Followers{'  '}
+                    <span style={{ color: theme.palette.primary.main }}>
+                      {account.numberOfFollowers}
+                    </span>
+                  </Typography>
+                  <Typography variant="caption">
+                    Following{'  '}
+                    <span style={{ color: theme.palette.primary.main }}>
+                      {' '}
+                      {account.numberOfFollowing}
+                    </span>
+                  </Typography>
+                </Stack>
+              </Link>
               <ButtonWithLoading
                 onClick={() => followAccount({ username: account.username })}
                 variant="outlined"

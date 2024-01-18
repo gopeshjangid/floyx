@@ -166,7 +166,7 @@ const PointsBalanceCard = React.memo(() => {
                     {walletLoading ? (
                       <Skeleton variant="text" />
                     ) : (
-                      wallet?.totalBalance + ' Points'
+                      (wallet?.totalBalance ?? 0.0) + ' Points'
                     )}
                   </Typography>
                 </Grid>
@@ -208,7 +208,7 @@ const PointsBalanceCard = React.memo(() => {
                         {walletLoading ? (
                           <Skeleton variant="text" />
                         ) : (
-                          wallet?.availableBalance + ' Points'
+                          (wallet?.availableBalance ?? 0.0) + ' Points'
                         )}{' '}
                         <br />
                         Currently: $
@@ -228,7 +228,17 @@ const PointsBalanceCard = React.memo(() => {
                     gap={2}
                     width="100%"
                   >
-                    <EarningButtons disabled={isEarningStopped?.stopEarings}>
+                    <EarningButtons
+                      sx={{
+                        borderColor: '#fff',
+                        color: '#fff',
+                        '&:hover': {
+                          borderColor: '#fff',
+                          color: '#fff',
+                        },
+                      }}
+                      disabled={isEarningStopped?.stopEarings}
+                    >
                       {isEarningStoppedLoading ? 'Loading...' : 'Withdraw'}
                     </EarningButtons>
                     <WalletHistory />
