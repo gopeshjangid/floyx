@@ -50,7 +50,7 @@ export default function AuthorPoints({ details }: any) {
         }}
       >
         <Typography mb={0} variant="button">
-          {`Go To Back`}
+          Back
         </Typography>
       </Button>
       <RoundPrimaryButton
@@ -84,26 +84,20 @@ export default function AuthorPoints({ details }: any) {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Box>
-          <Box>
-            <Typography sx={{ p: 1 }} variant="button">
-              Past Payouts {pointsEarned} points
-            </Typography>
-          </Box>
-          <Box>
-            <Typography sx={{ p: 1 }} variant="button">
-              - Author{' '}
-              {totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount || 0}{' '}
-              points
-            </Typography>
-          </Box>
-          <Box>
-            <Typography sx={{ p: 1 }} variant="button">
-              - Voters{' '}
-              {totalEarningPoints?.totalEarnings[0]?.userEarnedAmount || 0}{' '}
-              points
-            </Typography>
-          </Box>
+        <Box sx={{p: 1}}>
+          <Typography>
+            Past Payouts {pointsEarned} points
+          </Typography>          
+          <Typography>
+            - Author{' '}
+            {totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount || 0}{' '}
+            points
+          </Typography>
+          <Typography>
+            - Voters{' '}
+            {totalEarningPoints?.totalEarnings[0]?.userEarnedAmount || 0}{' '}
+            points
+          </Typography>
         </Box>
       </Popover>
     </Stack>

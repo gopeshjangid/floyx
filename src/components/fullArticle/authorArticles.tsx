@@ -44,8 +44,6 @@ export default function AuthorArticles({ username }: { username: string }) {
               md={6}
               key={index + 'article-'}
             >
-        {/* {JSON.stringify(article)}
-        {JSON.stringify(user)} */}
               <Stack
                 sx={{
                   border: `1px solid ${palette.primary.boxBorder}`,
@@ -89,12 +87,6 @@ export default function AuthorArticles({ username }: { username: string }) {
                         alt={user?.name}
                         sx={{ width: '25px', height: '25px' }}
                       />
-                    {/* 
-                      <Avatar
-                        alt={user?.name}
-                        src={user?.avatar}
-                        sx={{ width: 25, height: 25, marginRight: '5px' }}
-                      />*/}
                     </Box>
                     <Box>
                       <Typography variant="caption">&nbsp;&nbsp;&nbsp;by {user?.name}</Typography>

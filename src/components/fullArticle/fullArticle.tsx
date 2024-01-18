@@ -56,16 +56,7 @@ export default function FullArticle({ details }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={4} sm={2}>
-            <Suspense
-              fallback={<Skeleton variant="text" width="100px" height="30px" />}
-            >
-              <FollowUserFetched
-                username={details?.user?.username}
-              />
-            </Suspense>
-          </Grid>
-          <Grid item xs={12} sm={5}>
+          <Grid item xs={12} sm={7}>
             <Suspense
               fallback={
                 <Skeleton variant="text" width={'100%'} height="40px" />

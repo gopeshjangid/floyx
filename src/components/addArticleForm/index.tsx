@@ -9,6 +9,7 @@ import {
   useTheme,
   FormControl,
   FormLabel,
+  TextareaAutosize,
 } from '@mui/material';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
@@ -37,6 +38,19 @@ export const AddArticleFormBox = styled(Box)(({ theme }) => ({
         ? theme.palette.text.primary
         : theme.palette?.action?.svg,
   },
+}));
+
+const Textarea = styled(TextareaAutosize)(({ theme }) => ({
+  width: '100%',
+  border: '0px',
+  backgroundColor: theme.palette.background.default,
+  fontWeight: '600',
+  fontSize: '38px',
+  paddingLeft: 0,
+  overflow: "auto",
+  textOverflow: "ellipsis",
+  outline: 'none',
+  color: '#85838F',
 }));
 
 export default function AddArticleForm({
@@ -338,30 +352,14 @@ export default function AddArticleForm({
 
   return (
     <AddArticleFormBox>
-      <TextField
+      <Textarea
         placeholder="Title"
-        fullWidth
-        inputProps={{
-          maxLength: 200,
-        }}
+        maxRows={2}
         value={title}
         onChange={e => handleTitleChange(e, articleCreated)}
-        sx={{
-          '.MuiOutlinedInput-root': {
-            border: '0px',
-          },
-          '.MuiOutlinedInput-input': {
-            backgroundColor: palette.background.default,
-            fontWeight: '600',
-            fontSize: '38px',
-            paddingLeft: 0,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          },
-        }}
       />
       <FormControl>
-        <FormLabel sx={{ color: palette.text.primary }}>Add hashtags</FormLabel>
+        <FormLabel sx={{ color: palette.primary[300] }}>Add hashtags</FormLabel>
         <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={5} />
       </FormControl>
       <Stack

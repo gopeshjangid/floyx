@@ -1,9 +1,8 @@
 'use client';
-
+import LinkIcon from '@/assets/images/icons/link.svg';
 import ArticleIcon from '@/images/image/articleIcon';
-import LinkIcon from '@/images/image/linkIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
-import { Box, Typography, Link, Stack, Divider } from '@mui/material';
+import { Box, Typography, Link, Stack, Divider, Button } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import UsernameLink from '../usernameLink';
 import UserAvatar from '../UserAvatar';
@@ -16,6 +15,9 @@ import { RoundPrimaryButton } from '../CustomButtons';
 import { useRouter } from 'next/navigation';
 import FollowUser from '../FollowUser';
 import AuthorArticles from './authorArticles';
+import CustomDescription from "../customDescription";
+import { LocationOn } from "@mui/icons-material";
+import Image from "next/image";
 
 export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -65,6 +67,15 @@ export default function AuthorCoulmn({ details }: any) {
     },
     { skip: !details?.user?.username }
   );
+
+  const handleUrl = url => {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      window.open(`http://${url}`, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <AuthorDetailBox>
       <Box className="header" py={1}>
@@ -136,33 +147,36 @@ export default function AuthorCoulmn({ details }: any) {
         </Stack>
       </Box>
       <Box className="author-about">
-        <Typography
-          sx={{ wordBreak: 'break-all', color: palette.primary[300] }}
-          variant="body1"
+        <CustomDescription
+          textAlign="justify"
+          variant="subtitle2"
+          sx={{
+            opacity: 0.9,
+          }}
         >
           {profile?.shortDescription}
-        </Typography>
+        </CustomDescription>
         {/* {JSON.stringify(aboutProfile?.about)} */}
         <Box sx={{ display: 'flex' }} py={0.5}>
-          <Box sx={{ marginRight: '25px' }}>
+          <Box display={'flex'} gap={1} sx={{ marginRight: '25px' }}>
+            <LocationOn />
             <Typography variant="subtitle2">
               {aboutProfile?.about?.location}
             </Typography>
           </Box>
           {aboutProfile?.about?.website && (
-            <Box>
-              <Link
-                href="#"
-                underline="none"
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+            <Box
+              display="flex"
+              gap={1}>
+              <Button
+                variant="text"
+                size="small"
+                startIcon={<Image src={LinkIcon} alt="website link icon" />}
+                onClick={() => handleUrl(aboutProfile?.about?.website)}
+                sx={{ fontSize: '.825rem', textTransform: 'none', padding: 0 }}
               >
-                {<LinkIcon />}
                 {aboutProfile?.about?.website}
-              </Link>
+              </Button>
             </Box>
           )}
         </Box>
