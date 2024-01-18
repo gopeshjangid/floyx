@@ -25,7 +25,7 @@ import {
   useCheckArticleIsSharedMutation,
   UserComment,
 } from '@/lib/redux/slices/articleDetails';
-import Comment from '../CommentLists';
+import Comment from '../Comment';
 import { allRoutes } from '@/constants/allRoutes';
 import Image from 'next/image';
 import Post from '../Post/Post';
@@ -177,14 +177,23 @@ function LikesComments({
     [setNewCreatedComments]
   );
   const commentAction = useCallback(
-    data => {
-      const _comments = newCreatedComments.newComments.map(comment => {
-        if (comment.comment.id === data.id) {
-          return { ...comment, comment: { ...comment.comment, ...data } };
+    (data) => {
+      let _comments = newCreatedComments.newComments;
+      if (data?.isDeleted) {
+        _comments = newCreatedComments.newComments.filter(comment => {
+          return (comment.comment.id !== data.id)
+        });
+        if (isArticle) {
+          revalidate();
         }
-        return comment;
-      });
-
+      } else {
+        _comments = newCreatedComments.newComments.map(comment => {
+          if (comment.comment.id === data.id) {
+            return { ...comment, comment: { ...comment.comment, ...data } };
+          }
+          return comment;
+        });
+      }
       setNewCreatedComments(comments => ({
         ...comments,
         newComments: _comments,
@@ -192,6 +201,10 @@ function LikesComments({
     },
     [setNewCreatedComments, newCreatedComments]
   );
+
+  const CommentButton = () => {
+    
+  }
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
@@ -212,7 +225,10 @@ function LikesComments({
             {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
           </Typography>
         </Button>
-        <Link href={isPost ? `${allRoutes.post}/${itemId}` : '#'}>
+        <Link
+          href={isPost ? `${allRoutes.post}/${itemId}` : '#'}
+          style={{ pointerEvents: isPost ? undefined : 'none' }}
+        >
           <Button
             variant="text"
             startIcon={<CommentIcon />}
@@ -276,6 +292,7 @@ function LikesComments({
                   type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
                   setCommentText={commentTextHandler}
                   inputRef={commentRef}
+                  onAction={commentAction}
                 />
                 {index !== commentList.length - 1 && <Divider />}
               </div>
@@ -293,6 +310,7 @@ function LikesComments({
                   setCommentText={commentTextHandler}
                   inputRef={commentRef}
                   onAction={commentAction}
+                  isNewComment={true}
                 />
                 {index !== newCreatedComments?.newComments.length - 1 && (
                   <Divider />

@@ -74,9 +74,10 @@ const ProfileActivityInfo: React.FC<
   ProfileActivityInfoProps & {
     onEdit: (data: ProfileActivityInfoProps) => void;
     type?: string;
+    isSameuser: boolean;
   }
 > = props => {
-  const { onEdit, ...data } = props;
+  const { onEdit, isSameuser, ...data } = props;
   const isMobile = useMediaQuery('(max-width:480px)');
 
   const getIcon = () => {
@@ -115,9 +116,11 @@ const ProfileActivityInfo: React.FC<
             <Box textAlign="justify">
               <Typography variant="subtitle1">
                 {props.school || props.name || props.position}
-                <IconButton onClick={() => onEdit(data)} size="small">
-                  <BorderColorOutlined sx={{ fontSize: '12px' }} />
-                </IconButton>
+                {isSameuser && (
+                  <IconButton onClick={() => onEdit(data)} size="small">
+                    <BorderColorOutlined sx={{ fontSize: '12px' }} />
+                  </IconButton>
+                )}
               </Typography>
               <Typography sx={{ opacity: 0.8 }} variant="caption">
                 {props.field || props.company || props.description}
@@ -132,7 +135,7 @@ const ProfileActivityInfo: React.FC<
             justifyContent={isMobile ? 'space-between' : 'center'}
             direction={isMobile ? 'row' : 'column'}
           >
-            <Typography variant="subtitle1">
+            <Typography variant="caption">
               {props.period || props.year}
             </Typography>
             {props.fromMonth && (

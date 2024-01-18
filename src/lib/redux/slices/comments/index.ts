@@ -4,6 +4,18 @@ import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from '../posts';
 import { UserComment, artcileDetails } from '../articleDetails';
+import { ApiResponse } from "../profile";
+
+interface DeleteCommentParams {
+  commentId: string;
+  type: boolean;
+}
+
+interface UpdateCommentParams {
+  commentId: string;
+  content: string;
+  isNewComment?: boolean;
+}
 
 export const commentService = createApi({
   reducerPath: 'commentReducer',
@@ -67,6 +79,58 @@ export const commentService = createApi({
           };
         }),
     }),
+    updateComment: builder.mutation<ApiResponse<undefined>, UpdateCommentParams>({
+      query: commentData => ({
+        url: `${ApiEndpoint.EditComment}/${commentData.commentId}`,
+        method: 'PUT',
+        body: {
+          content: commentData.content,
+        },
+      }),
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(_ => {
+          if (!arg.isNewComment) {
+            api.dispatch(commentService.util.invalidateTags(['CommentList']));
+          }
+        });
+      },
+    }),
+    deleteComment: builder.mutation<ApiResponse<undefined>, DeleteCommentParams>({
+      query: commentData => ({
+        url: `${ApiEndpoint.DeleteComment}/${commentData?.commentId}?type=${commentData?.type ? 'PostComment': 'ArticleComment'}`,
+        method: 'delete',
+      }),
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(response => {
+          if (arg.type) {
+            api.dispatch(
+              postServices.util.updateQueryData('getPosts', {
+                pageNumber: 0,
+                postCreatedDate: 0
+              }, draft => {
+                // Find the article in the draft data and update its comment count
+                const article = draft.postList.find(
+                  article => article.id === arg?.commentId
+                );
+                if (article) {
+                  article.post.numberOfComments += 1;
+                }
+              })
+            );
+            api.dispatch(
+              postServices.util.invalidateTags([
+                { type: 'Posts', id: 'LIST' },
+                'postDetail',
+              ])
+            );
+            api.dispatch(commentService.util.invalidateTags(['CommentList']));
+          } else {
+            api.dispatch(artcileDetails.util.invalidateTags(['ArticleDetail']));
+            api.dispatch(commentService.util.invalidateTags(['CommentList']));
+          }
+        });
+      },
+    })
   }),
   tagTypes: ['CommentList'],
 });
@@ -75,4 +139,6 @@ export const {
   useCreateCommentMutation,
   useGetCommentListQuery,
   useLazyGetUserSuggestionQuery,
+  useUpdateCommentMutation,
+  useDeleteCommentMutation,
 } = commentService;

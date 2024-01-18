@@ -72,14 +72,13 @@ const Login: FC = () => {
         redirect: false,
       });
 
-      setLoading(false);
-
       if (response?.ok) {
         router.replace(allRoutes.home);
         toast.success('Login successfully!');
       } else {
         console.log('login error response', JSON.stringify(response));
         toast.error(response?.error || 'Something went wrong!');
+        setLoading(false);
       }
     }
   };
@@ -201,7 +200,9 @@ const Login: FC = () => {
                   fontWeight="400"
                   sx={{ '& a': { color: '#5798FF' } }}
                 >
-                  <Link href={allRoutes.login}>Forgotten your password?</Link>
+                  <Link prefetch={false} href={allRoutes.login}>
+                    Forgotten your password?
+                  </Link>
                 </Typography>
               </Box>
               <TextField
@@ -260,21 +261,34 @@ const Login: FC = () => {
               color={palette.primary[300]}
               sx={{ '& a': { color: '#5798FF' } }}
             >
-              <Link href={allRoutes.termsAndConditions}>Terms of Service </Link>{' '}
+              By signing in, you agree to
+              <Link prefetch={false} href={allRoutes.termsAndConditions}>
+                Terms of Service{' '}
+              </Link>{' '}
               and
-              <Link href={allRoutes.privacyPolicy}> Privacy Policy, </Link>
+              <Link prefetch={false} href={allRoutes.privacyPolicy}>
+                {' '}
+                Privacy Policy,{' '}
+              </Link>
               including
-              <Link href={allRoutes.cookiesPolicy}> Cookie Use.</Link>
+              <Link prefetch={false} href={allRoutes.cookiesPolicy}>
+                {' '}
+                Cookie Use.
+              </Link>
             </Typography>
           </Box>
           <Box mt="20px" textAlign="left">
-            <Link href={allRoutes.socialLogin} className="social-login">
+            <Link
+              prefetch={false}
+              href={allRoutes.socialLogin}
+              className="social-login"
+            >
               <SVGArrowLeft />
               <span className="gradient-text">Back to social login</span>
             </Link>
           </Box>
         </Box>
-        <LoginFooter />
+        <LoginFooter hideLinks />
       </Box>
     </Grid>
   );

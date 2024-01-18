@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Box, Typography, Grid, Stack, Skeleton } from '@mui/material';
+import { Box, Typography, Grid, Stack, Skeleton, Button } from '@mui/material';
 import Image from 'next/image';
 import UsernameLink from '../usernameLink';
 import CalendarIcon from '@/images/image/calendarIcon';
@@ -10,6 +10,8 @@ import SocialButts from './socialMediaButtons';
 import AuthorPoints from './authorPoints';
 import FollowUser from '../FollowUser';
 import TranslateIcon from '@/assets/images/svg/translateIcon';
+import { RoundPrimaryButton } from "../CustomButtons";
+import { useRouter } from 'next/navigation'
 
 export default function FullArticle({ details }: any) {
   const CONTENT =
@@ -21,7 +23,7 @@ export default function FullArticle({ details }: any) {
   return (
     <Box>
       <Box>
-        <Typography variant="h1" sx={{ textTransform: 'capitalize' }}>
+        <Typography variant="h1" sx={{ textTransform: 'capitalize', wordBreak: 'break-all', whiteSpace: 'pre-line' }}>
           {details?.article?.title}
         </Typography>
       </Box>
@@ -72,6 +74,7 @@ export default function FullArticle({ details }: any) {
                 <Skeleton variant="text" width={'100%'} height="40px" />
               }
             >
+              
               <AuthorPoints details={details} />
             </Suspense>
           </Grid>

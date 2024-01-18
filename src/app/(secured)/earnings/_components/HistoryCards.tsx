@@ -68,12 +68,12 @@ const TransactionHistory = React.memo(function TransactionCard() {
       <Button
         variant="text"
         onClick={() => setShowHistory(true)}
-        startIcon={<HistoryIcon />}
+        startIcon={<HistoryIcon stroke={'#fff'} />}
         sx={{
           textDecoration: 'underline',
           fontWeight: 500,
           fontSize: '15px',
-          color: palette.primary[700],
+          color: '#fff',
         }}
       >
         Transaction History
@@ -270,10 +270,9 @@ const DailyTaskHistory = React.memo(function DailyHistory() {
 const WalletHistory = React.memo(function WalletHistory() {
   const { palette } = useTheme();
   const balanceButtonStyle = {
-    color: palette.mode === 'dark' ? '#000000' : '#ffffff',
+    color: '#ffffff',
     border: `1.5px solid`,
-    borderColor:
-      'linear-gradient(134deg, #AB59FF 0%, #858FFF 50%, #4D9AFF 100%)',
+    borderColor: '#ffffff',
   };
   const [walletData, setWallet] = useState('');
   const { data: wallet, isLoading } = useGetUserWalletQuery();

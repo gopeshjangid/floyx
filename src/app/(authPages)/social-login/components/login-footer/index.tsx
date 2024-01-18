@@ -15,26 +15,34 @@ const LoginFooterWrapper = styled(Box)(() => ({
     },
   },
 }));
-const LoginFooter = () => {
+const LoginFooter = ({ hideLinks }: { hideLinks?: boolean }) => {
   const { palette } = useTheme();
 
   return (
     <LoginFooterWrapper>
-      <Stack
-        spacing={{
-          md: '42px',
-          xs: '20px',
-        }}
-        mb="13px"
-        className="login-service"
-        direction="row"
-        justifyContent="center"
-        flexWrap="wrap"
-      >
-        <Link href={allRoutes.termsAndConditions}>Terms of service</Link>
-        <Link href={allRoutes.privacyPolicy}>Privacy Policy</Link>
-        <Link href={allRoutes.cookiesPolicy}>Cookie Use</Link>
-      </Stack>
+      {!hideLinks && (
+        <Stack
+          spacing={{
+            md: '42px',
+            xs: '20px',
+          }}
+          mb="13px"
+          className="login-service"
+          direction="row"
+          justifyContent="center"
+          flexWrap="wrap"
+        >
+          <Link prefetch={false} href={allRoutes.termsAndConditions}>
+            Terms of service
+          </Link>
+          <Link prefetch={false} href={allRoutes.privacyPolicy}>
+            Privacy Policy
+          </Link>
+          <Link prefetch={false} href={allRoutes.cookiesPolicy}>
+            Cookie Use
+          </Link>
+        </Stack>
+      )}
       <Typography
         variant="h6"
         fontSize="16px"

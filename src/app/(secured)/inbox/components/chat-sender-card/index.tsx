@@ -48,20 +48,14 @@ const ChatSenderCard = ({
           </Typography>
         </Box>
 
-        <Box>
-          <Link href={`${allRoutes.profile}/${username}`}>
-            <ListItemAvatar>
-              <UserAvatar
-                alt=""
-                src={`${ApiEndpoint.ProfileDetails}/avatar/${username}`}
-                sx={{
-                  width: { md: '59px', xs: '50px' },
-                  height: { md: '59px', xs: '50px' },
-                }}
-              />
-            </ListItemAvatar>
-          </Link>
-        </Box>
+        <Link href={`${allRoutes.profile}/${username}`}>
+          <ListItemAvatar>
+            <UserAvatar
+              alt=""
+              src={`${ApiEndpoint.ProfileDetails}/avatar/${username}`}
+            />
+          </ListItemAvatar>
+        </Link>
       </Box>
 
       <Typography

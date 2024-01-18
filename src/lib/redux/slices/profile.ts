@@ -5,7 +5,7 @@ import { baseQuery } from '@/lib/utils';
 import { Education, Project } from '@/components/ProfileActivityInfo';
 import { artcileDetails } from './articleDetails';
 
-type ApiResponse<T> = {
+export type ApiResponse<T> = {
   value: {
     data: T;
     code: string;
@@ -153,6 +153,48 @@ export const profileService = createApi({
         return response?.value?.data;
       },
       providesTags: ['PopularAccount'],
+    }),
+    getUserFollowers: builder.query<
+      UserProfileDetails[],
+      { userId?: string; pageNumber: number }
+    >({
+      query: ({ userId, pageNumber }) =>
+        ApiEndpoint.GetFollowersUsersInfo +
+        '/' +
+        userId +
+        '?pageNumber=' +
+        pageNumber +
+        'pageSize=50',
+      transformResponse: (response: ApiResponse<UserProfileDetails[]>) => {
+        return response?.value?.data;
+      },
+      providesTags: (result, error, args) => [
+        {
+          type: 'userFollowers',
+          id: `followers-${args.userId}-${args.pageNumber}`,
+        },
+      ],
+    }),
+    userFollowedAccounts: builder.query<
+      UserProfileDetails[],
+      { userId?: string; pageNumber: number }
+    >({
+      query: ({ userId, pageNumber }) =>
+        ApiEndpoint.GetFollowedUsersInfo +
+        '/' +
+        userId +
+        '?pageNumber=' +
+        pageNumber +
+        '&pageSize=50',
+      transformResponse: (response: ApiResponse<UserProfileDetails[]>) => {
+        return response?.value?.data;
+      },
+      providesTags: (result, error, args) => [
+        {
+          type: 'userFollowed',
+          id: `userFollowed-${args.userId}-${args.pageNumber}`,
+        },
+      ],
     }),
     isUserFollowed: builder.query<
       boolean,
@@ -306,7 +348,7 @@ export const profileService = createApi({
     }),
     followUser: builder.mutation<void, Partial<{ username: string }>>({
       query: user => ({
-        url: `${ApiEndpoint.Follow}/${user.username}`, // Assuming `id` is part of investmentData
+        url: `${ApiEndpoint.Follow}/${user.username}`,
         method: 'POST', // or 'PATCH' for partial updates
         body: {},
       }),
@@ -316,6 +358,8 @@ export const profileService = createApi({
         'profileDetails',
         'PopularAccount',
         'FollowedAccount',
+        'userFollowers',
+        'userFollowed',
       ],
     }),
     getFollowMoreAccount: builder.query<any, void>({
@@ -332,6 +376,8 @@ export const profileService = createApi({
     'profileDetails',
     'FollowedAccount',
     'isUserFollowedBy',
+    'userFollowers',
+    'userFollowed',
   ],
 });
 
@@ -355,4 +401,6 @@ export const {
   useUpdateProfileDetailMutation,
   useGetFollowMoreAccountQuery,
   useIsUserFollowedQuery,
+  useGetUserFollowersQuery,
+  useUserFollowedAccountsQuery,
 } = profileService;

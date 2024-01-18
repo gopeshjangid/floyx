@@ -16,6 +16,8 @@ import {
   BoxProps,
   LinearProgress,
   Alert,
+  Tooltip,
+  FormHelperText,
 } from '@mui/material';
 import {
   BorderColorOutlined,
@@ -47,6 +49,7 @@ import { RoundPrimaryButton } from '@/components/CustomButtons';
 import FollowUser from '@/components/FollowUser';
 import TextareaAutosize from '@/components/CustomTextArea';
 import Link from 'next/link';
+import CustomDescription from '@/components/customDescription';
 interface ProfileFollowerWrapperProps extends BoxProps {
   isMobile: boolean;
   top?: string;
@@ -101,14 +104,13 @@ const ProfileCover = styled(Box)<Omit<ProfileFollowerWrapperProps, 'isMobile'>>(
     height: '280px',
     borderRadius: '10px',
     width: '100%',
-    overflow: 'hidden',
     position: 'relative',
   })
 );
 
 const ProfilePic = styled(Box)<ProfileFollowerWrapperProps>(
   ({ theme, ...props }) => ({
-    top: props?.isMobile ? '32%' : '39%',
+    top: '82%',
     left: '13px',
     background: theme.palette.background.default,
     borderRadius: '50px',
@@ -207,7 +209,7 @@ const ProfileSection: React.FC = () => {
   );
 
   const { data: isFollwed } = useIsUserFollowedQuery(
-    { userId: profile?.id ?? '', followedId: currentUser?.userId ?? '' },
+    { userId: currentUser?.userId ?? '', followedId: profile?.id ?? '' },
     { skip: !currentUser?.userId || !profile?.id || isSameuser }
   );
   const [
@@ -267,7 +269,11 @@ const ProfileSection: React.FC = () => {
   };
 
   const handleUrl = url => {
-    router.push(url);
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      window.open(`http://${url}`, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -291,7 +297,10 @@ const ProfileSection: React.FC = () => {
                   </IconButton>
                   <Typography
                     variant="subtitle1"
-                    sx={{ color: palette.primary.fontLightColor }}
+                    sx={{
+                      color: palette.primary.fontLightColor,
+                      fontWeight: 500,
+                    }}
                   >
                     {profile?.name}
                   </Typography>
@@ -347,7 +356,7 @@ const ProfileSection: React.FC = () => {
               sx={{ width: '100%', height: '200px' }}
             />
           ) : (
-            <>
+            <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
               <React.Suspense
                 fallback={
                   <Skeleton
@@ -358,18 +367,20 @@ const ProfileSection: React.FC = () => {
                 }
               >
                 {profile?.backgroundImage ? (
-                  <Image
-                    alt="profile image"
-                    //layout="fill"
-                    fill
-                    objectFit="cover"
-                    objectPosition="center"
-                    src={
-                      isEdit && imagePreview.cover
-                        ? imagePreview.cover
-                        : profile?.backgroundImage
-                    }
-                  />
+                  <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
+                    <Image
+                      alt="profile image"
+                      style={{ borderRadius: '10px' }}
+                      fill
+                      objectFit="cover"
+                      objectPosition="center"
+                      src={
+                        isEdit && imagePreview.cover
+                          ? imagePreview.cover
+                          : profile?.backgroundImage
+                      }
+                    />
+                  </Box>
                 ) : (
                   <Skeleton
                     animation="wave"
@@ -379,12 +390,14 @@ const ProfileSection: React.FC = () => {
                 )}
               </React.Suspense>
               {isEdit && (
-                <ProfileCoverUploader>
-                  <ImageUploader
-                    onImageUpload={onCoverUploaded}
-                    getPreviewData={getCoverPreviewData}
-                  />
-                </ProfileCoverUploader>
+                <Tooltip title="Please use a background photo with a minimum resolution of 1200x900 pixels or higher for the best results">
+                  <ProfileCoverUploader>
+                    <ImageUploader
+                      onImageUpload={onCoverUploaded}
+                      getPreviewData={getCoverPreviewData}
+                    />
+                  </ProfileCoverUploader>
+                </Tooltip>
               )}
               {!isEdit && isSameuser && (
                 <ProfileFollowerWrapper
@@ -405,7 +418,9 @@ const ProfileSection: React.FC = () => {
               )}
               <ProfileFollowerWrapper top="70%" isMobile={isMobile}>
                 <Box display="flex" p={1} alignItems="center" gap={1}>
-                  <Typography variant="subtitle2">Following</Typography>
+                  <Link href={`/profile/${username}/following`}>
+                    <Typography variant="subtitle2">Following</Typography>
+                  </Link>
                   <Typography
                     variant="subtitle2"
                     sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
@@ -413,7 +428,9 @@ const ProfileSection: React.FC = () => {
                     {profile?.numberOfFollowing}
                   </Typography>
                   <Typography>|</Typography>
-                  <Typography variant="subtitle2">Followers</Typography>
+                  <Link href={`/profile/${username}/followers`}>
+                    <Typography variant="subtitle2">Followers</Typography>
+                  </Link>
                   <Typography
                     variant="subtitle2"
                     sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
@@ -422,49 +439,52 @@ const ProfileSection: React.FC = () => {
                   </Typography>
                 </Box>
               </ProfileFollowerWrapper>
-            </>
+            </Box>
           )}
-        </ProfileCover>
-        <ProfilePic isMobile={isMobile}>
-          {isLoading && !profile ? (
-            <Skeleton
-              variant="circular"
-              animation="wave"
-              sx={{
-                width: '92%',
-                height: '92%',
-                left: '3.5%',
-                top: '3%',
-                position: 'relative',
-              }}
-            />
-          ) : (
-            <Box sx={{ position: 'relative', height: '100%', width: '100%' }}>
-              <Avatar
-                src={
-                  isEdit && imagePreview.profile
-                    ? imagePreview.profile
-                    : profile?.avatar
-                }
+          <ProfilePic isMobile={isMobile}>
+            {isLoading && !profile ? (
+              <Skeleton
+                variant="circular"
+                animation="wave"
                 sx={{
                   width: '92%',
                   height: '92%',
                   left: '3.5%',
                   top: '3%',
-                  border: `3px solid ${palette.primary.main}`,
+                  position: 'relative',
                 }}
               />
-              {isEdit && (
-                <ProfilePicUploader>
-                  <ImageUploader
-                    onImageUpload={onProfileUploaded}
-                    getPreviewData={getProfilePreviewData}
-                  />
-                </ProfilePicUploader>
-              )}
-            </Box>
-          )}
-        </ProfilePic>
+            ) : (
+              <Box sx={{ position: 'relative', height: '100%', width: '100%' }}>
+                <Avatar
+                  src={
+                    isEdit && imagePreview.profile
+                      ? imagePreview.profile
+                      : profile?.avatar
+                  }
+                  sx={{
+                    width: '92%',
+                    height: '92%',
+                    left: '3.5%',
+                    top: '3%',
+                    border: `3px solid ${palette.primary.main}`,
+                  }}
+                />
+                {isEdit && (
+                  <Tooltip title="For optimal profile picture quality, use a minimum resolution of 400x400 pixels or higher.">
+                    <ProfilePicUploader>
+                      <ImageUploader
+                        onImageUpload={onProfileUploaded}
+                        getPreviewData={getProfilePreviewData}
+                      />
+                    </ProfilePicUploader>
+                  </Tooltip>
+                )}
+              </Box>
+            )}
+          </ProfilePic>
+        </ProfileCover>
+
         {!isLoading && (
           <Box mt={isMobile ? 8 : 0}>
             {!isSameuser ? (
@@ -472,11 +492,19 @@ const ProfileSection: React.FC = () => {
                 allowPrivateMassages={!!profile?.allowPrivateMassages}
                 username={username ?? ''}
               />
-            ) : null}
+            ) : (
+              <Box height="50px" width="100%">
+                &nbsp;
+              </Box>
+            )}
           </Box>
         )}
-        <Box mt={6} p={2} pt={isEdit ? 5 : 2} textAlign="center">
-          <Stack direction="row" spacing={{ xs: 1, sm: 1, md: 1 }}>
+        <Box mt={1} p={2} pt={isEdit ? 5 : 2} textAlign="center">
+          <Stack
+            alignItems={'center'}
+            direction="row"
+            spacing={{ xs: 1, sm: 1, md: 1 }}
+          >
             {isLoading ? (
               <Skeleton
                 animation="wave"
@@ -491,7 +519,7 @@ const ProfileSection: React.FC = () => {
                 >
                   {profile?.name}
                 </Typography>
-                <UsernameLink username={profile?.username ?? ''} />
+                <UsernameLink variant="h6" username={profile?.username ?? ''} />
                 {isFollwed && (
                   <>
                     &nbsp;|
@@ -505,30 +533,39 @@ const ProfileSection: React.FC = () => {
           </Stack>
           <Box my={2}>
             {!isEdit ? (
-              <Typography
+              <CustomDescription
                 textAlign="justify"
                 variant="subtitle2"
-                color="textPrimary"
+                sx={{
+                  opacity: 0.9,
+                  color: palette.mode === 'dark' ? '#fff' : '#000',
+                }}
               >
                 {isLoading ? (
                   <Skeleton variant="rectangular" width="100%" height="60px" />
                 ) : (
                   profile?.shortDescription
                 )}
-              </Typography>
+              </CustomDescription>
             ) : (
-              <TextareaAutosize
-                onChange={event =>
-                  setForm(form => ({
-                    ...form,
-                    shortDescription: event.target.value,
-                  }))
-                }
-                placeholder="Enter short description..."
-                value={form.shortDescription}
-                minRows={5}
-                maxLength={200}
-              />
+              <>
+                <TextareaAutosize
+                  onChange={event =>
+                    setForm(form => ({
+                      ...form,
+                      shortDescription: event.target.value,
+                    }))
+                  }
+                  placeholder="Enter short description..."
+                  value={form.shortDescription}
+                  minRows={5}
+                  maxLength={500}
+                  sx={{ color: palette.mode === 'dark' ? '#fff' : '#000' }}
+                />
+                <FormHelperText sx={{ textAlign: 'right' }}>
+                  {`${form.shortDescription?.length ?? 0}/500`}
+                </FormHelperText>
+              </>
             )}
           </Box>
           <Stack
@@ -560,9 +597,9 @@ const ProfileSection: React.FC = () => {
                     {profileAbout?.about?.website}
                   </Button>
                 </Box>
-                <Box display="flex" gap={1}>
+                <Box display="flex" gap={1} alignItems={'flex-start'}>
                   <Image src={Calender} alt="Calender Icon" />
-                  <Typography variant="subtitle2" color="primary">
+                  <Typography variant="subtitle2" sx={{ color: 'grey' }}>
                     Joined Sept 1990
                   </Typography>
                 </Box>

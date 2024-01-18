@@ -13,7 +13,7 @@ import { revalidateTag } from 'next/cache';
 import LoginModal from '@/components/LoginModal';
 
 async function Page({ params }: any) {
-  const isMobile = useMediaQuery('(max-width:480px)');
+  // const isMobile = useMediaQuery('(max-width:480px)');
   const userName = params?.userName;
   const articlePuclicUrl = params?.articlePublicUrl;
   const { data: articleDetails, isError } = await fetchServerData(
@@ -28,8 +28,8 @@ async function Page({ params }: any) {
 
   return (
     <>
-      {!isMobile && <LoginHeader />}
-      {isMobile && <LoginModal />}
+      {/* {!isMobile && <LoginHeader />}
+      {isMobile && <LoginModal />} */}
       {isError && <Alert severity="error">Something went wrong</Alert>}
       {articleId && (
         <>

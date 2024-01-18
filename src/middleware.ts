@@ -1,4 +1,4 @@
-import { getToken } from 'next-auth/jwt';
+// import { getToken } from 'next-auth/jwt';
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -6,19 +6,20 @@ export default withAuth(customMiddleware, {
   pages: {
     signIn: '/social-login',
     error: '/login',
+    signOut: '/sign-out',
   },
 });
 
 export async function customMiddleware(request: NextRequest) {
-  const token = await getToken({ req: request });
+  // const token = await getToken({ req: request });
   const isPrivateRoute = config.matcher.includes(request.nextUrl.pathname);
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
   // Redirect to login page if trying to access a private route without a session
-  if (!token && isPrivateRoute && !isPublicRoute) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/login'; // The login page route
-    return NextResponse.redirect(url);
-  }
+  // if (!token && isPrivateRoute && !isPublicRoute) {
+  //   const url = request.nextUrl.clone();
+  //   url.pathname = '/login'; // The login page route
+  //   return NextResponse.redirect(url);
+  // }
 
   // Set device type cookie if not set or different
   const uaString = request.headers.get('user-agent') || '';

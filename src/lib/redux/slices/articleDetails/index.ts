@@ -4,6 +4,7 @@ import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from '../posts';
 import { commentService } from '../comments';
+import { ApiResponse } from "../profile";
 
 export interface ArticleDetailsArgs {
   userName: string;
@@ -202,19 +203,30 @@ export const artcileDetails = createApi({
       query: payload => ({
         url: `${ApiEndpoint.CreateDraft}`,
         method: 'post',
-        body: { ...payload, articleTags: payload.articleTags.split(',') },
+        body: payload,
       }),
       transformResponse: (response: any) => {
         return response.value.data;
       },
       invalidatesTags: ['ArticleInfoNumber'],
     }),
+    uploadArticleImage: builder.mutation<ApiResponse<string>, FormData>({
+      query: payload => ({
+        url: `${ApiEndpoint.UploadArticleImage}`,
+        method: 'post',
+        body: payload,
+      }),
+      transformResponse: (response: any) => {
+        return response.value.data;
+      },
+    }),
     updateDraftArticle: builder.mutation<any, any>({
       query: ({ articleId, payload }) => {
         return {
           url: `${ApiEndpoint.UpdateDraft}/${articleId}`,
           method: 'put',
-          body: { ...payload, articleTags: payload.articleTags.split(',') },
+          // body: { ...payload, articleTags: payload.articleTags ? payload.articleTags.split(','): [] },
+          body: payload,
         };
       },
       transformResponse: (response: any) => response.value.data,
@@ -226,7 +238,7 @@ export const artcileDetails = createApi({
         body: {},
       }),
       transformResponse: (response: any) => response.value.data,
-      invalidatesTags: [{ type: 'ArticleList', id: 'recent' }],
+      invalidatesTags: [{ type: 'ArticleList', id: 'recent' }, 'ArticleInfoNumber'],
     }),
     deleteArticle: builder.mutation<any, string>({
       query: articleId => ({
@@ -281,4 +293,5 @@ export const {
   useLazyGetDraftDetailQuery,
   useGetArticlesByAuthorQuery,
   useLazyGetSearchArticleQuery,
+  useUploadArticleImageMutation,
 } = artcileDetails;

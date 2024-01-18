@@ -114,8 +114,6 @@ const onCreateQueryStarted = async (
       );
     };
 
-    // console.log('getPostsArgs: ', getPostsArgs);
-    // console.log('postListByUserArgs: ', postListByUserArgs);
     if (getPostsArgs.length > 0) {
       getPostsArgs.forEach(arg => {
         if (arg.pageNumber === 0) {

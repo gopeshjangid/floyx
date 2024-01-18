@@ -20,6 +20,7 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  FormHelperText,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ExperienceSection from './experience';
@@ -36,6 +37,7 @@ import TextareaAutosize from '@/components/CustomTextArea';
 import { useParams } from 'next/navigation';
 import CustomChip from '@/components/CustomGridientChip';
 import { useSession } from 'next-auth/react';
+import CustomDescription from '@/components/customDescription';
 
 type ActivityChipEditInfoProps = {
   label: string;
@@ -256,6 +258,16 @@ const PersonalInfo: React.FC = () => {
       />
     );
   }
+
+  const handleExternalLink = e => {
+    e.preventDefault();
+    const url = formValues.website;
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      window.open(`http://${url}`, '_blank', 'noopener,noreferrer');
+    }
+  };
   return (
     <>
       {isUpdating && (
@@ -312,38 +324,53 @@ const PersonalInfo: React.FC = () => {
           </Grid>
           <Grid xs={12} sm={9} item>
             {' '}
-            <FormControl fullWidth>
-              <Select
-                name={'location'}
-                disabled={!isEdit}
-                value={formValues.location}
-                defaultValue={formValues.location}
-                onChange={handleSelectChange}
-              >
-                <MenuItem disabled value="">
-                  <em>Select</em>
-                </MenuItem>
-                {data?.listOfLocations?.map((option: string) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+            {isEdit ? (
+              <FormControl fullWidth>
+                <Select
+                  name={'location'}
+                  value={formValues.location}
+                  defaultValue={formValues.location}
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem disabled value="">
+                    <em>Select</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  {data?.listOfLocations?.map((option: string) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : (
+              <Typography variant="subtitle2">{formValues.location}</Typography>
+            )}
           </Grid>
           <Grid sm={3} xs={12} item>
             <InputLabel htmlFor="Country">Website</InputLabel>
           </Grid>
           <Grid xs={12} sm={9} item>
             {' '}
-            <TextField
-              variant="outlined"
-              name="website"
-              disabled={!isEdit}
-              placeholder="Ex. Canada"
-              value={formValues.website}
-              onChange={handleInputChange}
-            />
+            {isEdit ? (
+              <TextField
+                variant="outlined"
+                name="website"
+                placeholder="Ex. Canada"
+                value={formValues.website}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <a
+                rel="noopener noreferrer"
+                href={formValues.website}
+                onClick={handleExternalLink}
+                target="__blank"
+              >
+                <Typography variant="subtitle2">
+                  {formValues.website}
+                </Typography>
+              </a>
+            )}
           </Grid>
           <ActivityChipEditInfo
             handleDeleteSkill={handleDeleteChip}
@@ -356,7 +383,7 @@ const PersonalInfo: React.FC = () => {
             handleAddSkill={addSkillHandler}
             activityKey={'skills'}
           />
-          <Grid xs={12} sm={3} item>
+          <Grid xs={12} sm={3} mt={1} item>
             <InputLabel
               sx={{ textAlign: 'left', py: 2 }}
               htmlFor="Type interest and press enter"
@@ -364,20 +391,32 @@ const PersonalInfo: React.FC = () => {
               Description
             </InputLabel>
           </Grid>
-          <Grid xs={12} item sm={9}>
+          <Grid mt={2} xs={12} item sm={9}>
             {isEdit ? (
-              <TextareaAutosize
-                name="country"
-                placeholder="Enter description..."
-                value={formValues.description}
-                minRows={8}
-                maxLength={200}
-              />
+              <>
+                <TextareaAutosize
+                  name="country"
+                  placeholder="Enter description..."
+                  value={formValues.description}
+                  minRows={8}
+                  onChange={event =>
+                    setFormValues(form => ({
+                      ...form,
+                      description: event.target.value,
+                    }))
+                  }
+                  maxLength={500}
+                />
+                <FormHelperText>
+                  you can enter upto max 500 characters.{' '}
+                  {`${formValues.description.length}/500`}
+                </FormHelperText>
+              </>
             ) : (
-              <Box sx={{ border: `1px solid ${palette.action.border}` }} p={2}>
-                <Typography variant="subtitle2">
+              <Box p={2} pl={0}>
+                <CustomDescription variant="subtitle2">
                   {formValues.description}
-                </Typography>
+                </CustomDescription>
               </Box>
             )}
           </Grid>

@@ -10,7 +10,7 @@ export const GradientText = styled('span')(({ ...props }) => ({
   background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
-  fontWeight: 'normal',
+  fontWeight: 600,
   color: 'white', // This ensures the text has color if the gradient is not supported
   ...props,
 }));
@@ -22,7 +22,7 @@ const UsernameLink: React.FC<UsernameLinkProps & TypographyProps> = ({
   return (
     <Typography
       component="span"
-      variant="subtitle2"
+      variant="subtitle1"
       color="primary"
       sx={{ cursor: 'pointer', textDecoration: 'none' }}
       {...props}

@@ -104,7 +104,7 @@ const LinkListItemButton: React.FC<LinkListItemButtonProps> = ({
     return <CustomListItemButton {...props}>{children}</CustomListItemButton>;
   }
   return (
-    <Link href={href} passHref>
+    <Link href={href} passHref prefetch={false}>
       <CustomListItemButton {...props}>{children}</CustomListItemButton>
     </Link>
   );
@@ -193,7 +193,8 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   };
 
   const homeRedirect = () => {
-    router.push('/');
+    router.push('/', { scroll: true });
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -233,8 +234,8 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
 
   const MoreButton = () => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-    const handleClick = (event:any) => {
-      setAnchorEl(prev => prev ? null : event.currentTarget);
+    const handleClick = (event: any) => {
+      setAnchorEl(prev => (prev ? null : event.currentTarget));
     };
     const handleClose = () => {
       setAnchorEl(null);
@@ -243,9 +244,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     const id = open ? 'simple-popover' : undefined;
 
     return (
-      <CustomListItemButton
-        onClick={handleClick}
-      >
+      <CustomListItemButton onClick={handleClick}>
         <ListItemIcon>
           <CustomPopover
             open={open}
@@ -262,16 +261,15 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               {
                 label: 'Logout',
                 startIcon: <LogoutIcon />,
-                onClick: () => router.push(`/api/auth/signout`),
+                onClick: () => router.push(`/sign-out`),
               },
             ]}
           />
         </ListItemIcon>
         <ListItemText primary={'More'} />
-        </CustomListItemButton>
-
-    )
-  }
+      </CustomListItemButton>
+    );
+  };
   useEffect(() => {
     const isPrivate = config.matcher.includes(pathname);
     if (
@@ -325,7 +323,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               <ListItemText primary={item.label} />
               <ListItemSecondaryAction>
                 {item.label === 'Notifications' &&
-                  drawerData.notificationCount > 0 ? (
+                drawerData.notificationCount > 0 ? (
                   <CountWrapper count={drawerData.notificationCount} />
                 ) : item.label === 'Messages' &&
                   drawerData.messagesCount > 0 ? (
@@ -378,7 +376,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <>&nbsp;</>
           )}
         </Grid>
-        <Grid item sm={9} md={9} lg={9.5}>
+        <Grid item sm={8} md={8} lg={8.5}>
           {children}
         </Grid>
       </Grid>

@@ -1,13 +1,16 @@
 'use client';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, Suspense, useEffect, useState } from 'react';
 import {
   Box,
   Button,
   CircularProgress,
+  Grid,
+  Skeleton,
   Tab,
   Tabs,
   styled,
 } from '@mui/material';
+import { Theme } from '@mui/system';
 
 import Wrapper from '@/components/wrapper';
 import { tokenService } from '@/lib/services/new/tokenService';
@@ -19,7 +22,12 @@ import { notificationService } from '@/lib/services/new/notificationService';
 import { INotification, INotificationData } from './types';
 import { useToast } from '@/components/Toast/useToast';
 import NotificationLoader from './components/NotificationLoader';
-import { Theme } from '@mui/system';
+import RecentArticles from '@/components/PopularToday';
+
+const SectionSkeleton = () => (
+  <Skeleton variant="rectangular" width="100%" height="200px" />
+);
+
 const NotificationsWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   borderBottom: 1,
   paddingInline: '20px',
@@ -192,60 +200,66 @@ const Notifications = () => {
   };
 
   return (
-    <Wrapper
-      sx={{
-        maxWidth: {
-          md: '100%',
-          lg: '75%',
-        },
-      }}
-    >
-      <NotificationsWrapper>
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          flexWrap="wrap"
-          gap="10px"
-        >
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="notification tabs"
-          >
-            <Tab label="All" />
-            <Tab label="Unread" />
-          </Tabs>
+    <Box>
+      <Grid container>
+        <Grid item xs={12} sm={8} lg={9}>
+          <Wrapper>
+            <NotificationsWrapper>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                flexWrap="wrap"
+                gap="10px"
+              >
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="notification tabs"
+                >
+                  <Tab label="All" />
+                  <Tab label="Unread" />
+                </Tabs>
 
-          <Box className="notifications-header">
-            <Button onClick={markAllAsRead}>
-              {markAllAsReadLoading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : (
-                <SVGCheck />
-              )}
-              <span className="gradient-text">Mark all as read</span>
-            </Button>
-          </Box>
-        </Box>
-      </NotificationsWrapper>
-      <Box className="notifications-content">
-        <CustomTabPanel value={value} index={0}>
-          {isLoading ? (
-            <NotificationLoader />
-          ) : (
-            <NotificationList notifications={notificationData.notifications} />
-          )}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          {isLoading ? (
-            <NotificationLoader />
-          ) : (
-            <NotificationList notifications={unReadNotifications} />
-          )}
-        </CustomTabPanel>
-      </Box>
-    </Wrapper>
+                <Box className="notifications-header">
+                  <Button onClick={markAllAsRead}>
+                    {markAllAsReadLoading ? (
+                      <CircularProgress size={20} color="inherit" />
+                    ) : (
+                      <SVGCheck />
+                    )}
+                    <span className="gradient-text">Mark all as read</span>
+                  </Button>
+                </Box>
+              </Box>
+            </NotificationsWrapper>
+            <Box className="notifications-content">
+              <CustomTabPanel value={value} index={0}>
+                {isLoading ? (
+                  <NotificationLoader />
+                ) : (
+                  <NotificationList
+                    notifications={notificationData.notifications}
+                  />
+                )}
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={1}>
+                {isLoading ? (
+                  <NotificationLoader />
+                ) : (
+                  <NotificationList notifications={unReadNotifications} />
+                )}
+              </CustomTabPanel>
+            </Box>
+          </Wrapper>
+        </Grid>
+        <Grid paddingTop={2} item xs={12} sm={4} lg={3} paddingRight={1}>
+          <Suspense fallback={<SectionSkeleton />}>
+            <RecentArticles />
+          </Suspense>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 

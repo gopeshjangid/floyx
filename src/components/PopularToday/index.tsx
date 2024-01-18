@@ -6,12 +6,13 @@ import {
   Divider,
   Skeleton,
   Stack,
-  Alert,
+  Button,
 } from '@mui/material';
 
 import { styled, useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const PopularTodaySection = styled(Box)(() => ({
   alignItems: 'center',
@@ -21,7 +22,6 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
   backgroundColor: theme.palette.primary.mainBackground,
   borderRadius: '10px',
-  marginTop: '25px',
   maxHeight: '100vh',
   overflowY: 'auto',
   '& .box': {
@@ -34,48 +34,73 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 
 function RecentArticles() {
   const { palette } = useTheme();
+  const router = useRouter();
   const { data, isLoading, isError } = useGetArticleListQuery(
     'recent?forHome=true'
   );
 
+  const createMarkup = (content: string) => {
+    const CONTENT = content ? JSON.parse(content) : [];
+    console.log({ CONTENT });
+    return { __html: CONTENT[0]?.value?.slice(0, 25) + '...' ?? '' };
+  };
+
   return (
     <PopularTodaySection>
-      <Typography variant="body1">Recent Articles</Typography>
-      {isError && (
-        <Alert severity="error" color="error">
-          Error in loading recent articles.
-        </Alert>
-      )}
-      <PopularTodayListSection>
+      <Box display={{ xs: 'block', sm: 'none' }}>
+        <Typography variant="body1">Recent Articles</Typography>
+      </Box>
+      <PopularTodayListSection mt={4}>
         {!isLoading && data ? (
           data.map((article, index) => (
-            <Box p={2} key={`recent-article-${index}`}>
-              <Link target="_blank" href={article.article.publicUrl ? '/article/' + article.user.username + '/' + article.article.publicUrl : '/'}>
-                <Stack py={1} direction="row" gap={2}>
-                  <Box>
+            <Box p={1} py={2} key={`recent-article-${index}`}>
+              <Link
+                target="_blank"
+                href={
+                  article.article.publicUrl
+                    ? '/article/' +
+                      article.user.username +
+                      '/' +
+                      article.article.publicUrl
+                    : '/'
+                }
+              >
+                <Stack gap={0.8} direction="row" pb={0.5}>
+                  <Box width={'40%'}>
                     <Image
                       alt={article.article.title ?? 'article title'}
                       src={article.article?.coverPhotoThumbnail}
-                      height={70}
                       width={80}
-                      style={{ borderRadius: '3px' }}
+                      height={60}
+                      style={{ borderRadius: '5px' }}
                     />
                   </Box>
-                  <Box>
+                  <Stack gap={0}>
                     <Typography
                       sx={{
                         wordBreak: 'break-all',
                         color: palette.primary.fontLightColor,
                       }}
-                      variant="body2"
+                      variant="subtitle2"
                       gutterBottom={false}
                     >
                       {article.article.title ?? '(No title)'}...
                     </Typography>
-                    <Typography color="textPrimary" variant="caption">
-                      {article.article.title?.slice(0, 30)}...
-                    </Typography>
-                  </Box>
+                    <Typography
+                      color="textPrimary"
+                      variant="caption"
+                      dangerouslySetInnerHTML={createMarkup(
+                        article.article.content
+                      )}
+                    />
+                    <Button
+                      variant="text"
+                      size="small"
+                      sx={{ fontSize: '.65rem' }}
+                    >
+                      show more
+                    </Button>
+                  </Stack>
                 </Stack>
               </Link>
               <Divider />
@@ -94,11 +119,11 @@ function RecentArticles() {
                   >
                     <Skeleton
                       variant="rounded"
-                      height={60}
-                      width={'35%'}
+                      height={100}
+                      width={'100%'}
                       animation="wave"
                     />
-                    <Stack width={'65%'}>
+                    <Stack width={'100%'}>
                       <Skeleton
                         variant="text"
                         height={35}

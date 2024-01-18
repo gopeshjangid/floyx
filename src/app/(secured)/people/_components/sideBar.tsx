@@ -12,7 +12,7 @@ import {
   Paper,
   OutlinedInput,
   useTheme,
-  Chip,
+  //Chip,
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Skeleton from '@mui/material/Skeleton';
@@ -20,7 +20,7 @@ import Stack from '@mui/material/Stack';
 import HistoryIcon from '@mui/icons-material/History';
 import { useSession } from 'next-auth/react';
 import {
-  useGetBonusTaskStatusQuery,
+  //useGetBonusTaskStatusQuery,
   useGetInviteHistoryQuery,
 } from '@/lib/redux/slices/earnings';
 import CustomDialog from '@/components/CustomDialog';
@@ -203,45 +203,45 @@ const InvitationStatusCard = () => {
   );
 };
 
-const ReferralCard = () => {
-  const { data, isLoading } = useGetBonusTaskStatusQuery();
+// const ReferralCard = () => {
+//   const { data, isLoading } = useGetBonusTaskStatusQuery();
 
-  return (
-    <StyledBox>
-      <Typography variant="h6" color="textPrimary">
-        Bonuses:{' '}
-      </Typography>
-      {isLoading ? (
-        <Skeleton variant="rectangular" width="100%" height={320} />
-      ) : (
-        data &&
-        data.map((bonus, index) => (
-          <Box key={index} sx={{ width: '100%' }}>
-            <Typography variant="subtitle2" color="textPrimary" gutterBottom>
-              {bonus.taskName}
-            </Typography>
-            <Chip
-              sx={{
-                height: 'auto',
-                padding: '8px',
-                borderRadius: '5px',
-                background: 'rgba(92, 241, 116, 0.17)',
-                color: '#10C458',
-                fontWeight: 500,
-                my: '16px',
-              }}
-              label={`Status: ${`${50}/${bonus.countNeeded}`}`}
-            />
-            <Button variant="outlined" sx={{ mt: 1, mb: 2 }}>
-              Promoted Post For {bonus.promotedDays} Day
-              {bonus.promotedDays > 1 && 's'}
-            </Button>
-          </Box>
-        ))
-      )}
-    </StyledBox>
-  );
-};
+//   return (
+//     <StyledBox>
+//       <Typography variant="h6" color="textPrimary">
+//         Bonuses:{' '}
+//       </Typography>
+//       {isLoading ? (
+//         <Skeleton variant="rectangular" width="100%" height={320} />
+//       ) : (
+//         data &&
+//         data.map((bonus, index) => (
+//           <Box key={index} sx={{ width: '100%' }}>
+//             <Typography variant="subtitle2" color="textPrimary" gutterBottom>
+//               {bonus.taskName}
+//             </Typography>
+//             <Chip
+//               sx={{
+//                 height: 'auto',
+//                 padding: '8px',
+//                 borderRadius: '5px',
+//                 background: 'rgba(92, 241, 116, 0.17)',
+//                 color: '#10C458',
+//                 fontWeight: 500,
+//                 my: '16px',
+//               }}
+//               label={`Status: ${`${50}/${bonus.countNeeded}`}`}
+//             />
+//             <Button variant="outlined" sx={{ mt: 1, mb: 2 }}>
+//               Promoted Post For {bonus.promotedDays} Day
+//               {bonus.promotedDays > 1 && 's'}
+//             </Button>
+//           </Box>
+//         ))
+//       )}
+//     </StyledBox>
+//   );
+// };
 
 const EarningsSideBar = () => {
   const { status, data } = useSession();
@@ -264,7 +264,7 @@ const EarningsSideBar = () => {
         </Typography>
         <InvitationStatusCard />
       </StyledBox>
-      <ReferralCard isLoading={false} />
+      {/* <ReferralCard isLoading={false} /> */}
     </Stack>
   );
 };

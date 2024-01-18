@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  debounce,
   useTheme,
 } from '@mui/material';
 
@@ -32,21 +33,27 @@ import SVGDelete from '@/iconComponents/delete';
 import { showErrorMessages } from '@/lib/utils';
 import { SettingWrapper } from '../styled';
 import AccountSettingSkeleton from './loading';
+import { useCheckUsernameMutation } from '@/lib/redux/slices/registration';
 
 interface ISettingAccount {
   name: string;
   email: string;
+  username: string;
   enableMessage: boolean;
 }
 
 interface ISettingAccountFormError {
   name?: string;
   email?: string;
+  username?: string;
   enableMessage?: boolean;
 }
 
 const AccountSetting = () => {
   const theme = useTheme();
+  const [checkUserName, { data: checkUserNameData }] =
+    useCheckUsernameMutation();
+
   const {
     data: settingsData,
     isLoading: getSettingLoading,
@@ -70,7 +77,7 @@ const AccountSetting = () => {
   const [
     updateMessageSetting,
     {
-      data: messageSettingUpdateData,
+      // data: messageSettingUpdateData,
       isLoading: messageSettingLoading,
       error: messageSettingError,
     },
@@ -81,11 +88,33 @@ const AccountSetting = () => {
   const [formData, setFormData] = useState<ISettingAccount>({
     email: '',
     name: '',
+    username: '',
     enableMessage: false,
   });
   const [formError, setFormError] = useState<ISettingAccountFormError>({});
 
   const isUpdateLoading = settingUpdateLoading || messageSettingLoading;
+
+  const debouncedCheckUserName = useCallback(
+    debounce(username => username && checkUserName({ username }), 500),
+    []
+  );
+
+  useEffect(() => {
+    if (checkUserNameData && checkUserNameData === 'username_in_use') {
+      setFormError((prev: any) => ({
+        ...prev,
+        username: 'Username already exists',
+      }));
+    }
+
+    if (checkUserNameData === 'success') {
+      setFormError((prev: any) => ({
+        ...prev,
+        username: '',
+      }));
+    }
+  }, [checkUserNameData]);
 
   useEffect(() => {
     if (settingsData && getMessageSettingData) {
@@ -93,6 +122,7 @@ const AccountSetting = () => {
         email: settingsData.email,
         name: settingsData.name,
         enableMessage: getMessageSettingData?.allowPrivateMassages,
+        username: settingsData?.username,
       });
     }
   }, [settingsData, getMessageSettingData]);
@@ -103,11 +133,11 @@ const AccountSetting = () => {
     }
   }, [settingUpdateData]);
 
-  useEffect(() => {
-    if (messageSettingUpdateData === 'success') {
-      toast.success('Message settings updated successfully!');
-    }
-  }, [messageSettingUpdateData]);
+  // useEffect(() => {
+  //   if (messageSettingUpdateData === 'success') {
+  //     toast.success('Message settings updated successfully!');
+  //   }
+  // }, [messageSettingUpdateData]);
 
   useEffect(() => {
     if (settingUpdateError) {
@@ -133,7 +163,7 @@ const AccountSetting = () => {
     }
   }, [getMessageSettingError]);
 
-  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (event: React.ChangeEvent<any>) => {
     if (event.target.name === 'enableMessage') {
       const copy = { ...formData };
 
@@ -175,6 +205,8 @@ const AccountSetting = () => {
       updateSettings({
         name: formData.name,
         email: formData.email,
+        timezone: null,
+        username: formData?.username || '',
       });
 
       updateMessageSetting({
@@ -225,6 +257,41 @@ const AccountSetting = () => {
             </FormControl>
 
             <FormControl>
+              <FormLabel>Username</FormLabel>
+              <TextField
+                name="username"
+                fullWidth
+                hiddenLabel
+                value={formData.username}
+                placeholder="Ex. Dusti_69"
+                onChange={e => {
+                  debouncedCheckUserName(e.target.value);
+                  onChangeHandler(e);
+                }}
+                error={!!formError.username}
+                helperText={formError.username}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton edge="end" color="primary">
+                        <SVGUser />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                gap={1}
+              >
+                <SVGExclamation />
+                You can change once every 30 days
+              </Box>
+            </FormControl>
+
+            <FormControl sx={{ mt: 2 }}>
               <FormLabel>Email address</FormLabel>
               <TextField
                 name="email"
