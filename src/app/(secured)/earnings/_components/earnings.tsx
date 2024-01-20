@@ -140,7 +140,7 @@ const PointsBalanceCard = React.memo(() => {
         <Grid container>
           <Grid item xs={12} sm={5}>
             <PointsDisplay>
-              <Grid container>
+              <Grid container spacing={1}>
                 <Grid item xs={12} sm={12}>
                   <Typography variant="h6">Total points</Typography>
                 </Grid>
@@ -171,7 +171,9 @@ const PointsBalanceCard = React.memo(() => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <TransactionHistory />
+                  <Box pt={1}>
+                    <TransactionHistory />
+                  </Box>
                 </Grid>
               </Grid>
             </PointsDisplay>
@@ -203,7 +205,7 @@ const PointsBalanceCard = React.memo(() => {
                       }
                     />
 
-                    <Stack gap={0} width="100%">
+                    <Stack gap={1} width="100%">
                       <Typography variant="subtitle2">
                         {walletLoading ? (
                           <Skeleton variant="text" />

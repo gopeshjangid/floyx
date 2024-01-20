@@ -43,12 +43,18 @@ export default function FollowNewAccounts() {
 
   if (isLoading || isError) return null;
 
+  const accountsList = data
+    ? data?.result?.filter(account => !account.following)
+    : [];
+  if (accountsList.length === 0) {
+    return null;
+  }
   return (
     <Box mt={2}>
       <Typography variant="h6">Follow Accounts</Typography>
       <Stack direction="row" gap={1} my={2} sx={{ overflowX: 'auto' }}>
         {!isLoading && data ? (
-          data?.result?.map((account, index) => (
+          accountsList.map((account, index) => (
             <AccountBox
               p={2}
               justifyContent="center"
@@ -59,7 +65,7 @@ export default function FollowNewAccounts() {
               <Link href={`/profile/${account.username}`}>
                 <Avatar src={account.avatar} />
               </Link>
-              <Stack>
+              <Stack alignItems={'center'}>
                 {account.name && (
                   <Link href={`/profile/${account.username}`}>
                     <Typography textAlign="center" variant="body1">

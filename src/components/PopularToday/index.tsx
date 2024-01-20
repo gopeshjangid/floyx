@@ -9,11 +9,11 @@ import {
   Button,
 } from '@mui/material';
 
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import CustomDescription from '../customDescription';
+import { useRef } from 'react';
 
 const PopularTodaySection = styled(Box)(() => ({
   alignItems: 'center',
@@ -34,17 +34,14 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 }));
 
 function RecentArticles() {
-  const router = useRouter();
-  const { data, isLoading, isError } = useGetArticleListQuery(
-    'recent?forHome=true'
-  );
-
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const { data, isLoading } = useGetArticleListQuery('recent?forHome=true');
   return (
     <PopularTodaySection>
-      <Box display={{ xs: 'block', sm: 'none' }}>
+      <Box textAlign={'center'} marginTop="-10px">
         <Typography variant="body1">Recent Articles</Typography>
       </Box>
-      <PopularTodayListSection mt={4}>
+      <PopularTodayListSection mt={2}>
         {!isLoading && data ? (
           data.map((article, index) => (
             <Box p={1} pb={2} key={`recent-article-${index}`}>
@@ -60,12 +57,16 @@ function RecentArticles() {
                 }
               >
                 <Stack gap={0.8} pb={0.5}>
-                  <Box position={'relative'} width={'100%'}>
+                  <Box
+                    position={'relative'}
+                    width={'100%'}
+                    ref={imageContainerRef}
+                  >
                     <Image
                       alt={article.article.title ?? 'article title'}
                       src={article.article?.coverPhotoThumbnail}
-                      height="160"
-                      width="200"
+                      height="140"
+                      width={imageContainerRef?.current?.clientWidth ?? '220'}
                       style={{ borderRadius: '5px' }}
                     />
                   </Box>
@@ -112,7 +113,7 @@ function RecentArticles() {
                       <Skeleton
                         variant="text"
                         height={25}
-                        width={'60%'}
+                        width={'100%'}
                         animation="wave"
                       />
                     </Stack>

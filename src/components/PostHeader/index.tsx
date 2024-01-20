@@ -24,16 +24,7 @@ const HeaderSection = styled(Box)(() => ({
 }));
 export default function Header() {
   const pathName = usePathname();
-
   const { palette } = useTheme();
-  const getColorSvg = path => {
-    if (pathName === path) {
-      return palette.primary.iconSelectedColor;
-    }
-    return palette?.mode === 'light'
-      ? palette.text.primary
-      : palette?.primary.fontLightColor;
-  };
 
   return (
     <HeaderSection pb={1.5}>
@@ -49,11 +40,6 @@ export default function Header() {
               Article/Blog
             </Button>
           </Link>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Box display={{ xs: 'none', sm: 'block' }} pl={2}>
-            <Typography variant="subtitle1">Recent Articles</Typography>
-          </Box>
         </Grid>
       </Grid>
     </HeaderSection>
