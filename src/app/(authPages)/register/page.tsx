@@ -35,7 +35,6 @@ import { useToast } from '@/components/Toast/useToast';
 import { showErrorMessages } from '@/lib/utils';
 import VerifyPhone from './components/verify-phone';
 import VerifyEmail from './components/verify-email';
-import ProfileSetupModal from '@/components/ProfileSetupModal';
 
 const RegisterPage = () => {
   const theme = useTheme();
