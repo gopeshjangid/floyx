@@ -1,29 +1,29 @@
 body::-webkit-scrollbar {
-    width: 0.3em;
-   background: #5798FF;
+  width: 0.3em;
+  background: #5798ff;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 :root {
-    /* Your default theme */
-    --background: white;
-    --foreground: black;
+  /* Your default theme */
+  --background: white;
+  --foreground: black;
 }
 
 [data-theme='dark'] {
-    --background: black;
-    --foreground: white;
+  --background: black;
+  --foreground: white;
 }
 
 [data-theme='dark'] {
-    --fg: #fff;
-    --bg: #000;
+  --fg: #fff;
+  --bg: #000;
 }
 
 .mention-input-container__input {
-    outline: none;
+  outline: none;
 }

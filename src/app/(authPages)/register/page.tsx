@@ -315,6 +315,11 @@ const RegisterPage = () => {
                   error={!!formError.name}
                   helperText={formError.name}
                   inputProps={{ maxLength: 25 }}
+                  sx={{
+                    '& input': {
+                      WebkitTextFillColor: `${palette.action.opposite} !important`,
+                    },
+                  }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="end">
@@ -346,6 +351,11 @@ const RegisterPage = () => {
                   error={!!formError.username}
                   helperText={formError.username}
                   inputProps={{ maxLength: 25 }}
+                  sx={{
+                    '& input': {
+                      WebkitTextFillColor: `${palette.action.opposite} !important`,
+                    },
+                  }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="end">
@@ -381,6 +391,9 @@ const RegisterPage = () => {
                   <TextField
                     sx={{
                       marginBottom: '20px',
+                      '& input': {
+                        WebkitTextFillColor: `${palette.action.opposite} !important`,
+                      },
                     }}
                     name="recommended"
                     fullWidth
@@ -423,6 +436,11 @@ const RegisterPage = () => {
                   }}
                   error={!!formError.email}
                   helperText={formError.email}
+                  sx={{
+                    '& input': {
+                      WebkitTextFillColor: `${palette.action.opposite} !important`,
+                    },
+                  }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="end">
@@ -445,6 +463,11 @@ const RegisterPage = () => {
                   onChange={onChangeHandler}
                   error={!!formError.confirmEmail}
                   helperText={formError.confirmEmail}
+                  sx={{
+                    '& input': {
+                      WebkitTextFillColor: `${palette.action.opposite} !important`,
+                    },
+                  }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="end">
@@ -469,6 +492,11 @@ const RegisterPage = () => {
                   onChange={onChangeHandler}
                   error={!!formError.password}
                   helperText={formError.password}
+                  sx={{
+                    '& input': {
+                      WebkitTextFillColor: `${palette.action.opposite} !important`,
+                    },
+                  }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="end">

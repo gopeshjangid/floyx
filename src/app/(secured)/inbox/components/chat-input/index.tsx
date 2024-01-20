@@ -7,6 +7,7 @@ import {
   TextField,
   Theme,
   styled,
+  useTheme,
 } from '@mui/material';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
@@ -76,6 +77,7 @@ const ChatInput = ({
   const [emojiPicker, setEmojiPicker] = useState(false);
   const emojiWrapperRef = useRef<HTMLDivElement>(null);
   const session = useSession();
+  const theme = useTheme();
 
   useEffect(() => {
     document.addEventListener('mousedown', handleEmojiPicker, false);
@@ -135,6 +137,11 @@ const ChatInput = ({
             fullWidth
             hiddenLabel
             placeholder="Write a message..."
+            sx={{
+              '& input': {
+                WebkitTextFillColor: `${theme.palette.action.opposite} !important`,
+              },
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
