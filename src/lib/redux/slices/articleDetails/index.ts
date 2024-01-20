@@ -150,7 +150,7 @@ export const artcileDetails = createApi({
               )
             );
             api.dispatch(postServices.util.invalidateTags(['postDetail']));
-          } else if (arg.type == 'PostCommentLiked') {
+          } else if (arg.type == 'PostCommentLiked' || arg.type=== 'ArticleCommentLiked') {
             api.dispatch(commentService.util.invalidateTags(['CommentList']));
           }
         });

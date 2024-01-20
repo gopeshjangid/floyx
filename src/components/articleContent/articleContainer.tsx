@@ -10,6 +10,7 @@ import {
   Grid,
   IconButton,
   Skeleton,
+  Stack,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -26,6 +27,7 @@ import { useRef, useState } from 'react';
 import ActionModal from './actionModal';
 import { useDeleteArticleMutation } from '@/lib/redux';
 import { useRouter } from 'next/navigation';
+import moment from "moment";
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',
@@ -148,8 +150,12 @@ export default function ArticleContainer({
   };
 
   const handleClick = () => {
-    const dynamicUrl = `/article/${userDetails?.username}/${articleDetails?.publicUrl}`;
-    router.push(dynamicUrl);
+    if (userDetails) {
+      const dynamicUrl = `/article/${userDetails?.username}/${articleDetails?.publicUrl}`;
+      router.push(dynamicUrl);
+    } else {
+      handleOption(0);
+    }
   };
 
   const tippedOrNot = () => {
@@ -250,14 +256,13 @@ export default function ArticleContainer({
           <Grid item xs={12} sm={7}>
             <Box className="details" p={1}>
               <Box className="top">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    width: '80%',
-                  }}
+                <Stack
+                  justifyContent={'flex-start'}
+                  direction={"column"}
                 >
+                  {articleDetails.modifiedDate && <Typography>
+                    {`Last saved on ${moment(articleDetails.modifiedDate).format('LL')}`}
+                  </Typography>}
                   <Typography
                     variant="h5"
                     sx={{
@@ -281,7 +286,7 @@ export default function ArticleContainer({
                       <Skeleton variant="text" width={100} />
                     )}
                   </Typography>
-                </Box>
+                </Stack>
                 <IconButton onClick={e => e.stopPropagation()}>
                   <BookMarkIcon />
                 </IconButton>

@@ -9,6 +9,7 @@ import {
   useTheme,
   FormControl,
   FormLabel,
+  TextareaAutosize,
 } from '@mui/material';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
@@ -37,6 +38,19 @@ export const AddArticleFormBox = styled(Box)(({ theme }) => ({
         ? theme.palette.text.primary
         : theme.palette?.action?.svg,
   },
+}));
+
+const Textarea = styled(TextareaAutosize)(({ theme }) => ({
+  width: '100%',
+  border: '0px',
+  backgroundColor: theme.palette.background.default,
+  fontWeight: '600',
+  fontSize: '38px',
+  paddingLeft: 0,
+  overflow: "auto",
+  textOverflow: "ellipsis",
+  outline: 'none',
+  color: '#85838F',
 }));
 
 export default function AddArticleForm({
@@ -279,10 +293,13 @@ export default function AddArticleForm({
   const getArticleDetail = async () => {
     const response = await getDraftDetail(articleId);
     if (response.data) {
+      let responseContent = JSON.parse(response?.data?.content);
+      responseContent = Array.isArray(responseContent) ? responseContent : [initialSate];
+      responseContent = responseContent.length === 0 ? [initialSate] : responseContent;
       setTitle(response.data?.title);
       setContent(JSON.parse(response?.data?.content));
       setState(prev => ({
-        ...prev, inputsList: Array.isArray(JSON.parse(response?.data?.content)) ? JSON.parse(response?.data?.content) : [initialSate]
+        ...prev, inputsList: responseContent,
       }));
       setImagePreview(response?.data?.coverPhotoPath || '');
       setImageToUpload(response?.data?.coverPhotoPath || '');
@@ -293,6 +310,7 @@ export default function AddArticleForm({
       articleCreatedRef.current = true;
     }
   };
+
   useEffect(() => {
     const sub = setInterval(() => {
       if (startAutoSave) updateDraftArticle(false);
@@ -319,10 +337,6 @@ export default function AddArticleForm({
     }
   }, [isEditing, articleId]);
 
-  const deleteTagHandler = deleted => {
-    setHashTags(tags => tags.filter(item => item !== deleted));
-  };
-
   useEffect(() => {
     if (isReset) {
       resetAllState();
@@ -335,31 +349,18 @@ export default function AddArticleForm({
     },
     [setHashTags]
   );
+
   return (
     <AddArticleFormBox>
-      <TextField
+      <Textarea
         placeholder="Title"
-        fullWidth
-        inputProps={{
-          maxLength: 50,
-        }}
+        maxRows={2}
         value={title}
         onChange={e => handleTitleChange(e, articleCreated)}
-        sx={{
-          '.MuiOutlinedInput-root': {
-            border: '0px',
-          },
-          '.MuiOutlinedInput-input': {
-            backgroundColor: palette.background.default,
-            fontWeight: '600',
-            fontSize: '38px',
-            paddingLeft: 0,
-          },
-        }}
       />
       <FormControl>
-        <FormLabel sx={{ color: palette.text.primary }}>Add hashtags</FormLabel>
-        <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={3} />
+        <FormLabel sx={{ color: palette.primary[300] }}>Add hashtags</FormLabel>
+        <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={5} />
       </FormControl>
       <Stack
         mb={2}

@@ -30,7 +30,11 @@ const SignInGoogle = () => {
 
   return (
     <SignInGoogleWrapper>
-      <Button variant="contained" startIcon={<Image src={iconGoogle} alt="google" />} onClick={handleGoogleLogin}>
+      <Button
+        variant="contained"
+        startIcon={<Image src={iconGoogle} alt="google" />}
+        onClick={handleGoogleLogin}
+      >
         Sign in with Google
       </Button>
     </SignInGoogleWrapper>
