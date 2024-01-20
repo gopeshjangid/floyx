@@ -246,7 +246,6 @@ const RegisterPage = () => {
 
   return (
     <>
-      <ProfileSetupModal open={false} handleClose={() => {}} />
       <Container component="main" maxWidth="sm" sx={{ pt: 10 }}>
         {isRegisteredSuccess.value === true &&
           isRegisteredSuccess.type === 'phone' && (
@@ -574,8 +573,10 @@ const RegisterPage = () => {
               <Link prefetch={false} href={allRoutes.login}>
                 Old Token Panel
               </Link>
-              
-              <Typography variant="body1">2024 Powered by Floyx LLC.</Typography>
+
+              <Typography variant="body1">
+                2024 Powered by Floyx LLC.
+              </Typography>
             </Box>
           </>
         )}
