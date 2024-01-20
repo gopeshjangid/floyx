@@ -40,9 +40,10 @@ interface IChatCard {
   username: string;
   name: string;
   lastMessageDate?: string;
+  lastText?: string;
 }
 
-const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
+const ChatCard = ({ username, name, lastMessageDate, lastText }: IChatCard) => {
   const { palette } = useTheme();
   const params = useParams();
 
@@ -114,8 +115,7 @@ const ChatCard = ({ username, name, lastMessageDate }: IChatCard) => {
               fontSize={{ md: '16px', xs: '14px' }}
               fontWeight={500}
             >
-              {/* {thread.lastMessageDate} */}
-              {/* TODO: no data for last message text */}
+              {lastText || ''}
             </Typography>
           }
         />

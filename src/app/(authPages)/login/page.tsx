@@ -38,16 +38,6 @@ interface IFormError {
 }
 
 const Login: FC = () => {
-  // console.log('NEXT_PUBLIC_VERCEL_URL 1', process.env.NEXT_PUBLIC_VERCEL_URL);
-  // console.log('VERCEL_URL', process.env.VERCEL_URL);
-  // console.log('NEXTAUTH_URL', process.env.NEXTAUTH_URL);
-  // console.log('NEXT_PUBLIC_NEXTAUTH_URL', process.env.NEXT_PUBLIC_NEXTAUTH_URL);
-  // console.log('NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET);
-  // console.log(
-  //   'NEXT_PUBLIC_NEXTAUTH_SECRET',
-  //   process.env.NEXT_PUBLIC_NEXTAUTH_SECRET
-  // );
-
   const toast = useToast();
   const { palette } = useTheme();
   const router = useRouter();
@@ -175,6 +165,11 @@ const Login: FC = () => {
                 onChange={onChangeHandler}
                 error={!!formError.email}
                 helperText={formError.email}
+                sx={{
+                  '& input': {
+                    WebkitTextFillColor: `${palette.action.opposite} !important`,
+                  },
+                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">
@@ -214,6 +209,11 @@ const Login: FC = () => {
                 onChange={onChangeHandler}
                 error={!!formError.password}
                 helperText={formError.password}
+                sx={{
+                  '& input': {
+                    WebkitTextFillColor: `${palette.action.opposite} !important`,
+                  },
+                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">

@@ -15,6 +15,7 @@ import { allRoutes } from '@/constants/allRoutes';
 import UserAvatar from '@/components/UserAvatar';
 import { getRelativeTime } from '@/lib/utils';
 import BlockReportUser from '@/app/(secured)/profile/_components/blockReportUser';
+import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
 const ChatWrapper = styled(ListItem)(({ theme }: { theme: Theme }) => ({
   alignItems: 'center',
@@ -53,8 +54,8 @@ const ChatHeader = ({
         <Link href={`${allRoutes.profile}/${username}`}>
           <ListItemAvatar>
             <UserAvatar
-              alt="Travis Howard"
-              src={`${allRoutes.profile}/${username}`}
+              alt=""
+              src={`${ApiEndpoint.ProfileDetails}/avatar/${username}`}
               sx={{
                 width: { md: '59px', xs: '50px' },
                 height: { md: '59px', xs: '50px' },
