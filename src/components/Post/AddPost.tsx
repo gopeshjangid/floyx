@@ -147,6 +147,7 @@ function AddPost({
               label={
                 <Typography variant="subtitle2">Write an article</Typography>
               }
+              sx={{ marginTop: '8px' }}
               href="/composer/create"
             />
           </Tabs>

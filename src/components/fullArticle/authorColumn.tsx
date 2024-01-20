@@ -15,9 +15,10 @@ import { RoundPrimaryButton } from '../CustomButtons';
 import { useRouter } from 'next/navigation';
 import FollowUser from '../FollowUser';
 import AuthorArticles from './authorArticles';
-import CustomDescription from "../customDescription";
-import { LocationOn } from "@mui/icons-material";
-import Image from "next/image";
+import CustomDescription from '../customDescription';
+import { LocationOn } from '@mui/icons-material';
+import Image from 'next/image';
+import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
 
 export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -120,11 +121,8 @@ export default function AuthorCoulmn({ details }: any) {
           </Stack>
           <Stack justifyContent={'flex-start'} direction="row" gap={2}>
             <Stack direction="row">
-              <ProfileTickIcon height={18} stroke={palette.primary[300]} />
-              <Typography
-                variant="body2"
-                sx={{ margin: '0px 5px', opacity: 0.6 }}
-              >
+              <ProfileTickIcon height={20} stroke={'rgb(124, 147, 174)'} />
+              <Typography variant="body2" sx={{ margin: '0px 5px' }}>
                 Followers:
               </Typography>
               <Typography variant="body2">
@@ -132,11 +130,8 @@ export default function AuthorCoulmn({ details }: any) {
               </Typography>
             </Stack>
             <Stack direction="row">
-              <ArticleIcon />
-              <Typography
-                variant="body2"
-                sx={{ margin: '0px 5px', opacity: 0.6 }}
-              >
+              <ArticleProfileIcon width="20px" height="20px" />
+              <Typography variant="body2" sx={{ margin: '0px 5px' }}>
                 Articles:
               </Typography>
               <Typography variant="body2">
@@ -165,9 +160,7 @@ export default function AuthorCoulmn({ details }: any) {
             </Typography>
           </Box>
           {aboutProfile?.about?.website && (
-            <Box
-              display="flex"
-              gap={1}>
+            <Box display="flex" gap={1}>
               <Button
                 variant="text"
                 size="small"

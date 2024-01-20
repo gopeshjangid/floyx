@@ -30,6 +30,7 @@ export type UserProfileDetails = {
   official: boolean;
   shortDescription: string;
   username: string;
+  joinedDate?: string;
 };
 
 type About = {
@@ -84,6 +85,7 @@ export type Account = {
   numberOfEvents: number;
   experienced: boolean;
   followed: boolean;
+  following?: boolean;
   official: boolean;
   accountType: number;
   id: string;
@@ -164,20 +166,21 @@ export const profileService = createApi({
         userId +
         '?pageNumber=' +
         pageNumber +
-        'pageSize=50',
+        '&pageSize=10',
       transformResponse: (response: ApiResponse<UserProfileDetails[]>) => {
         return response?.value?.data;
       },
-      providesTags: (result, error, args) => [
-        {
-          type: 'userFollowers',
-          id: `followers-${args.userId}-${args.pageNumber}`,
-        },
-      ],
+      serializeQueryArgs: ({ queryArgs }) => {
+        return JSON.stringify(queryArgs);
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+      providesTags: [{ type: 'userFollowers', id: 'LIST' }],
     }),
     userFollowedAccounts: builder.query<
       UserProfileDetails[],
-      { userId?: string; pageNumber: number }
+      { userId?: string; pageNumber: number; username: string }
     >({
       query: ({ userId, pageNumber }) =>
         ApiEndpoint.GetFollowedUsersInfo +
@@ -185,16 +188,16 @@ export const profileService = createApi({
         userId +
         '?pageNumber=' +
         pageNumber +
-        '&pageSize=50',
+        '&pageSize=10',
       transformResponse: (response: ApiResponse<UserProfileDetails[]>) => {
         return response?.value?.data;
       },
-      providesTags: (result, error, args) => [
-        {
-          type: 'userFollowed',
-          id: `userFollowed-${args.userId}-${args.pageNumber}`,
-        },
-      ],
+      providesTags: (result, error, args) => {
+        return [{ type: 'UserFollowed', id: 'LIST' }];
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
     isUserFollowed: builder.query<
       boolean,
@@ -353,13 +356,13 @@ export const profileService = createApi({
         body: {},
       }),
       transformResponse: (response: any) => response.value,
-      invalidatesTags: [
+      invalidatesTags: (result, meta, args) => [
         'profileAbout',
         'profileDetails',
         'PopularAccount',
         'FollowedAccount',
         'userFollowers',
-        'userFollowed',
+        'UserFollowed',
       ],
     }),
     getFollowMoreAccount: builder.query<any, void>({
@@ -377,7 +380,7 @@ export const profileService = createApi({
     'FollowedAccount',
     'isUserFollowedBy',
     'userFollowers',
-    'userFollowed',
+    'UserFollowed',
   ],
 });
 

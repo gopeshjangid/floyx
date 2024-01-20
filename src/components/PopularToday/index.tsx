@@ -9,10 +9,11 @@ import {
   Button,
 } from '@mui/material';
 
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import CustomDescription from '../customDescription';
+import { useRef } from 'react';
 
 const PopularTodaySection = styled(Box)(() => ({
   alignItems: 'center',
@@ -33,27 +34,17 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 }));
 
 function RecentArticles() {
-  const { palette } = useTheme();
-  const router = useRouter();
-  const { data, isLoading, isError } = useGetArticleListQuery(
-    'recent?forHome=true'
-  );
-
-  const createMarkup = (content: string) => {
-    const CONTENT = content ? JSON.parse(content) : [];
-    console.log({ CONTENT });
-    return { __html: CONTENT[0]?.value?.slice(0, 25) + '...' ?? '' };
-  };
-
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const { data, isLoading } = useGetArticleListQuery('recent?forHome=true');
   return (
     <PopularTodaySection>
-      <Box display={{ xs: 'block', sm: 'none' }}>
+      <Box textAlign={'center'} marginTop="-10px">
         <Typography variant="body1">Recent Articles</Typography>
       </Box>
-      <PopularTodayListSection mt={4}>
+      <PopularTodayListSection mt={2}>
         {!isLoading && data ? (
           data.map((article, index) => (
-            <Box p={1} py={2} key={`recent-article-${index}`}>
+            <Box p={1} pb={2} key={`recent-article-${index}`}>
               <Link
                 target="_blank"
                 href={
@@ -65,34 +56,24 @@ function RecentArticles() {
                     : '/'
                 }
               >
-                <Stack gap={0.8} direction="row" pb={0.5}>
-                  <Box width={'40%'}>
+                <Stack gap={0.8} pb={0.5}>
+                  <Box
+                    position={'relative'}
+                    width={'100%'}
+                    ref={imageContainerRef}
+                  >
                     <Image
                       alt={article.article.title ?? 'article title'}
                       src={article.article?.coverPhotoThumbnail}
-                      width={80}
-                      height={60}
+                      height="140"
+                      width={imageContainerRef?.current?.clientWidth ?? '220'}
                       style={{ borderRadius: '5px' }}
                     />
                   </Box>
                   <Stack gap={0}>
-                    <Typography
-                      sx={{
-                        wordBreak: 'break-all',
-                        color: palette.primary.fontLightColor,
-                      }}
-                      variant="subtitle2"
-                      gutterBottom={false}
-                    >
-                      {article.article.title ?? '(No title)'}...
-                    </Typography>
-                    <Typography
-                      color="textPrimary"
-                      variant="caption"
-                      dangerouslySetInnerHTML={createMarkup(
-                        article.article.content
-                      )}
-                    />
+                    <CustomDescription variant="subtitle2" gutterBottom={false}>
+                      {article.article.title.slice(0, 100) ?? '(No title)'}...
+                    </CustomDescription>
                     <Button
                       variant="text"
                       size="small"
@@ -114,7 +95,6 @@ function RecentArticles() {
                   <Stack
                     alignItems={'center'}
                     gap={2}
-                    direction="row"
                     key={'item- article-' + index}
                   >
                     <Skeleton
@@ -126,13 +106,13 @@ function RecentArticles() {
                     <Stack width={'100%'}>
                       <Skeleton
                         variant="text"
-                        height={35}
+                        height={45}
                         width={'100%'}
                         animation="wave"
                       />
                       <Skeleton
                         variant="text"
-                        height={35}
+                        height={25}
                         width={'100%'}
                         animation="wave"
                       />

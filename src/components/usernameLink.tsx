@@ -10,7 +10,7 @@ export const GradientText = styled('span')(({ ...props }) => ({
   background: 'linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF)',
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
-  fontWeight: 600,
+  fontWeight: 500,
   color: 'white', // This ensures the text has color if the gradient is not supported
   ...props,
 }));

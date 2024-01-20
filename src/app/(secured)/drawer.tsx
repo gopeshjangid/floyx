@@ -193,7 +193,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   };
 
   const homeRedirect = () => {
-    router.push('/', { scroll: true });
+    if (pathname !== '/') {
+      router.push('/', { scroll: true });
+    }
     window.scrollTo(0, 0);
   };
 
@@ -292,6 +294,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     }));
   };
 
+  const navClickHandler = href => {
+    if (mobileOpen) {
+      setMobileOpen(false);
+    }
+
+    homeRedirect();
+  };
+
   const drawer = (
     <Box>
       <Box sx={{ padding: 1, background: 'inherit', paddingBottom: 2 }}>
@@ -314,10 +324,10 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 ? `${item.href}/${session.data?.user?.username}`
                 : item.href
             }
-            onClick={() => setMobileOpen(false)}
+            onClick={() => navClickHandler(item.href)}
           >
             <>
-              <ListItemIcon>
+              <ListItemIcon sx={{ marginTop: '-5px' }}>
                 {item?.icon && item?.icon(theme.palette.text.primary)}
               </ListItemIcon>
               <ListItemText primary={item.label} />

@@ -1,5 +1,4 @@
 'use client';
-//import InfiniteScroll from 'react-infinite-scroller';
 import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PostBox } from './styledPostBox';
@@ -42,7 +41,6 @@ function PostList({ postData, loadMore, hasMore }: PostProps) {
             next={loadMore}
             hasMore={hasMore}
             loader={<LoaderSkeleton key="loader-ininfite" />}
-            scrollableTarget="scrollableDiv"
             endMessage={
               <Box
                 sx={{
