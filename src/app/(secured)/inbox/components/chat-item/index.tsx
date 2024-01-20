@@ -115,7 +115,7 @@ const ChatCard = ({ username, name, lastMessageDate, lastText }: IChatCard) => {
               fontSize={{ md: '16px', xs: '14px' }}
               fontWeight={500}
             >
-              {lastText}
+              {lastText || ''}
             </Typography>
           }
         />
