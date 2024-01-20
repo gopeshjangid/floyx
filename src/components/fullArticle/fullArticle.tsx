@@ -8,10 +8,8 @@ import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import SocialButts from './socialMediaButtons';
 import AuthorPoints from './authorPoints';
-import FollowUser from '../FollowUser';
+import FollowUserFetched from "./followUserFetched";
 import TranslateIcon from '@/assets/images/svg/translateIcon';
-import { RoundPrimaryButton } from "../CustomButtons";
-import { useRouter } from 'next/navigation'
 
 export default function FullArticle({ details }: any) {
   const CONTENT =
@@ -58,17 +56,7 @@ export default function FullArticle({ details }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={4} sm={2}>
-            <Suspense
-              fallback={<Skeleton variant="text" width="100px" height="30px" />}
-            >
-              <FollowUser
-                isFollowed={details?.user?.isFollowed}
-                username={details?.user?.username}
-              />
-            </Suspense>
-          </Grid>
-          <Grid item xs={12} sm={5}>
+          <Grid item xs={12} sm={7}>
             <Suspense
               fallback={
                 <Skeleton variant="text" width={'100%'} height="40px" />
