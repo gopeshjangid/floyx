@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { iconLogo } from '@/assets/images';
 import { deleteCookie } from 'cookies-next';
+import FloyxImage from '@/iconComponents/floyxIcon';
 
 export default function SignOut() {
   const router = useRouter();
+  const theme = useTheme();
 
   const handleSubmit = async () => {
     deleteCookie('FLOYX_TOKEN');
@@ -29,7 +29,13 @@ export default function SignOut() {
       <Grid item xs={12} md={5} xl={4} className="my-5">
         <Typography variant="h1" component="h1" align="center" gutterBottom>
           <Box mb={5}>
-            <Image src={iconLogo} alt="logo" loading="lazy" />
+            <FloyxImage
+              fill={
+                theme.palette.mode === 'dark'
+                  ? theme.palette.common.white
+                  : theme.palette.common.black
+              }
+            />
           </Box>
           Sign out
         </Typography>
