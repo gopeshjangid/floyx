@@ -514,8 +514,11 @@ const ProfileSection: React.FC = () => {
             ) : (
               <>
                 <Typography
-                  variant="body2"
-                  sx={{ color: palette.primary.fontLightColor }}
+                  variant="body1"
+                  sx={{
+                    fontWeight: '500',
+                    color: palette.primary.fontLightColor,
+                  }}
                 >
                   {profile?.name}
                 </Typography>
@@ -600,7 +603,7 @@ const ProfileSection: React.FC = () => {
                 <Box display="flex" gap={1} alignItems={'flex-start'}>
                   <Image src={Calender} alt="Calender Icon" />
                   <Typography variant="subtitle2" sx={{ color: 'grey' }}>
-                    Joined Sept 1990
+                    {profile?.joinedDate}
                   </Typography>
                 </Box>
               </>

@@ -98,7 +98,12 @@ const PopularAccountsList = () => {
 
 const PopularAccounts = () => {
   return (
-    <Stack spacing={2} mt={5} pt={1}>
+    <Stack
+      spacing={2}
+      mt={5}
+      pt={1}
+      sx={{ maxHeight: '100vh', overflowY: 'hidden' }}
+    >
       <Typography variant="h6" color="textPrimary">
         Popular Accounts
       </Typography>

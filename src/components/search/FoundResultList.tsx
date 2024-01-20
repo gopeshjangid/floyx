@@ -20,6 +20,7 @@ import CustomTypographyWithIcon from '../typographyWithIcon';
 import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
 import ArticleSvgIcon from '@/iconComponents/articleSvgIcon';
 import Link from 'next/link';
+import CustomDescription from '../customDescription';
 
 interface SearchResultProps {
   profile: UserDetailsType;
@@ -42,7 +43,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
     <StyledCard>
       <CardContent>
         <Box>
-          <Stack direction="row">
+          <Stack direction="row" gap={1}>
             {isLoading ? (
               <Skeleton variant="circular" width={40} height={40} />
             ) : (
@@ -68,9 +69,21 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                   </Link>
                   <UsernameLink username={profile.username} />
                 </Stack>
-                <Typography sx={{ wordBreak: 'break-all' }} variant="subtitle2">
+                {(profile.followed || profile.following) && (
+                  <Stack alignItems="center" direction="row" gap={1}>
+                    {profile.following && (
+                      <Typography variant="caption">Followed</Typography>
+                    )}
+                    {profile.followed && (
+                      <Typography variant="caption">
+                        | &nbsp; Follows you
+                      </Typography>
+                    )}
+                  </Stack>
+                )}
+                <CustomDescription variant="subtitle2">
                   {profile.shortDescription}
-                </Typography>
+                </CustomDescription>
               </Box>
             )}
           </Stack>

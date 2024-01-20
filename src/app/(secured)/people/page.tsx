@@ -136,7 +136,7 @@ const SearchComponent: React.FC<{
                 startAdornment: (
                   <InputAdornment position="end">
                     <IconButton edge="end">
-                      <SVGUser fill="#A75FFF" />
+                      <SVGUser />
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -159,7 +159,7 @@ const SearchComponent: React.FC<{
                 startAdornment: (
                   <InputAdornment position="end">
                     <IconButton edge="end">
-                      <FlagOutlined fill="#A75FFF" />
+                      <FlagOutlined />
                     </IconButton>
                   </InputAdornment>
                 ),
