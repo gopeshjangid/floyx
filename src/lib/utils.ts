@@ -116,16 +116,53 @@ export const formatIndianNumber = (num: number) => {
   } else {
     return num;
   }
-}
+};
 
 export const addLinks = (content: any) => {
   if (!content) {
     return '';
   }
   const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm;
-  const link = '<a href="/profile/$2" style="background:linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF); -webkit-background-clip: text;-webkit-text-fill-color: transparent;font-weight: normal;color: white;">@$2</a>';
+  const link =
+    '<a href="/profile/$2" class="post-hyperlink" style="background:linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF); -webkit-background-clip: text;-webkit-text-fill-color: transparent;font-weight: normal;color: white;">@$2</a>';
   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const urlLink = '<a href="$1" target="_blank">$1</a>';
+
+  const urlLink = match => {
+    let displayText = match;
+    if (displayText.length > 30) {
+      displayText = displayText.substring(0, 30) + '...';
+    }
+    return `<a class="post-hyperlink" href="${match}" target="_blank">${displayText}</a>`;
+  };
+
   return content.replace(urlRegex, urlLink).replace(profileRegex, link);
 };
 
+export function copyTextToClipboard(text, onCopied = () => {}) {
+  if (navigator.clipboard) {
+    navigator.clipboard
+      .writeText(text)
+      .then(onCopied, () => fallbackCopyTextToClipboard(text, onCopied));
+  } else {
+    fallbackCopyTextToClipboard(text);
+  }
+}
+
+function fallbackCopyTextToClipboard(text, onCopied) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    const successful = document.execCommand('copy');
+    if (successful) {
+      onCopied();
+    } else {
+      console.error('Fallback: Copying text command was unsuccessful');
+    }
+  } catch (err) {
+    console.error('Fallback: Oops, unable to copy', err);
+  }
+  document.body.removeChild(textArea);
+}

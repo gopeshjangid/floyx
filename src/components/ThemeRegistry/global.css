@@ -27,3 +27,11 @@ a {
 .mention-input-container__input {
     outline: none;
 }
+
+.post-hyperlink {
+    color: #858FFF;
+}
+
+.post-hyperlink:hover {
+    text-decoration: underline;
+}
