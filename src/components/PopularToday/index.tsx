@@ -47,7 +47,7 @@ function RecentArticles() {
       <PopularTodayListSection mt={4}>
         {!isLoading && data ? (
           data.map((article, index) => (
-            <Box p={1} py={2} key={`recent-article-${index}`}>
+            <Box p={1} pb={2} key={`recent-article-${index}`}>
               <Link
                 target="_blank"
                 href={
@@ -94,7 +94,6 @@ function RecentArticles() {
                   <Stack
                     alignItems={'center'}
                     gap={2}
-                    direction="row"
                     key={'item- article-' + index}
                   >
                     <Skeleton
@@ -106,14 +105,14 @@ function RecentArticles() {
                     <Stack width={'100%'}>
                       <Skeleton
                         variant="text"
-                        height={35}
+                        height={45}
                         width={'100%'}
                         animation="wave"
                       />
                       <Skeleton
                         variant="text"
-                        height={35}
-                        width={'100%'}
+                        height={25}
+                        width={'60%'}
                         animation="wave"
                       />
                     </Stack>
