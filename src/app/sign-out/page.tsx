@@ -3,7 +3,7 @@
 import React from 'react';
 import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { deleteCookie } from 'cookies-next';
+import { signOut } from 'next-auth/react';
 import FloyxImage from '@/iconComponents/floyxIcon';
 
 export default function SignOut() {
@@ -11,12 +11,10 @@ export default function SignOut() {
   const theme = useTheme();
 
   const handleSubmit = async () => {
-    deleteCookie('FLOYX_TOKEN');
-    deleteCookie('next-auth.session-token');
-    deleteCookie('next-auth.csrf-token');
-    deleteCookie('next-auth.callback-url');
-
-    router.push('/social-login');
+    await signOut({
+      redirect: true,
+      callbackUrl: '/social-login',
+    });
   };
 
   return (
