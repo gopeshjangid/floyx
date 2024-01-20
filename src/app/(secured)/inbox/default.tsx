@@ -159,6 +159,7 @@ const Default = () => {
                 username={thread.user?.username}
                 name={thread?.user?.name}
                 lastMessageDate={thread.lastMessageDate}
+                lastText={thread?.lastText}
               />
             );
           })}

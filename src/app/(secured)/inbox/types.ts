@@ -23,6 +23,7 @@ export interface IThread {
   user: IUser;
   lastMessageStatus: number;
   unreadCount: number;
+  lastText?: string;
 }
 
 export interface IInboxData {
