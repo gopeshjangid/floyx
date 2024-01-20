@@ -1,3 +1,4 @@
+import { SOCIAL_SIGNIN_DATA } from '@/constants';
 import { cookies } from 'next/headers';
 
 export const setAccessTokenCookie = (accessToken: string): void => {
@@ -30,7 +31,7 @@ export const setSocialSignInCookie = ({
   isFirstTimeLogin,
 }: any) => {
   cookies().set(
-    'SOCIAL_SIGNIN_DATA',
+    SOCIAL_SIGNIN_DATA,
     JSON.stringify({
       email,
       firstname,

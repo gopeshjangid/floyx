@@ -14,11 +14,20 @@ import {
 } from '@/lib/redux';
 
 import { Box, Grid, Skeleton } from '@mui/material';
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
+import { getCookie } from 'cookies-next';
+
 import * as signalR from '@microsoft/signalr';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
-import { getCookie } from 'cookies-next';
 import useDevice from '@/lib/hooks/useDevice';
+import ProfileSetupModal from '@/components/ProfileSetupModal';
+import { SOCIAL_SIGNIN_DATA } from '@/constants';
 export interface apiParams {
   pageNumber: number;
   postCreatedDate: number;
@@ -29,6 +38,17 @@ const SectionSkeleton = () => (
 );
 
 export default function Page() {
+  const [firstTimeLoginUsingSocialMedia, setFirstTimeLoginUsingSocialMedia] =
+    useState<boolean | null>(null);
+
+  useLayoutEffect(() => {
+    if (JSON.parse(getCookie(SOCIAL_SIGNIN_DATA) || '{}').isFirstTimeLogin) {
+      setFirstTimeLoginUsingSocialMedia(true);
+    } else {
+      setFirstTimeLoginUsingSocialMedia(false);
+    }
+  }, []);
+
   const [apiParams, setApiParams] = useState<apiParams>({
     pageNumber: 0,
     postCreatedDate: 0,
@@ -103,45 +123,57 @@ export default function Page() {
     typeof window === 'undefined' ? 1000 : window.innerHeight;
 
   return (
-    <Box p={2} mt={isMobile ? 0 : 1}>
-      <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>
-        <Grid item xs={12}>
-          <Suspense fallback={<SectionSkeleton />}>
-            <PostHeader />
-          </Suspense>
-        </Grid>
-        <Grid item xs={12} sm={9}>
-          <Box
-            sx={{
-              overflow: 'auto',
-              maxHeight: viewportHeight,
-              overflowY: 'auto',
-              scrollbarWidth: 'none', // For Firefox
-              msOverflowStyle: 'none', // For IE 10+
-              '&::-webkit-scrollbar': {
-                display: 'none', // For Chrome, Safari, and newer versions of Edge
-              },
-            }}
-          >
-            <AddPost />
-            <Suspense fallback={<SectionSkeleton />}>
-              <FollowNewAccounts />
-            </Suspense>
-            <PostList
-              postData={postData || []}
-              loadMore={loadMore}
-              hasMore={hasMore}
-            />
+    <>
+      {firstTimeLoginUsingSocialMedia && (
+        <ProfileSetupModal
+          open={firstTimeLoginUsingSocialMedia}
+          handleClose={() => setFirstTimeLoginUsingSocialMedia(false)}
+          onSubmit={() => setFirstTimeLoginUsingSocialMedia(false)}
+        />
+      )}
+      {firstTimeLoginUsingSocialMedia !== null &&
+        !firstTimeLoginUsingSocialMedia && (
+          <Box p={2} mt={isMobile ? 0 : 1}>
+            <Grid container columnSpacing={{ xs: 1, sm: 3, md: 3 }}>
+              <Grid item xs={12}>
+                <Suspense fallback={<SectionSkeleton />}>
+                  <PostHeader />
+                </Suspense>
+              </Grid>
+              <Grid item xs={12} sm={9}>
+                <Box
+                  sx={{
+                    overflow: 'auto',
+                    maxHeight: viewportHeight,
+                    overflowY: 'auto',
+                    scrollbarWidth: 'none', // For Firefox
+                    msOverflowStyle: 'none', // For IE 10+
+                    '&::-webkit-scrollbar': {
+                      display: 'none', // For Chrome, Safari, and newer versions of Edge
+                    },
+                  }}
+                >
+                  <AddPost />
+                  <Suspense fallback={<SectionSkeleton />}>
+                    <FollowNewAccounts />
+                  </Suspense>
+                  <PostList
+                    postData={postData || []}
+                    loadMore={loadMore}
+                    hasMore={hasMore}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={3} paddingRight={1}>
+                <Box display={{ xs: 'none', sm: 'block' }}>
+                  <Suspense fallback={<SectionSkeleton />}>
+                    <RecentArticles />
+                  </Suspense>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
-        </Grid>
-        <Grid item xs={12} sm={3} paddingRight={1}>
-          <Box display={{ xs: 'none', sm: 'block' }}>
-            <Suspense fallback={<SectionSkeleton />}>
-              <RecentArticles />
-            </Suspense>
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
+        )}
+    </>
   );
 }
