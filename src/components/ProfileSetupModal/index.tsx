@@ -1,4 +1,5 @@
 import {
+  Backdrop,
   Box,
   Button,
   CircularProgress,
@@ -51,9 +52,11 @@ interface IProfileSetupError {
 const ProfileSetupModal = ({
   open,
   handleClose,
+  onSubmit,
 }: {
   open: boolean;
   handleClose: () => void;
+  onSubmit: () => void;
 }) => {
   const [
     updateSettings,
@@ -103,6 +106,7 @@ const ProfileSetupModal = ({
         name: formData.name,
         username: formData.username,
       });
+      onSubmit();
     }
   };
 
@@ -129,118 +133,127 @@ const ProfileSetupModal = ({
   };
 
   return (
-    <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
-        <Box display="flex" gap={2} flexDirection="column">
-          <Typography variant="h2">Profile Setup</Typography>
+    <Backdrop
+      sx={{
+        color: '#fff',
+        zIndex: theme => theme.zIndex.drawer + 100,
+        backdropFilter: 'blur(5px)',
+      }}
+      open={open}
+    >
+      <Modal open={open} onClose={handleClose} hideBackdrop>
+        <Box sx={style}>
+          <Box display="flex" gap={2} flexDirection="column">
+            <Typography variant="h2">Profile Setup</Typography>
 
-          <Typography>
-            When creating an account in Floyx, enter your NAME and USERNAME
-            under which you want to be visible to other users. You can also
-            select Keep your original data to continue.
-          </Typography>
+            <Typography>
+              When creating an account in Floyx, enter your NAME and USERNAME
+              under which you want to be visible to other users. You can also
+              select Keep your original data to continue.
+            </Typography>
 
-          <Typography>
-            Remember that you can change your NAME and USERNAME in your account
-            settings at any time.
-          </Typography>
-        </Box>
-        <Grid
-          container
-          spacing={1}
-          gap={{
-            xs: 2,
-            sm: 2,
-            md: 3,
-          }}
-          flexDirection="row"
-          component="form"
-          noValidate
-          mt={2}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Box component="form" noValidate onSubmit={updateAccountDetails}>
-            <FormControl>
-              <FormLabel required>Name</FormLabel>
-              <TextField
-                name="name"
-                fullWidth
-                hiddenLabel
-                placeholder="Ex. Dustin Max"
-                onChange={onChangeHandler}
-                error={!!formError.name}
-                helperText={formError.name}
-                inputProps={{ maxLength: 25 }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end" color="primary">
-                        <SVGUser />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Box>{`${formData.name.length}/25`}</Box>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </FormControl>
-
-            <FormControl>
-              <FormLabel required>Username</FormLabel>
-              <TextField
-                name="username"
-                fullWidth
-                hiddenLabel
-                placeholder="Ex. Dusti_69"
-                onChange={e => {
-                  debouncedCheckUserName(e.target.value);
-                  onChangeHandler(e);
-                }}
-                error={!!formError.username}
-                helperText={formError.username}
-                inputProps={{ maxLength: 25 }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end" color="primary">
-                        <SVGUser />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Box>{`${formData.username.length}/25`}</Box>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </FormControl>
-
-            <FormControl>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                className="submit-btn"
-              >
-                {settingUpdateLoading ? (
-                  <>
-                    <CircularProgress size={24} color="inherit" />
-                    Login
-                  </>
-                ) : (
-                  'Login'
-                )}
-              </Button>
-            </FormControl>
+            <Typography>
+              Remember that you can change your NAME and USERNAME in your
+              account settings at any time.
+            </Typography>
           </Box>
-        </Grid>
-      </Box>
-    </Modal>
+          <Grid
+            container
+            spacing={1}
+            gap={{
+              xs: 2,
+              sm: 2,
+              md: 3,
+            }}
+            flexDirection="row"
+            component="form"
+            noValidate
+            mt={2}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Box component="form" noValidate onSubmit={updateAccountDetails}>
+              <FormControl>
+                <FormLabel required>Name</FormLabel>
+                <TextField
+                  name="name"
+                  fullWidth
+                  hiddenLabel
+                  placeholder="Ex. Dustin Max"
+                  onChange={onChangeHandler}
+                  error={!!formError.name}
+                  helperText={formError.name}
+                  inputProps={{ maxLength: 25 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton edge="end" color="primary">
+                          <SVGUser />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Box>{`${formData.name.length}/25`}</Box>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel required>Username</FormLabel>
+                <TextField
+                  name="username"
+                  fullWidth
+                  hiddenLabel
+                  placeholder="Ex. Dusti_69"
+                  onChange={e => {
+                    debouncedCheckUserName(e.target.value);
+                    onChangeHandler(e);
+                  }}
+                  error={!!formError.username}
+                  helperText={formError.username}
+                  inputProps={{ maxLength: 25 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton edge="end" color="primary">
+                          <SVGUser />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Box>{`${formData.username.length}/25`}</Box>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </FormControl>
+
+              <FormControl>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  className="submit-btn"
+                >
+                  {settingUpdateLoading ? (
+                    <>
+                      <CircularProgress size={24} color="inherit" />
+                      Submit
+                    </>
+                  ) : (
+                    'Submit'
+                  )}
+                </Button>
+              </FormControl>
+            </Box>
+          </Grid>
+        </Box>
+      </Modal>
+    </Backdrop>
   );
 };
 

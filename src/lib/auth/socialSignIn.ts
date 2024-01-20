@@ -1,5 +1,5 @@
 import { apiPaths } from '@/constants/apiPaths';
-import { setAccessTokenCookie } from './index';
+import { setAccessTokenCookie, setSocialSignInCookie } from './index';
 
 export default async function socialSignIn({
   email,
@@ -8,6 +8,7 @@ export default async function socialSignIn({
   profileImage,
   socialid,
   socialType,
+  isFirstTimeLogin,
 }: any) {
   try {
     const data = {
@@ -40,6 +41,16 @@ export default async function socialSignIn({
       throw new Error('Invalid credentials');
     }
     setAccessTokenCookie(user?.value?.data?.token.accessToken);
+    setSocialSignInCookie({
+      email,
+      firstname,
+      lastname,
+      profileImage,
+      socialid,
+      socialType,
+      isFirstTimeLogin,
+    });
+
     return user;
   } catch (error: any) {
     throw new Error(error?.message || 'Server error');

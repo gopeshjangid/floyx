@@ -4,7 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
 
 import signIn from '@/lib/auth/signin';
-import socialSignIn from '@/lib/auth/socialSignIn';
+import checkMail from '@/lib/auth/checkMail';
 
 const handler = NextAuth({
   providers: [
@@ -53,8 +53,8 @@ const handler = NextAuth({
         token.profileImage = profile.picture;
         token.socialid = profile.sub;
 
-        await socialSignIn({
-          email: token.email,
+        await checkMail({
+          mail: token.email,
           firstname: profile.given_name,
           lastname: profile.family_name,
           profileImage: profile.picture,
@@ -70,8 +70,8 @@ const handler = NextAuth({
         token.profileImage = profile.picture.data.url;
         token.socialid = profile.id;
 
-        await socialSignIn({
-          email: profile.email,
+        await checkMail({
+          mail: token.email,
           firstname: profile.name.split(' ')[0],
           lastname: profile.name.split(' ')[1],
           profileImage: profile.picture.data.url,

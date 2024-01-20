@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete, { AutocompleteChangeReason, AutocompleteValue } from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useLazySearchArticleTagsQuery } from '@/lib/redux/slices/tags';
 import CustomChip from '../CustomGridientChip';
@@ -52,7 +52,7 @@ const TagAutocomplete = ({
       }
     } else {
       setInputValue('');
-      toast.error(`Max ${maxSelectedTag} tags are allowed`)
+      toast.error(`Max ${maxSelectedTag} tags are allowed`);
     }
   };
 
@@ -60,9 +60,15 @@ const TagAutocomplete = ({
     onSelectTags(selectedTags);
   }, [selectedTags]);
 
-  const handleChange = (event, newValue, reason) => {
+  const handleChange = (_event, newValue, reason: AutocompleteChangeReason) => {
     if (reason === 'selectOption') {
-      setSelectedTags(prevTags => [...prevTags, newValue]);
+      setSelectedTags(prevTags => {
+        if (prevTags.find(val => newValue.toLowerCase() === val.toLowerCase())) {
+          toast.error(`You have already added this tag.`);
+          return [...prevTags];
+        }
+        return [...prevTags, newValue];
+      });
     } else if (reason === 'createOption') {
       setSelectedTags(prevTags => [...prevTags, inputValue]);
     }
