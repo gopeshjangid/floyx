@@ -24,6 +24,7 @@ import {
 } from '@/lib/redux';
 import { useToast } from '../Toast/useToast';
 import TagAutocomplete from './articleTags';
+import { useRouter } from "next/navigation";
 
 export const AddArticleFormBox = styled(Box)(({ theme }) => ({
   '& h5': {
@@ -65,11 +66,12 @@ export default function AddArticleForm({
   setIsPublished,
   isReset,
 }: any) {
+  const router = useRouter();
   const [articleCreated, setArticleCreated] = useState<boolean>(false);
   const [startAutoSave, setStartAutoSave] = useState<boolean>(false);
   const articleCreatedRef = useRef(false);
   const toast = useToast();
-
+  const [resetAll, setResetAll] = useState(false);
   const [syncState, setSyncState] = useState<any>({
     syncContent: '',
     syncCoverPhoto: '',
@@ -161,7 +163,7 @@ export default function AddArticleForm({
   const handleTitleChange = (event: any, articleCreated: boolean) => {
     const { value } = event.target;
     let valueValidated = true;
-    const iChars = '!@#$%^&*+=[]\\\';/{}|":<>?';
+    const iChars = '@#$%^&*+=[]\\\';{}|":<>';
     for (let i = 0;i < value.length;i++) {
       if (iChars.includes(value.charAt(i))) {
         valueValidated = false;
@@ -223,6 +225,7 @@ export default function AddArticleForm({
 
   const resetAllState = () => {
     setContent([]);
+    setResetAll(true);
     setTitle('');
     setHashTags([]);
     setImagePreview('');
@@ -255,14 +258,14 @@ export default function AddArticleForm({
     if (validatePublishButton(title, content)) {
       const payload = createArticleData(title, content, imageToUpload, hashtags ? hashtags.join(',') : '');
       await updateDraft({ articleId, payload });
-      const response = await publishArticle(articleId);
+      const response = await publishArticle({articleId, articleTags: hashtags });
       if ((response as any)?.error) {
         setIsPublish(false);
       } else {
         resetAllState();
         const dynamicUrl = `/article/${(response as any)?.data?.publicUrl}`;
-        window.open(dynamicUrl);
         setIsPublish(false);
+        router.push(dynamicUrl);
       }
     } else {
       setIsPublish(false);
@@ -360,7 +363,7 @@ export default function AddArticleForm({
       />
       <FormControl>
         <FormLabel sx={{ color: palette.primary[300] }}>Add hashtags</FormLabel>
-        <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={5} />
+        <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={5} resetAll={resetAll} />
       </FormControl>
       <Stack
         mb={2}
