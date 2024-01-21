@@ -67,6 +67,7 @@ export default function AddArticleForm({
   isReset,
 }: any) {
   const router = useRouter();
+
   const [articleCreated, setArticleCreated] = useState<boolean>(false);
   const [startAutoSave, setStartAutoSave] = useState<boolean>(false);
   const articleCreatedRef = useRef(false);
@@ -289,6 +290,7 @@ export default function AddArticleForm({
       setSaveDraft(false);
       if (forceUpdate) {
         setIsDisabled(false);
+        toast.success('Your draft saved.');
       }
     }
   };
