@@ -50,7 +50,6 @@ import { INotification } from './notifications/types';
 import CustomPopover from '@/components/PopoverOptions';
 import LogoutIcon from '@/iconComponents/logOut';
 import SettingsIcon from '@/iconComponents/settingsIcon';
-import { AddCircleOutline } from '@mui/icons-material';
 import { GradientText } from '@/components/usernameLink';
 import SidebarProfileBar from '@/components/sidebarProfileInfo';
 import AddPost from '@/components/Post/AddPost';
@@ -193,6 +192,10 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   };
 
   const homeRedirect = () => {
+    if (pathname === '/') {
+      const container = document.querySelector('#mainContainerFeed');
+      if (container) container.scrollTop = 0;
+    }
     if (pathname !== '/') {
       router.push('/', { scroll: true });
     }
@@ -345,11 +348,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
         ))}
         <MoreButton />
         <ListItem>
-          <Button
-            variant="outlined"
-            startIcon={<AddCircleOutline color="secondary" />}
-            onClick={() => setOpenWriteDialog(true)}
-          >
+          <Button variant="outlined" onClick={() => setOpenWriteDialog(true)}>
             <GradientText>Write Post</GradientText>{' '}
           </Button>
         </ListItem>

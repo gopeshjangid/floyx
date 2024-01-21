@@ -72,14 +72,6 @@ export default function PostImage({ image, link, shared, isShared }) {
               loading="lazy" // Lazy loading
             />
           )}
-          <Box mt={1}>
-            <Typography component="span" sx={{ wordWrap: 'break-word' }}>
-              {link.startDate &&
-                moment(link.startDate).format('DD MMM YYYY - ')}{' '}
-              {link.title}
-            </Typography>
-            <Typography sx={{ wordWrap: 'break-word' }}>{link.url}</Typography>
-          </Box>
         </Box>
       )}
       {shared && !isShared && (

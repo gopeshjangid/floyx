@@ -108,7 +108,7 @@ function Post({
             />
           </Box>
         </Box>
-        <Box>
+        <Box pb={1}>
           <CustomDescription
             variant="h6"
             dangerouslySetInnerHTML={{
