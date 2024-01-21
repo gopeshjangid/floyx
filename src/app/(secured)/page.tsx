@@ -144,7 +144,7 @@ export default function Page() {
                 <Box
                   sx={{
                     overflow: 'auto',
-                    maxHeight: viewportHeight,
+                    maxHeight: viewportHeight + 100,
                     overflowY: 'auto',
                     scrollbarWidth: 'none', // For Firefox
                     msOverflowStyle: 'none', // For IE 10+
@@ -152,6 +152,7 @@ export default function Page() {
                       display: 'none', // For Chrome, Safari, and newer versions of Edge
                     },
                   }}
+                  id="mainContainerFeed"
                 >
                   <AddPost />
                   <Suspense fallback={<SectionSkeleton />}>
