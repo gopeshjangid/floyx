@@ -40,7 +40,6 @@ async function Page({ params }: any) {
                 details={articleDetails}
                 articlePuclicUrl={articlePuclicUrl}
                 articleId={articleId}
-                revalidate={revalidate}
               />
             </Suspense>
           </section>

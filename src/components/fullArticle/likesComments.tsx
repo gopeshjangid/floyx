@@ -58,7 +58,6 @@ type LikeCommentType = {
   showComments?: boolean;
   articleId: string;
   isArticle?: boolean;
-  revalidate?: any;
 };
 function LikesComments({
   likesCommentsDetails,
@@ -68,7 +67,6 @@ function LikesComments({
   showComments = false,
   articleId,
   isArticle = false,
-  revalidate,
 }: LikeCommentType) {
   const { data: commentList, isLoading } = useGetCommentListQuery(
     articleId! || '',

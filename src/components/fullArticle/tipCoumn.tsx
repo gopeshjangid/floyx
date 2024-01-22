@@ -13,14 +13,15 @@ import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
 import { useSetTipMutation } from '@/lib/redux/slices/articleDetails';
 import { useToast } from '../Toast/useToast';
 import { useSession } from 'next-auth/react';
+import useQuery from '@/lib/hooks/useFetch';
 
 export default function TipColumn({
   details,
   articlePuclicUrl,
   articleId,
-  revalidate,
 }: any) {
   const session = useSession();
+  const { fetchData, data } = useQuery('/api/revalidate');
   const [value, setValue] = useState<number>(30);
   const [updateTip, { isError, error, isSuccess }] = useSetTipMutation();
   const { data: tipHistory, isLoading } = useGetTipHistoryQuery(undefined, {
@@ -75,7 +76,7 @@ export default function TipColumn({
 
   useEffect(() => {
     if (isSuccess) {
-      revalidate();
+      fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
     }
   }, [isSuccess]);
 
