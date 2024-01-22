@@ -361,8 +361,10 @@ export default function AddArticleForm({
         placeholder="Title"
         maxRows={2}
         value={title}
+        maxLength={200}
         onChange={e => handleTitleChange(e, articleCreated)}
       />
+      {title.length > 0 && <Typography textAlign={'right'}> {`${title.length}/200`} </Typography>}
       <FormControl>
         <FormLabel sx={{ color: palette.primary[300] }}>Add hashtags</FormLabel>
         <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={5} resetAll={resetAll} />
