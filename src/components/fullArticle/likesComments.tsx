@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
@@ -32,6 +32,7 @@ import Post from '../Post/Post';
 import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
 import Link from 'next/link';
+import useQuery from '@/lib/hooks/useFetch';
 
 const style = {
   position: 'absolute',
@@ -87,7 +88,12 @@ function LikesComments({
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
-
+  const { fetchData, data } = useQuery('/api/revalidate');
+  useEffect(() => {
+    if (data) {
+      router.refresh();
+    }
+  }, [data]);
   const [updateLike] = useLikeItemMutation();
   const [checkIsShared] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
@@ -115,7 +121,7 @@ function LikesComments({
       }
     } else {
       if (isArticle) {
-        revalidate();
+        fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
         await publishArticle({ articleId: itemId, status, payload });
         toast.success('Article is Published Succesfully ');
       } else {
@@ -139,7 +145,7 @@ function LikesComments({
     const type: string = likeType();
     await updateLike({ articleId: itemId, type });
     if (isArticle) {
-      revalidate();
+      await fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
     }
   };
 
@@ -153,7 +159,7 @@ function LikesComments({
   const onCreatedArticleComment = useCallback(
     commentData => {
       if (commentData && isArticle) {
-        revalidate();
+        fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
       }
     },
     [setNewCreatedComments]
@@ -184,7 +190,7 @@ function LikesComments({
           return comment.comment.id !== data.id;
         });
         if (isArticle) {
-          revalidate();
+          fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
         }
       } else {
         _comments = newCreatedComments.newComments.map(comment => {
