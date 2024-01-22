@@ -19,6 +19,8 @@ import CustomDescription from '../customDescription';
 import { LocationOn } from '@mui/icons-material';
 import Image from 'next/image';
 import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
+import { useSession } from "next-auth/react";
+// import { useGetArticleDetailsQuery } from "@/lib/redux";
 
 export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -58,6 +60,9 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
 export default function AuthorCoulmn({ details }: any) {
   const { palette } = useTheme();
   const router = useRouter();
+  const session = useSession();
+
+  // const {data: articleDAtaaaa} = useGetArticleDetailsQuery({userName: 'saddam_beta', articlePuclicUrl: 'lorem-ipsum-2-9d7c9e27be'})
   const { data: profile } = useGetProfileDetailsQuery(
     { username: details?.user?.username },
     { skip: !details?.user?.username }
@@ -83,26 +88,27 @@ export default function AuthorCoulmn({ details }: any) {
         <Box minWidth={'40%'}>
           <Typography variant="body1">About Author</Typography>
         </Box>
-        <Box className="position-center">
-          <Box>
-            <RoundPrimaryButton
-              variant="outlined"
-              size="small"
-              sx={{ borderRadius: '30px', padding: '4px 14px' }}
-              onClick={() => router.push('/inbox')}
-            >
-              Message
-            </RoundPrimaryButton>
-          </Box>
-          <Divider variant="middle" />
-          <Box>
-            <FollowUser
-              isFollowed={profile?.followed}
-              username={details?.user?.username}
-            />
-          </Box>
-          <Divider />
-        </Box>
+        {session?.data?.user?.username !== details?.user?.username && (
+          <Box className="position-center">
+            <Box>
+              <RoundPrimaryButton
+                variant="outlined"
+                size="small"
+                sx={{ borderRadius: '30px', padding: '4px 14px' }}
+                onClick={() => router.push('/inbox')}
+              >
+                Message
+              </RoundPrimaryButton>
+            </Box>
+            <Divider variant="middle" />
+            <Box>
+              <FollowUser
+                isFollowed={profile?.followed}
+                username={details?.user?.username}
+              />
+            </Box>
+            <Divider />
+          </Box>)}
       </Box>
       <Box className="author-box">
         <Box sx={{ marginRight: 2 }}>

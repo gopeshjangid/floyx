@@ -10,6 +10,7 @@ import SocialButts from './socialMediaButtons';
 import AuthorPoints from './authorPoints';
 import FollowUserFetched from "./followUserFetched";
 import TranslateIcon from '@/assets/images/svg/translateIcon';
+import ArticleTags from "./articleTags";
 
 export default function FullArticle({ details }: any) {
   const CONTENT =
@@ -68,30 +69,17 @@ export default function FullArticle({ details }: any) {
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ display: 'flex' }}>
-        <Grid container>
-          {details?.article?.tags &&
-            details?.article?.tags.map((val: any, index: number) => (
-              <Grid
-                item
-                xs="auto"
-                key={index}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: '50px',
-                  border: '1px solid white',
-                  padding: '10px 20px',
-                  width: 'fit-Content',
-                  margin: '10px',
-                }}
-              >
-                <Typography variant="body2">#{val}</Typography>
-              </Grid>
-            ))}
-        </Grid>
-      </Box>
+        <Suspense
+          fallback={
+            <Skeleton variant="text" width={'100%'} height="40px" />
+          }
+        >
+        {details?.article?.tags &&
+          <ArticleTags
+            tags={details?.article?.tags}
+          />
+          }
+      </Suspense>
       {details?.article?.coverPhotoPath && (
         <Box sx={{ borderRadius: '8px', overflow: 'hidden' }}>
           <Image

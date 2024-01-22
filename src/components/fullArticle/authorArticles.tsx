@@ -34,67 +34,54 @@ export default function AuthorArticles({ username }: { username: string }) {
       >
         {articleList &&
           articleList.map(({ article, user }: any, index: number) => (
-            <Grid
-              onClick={() =>
-                router.push('/article/' + username + '/' + article.publicUrl)
-              }
-              item
-              xs={12}
-              sm={6}
-              md={6}
-              key={index + 'article-'}
-            >
-              <Stack
-                sx={{
-                  border: `1px solid ${palette.primary.boxBorder}`,
-                  borderRadius: '10px',
-                  padding: '16px',
-                }}
-                direction="row"
-              >
-                <Box
-                  sx={{
-                    marginRight: '15px',
-                    borderRadius: '4px',
-                    borderBottomLeftRadius: '6px',
-                    borderBottomRightRadius: '6px',
-                    overflow: 'hidden',
-                  }}
+            <>
+              {index < 4 && (
+                <Grid
+                  onClick={() =>
+                    router.push('/article/' + username + '/' + article.publicUrl)
+                  }
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  key={index + 'article-'}
                 >
-                  <Image
-                    width={56}
-                    height={56}
-                    sizes="100vw"
-                    src={article?.coverPhotoThumbnail}
-                    alt="coverPhotoThumbnail"
-                  />
-                </Box>
-                <Box>
-                  <Box>
+                  <Stack
+                    sx={{
+                      border: `1px solid ${palette.primary.boxBorder}`,
+                      borderRadius: '10px',
+                      padding: '16px',
+                    }}
+                    direction="row"
+                    alignItems={"center"}
+                    gap={1}
+                  >
+                    
+                    <Image
+                      width={0}
+                      height={0}
+                      style={{ width: '120px', height: '80px' }}
+                      sizes="100vw"
+                      src={article?.coverPhotoThumbnail}
+                      alt="coverPhotoThumbnail"
+                    />
                     <Typography
-                      sx={{ color: palette.primary.fontLightColor }}
-                      variant="subtitle2"
-                    >
+                      sx={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitLineClamp: "2",
+                        height: 50,
+                        WebkitBoxOrient: "vertical",
+                      }}>
                       {article?.title
-                        ? article?.title?.slice(0, 35) + '...'
+                        ? article?.title
                         : '(No title)'}
                     </Typography>
-                  </Box>
-                  <Stack direction="row" sx={{ display: 'flex' }}>
-                    <Box>
-                      <UserAvatar
-                        src={`${ApiEndpoint.ProfileDetails}/avatar/${user?.username}`}
-                        alt={user?.name}
-                        sx={{ width: '25px', height: '25px' }}
-                      />
-                    </Box>
-                    <Box>
-                      <Typography variant="caption">&nbsp;&nbsp;&nbsp;by {user?.name}</Typography>
-                    </Box> 
                   </Stack>
-                </Box>
-              </Stack>
-            </Grid>
+                </Grid>
+              )}
+            </>
           ))}
       </Grid>
     </Box>

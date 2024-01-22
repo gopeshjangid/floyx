@@ -18,10 +18,11 @@ export default function TipColumn({
   details,
   articlePuclicUrl,
   articleId,
+  revalidate,
 }: any) {
   const session = useSession();
   const [value, setValue] = useState<number>(30);
-  const [updateTip, { isError, error }] = useSetTipMutation();
+  const [updateTip, { isError, error, isSuccess }] = useSetTipMutation();
   const { data: tipHistory, isLoading } = useGetTipHistoryQuery(undefined, {
     skip: session?.status !== 'authenticated',
   });
@@ -71,6 +72,13 @@ export default function TipColumn({
       }
     }
   }, [isError, error]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      revalidate();
+    }
+  }, [isSuccess]);
+
   if (isLoading)
     return <Skeleton variant="rectangular" width="100%" height="50px" />;
 
