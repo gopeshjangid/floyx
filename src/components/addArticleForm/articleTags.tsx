@@ -28,9 +28,11 @@ const CustomAutoComplete = styled(Autocomplete)(({ theme }) => ({
 const TagAutocomplete = ({
   onSelectTags,
   maxSelectedTag,
+  resetAll
 }: {
     onSelectTags: (tags: string[]) => void;
     maxSelectedTag?: number;
+    resetAll: boolean;
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[] | never[]>([]);
@@ -144,6 +146,12 @@ const TagAutocomplete = ({
     },
     [formatIndianNumber, optionSelect]
   );
+
+  useEffect(() => {
+    if (resetAll) {
+      setSelectedTags([]);
+    }
+  }, [resetAll]);
 
   return (
     <CustomAutoComplete

@@ -230,12 +230,15 @@ export const artcileDetails = createApi({
         };
       },
       transformResponse: (response: any) => response.value.data,
+      invalidatesTags: [{ type: 'ArticleList', id: 'recent' }, 'ArticleInfoNumber'],
     }),
     publishArticle: builder.mutation<any, any>({
-      query: articleId => ({
-        url: `${ApiEndpoint.PublishDraft}/${articleId}`,
+      query: payload => ({
+        url: `${ApiEndpoint.PublishDraft}/${payload.articleId}`,
         method: 'put',
-        body: {},
+        body: {
+          articleTags: payload.articleTags,
+        },
       }),
       transformResponse: (response: any) => response.value.data,
       invalidatesTags: [{ type: 'ArticleList', id: 'recent' }, 'ArticleInfoNumber'],

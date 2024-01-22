@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
+import { Box, Popover, Tooltip, Typography } from '@mui/material';
 import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';
@@ -12,7 +12,8 @@ import { allRoutes } from '@/constants/allRoutes';
 import { Post as PostDetail } from '@/lib/redux';
 import { useSession } from 'next-auth/react';
 import LikesComments from '../fullArticle/likesComments';
-import { addLinks } from '@/lib/utils';
+import { addLinks, copyTextToClipboard } from '@/lib/utils';
+import CustomDescription from '../customDescription';
 // import { useSession } from "next-auth/react";
 interface postDetail {
   name: string;
@@ -52,12 +53,18 @@ function Post({
   const [buttonAction, setButtonAction] = useState('');
   const [open, setOpen] = useState<boolean>(false);
 
+  const onCopied = () => alert('Copied');
+
   const handleOptions = (val: any, options: Array<string>) => {
     setButtonAction(options[val]);
     if (options[val] === 'Delete Post') {
       setOpen(true);
     } else if (options[val] === 'Direct Link') {
-      router.push(`${allRoutes.post}/${postId}`);
+      const protocol = window.location.protocol;
+      const host = window.location.host;
+      const port = window.location.port;
+      const text = `${protocol}//${host}${allRoutes.post}/${postId}`;
+      copyTextToClipboard(text, onCopied);
     }
   };
   useEffect(() => {
@@ -101,9 +108,8 @@ function Post({
             />
           </Box>
         </Box>
-        <Box>
-          <Typography
-            sx={{ wordWrap: 'break-word' }}
+        <Box pb={1}>
+          <CustomDescription
             variant="h6"
             dangerouslySetInnerHTML={{
               __html: addLinks(content),

@@ -14,6 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CustomDescription from '../customDescription';
 import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 
 const PopularTodaySection = styled(Box)(() => ({
   alignItems: 'center',
@@ -23,7 +24,7 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
   backgroundColor: theme.palette.primary.mainBackground,
   borderRadius: '10px',
-  maxHeight: '100vh',
+  maxHeight: '110vh',
   overflowY: 'auto',
   '& .box': {
     marginTop: '10px',
@@ -34,6 +35,7 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 }));
 
 function RecentArticles() {
+  const router = useRouter();
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const { data, isLoading } = useGetArticleListQuery('recent?forHome=true');
   return (
@@ -74,17 +76,10 @@ function RecentArticles() {
                     <CustomDescription variant="subtitle2" gutterBottom={false}>
                       {article.article.title.slice(0, 100) ?? '(No title)'}...
                     </CustomDescription>
-                    <Button
-                      variant="text"
-                      size="small"
-                      sx={{ fontSize: '.65rem' }}
-                    >
-                      show more
-                    </Button>
                   </Stack>
                 </Stack>
               </Link>
-              <Divider />
+              {data.length - 1 !== index && <Divider />}
             </Box>
           ))
         ) : (
@@ -125,6 +120,16 @@ function RecentArticles() {
           </>
         )}
       </PopularTodayListSection>
+      <Box width="100%" textAlign={'center'} mt={1} mb={1}>
+        <Button
+          onClick={() => router.push('/articles')}
+          variant="text"
+          size="small"
+          sx={{ fontSize: '.65rem' }}
+        >
+          show more
+        </Button>
+      </Box>
     </PopularTodaySection>
   );
 }

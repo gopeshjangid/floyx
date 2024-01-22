@@ -208,16 +208,18 @@ function AddPost({
               {'Please add photo description to publish it.'}
             </Typography>
           )}
-          {imagePreview && (
-            <Image
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: '100%', height: 'auto' }} // optional
-              src={imagePreview}
-              alt="thumbnail"
-            />
-          )}
+          <Box mt={2}>
+            {imagePreview && (
+              <Image
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: '100%', height: 'auto' }} // optional
+                src={imagePreview}
+                alt="thumbnail"
+              />
+            )}
+          </Box>
         </Box>
         <Divider />
         <Box className="upload-media">

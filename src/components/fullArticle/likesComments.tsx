@@ -177,11 +177,11 @@ function LikesComments({
     [setNewCreatedComments]
   );
   const commentAction = useCallback(
-    (data) => {
+    data => {
       let _comments = newCreatedComments.newComments;
       if (data?.isDeleted) {
         _comments = newCreatedComments.newComments.filter(comment => {
-          return (comment.comment.id !== data.id)
+          return comment.comment.id !== data.id;
         });
         if (isArticle) {
           revalidate();
@@ -202,16 +202,15 @@ function LikesComments({
     [setNewCreatedComments, newCreatedComments]
   );
 
-  const CommentButton = () => {
-    
-  }
+  const likeCount = formatIndianNumber(likesCommentsDetails?.numberOfLikes);
+
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
       <Stack direction="row" gap={2} py={1}>
         <Button
           variant="text"
-          startIcon={<LikeIcon />}
+          startIcon={<LikeIcon isLiked={likesCommentsDetails?.likedByAuthor} />}
           onClick={handleArticleLike}
           sx={{ padding: 0 }}
         >
@@ -222,7 +221,8 @@ function LikesComments({
             marginBottom={0}
             sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
-            {formatIndianNumber(likesCommentsDetails?.numberOfLikes)} Likes
+            {likeCount}{' '}
+            {Number(likesCommentsDetails.numberOfLikes) > 1 ? 'Likes' : 'Like'}
           </Typography>
         </Button>
         <Link
