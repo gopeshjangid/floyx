@@ -12,7 +12,7 @@ import {
 import { useState } from 'react';
 
 
-export default function DottedButton({options, handleOption}: any) {
+export default function DottedButton({options, handleOption, setOpen}: any) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
@@ -30,11 +30,18 @@ export default function DottedButton({options, handleOption}: any) {
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    index: number
+    index: number,
+    optionName: string,
   ) => {
     event.stopPropagation();
-    handleOption(index);
-    setAnchorEl(null);
+    const options = ['Report Article', 'Block User', 'Report User'];
+    let optionsIndex = options.indexOf(optionName);
+    if (optionsIndex !== -1) {
+      handleOption(optionsIndex);
+      setAnchorEl(null);
+    } else {
+      setOpen(true);
+    }
   };
 
   return (
@@ -62,7 +69,7 @@ export default function DottedButton({options, handleOption}: any) {
             <MenuItem
               key={index}
               //   selected={index}
-              onClick={event => handleMenuItemClick(event, index)}
+              onClick={event => handleMenuItemClick(event, index, option?.name)}
             >
               <Box sx={{ display: 'flex' }}>
                 {option?.icon && (

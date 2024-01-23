@@ -58,18 +58,20 @@ function PostList({ postData, loadMore, hasMore }: PostProps) {
             }
           >
             {postData?.map((val: any) => (
-              <Post
-                key={`post-${val?.id}-post-created-time-${val.post?.createdDateTime}`}
-                name={val?.author?.name || ''}
-                username={val?.author?.username || ''}
-                createdDateTime={val?.post?.createdDateTime}
-                content={val?.post?.content}
-                shared={val?.post?.shared}
-                image={val?.post?.image}
-                link={val?.post?.link}
-                postDetails={val?.post}
-                postId={val?.id}
-              />
+              <>
+                {val?.author?.username && <Post
+                  key={`post-${val?.id}-post-created-time-${val.post?.createdDateTime}`}
+                  name={val?.author?.name || ''}
+                  username={val?.author?.username || ''}
+                  createdDateTime={val?.post?.createdDateTime}
+                  content={val?.post?.content}
+                  shared={val?.post?.shared}
+                  image={val?.post?.image}
+                  link={val?.post?.link}
+                  postDetails={val?.post}
+                  postId={val?.id}
+                />}
+              </>
             ))}
           </InfiniteScroll>
         </Box>

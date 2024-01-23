@@ -18,13 +18,13 @@ export default function Page({ params }: { params: { postId: string } }) {
       {isLoading ? (
         <DefaultPageSkelton showOnlyContent />
       ) : (
-        postDetail && (
+        postDetail && postDetail?.author?.username && (
           <Post
             name={postDetail?.author?.name}
             username={postDetail?.author?.username}
             createdDateTime={postDetail?.post?.createdDateTime}
             content={postDetail?.post?.content}
-            shared={postDetail?.post?.shared}
+            shared={postDetail?.post?.link}
             image={postDetail?.post?.image}
             link={postDetail?.post?.link}
             postDetails={postDetail?.post}
