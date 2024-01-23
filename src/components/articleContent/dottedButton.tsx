@@ -34,7 +34,7 @@ export default function DottedButton({options, handleOption, setOpen}: any) {
     optionName: string,
   ) => {
     event.stopPropagation();
-    const options = ['Report Article', 'Block user', 'Report user'];
+    const options = ['Report Article', 'Block User', 'Report User'];
     let optionsIndex = options.indexOf(optionName);
     if (optionsIndex !== -1) {
       handleOption(optionsIndex);
