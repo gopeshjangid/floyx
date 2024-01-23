@@ -14,6 +14,8 @@ import { useSetTipMutation } from '@/lib/redux/slices/articleDetails';
 import { useToast } from '../Toast/useToast';
 import { useSession } from 'next-auth/react';
 import useQuery from '@/lib/hooks/useFetch';
+import { revalidateArticleDetail } from '@/actions/actions';
+import { usePathname } from 'next/navigation';
 
 export default function TipColumn({
   details,
@@ -21,8 +23,8 @@ export default function TipColumn({
   articleId,
 }: any) {
   const session = useSession();
-  const { fetchData, data } = useQuery('/api/revalidate');
   const [value, setValue] = useState<number>(30);
+  const pathname = usePathname();
   const [updateTip, { isError, error, isSuccess }] = useSetTipMutation();
   const { data: tipHistory, isLoading } = useGetTipHistoryQuery(undefined, {
     skip: session?.status !== 'authenticated',
@@ -76,9 +78,9 @@ export default function TipColumn({
 
   useEffect(() => {
     if (isSuccess) {
-      fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
+      revalidateArticleDetail(pathname);
     }
-  }, [isSuccess]);
+  }, [isSuccess, pathname]);
 
   if (isLoading)
     return <Skeleton variant="rectangular" width="100%" height="50px" />;

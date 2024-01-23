@@ -1,6 +1,5 @@
 'use client';
 import LinkIcon from '@/assets/images/icons/link.svg';
-import ArticleIcon from '@/images/image/articleIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
 import { Box, Typography, Link, Stack, Divider, Button } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
@@ -19,7 +18,7 @@ import CustomDescription from '../customDescription';
 import { LocationOn } from '@mui/icons-material';
 import Image from 'next/image';
 import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 // import { useGetArticleDetailsQuery } from "@/lib/redux";
 
 export const AuthorDetailBox = styled(Box)(({ theme }) => ({
@@ -58,7 +57,6 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
 }));
 
 export default function AuthorCoulmn({ details }: any) {
-  const { palette } = useTheme();
   const router = useRouter();
   const session = useSession();
 
@@ -108,7 +106,8 @@ export default function AuthorCoulmn({ details }: any) {
               />
             </Box>
             <Divider />
-          </Box>)}
+          </Box>
+        )}
       </Box>
       <Box className="author-box">
         <Box sx={{ marginRight: 2 }}>

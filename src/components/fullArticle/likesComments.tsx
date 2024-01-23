@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
@@ -32,7 +32,7 @@ import Post from '../Post/Post';
 import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
 import Link from 'next/link';
-import useQuery from '@/lib/hooks/useFetch';
+import { revalidateArticleDetail } from '@/actions/actions';
 
 const style = {
   position: 'absolute',
@@ -68,6 +68,7 @@ function LikesComments({
   articleId,
   isArticle = false,
 }: LikeCommentType) {
+  const pathname = usePathname();
   const { data: commentList, isLoading } = useGetCommentListQuery(
     articleId! || '',
     { skip: !showComments }
@@ -86,12 +87,7 @@ function LikesComments({
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
-  const { fetchData, data } = useQuery('/api/revalidate');
-  useEffect(() => {
-    if (data) {
-      router.refresh();
-    }
-  }, [data]);
+
   const [updateLike] = useLikeItemMutation();
   const [checkIsShared] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
@@ -119,7 +115,7 @@ function LikesComments({
       }
     } else {
       if (isArticle) {
-        fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
+        revalidateArticleDetail(pathname);
         await publishArticle({ articleId: itemId, status, payload });
         toast.success('Article is Published Succesfully ');
       } else {
@@ -143,7 +139,7 @@ function LikesComments({
     const type: string = likeType();
     await updateLike({ articleId: itemId, type });
     if (isArticle) {
-      await fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
+      revalidateArticleDetail(pathname);
     }
   };
 
@@ -157,10 +153,10 @@ function LikesComments({
   const onCreatedArticleComment = useCallback(
     commentData => {
       if (commentData && isArticle) {
-        fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
+        revalidateArticleDetail(pathname);
       }
     },
-    [setNewCreatedComments]
+    [setNewCreatedComments, pathname]
   );
 
   const onCreatedNewComment = useCallback(
@@ -188,7 +184,7 @@ function LikesComments({
           return comment.comment.id !== data.id;
         });
         if (isArticle) {
-          fetchData({ method: 'GET', urlEndPoint: '/api/revalidate' });
+          revalidateArticleDetail(pathname);
         }
       } else {
         _comments = newCreatedComments.newComments.map(comment => {
