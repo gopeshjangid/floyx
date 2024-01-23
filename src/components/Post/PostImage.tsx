@@ -1,5 +1,5 @@
 // @ts-check
-import { Box, Skeleton, Typography } from '@mui/material';
+import { Box, Skeleton, Typography, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import Link from 'next/link';
@@ -11,6 +11,7 @@ export default function PostImage({ image, link, shared, isShared }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { palette } = useTheme();
 
   const handleOpen = () => {
     if (!isShared) {
@@ -56,10 +57,10 @@ export default function PostImage({ image, link, shared, isShared }) {
           )}
         </Box>
       )}
-      {link && (
+      {link && !isShared && (
         <Box
           onClick={openInNewTab}
-          sx={{ borderRadius: '10px', overflow: 'hidden' }}
+          sx={{ borderRadius: '10px', overflow: 'hidden', border: `1px solid ${palette.primary.boxBorder}` }}
         >
           {link.thumbnailPath && (
             <Image
@@ -72,9 +73,18 @@ export default function PostImage({ image, link, shared, isShared }) {
               loading="lazy" // Lazy loading
             />
           )}
+          <Typography p={1}>
+            {link.startDate && 
+              moment(link.startDate).format('DD MMM YYYY - ')
+            }
+            {link.title}
+          </Typography>
+          <Typography p={1}>
+            {link.url}
+          </Typography>
         </Box>
       )}
-      {shared && !isShared && (
+      {shared && !isShared && shared?.author?.username && (
         <Link href={`/post/${shared?.post?.id}`}>
           <Post
             name={shared?.author?.name || ''}

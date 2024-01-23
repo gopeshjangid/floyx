@@ -5,6 +5,7 @@ import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,10 +15,11 @@ import {
   Radio,
   RadioGroup,
   Stack,
-  TextareaAutosize,
   Typography,
   useTheme,
 } from '@mui/material';
+import TextareaAutosize from '@/components/CustomTextArea';
+
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import {
@@ -122,6 +124,8 @@ export default function ActionModal({
   setOpenDialog,
   articleDetails,
   username,
+  setItem,
+  text
 }: any) {
   const { palette } = useTheme();
   const toast = useToast();
@@ -129,12 +133,13 @@ export default function ActionModal({
 
   const [reportReason, setReportReason] = useState('');
   const [commentText, setCommentText] = useState('');
+  const [message, setMessage] = useState('');
 
   const [blockUser, { isSuccess: isBlocked, error: blockError }] =
     useBlockUserMutation();
   const [reportUser, { isSuccess: isUserReported, error: userError }] =
     useAddReportUserMutation();
-  const [reportArticle, { isSuccess: isArticleReported, error: articleError }] =
+  const [reportArticle, { data: reportArticleData, isSuccess: isArticleReported, error: articleError, isLoading }] =
     useAddReportArticleMutation();
   const [checkIsShared] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
@@ -156,7 +161,7 @@ export default function ActionModal({
           Reason: reportReason,
         });
       }
-      setOpenDialog(false);
+      // setOpenDialog(false);
     } catch (error) {
       toast.error(
         `Error occured in reporting the ${item === 2 ? 'user' : 'article'}`
@@ -200,6 +205,7 @@ export default function ActionModal({
     switch (item) {
       case 0:
       case 2:
+      case 4: 
         return (
           <Stack direction={'row'} justifyContent="center" gap={1}>
             <FlagIcon /> <Typography variant="h6">Report Issue</Typography>
@@ -236,7 +242,8 @@ export default function ActionModal({
               onClick={handleReportSubmit}
               // disabled={!reportReason}
             >
-              Report
+              {isLoading && <CircularProgress size={20} color="inherit" />}
+              {!isLoading &&  "Report"}
             </Button>
             <Button onClick={handleClose} variant="text">
               Close
@@ -265,6 +272,14 @@ export default function ActionModal({
             </Button>
           </>
         );
+      case 4: 
+        return (
+          <>
+            <Button variant="text" onClick={handleClose} autoFocus>
+              Done
+            </Button>
+          </>
+        )
     }
   };
 
@@ -310,6 +325,16 @@ export default function ActionModal({
             <Divider />
           </Box>
         );
+      case 4: 
+        return (
+          <>
+            <div> {message} </div>
+            <div>
+              The Floyx team will check {text === 'Material' ? 'content posted by user' : 'user profile'}, as soon as possible and will
+              take the appropriate steps.
+            </div>
+          </>
+        )
     }
   };
 
@@ -319,19 +344,31 @@ export default function ActionModal({
   };
 
   useEffect(() => {
-    if (isBlocked || isUserReported || isArticleReported) {
+    if (isBlocked || isUserReported) {
       if (isBlocked) {
         toast.success('The user has been blocked !');
       }
       if (isUserReported) {
         toast.success('The user has been reported!');
       }
-      if (isArticleReported) {
-        toast.success('The Article has been reported!');
-      }
     }
-  }, [isBlocked, isUserReported, isArticleReported]);
+  }, [isBlocked, isUserReported]);
 
+  useEffect(() => {
+    if (reportArticleData && reportArticleData) {
+      if (typeof reportArticleData === 'string') {
+        if (reportArticleData === 'Already_reported') {
+          setMessage('The user has been reported!');
+        }
+        if (reportArticleData === 'Content_has_been_reported_thank_you') {
+          setMessage('Content has been reported Successfully!! Thank you.');
+        }
+        setItem(4);
+        setOpenDialog(true);
+      }
+      console.log(reportArticleData);
+    }
+  }, [reportArticleData, reportArticleData])
   useEffect(() => {
     if (blockError || articleError || userError)
       if (blockError) {

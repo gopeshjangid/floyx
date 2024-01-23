@@ -32,22 +32,7 @@ import Post from '../Post/Post';
 import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
 import Link from 'next/link';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'auto',
-  maxHeight: '80vh',
-  minWidth: '50vw',
-  overflowY: 'scroll',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  padding: 5,
-  m: 2,
-};
+import ShareArticleModal from "./shareArticleModal";
 
 type LikeCommentType = {
   likesCommentsDetails: any;
@@ -83,48 +68,14 @@ function LikesComments({
     newComments: [],
   });
   const { palette } = useTheme();
-  const toast = useToast();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
 
   const [updateLike] = useLikeItemMutation();
-  const [checkIsShared] = useCheckArticleIsSharedMutation();
-  const [publishArticle] = useShareArticleMutation();
-  const [publishPost] = useSharePostMutation();
 
   const handleClick = () => {
     setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handlePublish = async () => {
-    const result: any = await checkIsShared(itemId);
-    const status: boolean = result?.data;
-    const payload = {
-      content: commentText,
-    };
-    if (status) {
-      if (isArticle) {
-        toast.error('This article has already been shared');
-      } else {
-        toast.error('This post has already been shared');
-      }
-    } else {
-      if (isArticle) {
-        revalidate();
-        await publishArticle({ articleId: itemId, status, payload });
-        toast.success('Article is Published Succesfully ');
-      } else {
-        await publishPost({ postId: itemId, payload });
-        toast.success('Post is Published Succesfully ');
-      }
-    }
-    setCommentText('');
-    setOpen(false);
   };
 
   const likeType = () => {
@@ -353,93 +304,20 @@ function LikesComments({
           />
         </Box>
       )}
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          {isArticle && (
-            <>
-              <Box sx={{ padding: '10px' }}>
-                <AddComment
-                  id={itemId}
-                  commentRef={commentRef}
-                  commentType={isPost ? 'PostComment' : 'ArticleComment'}
-                  commentText={commentText}
-                  setCommentText={commentTextHandler}
-                />
-              </Box>
-              {likesCommentsDetails?.coverPhotoPath && (
-                <Box sx={{ padding: '10px', marginTop: '10%' }}>
-                  <Image
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: '100%', height: '100%' }}
-                    src={likesCommentsDetails?.coverPhotoPath}
-                    alt="thumbnail"
-                  />
-                </Box>
-              )}
-              <Box
-                sx={{
-                  padding: '10px',
-                  paddingTop: '1px',
-                  textTransform: 'capitalize',
-                }}
-              >
-                <Typography variant="h1">
-                  {likesCommentsDetails?.title}
-                </Typography>
-              </Box>
-              <Divider />
-              <Box
-                sx={{
-                  paddingTop: '10px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <Button variant="contained" onClick={handlePublish}>
-                  Publish
-                </Button>
-              </Box>
-            </>
-          )}
-          {!isArticle && (
-            <>
-              <AddComment
-                id={itemId}
-                commentRef={commentRef}
-                commentType={isPost ? 'PostComment' : 'ArticleComment'}
-                commentText={commentText}
-                setCommentText={commentTextHandler}
-              />
-              <Post
-                name={likesCommentsDetails?.name}
-                username={likesCommentsDetails?.username}
-                createdDateTime={likesCommentsDetails?.createdDateTime}
-                content={likesCommentsDetails?.content}
-                shared={likesCommentsDetails?.shared}
-                image={likesCommentsDetails?.image}
-                link={likesCommentsDetails?.link}
-                isShared={true}
-                postDetails={likesCommentsDetails}
-                postId={articleId}
-                showComments={false}
-              />
-              <Box
-                sx={{
-                  paddingTop: '10px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <Button variant="contained" onClick={handlePublish}>
-                  Publish
-                </Button>
-              </Box>
-            </>
-          )}
-        </Box>
-      </Modal>
+      <ShareArticleModal 
+        open={open}
+        isArticle={isArticle}
+        itemId={itemId}
+        commentRef={commentRef}
+        isPost={isPost}
+        commentText={commentText}
+        commentTextHandler={commentTextHandler}
+        likesCommentsDetails={likesCommentsDetails}
+        revalidate={revalidate}
+        articleId={articleId}
+        setCommentText={setCommentText}
+        setOpen={setOpen}
+      />
     </Box>
   );
 }

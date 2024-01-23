@@ -23,11 +23,13 @@ import DottedButton from './dottedButton';
 import ShareIcon from '@/images/image/shareIcon';
 import FlagIcon from '@/images/image/flagIcon';
 import BlockUserIcon from '@/images/image/blockUser';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import ActionModal from './actionModal';
 import { useDeleteArticleMutation } from '@/lib/redux';
 import { useRouter } from 'next/navigation';
 import moment from "moment";
+import { useSession } from "next-auth/react";
+import ShareArticleModal from "../fullArticle/shareArticleModal";
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',
@@ -93,11 +95,18 @@ const ArticleContent = styled(Box)(({ theme }) => ({
   },
 }));
 
-const options = [
+const articleOptions = [
   {
     name: 'Report Article',
     icon: <FlagIcon />,
   },
+  {
+    name: 'Share Article',
+    icon: <ShareIcon articleOption={true} />,
+  },
+];
+
+const userOptions = [
   {
     name: 'Block User',
     icon: <BlockUserIcon />,
@@ -106,12 +115,7 @@ const options = [
     name: 'Report User',
     icon: <FlagIcon />,
   },
-  {
-    name: 'Share Article',
-    icon: <ShareIcon />,
-  },
-];
-
+]
 const addEditoptions = [
   {
     name: 'Edit',
@@ -133,6 +137,11 @@ export default function ArticleContainer({
   const { palette } = useTheme();
   const ref = useRef<HTMLElement>(null);
   const router = useRouter();
+  const session = useSession(); 
+  const loginUserName = session.data?.user?.username;
+  const [open, setOpen] = useState(false);
+  const commentRef = useRef();
+  const [commentText, setCommentText] = useState('');
 
   const [item, setItem] = useState<number>();
   const [openDialog, setOpenDialog] = useState(false);
@@ -184,6 +193,7 @@ export default function ArticleContainer({
           return;
       }
     } else {
+      // const []
       setOpenDialog(true);
       setItem(index);
     }
@@ -202,6 +212,13 @@ export default function ArticleContainer({
     offsetHeight: 0,
     offsetWidth: 0,
   };
+  const commentTextHandler = useCallback(
+    text => {
+      setCommentText(text);
+    },
+    [setCommentText]
+  );
+
   return (
     <>
       <ArticleContent onClick={handleClick}>
@@ -222,8 +239,9 @@ export default function ArticleContainer({
                   />
                   <Box className="dottedButton">
                     <DottedButton
-                      options={addEdittype ? addEditoptions : options}
+                      options={addEdittype ? addEditoptions : (userDetails?.username === loginUserName ? articleOptions : [...articleOptions, ...userOptions])}
                       setItem={setItem}
+                      setOpen={setOpen}  
                       handleOption={handleOption}
                     />
                   </Box>
@@ -244,8 +262,9 @@ export default function ArticleContainer({
                   </Box>
                   <Box className="dottedButton">
                     <DottedButton
-                      options={addEdittype ? addEditoptions : options}
+                      options={addEdittype ? addEditoptions : (userDetails?.username === loginUserName ? articleOptions : [...articleOptions, ...userOptions])}
                       setItem={setItem}
+                      setOpen={setOpen}
                       handleOption={handleOption}
                     />
                   </Box>
@@ -337,6 +356,20 @@ export default function ArticleContainer({
         setOpenDialog={setOpenDialog}
         articleDetails={articleDetails}
         username={userDetails?.username}
+        setItem={setItem}
+        text={item === 4 ? "Material": "User"}
+      />
+      <ShareArticleModal
+        open={open}
+        isArticle={true}
+        itemId={articleDetails.id}
+        commentRef={commentRef}
+        isPost={false}
+        commentText={commentText}
+        commentTextHandler={commentTextHandler}
+        likesCommentsDetails={articleDetails}
+        setCommentText={setCommentText}        
+        setOpen={setOpen}
       />
       <Dialog
         open={openConfirmationDialog}
