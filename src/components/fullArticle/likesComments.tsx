@@ -32,7 +32,7 @@ import Post from '../Post/Post';
 import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
 import Link from 'next/link';
-import ShareArticleModal from "./shareArticleModal";
+import ShareArticleModal from './shareArticleModal';
 import { revalidateArticleDetail } from '@/actions/actions';
 
 type LikeCommentType = {
@@ -71,12 +71,17 @@ function LikesComments({
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
+  const [isLiked, UpdateIsLiked] = useState(false);
 
-  const [updateLike] = useLikeItemMutation();
+  const [updateLike, { data, isSuccess }] = useLikeItemMutation();
 
   const handleClick = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (isSuccess) UpdateIsLiked(Boolean(data?.likeByAuthor));
+  }, [data, isSuccess]);
 
   const likeType = () => {
     if (isPost) {
@@ -109,7 +114,6 @@ function LikesComments({
     },
     [setNewCreatedComments, pathname]
   );
-
   const onCreatedNewComment = useCallback(
     (commentData, isLoading) => {
       if (isLoading) {
@@ -152,7 +156,6 @@ function LikesComments({
     },
     [setNewCreatedComments, newCreatedComments]
   );
-
   const likeCount = formatIndianNumber(likesCommentsDetails?.numberOfLikes);
 
   return (
@@ -161,7 +164,11 @@ function LikesComments({
       <Stack direction="row" gap={2} py={1}>
         <Button
           variant="text"
-          startIcon={<LikeIcon isLiked={likesCommentsDetails?.likedByAuthor} />}
+          startIcon={
+            <LikeIcon
+              isLiked={likesCommentsDetails?.likedByAuthor ?? isLiked}
+            />
+          }
           onClick={handleArticleLike}
           sx={{ padding: 0 }}
         >
@@ -304,7 +311,7 @@ function LikesComments({
           />
         </Box>
       )}
-      <ShareArticleModal 
+      <ShareArticleModal
         open={open}
         isArticle={isArticle}
         itemId={itemId}
