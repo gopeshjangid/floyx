@@ -54,6 +54,7 @@ import { GradientText } from '@/components/usernameLink';
 import SidebarProfileBar from '@/components/sidebarProfileInfo';
 import AddPost from '@/components/Post/AddPost';
 import { config } from '@/middleware';
+import { CloseOutlined } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -490,9 +491,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
           sx: { background: palette.background.default, width: '100%' },
         }}
       >
-        <DialogTitle sx={{ textAlign: 'center', paddingBottom: 0 }}>
-          Create Post
-        </DialogTitle>
+        <Stack direction="row" justifyContent={'space-between'}>
+          <DialogTitle sx={{ textAlign: 'center', paddingBottom: 0 }}>
+            Create Post
+          </DialogTitle>
+          <IconButton onClick={() => setOpenWriteDialog(false)}>
+            <CloseOutlined />
+          </IconButton>
+        </Stack>
         <DialogContent sx={{ m: 0, paddingTop: 0 }}>
           <AddPost writeDialog={true} setOpenWriteDialog={setOpenWriteDialog} />
         </DialogContent>

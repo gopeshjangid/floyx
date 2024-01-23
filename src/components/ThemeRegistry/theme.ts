@@ -33,6 +33,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(47, 46, 65, 1)',
             commentFontColor: '#ADB3C6',
+            titleColor: '#1b2530',
           },
           secondary: {
             main: '#ADB3C6', // Text Guide
@@ -90,6 +91,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(255, 255, 255, 1)',
             commentFontColor: '#D9D9D9',
+            titleColor: 'rgb(255, 255, 255, .8)',
           },
           secondary: {
             main: '#A75FFF', // Primary Purple

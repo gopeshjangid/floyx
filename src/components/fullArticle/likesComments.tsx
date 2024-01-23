@@ -58,6 +58,7 @@ function LikesComments({
     articleId! || '',
     { skip: !showComments }
   );
+  console.log('article likesCommentsDetails==>', likesCommentsDetails);
   const isSmallDevice = useMediaQuery('(max-width:400px)');
   const [commentText, setCommentText] = useState('');
   const [newCreatedComments, setNewCreatedComments] = useState<{

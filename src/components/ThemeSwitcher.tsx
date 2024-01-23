@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { FormControlLabel, Skeleton, Switch, styled } from '@mui/material';
+import { setCookie } from 'cookies-next';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -58,6 +59,10 @@ const ThemeSwitch = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setCookie('theme', theme);
+  }, [theme]);
 
   if (!mounted) {
     return <Skeleton width={180} height={60} />;

@@ -1,11 +1,11 @@
 'use client';
 
-import { Box, Popover, Tooltip, Typography } from '@mui/material';
+import { Box, Popover, Tooltip, Typography, useTheme } from '@mui/material';
 import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';
 import PostImage from './PostImage';
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PostActionModal from './PostActionModal';
 import { usePathname, useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
@@ -13,7 +13,6 @@ import { Post as PostDetail } from '@/lib/redux';
 import { useSession } from 'next-auth/react';
 import LikesComments from '../fullArticle/likesComments';
 import { addLinks, copyTextToClipboard } from '@/lib/utils';
-import CustomDescription from '../customDescription';
 import { useToast } from '../Toast/useToast';
 import CollapseDescription from '../collapseText';
 // import { useSession } from "next-auth/react";
@@ -49,6 +48,7 @@ function Post({
 }: postDetail) {
   const session = useSession();
   const toast = useToast();
+  const { palette } = useTheme();
   const userDetail = (session as any)?.data?.user?.username;
   const pathname = usePathname();
   const router = useRouter();
@@ -115,6 +115,7 @@ function Post({
             allowLength={300}
             variant="h6"
             text={addLinks(content)}
+            sx={{ color: palette.primary.titleColor }}
             isDangerouslySetInnerHTML
           />
         </Box>

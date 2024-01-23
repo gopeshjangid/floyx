@@ -11,11 +11,7 @@ export default function WhoToFollow() {
 
   return (
     <Box mt={4}>
-      <Typography
-        sx={{ marginLeft: '12px', color: palette.primary.fontLightColor }}
-      >
-        Who to follow
-      </Typography>
+      <Typography sx={{ marginLeft: '12px' }}>Who to follow</Typography>
       {whoToFollow !== undefined &&
         whoToFollow?.result &&
         whoToFollow?.result?.length > 0 &&

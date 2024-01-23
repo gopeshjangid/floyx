@@ -9,6 +9,7 @@ import {
   CircularProgress,
   Divider,
   useTheme,
+  IconButton,
 } from '@mui/material';
 import React, { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
@@ -26,10 +27,11 @@ import { useToast } from '../Toast/useToast';
 import { useLazyGetUserSuggestionQuery } from '@/lib/redux/slices/comments';
 import MentionItem from '../MentionItem';
 import { GradientText } from '../usernameLink';
+import { CloseOutlined } from '@mui/icons-material';
 
 const initialPostObj = {
   postText: '',
-  postTextLeft: 280,
+  postTextLeft: 2000,
   publishButtonDisabled: false,
 };
 
@@ -90,15 +92,17 @@ function AddPost({
   const handlePostText = useCallback(
     (e: any, newValue: any, newPlainTextValue: any) => {
       const text = e.target.value;
-
+      const newTextCount = calulcateLength(newPlainTextValue);
+      const remaining = 2000 - newTextCount;
+      if (remaining < 0) {
+        return;
+      }
       setPostObj(prev => {
         return {
           ...prev,
-          postText: text,
-          postTextLeft: 280 - calulcateLength(newPlainTextValue),
-          publishButtonDisabled: true
-            ? true
-            : 280 - calulcateLength(newPlainTextValue) < 0,
+          postText: newTextCount > remaining ? text : text.slice(0, remaining),
+          postTextLeft: remaining,
+          publishButtonDisabled: newTextCount > 0,
         };
       });
     },
@@ -188,19 +192,14 @@ function AddPost({
                   appendSpaceOnAdd={true}
                 />
               </MentionsInput>
-              {postObj.postTextLeft < 30 && (
-                <div className="post__warning">
-                  <Typography component={'span'} color={'error'}>
-                    {postObj.postTextLeft > 0
-                      ? 'You are getting close to the maximum character limit.'
-                      : 'You have exceeded the maximum character limit.'}
-                  </Typography>
-
-                  <Typography component={'span'}>
-                    {postObj.postTextLeft}
-                  </Typography>
-                </div>
-              )}
+              <Box textAlign={'right'}>
+                <Typography
+                  color={postObj.postTextLeft < 30 ? 'error' : 'textPrimary'}
+                  variant="caption"
+                >
+                  {postObj.postTextLeft}/2000
+                </Typography>
+              </Box>
             </Box>
           </Box>
           {error && !isLoading && (
@@ -208,18 +207,24 @@ function AddPost({
               {'Please add photo description to publish it.'}
             </Typography>
           )}
-          <Box mt={2}>
-            {imagePreview && (
+          {imagePreview && (
+            <Box position={'relative'} mt={2}>
               <Image
                 width={0}
                 height={0}
                 sizes="100vw"
-                style={{ width: '100%', height: 'auto' }} // optional
+                style={{ width: '100%', height: 'auto', borderRadius: '10px' }} // optional
                 src={imagePreview}
                 alt="thumbnail"
               />
-            )}
-          </Box>
+              <IconButton
+                sx={{ position: 'absolute', top: '-22px', right: '-22px' }}
+                onClick={() => setImagePreview('')}
+              >
+                <CloseOutlined />
+              </IconButton>
+            </Box>
+          )}
         </Box>
         <Divider />
         <Box className="upload-media">
@@ -243,7 +248,7 @@ function AddPost({
           </Box>
         </Box>
       </PostBox>
-      <Box position={'relative'}>
+      <Box mt={2} position={'relative'}>
         {(imagePreview || postObj.postText !== '') && (
           <Button
             variant="contained"

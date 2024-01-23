@@ -18,6 +18,7 @@ declare module '@mui/material/styles' {
     iconSelectedColor: string;
     fontLightColor: string;
     commentFontColor: string;
+    titleColor: string;
     // Add other custom properties as needed
   }
 

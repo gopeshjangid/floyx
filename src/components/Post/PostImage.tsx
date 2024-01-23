@@ -1,7 +1,6 @@
 // @ts-check
 import { Box, Skeleton, Typography, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
-import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
 import Lightbox from 'react-image-lightbox-rotate-fixed';
@@ -60,7 +59,12 @@ export default function PostImage({ image, link, shared, isShared }) {
       {link && !isShared && (
         <Box
           onClick={openInNewTab}
-          sx={{ borderRadius: '10px', overflow: 'hidden', border: `1px solid ${palette.primary.boxBorder}` }}
+          pb={2}
+          sx={{
+            borderRadius: '10px',
+            overflow: 'hidden',
+            border: `1px solid ${palette.primary.boxBorder}`,
+          }}
         >
           {link.thumbnailPath && (
             <Image
@@ -73,15 +77,10 @@ export default function PostImage({ image, link, shared, isShared }) {
               loading="lazy" // Lazy loading
             />
           )}
-          <Typography p={1}>
-            {link.startDate && 
-              moment(link.startDate).format('DD MMM YYYY - ')
-            }
-            {link.title}
-          </Typography>
-          <Typography p={1}>
-            {link.url}
-          </Typography>
+          <Box pl={1}>
+            <Typography variant="subtitle2">{window.location.host}</Typography>
+            <Link href={link.url}>{link.title}</Link>
+          </Box>
         </Box>
       )}
       {shared && !isShared && shared?.author?.username && (

@@ -34,12 +34,12 @@ export const PostBox = styled(Box)(({ theme }) => ({
     },
   },
   '& .input-container': {
-    padding: '2.5rem 2rem',
+    padding: '2.5rem 1rem',
 
     '& .styled-input-container': {
       display: 'flex',
       width: '100%',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'space-between',
       '& .mention-input': {
         display: 'flex',

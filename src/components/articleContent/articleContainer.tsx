@@ -27,9 +27,10 @@ import { useCallback, useRef, useState } from 'react';
 import ActionModal from './actionModal';
 import { useDeleteArticleMutation } from '@/lib/redux';
 import { useRouter } from 'next/navigation';
-import moment from "moment";
-import { useSession } from "next-auth/react";
-import ShareArticleModal from "../fullArticle/shareArticleModal";
+import moment from 'moment';
+import { useSession } from 'next-auth/react';
+import ShareArticleModal from '../fullArticle/shareArticleModal';
+import CustomDescription from '../customDescription';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',
@@ -115,7 +116,7 @@ const userOptions = [
     name: 'Report User',
     icon: <FlagIcon />,
   },
-]
+];
 const addEditoptions = [
   {
     name: 'Edit',
@@ -137,7 +138,7 @@ export default function ArticleContainer({
   const { palette } = useTheme();
   const ref = useRef<HTMLElement>(null);
   const router = useRouter();
-  const session = useSession(); 
+  const session = useSession();
   const loginUserName = session.data?.user?.username;
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
@@ -239,9 +240,15 @@ export default function ArticleContainer({
                   />
                   <Box className="dottedButton">
                     <DottedButton
-                      options={addEdittype ? addEditoptions : (userDetails?.username === loginUserName ? articleOptions : [...articleOptions, ...userOptions])}
+                      options={
+                        addEdittype
+                          ? addEditoptions
+                          : userDetails?.username === loginUserName
+                            ? articleOptions
+                            : [...articleOptions, ...userOptions]
+                      }
                       setItem={setItem}
-                      setOpen={setOpen}  
+                      setOpen={setOpen}
                       handleOption={handleOption}
                     />
                   </Box>
@@ -262,7 +269,13 @@ export default function ArticleContainer({
                   </Box>
                   <Box className="dottedButton">
                     <DottedButton
-                      options={addEdittype ? addEditoptions : (userDetails?.username === loginUserName ? articleOptions : [...articleOptions, ...userOptions])}
+                      options={
+                        addEdittype
+                          ? addEditoptions
+                          : userDetails?.username === loginUserName
+                            ? articleOptions
+                            : [...articleOptions, ...userOptions]
+                      }
                       setItem={setItem}
                       setOpen={setOpen}
                       handleOption={handleOption}
@@ -275,14 +288,15 @@ export default function ArticleContainer({
           <Grid item xs={12} sm={7}>
             <Box className="details" p={1}>
               <Box className="top">
-                <Stack
-                  justifyContent={'flex-start'}
-                  direction={"column"}
-                >
-                  {articleDetails.modifiedDate && <Typography>
-                    {`Last saved on ${moment(articleDetails.modifiedDate).format('LL')}`}
-                  </Typography>}
-                  <Typography
+                <Stack justifyContent={'flex-start'} direction={'column'}>
+                  {articleDetails.modifiedDate && (
+                    <Typography>
+                      {`Last saved on ${moment(
+                        articleDetails.modifiedDate
+                      ).format('LL')}`}
+                    </Typography>
+                  )}
+                  <CustomDescription
                     variant="h5"
                     sx={{
                       width: 'auto',
@@ -290,10 +304,10 @@ export default function ArticleContainer({
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }}
-                    color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
+                    color={palette.primary.titleColor}
                   >
                     {articleDetails?.title ? articleDetails?.title : ''}
-                  </Typography>
+                  </CustomDescription>
                   <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
                     {tipHistory ? (
                       tippedOrNot() ? (
@@ -357,7 +371,7 @@ export default function ArticleContainer({
         articleDetails={articleDetails}
         username={userDetails?.username}
         setItem={setItem}
-        text={item === 4 ? "Material": "User"}
+        text={item === 4 ? 'Material' : 'User'}
       />
       <ShareArticleModal
         open={open}
@@ -368,7 +382,7 @@ export default function ArticleContainer({
         commentText={commentText}
         commentTextHandler={commentTextHandler}
         likesCommentsDetails={articleDetails}
-        setCommentText={setCommentText}        
+        setCommentText={setCommentText}
         setOpen={setOpen}
       />
       <Dialog
