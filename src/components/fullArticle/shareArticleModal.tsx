@@ -4,6 +4,7 @@ import Image from "next/image";
 import Post from "../Post/Post";
 import { useCheckArticleIsSharedMutation, useShareArticleMutation, useSharePostMutation } from "@/lib/redux";
 import { useToast } from "../Toast/useToast";
+import { usePathname } from "next/navigation";
 
 const style = {
   position: 'absolute',
@@ -48,6 +49,7 @@ export default function ShareArticleModal({
     articleId?: string; 
     revalidate?: any; 
 }) {
+  const pathname = usePathname();
   const [checkIsShared, {isLoading}] = useCheckArticleIsSharedMutation();
   const [publishArticle, {isLoading: publishLoading}] = useShareArticleMutation();
   const [publishPost, {isLoading: postLoading}] = useSharePostMutation();
@@ -70,7 +72,7 @@ export default function ShareArticleModal({
         await publishArticle({ articleId: itemId, status, payload });
         toast.success('Article is Published Succesfully ');
         if (revalidate) {
-          revalidate();
+          revalidate(pathname);
         }
       } else {
         await publishPost({ postId: itemId, payload });

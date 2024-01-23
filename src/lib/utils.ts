@@ -58,9 +58,7 @@ export const fetchServerData = async (
   url: string
 ): { isError: boolean; data: any } => {
   try {
-    const res = await fetch(url, {
-      next: { tags: ['articleDetail'] },
-    });
+    const res = await fetch(url);
     if (!res.ok) {
       return { isError: true, data: null };
     }

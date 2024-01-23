@@ -15,7 +15,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import UserAvatar from '../UserAvatar';
-import { iconFloyx, iconLinkMessage } from '@/assets/images';
+import {
+  iconFloyx,
+  iconLinkGradient,
+  iconLinkMessage,
+  iconTelegramGradient,
+  iconUserGradient,
+} from '@/assets/images';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { getRelativeTime } from '@/lib/utils';
 import { INotification } from '@/app/(secured)/notifications/types';
@@ -148,6 +154,18 @@ const NotificationCard = ({
     }
   };
 
+  const getNotificationIcon = () => {
+    if (type === 0) return iconLinkMessage;
+    if (type === 1) return iconLinkGradient;
+    if (type === 2) return iconUserGradient;
+    if (type === 3) return iconTelegramGradient;
+    if (type === 4) return iconUserGradient;
+    if (type === 5) return iconUserGradient;
+    if (type === 6) return iconLinkMessage;
+
+    return iconLinkMessage;
+  };
+
   return (
     <ListItemItem active={state ? 1 : 0}>
       <ListItemAvatar>
@@ -164,9 +182,8 @@ const NotificationCard = ({
               height: { md: '59px', xs: '50px' },
             }}
           />
-          {/* TODO: as types and how to define it */}
           <span>
-            <Image src={iconLinkMessage} alt="icon" />
+            <Image src={getNotificationIcon()} alt="icon" />
           </span>
         </Link>
       </ListItemAvatar>

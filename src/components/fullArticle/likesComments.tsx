@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useCallback, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
@@ -33,6 +33,7 @@ import { formatIndianNumber } from '@/lib/utils';
 import { useSharePostMutation } from '@/lib/redux';
 import Link from 'next/link';
 import ShareArticleModal from "./shareArticleModal";
+import { revalidateArticleDetail } from '@/actions/actions';
 
 type LikeCommentType = {
   likesCommentsDetails: any;
@@ -42,7 +43,6 @@ type LikeCommentType = {
   showComments?: boolean;
   articleId: string;
   isArticle?: boolean;
-  revalidate?: any;
 };
 function LikesComments({
   likesCommentsDetails,
@@ -52,8 +52,8 @@ function LikesComments({
   showComments = false,
   articleId,
   isArticle = false,
-  revalidate,
 }: LikeCommentType) {
+  const pathname = usePathname();
   const { data: commentList, isLoading } = useGetCommentListQuery(
     articleId! || '',
     { skip: !showComments }
@@ -90,7 +90,7 @@ function LikesComments({
     const type: string = likeType();
     await updateLike({ articleId: itemId, type });
     if (isArticle) {
-      revalidate();
+      revalidateArticleDetail(pathname);
     }
   };
 
@@ -104,10 +104,10 @@ function LikesComments({
   const onCreatedArticleComment = useCallback(
     commentData => {
       if (commentData && isArticle) {
-        revalidate();
+        revalidateArticleDetail(pathname);
       }
     },
-    [setNewCreatedComments]
+    [setNewCreatedComments, pathname]
   );
 
   const onCreatedNewComment = useCallback(
@@ -135,7 +135,7 @@ function LikesComments({
           return comment.comment.id !== data.id;
         });
         if (isArticle) {
-          revalidate();
+          revalidateArticleDetail(pathname);
         }
       } else {
         _comments = newCreatedComments.newComments.map(comment => {
@@ -313,7 +313,7 @@ function LikesComments({
         commentText={commentText}
         commentTextHandler={commentTextHandler}
         likesCommentsDetails={likesCommentsDetails}
-        revalidate={revalidate}
+        revalidate={revalidateArticleDetail}
         articleId={articleId}
         setCommentText={setCommentText}
         setOpen={setOpen}

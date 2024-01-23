@@ -3,13 +3,12 @@ import AuthorCoulmn from '@/components/fullArticle/authorColumn';
 import FullArticle from '@/components/fullArticle/fullArticle';
 import LikesComments from '@/components/fullArticle/likesComments';
 import TipColumn from '@/components/fullArticle/tipCoumn';
-import { Alert, Skeleton, useMediaQuery } from '@mui/material';
+import { Alert, Skeleton } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { Metadata, ResolvingMetadata } from 'next';
 // import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
 import LoginHeader from '@/components/LoginHeader';
-import { revalidateTag } from 'next/cache';
 import LoginModal from '@/components/LoginModal';
 
 async function Page({ params }: any) {
@@ -20,11 +19,6 @@ async function Page({ params }: any) {
     `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
   );
   const articleId = articleDetails?.article?.id;
-
-  async function revalidate() {
-    'use server';
-    revalidateTag('articleDetail');
-  }
 
   return (
     <>
@@ -46,7 +40,6 @@ async function Page({ params }: any) {
                 details={articleDetails}
                 articlePuclicUrl={articlePuclicUrl}
                 articleId={articleId}
-                revalidate={revalidate}
               />
             </Suspense>
           </section>
@@ -71,7 +64,6 @@ async function Page({ params }: any) {
                 showComments={true}
                 articleId={articleId}
                 isArticle
-                revalidate={revalidate}
               />
             </Suspense>
           </section>
