@@ -169,23 +169,21 @@ const NotificationCard = ({
   return (
     <ListItemItem active={state ? 1 : 0}>
       <ListItemAvatar>
-        <Link href={`/profile/${publisher.username}/posts'`}>
-          <UserAvatar
-            src={
-              type === 6
-                ? iconFloyx
-                : `${ApiEndpoint.ProfileDetails}/avatar/${publisher.username}`
-            }
-            alt={publisher?.name}
-            sx={{
-              width: { md: '59px', xs: '50px' },
-              height: { md: '59px', xs: '50px' },
-            }}
-          />
-          <span>
-            <Image src={getNotificationIcon()} alt="icon" />
-          </span>
-        </Link>
+        <UserAvatar
+          src={
+            type === 6
+              ? iconFloyx
+              : `${ApiEndpoint.ProfileDetails}/avatar/${publisher.username}`
+          }
+          alt={publisher?.name}
+          sx={{
+            width: { md: '59px', xs: '50px' },
+            height: { md: '59px', xs: '50px' },
+          }}
+        />
+        <span>
+          <Image src={getNotificationIcon()} alt="icon" />
+        </span>
       </ListItemAvatar>
       <ListItemText
         onClick={() => markAsRead(id, objectId, publisher.username, origin)}
