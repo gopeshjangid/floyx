@@ -133,7 +133,7 @@ export default function AuthorCoulmn({ details }: any) {
               </Typography>
             </Stack>
             <Stack direction="row">
-              <ArticleProfileIcon width="20px" height="20px" />
+              <ArticleProfileIcon active={true} width="20px" height="20px" />
               <Typography variant="body2" sx={{ margin: '0px 5px' }}>
                 Articles:
               </Typography>
