@@ -77,6 +77,7 @@ const ChatHeader = ({
                   fontSize="16px"
                   fontWeight={500}
                   component="span"
+                  className='text-wrap'
                 >
                   {name?.split(' ')[0]}
                 </Typography>
@@ -84,7 +85,7 @@ const ChatHeader = ({
                   fontSize="14px"
                   fontWeight={400}
                   component="span"
-                  className="gradient-text"
+                  className="gradient-text text-wrap"
                   ml={1}
                 >
                   @{username}

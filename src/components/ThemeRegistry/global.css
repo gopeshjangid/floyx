@@ -35,3 +35,7 @@ a {
 .post-hyperlink:hover {
     text-decoration: underline;
 }
+
+.text-wrap{
+  word-break: break-all;
+}

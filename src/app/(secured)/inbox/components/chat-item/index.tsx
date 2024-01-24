@@ -79,16 +79,15 @@ const ChatCard = ({ username, name, lastMessageDate, lastText }: IChatCard) => {
                   fontSize="16px"
                   fontWeight={500}
                   component="span"
-                >
+                  className="text-wrap">
                   {name.split(' ')[0]}
                 </Typography>
                 <Typography
                   fontSize="14px"
                   fontWeight={400}
                   component="span"
-                  className="gradient-text"
-                  ml={1}
-                >
+                  className="gradient-text text-wrap"
+                  ml={1}>
                   @{username}
                 </Typography>
               </Box>
