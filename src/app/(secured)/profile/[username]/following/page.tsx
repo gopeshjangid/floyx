@@ -19,7 +19,7 @@ import {
   useUserFollowedAccountsQuery,
 } from '@/lib/redux/slices/profile';
 import { useParams } from 'next/navigation';
-import UsernameLink from '@/components/usernameLink';
+import UsernameLink, { ProfileName } from '@/components/usernameLink';
 import FollowUser from '@/components/FollowUser';
 import Link from 'next/link';
 import UserAvatar from '@/components/UserAvatar';
@@ -159,7 +159,6 @@ const MyFollowers: React.FC = () => {
               loader={<SectionSkeleton key="loader-ininfite" />}
               scrollableTarget="followedscrollableDiv"
               scrollThreshold={0.6}
-              off
               endMessage={
                 !isFetching && (
                   <Box
@@ -198,12 +197,12 @@ const MyFollowers: React.FC = () => {
                     </Box>
                     <Stack width="60%" justifyContent={'center'} gap={1}>
                       <Stack direction="row" gap={1}>
-                        <Typography
+                        <ProfileName
                           variant="body2"
                           sx={{ color: palette.primary.fontLightColor }}
                         >
                           {follower?.name}
-                        </Typography>
+                        </ProfileName>
                         <UsernameLink username={follower?.username ?? ''} />
                       </Stack>
                       <Stack direction="row" gap={1}>

@@ -97,11 +97,10 @@ const Page: React.FC = () => {
   return (
     <Box
       sx={{
-        overflow: 'auto',
-        height: clientHeight,
+        overflowY: 'auto',
+        maxHeight: '100vh',
       }}
       ref={parentRef}
-      id="scrollableDiv"
     >
       <ProfileSection />
       <Box sx={{ mb: 2 }}>{tabs}</Box>

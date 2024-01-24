@@ -10,6 +10,7 @@ interface PostProps {
   postData: PostDetailResult[];
   loadMore: any;
   hasMore: boolean;
+  scrollThreshold?: number;
 }
 
 const LoaderSkeleton = () => {
@@ -30,7 +31,7 @@ const LoaderSkeleton = () => {
   );
 };
 
-function PostList({ postData, loadMore, hasMore }: PostProps) {
+function PostList({ postData, loadMore, hasMore, scrollThreshold }: PostProps) {
   const { palette } = useTheme();
   return (
     <>
@@ -40,6 +41,7 @@ function PostList({ postData, loadMore, hasMore }: PostProps) {
             dataLength={postData.length} //This is important field to render the next data
             next={loadMore}
             hasMore={hasMore}
+            scrollThreshold={scrollThreshold}
             loader={<LoaderSkeleton key="loader-ininfite" />}
             endMessage={
               <Box
@@ -57,21 +59,23 @@ function PostList({ postData, loadMore, hasMore }: PostProps) {
               </Box>
             }
           >
-            {postData?.map((val: any) => (
-              <>
-                {val?.author?.username && <Post
-                  key={`post-${val?.id}-post-created-time-${val.post?.createdDateTime}`}
-                  name={val?.author?.name || ''}
-                  username={val?.author?.username || ''}
-                  createdDateTime={val?.post?.createdDateTime}
-                  content={val?.post?.content}
-                  shared={val?.post?.shared}
-                  image={val?.post?.image}
-                  link={val?.post?.link}
-                  postDetails={val?.post}
-                  postId={val?.id}
-                />}
-              </>
+            {postData?.map((val: any, index) => (
+              <React.Fragment key={`post-item-list-${index}`}>
+                {val?.author?.username && (
+                  <Post
+                    key={`post-${val?.id}-post-created-time-${val.post?.createdDateTime}`}
+                    name={val?.author?.name || ''}
+                    username={val?.author?.username || ''}
+                    createdDateTime={val?.post?.createdDateTime}
+                    content={val?.post?.content}
+                    shared={val?.post?.shared}
+                    image={val?.post?.image}
+                    link={val?.post?.link}
+                    postDetails={val?.post}
+                    postId={val?.id}
+                  />
+                )}
+              </React.Fragment>
             ))}
           </InfiniteScroll>
         </Box>

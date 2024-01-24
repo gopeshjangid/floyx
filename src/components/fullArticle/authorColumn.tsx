@@ -3,7 +3,7 @@ import LinkIcon from '@/assets/images/icons/link.svg';
 import ProfileTickIcon from '@/images/image/profileTick';
 import { Box, Typography, Link, Stack, Divider, Button } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
-import UsernameLink from '../usernameLink';
+import UsernameLink, { ProfileName } from '../usernameLink';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import {
@@ -119,9 +119,7 @@ export default function AuthorCoulmn({ details }: any) {
         </Box>
         <Stack alignItems="flex-start">
           <Stack direction={'row'} gap={1}>
-            <Typography variant="subtitle1" component={'span'}>
-              {details?.user?.name}
-            </Typography>
+            <ProfileName variant="subtitle1">{details?.user?.name}</ProfileName>
             <UsernameLink username={details?.user?.username} />
           </Stack>
           <Stack justifyContent={'flex-start'} direction="row" gap={2}>

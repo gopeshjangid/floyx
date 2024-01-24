@@ -1,6 +1,12 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
@@ -11,29 +17,26 @@ import {
   Divider,
   Typography,
   Button,
-  Modal,
   Stack,
   useTheme,
   Skeleton,
   useMediaQuery,
 } from '@mui/material';
 import AddComment from '../Post/AddComment';
-import { useToast } from '../Toast/useToast';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
   useLikeItemMutation,
-  useShareArticleMutation,
-  useCheckArticleIsSharedMutation,
   UserComment,
 } from '@/lib/redux/slices/articleDetails';
 import Comment from '../Comment';
 import { allRoutes } from '@/constants/allRoutes';
-import Image from 'next/image';
-import Post from '../Post/Post';
 import { formatIndianNumber } from '@/lib/utils';
-import { useSharePostMutation } from '@/lib/redux';
 import Link from 'next/link';
 import ShareArticleModal from './shareArticleModal';
 import { revalidateArticleDetail } from '@/actions/actions';
+import SplitButton from '../SplitButton';
+
+const commentLimitOptions = ['Most recent', 'All comments'];
 
 type LikeCommentType = {
   likesCommentsDetails: any;
@@ -58,9 +61,12 @@ function LikesComments({
     articleId! || '',
     { skip: !showComments }
   );
-  console.log('article likesCommentsDetails==>', likesCommentsDetails);
+  const [generalizedComments, setGeneralizedComments] = useState<UserComment[]>(
+    []
+  );
   const isSmallDevice = useMediaQuery('(max-width:400px)');
   const [commentText, setCommentText] = useState('');
+  const [commentLimit, setCommentLimit] = useState('Most recent');
   const [newCreatedComments, setNewCreatedComments] = useState<{
     isAdding: boolean;
     newComments: UserComment[];
@@ -91,6 +97,24 @@ function LikesComments({
       return 'ArticleLike';
     }
   };
+
+  useEffect(() => {
+    if (commentList)
+      setGeneralizedComments(
+        commentList
+          .slice()
+          .sort((a, b) => b.comment.createdDateTime - a.comment.createdDateTime)
+      );
+  }, [commentList]);
+
+  useEffect(() => {
+    if (!newCreatedComments.isAdding) {
+      setGeneralizedComments(comments => [
+        ...newCreatedComments.newComments,
+        ...comments,
+      ]);
+    }
+  }, [newCreatedComments, setGeneralizedComments]);
 
   const handleArticleLike = async () => {
     const type: string = likeType();
@@ -126,7 +150,7 @@ function LikesComments({
         setNewCreatedComments(comments => ({
           ...comments,
           isAdding: false,
-          newComments: [...comments.newComments, commentData],
+          newComments: [commentData],
         }));
       }
     },
@@ -158,6 +182,10 @@ function LikesComments({
     [setNewCreatedComments, newCreatedComments]
   );
   const likeCount = formatIndianNumber(likesCommentsDetails?.numberOfLikes);
+
+  const onCommentHandler = useCallback(index => {
+    setCommentLimit(commentLimitOptions[index]);
+  }, []);
 
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
@@ -229,55 +257,6 @@ function LikesComments({
           </Typography>
         </Button>
       </Stack>
-      {isArticle && <Divider />}
-      {!isPost && !isShared && (
-        <Typography variant="h5" sx={{ marginTop: '40px' }}>
-          Comments
-        </Typography>
-      )}
-      {isLoading && (
-        <Stack gap={1}>
-          <Skeleton width="100%" height="50px" />
-          <Skeleton width="100%" height="50px" />
-        </Stack>
-      )}
-      {showComments && (
-        <Box>
-          {Array.isArray(commentList) &&
-            commentList.map((val: any, index: number) => (
-              <div key={'comment-list-item-' + index}>
-                <Comment
-                  comment={val}
-                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
-                  setCommentText={commentTextHandler}
-                  inputRef={commentRef}
-                  onAction={commentAction}
-                />
-                {index !== commentList.length - 1 && <Divider />}
-              </div>
-            ))}
-        </Box>
-      )}
-      {newCreatedComments?.newComments.length > 0 && (
-        <Box>
-          {Array.isArray(newCreatedComments?.newComments) &&
-            newCreatedComments?.newComments.map((val: any, index: number) => (
-              <div key={'new-comment-list-item-' + index}>
-                <Comment
-                  comment={val}
-                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
-                  setCommentText={commentTextHandler}
-                  inputRef={commentRef}
-                  onAction={commentAction}
-                  isNewComment={true}
-                />
-                {index !== newCreatedComments?.newComments.length - 1 && (
-                  <Divider />
-                )}
-              </div>
-            ))}
-        </Box>
-      )}
       {!isPost && !isShared && (
         <>
           <Box
@@ -312,6 +291,70 @@ function LikesComments({
           />
         </Box>
       )}
+      {isArticle && <Divider />}
+      {!isPost && !isShared && (
+        <Typography variant="h5" sx={{ marginTop: '40px' }}>
+          Comments
+        </Typography>
+      )}
+      {isLoading && (
+        <Stack gap={1}>
+          <Skeleton width="100%" height="50px" />
+          <Skeleton width="100%" height="50px" />
+        </Stack>
+      )}
+      {generalizedComments.length > 0 && (
+        <Box width="100%" textAlign="right">
+          <Suspense fallback="loading...">
+            <SplitButton
+              options={commentLimitOptions}
+              handleOptions={onCommentHandler}
+              actionIcon={<ArrowDropDownIcon />}
+            />
+          </Suspense>
+        </Box>
+      )}
+      {showComments && (
+        <Box>
+          {Array.isArray(generalizedComments) &&
+            (commentLimit === 'Most recent'
+              ? generalizedComments.slice(0, 5)
+              : generalizedComments
+            ).map((val: any, index: number) => (
+              <div key={'comment-list-item-' + index}>
+                <Comment
+                  comment={val}
+                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                  setCommentText={commentTextHandler}
+                  inputRef={commentRef}
+                  onAction={commentAction}
+                />
+                {index !== generalizedComments.length - 1 && <Divider />}
+              </div>
+            ))}
+        </Box>
+      )}
+      {newCreatedComments?.newComments.length > 0 && (
+        <Box>
+          {Array.isArray(newCreatedComments?.newComments) &&
+            newCreatedComments?.newComments.map((val: any, index: number) => (
+              <div key={'new-comment-list-item-' + index}>
+                <Comment
+                  comment={val}
+                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                  setCommentText={commentTextHandler}
+                  inputRef={commentRef}
+                  onAction={commentAction}
+                  isNewComment={true}
+                />
+                {index !== newCreatedComments?.newComments.length - 1 && (
+                  <Divider />
+                )}
+              </div>
+            ))}
+        </Box>
+      )}
+
       <ShareArticleModal
         open={open}
         isArticle={isArticle}

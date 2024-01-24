@@ -3,7 +3,6 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { earningsService } from './slices/earnings';
 import { postServices } from './slices/posts';
 import { artcileDetails } from './slices/articleDetails';
-import { userService } from './slices/user';
 import { commentService } from './slices/comments';
 import { profileService } from './slices/profile';
 import { registrationService } from './slices/registration';
@@ -16,7 +15,6 @@ export const reducer = combineReducers({
   [postServices.reducerPath]: postServices.reducer,
   [artcileDetails.reducerPath]: artcileDetails.reducer,
   [tagServices.reducerPath]: tagServices.reducer,
-  [userService.reducerPath]: userService.reducer,
   [commentService.reducerPath]: commentService.reducer,
   [profileService.reducerPath]: profileService.reducer,
   [registrationService.reducerPath]: registrationService.reducer,

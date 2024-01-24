@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
-import UsernameLink from './usernameLink';
+import UsernameLink, { ProfileName } from './usernameLink';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
@@ -42,21 +42,18 @@ const SidebarProfileBar: React.FC = () => {
           <Stack alignItems="center" gap={1}>
             <Avatar src={data?.avatar} />
             <Stack alignItems="center" justifyContent="center">
-              <Typography
+              <ProfileName
                 variant="subtitle2"
                 sx={{
-                  color: palette.primary.fontLightColor,
                   textAlign: 'center',
                 }}
               >
                 {data?.name}
-                <br />
-                <UsernameLink
-                  variant="subtitle2"
-                  username={data?.username ?? ''}
-                />
-              </Typography>
-
+              </ProfileName>
+              <UsernameLink
+                variant="subtitle2"
+                username={data?.username ?? ''}
+              />
               <Stack direction="row" gap={1}>
                 <Typography
                   display="inline-flex"

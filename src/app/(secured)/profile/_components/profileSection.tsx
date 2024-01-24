@@ -40,7 +40,7 @@ import LinkIcon from '@/assets/images/icons/link.svg';
 //import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import BlockReportUser from './blockReportUser';
-import UsernameLink from '@/components/usernameLink';
+import UsernameLink, { ProfileName } from '@/components/usernameLink';
 import { useToast } from '@/components/Toast/useToast';
 import { useSession } from 'next-auth/react';
 import CustomChip from '@/components/CustomGridientChip';
@@ -51,7 +51,6 @@ import TextareaAutosize from '@/components/CustomTextArea';
 import Link from 'next/link';
 import CustomDescription from '@/components/customDescription';
 interface ProfileFollowerWrapperProps extends BoxProps {
-  isMobile: boolean;
   top?: string;
 }
 
@@ -99,26 +98,22 @@ const ProfilePicUploader = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
 }));
 
-const ProfileCover = styled(Box)<Omit<ProfileFollowerWrapperProps, 'isMobile'>>(
-  () => ({
-    height: '280px',
-    borderRadius: '10px',
-    width: '100%',
-    position: 'relative',
-  })
-);
+const ProfileCover = styled(Box)<ProfileFollowerWrapperProps>(() => ({
+  height: '280px',
+  borderRadius: '10px',
+  width: '100%',
+  position: 'relative',
+}));
 
-const ProfilePic = styled(Box)<ProfileFollowerWrapperProps>(
-  ({ theme, ...props }) => ({
-    top: '82%',
-    left: '13px',
-    background: theme.palette.background.default,
-    borderRadius: '50px',
-    width: '100px',
-    height: '100px',
-    position: 'absolute',
-  })
-);
+const ProfilePic = styled(Box)<ProfileFollowerWrapperProps>(({ theme }) => ({
+  top: '82%',
+  left: '13px',
+  background: theme.palette.background.default,
+  borderRadius: '50px',
+  width: '100px',
+  height: '100px',
+  position: 'absolute',
+}));
 
 const OtherUserProfileActions: React.FC<{
   username: string;
@@ -295,15 +290,7 @@ const ProfileSection: React.FC = () => {
                   >
                     <ChevronLeft fontSize="medium" color="secondary" />
                   </IconButton>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      color: palette.primary.fontLightColor,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {profile?.name}
-                  </Typography>
+                  <ProfileName variant="subtitle1">{profile?.name}</ProfileName>
                   &nbsp;
                   <UsernameLink username={profile?.username ?? ''} />
                 </Stack>
@@ -401,7 +388,6 @@ const ProfileSection: React.FC = () => {
               )}
               {!isEdit && isSameuser && (
                 <ProfileFollowerWrapper
-                  isMobile={isMobile}
                   top="4%"
                   sx={{ top: '16px', right: '16px' }}
                 >
@@ -416,7 +402,7 @@ const ProfileSection: React.FC = () => {
                   </Box>
                 </ProfileFollowerWrapper>
               )}
-              <ProfileFollowerWrapper top="70%" isMobile={isMobile}>
+              <ProfileFollowerWrapper top="70%">
                 <Box display="flex" p={1} alignItems="center" gap={1}>
                   <Link href={`/profile/${username}/following`}>
                     <Typography variant="subtitle2">Following</Typography>
@@ -441,7 +427,7 @@ const ProfileSection: React.FC = () => {
               </ProfileFollowerWrapper>
             </Box>
           )}
-          <ProfilePic isMobile={isMobile}>
+          <ProfilePic>
             {isLoading && !profile ? (
               <Skeleton
                 variant="circular"
@@ -582,7 +568,7 @@ const ProfileSection: React.FC = () => {
             {aboutLoading ? (
               <Skeleton variant="rectangular" height={'30px'} width="100%" />
             ) : (
-              <>
+              <Stack direction={'row'} gap={1} alignItems={'flex-end'}>
                 <Box display="flex" gap={1}>
                   <LocationOn />
                   <Typography variant="body2" color="textPrimary">
@@ -600,13 +586,18 @@ const ProfileSection: React.FC = () => {
                     {profileAbout?.about?.website}
                   </Button>
                 </Box>
-                <Box display="flex" gap={1} alignItems={'flex-start'}>
-                  <Image src={Calender} alt="Calender Icon" />
+                <Box display="flex" gap={1}>
+                  <Image
+                    src={Calender}
+                    width={20}
+                    height={20}
+                    alt="Calender Icon"
+                  />
                   <Typography variant="subtitle2" sx={{ color: 'grey' }}>
                     {profile?.joinedDate}
                   </Typography>
                 </Box>
-              </>
+              </Stack>
             )}
           </Stack>
           <Box my={2}>

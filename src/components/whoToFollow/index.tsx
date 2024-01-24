@@ -1,7 +1,7 @@
 'use client';
 import { Box, Divider, Stack, Typography, useTheme } from '@mui/material';
 import UserAvatar from '../UserAvatar';
-import UsernameLink from '../usernameLink';
+import UsernameLink, { ProfileName } from '../usernameLink';
 import FollowUser from '../FollowUser';
 import { useGetFollowMoreAccountQuery } from '@/lib/redux/slices/profile';
 
@@ -31,14 +31,14 @@ export default function WhoToFollow() {
               <Box>
                 <Stack direction="row" gap={1}>
                   <Box width="60%">
-                    <Typography
+                    <ProfileName
                       sx={{ color: palette.primary.fontLightColor }}
                       variant="subtitle2"
                     >
                       {val?.name}
                       <br />
                       <UsernameLink username={val.username} />
-                    </Typography>
+                    </ProfileName>
                   </Box>
                   <Box>
                     <FollowUser
