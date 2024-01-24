@@ -123,6 +123,7 @@ const CountWrapper = ({ count }: { count: number }) => (
       color: 'background.default',
       fontSize: '10px',
       fontWeight: 'bold',
+      marginTop: '-5px',
     }}
   >
     {count}

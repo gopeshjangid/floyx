@@ -5,15 +5,17 @@ import { FC, useEffect, useState } from 'react';
 
 const MUIThemeProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { resolvedTheme } = useTheme();
-  const [currentTheme, setCurrentTheme] = useState(getThemeObject('dark'));
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  useEffect(() => {
-    if (!resolvedTheme) return;
-    const theme = getThemeObject(resolvedTheme === 'dark' ? 'dark' : 'light');
-    setCurrentTheme(theme);
-  }, [resolvedTheme]);
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <ThemeProvider theme={currentTheme}>
+    <ThemeProvider
+      theme={getThemeObject(resolvedTheme === 'dark' ? 'dark' : 'light')}
+    >
       <CssBaseline />
       {children}
     </ThemeProvider>
