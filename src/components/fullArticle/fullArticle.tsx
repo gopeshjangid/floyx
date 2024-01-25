@@ -49,7 +49,12 @@ export default function FullArticle({ details }: any) {
             <Typography
               variant="subtitle1"
               component={'span'}
-              color="textPrimary"
+              sx={{
+                color:
+                  theme?.value === 'light'
+                    ? 'rgba(47, 46, 65, 1)'
+                    : 'rgba(255, 255, 255, 1)',
+              }}
             >
               {details?.user?.name}
             </Typography>

@@ -6,7 +6,7 @@ import moment from 'moment';
 import CalendarIcon from '@/images/image/calendarIcon';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
-import UsernameLink from '../usernameLink';
+import UsernameLink, { ProfileName } from '../usernameLink';
 import React from 'react';
 import { GradientText } from '../GradientComponents';
 
@@ -78,13 +78,7 @@ function UserCard({
                 flexWrap={'wrap'}
                 alignItems={'center'}
               >
-                <Typography
-                  variant="subtitle1"
-                  component={'span'}
-                  color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
-                >
-                  {name}{' '}
-                </Typography>
+                <ProfileName variant="subtitle1">{name} </ProfileName>
                 <UsernameLink
                   variant="subtitle2"
                   username={username}

@@ -165,11 +165,6 @@ const Login: FC = () => {
                 onChange={onChangeHandler}
                 error={!!formError.email}
                 helperText={formError.email}
-                sx={{
-                  '& input': {
-                    WebkitTextFillColor: `${palette.action.opposite} !important`,
-                  },
-                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">
@@ -209,11 +204,6 @@ const Login: FC = () => {
                 onChange={onChangeHandler}
                 error={!!formError.password}
                 helperText={formError.password}
-                sx={{
-                  '& input': {
-                    WebkitTextFillColor: `${palette.action.opposite} !important`,
-                  },
-                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="end">

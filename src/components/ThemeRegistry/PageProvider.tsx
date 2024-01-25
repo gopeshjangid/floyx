@@ -13,13 +13,13 @@ const PageProvider: FC<PageProviderProps> = ({ children }) => (
   <PreferredThemeProvider
     enableSystem
     attribute="class"
-    defaultTheme="dark"
-    forcedTheme={
-      typeof window !== 'undefined' &&
-      window.localStorage.getItem('theme') === 'light'
-        ? 'light'
-        : 'dark'
-    }
+    // defaultTheme="dark"
+    // forcedTheme={
+    //   typeof window !== 'undefined' &&
+    //   window.localStorage.getItem('theme') === 'light'
+    //     ? 'light'
+    //     : 'dark'
+    // }
   >
     <NextAppDirEmotionCacheProvider options={{ key: 'mui', prepend: true }}>
       <Head>

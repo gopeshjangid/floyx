@@ -173,14 +173,16 @@ export const postServices = createApi({
         if (!pageNumber) {
           return apiEndPoint;
         }
-        return `${apiEndPoint}?page=${pageNumber}&postCreatedDate=${postCreatedDate}`;
+        return `${apiEndPoint}?page=${pageNumber}&postCreatedDate=${
+          !postCreatedDate ? '' : postCreatedDate
+        }`;
       },
       transformResponse: (response: any) => ({
         postList: response?.value?.data || [],
         hasMore: response?.value?.hasMore,
       }),
-      serializeQueryArgs: ({ queryArgs }) => {
-        return JSON.stringify(queryArgs);
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
       },
       merge: (currentCache, newItems, otherArgs) => {
         if (currentCache) {

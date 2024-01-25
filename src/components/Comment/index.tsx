@@ -6,18 +6,25 @@ import { useLikeItemMutation } from '@/lib/redux';
 import { useSession } from 'next-auth/react';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import UsernameLink from '../usernameLink';
+import UsernameLink, { ProfileName } from '../usernameLink';
 import React, { useEffect, useRef, useState } from 'react';
-import { addLinks, formatIndianNumber } from "@/lib/utils";
-import SplitButton from "../SplitButton";
-import AddComment from "../Post/AddComment";
-import DeleteComment from "./DeleteComment";
+import { addLinks, formatIndianNumber } from '@/lib/utils';
+import SplitButton from '../SplitButton';
+import AddComment from '../Post/AddComment';
+import DeleteComment from './DeleteComment';
 
-function Comment({ comment, inputRef, type, onAction, setCommentText, isNewComment }: any) {
+function Comment({
+  comment,
+  inputRef,
+  type,
+  onAction,
+  setCommentText,
+  isNewComment,
+}: any) {
   const [updateLike, { data, isSuccess }] = useLikeItemMutation();
   const session = useSession();
   const updateCommentRef = useRef();
-  
+
   const [isEditing, setIsEditing] = useState(false);
   const { palette } = useTheme();
   const userName = (session as any)?.data?.user?.username;
@@ -40,7 +47,7 @@ function Comment({ comment, inputRef, type, onAction, setCommentText, isNewComme
     } else {
       setOpen(true);
     }
-  }
+  };
   useEffect(() => {
     if (onAction && isSuccess && data) {
       onAction({ ...data, id: comment?.comment?.id });
@@ -59,11 +66,14 @@ function Comment({ comment, inputRef, type, onAction, setCommentText, isNewComme
             />
           </Box>
           <Box sx={{ width: '100%', marginLeft: '16px' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }} pb={1}>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between' }}
+              pb={1}
+            >
               <Box>
-                <Typography variant="subtitle1" component={'span'}>
+                <ProfileName variant="subtitle1">
                   {comment?.user?.name}{' '}
-                </Typography>
+                </ProfileName>
                 <UsernameLink username={comment?.user?.username} />
               </Box>
               {comment?.comment?.createdDateTime && (
@@ -92,7 +102,7 @@ function Comment({ comment, inputRef, type, onAction, setCommentText, isNewComme
                 }}
               />
             </Box>
-            <Stack direction="row" justifyContent={"space-between"}>
+            <Stack direction="row" justifyContent={'space-between'}>
               <Box sx={{ display: 'flex', margin: '20px 0px' }}>
                 <Button
                   variant="text"
@@ -113,7 +123,7 @@ function Comment({ comment, inputRef, type, onAction, setCommentText, isNewComme
                   variant="text"
                   startIcon={<ReplyIcon />}
                   onClick={() => {
-                    onReply(comment?.user?.username)
+                    onReply(comment?.user?.username);
                   }}
                   sx={{ marginRight: '25px' }}
                 >
@@ -127,12 +137,12 @@ function Comment({ comment, inputRef, type, onAction, setCommentText, isNewComme
                   </Typography>
                 </Button>
               </Box>
-              {userName === comment?.user?.username && <SplitButton
-                options={commentAction}
-                handleOptions={(event: number) =>
-                  handleOptions(event)
-                }
-              />}
+              {userName === comment?.user?.username && (
+                <SplitButton
+                  options={commentAction}
+                  handleOptions={(event: number) => handleOptions(event)}
+                />
+              )}
             </Stack>
           </Box>
         </>

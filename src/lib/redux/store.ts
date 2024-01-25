@@ -21,7 +21,6 @@ import { profileService } from './slices/profile';
 import { postServices } from './slices/posts';
 import { tagServices } from './slices/tags';
 import { artcileDetails } from './slices/articleDetails';
-import { userService } from './slices/user';
 import { commentService } from './slices/comments';
 import { reducer } from './rootReducer';
 import { registrationService } from './slices/registration';
@@ -83,7 +82,6 @@ function makeStore(initialState) {
         .concat(postServices.middleware)
         .concat(tagServices.middleware)
         .concat(artcileDetails.middleware)
-        .concat(userService.middleware)
         .concat(commentService.middleware)
         .concat(profileService.middleware)
         .concat(registrationService.middleware)

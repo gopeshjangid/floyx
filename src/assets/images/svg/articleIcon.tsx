@@ -1,5 +1,5 @@
 import * as React from 'react';
-const ArticleProfileIcon = props => (
+const ArticleProfileIcon = ({ active, ...props }) => (
   <svg
     width={22}
     height={22}
@@ -18,7 +18,7 @@ const ArticleProfileIcon = props => (
     />
     <path
       d="M13.291 4.125v1.833c0 1.009.825 1.834 1.834 1.834h1.833m-9.625 4.125H11m-3.667 3.666h7.334"
-      stroke={props.active ? '#A75FFF' : '#7C93AE'}
+      stroke={active ? '#A75FFF' : '#7C93AE'}
       strokeWidth={1.5}
       strokeMiterlimit={10}
       strokeLinecap="round"

@@ -8,7 +8,7 @@ import {
   Skeleton,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import UsernameLink from './usernameLink';
+import UsernameLink, { ProfileName } from './usernameLink';
 import {
   useFollowUserMutation,
   useGetPopularAccountsToFollowQuery,
@@ -68,9 +68,9 @@ export default function FollowNewAccounts() {
               <Stack alignItems={'center'}>
                 {account.name && (
                   <Link href={`/profile/${account.username}`}>
-                    <Typography textAlign="center" variant="body1">
+                    <ProfileName textAlign="center" variant="body1">
                       {account.name}
-                    </Typography>
+                    </ProfileName>
                   </Link>
                 )}
                 <UsernameLink username={account.username ?? 'suername'} />

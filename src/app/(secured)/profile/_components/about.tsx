@@ -184,15 +184,6 @@ const PersonalInfo: React.FC = () => {
     }
   }, [data]);
 
-  // const [formErrors, setFormErrors] = React.useState<{ [key]: string }>({
-  //   location: '',
-  //   website: '',
-  //   skills: [],
-  //   description: '',
-  //   interests: [],
-  //   languages: [],
-  // });
-
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setFormValues({
@@ -212,15 +203,6 @@ const PersonalInfo: React.FC = () => {
 
   const validate = () => {
     const errors: any = {};
-    // if (!formValues.location) {
-    //   errors.location = 'Location is required';
-    // }
-    // if (!formValues.website) {
-    //   errors.website = 'Website is required';
-    // }
-
-    // Add other validation checks as needed
-    //setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
