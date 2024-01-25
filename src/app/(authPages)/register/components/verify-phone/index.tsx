@@ -49,9 +49,6 @@ const VerifyPhone = ({
         <TextField
           sx={{
             marginY: '25px',
-            '& input': {
-              WebkitTextFillColor: `${palette.action.opposite} !important`,
-            },
           }}
           fullWidth
           hiddenLabel

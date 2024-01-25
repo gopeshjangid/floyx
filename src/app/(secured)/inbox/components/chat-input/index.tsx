@@ -137,11 +137,6 @@ const ChatInput = ({
             fullWidth
             hiddenLabel
             placeholder="Write a message..."
-            sx={{
-              '& input': {
-                WebkitTextFillColor: `${theme.palette.action.opposite} !important`,
-              },
-            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
