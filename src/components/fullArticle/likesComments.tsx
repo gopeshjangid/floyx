@@ -78,17 +78,12 @@ function LikesComments({
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
-  const [isLiked, UpdateIsLiked] = useState(false);
 
   const [updateLike, { data, isSuccess }] = useLikeItemMutation();
 
   const handleClick = () => {
     setOpen(true);
   };
-
-  useEffect(() => {
-    if (isSuccess) UpdateIsLiked(Boolean(data?.likeByAuthor));
-  }, [data, isSuccess]);
 
   const likeType = () => {
     if (isPost) {
@@ -106,15 +101,6 @@ function LikesComments({
           .sort((a, b) => b.comment.createdDateTime - a.comment.createdDateTime)
       );
   }, [commentList]);
-
-  useEffect(() => {
-    if (!newCreatedComments.isAdding) {
-      setGeneralizedComments(comments => [
-        ...newCreatedComments.newComments,
-        ...comments,
-      ]);
-    }
-  }, [newCreatedComments, setGeneralizedComments]);
 
   const handleArticleLike = async () => {
     const type: string = likeType();
@@ -147,15 +133,17 @@ function LikesComments({
           isAdding: isLoading,
         }));
       } else if (commentData) {
+        setGeneralizedComments(comments => [commentData, ...comments]);
         setNewCreatedComments(comments => ({
           ...comments,
           isAdding: false,
-          newComments: [commentData],
+          newComments: [commentData, ...comments.newComments],
         }));
       }
     },
-    [setNewCreatedComments]
+    [setNewCreatedComments, setGeneralizedComments]
   );
+
   const commentAction = useCallback(
     data => {
       let _comments = newCreatedComments.newComments;
@@ -179,25 +167,20 @@ function LikesComments({
         newComments: _comments,
       }));
     },
-    [setNewCreatedComments, newCreatedComments]
+    [setNewCreatedComments, , newCreatedComments]
   );
   const likeCount = formatIndianNumber(likesCommentsDetails?.numberOfLikes);
 
   const onCommentHandler = useCallback(index => {
     setCommentLimit(commentLimitOptions[index]);
   }, []);
-
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
       <Stack direction="row" gap={2} py={1}>
         <Button
           variant="text"
-          startIcon={
-            <LikeIcon
-              isLiked={likesCommentsDetails?.likedByAuthor ?? isLiked}
-            />
-          }
+          startIcon={<LikeIcon isLiked={likesCommentsDetails?.likedByAuthor} />}
           onClick={handleArticleLike}
           sx={{ padding: 0 }}
         >

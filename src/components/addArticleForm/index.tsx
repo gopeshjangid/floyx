@@ -24,7 +24,7 @@ import {
 } from '@/lib/redux';
 import { useToast } from '../Toast/useToast';
 import TagAutocomplete from './articleTags';
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 export const AddArticleFormBox = styled(Box)(({ theme }) => ({
   '& h5': {
@@ -48,8 +48,8 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
   fontWeight: '600',
   fontSize: '38px',
   paddingLeft: 0,
-  overflow: "auto",
-  textOverflow: "ellipsis",
+  overflow: 'auto',
+  textOverflow: 'ellipsis',
   outline: 'none',
   color: '#85838F',
 }));
@@ -126,13 +126,18 @@ export default function AddArticleForm({
     }
   };
 
-  const createArticleData = (title: string, content: any, file: any, syncHashTag: string) => {
+  const createArticleData = (
+    title: string,
+    content: any,
+    file: any,
+    syncHashTag: string
+  ) => {
     const articleTags = syncHashTag.split(',');
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', JSON.stringify(content));
     formData.append('coverPhoto', file);
-    for (var i = 0;i < articleTags.length;i++) {
+    for (var i = 0; i < articleTags.length; i++) {
       formData.append('articleTags[]', articleTags[i]);
     }
     return formData;
@@ -151,7 +156,12 @@ export default function AddArticleForm({
     });
   };
 
-  const createDraftArticle = async (title: string, content: any, file: any, hashtags: string) => {
+  const createDraftArticle = async (
+    title: string,
+    content: any,
+    file: any,
+    hashtags: string
+  ) => {
     setArticleCreated(true);
     const formData = createArticleData(title, content, file, hashtags);
     const createdDraftData = await createDraft(formData);
@@ -163,17 +173,17 @@ export default function AddArticleForm({
 
   const handleTitleChange = (event: any, articleCreated: boolean) => {
     const { value } = event.target;
-    let valueValidated = true;
-    const iChars = '@#$%^&*+=[]\\\';{}|":<>';
-    for (let i = 0;i < value.length;i++) {
-      if (iChars.includes(value.charAt(i))) {
-        valueValidated = false;
-        break;
-      }
-    }
-    if (valueValidated) {
-      setTitle(value);
-    }
+    // let valueValidated = true;
+    // const iChars = '@#$%^&*+=[]\\\';{}|":<>';
+    // for (let i = 0;i < value.length;i++) {
+    //   if (iChars.includes(value.charAt(i))) {
+    //     valueValidated = false;
+    //     break;
+    //   }
+    // }
+    // if (valueValidated) {
+    setTitle(value);
+    //}
 
     if (!articleCreated) {
       createDraftArticle(value, content, imageToUpload, hashtags.join(','));
@@ -252,14 +262,22 @@ export default function AddArticleForm({
       index: '',
       nameLink: '',
       contentArticleCreated: articleCreated,
-    })
+    });
   };
 
   const handleSubmit = async () => {
     if (validatePublishButton(title, content)) {
-      const payload = createArticleData(title, content, imageToUpload, hashtags ? hashtags.join(',') : '');
+      const payload = createArticleData(
+        title,
+        content,
+        imageToUpload,
+        hashtags ? hashtags.join(',') : ''
+      );
       await updateDraft({ articleId, payload });
-      const response = await publishArticle({articleId, articleTags: hashtags });
+      const response = await publishArticle({
+        articleId,
+        articleTags: hashtags,
+      });
       if ((response as any)?.error) {
         setIsPublish(false);
       } else {
@@ -276,15 +294,18 @@ export default function AddArticleForm({
   const updateDraftArticle = async forceUpdate => {
     const { syncContent, syncTitle, syncCoverPhoto, syncHashTag } = syncState;
     if (
-      (articleId &&
-        (title || content) &&
-        (syncHashTag !== hashtags) ||
-        (JSON.stringify(content) !== syncContent ||
-          title !== syncTitle ||
-          imageToUpload !== syncCoverPhoto)) ||
+      (articleId && (title || content) && syncHashTag !== hashtags) ||
+      JSON.stringify(content) !== syncContent ||
+      title !== syncTitle ||
+      imageToUpload !== syncCoverPhoto ||
       forceUpdate
     ) {
-      const payload = createArticleData(title, content, imageToUpload, hashtags ? hashtags.join(',') : '');
+      const payload = createArticleData(
+        title,
+        content,
+        imageToUpload,
+        hashtags ? hashtags.join(',') : ''
+      );
       getArticleRequestData();
       await updateDraft({ articleId, payload });
       setSaveDraft(false);
@@ -299,12 +320,16 @@ export default function AddArticleForm({
     const response = await getDraftDetail(articleId);
     if (response.data) {
       let responseContent = JSON.parse(response?.data?.content);
-      responseContent = Array.isArray(responseContent) ? responseContent : [initialSate];
-      responseContent = responseContent.length === 0 ? [initialSate] : responseContent;
+      responseContent = Array.isArray(responseContent)
+        ? responseContent
+        : [initialSate];
+      responseContent =
+        responseContent.length === 0 ? [initialSate] : responseContent;
       setTitle(response.data?.title);
       setContent(JSON.parse(response?.data?.content));
       setState(prev => ({
-        ...prev, inputsList: responseContent,
+        ...prev,
+        inputsList: responseContent,
       }));
       setImagePreview(response?.data?.coverPhotoPath || '');
       setImageToUpload(response?.data?.coverPhotoPath || '');
@@ -334,7 +359,15 @@ export default function AddArticleForm({
     } else if (isPublish && !publishLoading) {
       handleSubmit();
     }
-  }, [isPublish, saveDraft, articleId, syncState, title, content, imageToUpload]);
+  }, [
+    isPublish,
+    saveDraft,
+    articleId,
+    syncState,
+    title,
+    content,
+    imageToUpload,
+  ]);
 
   useEffect(() => {
     if (isEditing) {
@@ -364,10 +397,16 @@ export default function AddArticleForm({
         maxLength={200}
         onChange={e => handleTitleChange(e, articleCreated)}
       />
-      {title.length > 0 && <Typography textAlign={'right'}> {`${title.length}/200`} </Typography>}
+      {title.length > 0 && (
+        <Typography textAlign={'right'}> {`${title.length}/200`} </Typography>
+      )}
       <FormControl>
         <FormLabel sx={{ color: palette.primary[300] }}>Add hashtags</FormLabel>
-        <TagAutocomplete onSelectTags={onSelectTags} maxSelectedTag={5} resetAll={resetAll} />
+        <TagAutocomplete
+          onSelectTags={onSelectTags}
+          maxSelectedTag={5}
+          resetAll={resetAll}
+        />
       </FormControl>
       <Stack
         mb={2}

@@ -120,17 +120,22 @@ export const addLinks = (content: any) => {
   if (!content) {
     return '';
   }
+
   const profileRegex = /@\[([^\]]+)\]\(([^)]+)\)/gm;
   const link =
     '<a href="/profile/$2" class="post-hyperlink" style="background:linear-gradient(to right, #AB59FF, #858FFF, #4D9AFF); -webkit-background-clip: text;-webkit-text-fill-color: transparent;font-weight: normal;color: white;">@$2</a>';
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  const urlRegex = /(https?:\/\/[^\s\[\]()]+)/g;
 
   const urlLink = match => {
     let displayText = match;
-    if (displayText.length > 30) {
-      displayText = displayText.substring(0, 30) + '...';
+    // Remove special characters from the URL
+    const cleanedUrl = displayText.replace(/[\[\]()]/g, '');
+
+    if (displayText.length > 40) {
+      displayText = displayText.substring(0, 40) + '...';
     }
-    return `<a class="post-hyperlink" href="${match}" target="_blank">${displayText}</a>`;
+    return `<a class="post-hyperlink" href="${cleanedUrl}" target="_blank">${displayText}</a>`;
   };
 
   return content.replace(urlRegex, urlLink).replace(profileRegex, link);

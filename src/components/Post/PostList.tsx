@@ -11,6 +11,7 @@ interface PostProps {
   loadMore: any;
   hasMore: boolean;
   scrollThreshold?: number;
+  showComments?: boolean;
 }
 
 const LoaderSkeleton = () => {
@@ -31,7 +32,13 @@ const LoaderSkeleton = () => {
   );
 };
 
-function PostList({ postData, loadMore, hasMore, scrollThreshold }: PostProps) {
+function PostList({
+  postData,
+  showComments,
+  loadMore,
+  hasMore,
+  scrollThreshold,
+}: PostProps) {
   const { palette } = useTheme();
   return (
     <>
@@ -73,6 +80,7 @@ function PostList({ postData, loadMore, hasMore, scrollThreshold }: PostProps) {
                     link={val?.post?.link}
                     postDetails={val?.post}
                     postId={val?.id}
+                    showComments={showComments}
                   />
                 )}
               </React.Fragment>

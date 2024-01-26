@@ -48,9 +48,6 @@ export default function Page() {
     }
   }, [tabName]);
 
-  const viewportHeight =
-    typeof window === 'undefined' ? 1000 : window.innerHeight;
-
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
       <Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -58,7 +55,7 @@ export default function Page() {
           <Box
             sx={{
               overflow: 'auto',
-              maxHeight: viewportHeight,
+              maxHeight: '102vh',
               overflowY: 'auto',
               scrollbarWidth: 'none', // For Firefox
               msOverflowStyle: 'none', // For IE 10+

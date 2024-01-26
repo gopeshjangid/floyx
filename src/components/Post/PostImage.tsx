@@ -1,6 +1,6 @@
 // @ts-check
 import { Box, Skeleton, Typography, useTheme } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Lightbox from 'react-image-lightbox-rotate-fixed';
@@ -29,6 +29,18 @@ export default function PostImage({ image, link, shared, isShared }) {
   const handleImageLoad = () => {
     setLoading(false);
   };
+  const getUrlHostName = useMemo(
+    () => url => {
+      try {
+        const parsedUrl = new URL(url);
+        return parsedUrl.hostname;
+      } catch (e) {
+        console.error('Invalid URL:', e);
+        return ''; // Return an empty string or handle the error as needed
+      }
+    },
+    []
+  );
 
   return (
     <Box>
@@ -78,7 +90,9 @@ export default function PostImage({ image, link, shared, isShared }) {
             />
           )}
           <Box pl={1}>
-            <Typography variant="subtitle2">{window.location.host}</Typography>
+            <Typography variant="subtitle2">
+              {link.url ? getUrlHostName(link.url) : window.location.host}
+            </Typography>
             <Link href={link.url}>{link.title}</Link>
           </Box>
         </Box>

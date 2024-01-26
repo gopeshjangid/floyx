@@ -31,6 +31,7 @@ import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import ShareArticleModal from '../fullArticle/shareArticleModal';
 import CustomDescription from '../customDescription';
+import useDevice from '@/lib/hooks/useDevice';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',
@@ -143,7 +144,7 @@ export default function ArticleContainer({
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
   const [commentText, setCommentText] = useState('');
-
+  const { isMobile } = useDevice();
   const [item, setItem] = useState<number>();
   const [openDialog, setOpenDialog] = useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
@@ -228,10 +229,15 @@ export default function ArticleContainer({
             <Box className="thumbnail" ref={ref}>
               {articleDetails?.coverPhotoThumbnail ||
               articleDetails?.coverPhotoPath ? (
-                <Box className="thumbnailBox">
+                <Box
+                  position="relative"
+                  height={isMobile ? 300 : 240}
+                  width={isMobile ? window.document.body.clientWidth - 32 : 220}
+                >
                   <Image
-                    width={offsetWidth ?? 0}
-                    height={offsetHeight ?? 0}
+                    fill
+                    objectFit="cover"
+                    objectPosition="center"
                     src={
                       articleDetails?.coverPhotoThumbnail ||
                       articleDetails?.coverPhotoPath
@@ -300,13 +306,12 @@ export default function ArticleContainer({
                     variant="h5"
                     sx={{
                       width: 'auto',
-                      textWrap: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
                     }}
                     color={palette.primary.titleColor}
                   >
-                    {articleDetails?.title ? articleDetails?.title : ''}
+                    {articleDetails?.title
+                      ? articleDetails?.title.slice(0, 70)
+                      : ''}
                   </CustomDescription>
                   <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
                     {tipHistory ? (
@@ -349,7 +354,7 @@ export default function ArticleContainer({
                   sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                   }}
                 >
                   <UserCard

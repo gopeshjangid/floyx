@@ -303,8 +303,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     if (mobileOpen) {
       setMobileOpen(false);
     }
-
-    homeRedirect();
+    if (href === '/') homeRedirect();
   };
 
   const drawer = (

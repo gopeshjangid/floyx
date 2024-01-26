@@ -1,5 +1,5 @@
 'use client';
-import { Box, Grid, Link, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Link, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DateParser from '../DateParser';
 import moment from 'moment';
@@ -39,8 +39,6 @@ function UserCard({
   isArticle?: boolean;
   isPost?: boolean;
 }) {
-  const { palette } = useTheme();
-
   const getSharedLink = () => (
     <Stack direction="row" gap={1}>
       <Typography variant="subtitle1">

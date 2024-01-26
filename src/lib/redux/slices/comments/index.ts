@@ -4,7 +4,7 @@ import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from '../posts';
 import { UserComment, artcileDetails } from '../articleDetails';
-import { ApiResponse } from "../profile";
+import { ApiResponse } from '../profile';
 
 interface DeleteCommentParams {
   commentId: string;
@@ -39,18 +39,41 @@ export const commentService = createApi({
         api.queryFulfilled.then(response => {
           if (arg.type === 'PostComment') {
             api.dispatch(
-              postServices.util.updateQueryData('getPosts', {
-                pageNumber: 0,
-                postCreatedDate: 0
-              }, draft => {
-                // Find the article in the draft data and update its comment count
-                const article = draft.postList.find(
-                  article => article.id === response.data.comment.itemId
-                );
-                if (article) {
-                  article.post.numberOfComments += 1;
+              postServices.util.updateQueryData(
+                'getPosts',
+                {
+                  pageNumber: 0,
+                  postCreatedDate: 0,
+                },
+                draft => {
+                  // Find the article in the draft data and update its comment count
+                  const article = draft.postList.find(
+                    article => article.id === response.data.comment.itemId
+                  );
+                  if (article) {
+                    article.post.numberOfComments += 1;
+                  }
                 }
-              })
+              )
+            );
+            api.dispatch(
+              postServices.util.updateQueryData(
+                'getPostListByUser',
+                {
+                  pageNumber: 0,
+                  postCreatedDate: 0,
+                  username: '',
+                },
+                draft => {
+                  // Find the article in the draft data and update its comment count
+                  const article = draft.postList.find(
+                    article => article.id === response.data.comment.itemId
+                  );
+                  if (article) {
+                    article.post.numberOfComments += 1;
+                  }
+                }
+              )
             );
             api.dispatch(
               postServices.util.invalidateTags([
@@ -79,7 +102,10 @@ export const commentService = createApi({
           };
         }),
     }),
-    updateComment: builder.mutation<ApiResponse<undefined>, UpdateCommentParams>({
+    updateComment: builder.mutation<
+      ApiResponse<undefined>,
+      UpdateCommentParams
+    >({
       query: commentData => ({
         url: `${ApiEndpoint.EditComment}/${commentData.commentId}`,
         method: 'PUT',
@@ -95,27 +121,36 @@ export const commentService = createApi({
         });
       },
     }),
-    deleteComment: builder.mutation<ApiResponse<undefined>, DeleteCommentParams>({
+    deleteComment: builder.mutation<
+      ApiResponse<undefined>,
+      DeleteCommentParams
+    >({
       query: commentData => ({
-        url: `${ApiEndpoint.DeleteComment}/${commentData?.commentId}?type=${commentData?.type ? 'PostComment': 'ArticleComment'}`,
+        url: `${ApiEndpoint.DeleteComment}/${commentData?.commentId}?type=${
+          commentData?.type ? 'PostComment' : 'ArticleComment'
+        }`,
         method: 'delete',
       }),
       onQueryStarted: (arg, api) => {
         api.queryFulfilled.then(response => {
           if (arg.type) {
             api.dispatch(
-              postServices.util.updateQueryData('getPosts', {
-                pageNumber: 0,
-                postCreatedDate: 0
-              }, draft => {
-                // Find the article in the draft data and update its comment count
-                const article = draft.postList.find(
-                  article => article.id === arg?.commentId
-                );
-                if (article) {
-                  article.post.numberOfComments += 1;
+              postServices.util.updateQueryData(
+                'getPosts',
+                {
+                  pageNumber: 0,
+                  postCreatedDate: 0,
+                },
+                draft => {
+                  // Find the article in the draft data and update its comment count
+                  const article = draft.postList.find(
+                    article => article.id === arg?.commentId
+                  );
+                  if (article) {
+                    article.post.numberOfComments += 1;
+                  }
                 }
-              })
+              )
             );
             api.dispatch(
               postServices.util.invalidateTags([
@@ -130,7 +165,7 @@ export const commentService = createApi({
           }
         });
       },
-    })
+    }),
   }),
   tagTypes: ['CommentList'],
 });
