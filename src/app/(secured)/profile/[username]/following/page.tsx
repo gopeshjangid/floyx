@@ -104,9 +104,9 @@ const MyFollowers: React.FC = () => {
           borderRadius: '10px',
         }}
         py={2}
-        pl={8}
+        pl={2}
       >
-        <Stack direction={'row'} gap={1} mb={1}>
+        <Stack direction={'row'} alignItems={'center'} gap={1} mb={1}>
           <UserAvatar
             alt={currentUser?.name ?? ''}
             src={currentUser?.avatar ?? ''}
@@ -196,7 +196,7 @@ const MyFollowers: React.FC = () => {
                       />
                     </Box>
                     <Stack width="60%" justifyContent={'center'} gap={1}>
-                      <Stack direction="row" gap={1}>
+                      <Stack alignItems={'center'} direction="row" gap={1}>
                         <ProfileName
                           variant="body2"
                           sx={{ color: palette.primary.fontLightColor }}

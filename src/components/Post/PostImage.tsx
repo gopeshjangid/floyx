@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Lightbox from 'react-image-lightbox-rotate-fixed';
 import Post from './Post';
+import CustomImage from '../Image';
 
 export default function PostImage({ image, link, shared, isShared }) {
   const [open, setOpen] = useState(false);
@@ -35,7 +36,6 @@ export default function PostImage({ image, link, shared, isShared }) {
         const parsedUrl = new URL(url);
         return parsedUrl.hostname;
       } catch (e) {
-        console.error('Invalid URL:', e);
         return ''; // Return an empty string or handle the error as needed
       }
     },
@@ -49,7 +49,7 @@ export default function PostImage({ image, link, shared, isShared }) {
           {loading && (
             <Skeleton variant="rounded" height={300} animation="wave" />
           )}
-          <Image
+          <CustomImage
             width={0}
             onLoad={handleImageLoad}
             height={0}
@@ -79,7 +79,7 @@ export default function PostImage({ image, link, shared, isShared }) {
           }}
         >
           {link.thumbnailPath && (
-            <Image
+            <CustomImage
               width={0}
               height={0}
               sizes="100vw"

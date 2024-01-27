@@ -67,7 +67,7 @@ const CopyableInput = () => {
         username: username,
       })
     );
-    return `${router.asPath}/${'registration?token=' + token}}`;
+    return `${window.location.protocol}//${window.location.host}/${'registration?token=' + token}}`;
   };
 
   return (

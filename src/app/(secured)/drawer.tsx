@@ -55,6 +55,8 @@ import SidebarProfileBar from '@/components/sidebarProfileInfo';
 import AddPost from '@/components/Post/AddPost';
 import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
+import { postServices } from '@/lib/redux';
+import { useDispatch } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -140,6 +142,7 @@ interface IDrawerState {
 }
 
 export default function DrawerAppBar({ children }: { children: ReactNode }) {
+  const dispatch = useDispatch();
   const [drawerData, setDrawerData] = useState<IDrawerState>({
     currentLoggedUser: {
       username: getCookie(FLOYX_USERNAME)?.toString() || '',
@@ -199,7 +202,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       if (container) container.scrollTop = 0;
     }
     if (pathname !== '/') {
-      router.push('/', { scroll: true });
+      router.push('/');
     }
     window.scrollTo(0, 0);
   };
@@ -303,7 +306,10 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     if (mobileOpen) {
       setMobileOpen(false);
     }
-    if (href === '/') homeRedirect();
+    if (href === '/') {
+      dispatch(postServices.util.invalidateTags(['MainFeedList']));
+      homeRedirect();
+    }
   };
 
   const drawer = (
