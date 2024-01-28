@@ -4,7 +4,7 @@ import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from '../posts';
 import { commentService } from '../comments';
-import { ApiResponse } from "../profile";
+import { ApiResponse } from '../profile';
 
 export interface ArticleDetailsArgs {
   userName: string;
@@ -16,7 +16,7 @@ interface LikeStatusArgs {
   type: string;
 }
 
-interface LikeStatusData {
+export interface LikeStatusData {
   likeByAuthor: boolean;
   numberOfLikes: number;
 }
@@ -145,12 +145,38 @@ export const artcileDetails = createApi({
                   );
                   if (article) {
                     article.post.numberOfLikes = response?.data?.numberOfLikes;
+                    article.post.likedByAuthor = response?.data?.likeByAuthor;
                   }
                 }
               )
             );
+
+            api.dispatch(
+              postServices.util.updateQueryData(
+                'getPostListByUser',
+                {
+                  pageNumber: 0,
+                  postCreatedDate: 0,
+                  username: '',
+                },
+                draft => {
+                  // Find the article in the draft data and update its comment count
+                  const article = draft.postList.find(
+                    article => article.id === arg.articleId
+                  );
+                  if (article) {
+                    article.post.numberOfLikes = response?.data?.numberOfLikes;
+                    article.post.likedByAuthor = response?.data?.likeByAuthor;
+                  }
+                }
+              )
+            );
+
             api.dispatch(postServices.util.invalidateTags(['postDetail']));
-          } else if (arg.type == 'PostCommentLiked' || arg.type=== 'ArticleCommentLiked') {
+          } else if (
+            arg.type == 'PostCommentLiked' ||
+            arg.type === 'ArticleCommentLiked'
+          ) {
             api.dispatch(commentService.util.invalidateTags(['CommentList']));
           }
         });
@@ -230,7 +256,10 @@ export const artcileDetails = createApi({
         };
       },
       transformResponse: (response: any) => response.value.data,
-      invalidatesTags: [{ type: 'ArticleList', id: 'recent' }, 'ArticleInfoNumber'],
+      invalidatesTags: [
+        { type: 'ArticleList', id: 'recent' },
+        'ArticleInfoNumber',
+      ],
     }),
     publishArticle: builder.mutation<any, any>({
       query: payload => ({
@@ -241,7 +270,10 @@ export const artcileDetails = createApi({
         },
       }),
       transformResponse: (response: any) => response.value.data,
-      invalidatesTags: [{ type: 'ArticleList', id: 'recent' }, 'ArticleInfoNumber'],
+      invalidatesTags: [
+        { type: 'ArticleList', id: 'recent' },
+        'ArticleInfoNumber',
+      ],
     }),
     deleteArticle: builder.mutation<any, string>({
       query: articleId => ({

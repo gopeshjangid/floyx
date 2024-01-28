@@ -1,9 +1,8 @@
 'use client';
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { Button, Grid, Typography, useTheme } from '@mui/material';
+import { Button, Grid, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
 const HeaderSection = styled(Box)(() => ({
@@ -23,7 +22,6 @@ const HeaderSection = styled(Box)(() => ({
   scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.1)',
 }));
 export default function Header() {
-  const pathName = usePathname();
   const { palette } = useTheme();
 
   return (
@@ -35,7 +33,7 @@ export default function Header() {
               sx={{ color: palette.mode === 'light' ? '#000' : '#fff' }}
               variant="outlined"
               color="primary"
-              startIcon={<ArticleProfileIcon />}
+              startIcon={<ArticleProfileIcon active={true} />}
             >
               Article/Blog
             </Button>

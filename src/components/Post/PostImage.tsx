@@ -1,16 +1,17 @@
 // @ts-check
-import { Box, Skeleton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import moment from 'moment';
+import { Box, Skeleton, Typography, useTheme } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Lightbox from 'react-image-lightbox-rotate-fixed';
 import Post from './Post';
+import CustomImage from '../Image';
 
 export default function PostImage({ image, link, shared, isShared }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { palette } = useTheme();
 
   const handleOpen = () => {
     if (!isShared) {
@@ -29,6 +30,17 @@ export default function PostImage({ image, link, shared, isShared }) {
   const handleImageLoad = () => {
     setLoading(false);
   };
+  const getUrlHostName = useMemo(
+    () => url => {
+      try {
+        const parsedUrl = new URL(url);
+        return parsedUrl.hostname;
+      } catch (e) {
+        return ''; // Return an empty string or handle the error as needed
+      }
+    },
+    []
+  );
 
   return (
     <Box>
@@ -37,7 +49,7 @@ export default function PostImage({ image, link, shared, isShared }) {
           {loading && (
             <Skeleton variant="rounded" height={300} animation="wave" />
           )}
-          <Image
+          <CustomImage
             width={0}
             onLoad={handleImageLoad}
             height={0}
@@ -56,13 +68,18 @@ export default function PostImage({ image, link, shared, isShared }) {
           )}
         </Box>
       )}
-      {link && (
+      {link && !isShared && (
         <Box
           onClick={openInNewTab}
-          sx={{ borderRadius: '10px', overflow: 'hidden' }}
+          pb={2}
+          sx={{
+            borderRadius: '10px',
+            overflow: 'hidden',
+            border: `1px solid ${palette.primary.boxBorder}`,
+          }}
         >
           {link.thumbnailPath && (
-            <Image
+            <CustomImage
               width={0}
               height={0}
               sizes="100vw"
@@ -72,9 +89,15 @@ export default function PostImage({ image, link, shared, isShared }) {
               loading="lazy" // Lazy loading
             />
           )}
+          <Box pl={1}>
+            <Typography variant="subtitle2">
+              {link.url ? getUrlHostName(link.url) : window.location.host}
+            </Typography>
+            <Link href={link.url}>{link.title}</Link>
+          </Box>
         </Box>
       )}
-      {shared && !isShared && (
+      {shared && !isShared && shared?.author?.username && (
         <Link href={`/post/${shared?.post?.id}`}>
           <Post
             name={shared?.author?.name || ''}

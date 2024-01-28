@@ -73,12 +73,14 @@ const ChatCard = ({ username, name, lastMessageDate, lastText }: IChatCard) => {
               justifyContent="space-between"
               flexWrap="wrap"
             >
-              <Box>
+              <Box display="flex" flexWrap="wrap" alignItems="center" columnGap={1} marginBottom={1}>
                 <Typography
                   color={palette?.mode === 'light' ? '#2F2E41' : '#fff'}
                   fontSize="16px"
                   fontWeight={500}
                   component="span"
+                  className="text-wrap"
+                  marginBottom={0}
                 >
                   {name.split(' ')[0]}
                 </Typography>
@@ -86,9 +88,8 @@ const ChatCard = ({ username, name, lastMessageDate, lastText }: IChatCard) => {
                   fontSize="14px"
                   fontWeight={400}
                   component="span"
-                  className="gradient-text"
-                  ml={1}
-                >
+                  className="gradient-text text-wrap"
+                  marginBottom={0}>
                   @{username}
                 </Typography>
               </Box>

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Box, Typography, Grid, Stack, Skeleton, Button } from '@mui/material';
+import { Box, Typography, Grid, Stack, Skeleton } from '@mui/material';
 import Image from 'next/image';
 import UsernameLink from '../usernameLink';
 import CalendarIcon from '@/images/image/calendarIcon';
@@ -8,21 +8,31 @@ import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import SocialButts from './socialMediaButtons';
 import AuthorPoints from './authorPoints';
-import FollowUserFetched from "./followUserFetched";
 import TranslateIcon from '@/assets/images/svg/translateIcon';
-import ArticleTags from "./articleTags";
+import ArticleTags from './articleTags';
+import { cookies } from 'next/headers';
 
 export default function FullArticle({ details }: any) {
+  const cookieStore = cookies();
+  const theme = cookieStore.get('theme');
   const CONTENT =
     details?.article?.content && JSON.parse(details?.article?.content);
   const createMarkup = (htmlString: string) => {
     return { __html: htmlString };
   };
-
   return (
     <Box>
       <Box>
-        <Typography variant="h1" sx={{ textTransform: 'capitalize', wordBreak: 'break-all', whiteSpace: 'pre-line' }}>
+        <Typography
+          variant="h1"
+          sx={{
+            textTransform: 'capitalize',
+            wordBreak: 'break-all',
+            whiteSpace: 'pre-line',
+            color:
+              theme?.value === 'light' ? '#1b2530' : 'rgb(255, 255, 255, .8)',
+          }}
+        >
           {details?.article?.title}
         </Typography>
       </Box>
@@ -39,7 +49,12 @@ export default function FullArticle({ details }: any) {
             <Typography
               variant="subtitle1"
               component={'span'}
-              color="textPrimary"
+              sx={{
+                color:
+                  theme?.value === 'light'
+                    ? 'rgba(47, 46, 65, 1)'
+                    : 'rgba(255, 255, 255, 1)',
+              }}
             >
               {details?.user?.name}
             </Typography>
@@ -63,22 +78,17 @@ export default function FullArticle({ details }: any) {
                 <Skeleton variant="text" width={'100%'} height="40px" />
               }
             >
-              
               <AuthorPoints details={details} />
             </Suspense>
           </Grid>
         </Grid>
       </Box>
-        <Suspense
-          fallback={
-            <Skeleton variant="text" width={'100%'} height="40px" />
-          }
-        >
-        {details?.article?.tags &&
-          <ArticleTags
-            tags={details?.article?.tags}
-          />
-          }
+      <Suspense
+        fallback={<Skeleton variant="text" width={'100%'} height="40px" />}
+      >
+        {details?.article?.tags && (
+          <ArticleTags tags={details?.article?.tags} />
+        )}
       </Suspense>
       {details?.article?.coverPhotoPath && (
         <Box sx={{ borderRadius: '8px', overflow: 'hidden' }}>

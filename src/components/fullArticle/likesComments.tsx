@@ -1,7 +1,13 @@
 'use client';
 
-import React, { useCallback, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
@@ -11,43 +17,26 @@ import {
   Divider,
   Typography,
   Button,
-  Modal,
   Stack,
   useTheme,
   Skeleton,
   useMediaQuery,
 } from '@mui/material';
 import AddComment from '../Post/AddComment';
-import { useToast } from '../Toast/useToast';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
   useLikeItemMutation,
-  useShareArticleMutation,
-  useCheckArticleIsSharedMutation,
   UserComment,
 } from '@/lib/redux/slices/articleDetails';
 import Comment from '../Comment';
 import { allRoutes } from '@/constants/allRoutes';
-import Image from 'next/image';
-import Post from '../Post/Post';
 import { formatIndianNumber } from '@/lib/utils';
-import { useSharePostMutation } from '@/lib/redux';
 import Link from 'next/link';
+import ShareArticleModal from './shareArticleModal';
+import { revalidateArticleDetail } from '@/actions/actions';
+import SplitButton from '../SplitButton';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'auto',
-  maxHeight: '80vh',
-  minWidth: '50vw',
-  overflowY: 'scroll',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  padding: 5,
-  m: 2,
-};
+const commentLimitOptions = ['Most recent', 'All comments'];
 
 type LikeCommentType = {
   likesCommentsDetails: any;
@@ -57,7 +46,6 @@ type LikeCommentType = {
   showComments?: boolean;
   articleId: string;
   isArticle?: boolean;
-  revalidate?: any;
 };
 function LikesComments({
   likesCommentsDetails,
@@ -67,14 +55,18 @@ function LikesComments({
   showComments = false,
   articleId,
   isArticle = false,
-  revalidate,
 }: LikeCommentType) {
+  const pathname = usePathname();
   const { data: commentList, isLoading } = useGetCommentListQuery(
     articleId! || '',
     { skip: !showComments }
   );
+  const [generalizedComments, setGeneralizedComments] = useState<UserComment[]>(
+    []
+  );
   const isSmallDevice = useMediaQuery('(max-width:400px)');
   const [commentText, setCommentText] = useState('');
+  const [commentLimit, setCommentLimit] = useState('Most recent');
   const [newCreatedComments, setNewCreatedComments] = useState<{
     isAdding: boolean;
     newComments: UserComment[];
@@ -83,48 +75,14 @@ function LikesComments({
     newComments: [],
   });
   const { palette } = useTheme();
-  const toast = useToast();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
 
-  const [updateLike] = useLikeItemMutation();
-  const [checkIsShared] = useCheckArticleIsSharedMutation();
-  const [publishArticle] = useShareArticleMutation();
-  const [publishPost] = useSharePostMutation();
+  const [updateLike, { data, isSuccess }] = useLikeItemMutation();
 
   const handleClick = () => {
     setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handlePublish = async () => {
-    const result: any = await checkIsShared(itemId);
-    const status: boolean = result?.data;
-    const payload = {
-      content: commentText,
-    };
-    if (status) {
-      if (isArticle) {
-        toast.error('This article has already been shared');
-      } else {
-        toast.error('This post has already been shared');
-      }
-    } else {
-      if (isArticle) {
-        revalidate();
-        await publishArticle({ articleId: itemId, status, payload });
-        toast.success('Article is Published Succesfully ');
-      } else {
-        await publishPost({ postId: itemId, payload });
-        toast.success('Post is Published Succesfully ');
-      }
-    }
-    setCommentText('');
-    setOpen(false);
   };
 
   const likeType = () => {
@@ -135,11 +93,20 @@ function LikesComments({
     }
   };
 
+  useEffect(() => {
+    if (commentList)
+      setGeneralizedComments(
+        commentList
+          .slice()
+          .sort((a, b) => b.comment.createdDateTime - a.comment.createdDateTime)
+      );
+  }, [commentList]);
+
   const handleArticleLike = async () => {
     const type: string = likeType();
     await updateLike({ articleId: itemId, type });
     if (isArticle) {
-      revalidate();
+      revalidateArticleDetail(pathname);
     }
   };
 
@@ -153,12 +120,11 @@ function LikesComments({
   const onCreatedArticleComment = useCallback(
     commentData => {
       if (commentData && isArticle) {
-        revalidate();
+        revalidateArticleDetail(pathname);
       }
     },
-    [setNewCreatedComments]
+    [setNewCreatedComments, pathname]
   );
-
   const onCreatedNewComment = useCallback(
     (commentData, isLoading) => {
       if (isLoading) {
@@ -167,15 +133,17 @@ function LikesComments({
           isAdding: isLoading,
         }));
       } else if (commentData) {
+        setGeneralizedComments(comments => [commentData, ...comments]);
         setNewCreatedComments(comments => ({
           ...comments,
           isAdding: false,
-          newComments: [...comments.newComments, commentData],
+          newComments: [commentData, ...comments.newComments],
         }));
       }
     },
-    [setNewCreatedComments]
+    [setNewCreatedComments, setGeneralizedComments]
   );
+
   const commentAction = useCallback(
     data => {
       let _comments = newCreatedComments.newComments;
@@ -184,7 +152,7 @@ function LikesComments({
           return comment.comment.id !== data.id;
         });
         if (isArticle) {
-          revalidate();
+          revalidateArticleDetail(pathname);
         }
       } else {
         _comments = newCreatedComments.newComments.map(comment => {
@@ -199,11 +167,13 @@ function LikesComments({
         newComments: _comments,
       }));
     },
-    [setNewCreatedComments, newCreatedComments]
+    [setNewCreatedComments, , newCreatedComments]
   );
-
   const likeCount = formatIndianNumber(likesCommentsDetails?.numberOfLikes);
 
+  const onCommentHandler = useCallback(index => {
+    setCommentLimit(commentLimitOptions[index]);
+  }, []);
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
@@ -270,55 +240,6 @@ function LikesComments({
           </Typography>
         </Button>
       </Stack>
-      {isArticle && <Divider />}
-      {!isPost && !isShared && (
-        <Typography variant="h5" sx={{ marginTop: '40px' }}>
-          Comments
-        </Typography>
-      )}
-      {isLoading && (
-        <Stack gap={1}>
-          <Skeleton width="100%" height="50px" />
-          <Skeleton width="100%" height="50px" />
-        </Stack>
-      )}
-      {showComments && (
-        <Box>
-          {Array.isArray(commentList) &&
-            commentList.map((val: any, index: number) => (
-              <div key={'comment-list-item-' + index}>
-                <Comment
-                  comment={val}
-                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
-                  setCommentText={commentTextHandler}
-                  inputRef={commentRef}
-                  onAction={commentAction}
-                />
-                {index !== commentList.length - 1 && <Divider />}
-              </div>
-            ))}
-        </Box>
-      )}
-      {newCreatedComments?.newComments.length > 0 && (
-        <Box>
-          {Array.isArray(newCreatedComments?.newComments) &&
-            newCreatedComments?.newComments.map((val: any, index: number) => (
-              <div key={'new-comment-list-item-' + index}>
-                <Comment
-                  comment={val}
-                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
-                  setCommentText={commentTextHandler}
-                  inputRef={commentRef}
-                  onAction={commentAction}
-                  isNewComment={true}
-                />
-                {index !== newCreatedComments?.newComments.length - 1 && (
-                  <Divider />
-                )}
-              </div>
-            ))}
-        </Box>
-      )}
       {!isPost && !isShared && (
         <>
           <Box
@@ -353,93 +274,84 @@ function LikesComments({
           />
         </Box>
       )}
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          {isArticle && (
-            <>
-              <Box sx={{ padding: '10px' }}>
-                <AddComment
-                  id={itemId}
-                  commentRef={commentRef}
-                  commentType={isPost ? 'PostComment' : 'ArticleComment'}
-                  commentText={commentText}
-                  setCommentText={commentTextHandler}
-                />
-              </Box>
-              {likesCommentsDetails?.coverPhotoPath && (
-                <Box sx={{ padding: '10px', marginTop: '10%' }}>
-                  <Image
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: '100%', height: '100%' }}
-                    src={likesCommentsDetails?.coverPhotoPath}
-                    alt="thumbnail"
-                  />
-                </Box>
-              )}
-              <Box
-                sx={{
-                  padding: '10px',
-                  paddingTop: '1px',
-                  textTransform: 'capitalize',
-                }}
-              >
-                <Typography variant="h1">
-                  {likesCommentsDetails?.title}
-                </Typography>
-              </Box>
-              <Divider />
-              <Box
-                sx={{
-                  paddingTop: '10px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <Button variant="contained" onClick={handlePublish}>
-                  Publish
-                </Button>
-              </Box>
-            </>
-          )}
-          {!isArticle && (
-            <>
-              <AddComment
-                id={itemId}
-                commentRef={commentRef}
-                commentType={isPost ? 'PostComment' : 'ArticleComment'}
-                commentText={commentText}
-                setCommentText={commentTextHandler}
-              />
-              <Post
-                name={likesCommentsDetails?.name}
-                username={likesCommentsDetails?.username}
-                createdDateTime={likesCommentsDetails?.createdDateTime}
-                content={likesCommentsDetails?.content}
-                shared={likesCommentsDetails?.shared}
-                image={likesCommentsDetails?.image}
-                link={likesCommentsDetails?.link}
-                isShared={true}
-                postDetails={likesCommentsDetails}
-                postId={articleId}
-                showComments={false}
-              />
-              <Box
-                sx={{
-                  paddingTop: '10px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <Button variant="contained" onClick={handlePublish}>
-                  Publish
-                </Button>
-              </Box>
-            </>
-          )}
+      {isArticle && <Divider />}
+      {!isPost && !isShared && (
+        <Typography variant="h5" sx={{ marginTop: '40px' }}>
+          Comments
+        </Typography>
+      )}
+      {isLoading && (
+        <Stack gap={1}>
+          <Skeleton width="100%" height="50px" />
+          <Skeleton width="100%" height="50px" />
+        </Stack>
+      )}
+      {generalizedComments.length > 0 && (
+        <Box width="100%" textAlign="right">
+          <Suspense fallback="loading...">
+            <SplitButton
+              options={commentLimitOptions}
+              handleOptions={onCommentHandler}
+              actionIcon={<ArrowDropDownIcon />}
+            />
+          </Suspense>
         </Box>
-      </Modal>
+      )}
+      {showComments && (
+        <Box>
+          {Array.isArray(generalizedComments) &&
+            (commentLimit === 'Most recent'
+              ? generalizedComments.slice(0, 5)
+              : generalizedComments
+            ).map((val: any, index: number) => (
+              <div key={'comment-list-item-' + index}>
+                <Comment
+                  comment={val}
+                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                  setCommentText={commentTextHandler}
+                  inputRef={commentRef}
+                  onAction={commentAction}
+                />
+                {index !== generalizedComments.length - 1 && <Divider />}
+              </div>
+            ))}
+        </Box>
+      )}
+      {newCreatedComments?.newComments.length > 0 && (
+        <Box>
+          {Array.isArray(newCreatedComments?.newComments) &&
+            newCreatedComments?.newComments.map((val: any, index: number) => (
+              <div key={'new-comment-list-item-' + index}>
+                <Comment
+                  comment={val}
+                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                  setCommentText={commentTextHandler}
+                  inputRef={commentRef}
+                  onAction={commentAction}
+                  isNewComment={true}
+                />
+                {index !== newCreatedComments?.newComments.length - 1 && (
+                  <Divider />
+                )}
+              </div>
+            ))}
+        </Box>
+      )}
+
+      <ShareArticleModal
+        open={open}
+        isArticle={isArticle}
+        itemId={itemId}
+        commentRef={commentRef}
+        isPost={isPost}
+        commentText={commentText}
+        commentTextHandler={commentTextHandler}
+        likesCommentsDetails={likesCommentsDetails}
+        revalidate={revalidateArticleDetail}
+        articleId={articleId}
+        setCommentText={setCommentText}
+        setOpen={setOpen}
+      />
     </Box>
   );
 }

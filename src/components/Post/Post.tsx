@@ -1,11 +1,11 @@
 'use client';
 
-import { Box, Popover, Tooltip, Typography } from '@mui/material';
+import { Box, Popover, Tooltip, Typography, useTheme } from '@mui/material';
 import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';
 import PostImage from './PostImage';
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PostActionModal from './PostActionModal';
 import { usePathname, useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
@@ -13,7 +13,8 @@ import { Post as PostDetail } from '@/lib/redux';
 import { useSession } from 'next-auth/react';
 import LikesComments from '../fullArticle/likesComments';
 import { addLinks, copyTextToClipboard } from '@/lib/utils';
-import CustomDescription from '../customDescription';
+import { useToast } from '../Toast/useToast';
+import CollapseDescription from '../collapseText';
 // import { useSession } from "next-auth/react";
 interface postDetail {
   name: string;
@@ -46,6 +47,8 @@ function Post({
   showComments,
 }: postDetail) {
   const session = useSession();
+  const toast = useToast();
+  const { palette } = useTheme();
   const userDetail = (session as any)?.data?.user?.username;
   const pathname = usePathname();
   const router = useRouter();
@@ -53,7 +56,7 @@ function Post({
   const [buttonAction, setButtonAction] = useState('');
   const [open, setOpen] = useState<boolean>(false);
 
-  const onCopied = () => alert('Copied');
+  const onCopied = () => toast.info('Copied');
 
   const handleOptions = (val: any, options: Array<string>) => {
     setButtonAction(options[val]);
@@ -62,7 +65,6 @@ function Post({
     } else if (options[val] === 'Direct Link') {
       const protocol = window.location.protocol;
       const host = window.location.host;
-      const port = window.location.port;
       const text = `${protocol}//${host}${allRoutes.post}/${postId}`;
       copyTextToClipboard(text, onCopied);
     }
@@ -109,11 +111,12 @@ function Post({
           </Box>
         </Box>
         <Box pb={1}>
-          <CustomDescription
+          <CollapseDescription
+            allowLength={300}
             variant="h6"
-            dangerouslySetInnerHTML={{
-              __html: addLinks(content),
-            }}
+            text={addLinks(content)}
+            sx={{ color: palette.primary.titleColor }}
+            isDangerouslySetInnerHTML
           />
         </Box>
         <PostImage

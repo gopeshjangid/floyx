@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -11,22 +11,26 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 
-export default function SplitButton({options, handleOptions}: any) {
+export default function SplitButton({
+  options,
+  handleOptions,
+  actionIcon,
+}: any) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
-  const [selectedIndex, setSelectedIndex] = React.useState<number|null>(null);
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    index: number,
+    index: number
   ) => {
     setSelectedIndex(index);
-    handleOptions(index)
+    handleOptions(index);
     setOpen(false);
   };
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+    setOpen(prevOpen => !prevOpen);
   };
 
   const handleClose = (event: Event) => {
@@ -42,13 +46,17 @@ export default function SplitButton({options, handleOptions}: any) {
 
   return (
     <React.Fragment>
-      <ButtonGroup variant="text" ref={anchorRef} aria-label="split button">
-        {/* <Button onClick={handleClick}>{options[selectedIndex]}</Button> */}
-        <Button
-          size="small"
-          onClick={handleToggle}
-        >
-          <MoreHorizIcon color="action"/>
+      <ButtonGroup
+        sx={{ '& .MuiButton-root': { border: 'none' } }}
+        variant="text"
+        ref={anchorRef}
+        aria-label="split button"
+      >
+        {actionIcon && (
+          <Button>{selectedIndex ? options[selectedIndex] : options[0]}</Button>
+        )}
+        <Button size="small" onClick={handleToggle}>
+          {actionIcon ?? <MoreHorizIcon color="action" />}
         </Button>
       </ButtonGroup>
       <Popper
@@ -72,12 +80,12 @@ export default function SplitButton({options, handleOptions}: any) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options.map((option:string, index: number) => (
+                  {options.map((option: string, index: number) => (
                     <MenuItem
                       key={option}
                       disabled={index === 2}
                       selected={index === selectedIndex}
-                      onClick={(event) => handleMenuItemClick(event, index)}
+                      onClick={event => handleMenuItemClick(event, index)}
                     >
                       {option}
                     </MenuItem>

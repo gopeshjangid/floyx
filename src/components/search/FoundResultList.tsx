@@ -14,7 +14,7 @@ import {
   Divider,
 } from '@mui/material';
 import { UserDetailsType } from '@/lib/redux/slices/profile';
-import UsernameLink from '../usernameLink';
+import UsernameLink, { ProfileName } from '../usernameLink';
 import { SVGUser } from '@/assets/images';
 import CustomTypographyWithIcon from '../typographyWithIcon';
 import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
@@ -58,14 +58,14 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
               <Box mb={2}>
                 <Stack alignItems="center" direction="row" gap={1}>
                   <Link href={`/profile/${profile.username}`}>
-                    <Typography
+                    <ProfileName
                       sx={{
                         color: theme.palette.primary.fontLightColor,
                       }}
                       variant="h6"
                     >
                       {profile.name}
-                    </Typography>
+                    </ProfileName>
                   </Link>
                   <UsernameLink username={profile.username} />
                 </Stack>

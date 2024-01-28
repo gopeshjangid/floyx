@@ -13,7 +13,6 @@ import { styled } from '@mui/material/styles';
 import Image from 'next/image';
 import Link from 'next/link';
 import CustomDescription from '../customDescription';
-import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 const PopularTodaySection = styled(Box)(() => ({
@@ -36,7 +35,6 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 
 function RecentArticles() {
   const router = useRouter();
-  const imageContainerRef = useRef<HTMLDivElement>(null);
   const { data, isLoading } = useGetArticleListQuery('recent?forHome=true');
   return (
     <PopularTodaySection>
@@ -59,22 +57,19 @@ function RecentArticles() {
                 }
               >
                 <Stack gap={0.8} pb={0.5}>
-                  <Box
-                    position={'relative'}
-                    width={'100%'}
-                    ref={imageContainerRef}
-                  >
+                  <Box position={'relative'} width={'100%'} height={120}>
                     <Image
                       alt={article.article.title ?? 'article title'}
                       src={article.article?.coverPhotoThumbnail}
-                      height="140"
-                      width={imageContainerRef?.current?.clientWidth ?? '220'}
+                      fill
+                      objectFit="cover"
+                      objectPosition="center"
                       style={{ borderRadius: '5px' }}
                     />
                   </Box>
                   <Stack gap={0}>
                     <CustomDescription variant="subtitle2" gutterBottom={false}>
-                      {article.article.title.slice(0, 100) ?? '(No title)'}...
+                      {article.article.title.slice(0, 50) ?? '(No title)'}...
                     </CustomDescription>
                   </Stack>
                 </Stack>

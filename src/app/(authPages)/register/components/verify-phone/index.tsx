@@ -4,7 +4,6 @@ import {
   CircularProgress,
   TextField,
   Typography,
-  useTheme,
 } from '@mui/material';
 import React from 'react';
 
@@ -21,7 +20,6 @@ const VerifyPhone = ({
   onChange,
   submitLoading,
 }: IVerifyPhoneProps) => {
-  const { palette } = useTheme();
   return (
     <Box
       sx={{
@@ -49,9 +47,6 @@ const VerifyPhone = ({
         <TextField
           sx={{
             marginY: '25px',
-            '& input': {
-              WebkitTextFillColor: `${palette.action.opposite} !important`,
-            },
           }}
           fullWidth
           hiddenLabel

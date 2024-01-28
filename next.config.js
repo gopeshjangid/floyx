@@ -10,6 +10,11 @@ const nextConfig = {
       transform: '@mui/icons-material/{{member}}',
     },
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["new-beta.floyx.com", "localhost:3000"],
+    }
+  },
   images: {
     //domains: ['floyx-beta.s3.us-east-2.amazonaws.com'],
     remotePatterns: [

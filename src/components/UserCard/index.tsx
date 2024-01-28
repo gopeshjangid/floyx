@@ -1,12 +1,12 @@
 'use client';
-import { Box, Grid, Link, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Link, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import DateParser from '../DateParser';
 import moment from 'moment';
 import CalendarIcon from '@/images/image/calendarIcon';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
-import UsernameLink from '../usernameLink';
+import UsernameLink, { ProfileName } from '../usernameLink';
 import React from 'react';
 import { GradientText } from '../GradientComponents';
 
@@ -39,8 +39,6 @@ function UserCard({
   isArticle?: boolean;
   isPost?: boolean;
 }) {
-  const { palette } = useTheme();
-
   const getSharedLink = () => (
     <Stack direction="row" gap={1}>
       <Typography variant="subtitle1">
@@ -78,13 +76,7 @@ function UserCard({
                 flexWrap={'wrap'}
                 alignItems={'center'}
               >
-                <Typography
-                  variant="subtitle1"
-                  component={'span'}
-                  color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
-                >
-                  {name}{' '}
-                </Typography>
+                <ProfileName variant="subtitle1">{name} </ProfileName>
                 <UsernameLink
                   variant="subtitle2"
                   username={username}

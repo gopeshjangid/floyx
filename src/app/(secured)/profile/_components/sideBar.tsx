@@ -11,7 +11,7 @@ import {
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { useGetPopularAccountsToFollowQuery } from '@/lib/redux/slices/profile';
-import UsernameLink from '@/components/usernameLink';
+import UsernameLink, { ProfileName } from '@/components/usernameLink';
 import Link from 'next/link';
 
 const StyledBox = ({ children }: any) => {
@@ -73,13 +73,9 @@ const PopularAccountsList = () => {
                   ) : (
                     account && (
                       <Stack alignItems={'flex-start'}>
-                        <Typography
-                          textAlign={'left'}
-                          variant="subtitle2"
-                          color="textPrimary"
-                        >
+                        <ProfileName textAlign={'left'} variant="subtitle2">
                           {account?.name}
-                        </Typography>
+                        </ProfileName>
                         <Box textAlign={'left'}>
                           <UsernameLink username={account?.username} />
                         </Box>

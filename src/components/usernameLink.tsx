@@ -35,3 +35,8 @@ const UsernameLink: React.FC<UsernameLinkProps & TypographyProps> = ({
 };
 
 export default UsernameLink;
+
+export const ProfileName = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.fontLightColor,
+  fontWeight: 500,
+}));

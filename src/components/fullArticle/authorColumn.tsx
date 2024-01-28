@@ -1,10 +1,9 @@
 'use client';
 import LinkIcon from '@/assets/images/icons/link.svg';
-import ArticleIcon from '@/images/image/articleIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
 import { Box, Typography, Link, Stack, Divider, Button } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
-import UsernameLink from '../usernameLink';
+import UsernameLink, { ProfileName } from '../usernameLink';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import {
@@ -19,7 +18,7 @@ import CustomDescription from '../customDescription';
 import { LocationOn } from '@mui/icons-material';
 import Image from 'next/image';
 import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 // import { useGetArticleDetailsQuery } from "@/lib/redux";
 
 export const AuthorDetailBox = styled(Box)(({ theme }) => ({
@@ -58,7 +57,6 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
 }));
 
 export default function AuthorCoulmn({ details }: any) {
-  const { palette } = useTheme();
   const router = useRouter();
   const session = useSession();
 
@@ -108,7 +106,8 @@ export default function AuthorCoulmn({ details }: any) {
               />
             </Box>
             <Divider />
-          </Box>)}
+          </Box>
+        )}
       </Box>
       <Box className="author-box">
         <Box sx={{ marginRight: 2 }}>
@@ -120,9 +119,7 @@ export default function AuthorCoulmn({ details }: any) {
         </Box>
         <Stack alignItems="flex-start">
           <Stack direction={'row'} gap={1}>
-            <Typography variant="subtitle1" component={'span'}>
-              {details?.user?.name}
-            </Typography>
+            <ProfileName variant="subtitle1">{details?.user?.name}</ProfileName>
             <UsernameLink username={details?.user?.username} />
           </Stack>
           <Stack justifyContent={'flex-start'} direction="row" gap={2}>
@@ -136,7 +133,7 @@ export default function AuthorCoulmn({ details }: any) {
               </Typography>
             </Stack>
             <Stack direction="row">
-              <ArticleProfileIcon width="20px" height="20px" />
+              <ArticleProfileIcon active={true} width="20px" height="20px" />
               <Typography variant="body2" sx={{ margin: '0px 5px' }}>
                 Articles:
               </Typography>

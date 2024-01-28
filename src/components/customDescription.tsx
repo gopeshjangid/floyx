@@ -3,7 +3,7 @@ import { Typography, styled } from '@mui/material';
 
 export const CustomDescription = styled(Typography)(
   () => `
-   word-break: break-all;
+   overflow-wrap: break-word;
    white-space: pre-line;
 `
 );
