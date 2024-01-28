@@ -1,10 +1,21 @@
-import { Box, Button, CircularProgress, Divider, Modal, Typography } from "@mui/material";
-import AddComment from "../Post/AddComment";
-import Image from "next/image";
-import Post from "../Post/Post";
-import { useCheckArticleIsSharedMutation, useShareArticleMutation, useSharePostMutation } from "@/lib/redux";
-import { useToast } from "../Toast/useToast";
-import { usePathname } from "next/navigation";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Modal,
+  Typography,
+} from '@mui/material';
+import AddComment from '../Post/AddComment';
+import Image from 'next/image';
+import Post from '../Post/Post';
+import {
+  useCheckArticleIsSharedMutation,
+  useShareArticleMutation,
+  useSharePostMutation,
+} from '@/lib/redux';
+import { useToast } from '../Toast/useToast';
+import { usePathname } from 'next/navigation';
 
 const style = {
   position: 'absolute',
@@ -12,14 +23,15 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 'auto',
+  
   maxHeight: '80vh',
-  minWidth: '50vw',
+  maxWidth: '50vw',
   overflowY: 'scroll',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  padding: 5,
-  m: 2,
+  padding: 3,
+  // m: 2,
 };
 
 export default function ShareArticleModal({
@@ -36,23 +48,24 @@ export default function ShareArticleModal({
   articleId,
   revalidate,
 }: {
-    open: boolean;
-    isArticle: boolean;
-    itemId: string;
-    commentRef: any;
-    isPost?: boolean;
-    commentText: string;
-    commentTextHandler: (text: string) => void;
-    likesCommentsDetails: any;
-    setOpen: any; 
-    setCommentText: any; 
-    articleId?: string; 
-    revalidate?: any; 
+  open: boolean;
+  isArticle: boolean;
+  itemId: string;
+  commentRef: any;
+  isPost?: boolean;
+  commentText: string;
+  commentTextHandler: (text: string) => void;
+  likesCommentsDetails: any;
+  setOpen: any;
+  setCommentText: any;
+  articleId?: string;
+  revalidate?: any;
 }) {
   const pathname = usePathname();
-  const [checkIsShared, {isLoading}] = useCheckArticleIsSharedMutation();
-  const [publishArticle, {isLoading: publishLoading}] = useShareArticleMutation();
-  const [publishPost, {isLoading: postLoading}] = useSharePostMutation();
+  const [checkIsShared, { isLoading }] = useCheckArticleIsSharedMutation();
+  const [publishArticle, { isLoading: publishLoading }] =
+    useShareArticleMutation();
+  const [publishPost, { isLoading: postLoading }] = useSharePostMutation();
   const toast = useToast();
 
   const handlePublish = async () => {
@@ -85,7 +98,7 @@ export default function ShareArticleModal({
 
   const handleClose = () => {
     setOpen(false);
-  }
+  };
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -102,12 +115,12 @@ export default function ShareArticleModal({
               />
             </Box>
             {likesCommentsDetails?.coverPhotoPath && (
-              <Box sx={{ padding: '10px', marginTop: '10%' }}>
+              <Box sx={{ padding: '10px', height: '400px' }}>
                 <Image
                   width={0}
                   height={0}
                   sizes="100vw"
-                  style={{ width: '100%', height: '100%' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   src={likesCommentsDetails?.coverPhotoPath}
                   alt="thumbnail"
                 />
@@ -120,7 +133,7 @@ export default function ShareArticleModal({
                 textTransform: 'capitalize',
               }}
             >
-              <Typography variant="h1">
+              <Typography variant="h1" fontSize="20px" className='text-clamp-2'>
                 {likesCommentsDetails?.title}
               </Typography>
             </Box>
@@ -133,7 +146,9 @@ export default function ShareArticleModal({
               }}
             >
               <Button variant="contained" onClick={handlePublish}>
-                {(isLoading || publishLoading || postLoading) && <CircularProgress size={24} color="inherit" />}
+                {(isLoading || publishLoading || postLoading) && (
+                  <CircularProgress size={24} color="inherit" />
+                )}
                 Publish
               </Button>
             </Box>
@@ -176,5 +191,5 @@ export default function ShareArticleModal({
         )}
       </Box>
     </Modal>
-  )
+  );
 }

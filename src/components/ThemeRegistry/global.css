@@ -25,17 +25,26 @@ a {
 }
 
 .mention-input-container__input {
-    outline: none;
+  outline: none;
 }
 
 .post-hyperlink {
-    color: #858FFF;
+  color: #858fff;
 }
 
 .post-hyperlink:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-.text-wrap{
+.text-wrap {
   word-break: break-all;
+}
+
+.text-clamp-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
 }

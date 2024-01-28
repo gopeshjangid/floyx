@@ -180,7 +180,7 @@ function LikesComments({
       <Stack direction="row" gap={2} py={1}>
         <Button
           variant="text"
-          startIcon={<LikeIcon isLiked={likesCommentsDetails?.likedByAuthor} />}
+          startIcon={<LikeIcon isLiked={likeCount} />}
           onClick={handleArticleLike}
           sx={{ padding: 0 }}
         >
@@ -191,7 +191,7 @@ function LikesComments({
             marginBottom={0}
             sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
-            {likeCount}{' '}
+            {likeCount}
             {Number(likesCommentsDetails.numberOfLikes) > 1 ? 'Likes' : 'Like'}
           </Typography>
         </Button>
