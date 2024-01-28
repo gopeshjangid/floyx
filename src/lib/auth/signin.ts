@@ -20,8 +20,9 @@ export default async function signIn(
     const user = await response.json();
     setAccessTokenCookie(user?.value?.data?.token.accessToken);
     setTwoStepAuthCookie(
-      user?.value?.data?.setTwoStepAuthCookie ? 'true' : 'false'
+      user?.value?.data?.twoStepLoginRequired ? 'true' : 'false'
     );
+
     if (!user || !response.ok) {
       throw new Error('Invalid credentials');
     }

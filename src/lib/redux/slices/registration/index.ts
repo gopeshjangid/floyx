@@ -74,6 +74,13 @@ export const registrationService = createApi({
       }),
       transformResponse: (response: any) => response?.value?.code,
     }),
+    login2fa: builder.mutation({
+      query: body => ({
+        url: ApiEndpoint.Login2fa,
+        method: 'POST',
+        body: body,
+      }),
+    }),
   }),
   tagTypes: ['registration'],
 });
@@ -86,4 +93,5 @@ export const {
   useVerifyOtpMutation,
   useResendMailMutation,
   useVerifyTokenMutation,
+  useLogin2faMutation,
 } = registrationService;
