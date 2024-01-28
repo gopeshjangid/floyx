@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
-import { Box, Typography, Button, Popover, useTheme, Stack } from '@mui/material';
+import { Box, Typography, Button, Popover, Stack } from '@mui/material';
 import StarIcon from '@/images/image/star';
 import { useGetArticleTotalEarningsQuery } from '@/lib/redux/slices/articleDetails';
 import { RoundPrimaryButton } from '../CustomButtons';
 import { useSession } from 'next-auth/react';
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 export default function AuthorPoints({ details }: any) {
   const session = useSession();
@@ -13,8 +13,9 @@ export default function AuthorPoints({ details }: any) {
   const articleId = details?.article?.id || '';
   const { data: totalEarningPoints } = useGetArticleTotalEarningsQuery(
     articleId,
-    { skip: session.status !== 'unauthenticated' }
+    { skip: session.status === 'unauthenticated' }
   );
+
   const pointsEarned = totalEarningPoints
     ? (
         totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +
@@ -35,11 +36,7 @@ export default function AuthorPoints({ details }: any) {
   const open = Boolean(anchorEl);
 
   return (
-    <Stack
-      justifyContent={'flex-end'}
-      alignItems={'flex-end'}
-      gap={1}
-    >
+    <Stack justifyContent={'flex-end'} alignItems={'flex-end'} gap={1}>
       <Button
         variant="outlined"
         size="small"
@@ -84,10 +81,8 @@ export default function AuthorPoints({ details }: any) {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Box sx={{p: 1}}>
-          <Typography>
-            Past Payouts {pointsEarned} points
-          </Typography>          
+        <Box sx={{ p: 1 }}>
+          <Typography>Past Payouts {pointsEarned} points</Typography>
           <Typography>
             - Author{' '}
             {totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount || 0}{' '}
@@ -95,8 +90,7 @@ export default function AuthorPoints({ details }: any) {
           </Typography>
           <Typography>
             - Voters{' '}
-            {totalEarningPoints?.totalEarnings[0]?.userEarnedAmount || 0}{' '}
-            points
+            {totalEarningPoints?.totalEarnings[0]?.userEarnedAmount || 0} points
           </Typography>
         </Box>
       </Popover>
