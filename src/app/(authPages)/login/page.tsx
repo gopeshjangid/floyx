@@ -239,6 +239,7 @@ const Login: FC = () => {
                     color="primary"
                     type="submit"
                     className="submit-btn"
+                    disabled={loading}
                   >
                     {loading ? (
                       <>

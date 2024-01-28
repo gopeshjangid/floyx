@@ -81,6 +81,13 @@ export const registrationService = createApi({
         body: body,
       }),
     }),
+    login: builder.mutation({
+      query: body => ({
+        url: ApiEndpoint.Login,
+        method: 'POST',
+        body: body,
+      }),
+    }),
   }),
   tagTypes: ['registration'],
 });
@@ -94,4 +101,5 @@ export const {
   useResendMailMutation,
   useVerifyTokenMutation,
   useLogin2faMutation,
+  useLoginMutation,
 } = registrationService;
