@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
-import ThemeSwitch from '@/components/ThemeSwitcher';
 import { SVGUser } from '@/assets/images';
 import { useToast } from '@/components/Toast/useToast';
 import {
@@ -220,7 +219,6 @@ const AccountSetting = () => {
 
   return (
     <>
-      <ThemeSwitch />
       <Wrapper
         sx={{
           maxWidth: {
