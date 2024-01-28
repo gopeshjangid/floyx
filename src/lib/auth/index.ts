@@ -1,8 +1,16 @@
-import { SOCIAL_SIGNIN_DATA } from '@/constants';
+import { FLOYX_TOKEN, SOCIAL_SIGNIN_DATA, TWO_STEP_AUTH } from '@/constants';
 import { cookies } from 'next/headers';
 
 export const setAccessTokenCookie = (accessToken: string): void => {
-  cookies().set('FLOYX_TOKEN', accessToken, {
+  cookies().set(FLOYX_TOKEN, accessToken, {
+    path: '/',
+    httpOnly: false,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  });
+};
+
+export const setTwoStepAuthCookie = (isRequired: string): void => {
+  cookies().set(TWO_STEP_AUTH, isRequired, {
     path: '/',
     httpOnly: false,
     maxAge: 30 * 24 * 60 * 60, // 30 days

@@ -18,4 +18,5 @@ export const allRoutes = {
   },
   post: '/post',
   profile: '/profile',
+  recoveryCodes: '/recovery-codes',
 };

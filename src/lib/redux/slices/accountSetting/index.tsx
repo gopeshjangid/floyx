@@ -89,6 +89,40 @@ export const accountSettingService = createApi({
         response?.data.value.code,
       invalidatesTags: ['blockUser'],
     }),
+    enable2faFirstStep: builder.mutation({
+      query: () => ({
+        url: ApiEndpoint.Enable2faFirstStep,
+        method: 'POST',
+      }),
+      transformResponse: (response: any) => response?.value?.data,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
+    }),
+    enable2faSecondStep: builder.mutation({
+      query: () => ({
+        url: ApiEndpoint.Enable2faSecondStep,
+        method: 'POST',
+      }),
+      transformResponse: (response: any) => response?.value?.data,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
+    }),
+    enable2faVerifyStep: builder.mutation({
+      query: body => ({
+        url: ApiEndpoint.Enable2faVerifyStep,
+        method: 'POST',
+        body: body,
+      }),
+    }),
+    disable2fa: builder.mutation({
+      query: () => ({
+        url: ApiEndpoint.Disable2fa,
+        method: 'POST',
+      }),
+      transformResponse: (response: any) => response?.value?.code,
+      transformErrorResponse: (response: any): string[] =>
+        response?.data.value.code,
+    }),
   }),
 });
 
@@ -100,4 +134,8 @@ export const {
   useUnblockUserMutation,
   useGetSettingsQuery,
   useGetMessageSettingsQuery,
+  useEnable2faFirstStepMutation,
+  useEnable2faSecondStepMutation,
+  useEnable2faVerifyStepMutation,
+  useDisable2faMutation,
 } = accountSettingService;

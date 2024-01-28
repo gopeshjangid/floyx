@@ -1,5 +1,5 @@
 import { apiPaths } from '@/constants/apiPaths';
-import { setAccessTokenCookie } from './index';
+import { setAccessTokenCookie, setTwoStepAuthCookie } from './index';
 
 export default async function signIn(
   email: string,
@@ -19,6 +19,9 @@ export default async function signIn(
     );
     const user = await response.json();
     setAccessTokenCookie(user?.value?.data?.token.accessToken);
+    setTwoStepAuthCookie(
+      user?.value?.data?.setTwoStepAuthCookie ? 'true' : 'false'
+    );
     if (!user || !response.ok) {
       throw new Error('Invalid credentials');
     }
