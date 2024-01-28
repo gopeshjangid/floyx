@@ -86,6 +86,9 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
       paddingTop: '3px',
       // paddingBottom: '3px',
       position: 'relative',
+      "& .articles-editor__paragraph > *":{
+        color:`${theme.palette?.mode === 'light' ? '#2b2b2b' : 'white'} !important`
+      },
       "& [contentEditable='true']": {
         '&:empty::before': {
           border: '0 !important',
