@@ -29,8 +29,7 @@ export default function FullArticle({ details }: any) {
             textTransform: 'capitalize',
             wordBreak: 'break-all',
             whiteSpace: 'pre-line',
-            color:
-              theme?.value === 'light' ? '#1b2530' : 'rgb(255, 255, 255, .8)',
+            color: '#1b2530',
           }}
         >
           {details?.article?.title}
