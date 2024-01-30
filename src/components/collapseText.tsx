@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import { Box, Stack, TypographyProps } from '@mui/material';
+import { Box, Stack, TypographyProps, useTheme } from '@mui/material';
 import CustomDescription from './customDescription';
 
 export default function CollapseDescription({
@@ -15,6 +15,7 @@ export default function CollapseDescription({
   text: string;
   isDangerouslySetInnerHTML?: boolean;
 } & TypographyProps) {
+  const { palette } = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const openHandler = e => {
@@ -35,12 +36,12 @@ export default function CollapseDescription({
           {...props}
         />
       ) : (
-        <CustomDescription>
+        <CustomDescription {...props}>
           {showFull ? completeText : completeText.slice(0, allowLength)}
         </CustomDescription>
       );
     },
-    [isDangerouslySetInnerHTML, text]
+    [isDangerouslySetInnerHTML, text, palette]
   );
 
   return (
