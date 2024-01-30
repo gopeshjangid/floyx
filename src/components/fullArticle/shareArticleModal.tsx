@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import AddComment from '../Post/AddComment';
 import Image from 'next/image';
+
 import Post from '../Post/Post';
 import {
   useCheckArticleIsSharedMutation,
@@ -30,7 +31,6 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   padding: 3,
-  // m: 2,
 };
 
 export default function ShareArticleModal({
