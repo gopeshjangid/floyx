@@ -27,11 +27,14 @@
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
+    "@ethersproject/contracts": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
     "@microsoft/signalr": "^8.0.0",
     "@mui/icons-material": "5.14.18",
     "@mui/material": "5.14.18",
     "@reduxjs/toolkit": "^2.0.1",
     "@types/uuid": "^9.0.7",
+    "@walletconnect/ethereum-provider": "^2.11.0",
     "axios": "^1.6.0",
     "cookies-next": "^4.0.0",
     "emoji-mart": "^5.5.2",
@@ -53,10 +56,12 @@
     "react-textarea-autosize": "^8.5.3",
     "react-vimeo": "^2.0.0",
     "react-youtube": "^10.1.0",
+    "reactstrap": "^9.2.2",
     "redux-logger": "^3.0.6",
     "redux-persist": "6.0.0",
     "sass": "^1.69.5",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "web3": "^4.4.0"
   },
   "devDependencies": {
     "@types/node": "20.9.0",
