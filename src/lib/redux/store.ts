@@ -6,16 +6,6 @@ import {
   useDispatch as useReduxDispatch,
   TypedUseSelectorHook,
 } from 'react-redux';
-import {
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-//import storage from 'redux-persist/lib/storage';
 import { earningsService } from './slices/earnings';
 import { profileService } from './slices/profile';
 import { postServices } from './slices/posts';
@@ -25,58 +15,17 @@ import { commentService } from './slices/comments';
 import { reducer } from './rootReducer';
 import { registrationService } from './slices/registration';
 import { accountSettingService } from './slices/accountSetting';
-import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { notificationApiService } from './slices/notification';
 import { authMiddleware } from './authMiddleware';
-
-const createNoopStorage = () => {
-  return {
-    getItem() {
-      return Promise.resolve(null);
-    },
-    setItem(v_key, value) {
-      return Promise.resolve(value);
-    },
-    removeItem() {
-      return Promise.resolve();
-    },
-  };
-};
-
-const storage =
-  typeof window !== 'undefined'
-    ? createWebStorage('local')
-    : createNoopStorage();
-
-const persistConfig = {
-  key: 'root',
-  storage,
-  whitelist: [
-    earningsService.reducerPath,
-    postServices.reducerPath,
-    tagServices.reducerPath,
-    profileService.reducerPath,
-    registrationService.reducerPath,
-    accountSettingService.reducerPath,
-    commentService.reducerPath,
-    notificationApiService.reducerPath,
-  ],
-};
-
-const persistedReducer = persistReducer(persistConfig, reducer);
 
 let store: any;
 
 function makeStore(initialState) {
   return configureStore({
-    reducer: persistedReducer,
+    reducer: reducer, // Directly using the root reducer
     preloadedState: initialState,
     middleware: getDefaultMiddleware =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
-      })
+      getDefaultMiddleware()
         .concat(authMiddleware)
         .concat(earningsService.middleware)
         .concat(postServices.middleware)

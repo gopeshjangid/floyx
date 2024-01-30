@@ -10,12 +10,13 @@ import SocialButts from './socialMediaButtons';
 import AuthorPoints from './authorPoints';
 import TranslateIcon from '@/assets/images/svg/translateIcon';
 import ArticleTags from './articleTags';
-// import { cookies } from 'next/headers';
-import { ArticleDescription, ArticleTypographyHeading, ArticleUserName } from './articleStyled';
+import {
+  ArticleDescription,
+  ArticleTypographyHeading,
+  ArticleUserName,
+} from './articleStyled';
 
 export default function FullArticle({ details }: any) {
-  // const cookieStore = cookies();
-  // const theme = cookieStore.get('theme');
   const CONTENT =
     details?.article?.content && JSON.parse(details?.article?.content);
   const createMarkup = (htmlString: string) => {

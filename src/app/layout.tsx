@@ -7,8 +7,6 @@ import AuthProvider from './context/AuthProvider';
 import { ToastProvider } from '@/components/Toast/useToast';
 import { initializeStore } from '@/lib/redux';
 import NextTopLoader from 'nextjs-toploader';
-//import { PersistGate } from 'redux-persist/integration/react';
-//import { DefaultCircularProgress } from '@/components/DefaultPageSkelton';
 import '../components/ThemeRegistry/global.css';
 import { useTheme } from 'next-themes';
 
@@ -53,12 +51,7 @@ export default function RootLayout({
                 zIndex={1600}
                 //showAtBottom={false}
               />
-              {/* <PersistGate
-                loading={<DefaultCircularProgress />}
-                persistor={persistor}
-              > */}
               <PageProvider>{children}</PageProvider>
-              {/* </PersistGate> */}
             </Provider>
           </AuthProvider>
         </ToastProvider>

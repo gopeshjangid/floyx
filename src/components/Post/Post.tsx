@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Popover, Tooltip, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';

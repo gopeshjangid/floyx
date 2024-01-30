@@ -10,17 +10,7 @@ interface PageProviderProps {
 }
 
 const PageProvider: FC<PageProviderProps> = ({ children }) => (
-  <PreferredThemeProvider
-    enableSystem
-    attribute="class"
-    // defaultTheme="dark"
-    // forcedTheme={
-    //   typeof window !== 'undefined' &&
-    //   window.localStorage.getItem('theme') === 'light'
-    //     ? 'light'
-    //     : 'dark'
-    // }
-  >
+  <PreferredThemeProvider enableSystem attribute="class">
     <NextAppDirEmotionCacheProvider options={{ key: 'mui', prepend: true }}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
