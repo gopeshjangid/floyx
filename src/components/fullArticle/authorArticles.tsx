@@ -52,10 +52,10 @@ export default function AuthorArticles({ username }: { username: string }) {
                     sx={{
                       border: `1px solid ${palette.primary.boxBorder}`,
                       borderRadius: '10px',
-                      padding: '16px',
+                      // padding: '16px',
                     }}
                     direction="row"
-                    alignItems={'center'}
+                    // alignItems={'center'}
                     gap={1}
                   >
                     <Image
@@ -66,9 +66,11 @@ export default function AuthorArticles({ username }: { username: string }) {
                       src={article?.coverPhotoThumbnail}
                       alt="coverPhotoThumbnail"
                     />
+                    <Box padding='20px 5px'>
                     <Typography className="text-clamp-2">
                       {article?.title ? article?.title : '(No title)'}
                     </Typography>
+                    </Box>
                   </Stack>
                 </Grid>
               )}

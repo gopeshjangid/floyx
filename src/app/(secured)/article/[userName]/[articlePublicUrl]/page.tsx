@@ -7,9 +7,6 @@ import { Alert, Skeleton } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { Metadata, ResolvingMetadata } from 'next';
-// import RecommendedTopics from '@/components/recommendedTopics/recommendedTopics';
-import LoginHeader from '@/components/LoginHeader';
-import LoginModal from '@/components/LoginModal';
 
 async function Page({ params }: any) {
   // const isMobile = useMediaQuery('(max-width:480px)');
@@ -22,8 +19,6 @@ async function Page({ params }: any) {
 
   return (
     <>
-      {/* {!isMobile && <LoginHeader />}
-      {isMobile && <LoginModal />} */}
       {isError && <Alert severity="error">Something went wrong</Alert>}
       {articleId && (
         <>

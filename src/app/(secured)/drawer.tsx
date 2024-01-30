@@ -216,11 +216,13 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   }, [session]);
 
   useEffect(() => {
-    notificationService.publisher.on('change', getNotifications);
-    notificationService.publisher.on('reload', getInitialNotification);
-    messageService.publisher.on('threads', getMessageCount);
-    getInitialNotification();
-  }, []);
+    if (session.status === 'authenticated') {
+      notificationService.publisher.on('change', getNotifications);
+      notificationService.publisher.on('reload', getInitialNotification);
+      messageService.publisher.on('threads', getMessageCount);
+      getInitialNotification();
+    }
+  }, [session]);
 
   const getNotifications = (data: INotification[]) => {
     setDrawerData(prev => ({

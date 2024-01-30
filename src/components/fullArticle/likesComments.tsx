@@ -35,6 +35,9 @@ import Link from 'next/link';
 import ShareArticleModal from './shareArticleModal';
 import { revalidateArticleDetail } from '@/actions/actions';
 import SplitButton from '../SplitButton';
+import { useSelector } from 'react-redux';
+import { ReduxState } from '@/lib/redux';
+import LoginModal from '../LoginModal';
 
 const commentLimitOptions = ['Most recent', 'All comments'];
 
@@ -57,6 +60,9 @@ function LikesComments({
   isArticle = false,
 }: LikeCommentType) {
   const pathname = usePathname();
+  const { openLoginModel } = useSelector(
+    (state: ReduxState) => state.appReducer
+  );
   const { data: commentList, isLoading } = useGetCommentListQuery(
     articleId! || '',
     { skip: !showComments }
@@ -177,6 +183,7 @@ function LikesComments({
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
+      {openLoginModel && <LoginModal isForceOpened />}
       <Stack direction="row" gap={2} py={1}>
         <Button
           variant="text"

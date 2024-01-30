@@ -20,7 +20,7 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
-  flexDirection: "column",
+  flexDirection: 'column',
   '& .avatar': {
     width: 49,
     height: 49,
@@ -38,7 +38,7 @@ const AddCommentBox = styled(Box)(({ theme }) => ({
       flexDirection: 'column',
       '& textarea': {
         padding: '0.5rem',
-        color: theme.palette.text.primary,
+        color: theme.palette.primary.fontLightColor,
         border: `1px solid ${theme.palette?.primary?.[800]}`,
         borderRadius: '10px',
         paddingLeft: '16px',
@@ -74,9 +74,7 @@ interface Props {
     commentData: UserComment | undefined,
     isLoading: boolean
   ) => void;
-  commentAction?: (
-    comment: any,
-  ) => void;
+  commentAction?: (comment: any) => void;
   isEditing?: boolean;
   setIsEditing?: any;
   isNewComment?: boolean;
@@ -87,8 +85,8 @@ function AddComment({
   commentType,
   commentText,
   setCommentText,
-  onCreatedNewComment = (comment, isLoading) => { },
-  commentAction = (comment) => {},
+  onCreatedNewComment = (comment, isLoading) => {},
+  commentAction = comment => {},
   isEditing,
   setIsEditing,
   isNewComment,
@@ -97,7 +95,8 @@ function AddComment({
   const [createComment, { isLoading, isSuccess, data: createdComment }] =
     useCreateCommentMutation();
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
-  const [updateComment, { isLoading: updateLoading }] = useUpdateCommentMutation();
+  const [updateComment, { isLoading: updateLoading }] =
+    useUpdateCommentMutation();
   const handlePostText = (e: any) => {
     const text = e.target.value;
     setCommentText(text);
@@ -136,10 +135,14 @@ function AddComment({
   };
 
   const handleEditSubmit = async () => {
-    const data = await updateComment({ commentId: id, content: commentText, isNewComment: isNewComment });
-    commentAction({ id: id, content: commentText, isDeleted: true })
+    const data = await updateComment({
+      commentId: id,
+      content: commentText,
+      isNewComment: isNewComment,
+    });
+    commentAction({ id: id, content: commentText, isDeleted: true });
     setIsEditing(false);
-  }
+  };
 
   const renderUserSuggestion = (user: any) => {
     return <MentionItem user={user} />;
@@ -182,21 +185,15 @@ function AddComment({
       </Box>
       {isEditing && (
         <Stack
-          direction={"row"}
-          justifyContent={"flex-end"}
+          direction={'row'}
+          justifyContent={'flex-end'}
           gap={1}
           marginTop={1}
         >
-          <Button
-            variant="outlined"
-            onClick={handleEditSubmit}
-          >
+          <Button variant="outlined" onClick={handleEditSubmit}>
             Update
           </Button>
-          <Button
-            variant="outlined"
-            onClick={()=> setIsEditing(false)}
-          >
+          <Button variant="outlined" onClick={() => setIsEditing(false)}>
             Cancel
           </Button>
         </Stack>

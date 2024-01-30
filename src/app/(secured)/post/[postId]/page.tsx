@@ -1,20 +1,21 @@
 'use client';
-import { Box, useMediaQuery } from '@mui/material';
+import { Box } from '@mui/material';
 import DefaultPageSkelton from '@/components/DefaultPageSkelton';
-import LoginHeader from '@/components/LoginHeader';
 import LoginModal from '@/components/LoginModal';
 import Post from '@/components/Post/Post';
 import { useGetPostDetailQuery } from '@/lib/redux/slices/posts';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { ReduxState } from '@/lib/redux';
 
 export default function Page({ params }: { params: { postId: string } }) {
   const { data: postDetail, isLoading } = useGetPostDetailQuery(params.postId);
-  const isMobile = useMediaQuery('(max-width:480px)');
-
+  const { openLoginModel } = useSelector(
+    (state: ReduxState) => state.appReducer
+  );
   return (
     <>
-      {!isMobile && <LoginHeader />}
-      {isMobile && <LoginModal />}
+      {openLoginModel && <LoginModal isForceOpened={true} />}
       {isLoading ? (
         <DefaultPageSkelton showOnlyContent />
       ) : (

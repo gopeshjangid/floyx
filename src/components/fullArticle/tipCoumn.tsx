@@ -26,7 +26,8 @@ export default function TipColumn({
   const pathname = usePathname();
   const [updateTip, { isError, error, isSuccess }] = useSetTipMutation();
   const { data: tipHistory, isLoading } = useGetTipHistoryQuery(undefined, {
-    skip: session?.status === 'unauthenticated',
+    skip:
+      session?.status === 'loading' || session?.status === 'unauthenticated',
   });
   const toast = useToast();
   const { palette } = useTheme();
