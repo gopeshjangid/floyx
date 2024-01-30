@@ -32,6 +32,7 @@ export default async function checkMail({
     // if (!user || !response.ok) {
     //   throw new Error('Invalid credentials');
     // }
+    console.log('check is first time social media signin', user?.value?.code);
 
     await socialSignIn({
       email: mail,
