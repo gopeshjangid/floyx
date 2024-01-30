@@ -81,7 +81,6 @@ const ArticleContent = styled(Box)(({ theme }) => ({
       color: `${theme.palette.text.secondary}`,
     },
     '& .middle': {
-      width: '70%',
       color: `${theme.palette.text.disabled}`,
       wordWrap: 'break-word',
     },
@@ -232,7 +231,7 @@ export default function ArticleContainer({
                 <Box
                   position="relative"
                   height={isMobile ? 300 : 240}
-                  width={isMobile ? window.document.body.clientWidth - 32 : 220}
+                  width={isMobile ? window.document.body.clientWidth - 32 : '100%'}
                 >
                   <Image
                     fill
@@ -304,10 +303,8 @@ export default function ArticleContainer({
                   )}
                   <CustomDescription
                     variant="h5"
-                    sx={{
-                      width: 'auto',
-                    }}
                     color={palette.primary.titleColor}
+                    className='text-clamp-2'
                   >
                     {articleDetails?.title
                       ? articleDetails?.title.slice(0, 70)
@@ -325,7 +322,7 @@ export default function ArticleContainer({
                     )}
                   </Typography>
                 </Stack>
-                <IconButton onClick={e => e.stopPropagation()}>
+                <IconButton onClick={e => e.stopPropagation()} sx={{width:40,height:40}}>
                   <BookMarkIcon />
                 </IconButton>
               </Box>
@@ -335,18 +332,8 @@ export default function ArticleContainer({
                   // color={"textPrimary"}
                   component={'span'}
                   color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
-                  sx={{
-                    minHeight: `${40}px`,
-                    maxHeight: `${40 * 2}px`,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 2,
-                  }}
-                >
-                  <div dangerouslySetInnerHTML={createMarkup(description)} />
-                </Typography>
+                  className='text-clamp-2'
+                  dangerouslySetInnerHTML={createMarkup(description)} />
               </Box>
               {userDetails && (
                 <Box

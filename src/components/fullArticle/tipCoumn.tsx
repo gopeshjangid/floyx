@@ -13,7 +13,6 @@ import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
 import { useSetTipMutation } from '@/lib/redux/slices/articleDetails';
 import { useToast } from '../Toast/useToast';
 import { useSession } from 'next-auth/react';
-import useQuery from '@/lib/hooks/useFetch';
 import { revalidateArticleDetail } from '@/actions/actions';
 import { usePathname } from 'next/navigation';
 
@@ -27,7 +26,8 @@ export default function TipColumn({
   const pathname = usePathname();
   const [updateTip, { isError, error, isSuccess }] = useSetTipMutation();
   const { data: tipHistory, isLoading } = useGetTipHistoryQuery(undefined, {
-    skip: session?.status !== 'authenticated',
+    skip:
+      session?.status === 'loading' || session?.status === 'unauthenticated',
   });
   const toast = useToast();
   const { palette } = useTheme();

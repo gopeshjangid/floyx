@@ -6,7 +6,7 @@ import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
 import SignInGoogle from './components/sign-in-google';
-import SignInFacebook from './components/sign-in-facebook';
+// import SignInFacebook from './components/sign-in-facebook';
 import { allRoutes } from '@/constants/allRoutes';
 import LoginFooter from './components/login-footer';
 
@@ -54,7 +54,8 @@ const SocialLogin: FC = () => {
             Login to your account
           </Typography>
           <SignInGoogle />
-          <SignInFacebook />
+          {/* TODO: add fb in future */}
+          {/* <SignInFacebook /> */}
           <Box mb="3px">
             <Button
               variant="outlined"

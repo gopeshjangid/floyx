@@ -5,8 +5,8 @@ import { Box, Typography, Grid, Stack, Avatar, Skeleton } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import UserAvatar from "../UserAvatar";
-import { ApiEndpoint } from "@/lib/API/ApiEndpoints";
+import UserAvatar from '../UserAvatar';
+import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { useSession } from 'next-auth/react';
 
 export default function AuthorArticles({ username }: { username: string }) {
@@ -38,7 +38,9 @@ export default function AuthorArticles({ username }: { username: string }) {
               {index < 4 && (
                 <Grid
                   onClick={() =>
-                    router.push('/article/' + username + '/' + article.publicUrl)
+                    router.push(
+                      '/article/' + username + '/' + article.publicUrl
+                    )
                   }
                   item
                   xs={12}
@@ -50,13 +52,12 @@ export default function AuthorArticles({ username }: { username: string }) {
                     sx={{
                       border: `1px solid ${palette.primary.boxBorder}`,
                       borderRadius: '10px',
-                      padding: '16px',
+                      // padding: '16px',
                     }}
                     direction="row"
-                    alignItems={"center"}
+                    // alignItems={'center'}
                     gap={1}
                   >
-                    
                     <Image
                       width={0}
                       height={0}
@@ -65,19 +66,11 @@ export default function AuthorArticles({ username }: { username: string }) {
                       src={article?.coverPhotoThumbnail}
                       alt="coverPhotoThumbnail"
                     />
-                    <Typography
-                      sx={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        display: "-webkit-box",
-                        WebkitLineClamp: "2",
-                        height: 50,
-                        WebkitBoxOrient: "vertical",
-                      }}>
-                      {article?.title
-                        ? article?.title
-                        : '(No title)'}
+                    <Box padding='20px 5px'>
+                    <Typography className="text-clamp-2">
+                      {article?.title ? article?.title : '(No title)'}
                     </Typography>
+                    </Box>
                   </Stack>
                 </Grid>
               )}

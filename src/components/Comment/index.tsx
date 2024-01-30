@@ -106,7 +106,7 @@ function Comment({
               <Box sx={{ display: 'flex', margin: '20px 0px' }}>
                 <Button
                   variant="text"
-                  startIcon={<LikeIcon />}
+                  startIcon={<LikeIcon isLiked={formatIndianNumber(comment?.comment?.numberOfLikes)} />}
                   sx={{ marginRight: '25px' }}
                   onClick={commentLikeUnlike}
                 >

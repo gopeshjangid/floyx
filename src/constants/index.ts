@@ -8,3 +8,4 @@ export const PARENTHESES_AND_BRACKETS_REGEX = /\(([^)]+)\)|]|\[/g;
 export const FLOYX_TOKEN = 'FLOYX_TOKEN';
 export const FLOYX_USERNAME = 'FLOYX_USERNAME';
 export const SOCIAL_SIGNIN_DATA = 'SOCIAL_SIGNIN_DATA';
+export const TWO_STEP_AUTH = 'TWO_STEP_AUTH';

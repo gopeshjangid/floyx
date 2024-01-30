@@ -1,8 +1,8 @@
 'use client';
 import LinkIcon from '@/assets/images/icons/link.svg';
 import ProfileTickIcon from '@/images/image/profileTick';
-import { Box, Typography, Link, Stack, Divider, Button } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { Box, Typography, Stack, Divider, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import UsernameLink, { ProfileName } from '../usernameLink';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
@@ -88,16 +88,18 @@ export default function AuthorCoulmn({ details }: any) {
         </Box>
         {session?.data?.user?.username !== details?.user?.username && (
           <Box className="position-center">
-            <Box>
-              <RoundPrimaryButton
-                variant="outlined"
-                size="small"
-                sx={{ borderRadius: '30px', padding: '4px 14px' }}
-                onClick={() => router.push('/inbox')}
-              >
-                Message
-              </RoundPrimaryButton>
-            </Box>
+            {details?.user?.allowPrivateMassages && (
+              <Box>
+                <RoundPrimaryButton
+                  variant="outlined"
+                  size="small"
+                  sx={{ borderRadius: '30px', padding: '4px 14px' }}
+                  onClick={() => router.push('/inbox')}
+                >
+                  Message
+                </RoundPrimaryButton>
+              </Box>
+            )}
             <Divider variant="middle" />
             <Box>
               <FollowUser

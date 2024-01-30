@@ -1,12 +1,22 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Box, Button, CircularProgress, FormControl, FormLabel, TextField, Theme, styled } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  FormControl,
+  FormLabel,
+  TextField,
+  Theme,
+  styled,
+} from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
 import { useToast } from '@/components/Toast/useToast';
 import { useChangePasswordMutation } from '@/lib/redux/slices/accountSetting';
 import { showErrorMessages } from '@/lib/utils';
+import TwoFactorAuth from '../_components/two-factor-auth';
 
 const AccountWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   '& .MuiInputBase-root': {
@@ -32,7 +42,8 @@ interface IChangePasswordFormError {
 
 const AccountSetting = () => {
   const toast = useToast();
-  const [changePassword, { data, isLoading, error }] = useChangePasswordMutation();
+  const [changePassword, { data, isLoading, error }] =
+    useChangePasswordMutation();
 
   const [formData, setFormData] = useState<IChangePassword>({
     currentPassword: '',
@@ -79,7 +90,8 @@ const AccountSetting = () => {
       err.newPasswordConfirmation = 'New confirm passowrd is required!';
     }
     if (formData.newPassword !== formData.newPasswordConfirmation) {
-      err.newPasswordConfirmation = 'New password and confirm password must be same!';
+      err.newPasswordConfirmation =
+        'New password and confirm password must be same!';
     }
 
     setFormError({ ...err });
@@ -164,6 +176,8 @@ const AccountSetting = () => {
               </Button>
             </FormControl>
           </Box>
+
+          <TwoFactorAuth />
         </AccountWrapper>
       </Wrapper>
     </>

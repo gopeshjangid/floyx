@@ -11,12 +11,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
 
 import { useToast } from '../Toast/useToast';
 import { allRoutes } from '@/constants/allRoutes';
+import { useDispatch } from 'react-redux';
+import { setLoginModal } from '@/lib/redux/slices/appConfig';
 
 interface ILogin {
   email: string;
@@ -37,14 +39,20 @@ const style = {
   minWidth: '80vw',
   overflowY: 'scroll',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
   boxShadow: 24,
+  borderRadius: '10px',
   padding: 5,
 };
 
-const LoginModal = () => {
+const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    if (isForceOpened) {
+      dispatch(setLoginModal(false));
+    }
+    setOpen(false);
+  };
   const session = useSession();
   const toast = useToast();
 
@@ -54,6 +62,12 @@ const LoginModal = () => {
     password: '',
   });
   const [formError, setFormError] = useState<IFormError>({});
+
+  useEffect(() => {
+    if (isForceOpened) {
+      setOpen(isForceOpened);
+    }
+  }, [isForceOpened]);
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

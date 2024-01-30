@@ -32,7 +32,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             mainBackground: '#fff',
             iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(47, 46, 65, 1)',
-            commentFontColor: '#ADB3C6',
+            commentFontColor: 'rgba(47, 46, 65, .8)',
             titleColor: '#1b2530',
           },
           secondary: {
@@ -90,7 +90,7 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
             mainBackground: '#0B081F',
             iconSelectedColor: '#A75FFF',
             fontLightColor: 'rgba(255, 255, 255, 1)',
-            commentFontColor: '#D9D9D9',
+            commentFontColor: 'rgba(255, 255, 255, .8)',
             titleColor: 'rgb(255, 255, 255, .8)',
           },
           secondary: {

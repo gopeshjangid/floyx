@@ -10,11 +10,12 @@ import SocialButts from './socialMediaButtons';
 import AuthorPoints from './authorPoints';
 import TranslateIcon from '@/assets/images/svg/translateIcon';
 import ArticleTags from './articleTags';
-import { cookies } from 'next/headers';
+// import { cookies } from 'next/headers';
+import { ArticleDescription, ArticleTypographyHeading, ArticleUserName } from './articleStyled';
 
 export default function FullArticle({ details }: any) {
-  const cookieStore = cookies();
-  const theme = cookieStore.get('theme');
+  // const cookieStore = cookies();
+  // const theme = cookieStore.get('theme');
   const CONTENT =
     details?.article?.content && JSON.parse(details?.article?.content);
   const createMarkup = (htmlString: string) => {
@@ -23,18 +24,9 @@ export default function FullArticle({ details }: any) {
   return (
     <Box>
       <Box>
-        <Typography
-          variant="h1"
-          sx={{
-            textTransform: 'capitalize',
-            wordBreak: 'break-all',
-            whiteSpace: 'pre-line',
-            color:
-              theme?.value === 'light' ? '#1b2530' : 'rgb(255, 255, 255, .8)',
-          }}
-        >
+        <ArticleTypographyHeading variant="h1">
           {details?.article?.title}
-        </Typography>
+        </ArticleTypographyHeading>
       </Box>
       <Box py={2}>
         <Grid container spacing={1}>
@@ -46,18 +38,9 @@ export default function FullArticle({ details }: any) {
             />
           </Grid>
           <Grid item xs={6} sm={4}>
-            <Typography
-              variant="subtitle1"
-              component={'span'}
-              sx={{
-                color:
-                  theme?.value === 'light'
-                    ? 'rgba(47, 46, 65, 1)'
-                    : 'rgba(255, 255, 255, 1)',
-              }}
-            >
+            <ArticleUserName variant="subtitle1">
               {details?.user?.name}
-            </Typography>
+            </ArticleUserName>
             <UsernameLink
               variant="subtitle2"
               username={details?.user?.username}
@@ -107,12 +90,12 @@ export default function FullArticle({ details }: any) {
           CONTENT.map((val: any, index: number) => (
             <Box sx={{ padding: '10px 0' }} key={`articleDetail${index}`}>
               {val?.type === 'paragraph' ? (
-                <Typography
+                <ArticleDescription
                   variant="body1"
                   dangerouslySetInnerHTML={createMarkup(val?.value)}
                 />
               ) : (
-                <Typography
+                <ArticleDescription
                   variant="body1"
                   dangerouslySetInnerHTML={createMarkup(val?.value)}
                 />

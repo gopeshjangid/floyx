@@ -9,7 +9,6 @@ import { SettingWrapper } from '../styled';
 const AccountSettingSkeleton = () => {
   return (
     <>
-      <Skeleton variant="text" width="20%" height="60px" />
 
       <Wrapper
         sx={{
