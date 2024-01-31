@@ -26,12 +26,7 @@ export default function TipColumn({
   const pathname = usePathname();
   const [updateTip, { isLoading: tipLoading, isError, error, isSuccess }] =
     useSetTipMutation();
-  const {
-    refetch,
-    data: tipHistory,
-    isUninitialized,
-    isFetching,
-  } = useGetTipHistoryQuery(undefined, {
+  const { refetch, data: tipHistory } = useGetTipHistoryQuery(undefined, {
     skip:
       session?.status === 'loading' || session?.status === 'unauthenticated',
   });
@@ -41,12 +36,6 @@ export default function TipColumn({
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
-
-  useEffect(() => {
-    if (!isUninitialized && session.status !== 'loading' && !isFetching) {
-      refetch();
-    }
-  }, [session.status, isFetching, isUninitialized]);
 
   const handleTip = () => {
     const payload: any = {
