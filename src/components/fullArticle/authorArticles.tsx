@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import CustomDescription from '../customDescription';
 
 export default function AuthorArticles({ username }: { username: string }) {
   const { palette } = useTheme();
@@ -49,24 +50,22 @@ export default function AuthorArticles({ username }: { username: string }) {
                     sx={{
                       border: `1px solid ${palette.primary.boxBorder}`,
                       borderRadius: '10px',
-                      // padding: '16px',
+                      overflow: 'hidden',
                     }}
                     direction="row"
-                    // alignItems={'center'}
                     gap={1}
                   >
                     <Image
-                      width={0}
-                      height={0}
-                      style={{ width: '120px', height: '80px' }}
+                      height={100}
+                      width={160}
                       sizes="100vw"
                       src={article?.coverPhotoThumbnail}
                       alt="coverPhotoThumbnail"
                     />
                     <Box padding="20px 5px">
-                      <Typography className="text-clamp-2">
+                      <CustomDescription className="text-clamp-2">
                         {article?.title ? article?.title : '(No title)'}
-                      </Typography>
+                      </CustomDescription>
                     </Box>
                   </Stack>
                 </Grid>

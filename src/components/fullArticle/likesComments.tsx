@@ -184,7 +184,7 @@ function LikesComments({
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
       {openLoginModel && <LoginModal isForceOpened />}
-      <Stack direction="row" gap={2} py={1}>
+      <Stack direction="row" gap={2} py={1} justifyContent={'flex-start'}>
         <Button
           variant="text"
           startIcon={<LikeIcon isLiked={likeCount} />}
@@ -198,7 +198,7 @@ function LikesComments({
             marginBottom={0}
             sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
-            {likeCount}
+            {likeCount}&nbsp;
             {Number(likesCommentsDetails.numberOfLikes) > 1 ? 'Likes' : 'Like'}
           </Typography>
         </Button>
