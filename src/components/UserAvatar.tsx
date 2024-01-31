@@ -24,21 +24,30 @@ interface UserAvatarProps {
         }
       | string;
   };
+  restrictNavigation: boolean;
 }
-const UserAvatar = ({ src, alt, sx }: UserAvatarProps) => {
+const UserAvatar = ({
+  src,
+  alt,
+  sx,
+  restrictNavigation = false,
+}: UserAvatarProps) => {
   const { status } = useSession();
   const [loading, setLoading] = useState<boolean>(true);
   let linkSrc = typeof src === 'string' ? src.split('/') : [];
-  const userName = linkSrc.length > 0 ? linkSrc[linkSrc.length-1] : ''
+  const userName = linkSrc.length > 0 ? linkSrc[linkSrc.length - 1] : '';
   return (
     <Avatar sx={sx}>
       {(!loading || status === 'loading') && <SVGUser />}
-      {loading && status !== 'loading' && (
-        <Link
-          href={userName !== '' ? `/profile/${userName}` : ''}
-          passHref
-          style={{ pointerEvents: userName == '' ? 'none' : undefined}}
-        >
+      {loading &&
+        status !== 'loading' &&
+        (!restrictNavigation ? (
+          <Link
+            href={userName !== '' ? `/profile/${userName}` : ''}
+            passHref
+            style={{ pointerEvents: userName === '' ? 'none' : undefined }}
+          ></Link>
+        ) : (
           <Image
             src={src}
             alt={alt}
@@ -51,10 +60,8 @@ const UserAvatar = ({ src, alt, sx }: UserAvatarProps) => {
             onError={() => {
               setLoading(false);
             }}
-          
-            />
-        </Link>
-      )}
+          />
+        ))}
     </Avatar>
   );
 };
