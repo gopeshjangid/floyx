@@ -97,6 +97,19 @@ interface shareArticleArgs {
   };
 }
 
+type totalEarningsType = {
+  articleEarnedAmount: number;
+  currencyName: string;
+  userEarnedAmount: number;
+};
+
+interface ArticleEarning {
+  articleId: string;
+  articlePublicUrl: string;
+  articleUserId: string;
+  totalEarnings: totalEarningsType[];
+}
+
 export const artcileDetails = createApi({
   reducerPath: 'artcileDetailsReducer',
   baseQuery: baseQuery,
@@ -182,9 +195,10 @@ export const artcileDetails = createApi({
         });
       },
     }),
-    getArticleTotalEarnings: builder.query<any, string>({
+    getArticleTotalEarnings: builder.query<ArticleEarning, string>({
       query: articleId => `${ApiEndpoint.ArticleTotalEarning}/${articleId}`,
-      transformResponse: (response: any) => response?.value?.data,
+      transformResponse: (response: ApiResponse<ArticleEarning>) =>
+        response?.value?.data,
       providesTags: (result, error, arg) => [{ type: 'articleTip', id: arg }],
     }),
     setTip: builder.mutation<any, string>({
@@ -194,7 +208,7 @@ export const artcileDetails = createApi({
         body: payload,
       }),
       transformErrorResponse: (error: any) => error?.data?.value?.data || '',
-      invalidatesTags: ['articleTip'],
+      invalidatesTags: ['articleTip', 'tipHistory', 'walletHistory'],
     }),
     getArticleList: builder.query<any, string | undefined>({
       query: tabName =>
@@ -308,6 +322,8 @@ export const artcileDetails = createApi({
     'FollowedAccount',
     'SearchArticle',
     'CommentList',
+    'tipHistory',
+    'walletHistory',
   ],
 });
 

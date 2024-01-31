@@ -1,18 +1,15 @@
 'use client';
 
 import { useGetArticlesByAuthorQuery } from '@/lib/redux/slices/articleDetails';
-import { Box, Typography, Grid, Stack, Avatar, Skeleton } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { Box, Typography, Grid, Stack, Skeleton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import UserAvatar from '../UserAvatar';
-import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import { useSession } from 'next-auth/react';
+import React from 'react';
 
 export default function AuthorArticles({ username }: { username: string }) {
   const { palette } = useTheme();
   const router = useRouter();
-  const session = useSession();
 
   const { data: articleList, isLoading } = useGetArticlesByAuthorQuery({
     username: username,
@@ -34,7 +31,7 @@ export default function AuthorArticles({ username }: { username: string }) {
       >
         {articleList &&
           articleList.map(({ article, user }: any, index: number) => (
-            <>
+            <React.Fragment key={`author-article-${index}`}>
               {index < 4 && (
                 <Grid
                   onClick={() =>
@@ -66,15 +63,15 @@ export default function AuthorArticles({ username }: { username: string }) {
                       src={article?.coverPhotoThumbnail}
                       alt="coverPhotoThumbnail"
                     />
-                    <Box padding='20px 5px'>
-                    <Typography className="text-clamp-2">
-                      {article?.title ? article?.title : '(No title)'}
-                    </Typography>
+                    <Box padding="20px 5px">
+                      <Typography className="text-clamp-2">
+                        {article?.title ? article?.title : '(No title)'}
+                      </Typography>
                     </Box>
                   </Stack>
                 </Grid>
               )}
-            </>
+            </React.Fragment>
           ))}
       </Grid>
     </Box>
