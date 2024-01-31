@@ -29,7 +29,8 @@ export default function TipColumn({
   const {
     refetch,
     data: tipHistory,
-    isLoading,
+    isUninitialized,
+    isFetching,
   } = useGetTipHistoryQuery(undefined, {
     skip:
       session?.status === 'loading' || session?.status === 'unauthenticated',
@@ -42,10 +43,10 @@ export default function TipColumn({
   };
 
   useEffect(() => {
-    if (session.status !== 'loading') {
+    if (!isUninitialized && session.status !== 'loading' && !isFetching) {
       refetch();
     }
-  }, [session.status]);
+  }, [session.status, isFetching, isUninitialized]);
 
   const handleTip = () => {
     const payload: any = {
