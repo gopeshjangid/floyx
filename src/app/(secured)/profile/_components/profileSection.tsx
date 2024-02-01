@@ -126,6 +126,8 @@ const OtherUserProfileActions: React.FC<{
   } = useGetProfileDetailsQuery({ username: username! });
   const router = useRouter();
 
+  const OnSuccessBlock = React.useCallback(() => {}, []);
+
   return (
     <Stack
       justifyContent="flex-end"
@@ -146,7 +148,7 @@ const OtherUserProfileActions: React.FC<{
       {!isLoading && accountDetail && (
         <>
           <React.Suspense fallback={<Typography>Loading...</Typography>}>
-            <BlockReportUser username={username} onSuccess={() => {}} />
+            <BlockReportUser username={username} onSuccess={OnSuccessBlock} />
           </React.Suspense>
 
           {allowPrivateMassages && (
@@ -193,7 +195,9 @@ const ProfileSection: React.FC = () => {
     ? params?.username[0] ?? ''
     : params?.username || '';
   const session = useSession();
-  const { data: currentUser } = useGetCurrentProfileDetailsQuery();
+  const { data: currentUser } = useGetCurrentProfileDetailsQuery(undefined, {
+    skip: session.status !== 'authenticated',
+  });
   const isSameuser = session.data?.user.username === username;
   const isMobile = useMediaQuery('(max-width:480px)');
   const { data: profile, isLoading } = useGetProfileDetailsQuery(
@@ -473,7 +477,7 @@ const ProfileSection: React.FC = () => {
 
         {!isLoading && (
           <Box mt={isMobile ? 8 : 0}>
-            {!isSameuser ? (
+            {!isSameuser && session.status === 'authenticated' ? (
               <OtherUserProfileActions
                 allowPrivateMassages={!!profile?.allowPrivateMassages}
                 username={username ?? ''}
@@ -548,11 +552,11 @@ const ProfileSection: React.FC = () => {
                   placeholder="Enter short description..."
                   value={form.shortDescription}
                   minRows={5}
-                  maxLength={500}
+                  maxLength={600}
                   sx={{ color: palette.mode === 'dark' ? '#fff' : '#000' }}
                 />
                 <FormHelperText sx={{ textAlign: 'right' }}>
-                  {`${form.shortDescription?.length ?? 0}/500`}
+                  {`${form.shortDescription?.length ?? 0}/600`}
                 </FormHelperText>
               </>
             )}

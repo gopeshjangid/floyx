@@ -310,7 +310,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       setMobileOpen(false);
     }
     if (href === '/') {
-      dispatch(postServices.util.invalidateTags(['MainFeedList']));
+      dispatch(
+        postServices.util.invalidateTags([{ type: 'MainFeedList', id: 'ALL' }])
+      );
       homeRedirect();
     }
   };

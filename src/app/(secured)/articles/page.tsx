@@ -13,7 +13,7 @@ import {
   useLazyGetSearchArticleQuery,
 } from '@/lib/redux';
 import { GradientButton } from '@/components/gradientButton';
-import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
+//import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
 import Link from 'next/link';
 
 export default function Page() {
@@ -21,18 +21,27 @@ export default function Page() {
   const [tabName, setTabName] = useState('liked?limited=true');
 
   const [dynamicTab, setDynamicTab] = useState({
-    searchBy: undefined,
+    searchBy: '',
     value: undefined,
-    tagId: undefined,
+    tagId: '',
   });
 
   const [getArticleList, { data: articleList, isFetching }] =
     useLazyGetArticleListQuery();
 
-  const [
-    getArticlesByTag,
-    { data: articleListByTags, isFetching: articleListFetching },
-  ] = useLazyGetArticleByTagsQuery();
+  useEffect(() => {
+    if (window.location.hash) {
+      setDynamicTab(tab => ({
+        ...tab,
+        searchBy: 'tag',
+        tagId: window.location.hash.slice(1),
+      }));
+    }
+  }, []);
+  // const [
+  //   getArticlesByTag,
+  //   { data: articleListByTags, isFetching: articleListFetching },
+  // ] = useLazyGetArticleByTagsQuery();
   const [
     searchArticle,
     { data: searchedArticle, isFetching: searchIsFetching },
@@ -42,7 +51,7 @@ export default function Page() {
     if (tabName !== dynamicTab.tagId) {
       getArticleList(tabName);
     } else if (dynamicTab.searchBy === 'tag' && dynamicTab.tagId) {
-      getArticlesByTag({ tagId: dynamicTab.tagId });
+      searchArticle({ searchString: dynamicTab.tagId });
     } else if (dynamicTab.searchBy === 'search' && dynamicTab.tagId) {
       searchArticle({ searchString: dynamicTab.value ?? '' });
     }
@@ -84,18 +93,10 @@ export default function Page() {
             </Box>
             <ArticleContent
               articleList={
-                tabName !== dynamicTab.tagId
-                  ? articleList
-                  : dynamicTab.searchBy === 'tag' && dynamicTab.tagId
-                    ? articleListByTags
-                    : searchedArticle
+                tabName !== dynamicTab.tagId ? articleList : searchedArticle
               }
               loadingList={
-                tabName !== dynamicTab.tagId
-                  ? isFetching
-                  : dynamicTab.searchBy === 'tag' && dynamicTab.tagId
-                    ? articleListFetching
-                    : searchIsFetching
+                tabName !== dynamicTab.tagId ? isFetching : searchIsFetching
               }
             />
           </Box>

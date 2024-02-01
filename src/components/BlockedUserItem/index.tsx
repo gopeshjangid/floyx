@@ -78,7 +78,6 @@ const BlockedUserItem = ({
   return (
     <ListItemItem>
       <ListItemAvatar>
-        <Link href={`/profile/${username}/posts`}>
           <UserAvatar
             src={`${ApiEndpoint.ProfileDetails}/avatar/${username}`}
             alt={name}
@@ -86,8 +85,8 @@ const BlockedUserItem = ({
               width: { md: '59px', xs: '50px' },
               height: { md: '59px', xs: '50px' },
             }}
+            restrictNavigation = {true}
           />
-        </Link>
       </ListItemAvatar>
       <ListItemText
         primary={

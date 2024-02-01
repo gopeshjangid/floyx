@@ -28,6 +28,8 @@ import {
 } from '@/lib/redux/slices/profile';
 import { useToast } from '@/components/Toast/useToast';
 import DeleteModal from '../../inbox/components/delete-modal';
+import { useRouter } from 'next/navigation';
+import { allRoutes } from '@/constants/allRoutes';
 
 interface UserActionModalProps {
   onSuccess: (status: string) => void;
@@ -130,6 +132,7 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
 }) => {
   const toast = useToast();
   const { palette } = useTheme();
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -187,6 +190,7 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
       onSuccess('BLOCKED');
       handleClose();
       setModalType('');
+      router.replace(allRoutes.home);
     } catch (error) {
       toast.error('Error occured in blocking the user');
       console.error('Error blocking the user:', error);
