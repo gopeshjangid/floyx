@@ -17,10 +17,9 @@ export default function AuthorPoints({ details }: any) {
   );
 
   const pointsEarned = totalEarningPoints
-    ? (
-        totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount +
-        totalEarningPoints?.totalEarnings[0]?.userEarnedAmount
-      ).toFixed(3)
+    ? totalEarningPoints.totalEarnings
+        .reduce((a, c) => a + c.articleEarnedAmount + c.userEarnedAmount, 0)
+        .toFixed(3)
     : 0;
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -81,15 +80,17 @@ export default function AuthorPoints({ details }: any) {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Box sx={{ p: 1 }}>
-          <Typography>Past Payouts {pointsEarned} points</Typography>
-          <Typography>
-            - Author{' '}
+        <Box sx={{ p: 1.5 }}>
+          <Typography variant="subtitle2">
+            Past Payouts -{pointsEarned} points
+          </Typography>
+          <Typography variant="subtitle2">
+            Author -
             {totalEarningPoints?.totalEarnings[0]?.articleEarnedAmount || 0}{' '}
             points
           </Typography>
-          <Typography>
-            - Voters{' '}
+          <Typography variant="subtitle2">
+            Voters-{' '}
             {totalEarningPoints?.totalEarnings[0]?.userEarnedAmount || 0} points
           </Typography>
         </Box>

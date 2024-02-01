@@ -4,7 +4,6 @@ import { Box, Tabs, Tab, Typography, Divider, useTheme } from '@mui/material';
 import React, { useState, SyntheticEvent, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 
-import BookMarkIcon from '@/images/image/bookMarkIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import RecentIcon from '@/images/image/recentIcon';
 import ProfileTickIcon from '@/images/image/profileTick';
@@ -77,14 +76,14 @@ export default function ArticleHead({
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
     setTabName(newValue);
+    setArticleTabs(defaultTab);
   };
-
   useEffect(() => {
     if (dynamicTabType) {
       setArticleTabs([
         {
           icon: (fill: string) => <SearchIcon fill={fill} />,
-          label: dynamicTab,
+          label: '#' + dynamicTabType,
           value: dynamicTabType,
         },
         ...defaultTab,
@@ -96,7 +95,7 @@ export default function ArticleHead({
       setValue('liked?limited=true');
       setTabName('liked?limited=true');
     }
-  }, [dynamicTab]);
+  }, [dynamicTab, dynamicTabType]);
   return (
     <>
       <ArticleHeadContainer>

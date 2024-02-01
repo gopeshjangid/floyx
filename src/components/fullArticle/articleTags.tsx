@@ -1,24 +1,21 @@
-"use client";
+'use client';
 
-import { Stack } from "@mui/material";
-import CustomChip from "../CustomGridientChip";
+import { Stack } from '@mui/material';
+import CustomChip from '../CustomGridientChip';
+import Link from 'next/link';
 
 export default function ArticleTags({ tags }) {
   return (
-    <Stack
-      gap={1}
-      direction={"row"}
-      mb={2}
-    >
+    <Stack gap={1} direction={'row'} mb={2}>
       {tags.map((val: any, index: number) => (
         <CustomChip
           key={'tags' + index}
           label={`#${val.tagName}`}
-          component="a"
-          href="#basic-chip"
+          component={Link}
+          href={`/articles/#${val.tagName}`}
           clickable
         />
       ))}
     </Stack>
-  )
+  );
 }

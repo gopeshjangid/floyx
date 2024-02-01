@@ -241,10 +241,7 @@ export const postServices = createApi({
           };
       },
       providesTags: (result, error, arg) => [
-        {
-          type: 'MainFeedList',
-          id: `${arg.pageNumber}-${arg.postCreatedDate}`,
-        },
+        { type: 'MainFeedList', id: 'ALL' },
       ],
       // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
