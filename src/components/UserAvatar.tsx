@@ -24,7 +24,7 @@ interface UserAvatarProps {
         }
       | string;
   };
-  restrictNavigation: boolean;
+  restrictNavigation?: boolean;
 }
 const UserAvatar = ({
   src,
