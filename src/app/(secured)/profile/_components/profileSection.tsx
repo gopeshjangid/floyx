@@ -552,11 +552,11 @@ const ProfileSection: React.FC = () => {
                   placeholder="Enter short description..."
                   value={form.shortDescription}
                   minRows={5}
-                  maxLength={500}
+                  maxLength={600}
                   sx={{ color: palette.mode === 'dark' ? '#fff' : '#000' }}
                 />
                 <FormHelperText sx={{ textAlign: 'right' }}>
-                  {`${form.shortDescription?.length ?? 0}/500`}
+                  {`${form.shortDescription?.length ?? 0}/600`}
                 </FormHelperText>
               </>
             )}
