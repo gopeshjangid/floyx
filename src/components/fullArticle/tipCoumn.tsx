@@ -6,7 +6,7 @@ import {
   Slider,
   Button,
   useTheme,
-  Skeleton,
+  CircularProgress,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
@@ -24,8 +24,9 @@ export default function TipColumn({
   const session = useSession();
   const [value, setValue] = useState<number>(30);
   const pathname = usePathname();
-  const [updateTip, { isError, error, isSuccess }] = useSetTipMutation();
-  const { data: tipHistory, isLoading } = useGetTipHistoryQuery(undefined, {
+  const [updateTip, { isLoading: tipLoading, isError, error, isSuccess }] =
+    useSetTipMutation();
+  const { refetch, data: tipHistory } = useGetTipHistoryQuery(undefined, {
     skip:
       session?.status === 'loading' || session?.status === 'unauthenticated',
   });
@@ -46,7 +47,6 @@ export default function TipColumn({
     };
     updateTip(payload);
   };
-
   const tippedOrNot = () => {
     const check = tipHistory?.filter(val => val?.articleId === articleId);
     if (check?.length === 0) {
@@ -70,6 +70,11 @@ export default function TipColumn({
           case 'you_cannot_tip_your_own_article':
             message = 'You cannot tip your own articles';
             break;
+          case 'tip_limit_exceeded_for_today':
+            message = 'Your tip limit exceeded for today';
+            break;
+          default:
+            message = 'Something went wrong! Please try again';
         }
         toast.error(message);
       }
@@ -78,12 +83,11 @@ export default function TipColumn({
 
   useEffect(() => {
     if (isSuccess) {
+      refetch();
+      toast.success('You tipped!');
       revalidateArticleDetail(pathname);
     }
   }, [isSuccess, pathname]);
-
-  if (isLoading)
-    return <Skeleton variant="rectangular" width="100%" height="50px" />;
 
   if (!tipHistory) return null;
   return (
@@ -145,9 +149,13 @@ export default function TipColumn({
               marginTop: '25px',
             }}
           >
-            <Button variant="contained" onClick={handleTip}>
-              Tip
-            </Button>
+            {tipLoading ? (
+              <CircularProgress color="secondary" />
+            ) : (
+              <Button variant="contained" onClick={handleTip}>
+                Tip
+              </Button>
+            )}
           </Box>
           <Box
             sx={{

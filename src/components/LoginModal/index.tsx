@@ -10,15 +10,17 @@ import {
   Modal,
   TextField,
   Typography,
+  useTheme,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
-
+import FloyxImage from '@/iconComponents/floyxIcon';
 import { useToast } from '../Toast/useToast';
 import { allRoutes } from '@/constants/allRoutes';
 import { useDispatch } from 'react-redux';
 import { setLoginModal } from '@/lib/redux/slices/appConfig';
+import useDevice from '@/lib/hooks/useDevice';
 
 interface ILogin {
   email: string;
@@ -34,18 +36,20 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 'auto',
+  width: '100%',
   maxHeight: '90vh',
-  minWidth: '80vw',
+  minWidth: '20vw',
+  maxWidth: '390px',
   overflowY: 'scroll',
   bgcolor: 'background.paper',
-  boxShadow: 24,
   borderRadius: '10px',
-  padding: 5,
+  padding: 2,
 };
 
 const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
   const dispatch = useDispatch();
+  const { isMobile } = useDevice();
+  const { palette } = useTheme();
   const [open, setOpen] = useState<boolean>(false);
   const handleClose = () => {
     if (isForceOpened) {
@@ -129,24 +133,26 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
     <>
       {open && (
         <Modal open={open} onClose={handleClose}>
-          <Box sx={style}>
+          <Box sx={{ ...style, top: isMobile ? '40%' : '50%' }}>
+            <Box>
+              <FloyxImage
+                fill={
+                  palette.mode === 'dark'
+                    ? palette.common.white
+                    : palette.common.black
+                }
+              />
+            </Box>
             <Grid
               container
               spacing={1}
-              gap={{
-                xs: 2,
-                sm: 2,
-                md: 3,
-              }}
-              flexDirection="row"
               component="form"
               noValidate
               onSubmit={login}
               mt={2}
-              justifyContent="center"
               alignItems="center"
             >
-              <Grid item>
+              <Grid item xs={12}>
                 <FormControl>
                   <FormLabel>Username or email </FormLabel>
 
@@ -156,12 +162,13 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
                     hiddenLabel
                     placeholder="Username or email"
                     onChange={onChangeHandler}
+                    autoFocus
                     error={!!formError.email}
                     helperText={formError.email}
                   />
                 </FormControl>
               </Grid>
-              <Grid item>
+              <Grid item xs={12}>
                 <FormControl>
                   <FormLabel>Password</FormLabel>
 
@@ -177,7 +184,7 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
                   />
                 </FormControl>
               </Grid>
-              <Grid item>
+              <Grid item sm={6} xs={6}>
                 <Button variant="contained" type="submit" disabled={loading}>
                   {loading ? (
                     <CircularProgress size={24} color="inherit" />
@@ -186,8 +193,14 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
                   )}
                 </Button>
               </Grid>
-
-              <Grid item>
+              <Grid item xs={6}>
+                <Link href={allRoutes.register}>
+                  <Button variant="outlined" size="large" disabled={loading}>
+                    Register Now
+                  </Button>
+                </Link>
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <Typography
                   fontSize="16px"
                   fontWeight="400"
@@ -195,14 +208,6 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
                 >
                   <Link href={allRoutes.login}>Forgotten your password?</Link>
                 </Typography>
-              </Grid>
-
-              <Grid item>
-                <Link href={allRoutes.register}>
-                  <Button variant="outlined" size="large" disabled={loading}>
-                    Register Now
-                  </Button>
-                </Link>
               </Grid>
             </Grid>
           </Box>

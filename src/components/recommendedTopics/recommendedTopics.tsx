@@ -1,13 +1,8 @@
 'use client';
-import {
-  Box,
-  Skeleton,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material';
 import CustomChip from '../CustomGridientChip';
 import { useGetPopularTagsQuery } from '@/lib/redux/slices/tags';
+import Link from 'next/link';
 
 export default function RecommendedTopics({ setDynamicTab }) {
   const { palette } = useTheme();
@@ -15,7 +10,7 @@ export default function RecommendedTopics({ setDynamicTab }) {
   const handleClick = val => {
     setDynamicTab({
       searchBy: 'tag',
-      tagId: val.tagId,
+      tagId: val.tagName,
       value: val.tagName,
     });
   };
@@ -43,8 +38,8 @@ export default function RecommendedTopics({ setDynamicTab }) {
             <CustomChip
               key={'topics' + index}
               label={val?.tagName}
-              component="a"
-              // href="#basic-chip"
+              component={Link}
+              href={`/articles/#${val.tagName}`}
               clickable
               style={{ marginBottom: 10, marginRight: 10 }}
               onClick={() => handleClick(val)}

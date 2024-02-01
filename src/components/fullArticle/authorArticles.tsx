@@ -1,18 +1,16 @@
 'use client';
 
 import { useGetArticlesByAuthorQuery } from '@/lib/redux/slices/articleDetails';
-import { Box, Typography, Grid, Stack, Avatar, Skeleton } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { Box, Typography, Grid, Stack, Skeleton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import UserAvatar from '../UserAvatar';
-import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
-import { useSession } from 'next-auth/react';
+import React from 'react';
+import CustomDescription from '../customDescription';
 
 export default function AuthorArticles({ username }: { username: string }) {
   const { palette } = useTheme();
   const router = useRouter();
-  const session = useSession();
 
   const { data: articleList, isLoading } = useGetArticlesByAuthorQuery({
     username: username,
@@ -34,7 +32,7 @@ export default function AuthorArticles({ username }: { username: string }) {
       >
         {articleList &&
           articleList.map(({ article, user }: any, index: number) => (
-            <>
+            <React.Fragment key={`author-article-${index}`}>
               {index < 4 && (
                 <Grid
                   onClick={() =>
@@ -52,29 +50,27 @@ export default function AuthorArticles({ username }: { username: string }) {
                     sx={{
                       border: `1px solid ${palette.primary.boxBorder}`,
                       borderRadius: '10px',
-                      // padding: '16px',
+                      overflow: 'hidden',
                     }}
                     direction="row"
-                    // alignItems={'center'}
                     gap={1}
                   >
                     <Image
-                      width={0}
-                      height={0}
-                      style={{ width: '120px', height: '80px' }}
+                      height={100}
+                      width={160}
                       sizes="100vw"
                       src={article?.coverPhotoThumbnail}
                       alt="coverPhotoThumbnail"
                     />
-                    <Box padding='20px 5px'>
-                    <Typography className="text-clamp-2">
-                      {article?.title ? article?.title : '(No title)'}
-                    </Typography>
+                    <Box padding="20px 5px">
+                      <CustomDescription className="text-clamp-2">
+                        {article?.title ? article?.title : '(No title)'}
+                      </CustomDescription>
                     </Box>
                   </Stack>
                 </Grid>
               )}
-            </>
+            </React.Fragment>
           ))}
       </Grid>
     </Box>
