@@ -160,7 +160,7 @@ export default function AuthorCoulmn({ details }: any) {
         <Box sx={{ display: 'flex' }} py={0.5}>
           <Box display={'flex'} gap={1} sx={{ marginRight: '25px' }}>
             <LocationOn />
-            <Typography variant="subtitle2">
+            <Typography variant="subtitle2" sx={{ marginY: 'auto' }}>
               {aboutProfile?.about?.location}
             </Typography>
           </Box>
