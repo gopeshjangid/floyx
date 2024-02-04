@@ -106,7 +106,7 @@ function AddPost({
         text = `${postObj.postText}${emoji.native}`;
       }
       // const text = e.target.value;
-      const newTextCount = calulcateLength(postObj.postText);
+      const newTextCount = calulcateLength(text); //newPlainTextValue
       const remaining = 2000 - newTextCount;
       if (remaining < 0) {
         return;
