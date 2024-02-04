@@ -17,6 +17,16 @@ import {
   ArticleTypographyHeading,
   ArticleUserName,
 } from './articleStyled';
+import { LanguageSwitcher } from "../lang-switcher";
+
+window.__GOOGLE_TRANSLATION_CONFIG__ = {
+  languages: [
+    { title: "English", name: "en" },
+    { title: "Polish", name: "pl" },
+    { title: "Portuguese", name: "pt" },
+  ],
+  defaultLanguage: "en",
+};
 
 export default function FullArticle({ details }: any) {
   const CONTENT =
@@ -120,23 +130,7 @@ export default function FullArticle({ details }: any) {
         <Typography variant="body2">EN</Typography> */}
         &nbsp;
         <Box >
-          <FormControl sx={{minWidth: 120 }} size="small">
-            <Select
-              displayEmpty
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              value={language}
-              onChange={handleChange}
-              input={<OutlinedInput />}
-              renderValue={(selected) => {
-                return selected
-              }}
-            >
-              <MenuItem value={'EN'}>EN</MenuItem>
-              <MenuItem value={'PT'}>PT</MenuItem>
-              <MenuItem value={"PL"}>PL</MenuItem>
-            </Select>
-          </FormControl>
+          <LanguageSwitcher />        
         </Box>
         
       </Box>
