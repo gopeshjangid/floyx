@@ -15,6 +15,7 @@ import {
   Typography,
   debounce,
   useTheme,
+  styled
 } from '@mui/material';
 
 import Wrapper from '@/components/wrapper';
@@ -47,6 +48,12 @@ interface ISettingAccountFormError {
   username?: string;
   enableMessage?: boolean;
 }
+
+const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+  "& .MuiFormControlLabel-label": {
+    marginTop: '4px'
+  }
+}));
 
 const AccountSetting = () => {
   const theme = useTheme();
@@ -321,7 +328,7 @@ const AccountSetting = () => {
             </FormControl>
 
             <FormControl margin="normal">
-              <FormControlLabel
+              <StyledFormControlLabel
                 name="enableMessage"
                 control={
                   <Checkbox
