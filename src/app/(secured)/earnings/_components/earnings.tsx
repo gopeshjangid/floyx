@@ -151,6 +151,7 @@ const PointsBalanceCard = React.memo(() => {
                   justifyContent="flex-start"
                   display={'flex'}
                   gap={2}
+                  alignItems={'center'}
                 >
                   <Image
                     alt="accountpoint "
@@ -193,7 +194,12 @@ const PointsBalanceCard = React.memo(() => {
                   <Typography variant="h6">Available balance</Typography>
                 </Grid>
                 <Grid item sm={12} xs={12}>
-                  <Stack direction="row" gap={1} width={'100%'}>
+                  <Stack
+                    alignItems={'center'}
+                    direction="row"
+                    gap={1}
+                    width={'100%'}
+                  >
                     <Image
                       alt="accountbalance "
                       height={40}
@@ -212,13 +218,13 @@ const PointsBalanceCard = React.memo(() => {
                         ) : (
                           (wallet?.availableBalance ?? 0.0) + ' Points'
                         )}{' '}
-                        <br />
+                        {/* <br />
                         Currently: $
                         {isLoading ? (
                           <Skeleton variant="text" />
                         ) : (
                           currentBalance.toFixed(10)
-                        )}
+                        )} */}
                       </Typography>
                     </Stack>
                   </Stack>
