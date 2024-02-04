@@ -1,12 +1,17 @@
 'use client';
 
 import React from 'react';
-import { Button, Typography, Tabs, Tab, Stack, useTheme } from '@mui/material';
+import { Button, Typography, Tabs, Tab, Stack, useTheme, styled } from '@mui/material';
 import { GradientText } from '../usernameLink';
 import DocumentText from '@/assets/images/svg/documentText';
 import EditIcon from '@/assets/images/svg/editIcon';
 import { GradientButton } from '../gradientButton';
 import AddIcon from '@/assets/images/svg/addIcon';
+
+const StyledTypography = styled(Typography)({
+  marginTop: '4px',
+});
+
 
 function AddArticleHead({
   setSaveDraft,
@@ -70,9 +75,9 @@ function AddArticleHead({
                   My Articles [{articleDraftNumbers?.info?.numberOfArticles}]
                 </GradientText>
               ) : (
-                <Typography variant="subtitle2">
+                <StyledTypography variant="subtitle2">
                   My Articles [{articleDraftNumbers?.info?.numberOfArticles}]
-                </Typography>
+                </StyledTypography>
               )
             }
             value={'my'}
@@ -96,9 +101,9 @@ function AddArticleHead({
                   My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]
                 </GradientText>
               ) : (
-                <Typography variant="subtitle2">
+                <StyledTypography variant="subtitle2">
                   My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]
-                </Typography>
+                </StyledTypography>
               )
             }
             value={'draft'}
@@ -120,7 +125,7 @@ function AddArticleHead({
               value === 'newArticle' ? (
                 <GradientText>Write New</GradientText>
               ) : (
-                <Typography variant="subtitle2">Write New</Typography>
+                <StyledTypography variant="subtitle2">Write New</StyledTypography>
               )
             }
             value={'newArticle'}

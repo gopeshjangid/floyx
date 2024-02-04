@@ -28,6 +28,9 @@ import { useLazyGetUserSuggestionQuery } from '@/lib/redux/slices/comments';
 import MentionItem from '../MentionItem';
 import { GradientText } from '../usernameLink';
 import { CloseOutlined } from '@mui/icons-material';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
+import MoodIcon from '@mui/icons-material/Mood';
 
 const initialPostObj = {
   postText: '',
@@ -52,6 +55,11 @@ function AddPost({
   const value = 0;
   const [imagePreview, setImagePreview] = useState<any>('');
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('');
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   const [createPost, { error, isLoading }] = useCreatePostMutation();
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
@@ -90,9 +98,15 @@ function AddPost({
   };
 
   const handlePostText = useCallback(
-    (e: any, newValue: any, newPlainTextValue: any) => {
-      const text = e.target.value;
-      const newTextCount = calulcateLength(newPlainTextValue);
+    (e: any, newValue: any, newPlainTextValue: any, emoji?: any) => {
+      let text = '';
+      if (e && e.target) {
+        text = e.target.value;
+      } else if (emoji) {
+        text = `${postObj.postText}${emoji.native}`;
+      }
+      // const text = e.target.value;
+      const newTextCount = calulcateLength(text); //newPlainTextValue
       const remaining = 2000 - newTextCount;
       if (remaining < 0) {
         return;
@@ -149,7 +163,7 @@ function AddPost({
             <Tab
               component={Link}
               label={
-                <Typography variant="subtitle2">Write an article</Typography>
+                <Typography variant="subtitle2">WRITE AN ARTICLE</Typography>
               }
               sx={{ marginTop: '8px' }}
               href="/composer/create"
@@ -192,6 +206,12 @@ function AddPost({
                   appendSpaceOnAdd={true}
                 />
               </MentionsInput>
+              <Box>
+                <IconButton onClick={toggleVisibility}>
+                  <MoodIcon />
+                </IconButton>
+                {isVisible ? <Picker data={data} onEmojiSelect={(emoji)=>handlePostText(null, null, null, emoji)} /> : <></>}
+              </Box>
               <Box textAlign={'right'}>
                 <Typography
                   color={postObj.postTextLeft < 30 ? 'error' : 'textPrimary'}

@@ -598,7 +598,7 @@ const ProfileSection: React.FC = () => {
                     alt="Calender Icon"
                   />
                   <Typography variant="subtitle2" sx={{ color: 'grey' }}>
-                    {profile?.joinedDate}
+                    Joined {profile?.joinedDate}
                   </Typography>
                 </Box>
               </Stack>

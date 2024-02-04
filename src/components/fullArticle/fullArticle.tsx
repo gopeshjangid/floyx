@@ -1,5 +1,7 @@
-import React, { Suspense } from 'react';
-import { Box, Typography, Grid, Stack, Skeleton } from '@mui/material';
+"use client"
+import React, { Suspense,useState } from 'react';
+import { Box, Typography, Grid, Stack, Skeleton, MenuItem, FormControl, OutlinedInput} from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Image from 'next/image';
 import UsernameLink from '../usernameLink';
 import CalendarIcon from '@/images/image/calendarIcon';
@@ -22,6 +24,14 @@ export default function FullArticle({ details }: any) {
   const createMarkup = (htmlString: string) => {
     return { __html: htmlString };
   };
+
+  const [language, setLanguage] = useState('EN');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setLanguage(event.target.value as string);
+  };
+
+
   return (
     <Box>
       <Box>
@@ -106,8 +116,29 @@ export default function FullArticle({ details }: any) {
       </Box>
       <Box display={'flex'} py={1}>
         <TranslateIcon />
+        {/* &nbsp;
+        <Typography variant="body2">EN</Typography> */}
         &nbsp;
-        <Typography variant="body2">EN</Typography>
+        <Box >
+          <FormControl sx={{minWidth: 120 }} size="small">
+            <Select
+              displayEmpty
+              labelId="demo-select-small-label"
+              id="demo-select-small"
+              value={language}
+              onChange={handleChange}
+              input={<OutlinedInput />}
+              renderValue={(selected) => {
+                return selected
+              }}
+            >
+              <MenuItem value={'EN'}>EN</MenuItem>
+              <MenuItem value={'PT'}>PT</MenuItem>
+              <MenuItem value={"PL"}>PL</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        
       </Box>
       <Box py={1}>
         <Suspense fallback={<Typography>Loading...</Typography>}>
