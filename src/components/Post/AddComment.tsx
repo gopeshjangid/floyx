@@ -1,7 +1,7 @@
 'use client';
 
 import { styled } from '@mui/material/styles';
-import { Box, Button, CircularProgress, Stack } from '@mui/material';
+import { Box, Button, CircularProgress, Stack, IconButton } from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
 import UserAvatar from '../UserAvatar';
 import { useSession } from 'next-auth/react';
@@ -13,8 +13,11 @@ import {
 } from '@/lib/redux/slices/comments';
 //import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserComment } from '@/lib/redux';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
+import MoodIcon from '@mui/icons-material/Mood';
 
 const AddCommentBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -97,9 +100,19 @@ function AddComment({
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
   const [updateComment, { isLoading: updateLoading }] =
     useUpdateCommentMutation();
-  const handlePostText = (e: any) => {
-    const text = e.target.value;
+  const handlePostText = (e: any,emoji?:any) => {
+    let text = '';
+    if (e && e.target) {
+      text = e.target.value;
+    } else if (emoji) {
+      text = `${commentText}${emoji.native}`;
+    }
     setCommentText(text);
+  };
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
   };
 
   const getUserDetails = async (mentionValue: string, callback: any) => {
@@ -172,6 +185,7 @@ function AddComment({
             disabled={isLoading}
             onKeyDown={onEnterPress}
             placeholder={'Add a comment'}
+            style={{width:'95%'}}
           >
             <Mention
               trigger="@"
@@ -181,6 +195,14 @@ function AddComment({
               appendSpaceOnAdd={true}
             />
           </MentionsInput>
+          <IconButton onClick={toggleVisibility} sx={{position: 'absolute', right: '-10px'}}>
+              <MoodIcon />
+          </IconButton>
+          <Box sx={{ position: 'absolute', zIndex: 999999, right: '-10px', top: '50px'}}>
+            {isVisible ? <Picker data={data} onEmojiSelect={(emoji)=>
+              handlePostText(null, emoji)
+              } /> : <></>}
+          </Box>
         </Box>
       </Box>
       {isEditing && (

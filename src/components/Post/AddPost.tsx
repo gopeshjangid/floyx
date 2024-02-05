@@ -206,12 +206,6 @@ function AddPost({
                   appendSpaceOnAdd={true}
                 />
               </MentionsInput>
-              <Box>
-                <IconButton onClick={toggleVisibility}>
-                  <MoodIcon />
-                </IconButton>
-                {isVisible ? <Picker data={data} onEmojiSelect={(emoji)=>handlePostText(null, null, null, emoji)} /> : <></>}
-              </Box>
               <Box textAlign={'right'}>
                 <Typography
                   color={postObj.postTextLeft < 30 ? 'error' : 'textPrimary'}
@@ -247,6 +241,7 @@ function AddPost({
           )}
         </Box>
         <Divider />
+        <Box sx={{ display: 'inline-flex'}}>
         <Box className="upload-media">
           <Box>
             <input
@@ -266,6 +261,13 @@ function AddPost({
               <Typography variant="subtitle1">Photo</Typography>
             </label>
           </Box>
+        </Box>
+        <Box sx={{ padding: '9px 0px' }}>
+          <IconButton onClick={toggleVisibility}>
+            <MoodIcon />
+          </IconButton>
+          {isVisible ? <Picker data={data} onEmojiSelect={(emoji)=>handlePostText(null, null, null, emoji)} /> : <></>}
+        </Box>
         </Box>
       </PostBox>
       <Box mt={2} position={'relative'}>
