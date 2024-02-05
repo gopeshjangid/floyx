@@ -46,7 +46,21 @@ const UserAvatar = ({
             href={userName !== '' ? `/profile/${userName}` : ''}
             passHref
             style={{ pointerEvents: userName === '' ? 'none' : undefined }}
-          ></Link>
+          >
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              onLoad={result => {
+                if (result.currentTarget.naturalWidth === 0) {
+                  setLoading(false);
+                }
+              }}
+              onError={() => {
+                setLoading(false);
+              }}
+            />
+          </Link>
         ) : (
           <Image
             src={src}
