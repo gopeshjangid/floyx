@@ -358,7 +358,7 @@ const WalletHistory = React.memo(function WalletHistory() {
       <Button
         sx={balanceButtonStyle}
         fullWidth
-        onClick={() => setShowHistory(true)}
+        // onClick={() => setShowHistory(true)}
       >
         Wallet
       </Button>
