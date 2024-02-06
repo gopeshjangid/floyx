@@ -107,8 +107,7 @@ export default function TipColumn({
               variant="body1"
               sx={{ textAlign: 'center', color: palette.primary[300] }}
             >
-              Split the amount of 0.01 points for you and the author, we pay the
-              tips from our rewards pool.
+              Split the amount of 0.01 points for you and the author.
             </Typography>
           </Box>
           <Box
@@ -165,7 +164,7 @@ export default function TipColumn({
             }}
           >
             <Typography variant="body1" sx={{ textAlign: 'center' }}>
-              Start earning money by reading articles!
+              Start collecting points on reading articles!
             </Typography>
           </Box>
         </Box>
