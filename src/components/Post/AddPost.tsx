@@ -142,6 +142,7 @@ function AddPost({
   const publishPost = () => {
     setPostObj(prev => ({ ...prev, publishButtonDisabled: true }));
     publishImage();
+    setIsVisible(false)
   };
 
   const renderUserSuggestion = (user: any) => {

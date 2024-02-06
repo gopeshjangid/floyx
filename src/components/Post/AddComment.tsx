@@ -145,6 +145,7 @@ function AddComment({
         setCommentText('');
       }
     }
+    setIsVisible(false)
   };
 
   const handleEditSubmit = async () => {
