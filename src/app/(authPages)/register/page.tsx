@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { SVGLock, SVGUser } from '@/assets/images';
 import SVGEmail from '@/iconComponents/email';
@@ -41,6 +42,7 @@ const RegisterPage = () => {
   const toast = useToast();
   const router = useRouter();
   const { palette } = useTheme();
+  const searchParams = useSearchParams();
 
   const [
     verifyOtp,
@@ -82,6 +84,24 @@ const RegisterPage = () => {
     recommended: '',
     phone: '',
   });
+
+  const token = searchParams.get('token');
+
+  useEffect(() => {
+    if (token) {
+      const sanitizedToken = token.replace(/[^A-Za-z0-9+/]/g, '');
+      const decodedToken = atob(sanitizedToken);
+      const parsedToken = JSON.parse(decodedToken);
+
+      const { username } = parsedToken;
+      setFormData(prevState => ({
+        ...prevState,
+        recommendedMe: true,
+        recommended: username,
+      }));
+    }
+  }, []);
+
   const [formError, setFormError] = useState<any>({});
 
   useEffect(() => {
@@ -368,7 +388,7 @@ const RegisterPage = () => {
                   name="recommendedMe"
                   control={
                     <Checkbox
-                      defaultChecked={false}
+                      defaultChecked={token ? true : false}
                       onChange={onChangeHandler}
                     />
                   }
@@ -384,6 +404,7 @@ const RegisterPage = () => {
                     hiddenLabel
                     placeholder="Enter here..."
                     onChange={onChangeHandler}
+                    defaultValue={formData.recommended}
                     error={!!formError.recommended}
                     helperText={formError.recommended}
                     inputProps={{ maxLength: 25 }}
