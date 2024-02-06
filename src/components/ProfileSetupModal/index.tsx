@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Backdrop,
   Box,
@@ -18,6 +20,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useUpdateSettingsMutation } from '@/lib/redux/slices/accountSetting';
 import { SVGUser } from '@/assets/images';
 import { useCheckUsernameMutation } from '@/lib/redux/slices/registration';
+import { showErrorMessages } from '@/lib/utils';
+import { useToast } from '../Toast/useToast';
 
 const style = {
   position: 'absolute',
@@ -26,7 +30,6 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: '100%',
   maxHeight: '90vh',
-  //   minWidth: '60vw',
   maxWidth: {
     xs: '90vw',
     md: '40vw',
@@ -58,14 +61,30 @@ const ProfileSetupModal = ({
   handleClose: () => void;
   onSubmit: () => void;
 }) => {
+  const toast = useToast();
   const [
     updateSettings,
     {
-      //   data: settingUpdateData,
+      data: settingUpdateData,
       isLoading: settingUpdateLoading,
-      //   error: settingUpdateError,
+      error: settingUpdateError,
     },
   ] = useUpdateSettingsMutation();
+
+  console.log('settingUpdateData:', settingUpdateData);
+  console.log('settingUpdateError:', settingUpdateError);
+
+  useEffect(() => {
+    if (settingUpdateData === 'success') {
+      onSubmit();
+    }
+  }, [settingUpdateData]);
+
+  useEffect(() => {
+    if (settingUpdateError) {
+      toast.error(showErrorMessages([settingUpdateError] as any));
+    }
+  }, [settingUpdateError]);
 
   const [checkUserName, { data: checkUserNameData }] =
     useCheckUsernameMutation();
@@ -97,8 +116,9 @@ const ProfileSetupModal = ({
     []
   );
 
-  const updateAccountDetails = async (e: React.FormEvent<HTMLFormElement>) => {
+  const updateAccountDetails = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const isValid: boolean = validateForm();
 
     if (isValid) {
@@ -106,7 +126,6 @@ const ProfileSetupModal = ({
         name: formData.name,
         username: formData.username,
       });
-      onSubmit();
     }
   };
 
@@ -166,13 +185,15 @@ const ProfileSetupModal = ({
               md: 3,
             }}
             flexDirection="row"
-            component="form"
-            noValidate
             mt={2}
             justifyContent="center"
             alignItems="center"
           >
-            <Box component="form" noValidate onSubmit={updateAccountDetails}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={e => updateAccountDetails(e)}
+            >
               <FormControl>
                 <FormLabel required>Name</FormLabel>
                 <TextField

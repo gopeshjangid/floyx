@@ -1,5 +1,8 @@
 import { apiPaths } from '@/constants/apiPaths';
-import { setAccessTokenCookie, setSocialSignInCookie } from './index';
+import {
+  setAccessTokenCookie,
+  setIsFirstTimeLoginUsingSocialMediaCookie,
+} from './index';
 
 export default async function socialSignIn({
   email,
@@ -8,7 +11,6 @@ export default async function socialSignIn({
   profileImage,
   socialid,
   socialType,
-  isFirstTimeLogin,
 }: any) {
   try {
     const data = {
@@ -17,6 +19,8 @@ export default async function socialSignIn({
         {
           firstname,
           lastname,
+          loginType: 0,
+          name: `${firstname} ${lastname}`,
           email,
           profileImage,
           socialid,
@@ -24,6 +28,8 @@ export default async function socialSignIn({
         },
       ],
     };
+
+    console.log('social signin payload', data);
 
     const response = await fetch(
       `${process.env.BACKEND_BASE_DEV_URL}${apiPaths.socialLogin}`,
@@ -36,20 +42,20 @@ export default async function socialSignIn({
       }
     );
     const user = await response.json();
+    console.log(
+      'user:--------------',
+      user,
+      user?.value?.data?.token.accessToken
+    );
 
     if (!user || !response.ok) {
       throw new Error('Invalid credentials');
     }
+
     setAccessTokenCookie(user?.value?.data?.token.accessToken);
-    setSocialSignInCookie({
-      email,
-      firstname,
-      lastname,
-      profileImage,
-      socialid,
-      socialType,
-      isFirstTimeLogin,
-    });
+    setIsFirstTimeLoginUsingSocialMediaCookie(
+      user?.value?.data?.isProfileCompleted ? 'false' : 'true'
+    );
 
     return user;
   } catch (error: any) {

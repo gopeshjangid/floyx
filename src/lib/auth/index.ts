@@ -1,4 +1,9 @@
-import { FLOYX_TOKEN, SOCIAL_SIGNIN_DATA, TWO_STEP_AUTH } from '@/constants';
+import {
+  FIRST_TIME_LOGIN_USING_SOCIAL,
+  FLOYX_TOKEN,
+  SOCIAL_SIGNIN_DATA,
+  TWO_STEP_AUTH,
+} from '@/constants';
 import { cookies } from 'next/headers';
 
 export const setAccessTokenCookie = (accessToken: string): void => {
@@ -17,16 +22,14 @@ export const setTwoStepAuthCookie = (isRequired: string): void => {
   });
 };
 
-export const setCheckMailCookie = (email: string): void => {
-  cookies().set('CHECK_EMAIL', email, {
+export const setIsFirstTimeLoginUsingSocialMediaCookie = (
+  status: string
+): void => {
+  cookies().set(FIRST_TIME_LOGIN_USING_SOCIAL, status, {
     path: '/',
     httpOnly: false,
     maxAge: 30 * 24 * 60 * 60, // 30 days
   });
-};
-
-export const getAccessTokenCookie = () => {
-  return cookies().get('FLOYX_TOKEN');
 };
 
 export const setSocialSignInCookie = ({
