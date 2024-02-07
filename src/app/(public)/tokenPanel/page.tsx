@@ -4,27 +4,8 @@
 import React, { useState, useEffect } from 'react';
 import { Web3Provider } from '@ethersproject/providers';
 import WalletConnectProvider from '@walletconnect/ethereum-provider';
-import Counter from './_components/Counter';
-// import {
-//   Collapse,
-//   Navbar as ReactstrapNavbar,
-//   NavbarToggler,
-//   Nav,
-//   Row,
-//   Col,
-//   Container,
-//   Button,
-//   InputGroup,
-//   DropdownItem,
-//   DropdownMenu,
-//   Dropdown,
-//   DropdownToggle,
-//   Card,
-//   CardText,
-// } from 'reactstrap';
-import { LoginOutlined } from '@mui/icons-material';
 import Web3 from 'web3';
-
+import { publicProvider } from 'wagmi/providers/public';
 import { FloyxStakingAddress, chainID } from '@/constants/Addresses';
 import FloyxImage from '@/iconComponents/floyxIcon';
 //import { getFloyxContract } from '@constants/Floyx_Token';
@@ -32,20 +13,6 @@ import { getNewFloyxContract } from '@/constants/New_Floyx_Token';
 import { getVestingContract } from '@/constants/Vesting_Contract';
 import { getPrivateSeedContract } from '@/constants/PrivateSeed_Contract';
 import { getStakingContract } from '@/constants/Staking_Contract';
-
-import arrow from '@/assets/images/arrow.png';
-import followusback from '@/assets/images/followusback.png';
-import walletConnectImage from '@/assets/images/walletConnect.svg';
-import Instagram from '@/assets/Instagram.png';
-import GooglePlay from '@/assets/GooglePlay.png';
-import wallet from '@/assets/images/wallet.png';
-import Facebook from '@/assets/Facebook.png';
-import Youtube from '@/assets/Youtube.png';
-import Linkedin from '@/assets/Linkedin.png';
-import Medium from '@/assets/Medium.png';
-import Twitter from '@/assets/Twitter.png';
-import Telegram from '@/assets/Telegram.png';
-import AppleStore from '@/assets/AppleStore.png';
 import { useToast } from '@/components/Toast/useToast';
 import {
   AppBar,
@@ -61,27 +28,8 @@ import ReusableModal from './_components/modal';
 import WalletConnectIcon from '@/iconComponents/walletConnectIcon';
 import MetaMaskIcon from '@/assets/images/metaMask.png';
 import { useRouter } from 'next/navigation';
-
-const TimerBox = ({ children, bottomTitle }) => (
-  <Box textAlign={'center'} sx={{ width: '60px', height: '80px' }}>
-    <Box
-      sx={{
-        border: `1px solid #5798FF`,
-        borderRadius: '10px',
-        height: '50px',
-        width: '60px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '5px',
-      }}
-    >
-      {children}
-    </Box>
-    <Typography variant="subtitle2">{bottomTitle}</Typography>
-  </Box>
-);
-
+import Counter from './_components/CountdownTimer';
+import { useAccount } from 'wagmi';
 const NonLoggedinWalletModal = ({ onClick }: { onClick: () => void }) => {
   return (
     <Box textAlign="center">
@@ -99,13 +47,18 @@ const NonLoggedinWalletModal = ({ onClick }: { onClick: () => void }) => {
 };
 
 const updatedtokenPanel = props => {
-  const [modalType, setModal] = useState('STACKING');
+  const [modalType, setModal] = useState('FIRST');
   const router = useRouter();
   const [isLogged, setIsLogged] = useState(false);
   const [web3Library, setWeb3Library] = useState('');
   const [web3Account, setWeb3Account] = useState('');
   const toast = useToast();
   const theme = useTheme();
+  const { address, isConnecting, isDisconnected } = useAccount();
+
+  if (isConnecting) return <div>Connecting…</div>;
+  if (isDisconnected) return <div>Disconnected</div>;
+  return <div>{address}</div>;
 
   const connectMetamask = async () => {
     try {
@@ -129,6 +82,12 @@ const updatedtokenPanel = props => {
   };
 
   // functions
+
+  function getProvider(web3library_) {
+    const { provider } = web3library_;
+    const web3 = new Web3(provider);
+    return web3;
+  }
 
   async function fetchStakedAmount(
     _FloyxStakingContract,
@@ -803,6 +762,105 @@ const updatedtokenPanel = props => {
     }
   };
 
+  async function claimStakingReward() {
+    const web3 = getProvider(web3Library);
+    const myFloyxTokenContract = getNewFloyxContract(web3Library, web3Account);
+    const myStakingContract = getStakingContract(web3Library, web3Account);
+    // claimTokens
+    try {
+      const sampleVariable = await myStakingContract.withdraw(web3Account);
+      const hashValue = sampleVariable.hash.toString();
+
+      if (sampleVariable !== null) {
+        const interval = setInterval(() => {
+          web3.eth.getTransactionReceipt(hashValue, async (err, rec) => {
+            if (rec) {
+              const currentBalance = await myFloyxTokenContract.balanceOf(
+                web3Account,
+                overrides
+              );
+            } else {
+              console.log(err);
+            }
+          });
+          ``;
+        }, 1000);
+      }
+    } catch (ex) {
+      toast.error('Claim Not Allowed!');
+
+      console.log('An error occour', ex);
+    }
+  }
+
+  const getActionButtons = () => {
+    switch (modalType) {
+      case 'STACKING':
+        return (
+          <Button onClick={claimStakingReward} variant="contained">
+            Claim Floyx
+          </Button>
+        );
+        break;
+      case 'SEEDVESTING':
+        return (
+          <Button onClick={claimReward} variant="contained">
+            Claim Floyx
+          </Button>
+        );
+      case 'PRESALEVESTING':
+        return (
+          <Button onClick={claimPrivateReward} variant="contained">
+            Claim Floyx
+          </Button>
+        );
+        break;
+      case 'AIRDROP':
+        return (
+          <Button onClick={claimAirdropReward} variant="contained">
+            Claim Floyx
+          </Button>
+        );
+        break;
+      default:
+        break;
+    }
+  };
+
+  const getTitles = () => {
+    switch (modalType) {
+      case 'STACKING':
+        return (
+          <Typography sx={{ color: '#000' }} textAlign="center" variant="h5">
+            Next Stacking Claim Available In
+          </Typography>
+        );
+        break;
+      case 'SEEDVESTING':
+        return (
+          <Typography sx={{ color: '#000' }} textAlign="center" variant="h5">
+            Next Seed vesting Claim Available In
+          </Typography>
+        );
+      case 'PRESALEVESTING':
+        return (
+          <Typography sx={{ color: '#000' }} textAlign="center" variant="h5">
+            Next Private Sale Vesting Claim Available In
+          </Typography>
+        );
+        break;
+      case 'AIRDROP':
+        return (
+          <Typography sx={{ color: '#000' }} textAlign="center" variant="h5">
+            Next Airdrop Sale Vesting Claim Available In
+          </Typography>
+        );
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <Box width={'100%'}>
       <AppBar
@@ -913,31 +971,19 @@ const updatedtokenPanel = props => {
               </Stack>
             </Box>
           )}
-          {modalType == 'STACKING' && (
+          {['STACKING', 'SEEDVESTING', 'PRESALEVESTING', 'AIRDROP'].indexOf(
+            modalType
+          ) > -1 && (
             <Box
               p={2}
               textAlign={'center'}
               sx={{ height: '360px', maxWidth: '90vw' }}
             >
               <Box p={1} gap={1}>
-                <Typography
-                  sx={{ color: '#000' }}
-                  textAlign="center"
-                  variant="h5"
-                >
-                  Next Private Sale Vesting Claim Available In
-                </Typography>
+                {getTitles()}
               </Box>
-              <Stack gap={1} direction="row" alignItems={'center'}>
-                <TimerBox bottomTitle="Days">10</TimerBox>
-                <Box height="60px">:</Box>
-                <TimerBox bottomTitle="Hours">10</TimerBox>
-                <Box height="60px">:</Box>
-                <TimerBox bottomTitle="Minutes">10</TimerBox>
-                <Box height="60px">:</Box>
-                <TimerBox bottomTitle="Seconds">10</TimerBox>
-              </Stack>
-              <Box>
+              <Counter targetDate={new Date()} />
+              <Box py={1}>
                 <Typography variant="subtitle1">Total Amount</Typography>
                 <Typography variant="subtitle1">
                   Total released amount
@@ -947,7 +993,7 @@ const updatedtokenPanel = props => {
                 </Typography>
               </Box>
               <Box mt={2} textAlign="center" pt={1}>
-                <Button variant="contained">Claim Floyx</Button>
+                {getActionButtons()}
               </Box>
             </Box>
           )}
