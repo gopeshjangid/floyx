@@ -136,7 +136,7 @@ const NotificationCard = ({
           url = '/post/' + objectId;
           break;
         case 1:
-          url = '/article/' + objectId;
+          url = `/article/${publisher.username}/${objectId}?id=${objectId}`;
           break;
         case 2:
           url = '/event/' + objectId;
