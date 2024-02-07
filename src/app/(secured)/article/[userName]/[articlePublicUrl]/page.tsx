@@ -8,13 +8,26 @@ import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { Metadata, ResolvingMetadata } from 'next';
 
-async function Page({ params }: any) {
+async function Page({ params,searchParams }: any) {
   // const isMobile = useMediaQuery('(max-width:480px)');
   const userName = params?.userName;
-  const articlePuclicUrl = params?.articlePublicUrl;
-  const { data: articleDetails, isError } = await fetchServerData(
-    `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
-  );
+  let articlePuclicUrl = params?.articlePublicUrl;
+  let articleDetails, isError;
+  if(searchParams.id){
+    let fetchResult = await fetchServerData(
+      `${ApiEndpoint.GetArticleById}${searchParams.id}`
+    );
+    articleDetails = fetchResult.data;
+    isError = fetchResult.isError;
+  }else{
+    let fetchResult = await fetchServerData(
+      `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
+    );
+    articleDetails = fetchResult.data;
+    isError = fetchResult.isError;
+  }
+  
+  articlePuclicUrl = articleDetails?.article?.publicUrl;
   const articleId = articleDetails?.article?.id;
 
   return (
