@@ -16,6 +16,7 @@ import {
   debounce,
 } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 import { useUpdateSettingsMutation } from '@/lib/redux/slices/accountSetting';
 import { SVGUser } from '@/assets/images';
@@ -62,6 +63,18 @@ const ProfileSetupModal = ({
   onSubmit: () => void;
 }) => {
   const toast = useToast();
+  const { data: session, update } = useSession();
+
+  const handleUpdate = async username => {
+    await update({
+      ...session,
+      user: {
+        ...session?.user,
+        username: username,
+      },
+    });
+  };
+
   const [
     updateSettings,
     {
@@ -77,6 +90,7 @@ const ProfileSetupModal = ({
   useEffect(() => {
     if (settingUpdateData === 'success') {
       onSubmit();
+      handleUpdate(formData.username);
     }
   }, [settingUpdateData]);
 
