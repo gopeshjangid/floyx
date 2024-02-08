@@ -330,7 +330,7 @@ const RegisterPage = () => {
             >
               Join for free today and keep your data safe in the digital space.
             </Typography>
-            {formData.recommended && (
+            {token && (
               <Typography
                 variant="h6"
                 gutterBottom
