@@ -15,6 +15,7 @@ import Link from 'next/link';
 const SidebarProfileBar: React.FC = () => {
   const { palette } = useTheme();
   const session = useSession();
+  console.log("session:", session)
   const username = (session as any)?.data?.user?.username ?? '';
   const { data, isLoading, error } = useGetProfileDetailsQuery(
     {
