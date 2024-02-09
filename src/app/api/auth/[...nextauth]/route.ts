@@ -44,16 +44,9 @@ const handler = NextAuth({
   },
 
   callbacks: {
-    async jwt({ token, user, account, profile }: any) {
+    async jwt({ token, user, account, profile, trigger, session }: any) {
       if (account?.provider === 'google' && account?.id_token) {
-        token.socialType = 'google';
-        token.email = profile.email;
-        token.firstname = profile.given_name;
-        token.lastname = profile.family_name;
-        token.profileImage = profile.picture;
-        token.socialid = profile.sub;
-
-        await socialSignIn({
+        const socialSignInResponseInNextAuthFile = await socialSignIn({
           email: token.email,
           firstname: profile.given_name,
           lastname: profile.family_name,
@@ -61,16 +54,17 @@ const handler = NextAuth({
           socialid: profile.sub,
           socialType: 'google',
         });
+
+        token.socialType = 'google';
+        token.email = profile.email;
+        token.firstname = profile.given_name;
+        token.lastname = profile.family_name;
+        token.profileImage = profile.picture;
+        token.socialid = profile.sub;
+        token.username = socialSignInResponseInNextAuthFile.value.data.username;
       }
       if (account?.provider === 'facebook' && account?.access_token) {
-        token.socialType = 'facebook';
-        token.email = profile.email;
-        token.firstname = profile.name.split(' ')[0];
-        token.lastname = profile.name.split(' ')[1];
-        token.profileImage = profile.picture.data.url;
-        token.socialid = profile.id;
-
-        await socialSignIn({
+        const socialSignInResponseInNextAuthFile = await socialSignIn({
           mail: token.email,
           firstname: profile.name.split(' ')[0],
           lastname: profile.name.split(' ')[1],
@@ -78,6 +72,13 @@ const handler = NextAuth({
           socialid: profile.id,
           socialType: 'facebook',
         });
+        token.socialType = 'facebook';
+        token.email = profile.email;
+        token.firstname = profile.name.split(' ')[0];
+        token.lastname = profile.name.split(' ')[1];
+        token.profileImage = profile.picture.data.url;
+        token.socialid = profile.id;
+        token.username = socialSignInResponseInNextAuthFile.value.data.username;
       }
       if (user?.value?.code === 'success') {
         token.accessToken = user.value.data.token;
@@ -85,9 +86,13 @@ const handler = NextAuth({
         token.timezone = user.value.data.timezone;
         token.twoStepLoginRequired = user.value.data.twoStepLoginRequired;
       }
+
+      if (trigger === 'update') {
+        token.username = session.username;
+      }
       return token;
     },
-    session({ session, token }: any) {
+    session({ session, token, trigger }: any) {
       if (token && session.user) {
         session.user.token = token.accessToken;
         session.user.username = token.username;
@@ -100,7 +105,13 @@ const handler = NextAuth({
         session.user.firstname = token.firstname;
         session.user.lastname = token.lastname;
         session.user.profileImage = token.profileImage;
+        session.user.username = token.username;
       }
+
+      if (trigger === 'update') {
+        session.user.username = token.username;
+      }
+
       return session;
     },
   },

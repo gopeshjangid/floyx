@@ -57,6 +57,7 @@ import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
 import { postServices } from '@/lib/redux';
 import { useDispatch } from 'react-redux';
+import GoogleTranslatorPicker from "../../components/fullArticle/googleTranslator";
 
 const drawerWidth = 240;
 
@@ -370,9 +371,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <GradientText>Write Post</GradientText>{' '}
           </Button>
         </ListItem>
-        <ListItem>
-          <ThemeSwitch />
-        </ListItem>
+        <List sx={{ display: 'flex', flexDirection: 'row',margin:'0 10px' }}>
+          <ListItem sx={{padding:0}}>
+            <ThemeSwitch />
+          </ListItem>
+          <ListItem sx={{padding: '15px 0px 0px 0px'}}>
+            <GoogleTranslatorPicker/>
+          </ListItem>
+        </List>
       </List>
     </Box>
   );
@@ -443,7 +449,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 />
               </IconButton>
             </Box>
-            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>  
               <IconButton
                 aria-label="open drawer"
                 edge="end"

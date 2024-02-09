@@ -83,7 +83,7 @@ const Phone = ({ value, onChange, checkPhone, error }: IPhoneProps) => {
       <FormLabel required>Phone number</FormLabel>
       <StyledPhone>
         <PhoneInput
-          enableLongNumbers={true}
+          enableLongNumbers={false}
           enableSearch={true}
           searchPlaceholder="Search"
           country="in"

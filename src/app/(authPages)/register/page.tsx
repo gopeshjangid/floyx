@@ -50,6 +50,8 @@ const RegisterPage = () => {
   ] = useVerifyOtpMutation();
   const [checkUserName, { data: checkUserNameData }] =
     useCheckUsernameMutation();
+  const [checkRefferredUserName, { data: checkRefferedUserNameData }] =
+    useCheckUsernameMutation();
   const [checkPhone, { data: checkPhoneData }] = useLazyCheckPhoneQuery();
   const [checkEmail, { data: checkEmailData }] = useCheckEmailMutation();
   const [registerUser, { data: registrationData, error, isLoading }] =
@@ -65,6 +67,11 @@ const RegisterPage = () => {
 
   const debouncedCheckUserName = useCallback(
     debounce(username => username && checkUserName({ username }), 500),
+    []
+  );
+
+  const debouncedCheckRefferedUserName = useCallback(
+    debounce(username => username && checkRefferredUserName({ username }), 500),
     []
   );
 
@@ -177,6 +184,22 @@ const RegisterPage = () => {
       }));
     }
   }, [checkUserNameData]);
+
+  useEffect(() => {
+    if (checkRefferedUserNameData && checkRefferedUserNameData === 'success') {
+      setFormError((prev: any) => ({
+        ...prev,
+        recommended: 'User does not exist',
+      }));
+    }
+
+    if (checkRefferedUserNameData === 'username_in_use') {
+      setFormError((prev: any) => ({
+        ...prev,
+        recommended: '',
+      }));
+    }
+  }, [checkRefferedUserNameData]);
 
   useEffect(() => {
     if (checkEmailData === 'email_in_use') {
@@ -307,6 +330,18 @@ const RegisterPage = () => {
             >
               Join for free today and keep your data safe in the digital space.
             </Typography>
+            {token && (
+              <Typography
+                variant="h6"
+                gutterBottom
+                color="textPrimary"
+                align="center"
+                mt={3}
+              >
+                Referred By{' '}
+                <span style={{ color: '#00FF00' }}>{formData.recommended}</span>
+              </Typography>
+            )}
             <Box
               component="form"
               noValidate
@@ -403,7 +438,10 @@ const RegisterPage = () => {
                     fullWidth
                     hiddenLabel
                     placeholder="Enter here..."
-                    onChange={onChangeHandler}
+                    onChange={e => {
+                      debouncedCheckRefferedUserName(e.target.value);
+                      onChangeHandler(e);
+                    }}
                     defaultValue={formData.recommended}
                     error={!!formError.recommended}
                     helperText={formError.recommended}
