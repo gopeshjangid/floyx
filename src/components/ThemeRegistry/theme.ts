@@ -397,9 +397,22 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           input: {
             '&:-webkit-autofill': {
               WebkitBoxShadow: `0 0 0 100px ${palette.background.paper} inset`,
-              WebkitTextFillColor: mode === 'light' ? '#ADB3C6' : '#D1D0D5',
+              WebkitTextFillColor: mode === 'light' ? '#000' : '#fff',
               borderRadius: '0',
             },
+            // For Firefox
+            '&:-moz-autofill': {
+              boxShadow: `0 0 0 100px ${palette.background.paper} inset`,
+              textFillColor: mode === 'light' ? '#000' : '#fff',
+              borderRadius: '0',
+            },
+            // Standard properties for other browsers (if necessary)
+            '&:autofill': {
+              boxShadow: `0 0 0 100px ${palette.background.paper} inset`,
+              textFillColor: mode === 'light' ? '#000' : '#fff',
+              borderRadius: '0',
+            },
+            color: mode === 'light' ? '#000' : '#fff',
           },
         },
       },
@@ -423,28 +436,6 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
           },
         },
       },
-      // MuiButton: {
-      //   styleOverrides: {
-      //     // Assuming "primary" is your default color for the button
-      //     root: {
-      //       height: 'fit-content !important',
-      //       textTransform: 'capitalize',
-      //     },
-      //     containedPrimary: {
-      //       color: 'white', // Assuming you want white text for the button
-      //       borderRadius: '10px',
-      //       padding: '12px 29px',
-      //       gap: '10px',
-      //       background: `linear-gradient(90deg, ${palette.secondary[400]}  0%, #858FFF 50%, #4D9AFF 100%)`,
-      //       '&:hover': {
-      //         // You should also define the hover state
-      //         background: `linear-gradient(90deg, ${palette.secondary[400]}  0%, #858FFF 50%, #4D9AFF 100%)`,
-      //         opacity: 0.9, // Or any other styling you want on hover
-      //       },
-      //     },
-      //     outlined: {},
-      //   },
-      // },
     },
   });
 };
