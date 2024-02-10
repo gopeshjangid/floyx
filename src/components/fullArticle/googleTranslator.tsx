@@ -40,14 +40,25 @@ const GoogleTranslate: React.FC = () => {
 
     const cookieValue = getCookie('googtrans');
     setSelected(cookieValue ? languagesCode[cookieValue] : 'English');
-  }, []);
+  }, [selected]);
 
   const langChange = (e: SelectChangeEvent<string>) => {
     const value = e.target.value;
-    setCookie('googtrans', value);
-    setSelected(languagesCode[value]);
-    window.location.reload();
-  };
+    console.log(hasCookie('googtrans'), "cookies test", getCookie('googtrans') )
+    if(hasCookie('googtrans')){
+        if(getCookie('googtrans') != value){
+            deleteCookie('googtrans');
+            setCookie('googtrans', value);
+            setSelected(languagesCode[value]);
+            window.location.reload();
+        }
+    }else{
+        setCookie('googtrans', value);
+        setSelected(languagesCode[value]);
+        window.location.reload();
+    }
+    
+};
 
     return (
       <>
