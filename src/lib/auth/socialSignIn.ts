@@ -29,8 +29,6 @@ export default async function socialSignIn({
       ],
     };
 
-    console.log('social signin payload', data);
-
     const response = await fetch(
       `${process.env.BACKEND_BASE_DEV_URL}${apiPaths.socialLogin}`,
       {
@@ -42,11 +40,6 @@ export default async function socialSignIn({
       }
     );
     const user = await response.json();
-    console.log(
-      'user:--------------',
-      user,
-      user?.value?.data?.token.accessToken
-    );
 
     if (!user || !response.ok) {
       throw new Error('Invalid credentials');

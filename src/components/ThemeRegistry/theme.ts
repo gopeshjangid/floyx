@@ -412,7 +412,12 @@ const getThemeObject = (mode: PaletteMode): ThemeOptions => {
               textFillColor: mode === 'light' ? '#000' : '#fff',
               borderRadius: '0',
             },
-            color: mode === 'light' ? '#000' : '#fff',
+            '&:not(:placeholder-shown)': {
+              WebkitTextFillColor:
+                mode === 'light' ? '#000 !important' : '#fff !important',
+              textFillColor:
+                mode === 'light' ? '#000 !important' : '#fff !important',
+            },
           },
         },
       },
