@@ -1,6 +1,11 @@
 'use client';
 
-import { FLOYX_TOKEN, FLOYX_USERNAME } from '@/constants';
+import {
+  FIRST_TIME_LOGIN_USING_SOCIAL,
+  FLOYX_TOKEN,
+  FLOYX_USERNAME,
+  SOCIAL_SIGNIN_DATA,
+} from '@/constants';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { EventEmitter } from 'events';
@@ -73,6 +78,8 @@ export class TokenService {
   public removeAuthData = () => {
     deleteCookie(FLOYX_TOKEN);
     deleteCookie(FLOYX_USERNAME);
+    deleteCookie(SOCIAL_SIGNIN_DATA);
+    deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
   };
 
   public getUsername() {

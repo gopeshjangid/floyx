@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Backdrop,
   Box,
@@ -14,10 +16,15 @@ import {
   debounce,
 } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
+import { setCookie } from 'cookies-next';
+import { useSession } from 'next-auth/react';
 
 import { useUpdateSettingsMutation } from '@/lib/redux/slices/accountSetting';
 import { SVGUser } from '@/assets/images';
 import { useCheckUsernameMutation } from '@/lib/redux/slices/registration';
+import { showErrorMessages } from '@/lib/utils';
+import { useToast } from '../Toast/useToast';
+import { FIRST_TIME_LOGIN_USING_SOCIAL } from '@/constants';
 
 const style = {
   position: 'absolute',
@@ -26,7 +33,6 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: '100%',
   maxHeight: '90vh',
-  //   minWidth: '60vw',
   maxWidth: {
     xs: '90vw',
     md: '40vw',
@@ -58,14 +64,49 @@ const ProfileSetupModal = ({
   handleClose: () => void;
   onSubmit: () => void;
 }) => {
+  const toast = useToast();
+  const { data: session, update } = useSession();
+
+  function handleUpdate({ username, name }: any) {
+    update({
+      ...session,
+      user: {
+        ...session?.user,
+        username: username,
+        name: name,
+        firstname: name.split(' ')[0],
+        lastname: name.split(' ')[1],
+      },
+    });
+  }
+
   const [
     updateSettings,
     {
-      //   data: settingUpdateData,
+      data: settingUpdateData,
       isLoading: settingUpdateLoading,
-      //   error: settingUpdateError,
+      error: settingUpdateError,
     },
   ] = useUpdateSettingsMutation();
+
+  useEffect(() => {
+    if (settingUpdateData === 'success') {
+      onSubmit();
+      handleUpdate({
+        username: formData.username,
+        name: formData.name,
+      });
+      setCookie(FIRST_TIME_LOGIN_USING_SOCIAL, 'false');
+      // setCookie('FLOYX_UPDATED_USERNAME', formData.username);
+      // setCookie('FLOYX_UPDATED_NAME', formData.name);
+    }
+  }, [settingUpdateData]);
+
+  useEffect(() => {
+    if (settingUpdateError) {
+      toast.error(showErrorMessages([settingUpdateError] as any));
+    }
+  }, [settingUpdateError]);
 
   const [checkUserName, { data: checkUserNameData }] =
     useCheckUsernameMutation();
@@ -97,8 +138,9 @@ const ProfileSetupModal = ({
     []
   );
 
-  const updateAccountDetails = async (e: React.FormEvent<HTMLFormElement>) => {
+  const updateAccountDetails = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const isValid: boolean = validateForm();
 
     if (isValid) {
@@ -106,7 +148,6 @@ const ProfileSetupModal = ({
         name: formData.name,
         username: formData.username,
       });
-      onSubmit();
     }
   };
 
@@ -166,13 +207,15 @@ const ProfileSetupModal = ({
               md: 3,
             }}
             flexDirection="row"
-            component="form"
-            noValidate
             mt={2}
             justifyContent="center"
             alignItems="center"
           >
-            <Box component="form" noValidate onSubmit={updateAccountDetails}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={e => updateAccountDetails(e)}
+            >
               <FormControl>
                 <FormLabel required>Name</FormLabel>
                 <TextField

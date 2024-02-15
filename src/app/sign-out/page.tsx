@@ -5,12 +5,18 @@ import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import FloyxImage from '@/iconComponents/floyxIcon';
+import { deleteCookie } from 'cookies-next';
+import { FIRST_TIME_LOGIN_USING_SOCIAL, SOCIAL_SIGNIN_DATA } from '@/constants';
 
 export default function SignOut() {
   const router = useRouter();
   const theme = useTheme();
 
   const handleSubmit = async () => {
+    deleteCookie('FLOYX_TOKEN');
+    deleteCookie('next-auth.session-token');
+    deleteCookie(SOCIAL_SIGNIN_DATA);
+    deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
     await signOut({
       redirect: true,
       callbackUrl: '/social-login',

@@ -45,7 +45,11 @@ import ThemeSwitch from '@/components/ThemeSwitcher';
 import { allRoutes } from '@/constants/allRoutes';
 import { notificationService } from '@/lib/services/new/notificationService';
 import { messageService } from '@/lib/services/new/messageService';
-import { FLOYX_USERNAME } from '@/constants';
+import {
+  FIRST_TIME_LOGIN_USING_SOCIAL,
+  FLOYX_USERNAME,
+  SOCIAL_SIGNIN_DATA,
+} from '@/constants';
 import { INotification } from './notifications/types';
 import CustomPopover from '@/components/PopoverOptions';
 import LogoutIcon from '@/iconComponents/logOut';
@@ -57,7 +61,7 @@ import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
 import { postServices } from '@/lib/redux';
 import { useDispatch } from 'react-redux';
-import GoogleTranslatorPicker from "../../components/fullArticle/googleTranslator";
+import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
 const drawerWidth = 240;
 
@@ -160,6 +164,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const { palette } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openWriteDialog, setOpenWriteDialog] = useState(false);
+  const firstTimeUsingSocialMediaLogin = ![true, 'true'].includes(
+    getCookie(FIRST_TIME_LOGIN_USING_SOCIAL) as any
+  );
   const isLoggedIn: boolean = session.status === 'authenticated';
   const navItems = [
     {
@@ -289,11 +296,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     if (
       session.status !== 'loading' &&
       !isLoggedIn &&
+      !firstTimeUsingSocialMediaLogin &&
       !pathname.includes('/login') &&
       isPrivate
     ) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
+      deleteCookie(SOCIAL_SIGNIN_DATA);
+      deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
       signOut({ redirect: true });
       //router.push('/login');
     }
@@ -365,10 +375,11 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <GradientText>Write Post</GradientText>{' '}
           </Button>
         </ListItem>
-        <List sx={{ display: 'flex', flexDirection: 'row',margin:'0 10px' }}>
-          <ListItem sx={{padding:0}}>
+        <List sx={{ display: 'flex', flexDirection: 'row', margin: '0 10px' }}>
+          <ListItem sx={{ padding: 0 }}>
             <ThemeSwitch />
           </ListItem>
+
 {/*           <ListItem sx={{padding: '15px 0px 0px 0px'}}>
             <GoogleTranslatorPicker/>
           </ListItem> */}
@@ -443,7 +454,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 />
               </IconButton>
             </Box>
-            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>  
+            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
               <IconButton
                 aria-label="open drawer"
                 edge="end"

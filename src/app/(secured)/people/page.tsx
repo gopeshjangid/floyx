@@ -50,6 +50,12 @@ interface UserProfilesResponse {
   page: number;
 }
 
+const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+  "& .MuiFormControlLabel-label": {
+    marginTop: '4px'
+  }
+}));
+
 const StyledChip = styled(Chip)(({ theme }) => ({
   borderRadius: '4px', // Adjust the border-radius for rounded corners
   padding: theme.spacing(0.5, 1), // Use theme spacing for consistent padding
@@ -203,7 +209,7 @@ const SearchComponent: React.FC<{
           </Grid>
           <Grid sm={9} xs={12} item>
             {' '}
-            <FormControlLabel
+            <StyledFormControlLabel
               control={
                 <Checkbox
                   name="professionalExperience"

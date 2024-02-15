@@ -4,6 +4,8 @@ import moment from 'moment';
 import { getCookie, deleteCookie } from 'cookies-next';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { signOut } from 'next-auth/react';
+import { FIRST_TIME_LOGIN_USING_SOCIAL, SOCIAL_SIGNIN_DATA } from '@/constants';
+
 export const getRelativeTime = (date: string) => {
   const dateObject = new Date(date);
   const sec = dateObject.getSeconds();
@@ -32,6 +34,8 @@ const isServer = () => typeof window === 'undefined';
 const logout = async () => {
   deleteCookie('FLOYX_TOKEN');
   deleteCookie('next-auth.session-token');
+  deleteCookie(SOCIAL_SIGNIN_DATA);
+  deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
   await signOut({ redirect: false });
 };
 

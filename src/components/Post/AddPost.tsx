@@ -164,7 +164,7 @@ function AddPost({
             <Tab
               component={Link}
               label={
-                <Typography variant="subtitle2">Write an article</Typography>
+                <Typography variant="subtitle2">WRITE AN ARTICLE</Typography>
               }
               sx={{ marginTop: '8px' }}
               href="/composer/create"

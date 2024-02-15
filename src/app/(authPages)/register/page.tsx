@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { SVGLock, SVGUser } from '@/assets/images';
 import SVGEmail from '@/iconComponents/email';
@@ -41,12 +42,15 @@ const RegisterPage = () => {
   const toast = useToast();
   const router = useRouter();
   const { palette } = useTheme();
+  const searchParams = useSearchParams();
 
   const [
     verifyOtp,
     { data: verifyOtpData, isLoading: verifyOtpLoading, error: verifyOtpError },
   ] = useVerifyOtpMutation();
   const [checkUserName, { data: checkUserNameData }] =
+    useCheckUsernameMutation();
+  const [checkRefferredUserName, { data: checkRefferedUserNameData }] =
     useCheckUsernameMutation();
   const [checkPhone, { data: checkPhoneData }] = useLazyCheckPhoneQuery();
   const [checkEmail, { data: checkEmailData }] = useCheckEmailMutation();
@@ -66,6 +70,11 @@ const RegisterPage = () => {
     []
   );
 
+  const debouncedCheckRefferedUserName = useCallback(
+    debounce(username => username && checkRefferredUserName({ username }), 500),
+    []
+  );
+
   const debouncedCheckEmail = useCallback(
     debounce(mail => mail && checkEmail({ mail }), 500),
     []
@@ -82,6 +91,24 @@ const RegisterPage = () => {
     recommended: '',
     phone: '',
   });
+
+  const token = searchParams.get('token');
+
+  useEffect(() => {
+    if (token) {
+      const sanitizedToken = token.replace(/[^A-Za-z0-9+/]/g, '');
+      const decodedToken = atob(sanitizedToken);
+      const parsedToken = JSON.parse(decodedToken);
+
+      const { username } = parsedToken;
+      setFormData(prevState => ({
+        ...prevState,
+        recommendedMe: true,
+        recommended: username,
+      }));
+    }
+  }, []);
+
   const [formError, setFormError] = useState<any>({});
 
   useEffect(() => {
@@ -157,6 +184,22 @@ const RegisterPage = () => {
       }));
     }
   }, [checkUserNameData]);
+
+  useEffect(() => {
+    if (checkRefferedUserNameData && checkRefferedUserNameData === 'success') {
+      setFormError((prev: any) => ({
+        ...prev,
+        recommended: 'User does not exist',
+      }));
+    }
+
+    if (checkRefferedUserNameData === 'username_in_use') {
+      setFormError((prev: any) => ({
+        ...prev,
+        recommended: '',
+      }));
+    }
+  }, [checkRefferedUserNameData]);
 
   useEffect(() => {
     if (checkEmailData === 'email_in_use') {
@@ -287,6 +330,18 @@ const RegisterPage = () => {
             >
               Join for free today and keep your data safe in the digital space.
             </Typography>
+            {token && (
+              <Typography
+                variant="h6"
+                gutterBottom
+                color="textPrimary"
+                align="center"
+                mt={3}
+              >
+                Referred By{' '}
+                <span style={{ color: '#00FF00' }}>{formData.recommended}</span>
+              </Typography>
+            )}
             <Box
               component="form"
               noValidate
@@ -362,13 +417,19 @@ const RegisterPage = () => {
                   }}
                 />
               </FormControl>
+              <Phone
+                value={formData.phone}
+                onChange={onChangeHandler}
+                checkPhone={checkPhone}
+                error={formError.phone}
+              />
 
               <FormControl>
                 <FormControlLabel
                   name="recommendedMe"
                   control={
                     <Checkbox
-                      defaultChecked={false}
+                      defaultChecked={token ? true : false}
                       onChange={onChangeHandler}
                     />
                   }
@@ -383,7 +444,11 @@ const RegisterPage = () => {
                     fullWidth
                     hiddenLabel
                     placeholder="Enter here..."
-                    onChange={onChangeHandler}
+                    onChange={e => {
+                      debouncedCheckRefferedUserName(e.target.value);
+                      onChangeHandler(e);
+                    }}
+                    defaultValue={formData.recommended}
                     error={!!formError.recommended}
                     helperText={formError.recommended}
                     inputProps={{ maxLength: 25 }}
@@ -396,13 +461,6 @@ const RegisterPage = () => {
                         </InputAdornment>
                       ),
                     }}
-                  />
-
-                  <Phone
-                    value={formData.phone}
-                    onChange={onChangeHandler}
-                    checkPhone={checkPhone}
-                    error={formError.phone}
                   />
                 </>
               )}

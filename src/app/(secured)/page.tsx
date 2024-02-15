@@ -27,7 +27,7 @@ import * as signalR from '@microsoft/signalr';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import useDevice from '@/lib/hooks/useDevice';
 import ProfileSetupModal from '@/components/ProfileSetupModal';
-import { SOCIAL_SIGNIN_DATA } from '@/constants';
+import { FIRST_TIME_LOGIN_USING_SOCIAL } from '@/constants';
 export interface apiParams {
   pageNumber: number;
   postCreatedDate: number;
@@ -42,7 +42,9 @@ export default function Page() {
     useState<boolean | null>(null);
 
   useLayoutEffect(() => {
-    if (JSON.parse(getCookie(SOCIAL_SIGNIN_DATA) || '{}').isFirstTimeLogin) {
+    if (
+      [true, 'true'].includes(getCookie(FIRST_TIME_LOGIN_USING_SOCIAL) as any)
+    ) {
       setFirstTimeLoginUsingSocialMedia(true);
     } else {
       setFirstTimeLoginUsingSocialMedia(false);

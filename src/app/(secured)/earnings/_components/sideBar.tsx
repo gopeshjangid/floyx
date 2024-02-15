@@ -150,7 +150,7 @@ const InvitationStatusCard = () => {
           content={
             <Stack gap={2}>
               <Typography variant="h6">
-                Sucessful invitation&nbsp;${data.referralHistory.length}
+                Sucessful invitation&nbsp;{data.referralHistory.length}
               </Typography>
               {data.referralHistory.map((item, index) => (
                 <Box key={'item-' + index}>
