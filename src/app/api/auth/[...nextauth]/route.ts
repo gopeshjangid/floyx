@@ -44,7 +44,7 @@ const handler = NextAuth({
   },
 
   callbacks: {
-    async jwt({ token, user, account, profile, trigger, session }: any) {
+    async jwt({ token, user, account, profile }: any) {
       if (account?.provider === 'google' && account?.id_token) {
         const socialSignInResponseInNextAuthFile = await socialSignIn({
           email: token.email,
@@ -87,12 +87,12 @@ const handler = NextAuth({
         token.twoStepLoginRequired = user.value.data.twoStepLoginRequired;
       }
 
-      if (trigger === 'update') {
-        token.username = session.username;
-      }
+      // if (trigger === 'update') {
+      //   token.username = session.username;
+      // }
       return token;
     },
-    session({ session, token, trigger }: any) {
+    session({ session, token }: any) {
       if (token && session.user) {
         session.user.token = token.accessToken;
         session.user.username = token.username;
@@ -108,9 +108,9 @@ const handler = NextAuth({
         session.user.username = token.username;
       }
 
-      if (trigger === 'update') {
-        session.user.username = token.username;
-      }
+      // if (trigger === 'update') {
+      //   session.user.username = token.username;
+      // }
 
       return session;
     },

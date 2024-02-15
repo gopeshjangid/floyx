@@ -45,7 +45,11 @@ import ThemeSwitch from '@/components/ThemeSwitcher';
 import { allRoutes } from '@/constants/allRoutes';
 import { notificationService } from '@/lib/services/new/notificationService';
 import { messageService } from '@/lib/services/new/messageService';
-import { FIRST_TIME_LOGIN_USING_SOCIAL, FLOYX_USERNAME, SOCIAL_SIGNIN_DATA } from '@/constants';
+import {
+  FIRST_TIME_LOGIN_USING_SOCIAL,
+  FLOYX_USERNAME,
+  SOCIAL_SIGNIN_DATA,
+} from '@/constants';
 import { INotification } from './notifications/types';
 import CustomPopover from '@/components/PopoverOptions';
 import LogoutIcon from '@/iconComponents/logOut';
@@ -57,7 +61,7 @@ import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
 import { postServices } from '@/lib/redux';
 import { useDispatch } from 'react-redux';
-import GoogleTranslatorPicker from "../../components/fullArticle/googleTranslator";
+import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
 const drawerWidth = 240;
 
@@ -210,6 +214,32 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     }
     window.scrollTo(0, 0);
   };
+
+  // const userName = getCookie('FLOYX_UPDATED_USERNAME');
+  // const Name = getCookie('FLOYX_UPDATED_NAME');
+
+  // useEffect(() => {
+  //   if (userName && Name) {
+  //     handleUpdate({
+  //       username: userName,
+  //       name: Name,
+  //     });
+  //   }
+  // }, [userName, Name]);
+
+  // function handleUpdate({ username, name }: any) {
+  //   console.log('in update');
+  //   session.update({
+  //     ...session.data,
+  //     user: {
+  //       ...session?.data?.user,
+  //       username: username,
+  //       name: name,
+  //       firstname: name.split(' ')[0],
+  //       lastname: name.split(' ')[1],
+  //     },
+  //   });
+  // }
 
   useEffect(() => {
     if (session.data?.expires) {
@@ -371,12 +401,12 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <GradientText>Write Post</GradientText>{' '}
           </Button>
         </ListItem>
-        <List sx={{ display: 'flex', flexDirection: 'row',margin:'0 10px' }}>
-          <ListItem sx={{padding:0}}>
+        <List sx={{ display: 'flex', flexDirection: 'row', margin: '0 10px' }}>
+          <ListItem sx={{ padding: 0 }}>
             <ThemeSwitch />
           </ListItem>
-          <ListItem sx={{padding: '15px 0px 0px 0px'}}>
-            <GoogleTranslatorPicker/>
+          <ListItem sx={{ padding: '15px 0px 0px 0px' }}>
+            <GoogleTranslatorPicker />
           </ListItem>
         </List>
       </List>
@@ -449,7 +479,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 />
               </IconButton>
             </Box>
-            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>  
+            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
               <IconButton
                 aria-label="open drawer"
                 edge="end"
