@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { setCookie } from 'cookies-next';
+import { useSession } from 'next-auth/react';
 
 import { useUpdateSettingsMutation } from '@/lib/redux/slices/accountSetting';
 import { SVGUser } from '@/assets/images';
@@ -64,21 +65,20 @@ const ProfileSetupModal = ({
   onSubmit: () => void;
 }) => {
   const toast = useToast();
-  // const { data: session, update } = useSession();
+  const { data: session, update } = useSession();
 
-  // function handleUpdate({ username, name }: any) {
-  //   console.log('in update');
-  //   update({
-  //     ...session,
-  //     user: {
-  //       ...session?.user,
-  //       username: username,
-  //       name: name,
-  //       firstname: name.split(' ')[0],
-  //       lastname: name.split(' ')[1],
-  //     },
-  //   });
-  // }
+  function handleUpdate({ username, name }: any) {
+    update({
+      ...session,
+      user: {
+        ...session?.user,
+        username: username,
+        name: name,
+        firstname: name.split(' ')[0],
+        lastname: name.split(' ')[1],
+      },
+    });
+  }
 
   const [
     updateSettings,
@@ -95,10 +95,10 @@ const ProfileSetupModal = ({
   useEffect(() => {
     if (settingUpdateData === 'success') {
       onSubmit();
-      // handleUpdate({
-      //   username: formData.username,
-      //   name: formData.name,
-      // });
+      handleUpdate({
+        username: formData.username,
+        name: formData.name,
+      });
       setCookie(FIRST_TIME_LOGIN_USING_SOCIAL, 'false');
       // setCookie('FLOYX_UPDATED_USERNAME', formData.username);
       // setCookie('FLOYX_UPDATED_NAME', formData.name);
