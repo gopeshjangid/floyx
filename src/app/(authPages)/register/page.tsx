@@ -417,6 +417,12 @@ const RegisterPage = () => {
                   }}
                 />
               </FormControl>
+              <Phone
+                value={formData.phone}
+                onChange={onChangeHandler}
+                checkPhone={checkPhone}
+                error={formError.phone}
+              />
 
               <FormControl>
                 <FormControlLabel
@@ -455,13 +461,6 @@ const RegisterPage = () => {
                         </InputAdornment>
                       ),
                     }}
-                  />
-
-                  <Phone
-                    value={formData.phone}
-                    onChange={onChangeHandler}
-                    checkPhone={checkPhone}
-                    error={formError.phone}
                   />
                 </>
               )}
