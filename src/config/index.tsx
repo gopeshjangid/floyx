@@ -5,13 +5,13 @@ import { mainnet, sepolia } from 'wagmi/chains';
 
 // Get projectId at https://cloud.walletconnect.com
 //export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
-export const projectId = 'fac14336798629104aeff05bef9640c0';
+export const projectId = 'fbd704f18d2cb8bfe2eeb165ccbbfa36';
 
 if (!projectId) throw new Error('Project ID is not defined');
 
 const metadata = {
   name: 'Web3Modal',
-  description: 'Web3Modal Example',
+  description: 'Floyx Wallet connect',
   url: 'https://362b-2402-8100-24ee-278c-2c9b-b8aa-c547-1358.ngrok-free.app', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 };
@@ -21,7 +21,7 @@ export const config = defaultWagmiConfig({
   chains: [mainnet, sepolia], // required
   projectId, // required
   metadata, // required
-  ssr: true,
+  ssr: false,
   storage: createStorage({
     storage: cookieStorage,
   }),

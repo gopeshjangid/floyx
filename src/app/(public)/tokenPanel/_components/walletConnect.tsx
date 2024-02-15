@@ -1,50 +1,45 @@
-import { Chain, configureChains, createClient, WagmiConfig } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Web3ModalProvider } from '@web3modal/wagmi';
-import { useAccount, useConnect } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/wagmi';
+import { useConnect, useProvider, useDisconnect, chain } from 'wagmi';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 
-// Set up chains
-const { chains, provider } = configureChains(
-  [Chain.mainnet, Chain.polygon],
-  [publicProvider()]
-);
+// Add your WalletConnect Cloud Project ID here
+const projectId = 'YOUR_PROJECT_ID';
 
-// Create a Wagmi client
-const wagmiClient = createClient({
-  autoConnect: true,
-  provider,
-});
+const useWallet = () => {
+  const { connect, connectors, activeConnector } = useConnect();
+  const { provider } = useProvider();
+  const { disconnect } = useDisconnect();
 
-// Create a React Query client
-const queryClient = new QueryClient();
+  const handleWalletConnect = async () => {
+    // Create the WalletConnect connector instance
+    const walletConnect = new WalletConnectConnector({
+      chains: [chain.polygon], // Specify supported chains
+      options: {
+        projectId,
+        qrcode: true,
+      },
+    });
 
-function MyApp({ Component, pageProps }) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <WagmiConfig client={wagmiClient}>
-        <Web3ModalProvider>
-          <Component {...pageProps} />
-        </Web3ModalProvider>
-      </WagmiConfig>
-    </QueryClientProvider>
-  );
-}
+    // Connect using Wagmi's connect function
+    try {
+      await connect(walletConnect);
+    } catch (error) {
+      console.error('WalletConnect connection error:', error);
+      // Handle errors appropriately, e.g., display them to the user
+    }
+  };
 
-export default function ConnectWallet() {
-  const { connect } = useConnect();
-  const { address, isConnected } = useAccount();
-  const { disconnect, openModal } = useWeb3Modal();
-
-  if (isConnected) {
-    return (
-      <div>
-        <p>Connected to {address}</p>
-        <button onClick={() => disconnect()}>Disconnect</button>
-      </div>
-    );
+  // Use the provider, disconnect function, and other Wagmi utilities as needed
+  if (provider) {
+    // Use provider for Web3 interactions
+    // ...
   }
 
-  return <button onClick={() => openModal()}>Connect Wallet</button>;
-}
+  // Optionally, add a disconnect button
+  const handleDisconnect = async () => {
+    if (activeConnector) {
+      await disconnect();
+    }
+  };
+};
+
+export default useWallet;
