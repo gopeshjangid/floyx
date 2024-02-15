@@ -89,9 +89,6 @@ const ProfileSetupModal = ({
     },
   ] = useUpdateSettingsMutation();
 
-  console.log('settingUpdateData:', settingUpdateData);
-  console.log('settingUpdateError:', settingUpdateError);
-
   useEffect(() => {
     if (settingUpdateData === 'success') {
       onSubmit();

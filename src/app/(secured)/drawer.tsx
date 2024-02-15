@@ -215,32 +215,6 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     window.scrollTo(0, 0);
   };
 
-  // const userName = getCookie('FLOYX_UPDATED_USERNAME');
-  // const Name = getCookie('FLOYX_UPDATED_NAME');
-
-  // useEffect(() => {
-  //   if (userName && Name) {
-  //     handleUpdate({
-  //       username: userName,
-  //       name: Name,
-  //     });
-  //   }
-  // }, [userName, Name]);
-
-  // function handleUpdate({ username, name }: any) {
-  //   console.log('in update');
-  //   session.update({
-  //     ...session.data,
-  //     user: {
-  //       ...session?.data?.user,
-  //       username: username,
-  //       name: name,
-  //       firstname: name.split(' ')[0],
-  //       lastname: name.split(' ')[1],
-  //     },
-  //   });
-  // }
-
   useEffect(() => {
     if (session.data?.expires) {
       if (moment(session.data.expires).isBefore(moment())) {
