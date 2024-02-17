@@ -151,6 +151,13 @@ const ProfileSetupModal = ({
     }
   };
 
+  const handleKeyPress = (e) => {
+    const allowedCharacters = /^[a-zA-Z0-9_]+$/;
+    if (!allowedCharacters.test(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   const validateForm = () => {
     const tempErrors: any = {};
     if (!formData.name) tempErrors.name = 'Name is required!';
@@ -255,6 +262,7 @@ const ProfileSetupModal = ({
                     debouncedCheckUserName(e.target.value);
                     onChangeHandler(e);
                   }}
+                  onKeyPress={handleKeyPress}
                   error={!!formError.username}
                   helperText={formError.username}
                   inputProps={{ maxLength: 25 }}
