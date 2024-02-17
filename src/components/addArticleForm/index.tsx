@@ -325,7 +325,7 @@ export default function AddArticleForm({
         : [initialSate];
       responseContent =
         responseContent.length === 0 ? [initialSate] : responseContent;
-      setTitle(response.data?.title);
+      setTitle(response.data?.title ||'');
       setContent(JSON.parse(response?.data?.content));
       setState(prev => ({
         ...prev,

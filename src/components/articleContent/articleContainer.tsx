@@ -208,6 +208,7 @@ export default function ArticleContainer({
   const handleDeleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     deleteArtice(articleDetails?.id);
+    setOpenConfirmationDialog(false);
   };
   const { offsetHeight, offsetWidth } = ref?.current ?? {
     offsetHeight: 0,

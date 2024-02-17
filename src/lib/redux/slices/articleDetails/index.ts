@@ -214,14 +214,14 @@ export const artcileDetails = createApi({
       query: tabName =>
         `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ''}`,
       providesTags: (result, error, type) => [
-        { type: 'ArticleList', id: type },
+        { type: 'ArticleList', id: type },'deleteArticle'
       ],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
-      providesTags: ['ArticleInfoNumber'],
+      providesTags: ['ArticleInfoNumber','deleteArticle'],
     }),
     checkArticleIsShared: builder.mutation<boolean, string>({
       query: articleId => ({

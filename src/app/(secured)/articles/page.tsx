@@ -56,6 +56,8 @@ export default function Page() {
       searchArticle({ searchString: dynamicTab.value ?? '' });
     }
   }, [tabName]);
+  const viewportHeight =
+    typeof window === 'undefined' ? 1000 : window.innerHeight;
 
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
@@ -64,7 +66,7 @@ export default function Page() {
           <Box
             sx={{
               overflow: 'auto',
-              maxHeight: '102vh',
+              maxHeight: viewportHeight + 450,
               overflowY: 'auto',
               scrollbarWidth: 'none', // For Firefox
               msOverflowStyle: 'none', // For IE 10+

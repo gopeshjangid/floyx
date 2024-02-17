@@ -34,8 +34,19 @@ export default function DottedButton({options, handleOption, setOpen}: any) {
     optionName: string,
   ) => {
     event.stopPropagation();
-    const options = ['Report Article', 'Block User', 'Report User'];
-    let optionsIndex = options.indexOf(optionName);
+    // const options = ['Report Article', 'Block User', 'Report User'];
+    const options = {
+      'Edit':0,
+      'Delete':1,
+      'Report Article':0,
+      'Block User':1,
+      'Report User':2
+    }
+    // let optionsIndex = options.indexOf(optionName);
+    let optionsIndex = options[optionName];
+    if(optionsIndex == undefined){
+      optionsIndex = -1
+    }
     if (optionsIndex !== -1) {
       handleOption(optionsIndex);
       setAnchorEl(null);
