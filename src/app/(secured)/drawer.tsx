@@ -379,9 +379,10 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
           <ListItem sx={{ padding: 0 }}>
             <ThemeSwitch />
           </ListItem>
-          <ListItem sx={{ padding: '15px 0px 0px 0px' }}>
-            <GoogleTranslatorPicker />
-          </ListItem>
+
+{/*           <ListItem sx={{padding: '15px 0px 0px 0px'}}>
+            <GoogleTranslatorPicker/>
+          </ListItem> */}
         </List>
       </List>
     </Box>
