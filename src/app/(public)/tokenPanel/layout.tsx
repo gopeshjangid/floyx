@@ -1,24 +1,23 @@
-'use client';
 import React from 'react';
-import { Box } from '@mui/material';
 import { headers } from 'next/headers';
 import { cookieToInitialState } from 'wagmi';
-import { config } from '@/config';
-import ContextProvider from './_components/context';
+import { wagmiConfig } from '@/config';
+import { Web3Modal } from '@/context';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Floyx- Token Panel',
+  description: 'This is a description of the site.',
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const initialState = cookieToInitialState(config, document.cookie);
-  return (
-    <html lang="en">
-      <body>
-        <ContextProvider initialState={initialState}>
-          <Box>{children}</Box>
-        </ContextProvider>
-      </body>
-    </html>
+  const initialState = cookieToInitialState(
+    wagmiConfig,
+    headers().get('cookie')
   );
+  return <Web3Modal initialState={initialState}>{children}</Web3Modal>;
 }

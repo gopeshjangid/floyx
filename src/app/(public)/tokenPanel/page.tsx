@@ -1,12 +1,15 @@
 /* eslint-disable camelcase */
 // @ts-nocheck
 'use client';
-import React, { useState, useEffect } from 'react';
-import { Web3Provider } from '@ethersproject/providers';
-import WalletConnectProvider from '@walletconnect/ethereum-provider';
-import Web3 from 'web3';
-import { publicProvider } from 'wagmi/providers/public';
-import { FloyxStakingAddress, chainID } from '@/constants/Addresses';
+import React, { useState, useEffect, Suspense } from 'react';
+//import { Web3Provider } from '@ethersproject/providers';
+//import Web3 from 'web3';
+import {
+  FloyxStakingAddress,
+  New_Floyx_Token_Address,
+  chainID,
+  Floyx_TokenVesting_Address,
+} from '@/constants/Addresses';
 import FloyxImage from '@/iconComponents/floyxIcon';
 //import { getFloyxContract } from '@constants/Floyx_Token';
 import { getNewFloyxContract } from '@/constants/New_Floyx_Token';
@@ -21,73 +24,206 @@ import {
   Typography,
   useTheme,
   Button,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import Image from 'next/image';
 import WalletPanelImage from '@/assets/wallet-panal.png';
 import ReusableModal from './_components/modal';
-import WalletConnectIcon from '@/iconComponents/walletConnectIcon';
-import MetaMaskIcon from '@/assets/images/metaMask.png';
 import { useRouter } from 'next/navigation';
 import Counter from './_components/CountdownTimer';
-import { useAccount } from 'wagmi';
+import {
+  useAccount,
+  useBalance,
+  useDisconnect,
+  useReadContract,
+  useReadContracts,
+  useWriteContract,
+} from 'wagmi';
+import TokenPanelHeader from './_components/header';
+import { stakingContractabi } from '@/constants/Staking_abi';
+import { privateSeedContractabi } from '/constants/PrivateSeed_abi';
+import {
+  vestingContractabi,
+  newTokenABI,
+} from '@/constants/VestingContract_abi';
+import { ethers } from 'ethers';
+import { ErrorOutlineOutlined } from '@mui/icons-material';
+
 const NonLoggedinWalletModal = ({ onClick }: { onClick: () => void }) => {
   return (
     <Box textAlign="center">
+      <Typography sx={{ color: '#000' }} textAlign="center" variant="h3">
+        Connect Wallet
+      </Typography>
       <Image
         src={WalletPanelImage}
         height="200px"
         width="300px"
         alt="Wallet panel"
       />
-      <Button variant="text" onClick={onClick}>
-        Log in to your wallet to check the details
-      </Button>
+      <Button variant="text">Log in to your wallet to check the details</Button>
     </Box>
   );
 };
 
 const updatedtokenPanel = props => {
   const [modalType, setModal] = useState('FIRST');
-  const router = useRouter();
-  const [isLogged, setIsLogged] = useState(false);
+  const { address, isConnected, isConnecting, isReconnecting, isDisconnected } =
+    useAccount();
+  const { disconnect } = useDisconnect();
   const [web3Library, setWeb3Library] = useState('');
+  const [lockTimer, setLockTimer] = useState(0);
+  const [amount, setAmount] = useState({
+    totalAmount: 0,
+    releasedAmount: 0,
+    availableAmount: 0,
+  });
   const [web3Account, setWeb3Account] = useState('');
   const toast = useToast();
+  const [claimResult, setClaimResult] = useState({
+    status: '',
+    error: '',
+    result: '',
+  });
   const theme = useTheme();
-  const { address, isConnecting, isDisconnected } = useAccount();
 
-  if (isConnecting) return <div>Connecting…</div>;
-  if (isDisconnected) return <div>Disconnected</div>;
-  return <div>{address}</div>;
+  const result = useReadContract({
+    abi: stakingContractabi,
+    address: FloyxStakingAddress,
+    functionName: 'getStakedAmount',
+    args: [address],
+  });
 
-  const connectMetamask = async () => {
-    try {
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      console.log('value of chainId', parseInt(chainId));
+  const { data: vestingStartTime } = useReadContract({
+    abi: vestingContractabi,
+    address: Floyx_TokenVesting_Address,
+    functionName: 'getStartTimePeriod',
+    args: [address, '0'],
+  });
 
-      // change chainId to 37
-      if (parseInt(chainId) == chainID) {
-        const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts',
-        });
+  const { data: oneMonth } = useReadContract({
+    abi: vestingContractabi,
+    address: Floyx_TokenVesting_Address,
+    functionName: 'getSlicePeriod',
+    args: [address, '0'],
+  });
 
-        window.location.reload(true);
-      } else {
-        toast.error('Please connect to polygon Network');
-      }
-    } catch (ex) {
-      toast.error('Oops! An error occurred.');
-      console.log(ex);
-    }
+  const { data: vestingScheduledAmount } = useReadContract({
+    abi: vestingContractabi,
+    address: Floyx_TokenVesting_Address,
+    functionName: 'getTototalSheduleAmount',
+    args: [address, '0'],
+  });
+
+  const { data: vestingClaimableAmount } = useReadContract({
+    abi: vestingContractabi,
+    address: Floyx_TokenVesting_Address,
+    functionName: 'getClaimableAmount',
+    args: [address, '0'],
+  });
+
+  const { data: vestingReleasedAmount } = useReadContract({
+    abi: vestingContractabi,
+    address: Floyx_TokenVesting_Address,
+    functionName: 'getReleasedAmount',
+    args: [address, '0'],
+  });
+
+  const {
+    writeContract,
+    data: vestingClaimed,
+    error: vestingClaimError,
+    isPending: vestingClaimIsPending,
+    status: vestingClaimStatus,
+  } = useWriteContract();
+
+  console.log(
+    'vestingClaimed => ',
+    vestingClaimed,
+    'status =>',
+    vestingClaimStatus,
+    'vestingClaimError =>',
+    vestingClaimError
+  );
+
+  const formatWeiTOEather = weiValue => {
+    return ethers.formatEther(weiValue);
   };
 
-  // functions
+  useEffect(() => {
+    setClaimResult({});
+  }, [vestingClaimStatus, vestingClaimError]);
 
+  useEffect(() => {
+    console.log('vestingScheduledAmount: ', vestingScheduledAmount);
+    if (vestingScheduledAmount) {
+      setAmount(amount => ({
+        ...amount,
+        totalAmount: formatWeiTOEather(vestingScheduledAmount),
+      }));
+    }
+  }, [vestingScheduledAmount]);
+
+  useEffect(() => {
+    console.log('vestingScheduledAmount: ', vestingReleasedAmount);
+    if (vestingReleasedAmount) {
+      setAmount(amount => ({
+        ...amount,
+        releasedAmount: formatWeiTOEather(vestingReleasedAmount),
+      }));
+    }
+  }, [vestingReleasedAmount]);
+
+  useEffect(() => {
+    console.log('vestingScheduledAmount: ', vestingClaimableAmount);
+    if (vestingClaimableAmount) {
+      setAmount(amount => ({
+        ...amount,
+        availableAmount: formatWeiTOEather(vestingClaimableAmount),
+      }));
+    }
+  }, [vestingClaimableAmount]);
+
+  const balance = useBalance({
+    address,
+    token: New_Floyx_Token_Address,
+  });
   function getProvider(web3library_) {
     const { provider } = web3library_;
-    const web3 = new Web3(provider);
+    //const web3 = new Web3(provider);
+    const web3 = null;
     return web3;
   }
+  useEffect(() => {
+    console.log('isConnected: ', isConnected);
+
+    if (isConnected && address) {
+      setModal('STACKING');
+    } else {
+      setModal('FIRST');
+    }
+  }, [isConnected, address]);
+
+  // useEffect(() => {
+  //   if (!isConnected) return;
+  //   (async () => {
+  //     try {
+  //       console.log('connected, reading contract');
+  //       console.log('connected, reading contract');
+
+  //       const result = await readContract(wagmiConfig, {
+  //         abi: vestingContractabi,
+  //         address: Floyx_TokenVesting_Address,
+  //         functionName: 'getStartTimePeriod',
+  //         args: [address, '0'],
+  //       });
+  //       console.log('result =>>>>>>>>>>>>: ', result);
+  //     } catch (error) {
+  //       console.error('Error reading contract:', error);
+  //     }
+  //   })();
+  // }, [isConnected, address]);
 
   async function fetchStakedAmount(
     _FloyxStakingContract,
@@ -285,16 +421,10 @@ const updatedtokenPanel = props => {
 
   async function setTimerFunction(library: any, account: string) {
     try {
-      const vestingContract = getVestingContract(library, account);
-
       // Fetching oneMonth and timePeriod from the contract
-      let oneMonth =
-        parseInt(await vestingContract.getSlicePeriod(account, 0, overrides)) *
-        1000;
-      let timePeriod =
-        parseInt(
-          await vestingContract.getStartTimePeriod(account, 0, overrides)
-        ) * 1000;
+      let oneMonthTIme = parseInt(oneMonth) * 1000;
+      console.log({ oneMonthTIme });
+      let timePeriod = parseInt(vestingStartTime) * 1000;
 
       // Set lock timer to zero if timePeriod is zero
       if (timePeriod === 0) {
@@ -305,7 +435,7 @@ const updatedtokenPanel = props => {
       // Calculate the next lock period
       let lockPeriod = timePeriod;
       while (Date.now() > lockPeriod) {
-        lockPeriod += oneMonth;
+        lockPeriod += oneMonthTIme;
       }
       setLockTimer(lockPeriod);
     } catch (e) {
@@ -313,6 +443,10 @@ const updatedtokenPanel = props => {
       console.error(e); // More descriptive error logging
     }
   }
+
+  useEffect(() => {
+    if (address) setTimerFunction();
+  }, [vestingStartTime, address]);
 
   async function fetchStakedAmount(
     _FloyxStakingContract,
@@ -469,133 +603,6 @@ const updatedtokenPanel = props => {
     }
   }
 
-  /* AIRDROP SHEDULES */
-
-  async function getAirdropRewardAmount(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const rewardAmount = await _FloyxVestingContract.getClaimableAmount(
-      _address,
-      11,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      rewardAmount.toString(),
-      'ether'
-    );
-    setfloyxAirdropClaimableAmount(balanceConverted);
-  }
-
-  async function functotalAirdropAmountAvaialble(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const amountTotal = await _FloyxVestingContract.getTototalSheduleAmount(
-      _address,
-      11,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      amountTotal.toString(),
-      'ether'
-    );
-    setfloyxAridropTotalAmount(balanceConverted);
-  }
-
-  async function functotalAirdropReleasedAmount(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const amountTotal = await _FloyxVestingContract.getReleasedAmount(
-      _address,
-      11,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      amountTotal.toString(),
-      'ether'
-    );
-    setfloyxAirdropReleasedAmount(balanceConverted);
-  }
-
-  async function claimAirdropReward() {
-    const web3 = getProvider(web3Library);
-    const NewFloyxContract = getNewFloyxContract(web3Library, web3Account);
-    const FloyxVestingContract = getVestingContract(web3Library, web3Account);
-
-    // claimTokens
-    try {
-      const sampleVariable = await FloyxVestingContract.claimVestedToken(
-        web3Account,
-        11
-      );
-      const hashValue = sampleVariable.hash.toString();
-
-      if (sampleVariable !== null) {
-        const interval = setInterval(() => {
-          web3.eth.getTransactionReceipt(hashValue, async (err, rec) => {
-            if (rec) {
-              const currentBalance = await NewFloyxContract.balanceOf(
-                web3Account,
-                overrides
-              );
-            } else {
-              console.log(err);
-            }
-            if (floyxAirdropClaimableAmount == 0) {
-              toast.error('Claim Not Allowed!');
-              return;
-            }
-          });
-          ``;
-        }, 1000);
-      }
-    } catch (ex) {
-      toast.error('Claim Not Allowed!');
-
-      console.log('An error occour', ex);
-    }
-  }
-
-  async function setAirdropTimerFunction(library, account) {
-    try {
-      const vestingContract = getVestingContract(library, account);
-      let oneMonth = await vestingContract.getSlicePeriod(
-        account,
-        11,
-        overrides
-      );
-      oneMonth = parseInt(oneMonth) * 1000;
-
-      let timePeriod = await vestingContract.getStartTimePeriod(
-        account,
-        11,
-        overrides
-      );
-      timePeriod = parseInt(timePeriod) * 1000;
-
-      if (timePeriod === 0) {
-        setAirdropLockTimer(0);
-      } else {
-        let lockPeriod = timePeriod;
-        while (Date.now() > lockPeriod) {
-          lockPeriod = lockPeriod + oneMonth;
-        }
-        setAirdropLockTimer(lockPeriod);
-      }
-    } catch (e) {
-      toast.error('Oops! An error occurred.');
-      console.log(e);
-    }
-  }
-
   const toggle = stake_period => {
     if (!stake_period) {
       setdropdownOpen(!dropdownOpen);
@@ -723,45 +730,6 @@ const updatedtokenPanel = props => {
     }
   };
 
-  const connectWaletConnect = async () => {
-    try {
-      const RPC_URLS = {
-        // 1: process.env.REACT_APP_INFURA,
-        137: 'https://polygon-rpc.com',
-      };
-
-      const provider = new WalletConnectProvider({
-        rpc: {
-          // 1: RPC_URLS[1],
-          137: RPC_URLS[137],
-        },
-
-        qrcode: true,
-        pollingInterval: 15000,
-        chainId: chainID,
-      });
-
-      const accounts = await provider.enable();
-      const account = accounts[0];
-      const library = new Web3Provider(provider, 'any');
-      const currentChainId = provider.signer.connection.chainId;
-
-      if (currentChainId != chainID) {
-        toast.error('Please Connect to polygon network');
-        return;
-      }
-
-      console.log('Value of provider:::');
-      setWeb3Library(library);
-      setWeb3Account(account);
-      setIsLogged(account);
-      ConnectToContract(library, account);
-    } catch (ex) {
-      toast.error('Oops! An error occurred.');
-      console.log(ex);
-    }
-  };
-
   async function claimStakingReward() {
     const web3 = getProvider(web3Library);
     const myFloyxTokenContract = getNewFloyxContract(web3Library, web3Account);
@@ -793,18 +761,73 @@ const updatedtokenPanel = props => {
     }
   }
 
+  const claimVesting = () => {
+    // writeContract({
+    //   abi: vestingContractabi,
+    //   address: Floyx_TokenVesting_Address,
+    //   functionName: 'claimVestedToken',
+    //   args: [address, 0],
+    // });
+
+    writeContract({
+      abi: stakingContractabi,
+      address: FloyxStakingAddress,
+      functionName: 'withdraw',
+      args: [address],
+    });
+  };
+
+  const claimStacking = () => {
+    // writeContract({
+    //   abi: vestingContractabi,
+    //   address: Floyx_TokenVesting_Address,
+    //   functionName: 'claimVestedToken',
+    //   args: [address, 0],
+    // });
+
+    writeContract({
+      abi: stakingContractabi,
+      address: FloyxStakingAddress,
+      functionName: 'withdraw',
+      args: [address],
+    });
+  };
+
   const getActionButtons = () => {
+    if (vestingClaimStatus === 'pending') {
+      return <CircularProgress />;
+    }
+
+    // if (vestingClaimStatus === 'error') {
+    //   return (
+    //     <Box>
+    //       <Alert variant="outlined" severity="error">
+    //         Error Occured
+    //       </Alert>
+    //     </Box>
+    //   );
+    // }
+
+    if (vestingClaimStatus === 'success') {
+      return (
+        <Box>
+          <Alert variant="outlined" severity="success">
+            Claimed!
+          </Alert>
+        </Box>
+      );
+    }
     switch (modalType) {
       case 'STACKING':
         return (
-          <Button onClick={claimStakingReward} variant="contained">
+          <Button onClick={claimStacking} variant="contained">
             Claim Floyx
           </Button>
         );
         break;
       case 'SEEDVESTING':
         return (
-          <Button onClick={claimReward} variant="contained">
+          <Button onClick={claimVesting} variant="contained">
             Claim Floyx
           </Button>
         );
@@ -861,61 +884,27 @@ const updatedtokenPanel = props => {
     }
   };
 
+  const connectHandler = () => {
+    if (address) {
+      disconnect();
+    } else {
+      setModal('CONNECT');
+    }
+  };
+  console.log('lock perid', lockTimer);
   return (
     <Box width={'100%'}>
-      <AppBar
-        position="fixed"
-        sx={{
-          backgroundColor:
-            theme.palette.mode === 'dark'
-              ? theme.palette.common.white
-              : theme.palette.common.black,
-          height: '60px',
-          padding: '5px 16px',
-        }}
-      >
-        <Stack direction="row" justifyContent={'space-between'}>
-          <FloyxImage
-            fill={
-              theme.palette.mode !== 'dark'
-                ? theme.palette.common.white
-                : theme.palette.common.black
-            }
-          />
-          <Stack direction={'row'} gap={1}>
-            <Button
-              onClick={() => setModal('STACKING')}
-              variant={modalType === 'STACKING' ? 'outlined' : 'text'}
-            >
-              STACKING PREVIEW
-            </Button>
-            <Button
-              onClick={() => setModal('SEEDVESTING')}
-              variant={modalType === 'SEEDVESTING' ? 'outlined' : 'text'}
-            >
-              SEEDVESTING
-            </Button>
-            <Button
-              onClick={() => setModal('PRESALEVESTING')}
-              variant={modalType === 'PRESALEVESTING' ? 'outlined' : 'text'}
-            >
-              PRESALEVESTING
-            </Button>
-            <Button
-              onClick={() => setModal('AIRDROP')}
-              variant={modalType === 'AIRDROP' ? 'outlined' : 'text'}
-            >
-              AIRDROP
-            </Button>
-          </Stack>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Button onClick={connectWaletConnect} variant="contained">
-              Connect Wallet
-            </Button>
-          </Box>
-        </Stack>
-      </AppBar>
+      <Suspense fallback={<Typography>Please wait...</Typography>}>
+        <TokenPanelHeader
+          setModal={setModal}
+          modalType={modalType}
+          isConnected={isConnected}
+          isConnecting={isConnecting}
+          address={address}
+          connectHandler={connectHandler}
+          FloyxImage={FloyxImage}
+        />
+      </Suspense>
       <Box
         sx={{
           backgroundImage: `url(../tokenPanelBg.png)`,
@@ -935,42 +924,6 @@ const updatedtokenPanel = props => {
           {modalType == 'FIRST' && (
             <NonLoggedinWalletModal onClick={() => setModal('CONNECT')} />
           )}
-          {modalType == 'CONNECT' && (
-            <Box p={1} sx={{ height: '300px' }}>
-              <Box p={1} gap={1}>
-                <Typography
-                  sx={{ color: '#000' }}
-                  textAlign="center"
-                  variant="h3"
-                >
-                  Connect Wallet
-                </Typography>
-                <Typography color={'textPrimary'} variant="subtitle2">
-                  Please Connect your wallet to continue. The system supports
-                  the following wallets.
-                </Typography>
-              </Box>
-              <Stack gap={2}>
-                <Button startIcon={<WalletConnectIcon />} variant="contained">
-                  Wallet Connect
-                </Button>
-                <Button
-                  startIcon={
-                    <Image
-                      src={MetaMaskIcon}
-                      alt="metamask"
-                      height={'20px'}
-                      width="20px"
-                    />
-                  }
-                  variant="contained"
-                  onClick={connectMetamask}
-                >
-                  Metamask
-                </Button>
-              </Stack>
-            </Box>
-          )}
           {['STACKING', 'SEEDVESTING', 'PRESALEVESTING', 'AIRDROP'].indexOf(
             modalType
           ) > -1 && (
@@ -982,15 +935,37 @@ const updatedtokenPanel = props => {
               <Box p={1} gap={1}>
                 {getTitles()}
               </Box>
-              <Counter targetDate={new Date()} />
-              <Box py={1}>
-                <Typography variant="subtitle1">Total Amount</Typography>
-                <Typography variant="subtitle1">
-                  Total released amount
-                </Typography>
-                <Typography variant="subtitle1">
-                  Available amount to claim
-                </Typography>
+              <Counter
+                targetDate={lockTimer ? new Date(lockTimer) : new Date()}
+              />
+              <Box py={1} textAlign="center">
+                <Stack justifyContent={'center'} direction="row" gap={1}>
+                  <Typography variant="subtitle1">Total Amount</Typography>:
+                  <Typography fontWeight={'500'} variant="subtitle1">
+                    {amount.totalAmount}
+                  </Typography>
+                </Stack>
+
+                <Stack justifyContent={'center'} direction="row" gap={1}>
+                  <Typography variant="subtitle1">
+                    Total released amount
+                  </Typography>
+                  :
+                  <Typography fontWeight={'500'} variant="subtitle1">
+                    {amount.releasedAmount}
+                  </Typography>
+                </Stack>
+
+                <Stack justifyContent={'center'} direction="row" gap={1}>
+                  <Typography variant="subtitle1">
+                    {' '}
+                    Available amount to claim
+                  </Typography>
+                  :
+                  <Typography fontWeight={'500'} variant="subtitle1">
+                    {amount.availableAmount}
+                  </Typography>
+                </Stack>
               </Box>
               <Box mt={2} textAlign="center" pt={1}>
                 {getActionButtons()}
