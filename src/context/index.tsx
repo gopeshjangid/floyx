@@ -19,7 +19,7 @@ createWeb3Modal({
   themeMode: 'light',
   tokens: {
     137: {
-      address: '0x53a626d2bec5Cd98e4dCb0bf694CEa5F93D58654',
+      address: '0x7067BeBfA1720132DFb9373d65B522AfBe3A201e',
     },
   },
   // chainImages: {

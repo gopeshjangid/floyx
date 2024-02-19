@@ -32,14 +32,15 @@ function TokenPanelHeader({
     setMobileOpen(!mobileOpen);
   };
 
+  console.log('modalType =>>>', modalType);
   const getNavItems = () => {
     return (
       <Stack direction={isMobile ? 'column' : 'row'} gap={1}>
         <Button
-          onClick={() => setModal('STACKING')}
-          variant={modalType === 'STACKING' ? 'outlined' : 'text'}
+          onClick={() => setModal('STAKING')}
+          variant={modalType === 'STAKING' ? 'outlined' : 'text'}
         >
-          STACKING PREVIEW
+          STAKING PREVIEW
         </Button>
         <Button
           onClick={() => setModal('SEEDVESTING')}

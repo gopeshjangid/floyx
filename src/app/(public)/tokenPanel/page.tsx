@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 // @ts-nocheck
 'use client';
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useCallback } from 'react';
 import {
   FloyxStakingAddress,
   New_Floyx_Token_Address,
@@ -72,14 +72,6 @@ const updatedtokenPanel = props => {
     availableAmount: 0,
   });
   const toast = useToast();
-  const theme = useTheme();
-
-  // const result = useReadContract({
-  //   abi: stakingContractabi,
-  //   address: FloyxStakingAddress,
-  //   functionName: 'getStakedAmount',
-  //   args: [address],
-  // });
 
   // SEED DETAILS
 
@@ -117,6 +109,19 @@ const updatedtokenPanel = props => {
     functionName: 'getSeedReleasedAmount',
     args: [address],
   });
+
+  const {
+    writeContract,
+    error: claimError,
+    status: claimStatus,
+  } = useWriteContract();
+
+  useEffect(() => {
+    if (claimStatus === 'error') {
+      console.log('Error in claim: ', claimError);
+      toast.error('Claim not allowed!');
+    }
+  }, [claimStatus, claimError]);
 
   const claimVesting = () => {
     writeContract({
@@ -284,17 +289,12 @@ const updatedtokenPanel = props => {
   useEffect(() => {
     console.log('funcTogetRewardAmount: ', funcTogetRewardAmount);
     if (funcTogetRewardAmount) {
-      setStakeAmount(stakeAmount => ({
+      setAmount(stakeAmount => ({
         ...stakeAmount,
-        totalStakeRewardAmount: formatWeiTOEather(funcTogetRewardAmount),
+        availableAmount: formatWeiTOEather(funcTogetRewardAmount),
       }));
     }
   }, [funcTogetRewardAmount]);
-
-  // const balance = useBalance({
-  //   address,
-  //   token: New_Floyx_Token_Address,
-  // });
 
   useEffect(() => {
     console.log('isConnected: ', isConnected);
@@ -306,13 +306,22 @@ const updatedtokenPanel = props => {
     }
   }, [isConnected, address]);
 
-  async function setTimerFunction(library: any, account: string) {
+  async function setTimerFunction() {
     try {
-      // Fetching oneMonth and timePeriod from the contract
-      let oneMonthTIme = parseInt(Seed_OneMonth) * 1000;
-      console.log({ oneMonthTIme });
-      let timePeriod = parseInt(seedVestingStartTime) * 1000;
-
+      let timePeriod = null;
+      let oneMonthTIme = null;
+      if (modalType === 'SEEDVESTING') {
+        oneMonthTIme = parseInt(Seed_OneMonth) * 1000;
+        console.log({ oneMonthTIme });
+        timePeriod = parseInt(seedVestingStartTime) * 1000;
+      } else if (modalType === 'STAKING') {
+        oneMonthTIme = parseInt(getStakeTime) * 1000 - Date.now() * 1000;
+        console.log({ oneMonthTIme });
+        timePeriod = parseInt(getStakeTime) * 1000;
+      } else if (modalType === 'PRESALEVESTING') {
+        oneMonthTIme = parseInt(Private_OneMonth) * 1000;
+        timePeriod = parseInt(privateVestingStartTime) * 1000;
+      }
       // Set lock timer to zero if timePeriod is zero
       if (timePeriod === 0) {
         setLockTimer(0);
@@ -329,41 +338,26 @@ const updatedtokenPanel = props => {
       console.error(e); // More descriptive error logging
     }
   }
-
+  console.log('amount =>', amount);
   useEffect(() => {
-    if (address) setTimerFunction();
-  }, [seedVestingStartTime, address]);
-
-  /* PRIVATESALE VESTING */
-
-  async function setPrivateTimerFunction(library: any, account: string) {
-    try {
-      // Fetching oneMonth and timePeriod from the contract
-      let oneMonthTIme = parseInt(Private_OneMonth) * 1000;
-      let timePeriod = parseInt(privateVestingStartTime) * 1000;
-
-      // Set lock timer to zero if timePeriod is zero
-      if (timePeriod === 0) {
-        setLockTimer(0);
-        return;
-      }
-      // Calculate the next lock period
-      let lockPeriod = timePeriod;
-      while (Date.now() > lockPeriod) {
-        lockPeriod += oneMonthTIme;
-      }
-      setLockTimer(lockPeriod);
-    } catch (e) {
-      toast.error('Oops! An error occurred.');
-      console.error(e); // More descriptive error logging
+    if (
+      address &&
+      (seedVestingStartTime || getStakeTime || privateVestingStartTime)
+    ) {
+      console.log('timer set');
+      setTimerFunction();
     }
-  }
-
-  useEffect(() => {
-    if (address) setPrivateTimerFunction();
-  }, [privateVestingStartTime, address]);
-
+  }, [
+    setTimerFunction,
+    seedVestingStartTime,
+    getStakeTime,
+    privateVestingStartTime,
+    address,
+  ]);
   const getActionButtons = () => {
+    if (claimStatus === 'pending') {
+      return <CircularProgress />;
+    }
     switch (modalType) {
       case 'STAKING':
         return (
@@ -420,13 +414,14 @@ const updatedtokenPanel = props => {
     }
   };
 
-  const connectHandler = () => {
+  const connectHandler = useCallback(() => {
     if (address) {
       disconnect();
     } else {
       setModal('CONNECT');
     }
-  };
+  }, [disconnect, setModal]);
+
   console.log('lock perid', lockTimer);
   return (
     <Box width={'100%'}>
@@ -470,9 +465,7 @@ const updatedtokenPanel = props => {
               <Box p={1} gap={1}>
                 {getTitles()}
               </Box>
-              <Counter
-                targetDate={lockTimer ? new Date(lockTimer) : new Date()}
-              />
+              <Counter targetDate={lockTimer ? new Date(lockTimer) : null} />
               <Box py={1} textAlign="center">
                 <Stack justifyContent={'center'} direction="row" gap={1}>
                   <Typography variant="subtitle1">Total Amount</Typography>:
@@ -481,20 +474,26 @@ const updatedtokenPanel = props => {
                   </Typography>
                 </Stack>
 
-                <Stack justifyContent={'center'} direction="row" gap={1}>
-                  <Typography variant="subtitle1">
-                    Total released amount
-                  </Typography>
-                  :
-                  <Typography fontWeight={'500'} variant="subtitle1">
-                    {amount.releasedAmount}
-                  </Typography>
-                </Stack>
+                {modalType !== 'STAKING' && (
+                  <Stack justifyContent={'center'} direction="row" gap={1}>
+                    <Typography variant="subtitle1">
+                      {modalType === 'STAKING'
+                        ? 'Total Staked Amount'
+                        : 'Total released amount'}
+                    </Typography>
+                    :
+                    <Typography fontWeight={'500'} variant="subtitle1">
+                      {amount.releasedAmount}
+                    </Typography>
+                  </Stack>
+                )}
 
                 <Stack justifyContent={'center'} direction="row" gap={1}>
                   <Typography variant="subtitle1">
                     {' '}
-                    Available amount to claim
+                    {modalType === 'STAKING'
+                      ? 'Reward Amount'
+                      : 'Available amount to claim'}
                   </Typography>
                   :
                   <Typography fontWeight={'500'} variant="subtitle1">
@@ -502,6 +501,13 @@ const updatedtokenPanel = props => {
                   </Typography>
                 </Stack>
               </Box>
+              {claimStatus === 'success' && (
+                <Box my={1}>
+                  <Alert severity="success" variant="outlined">
+                    Claimed success!
+                  </Alert>
+                </Box>
+              )}
               <Box mt={2} textAlign="center" pt={1}>
                 {getActionButtons()}
               </Box>
