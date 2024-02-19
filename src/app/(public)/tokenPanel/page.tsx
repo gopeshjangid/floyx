@@ -9,6 +9,7 @@ import {
   New_Floyx_Token_Address,
   chainID,
   Floyx_TokenVesting_Address,
+  FloyxPrivateSeedClaimer,
 } from '@/constants/Addresses';
 import FloyxImage from '@/iconComponents/floyxIcon';
 //import { getFloyxContract } from '@constants/Floyx_Token';
@@ -41,12 +42,10 @@ import {
   useWriteContract,
 } from 'wagmi';
 import TokenPanelHeader from './_components/header';
+import { vestingContractabi } from '@/constants/VestingContract_abi';
 import { stakingContractabi } from '@/constants/Staking_abi';
-import { privateSeedContractabi } from '/constants/PrivateSeed_abi';
-import {
-  vestingContractabi,
-  newTokenABI,
-} from '@/constants/VestingContract_abi';
+import { privateSeedContractabi } from '@/constants/PrivateSeed_abi';
+import { contractNewFloyxAbi } from '@/constants/New_Floyx_Token_abi';
 import { ethers } from 'ethers';
 import { ErrorOutlineOutlined } from '@mui/icons-material';
 
@@ -79,30 +78,41 @@ const updatedtokenPanel = props => {
     releasedAmount: 0,
     availableAmount: 0,
   });
+  const [privateAmount, setPrivateAmount] = useState({
+    totalPrivateAmount: 0,
+    releasedPrivateAmount: 0,
+    claimablePrivateAmount: 0,
+  });
+  const [stakeAmount, setStakeAmount] = useState({
+    totalStakedAmount: 0,
+    totalStakeRewardAmount: 0,
+  });
   const [web3Account, setWeb3Account] = useState('');
   const toast = useToast();
-  const [claimResult, setClaimResult] = useState({
-    status: '',
-    error: '',
-    result: '',
-  });
+  // const [claimResult, setClaimResult] = useState({
+  //   status: '',
+  //   error: '',
+  //   result: '',
+  // });
   const theme = useTheme();
 
-  const result = useReadContract({
-    abi: stakingContractabi,
-    address: FloyxStakingAddress,
-    functionName: 'getStakedAmount',
-    args: [address],
-  });
+  // const result = useReadContract({
+  //   abi: stakingContractabi,
+  //   address: FloyxStakingAddress,
+  //   functionName: 'getStakedAmount',
+  //   args: [address],
+  // });
 
-  const { data: vestingStartTime } = useReadContract({
+  // SEED DETAILS
+
+  const { data: seedVestingStartTime } = useReadContract({
     abi: vestingContractabi,
     address: Floyx_TokenVesting_Address,
     functionName: 'getStartTimePeriod',
     args: [address, '0'],
   });
 
-  const { data: oneMonth } = useReadContract({
+  const { data: Seed_OneMonth } = useReadContract({
     abi: vestingContractabi,
     address: Floyx_TokenVesting_Address,
     functionName: 'getSlicePeriod',
@@ -110,50 +120,42 @@ const updatedtokenPanel = props => {
   });
 
   const { data: vestingScheduledAmount } = useReadContract({
-    abi: vestingContractabi,
-    address: Floyx_TokenVesting_Address,
-    functionName: 'getTototalSheduleAmount',
-    args: [address, '0'],
+    abi: privateSeedContractabi,
+    address: FloyxPrivateSeedClaimer,
+    functionName: 'getSeedTototalAmount',
+    args: [address],
   });
 
   const { data: vestingClaimableAmount } = useReadContract({
-    abi: vestingContractabi,
-    address: Floyx_TokenVesting_Address,
-    functionName: 'getClaimableAmount',
-    args: [address, '0'],
+    abi: privateSeedContractabi,
+    address: FloyxPrivateSeedClaimer,
+    functionName: 'getSeedClaimableAmount',
+    args: [address],
   });
 
   const { data: vestingReleasedAmount } = useReadContract({
-    abi: vestingContractabi,
-    address: Floyx_TokenVesting_Address,
-    functionName: 'getReleasedAmount',
-    args: [address, '0'],
+    abi: privateSeedContractabi,
+    address: FloyxPrivateSeedClaimer,
+    functionName: 'getSeedReleasedAmount',
+    args: [address],
   });
 
-  const {
-    writeContract,
-    data: vestingClaimed,
-    error: vestingClaimError,
-    isPending: vestingClaimIsPending,
-    status: vestingClaimStatus,
-  } = useWriteContract();
-
-  console.log(
-    'vestingClaimed => ',
-    vestingClaimed,
-    'status =>',
-    vestingClaimStatus,
-    'vestingClaimError =>',
-    vestingClaimError
-  );
+  const claimVesting = () => {
+    writeContract({
+      abi: privateSeedContractabi,
+      address: FloyxPrivateSeedClaimer,
+      functionName: 'claimSeedVesting',
+      args: [address],
+    });
+  };
 
   const formatWeiTOEather = weiValue => {
     return ethers.formatEther(weiValue);
   };
 
-  useEffect(() => {
-    setClaimResult({});
-  }, [vestingClaimStatus, vestingClaimError]);
+  // useEffect(() => {
+  //   setClaimResult({});
+  // }, [vestingClaimStatus, vestingClaimError]);
 
   useEffect(() => {
     console.log('vestingScheduledAmount: ', vestingScheduledAmount);
@@ -185,6 +187,136 @@ const updatedtokenPanel = props => {
     }
   }, [vestingClaimableAmount]);
 
+  // Private Vesting
+
+  const { data: privateVestingStartTime } = useReadContract({
+    abi: vestingContractabi,
+    address: Floyx_TokenVesting_Address,
+    functionName: 'getStartTimePeriod',
+    args: [address, '1'],
+  });
+
+  const { data: Private_OneMonth } = useReadContract({
+    abi: vestingContractabi,
+    address: Floyx_TokenVesting_Address,
+    functionName: 'getSlicePeriod',
+    args: [address, '1'],
+  });
+
+  const { data: getPrivateRewardAmount } = useReadContract({
+    abi: privateSeedContractabi,
+    address: FloyxPrivateSeedClaimer,
+    functionName: 'getPrivateClaimableAmount',
+    args: [address],
+  });
+
+  const { data: functotalPrivateAmountAvaialble } = useReadContract({
+    abi: privateSeedContractabi,
+    address: FloyxPrivateSeedClaimer,
+    functionName: 'getPrivateTototalAmount',
+    args: [address],
+  });
+
+  const { data: functotalPrivateReleasedAmount } = useReadContract({
+    abi: privateSeedContractabi,
+    address: FloyxPrivateSeedClaimer,
+    functionName: 'getPrivateReleasedAmount',
+    args: [address],
+  });
+
+  const claimPrivateReward = () => {
+    writeContract({
+      abi: privateSeedContractabi,
+      address: FloyxPrivateSeedClaimer,
+      functionName: 'claimPrivateVesting',
+      args: [address],
+    });
+  };
+  useEffect(() => {
+    console.log('getPrivateRewardAmount: ', getPrivateRewardAmount);
+    if (vestingClaimableAmount) {
+      setPrivateAmount(privateAmount => ({
+        ...privateAmount,
+        claimablePrivateAmount: formatWeiTOEather(getPrivateRewardAmount),
+      }));
+    }
+  }, [getPrivateRewardAmount]);
+  useEffect(() => {
+    console.log(
+      'functotalPrivateAmountAvaialble: ',
+      functotalPrivateAmountAvaialble
+    );
+    if (vestingClaimableAmount) {
+      setPrivateAmount(privateAmount => ({
+        ...privateAmount,
+        totalPrivateAmount: formatWeiTOEather(functotalPrivateAmountAvaialble),
+      }));
+    }
+  }, [functotalPrivateAmountAvaialble]);
+  useEffect(() => {
+    console.log(
+      'functotalPrivateReleasedAmount: ',
+      functotalPrivateReleasedAmount
+    );
+    if (vestingClaimableAmount) {
+      setPrivateAmount(privateAmount => ({
+        ...privateAmount,
+        releasedPrivateAmount: formatWeiTOEather(
+          functotalPrivateReleasedAmount
+        ),
+      }));
+    }
+  }, [functotalPrivateReleasedAmount]);
+
+  // STAKING CHECK
+  const { data: getStakeTime } = useReadContract({
+    abi: stakingContractabi,
+    address: FloyxStakingAddress,
+    functionName: 'getStakingEndTime',
+    args: [address],
+  });
+  const { data: funcToGetStakedAmount } = useReadContract({
+    abi: stakingContractabi,
+    address: FloyxStakingAddress,
+    functionName: 'getStakedAmount',
+    args: [address],
+  });
+
+  const { data: funcTogetRewardAmount } = useReadContract({
+    abi: stakingContractabi,
+    address: FloyxStakingAddress,
+    functionName: 'getUserRewardAmount',
+    args: [address],
+  });
+
+  const claimStaking = () => {
+    writeContract({
+      abi: stakingContractabi,
+      address: FloyxStakingAddress,
+      functionName: 'withdraw',
+      args: [address],
+    });
+  };
+
+  useEffect(() => {
+    console.log('funcToGetStakedAmount: ', funcToGetStakedAmount);
+    if (funcToGetStakedAmount) {
+      setStakeAmount(stakeAmount => ({
+        ...stakeAmount,
+        totalStakedAmount: formatWeiTOEather(funcToGetStakedAmount),
+      }));
+    }
+  }, [funcToGetStakedAmount]);
+  useEffect(() => {
+    console.log('funcTogetRewardAmount: ', funcTogetRewardAmount);
+    if (funcTogetRewardAmount) {
+      setStakeAmount(stakeAmount => ({
+        ...stakeAmount,
+        totalStakeRewardAmount: formatWeiTOEather(funcTogetRewardAmount),
+      }));
+    }
+  }, [funcTogetRewardAmount]);
+
   const balance = useBalance({
     address,
     token: New_Floyx_Token_Address,
@@ -199,7 +331,7 @@ const updatedtokenPanel = props => {
     console.log('isConnected: ', isConnected);
 
     if (isConnected && address) {
-      setModal('STACKING');
+      setModal('STAKING');
     } else {
       setModal('FIRST');
     }
@@ -225,60 +357,22 @@ const updatedtokenPanel = props => {
   //   })();
   // }, [isConnected, address]);
 
-  async function fetchStakedAmount(
-    _FloyxStakingContract,
-    _address,
-    _web3library
-  ) {
+  async function setStakeTimer(library: any, account: string) {
     try {
-      const amountTotal = await _FloyxStakingContract.getStakedAmount(
-        _address,
-        overrides
-      );
-      const web3 = getProvider(_web3library);
-      const balanceConverted = web3.utils.fromWei(
-        amountTotal.toString(),
-        'ether'
-      );
-      setfloxStakedAmount(balanceConverted);
+      let timePeriod = parseInt(getStakeTime) * 1000;
+      if (timePeriod === 0) {
+        setStakeLockTimer(0);
+      } else {
+        const currentTime = Date.now();
+        if (currentTime > timePeriod) {
+          setStakeLockTimer(0);
+        } else {
+          setStakeLockTimer(timePeriod);
+        }
+      }
     } catch (e) {
-      console.error('Error in fetchStakedAmount:', e);
-    }
-  }
-
-  async function fetchRewardAmount(
-    _FloyxStakingContract,
-    _address,
-    _web3library
-  ) {
-    try {
-      const amountTotal = await _FloyxStakingContract.getUserRewardAmount(
-        _address,
-        overrides
-      );
-      const web3 = getProvider(_web3library);
-      const balanceConverted = web3.utils.fromWei(
-        amountTotal.toString(),
-        'ether'
-      );
-      setfloyxRewardAmount(balanceConverted);
-    } catch (e) {
-      console.error('Error in fetchRewardAmount:', e);
-    }
-  }
-
-  async function setStakeTimer(library, account) {
-    try {
-      const myStakingContract = getStakingContract(library, account);
-      let timePeriod =
-        parseInt(
-          await myStakingContract.getStakingEndTime(account, overrides)
-        ) * 1000;
-
-      setStakeLockTimer(timePeriod > Date.now() ? timePeriod : 0);
-    } catch (e) {
-      toast.error('Oops! An error occurred.');
-      console.error('Error in setStakeTimer:', e);
+      notifyFailure('Oops! An error occurred.');
+      console.log(e);
     }
   }
 
@@ -304,134 +398,20 @@ const updatedtokenPanel = props => {
     }
   }
 
-  async function setTimerForStake(library: any, account: string) {
-    try {
-      const myStakingContract = getStakingContract(library, account);
-      let timePeriod = await myStakingContract.getStakingEndTime(
-        account,
-        overrides
-      );
-
-      timePeriod = parseInt(timePeriod) * 1000;
-
-      const currentTime = Date.now();
-
-      // Simplify the conditionals
-      // If timePeriod is 0 or currentTime is past timePeriod, set stake lock timer to 0
-      // Otherwise, set it to timePeriod
-      const timerValue =
-        timePeriod === 0 || currentTime > timePeriod ? 0 : timePeriod;
-      setStakeLockTimer(timerValue);
-    } catch (e) {
-      toast.error('Oops! An error occurred while setting the stake timer.');
-      console.error(e); // More descriptive console logging
-    }
-  }
-  async function getRewardAmount(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const rewardAmount = await _FloyxVestingContract.getSeedClaimableAmount(
-      _address,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      rewardAmount.toString(),
-      'ether'
-    );
-    setfloxfloxClaimableAmount(balanceConverted);
-  }
-
-  async function functotalAmountAvaialble(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const amountTotal = await _FloyxVestingContract.getSeedTototalAmount(
-      _address,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      amountTotal.toString(),
-      'ether'
-    );
-    setfloyxTotalAmount(balanceConverted);
-  }
-
-  async function functotalReleasedAmount(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const amountTotal = await _FloyxVestingContract.getSeedReleasedAmount(
-      _address,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      amountTotal.toString(),
-      'ether'
-    );
-    setfloxReleasedAmount(balanceConverted);
-  }
-
-  async function claimReward() {
-    const web3 = getProvider(web3Library);
-    const NewFloyxContract = getNewFloyxContract(web3Library, web3Account);
-    const FloxPrivateSeedContract = getPrivateSeedContract(
-      web3Library,
-      web3Account
-    );
-    if (floxClaimableAmount == 0) {
-      toast.error('Claim Not Allowed!');
-      return;
-    }
-    // claimTokens
-    try {
-      const sampleVariable = await FloxPrivateSeedContract.claimSeedVesting(
-        web3Account,
-        overrides
-      );
-      const hashValue = sampleVariable.hash.toString();
-
-      if (sampleVariable !== null) {
-        const interval = setInterval(() => {
-          web3.eth.getTransactionReceipt(hashValue, async (err, rec) => {
-            if (rec) {
-              const currentBalance = await NewFloyxContract.balanceOf(
-                web3Account,
-                overrides
-              );
-            } else {
-              console.log(err);
-            }
-          });
-          ``;
-        }, 1000);
-      }
-    } catch (ex) {
-      toast.error('Claim Not Allowed!');
-
-      console.log('An error occour', ex);
-    }
-  }
+  // SEED
 
   async function setTimerFunction(library: any, account: string) {
     try {
       // Fetching oneMonth and timePeriod from the contract
-      let oneMonthTIme = parseInt(oneMonth) * 1000;
+      let oneMonthTIme = parseInt(Seed_OneMonth) * 1000;
       console.log({ oneMonthTIme });
-      let timePeriod = parseInt(vestingStartTime) * 1000;
+      let timePeriod = parseInt(seedVestingStartTime) * 1000;
 
       // Set lock timer to zero if timePeriod is zero
       if (timePeriod === 0) {
         setLockTimer(0);
         return;
       }
-
       // Calculate the next lock period
       let lockPeriod = timePeriod;
       while (Date.now() > lockPeriod) {
@@ -446,381 +426,43 @@ const updatedtokenPanel = props => {
 
   useEffect(() => {
     if (address) setTimerFunction();
-  }, [vestingStartTime, address]);
-
-  async function fetchStakedAmount(
-    _FloyxStakingContract,
-    _address,
-    _web3library
-  ) {
-    try {
-      const amountTotal = await _FloyxStakingContract.getStakedAmount(
-        _address,
-        overrides
-      );
-      const web3 = getProvider(_web3library);
-      const balanceConverted = web3.utils.fromWei(
-        amountTotal.toString(),
-        'ether'
-      );
-      setfloxStakedAmount(balanceConverted);
-    } catch (error) {
-      console.error('Error fetching staked amount:', error);
-      // Consider adding a notification for the user here if appropriate
-    }
-  }
+  }, [seedVestingStartTime, address]);
 
   /* PRIVATESALE VESTING */
-  async function getPrivateRewardAmount(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const rewardAmount = await _FloyxVestingContract.getPrivateClaimableAmount(
-      _address,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      rewardAmount.toString(),
-      'ether'
-    );
-    setfloyxPrivateClaimableAmount(balanceConverted);
-  }
 
-  async function functotalPrivateAmountAvaialble(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const amountTotal = await _FloyxVestingContract.getPrivateTototalAmount(
-      _address,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      amountTotal.toString(),
-      'ether'
-    );
-    setfloyxTotalPrivateAmount(balanceConverted);
-  }
-
-  async function functotalPrivateReleasedAmount(
-    _FloyxVestingContract,
-    _address,
-    _web3library
-  ) {
-    const amountTotal = await _FloyxVestingContract.getPrivateReleasedAmount(
-      _address,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      amountTotal.toString(),
-      'ether'
-    );
-    setfloyxPrivateReleasedAmount(balanceConverted);
-  }
-
-  async function claimPrivateReward() {
-    const web3 = getProvider(web3Library);
-    const NewFloyxContract = getNewFloyxContract(web3Library, web3Account);
-    const FloxPrivateSeedContract = getPrivateSeedContract(
-      web3Library,
-      web3Account
-    );
-
-    if (floyxPrivateClaimableAmount == 0) {
-      toast.error('Claim Not Allowed!');
-      return;
-    }
-
-    // claimTokens
+  async function setPrivateTimerFunction(library: any, account: string) {
     try {
-      const sampleVariable = await FloxPrivateSeedContract.claimPrivateVesting(
-        web3Account,
-        overrides
-      );
-      const hashValue = sampleVariable.hash.toString();
+      // Fetching oneMonth and timePeriod from the contract
+      let oneMonthTIme = parseInt(Private_OneMonth) * 1000;
+      console.log({ oneMonthTIme });
+      let timePeriod = parseInt(privateVestingStartTime) * 1000;
 
-      if (sampleVariable !== null) {
-        const interval = setInterval(() => {
-          web3.eth.getTransactionReceipt(hashValue, async (err, rec) => {
-            if (rec) {
-              const currentBalance = await NewFloyxContract.balanceOf(
-                web3Account,
-                overrides
-              );
-            } else {
-              console.log(err);
-            }
-          });
-          ``;
-        }, 1000);
-      }
-    } catch (ex) {
-      toast.error('Claim Not Allowed!');
-
-      console.log('An error occour', ex);
-    }
-  }
-
-  async function setPrivateTimerFunction(library, account) {
-    try {
-      const vestingContract = getVestingContract(library, account);
-      let oneMonth = await vestingContract.getSlicePeriod(
-        account,
-        1,
-        overrides
-      );
-      oneMonth = parseInt(oneMonth) * 1000;
-
-      let timePeriod = await vestingContract.getStartTimePeriod(
-        account,
-        1,
-        overrides
-      );
-      timePeriod = parseInt(timePeriod) * 1000;
-
-      let fistCliamTime = parseInt(1697414400) * 1000;
-      let lockPeriod;
-      if (Date.now() < fistCliamTime) {
-        lockPeriod = fistCliamTime;
-      } else {
-        lockPeriod = timePeriod;
-      }
+      // Set lock timer to zero if timePeriod is zero
       if (timePeriod === 0) {
-        setPrivateLockTimer(0);
-      } else {
-        while (Date.now() > lockPeriod) {
-          lockPeriod = lockPeriod + oneMonth;
-        }
-        setPrivateLockTimer(lockPeriod);
+        setLockTimer(0);
+        return;
       }
+      // Calculate the next lock period
+      let lockPeriod = timePeriod;
+      while (Date.now() > lockPeriod) {
+        lockPeriod += oneMonthTIme;
+      }
+      setLockTimer(lockPeriod);
     } catch (e) {
       toast.error('Oops! An error occurred.');
-      console.log(e);
+      console.error(e); // More descriptive error logging
     }
   }
 
-  const toggle = stake_period => {
-    if (!stake_period) {
-      setdropdownOpen(!dropdownOpen);
-    } else {
-      switch (stake_period) {
-        case '180':
-          setstake_periodTab(1);
-          setStakePeriodInDays(stake_period);
-          console.log(
-            `Sorry, we are out of ${stake_period} ${stake_periodTab} ${currentStakePeriod}.`
-          );
-          break;
-        case '60':
-          setstake_periodTab(2);
-          setStakePeriodInDays(stake_period);
-          console.log(
-            `Sorry, we are out of ${stake_period} ${stake_periodTab} ${currentStakePeriod}.`
-          );
-          break;
-        case '90':
-          setstake_periodTab(3);
-          setStakePeriodInDays(stake_period);
-
-          console.log(
-            `Sorry, we are out of ${stake_period} ${stake_periodTab} ${currentStakePeriod}.`
-          );
-          break;
-        default:
-          console.log(
-            `Sorry, we are out of default ${stake_period} ${stake_periodTab} ${currentStakePeriod}.`
-          );
-      }
-    }
-  };
-
-  async function funcTogetRewardAmount(
-    _FloyxStakingContract,
-    _address,
-    _web3library
-  ) {
-    const amountTotal = await _FloyxStakingContract.getUserRewardAmount(
-      _address,
-      overrides
-    );
-    const web3 = getProvider(_web3library);
-    const balanceConverted = web3.utils.fromWei(
-      amountTotal.toString(),
-      'ether'
-    );
-    setfloyxRewardAmount(balanceConverted);
-  }
-
-  //
-  const ConnectToContract = async (web3library, web3Account) => {
-    //Token Contract
-    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-
-    if (parseInt(chainId) != chainID) {
-      toast.error('Please connect to polygon Network');
-    }
-
-    const FloyxVestingContract = getVestingContract(web3library, web3Account);
-    const FloxPrivateSeedContract = getPrivateSeedContract(
-      web3library,
-      web3Account
-    );
-    const NewFloyxContract = getNewFloyxContract(web3library, web3Account);
-    const stakingContract = await getStakingContract(web3library, web3Account);
-
-    try {
-      if (web3Account && parseInt(chainId) == chainID) {
-        // Balance of Matic||Eth in user wallet
-        //const { provider } = web3library;
-
-        setTimerForStake(web3library, web3Account);
-        setTimerFunction(web3library, web3Account);
-        setPrivateTimerFunction(web3library, web3Account);
-        setAirdropTimerFunction(web3library, web3Account);
-
-        //Floyx Balance
-        setFloyxbalanceOfUser(NewFloyxContract, web3Account, web3library);
-        functotalAmountAvaialble(
-          FloxPrivateSeedContract,
-          web3Account,
-          web3library
-        );
-        functotalPrivateAmountAvaialble(
-          FloxPrivateSeedContract,
-          web3Account,
-          web3library
-        );
-        functotalAirdropAmountAvaialble(
-          FloyxVestingContract,
-          web3Account,
-          web3library
-        );
-        functotalReleasedAmount(
-          FloxPrivateSeedContract,
-          web3Account,
-          web3library
-        );
-        functotalPrivateReleasedAmount(
-          FloxPrivateSeedContract,
-          web3Account,
-          web3library
-        );
-        functotalAirdropReleasedAmount(
-          FloyxVestingContract,
-          web3Account,
-          web3library
-        );
-
-        getRewardAmount(FloxPrivateSeedContract, web3Account, web3library);
-        getPrivateRewardAmount(
-          FloxPrivateSeedContract,
-          web3Account,
-          web3library
-        );
-        getAirdropRewardAmount(FloyxVestingContract, web3Account, web3library);
-        funcToGetStakedAmount(stakingContract, web3Account, web3library);
-        funcTogetRewardAmount(stakingContract, web3Account, web3library);
-      }
-    } catch (ex) {
-      toast.error(ex);
-    }
-  };
-
-  async function claimStakingReward() {
-    const web3 = getProvider(web3Library);
-    const myFloyxTokenContract = getNewFloyxContract(web3Library, web3Account);
-    const myStakingContract = getStakingContract(web3Library, web3Account);
-    // claimTokens
-    try {
-      const sampleVariable = await myStakingContract.withdraw(web3Account);
-      const hashValue = sampleVariable.hash.toString();
-
-      if (sampleVariable !== null) {
-        const interval = setInterval(() => {
-          web3.eth.getTransactionReceipt(hashValue, async (err, rec) => {
-            if (rec) {
-              const currentBalance = await myFloyxTokenContract.balanceOf(
-                web3Account,
-                overrides
-              );
-            } else {
-              console.log(err);
-            }
-          });
-          ``;
-        }, 1000);
-      }
-    } catch (ex) {
-      toast.error('Claim Not Allowed!');
-
-      console.log('An error occour', ex);
-    }
-  }
-
-  const claimVesting = () => {
-    // writeContract({
-    //   abi: vestingContractabi,
-    //   address: Floyx_TokenVesting_Address,
-    //   functionName: 'claimVestedToken',
-    //   args: [address, 0],
-    // });
-
-    writeContract({
-      abi: stakingContractabi,
-      address: FloyxStakingAddress,
-      functionName: 'withdraw',
-      args: [address],
-    });
-  };
-
-  const claimStacking = () => {
-    // writeContract({
-    //   abi: vestingContractabi,
-    //   address: Floyx_TokenVesting_Address,
-    //   functionName: 'claimVestedToken',
-    //   args: [address, 0],
-    // });
-
-    writeContract({
-      abi: stakingContractabi,
-      address: FloyxStakingAddress,
-      functionName: 'withdraw',
-      args: [address],
-    });
-  };
+  useEffect(() => {
+    if (address) setPrivateTimerFunction();
+  }, [privateVestingStartTime, address]);
 
   const getActionButtons = () => {
-    if (vestingClaimStatus === 'pending') {
-      return <CircularProgress />;
-    }
-
-    // if (vestingClaimStatus === 'error') {
-    //   return (
-    //     <Box>
-    //       <Alert variant="outlined" severity="error">
-    //         Error Occured
-    //       </Alert>
-    //     </Box>
-    //   );
-    // }
-
-    if (vestingClaimStatus === 'success') {
-      return (
-        <Box>
-          <Alert variant="outlined" severity="success">
-            Claimed!
-          </Alert>
-        </Box>
-      );
-    }
     switch (modalType) {
-      case 'STACKING':
+      case 'STAKING':
         return (
-          <Button onClick={claimStacking} variant="contained">
+          <Button onClick={claimStaking} variant="contained">
             Claim Floyx
           </Button>
         );
@@ -838,13 +480,7 @@ const updatedtokenPanel = props => {
           </Button>
         );
         break;
-      case 'AIRDROP':
-        return (
-          <Button onClick={claimAirdropReward} variant="contained">
-            Claim Floyx
-          </Button>
-        );
-        break;
+
       default:
         break;
     }
@@ -852,10 +488,10 @@ const updatedtokenPanel = props => {
 
   const getTitles = () => {
     switch (modalType) {
-      case 'STACKING':
+      case 'STAKING':
         return (
           <Typography sx={{ color: '#000' }} textAlign="center" variant="h5">
-            Next Stacking Claim Available In
+            Next Staking Claim Available In
           </Typography>
         );
         break;
@@ -872,12 +508,7 @@ const updatedtokenPanel = props => {
           </Typography>
         );
         break;
-      case 'AIRDROP':
-        return (
-          <Typography sx={{ color: '#000' }} textAlign="center" variant="h5">
-            Next Airdrop Sale Vesting Claim Available In
-          </Typography>
-        );
+
         break;
       default:
         break;
@@ -924,9 +555,8 @@ const updatedtokenPanel = props => {
           {modalType == 'FIRST' && (
             <NonLoggedinWalletModal onClick={() => setModal('CONNECT')} />
           )}
-          {['STACKING', 'SEEDVESTING', 'PRESALEVESTING', 'AIRDROP'].indexOf(
-            modalType
-          ) > -1 && (
+          {['STAKING', 'SEEDVESTING', 'PRESALEVESTING'].indexOf(modalType) >
+            -1 && (
             <Box
               p={2}
               textAlign={'center'}
