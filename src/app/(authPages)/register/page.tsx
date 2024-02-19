@@ -89,22 +89,33 @@ const RegisterPage = () => {
     password: '',
     recommendedMe: false,
     recommended: '',
+    referred: '',
+    isReferred: false,
     phone: '',
   });
 
   const token = searchParams.get('token');
 
+  function getValidJSON(jsonString) {
+    try {
+      return JSON.parse(jsonString);
+    } catch (e) {
+      return false; // JSON is invalid
+    }
+  }
+
   useEffect(() => {
     if (token) {
       const sanitizedToken = token.replace(/[^A-Za-z0-9+/]/g, '');
       const decodedToken = atob(sanitizedToken);
-      const parsedToken = JSON.parse(decodedToken);
+      const parsedToken = getValidJSON(decodedToken);
+      if (!parsedToken) return false;
 
       const { username } = parsedToken;
       setFormData(prevState => ({
         ...prevState,
-        recommendedMe: true,
-        recommended: username,
+        referred: username,
+        isReferred: true,
       }));
     }
   }, []);
@@ -126,20 +137,23 @@ const RegisterPage = () => {
   }, [verifyOtpData]);
 
   useEffect(() => {
-    if (registrationData === 'success' && isReferred) {
+    if (registrationData === 'success' && formData.isReferred) {
       setIsRegisteredSuccess({
         value: true,
         type: 'phone',
       });
     }
-
-    if (registrationData === 'success' && !isReferred) {
+    if (
+      registrationData === 'success' &&
+      !formData.isReferred &&
+      !formData.recommendedMe
+    ) {
       setIsRegisteredSuccess({
         value: true,
         type: 'email',
       });
     }
-  }, [registrationData]);
+  }, [registrationData, formData]);
 
   useEffect(() => {
     if ((error as any)?.length > 0) {
@@ -253,8 +267,13 @@ const RegisterPage = () => {
         accountType: 'personal',
         acceptTerms: true,
         phoneNumber: formData.phone,
-        isReferred: formData.recommendedMe,
-        invitedbyUsername: formData.recommendedMe ? formData.recommended : '',
+        isReferred: formData.isReferred,
+
+        invitedbyUsername: formData.isReferred
+          ? formData.referred
+          : formData.recommendedMe
+            ? formData.recommended
+            : '',
       });
     }
   };
@@ -417,25 +436,29 @@ const RegisterPage = () => {
                   }}
                 />
               </FormControl>
-              <Phone
-                value={formData.phone}
-                onChange={onChangeHandler}
-                checkPhone={checkPhone}
-                error={formError.phone}
-              />
-
-              <FormControl>
-                <FormControlLabel
-                  name="recommendedMe"
-                  control={
-                    <Checkbox
-                      defaultChecked={token ? true : false}
-                      onChange={onChangeHandler}
-                    />
-                  }
-                  label="Someone recommended Floyx to me (optional)"
+              {(formData.referred || formData.recommendedMe) && (
+                <Phone
+                  value={formData.phone}
+                  onChange={onChangeHandler}
+                  checkPhone={checkPhone}
+                  error={formError.phone}
                 />
-              </FormControl>
+              )}
+
+              {!formData.referred && (
+                <FormControl>
+                  <FormControlLabel
+                    name="recommendedMe"
+                    control={
+                      <Checkbox
+                        defaultChecked={token ? true : false}
+                        onChange={onChangeHandler}
+                      />
+                    }
+                    label="Someone recommended Floyx to me (optional)"
+                  />
+                </FormControl>
+              )}
 
               {formData.recommendedMe && (
                 <>
