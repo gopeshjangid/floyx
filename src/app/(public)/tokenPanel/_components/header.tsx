@@ -23,6 +23,7 @@ function TokenPanelHeader({
   address,
   connectHandler,
   FloyxImage,
+  hideNav,
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
@@ -34,6 +35,7 @@ function TokenPanelHeader({
 
   console.log('modalType =>>>', modalType);
   const getNavItems = () => {
+    if (hideNav) return;
     return (
       <Stack direction={isMobile ? 'column' : 'row'} gap={1}>
         <Button
@@ -78,11 +80,17 @@ function TokenPanelHeader({
           paddingBottom: '10px',
         }}
       >
-        <Toolbar sx={{ padding: isMobile ? '5px 2px' : '5px 16px' }}>
+        <Toolbar
+          sx={{
+            padding: isMobile ? '5px 2px' : '16px 16px',
+            paddingBottom: '16px',
+          }}
+        >
           <Stack
             direction="row"
             justifyContent={'space-between'}
             sx={{ width: '100%' }}
+            pb={2}
           >
             <FloyxImage
               fill={
@@ -92,9 +100,11 @@ function TokenPanelHeader({
               }
             />
             {!isMobile ? getNavItems() : ''}
-            <Box sx={{ flexGrow: 0 }}>
-              <w3m-button />
-            </Box>
+            {!hideNav && (
+              <Box sx={{ flexGrow: 0 }}>
+                <w3m-button />
+              </Box>
+            )}
             {isMobile && (
               <IconButton
                 color="inherit"

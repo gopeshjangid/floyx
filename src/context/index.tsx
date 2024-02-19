@@ -5,6 +5,7 @@ import { wagmiConfig, projectId } from '@/config';
 import { createWeb3Modal } from '@web3modal/wagmi/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { State, WagmiProvider } from 'wagmi';
+import chainImage from '@/assets/images/floyx_old_logo.jpeg';
 const queryClient = new QueryClient();
 
 if (!projectId) throw new Error('Project ID is not defined');
@@ -22,9 +23,9 @@ createWeb3Modal({
       address: '0x7067BeBfA1720132DFb9373d65B522AfBe3A201e',
     },
   },
-  // chainImages: {
-  //   137: 'https://my.images.com/eth.png',
-  // },
+  chainImages: {
+    137: 'https://my.images.com/eth.png',
+  },
 });
 
 export function Web3Modal({

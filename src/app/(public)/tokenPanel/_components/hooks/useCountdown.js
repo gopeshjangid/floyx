@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 
 const useCountdown = (targetDate) => {
-  const countDownDate = targetDate ? new Date(targetDate).getTime() : null;
+  const countDownDate = targetDate ? new Date(targetDate).getTime() : 0;
 
-  const [countDown, setCountDown] = useState(countDownDate ? countDownDate - new Date().getTime() : 0)
+  const [countDown, setCountDown] = useState(countDownDate ? countDownDate - new Date().getTime() : 0);
+  useEffect(() => {
+    setCountDown(countDownDate ? countDownDate - new Date().getTime() : 0);
+  }, [countDownDate]);
 
   useEffect(() => {
     if (!countDownDate) return;

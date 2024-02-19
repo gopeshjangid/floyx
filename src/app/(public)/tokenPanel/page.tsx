@@ -4,25 +4,23 @@
 import React, { useState, useEffect, Suspense, useCallback } from 'react';
 import {
   FloyxStakingAddress,
-  New_Floyx_Token_Address,
+  //New_Floyx_Token_Address,
   Floyx_TokenVesting_Address,
   FloyxPrivateSeedClaimer,
 } from '@/constants/Addresses';
 import FloyxImage from '@/iconComponents/floyxIcon';
 //import { getFloyxContract } from '@constants/Floyx_Token';
-import { getNewFloyxContract } from '@/constants/New_Floyx_Token';
-import { getVestingContract } from '@/constants/Vesting_Contract';
-import { getPrivateSeedContract } from '@/constants/PrivateSeed_Contract';
-import { getStakingContract } from '@/constants/Staking_Contract';
+// import { getNewFloyxContract } from '@/constants/New_Floyx_Token';
+// import { getVestingContract } from '@/constants/Vesting_Contract';
+// import { getPrivateSeedContract } from '@/constants/PrivateSeed_Contract';
+// import { getStakingContract } from '@/constants/Staking_Contract';
 import { useToast } from '@/components/Toast/useToast';
 import {
   Box,
   Stack,
   Typography,
-  useTheme,
   Button,
   CircularProgress,
-  Alert,
 } from '@mui/material';
 import Image from 'next/image';
 import WalletPanelImage from '@/assets/wallet-panal.png';
@@ -30,10 +28,8 @@ import ReusableModal from './_components/modal';
 import Counter from './_components/CountdownTimer';
 import {
   useAccount,
-  useBalance,
   useDisconnect,
   useReadContract,
-  useReadContracts,
   useWriteContract,
 } from 'wagmi';
 import TokenPanelHeader from './_components/header';
@@ -41,8 +37,8 @@ import { vestingContractabi } from '@/constants/VestingContract_abi';
 import { stakingContractabi } from '@/constants/Staking_abi';
 import { privateSeedContractabi } from '@/constants/PrivateSeed_abi';
 import { ethers } from 'ethers';
-import { ErrorOutlineOutlined } from '@mui/icons-material';
-import { useRouter } from 'next/navigation';
+
+import LandingPage from './_components/landingPage';
 
 const NonLoggedinWalletModal = ({ onClick }: { onClick: () => void }) => {
   return (
@@ -62,12 +58,24 @@ const NonLoggedinWalletModal = ({ onClick }: { onClick: () => void }) => {
 };
 
 const updatedtokenPanel = props => {
-  const [modalType, setModal] = useState('FIRST');
+  const [modalType, setModal] = useState('LANDING');
   const { address, isConnected, isConnecting, isReconnecting, isDisconnected } =
     useAccount();
   const { disconnect } = useDisconnect();
   const [lockTimer, setLockTimer] = useState(0);
-  const [amount, setAmount] = useState({
+  const [vestingAmount, setVestingAmount] = useState({
+    totalAmount: 0,
+    releasedAmount: 0,
+    availableAmount: 0,
+  });
+
+  const [stakingAmount, setStakingAmount] = useState({
+    totalAmount: 0,
+    releasedAmount: 0,
+    availableAmount: 0,
+  });
+
+  const [privateAmount, setPrivateAmount] = useState({
     totalAmount: 0,
     releasedAmount: 0,
     availableAmount: 0,
@@ -143,9 +151,8 @@ const updatedtokenPanel = props => {
   };
 
   useEffect(() => {
-    console.log('vestingScheduledAmount: ', vestingScheduledAmount);
     if (vestingScheduledAmount) {
-      setAmount(amount => ({
+      setVestingAmount(amount => ({
         ...amount,
         totalAmount: formatWeiTOEather(vestingScheduledAmount),
       }));
@@ -155,7 +162,7 @@ const updatedtokenPanel = props => {
   useEffect(() => {
     console.log('vestingScheduledAmount: ', vestingReleasedAmount);
     if (vestingReleasedAmount) {
-      setAmount(amount => ({
+      setVestingAmount(amount => ({
         ...amount,
         releasedAmount: formatWeiTOEather(vestingReleasedAmount),
       }));
@@ -165,7 +172,7 @@ const updatedtokenPanel = props => {
   useEffect(() => {
     console.log('vestingScheduledAmount: ', vestingClaimableAmount);
     if (vestingClaimableAmount) {
-      setAmount(amount => ({
+      setVestingAmount(amount => ({
         ...amount,
         availableAmount: formatWeiTOEather(vestingClaimableAmount),
       }));
@@ -219,7 +226,7 @@ const updatedtokenPanel = props => {
   };
   useEffect(() => {
     if (getPrivateRewardAmount) {
-      setAmount(privateAmount => ({
+      setPrivateAmount(privateAmount => ({
         ...privateAmount,
         availableAmount: formatWeiTOEather(getPrivateRewardAmount),
       }));
@@ -232,7 +239,7 @@ const updatedtokenPanel = props => {
       functotalPrivateAmountAvaialble
     );
     if (functotalPrivateAmountAvaialble) {
-      setAmount(privateAmount => ({
+      setPrivateAmount(privateAmount => ({
         ...privateAmount,
         totalAmount: formatWeiTOEather(functotalPrivateAmountAvaialble),
       }));
@@ -245,7 +252,7 @@ const updatedtokenPanel = props => {
       functotalPrivateReleasedAmount
     );
     if (functotalPrivateReleasedAmount) {
-      setAmount(privateAmount => ({
+      setPrivateAmount(privateAmount => ({
         ...privateAmount,
         releasedAmount: formatWeiTOEather(functotalPrivateReleasedAmount),
       }));
@@ -283,17 +290,9 @@ const updatedtokenPanel = props => {
   };
 
   useEffect(() => {
-    setAmount({
-      totalAmount: 0,
-      releasedAmount: 0,
-      availableAmount: 0,
-    });
-  }, [modalType]);
-
-  useEffect(() => {
     console.log('funcToGetStakedAmount: ', funcToGetStakedAmount);
     if (funcToGetStakedAmount) {
-      setAmount(stakeAmount => ({
+      setStakingAmount(stakeAmount => ({
         ...stakeAmount,
         totalAmount: formatWeiTOEather(funcToGetStakedAmount),
       }));
@@ -303,7 +302,7 @@ const updatedtokenPanel = props => {
   useEffect(() => {
     console.log('funcTogetRewardAmount: ', funcTogetRewardAmount);
     if (funcTogetRewardAmount) {
-      setAmount(stakeAmount => ({
+      setStakingAmount(stakeAmount => ({
         ...stakeAmount,
         availableAmount: formatWeiTOEather(funcTogetRewardAmount),
       }));
@@ -315,13 +314,12 @@ const updatedtokenPanel = props => {
 
     if (isConnected && address) {
       setModal('STAKING');
-    } else {
-      setModal('FIRST');
     }
   }, [isConnected, address]);
 
   async function setTimerFunction() {
     try {
+      setLockTimer(0);
       let timePeriod = null;
       let oneMonthTIme = null;
       if (modalType === 'SEEDVESTING') {
@@ -336,6 +334,7 @@ const updatedtokenPanel = props => {
         oneMonthTIme = parseInt(Private_OneMonth) * 1000;
         timePeriod = parseInt(privateVestingStartTime) * 1000;
       }
+      console.log('checking timePeriod: ', timePeriod);
       // Set lock timer to zero if timePeriod is zero
       if (timePeriod === 0) {
         setLockTimer(0);
@@ -352,18 +351,18 @@ const updatedtokenPanel = props => {
       console.error(e); // More descriptive error logging
     }
   }
-  console.log('amount =>', amount);
   useEffect(() => {
     if (
       address &&
-      (seedVestingStartTime || getStakeTime || privateVestingStartTime)
+      modalType !== 'LANDING' &&
+      (seedVestingStartTime !== '0n' || privateVestingStartTime !== '0n')
     ) {
       console.log('timer set');
       setTimerFunction();
     }
   }, [
-    setTimerFunction,
     seedVestingStartTime,
+    modalType,
     getStakeTime,
     privateVestingStartTime,
     address,
@@ -436,7 +435,6 @@ const updatedtokenPanel = props => {
     }
   }, [disconnect, setModal]);
 
-  console.log('lock perid', lockTimer);
   return (
     <Box width={'100%'}>
       <Suspense fallback={<Typography>Please wait...</Typography>}>
@@ -448,6 +446,7 @@ const updatedtokenPanel = props => {
           address={address}
           connectHandler={connectHandler}
           FloyxImage={FloyxImage}
+          hideNav={modalType === 'LANDING'}
         />
       </Suspense>
       <Box
@@ -459,68 +458,83 @@ const updatedtokenPanel = props => {
           backgroundSize: 'cover',
         }}
       >
-        <ReusableModal
-          isOpen={open}
-          onClose={() => {
-            setModal(false);
-          }}
-          title="vesting"
-        >
-          {modalType == 'FIRST' && (
-            <NonLoggedinWalletModal onClick={() => setModal('CONNECT')} />
-          )}
-          {['STAKING', 'SEEDVESTING', 'PRESALEVESTING'].indexOf(modalType) >
-            -1 && (
-            <Box
-              p={2}
-              textAlign={'center'}
-              sx={{ height: '360px', maxWidth: '90vw' }}
-            >
-              <Box p={1} gap={1}>
-                {getTitles()}
-              </Box>
-              <Counter targetDate={lockTimer ? new Date(lockTimer) : null} />
-              <Box py={1} textAlign="center">
-                <Stack justifyContent={'center'} direction="row" gap={1}>
-                  <Typography variant="subtitle1">Total Amount</Typography>:
-                  <Typography fontWeight={'500'} variant="subtitle1">
-                    {amount.totalAmount}
-                  </Typography>
-                </Stack>
+        {modalType === 'LANDING' && <LandingPage setModal={setModal} />}
+        {modalType !== 'LANDING' && (
+          <ReusableModal
+            isOpen={open}
+            onClose={() => {
+              setModal(false);
+            }}
+            title="vesting"
+          >
+            {modalType == 'FIRST' && (
+              <NonLoggedinWalletModal onClick={() => setModal('CONNECT')} />
+            )}
+            {['STAKING', 'SEEDVESTING', 'PRESALEVESTING'].indexOf(modalType) >
+              -1 && (
+              <Box
+                p={2}
+                textAlign={'center'}
+                sx={{ height: '360px', maxWidth: '90vw' }}
+              >
+                <Box p={1} gap={1}>
+                  {getTitles()}
+                </Box>
+                <Counter targetDate={lockTimer ? new Date(lockTimer) : 0} />
+                <Box py={1} textAlign="center">
+                  <Stack justifyContent={'center'} direction="row" gap={1}>
+                    <Typography variant="subtitle1">Total Amount</Typography>:
+                    <Typography fontWeight={'500'} variant="subtitle1">
+                      {modalType === 'STAKING'
+                        ? stakingAmount.totalAmount
+                        : modalType === 'SEEDVESTING'
+                          ? vestingAmount.totalAmount
+                          : privateAmount.totalAmount}
+                    </Typography>
+                  </Stack>
 
-                {modalType !== 'STAKING' && (
+                  {modalType !== 'STAKING' && (
+                    <Stack justifyContent={'center'} direction="row" gap={1}>
+                      <Typography variant="subtitle1">
+                        {modalType === 'STAKING'
+                          ? 'Total Staked Amount'
+                          : 'Total released amount'}
+                      </Typography>
+                      :
+                      <Typography fontWeight={'500'} variant="subtitle1">
+                        {modalType === 'STAKING'
+                          ? stakingAmount.releasedAmount
+                          : modalType === 'SEEDVESTING'
+                            ? vestingAmount.releasedAmount
+                            : privateAmount.releasedAmount}
+                      </Typography>
+                    </Stack>
+                  )}
+
                   <Stack justifyContent={'center'} direction="row" gap={1}>
                     <Typography variant="subtitle1">
+                      {' '}
                       {modalType === 'STAKING'
-                        ? 'Total Staked Amount'
-                        : 'Total released amount'}
+                        ? 'Reward Amount'
+                        : 'Available amount to claim'}
                     </Typography>
                     :
                     <Typography fontWeight={'500'} variant="subtitle1">
-                      {amount.releasedAmount}
+                      {modalType === 'STAKING'
+                        ? stakingAmount.availableAmount
+                        : modalType === 'SEEDVESTING'
+                          ? vestingAmount.availableAmount
+                          : privateAmount.availableAmount}
                     </Typography>
                   </Stack>
-                )}
-
-                <Stack justifyContent={'center'} direction="row" gap={1}>
-                  <Typography variant="subtitle1">
-                    {' '}
-                    {modalType === 'STAKING'
-                      ? 'Reward Amount'
-                      : 'Available amount to claim'}
-                  </Typography>
-                  :
-                  <Typography fontWeight={'500'} variant="subtitle1">
-                    {amount.availableAmount}
-                  </Typography>
-                </Stack>
+                </Box>
+                <Box mt={2} textAlign="center" pt={1}>
+                  {getActionButtons()}
+                </Box>
               </Box>
-              <Box mt={2} textAlign="center" pt={1}>
-                {getActionButtons()}
-              </Box>
-            </Box>
-          )}
-        </ReusableModal>
+            )}
+          </ReusableModal>
+        )}
       </Box>
     </Box>
   );
