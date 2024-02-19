@@ -53,12 +53,6 @@ function TokenPanelHeader({
         >
           PRESALEVESTING
         </Button>
-        <Button
-          onClick={() => setModal('AIRDROP')}
-          variant={modalType === 'AIRDROP' ? 'outlined' : 'text'}
-        >
-          AIRDROP
-        </Button>
       </Stack>
     );
   };

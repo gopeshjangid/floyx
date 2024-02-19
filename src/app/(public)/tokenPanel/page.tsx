@@ -2,12 +2,9 @@
 // @ts-nocheck
 'use client';
 import React, { useState, useEffect, Suspense } from 'react';
-//import { Web3Provider } from '@ethersproject/providers';
-//import Web3 from 'web3';
 import {
   FloyxStakingAddress,
   New_Floyx_Token_Address,
-  chainID,
   Floyx_TokenVesting_Address,
   FloyxPrivateSeedClaimer,
 } from '@/constants/Addresses';
@@ -19,7 +16,6 @@ import { getPrivateSeedContract } from '@/constants/PrivateSeed_Contract';
 import { getStakingContract } from '@/constants/Staking_Contract';
 import { useToast } from '@/components/Toast/useToast';
 import {
-  AppBar,
   Box,
   Stack,
   Typography,
@@ -31,7 +27,6 @@ import {
 import Image from 'next/image';
 import WalletPanelImage from '@/assets/wallet-panal.png';
 import ReusableModal from './_components/modal';
-import { useRouter } from 'next/navigation';
 import Counter from './_components/CountdownTimer';
 import {
   useAccount,
@@ -45,7 +40,6 @@ import TokenPanelHeader from './_components/header';
 import { vestingContractabi } from '@/constants/VestingContract_abi';
 import { stakingContractabi } from '@/constants/Staking_abi';
 import { privateSeedContractabi } from '@/constants/PrivateSeed_abi';
-import { contractNewFloyxAbi } from '@/constants/New_Floyx_Token_abi';
 import { ethers } from 'ethers';
 import { ErrorOutlineOutlined } from '@mui/icons-material';
 
@@ -71,29 +65,13 @@ const updatedtokenPanel = props => {
   const { address, isConnected, isConnecting, isReconnecting, isDisconnected } =
     useAccount();
   const { disconnect } = useDisconnect();
-  const [web3Library, setWeb3Library] = useState('');
   const [lockTimer, setLockTimer] = useState(0);
   const [amount, setAmount] = useState({
     totalAmount: 0,
     releasedAmount: 0,
     availableAmount: 0,
   });
-  const [privateAmount, setPrivateAmount] = useState({
-    totalPrivateAmount: 0,
-    releasedPrivateAmount: 0,
-    claimablePrivateAmount: 0,
-  });
-  const [stakeAmount, setStakeAmount] = useState({
-    totalStakedAmount: 0,
-    totalStakeRewardAmount: 0,
-  });
-  const [web3Account, setWeb3Account] = useState('');
   const toast = useToast();
-  // const [claimResult, setClaimResult] = useState({
-  //   status: '',
-  //   error: '',
-  //   result: '',
-  // });
   const theme = useTheme();
 
   // const result = useReadContract({
@@ -152,10 +130,6 @@ const updatedtokenPanel = props => {
   const formatWeiTOEather = weiValue => {
     return ethers.formatEther(weiValue);
   };
-
-  // useEffect(() => {
-  //   setClaimResult({});
-  // }, [vestingClaimStatus, vestingClaimError]);
 
   useEffect(() => {
     console.log('vestingScheduledAmount: ', vestingScheduledAmount);
@@ -233,37 +207,36 @@ const updatedtokenPanel = props => {
     });
   };
   useEffect(() => {
-    console.log('getPrivateRewardAmount: ', getPrivateRewardAmount);
-    if (vestingClaimableAmount) {
-      setPrivateAmount(privateAmount => ({
+    if (getPrivateRewardAmount) {
+      setAmount(privateAmount => ({
         ...privateAmount,
-        claimablePrivateAmount: formatWeiTOEather(getPrivateRewardAmount),
+        availableAmount: formatWeiTOEather(getPrivateRewardAmount),
       }));
     }
   }, [getPrivateRewardAmount]);
+
   useEffect(() => {
     console.log(
       'functotalPrivateAmountAvaialble: ',
       functotalPrivateAmountAvaialble
     );
-    if (vestingClaimableAmount) {
-      setPrivateAmount(privateAmount => ({
+    if (functotalPrivateAmountAvaialble) {
+      setAmount(privateAmount => ({
         ...privateAmount,
-        totalPrivateAmount: formatWeiTOEather(functotalPrivateAmountAvaialble),
+        totalAmount: formatWeiTOEather(functotalPrivateAmountAvaialble),
       }));
     }
   }, [functotalPrivateAmountAvaialble]);
+
   useEffect(() => {
     console.log(
       'functotalPrivateReleasedAmount: ',
       functotalPrivateReleasedAmount
     );
-    if (vestingClaimableAmount) {
-      setPrivateAmount(privateAmount => ({
+    if (functotalPrivateReleasedAmount) {
+      setAmount(privateAmount => ({
         ...privateAmount,
-        releasedPrivateAmount: formatWeiTOEather(
-          functotalPrivateReleasedAmount
-        ),
+        releasedAmount: formatWeiTOEather(functotalPrivateReleasedAmount),
       }));
     }
   }, [functotalPrivateReleasedAmount]);
@@ -301,12 +274,13 @@ const updatedtokenPanel = props => {
   useEffect(() => {
     console.log('funcToGetStakedAmount: ', funcToGetStakedAmount);
     if (funcToGetStakedAmount) {
-      setStakeAmount(stakeAmount => ({
+      setAmount(stakeAmount => ({
         ...stakeAmount,
-        totalStakedAmount: formatWeiTOEather(funcToGetStakedAmount),
+        totalAmount: formatWeiTOEather(funcToGetStakedAmount),
       }));
     }
   }, [funcToGetStakedAmount]);
+
   useEffect(() => {
     console.log('funcTogetRewardAmount: ', funcTogetRewardAmount);
     if (funcTogetRewardAmount) {
@@ -317,16 +291,11 @@ const updatedtokenPanel = props => {
     }
   }, [funcTogetRewardAmount]);
 
-  const balance = useBalance({
-    address,
-    token: New_Floyx_Token_Address,
-  });
-  function getProvider(web3library_) {
-    const { provider } = web3library_;
-    //const web3 = new Web3(provider);
-    const web3 = null;
-    return web3;
-  }
+  // const balance = useBalance({
+  //   address,
+  //   token: New_Floyx_Token_Address,
+  // });
+
   useEffect(() => {
     console.log('isConnected: ', isConnected);
 
@@ -336,69 +305,6 @@ const updatedtokenPanel = props => {
       setModal('FIRST');
     }
   }, [isConnected, address]);
-
-  // useEffect(() => {
-  //   if (!isConnected) return;
-  //   (async () => {
-  //     try {
-  //       console.log('connected, reading contract');
-  //       console.log('connected, reading contract');
-
-  //       const result = await readContract(wagmiConfig, {
-  //         abi: vestingContractabi,
-  //         address: Floyx_TokenVesting_Address,
-  //         functionName: 'getStartTimePeriod',
-  //         args: [address, '0'],
-  //       });
-  //       console.log('result =>>>>>>>>>>>>: ', result);
-  //     } catch (error) {
-  //       console.error('Error reading contract:', error);
-  //     }
-  //   })();
-  // }, [isConnected, address]);
-
-  async function setStakeTimer(library: any, account: string) {
-    try {
-      let timePeriod = parseInt(getStakeTime) * 1000;
-      if (timePeriod === 0) {
-        setStakeLockTimer(0);
-      } else {
-        const currentTime = Date.now();
-        if (currentTime > timePeriod) {
-          setStakeLockTimer(0);
-        } else {
-          setStakeLockTimer(timePeriod);
-        }
-      }
-    } catch (e) {
-      notifyFailure('Oops! An error occurred.');
-      console.log(e);
-    }
-  }
-
-  async function fetchVestingDetails(
-    _FloyxVestingContract,
-    _address,
-    _web3library,
-    type
-  ) {
-    try {
-      const amountTotal = await _FloyxVestingContract[`getSeed${type}Amount`](
-        _address,
-        overrides
-      );
-      const web3 = getProvider(_web3library);
-      const balanceConverted = web3.utils.fromWei(
-        amountTotal.toString(),
-        'ether'
-      );
-      window[`setfloyx${type}Amount`](balanceConverted);
-    } catch (e) {
-      console.error(`Error in fetchVestingDetails for ${type}:`, e);
-    }
-  }
-
-  // SEED
 
   async function setTimerFunction(library: any, account: string) {
     try {
@@ -434,7 +340,6 @@ const updatedtokenPanel = props => {
     try {
       // Fetching oneMonth and timePeriod from the contract
       let oneMonthTIme = parseInt(Private_OneMonth) * 1000;
-      console.log({ oneMonthTIme });
       let timePeriod = parseInt(privateVestingStartTime) * 1000;
 
       // Set lock timer to zero if timePeriod is zero
