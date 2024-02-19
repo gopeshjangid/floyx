@@ -48,7 +48,7 @@ export const PostBox = styled(Box)(({ theme }) => ({
         '& textarea': {
           padding: '0.5rem',
           outline: 0,
-          color: theme.palette.text.primary,
+          color: theme.palette.primary.fontLightColor,
           borderRadius: '10px',
           border: `1px solid ${theme.palette?.primary?.[800]}`,
           '&:hover': {
