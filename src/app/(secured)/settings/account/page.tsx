@@ -34,6 +34,7 @@ import { showErrorMessages } from '@/lib/utils';
 import { SettingWrapper } from '../styled';
 import AccountSettingSkeleton from './loading';
 import { useCheckUsernameMutation } from '@/lib/redux/slices/registration';
+import { useSession } from 'next-auth/react';
 
 interface ISettingAccount {
   name: string;
@@ -90,6 +91,8 @@ const AccountSetting = () => {
   ] = useUpdateMessageSettingsMutation();
 
   const toast = useToast();
+  const { data: session, update } = useSession();
+
 
   const [formData, setFormData] = useState<ISettingAccount>({
     email: '',
@@ -136,6 +139,10 @@ const AccountSetting = () => {
   useEffect(() => {
     if (settingUpdateData === 'success') {
       toast.success('Account details updated successfully!');
+      handleUpdate({
+        username: formData.username,
+        name: formData.name,
+      });
     }
   }, [settingUpdateData]);
 
@@ -219,6 +226,19 @@ const AccountSetting = () => {
       });
     }
   };
+
+  function handleUpdate({ username, name }: any) {
+    update({
+      ...session,
+      user: {
+        ...session?.user,
+        username: username,
+        name: name,
+        firstname: name.split(' ')[0],
+        lastname: name.split(' ')[1],
+      },
+    });
+  }
 
   if (getSettingLoading || getMessageSettingLoading) {
     return <AccountSettingSkeleton />;

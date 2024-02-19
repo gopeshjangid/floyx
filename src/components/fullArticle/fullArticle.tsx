@@ -114,12 +114,12 @@ export default function FullArticle({ details }: any) {
             </Box>
           ))}
       </Box>
-      <Box display={'flex'} py={1}>
-        <TranslateIcon />
+      {/* <Box display={'flex'} py={1}> */}
+        {/* <TranslateIcon /> */}
         {/* &nbsp;
         <Typography variant="body2">EN</Typography> */}
-        &nbsp;
-        <Box >
+        {/* &nbsp; */}
+        {/* <Box >
           <FormControl sx={{minWidth: 120 }} size="small">
             <Select
               displayEmpty
@@ -137,9 +137,9 @@ export default function FullArticle({ details }: any) {
               <MenuItem value={"PL"}>PL</MenuItem>
             </Select>
           </FormControl>
-        </Box>
+        </Box> */}
         
-      </Box>
+      {/* </Box> */}
       <Box py={1}>
         <Suspense fallback={<Typography>Loading...</Typography>}>
           <SocialButts details={details} />
