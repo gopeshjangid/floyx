@@ -358,7 +358,7 @@ const RegisterPage = () => {
                 mt={3}
               >
                 Referred By{' '}
-                <span style={{ color: '#00FF00' }}>{formData.recommended}</span>
+                <span style={{ color: '#00FF00' }}>{formData.referred}</span>
               </Typography>
             )}
             <Box
