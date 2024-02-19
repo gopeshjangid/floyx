@@ -7,6 +7,7 @@ import {
   Stack,
   Skeleton,
 } from '@mui/material';
+import { ChevronRight, ChevronLeft } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import UsernameLink, { ProfileName } from './usernameLink';
 import {
@@ -41,6 +42,15 @@ export default function FollowNewAccounts() {
     followUser({ username: account.username });
   };
 
+  const handleAccountListScroll = (direction: 'left' | 'right') => {
+    const container = document.getElementById('accountsListContainer');
+    if (container) {
+      const scrollAmount = 200;
+      container.scrollLeft +=
+        direction === 'right' ? scrollAmount : -scrollAmount;
+    }
+  };
+
   if (isLoading || isError) return null;
 
   const accountsList = data
@@ -50,9 +60,41 @@ export default function FollowNewAccounts() {
     return null;
   }
   return (
-    <Box mt={2}>
-      <Typography variant="h6">Follow Accounts</Typography>
-      <Stack direction="row" gap={1} my={2} sx={{ overflowX: 'auto' }}>
+    <Box mt={2} display="flex" flexDirection="column">
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="h6" sx={{ marginRight: '8px' }}>
+          Follow Accounts
+        </Typography>
+        <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            p={1}
+            onClick={() => handleAccountListScroll('left')}
+            sx={{ cursor: 'pointer' }}
+          >
+            <ChevronLeft />
+          </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            p={1}
+            onClick={() => handleAccountListScroll('right')}
+            sx={{ cursor: 'pointer' }}
+          >
+            <ChevronRight />
+          </Box>
+        </Box>
+      </Box>
+      <Stack
+        direction="row"
+        gap={1}
+        my={2}
+        sx={{ overflowX: 'auto' }}
+        id="accountsListContainer"
+      >
         {!isLoading && data ? (
           accountsList.map((account, index) => (
             <AccountBox

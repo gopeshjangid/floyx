@@ -21,7 +21,6 @@ export default function Page() {
   const params = useParams();
   const isMobile = useMediaQuery('(max-width:480px)');
   const [tabName, setTabName] = useState('liked?limited=true');
-  console.log('params: ', params);
   const [dynamicTab, setDynamicTab] = useState({
     searchBy: undefined,
     value: undefined,

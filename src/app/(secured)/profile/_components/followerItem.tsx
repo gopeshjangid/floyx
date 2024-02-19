@@ -119,7 +119,6 @@ const MyFollowers: React.FC = () => {
     { skip: !currentUser?.id }
   );
 
-  console.log('rendering');
   useEffect(() => {
     if (data) {
       setFollowingList(prev => [...prev, ...data]);

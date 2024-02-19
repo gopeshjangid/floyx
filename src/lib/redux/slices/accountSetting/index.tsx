@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { FLOYX_TOKEN } from '@/constants';
+import { profileService } from '../profile';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: '/',
@@ -47,6 +48,11 @@ export const accountSettingService = createApi({
       transformErrorResponse: (response: any): string[] =>
         response?.data.value.code,
       invalidatesTags: ['accountSetting'],
+      onQueryStarted: (arg, api) => {
+        api.queryFulfilled.then(response => {
+          api.dispatch(profileService.util.invalidateTags([{ type: 'profileDetails' }]));
+        })
+      }
     }),
     updateMessageSettings: builder.mutation({
       query: body => ({
