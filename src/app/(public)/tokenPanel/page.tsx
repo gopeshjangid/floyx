@@ -42,6 +42,7 @@ import { stakingContractabi } from '@/constants/Staking_abi';
 import { privateSeedContractabi } from '@/constants/PrivateSeed_abi';
 import { ethers } from 'ethers';
 import { ErrorOutlineOutlined } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
 
 const NonLoggedinWalletModal = ({ onClick }: { onClick: () => void }) => {
   return (
@@ -120,6 +121,11 @@ const updatedtokenPanel = props => {
     if (claimStatus === 'error') {
       console.log('Error in claim: ', claimError);
       toast.error('Claim not allowed!');
+    }
+
+    if (claimStatus === 'success') {
+      toast.success('Claim completed!');
+      window.location.reload();
     }
   }, [claimStatus, claimError]);
 
@@ -275,6 +281,14 @@ const updatedtokenPanel = props => {
       args: [address],
     });
   };
+
+  useEffect(() => {
+    setAmount({
+      totalAmount: 0,
+      releasedAmount: 0,
+      availableAmount: 0,
+    });
+  }, [modalType]);
 
   useEffect(() => {
     console.log('funcToGetStakedAmount: ', funcToGetStakedAmount);
@@ -501,13 +515,6 @@ const updatedtokenPanel = props => {
                   </Typography>
                 </Stack>
               </Box>
-              {claimStatus === 'success' && (
-                <Box my={1}>
-                  <Alert severity="success" variant="outlined">
-                    Claimed success!
-                  </Alert>
-                </Box>
-              )}
               <Box mt={2} textAlign="center" pt={1}>
                 {getActionButtons()}
               </Box>

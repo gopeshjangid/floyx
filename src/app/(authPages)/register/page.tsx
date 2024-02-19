@@ -378,26 +378,29 @@ const RegisterPage = () => {
 
               {formData.recommendedMe && (
                 <>
-                  <TextField
-                    name="recommended"
-                    fullWidth
-                    hiddenLabel
-                    placeholder="Enter here..."
-                    onChange={onChangeHandler}
-                    error={!!formError.recommended}
-                    helperText={formError.recommended}
-                    inputProps={{ maxLength: 25 }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Box>
-                            <Box>{`${formData.recommended.length}/25`}</Box>
-                          </Box>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
+                  {' '}
+                  <FormControl>
+                    <FormLabel required>Recommender's username</FormLabel>
+                    <TextField
+                      name="recommended"
+                      fullWidth
+                      hiddenLabel
+                      placeholder="Enter here recommender's username..."
+                      onChange={onChangeHandler}
+                      error={!!formError.recommended}
+                      helperText={formError.recommended}
+                      inputProps={{ maxLength: 25 }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Box>
+                              <Box>{`${formData.recommended.length}/25`}</Box>
+                            </Box>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </FormControl>
                   <Phone
                     value={formData.phone}
                     onChange={onChangeHandler}
