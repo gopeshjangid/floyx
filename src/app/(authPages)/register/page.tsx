@@ -462,29 +462,32 @@ const RegisterPage = () => {
 
               {formData.recommendedMe && (
                 <>
-                  <TextField
-                    name="recommended"
-                    fullWidth
-                    hiddenLabel
-                    placeholder="Enter here..."
-                    onChange={e => {
-                      debouncedCheckRefferedUserName(e.target.value);
-                      onChangeHandler(e);
-                    }}
-                    defaultValue={formData.recommended}
-                    error={!!formError.recommended}
-                    helperText={formError.recommended}
-                    inputProps={{ maxLength: 25 }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Box>
-                            <Box>{`${formData.recommended.length}/25`}</Box>
-                          </Box>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
+                  <FormControl>
+                    <FormLabel required>Recommender's username</FormLabel>
+                    <TextField
+                      name="recommended"
+                      fullWidth
+                      hiddenLabel
+                      placeholder="Enter here recommender's username..."
+                      onChange={e => {
+                        debouncedCheckRefferedUserName(e.target.value);
+                        onChangeHandler(e);
+                      }}
+                      defaultValue={formData.recommended}
+                      error={!!formError.recommended}
+                      helperText={formError.recommended}
+                      inputProps={{ maxLength: 25 }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Box>
+                              <Box>{`${formData.recommended.length}/25`}</Box>
+                            </Box>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </FormControl>
                 </>
               )}
 
