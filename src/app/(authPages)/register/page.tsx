@@ -109,14 +109,14 @@ const RegisterPage = () => {
       const sanitizedToken = token.replace(/[^A-Za-z0-9+/]/g, '');
       const decodedToken = atob(sanitizedToken);
       const parsedToken = getValidJSON(decodedToken);
-      if (!parsedToken) return false;
-
-      const { username } = parsedToken;
-      setFormData(prevState => ({
-        ...prevState,
-        referred: username,
-        isReferred: true,
-      }));
+      if (parsedToken) {
+        const { username } = parsedToken;
+        setFormData(prevState => ({
+          ...prevState,
+          referred: username,
+          isReferred: true,
+        }));
+      }
     }
   }, []);
 
