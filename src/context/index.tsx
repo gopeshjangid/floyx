@@ -24,7 +24,7 @@ createWeb3Modal({
     },
   },
   chainImages: {
-    137: 'https://my.images.com/eth.png',
+    137: 'https://s3.us-east-2.amazonaws.com/floyx.com/floyx-logo.jpg',
   },
 });
 
