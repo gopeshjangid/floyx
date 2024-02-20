@@ -23,7 +23,6 @@ const SidebarProfileBar: React.FC = () => {
     { skip: !username }
   );
 
-  console.log('side profile view isloading =>', isLoading, isFetching);
   return (
     <Paper
       elevation={0}

@@ -7,7 +7,7 @@ import React, { useState, useCallback } from 'react';
 
 export interface apiParams {
   pageNumber: number;
-  postCreatedDate: number;
+  postCreatedDate: number | '';
   username: string;
 }
 
@@ -18,11 +18,11 @@ function ProfilePostList() {
     : params?.username || '';
   const [apiParams, setApiParams] = useState<apiParams>({
     pageNumber: 1,
-    postCreatedDate: 0,
+    postCreatedDate: '',
     username: username || '',
   });
 
-  const { data, isFetching } = useGetPostListByUserQuery(apiParams);
+  const { data, isFetching, isLoading } = useGetPostListByUserQuery(apiParams);
   const postData = data?.postList;
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
   const loadMore = useCallback(() => {
@@ -45,6 +45,7 @@ function ProfilePostList() {
             loadMore={loadMore}
             hasMore={hasMore}
             scrollThreshold={0.7}
+            isLoading={isLoading}
           />
         </Grid>
       </Grid>

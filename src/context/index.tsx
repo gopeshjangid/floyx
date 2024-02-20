@@ -16,6 +16,7 @@ createWeb3Modal({
   allWallets: 'HIDE',
   themeVariables: {
     '--w3m-color-mix': '#5798FF',
+    '--w3m-color-mix-strength': 40,
   },
   themeMode: 'light',
   tokens: {

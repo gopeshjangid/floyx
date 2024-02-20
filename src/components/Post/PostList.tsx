@@ -13,6 +13,7 @@ interface PostProps {
   hasMore: boolean;
   scrollThreshold?: number;
   showComments?: boolean;
+  isLoading?: boolean;
 }
 
 const LoaderSkeleton = () => {
@@ -39,11 +40,12 @@ function PostList({
   loadMore,
   hasMore,
   scrollThreshold,
+  isLoading,
 }: PostProps) {
   const { palette } = useTheme();
   return (
     <>
-      {Array.isArray(postData) ? (
+      {!isLoading && Array.isArray(postData) ? (
         <Box>
           {postData?.length > 0 ? (
             <InfiniteScroll

@@ -145,6 +145,12 @@ export const profileService = createApi({
       transformErrorResponse: (error, meta) => {
         return error;
       },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+      serializeQueryArgs: ({ queryArgs }) => {
+        return JSON.stringify(queryArgs);
+      },
     }),
     getPopularAccountsToFollow: builder.query<
       AccountApiResponse,

@@ -15,7 +15,7 @@ const initialState: Posts = {
 
 interface PostDetail {
   pageNumber: number;
-  postCreatedDate: number;
+  postCreatedDate: number | string;
 }
 
 interface Author {
@@ -56,7 +56,7 @@ export interface PostDetailResult {
 type PostListByUserArgs = {
   username: string;
   pageNumber?: number;
-  postCreatedDate: number;
+  postCreatedDate: number | string;
 };
 
 interface sharePostArgs {
@@ -237,15 +237,23 @@ export const postServices = createApi({
           };
         }
         if (currentCache) {
+          console.log(
+            'getPost current cache merging',
+            currentCache.postList.length,
+            'pagn =>',
+            otherArgs.arg.pageNumber
+          );
           return {
             postList: [...currentCache.postList, ...newItems.postList],
             hasMore: newItems.postList.length === 10,
           };
-        } else
+        } else {
+          console.log('getPost new  cache merging', newItems.postList.length);
           return {
             postList: [...newItems.postList],
             hasMore: newItems.postList.length === 10,
           };
+        }
       },
       providesTags: (result, error, arg) => [
         { type: 'MainFeedList', id: 'ALL' },

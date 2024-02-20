@@ -30,7 +30,7 @@ import ProfileSetupModal from '@/components/ProfileSetupModal';
 import { FIRST_TIME_LOGIN_USING_SOCIAL } from '@/constants';
 export interface apiParams {
   pageNumber: number;
-  postCreatedDate: number;
+  postCreatedDate: number | string;
 }
 
 const SectionSkeleton = () => (
@@ -52,12 +52,12 @@ export default function Page() {
   }, []);
 
   const [apiParams, setApiParams] = useState<apiParams>({
-    pageNumber: 0,
-    postCreatedDate: 0,
+    pageNumber: 1,
+    postCreatedDate: '',
   });
   const { isMobile } = useDevice();
   const store = useStore({});
-  const { data, isFetching } = useGetPostsQuery(apiParams);
+  const { data, isFetching, isLoading } = useGetPostsQuery(apiParams);
   const postData = data?.postList;
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
   const initSignalR = () => {
@@ -96,30 +96,17 @@ export default function Page() {
   useEffect(() => {
     initSignalR();
   }, []);
-
-  const debounce = (func: (...args: any[]) => void, delay: number) => {
-    let timer: any;
-    return function (...args: any[]) {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        func(...args);
-      }, delay);
-    };
-  };
-
-  const loadMore = useCallback(
-    debounce(() => {
-      if (postData?.length && !isFetching) {
-        const lastPost = postData[postData.length - 1];
-        setApiParams(prevParams => ({
-          ...prevParams,
-          pageNumber: prevParams.pageNumber + 1,
-          postCreatedDate: lastPost?.post?.createdDateTime,
-        }));
-      }
-    }, 2000),
-    [postData, isFetching, setApiParams]
-  );
+  const loadMore = useCallback(() => {
+    if (postData?.length && !isFetching) {
+      console.log('post list load more called');
+      const lastPost = postData[postData.length - 1];
+      setApiParams(prevParams => ({
+        ...prevParams,
+        pageNumber: prevParams.pageNumber + 1,
+        postCreatedDate: lastPost?.post?.createdDateTime,
+      }));
+    }
+  }, [postData, isFetching, isLoading, setApiParams]);
 
   const viewportHeight =
     typeof window === 'undefined' ? 1000 : window.innerHeight;
@@ -164,6 +151,8 @@ export default function Page() {
                     postData={postData || []}
                     loadMore={loadMore}
                     hasMore={hasMore}
+                    isLoading={isLoading}
+                    scrollThreshold={0.8}
                   />
                 </Box>
               </Grid>

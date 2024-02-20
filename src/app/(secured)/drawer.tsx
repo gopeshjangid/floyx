@@ -322,7 +322,10 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     }
     if (href === '/') {
       dispatch(
-        postServices.util.invalidateTags([{ type: 'MainFeedList', id: 'ALL' }])
+        postServices.util.invalidateTags([
+          { type: 'MainFeedList', id: 'ALL' },
+          'MainFeedList',
+        ])
       );
       homeRedirect();
     }
@@ -380,7 +383,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <ThemeSwitch />
           </ListItem>
 
-{/*           <ListItem sx={{padding: '15px 0px 0px 0px'}}>
+          {/*           <ListItem sx={{padding: '15px 0px 0px 0px'}}>
             <GoogleTranslatorPicker/>
           </ListItem> */}
         </List>
