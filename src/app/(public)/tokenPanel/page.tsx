@@ -320,53 +320,70 @@ const updatedtokenPanel = props => {
   async function setTimerFunction() {
     try {
       setLockTimer(0);
-      let timePeriod = null;
-      let oneMonthTIme = null;
+      let oneMonthTime = 0;
+      let timePeriod = 0;
+
       if (modalType === 'SEEDVESTING') {
-        oneMonthTIme = parseInt(Seed_OneMonth) * 1000;
-        console.log({ oneMonthTIme });
+        oneMonthTime = parseInt(Seed_OneMonth) * 1000;
         timePeriod = parseInt(seedVestingStartTime) * 1000;
       } else if (modalType === 'STAKING') {
-        oneMonthTIme = parseInt(getStakeTime) * 1000 - Date.now() * 1000;
-        console.log({ oneMonthTIme });
+        oneMonthTime = parseInt(getStakeTime) * 1000 - Date.now();
         timePeriod = parseInt(getStakeTime) * 1000;
       } else if (modalType === 'PRESALEVESTING') {
-        oneMonthTIme = parseInt(Private_OneMonth) * 1000;
+        oneMonthTime = parseInt(Private_OneMonth) * 1000;
         timePeriod = parseInt(privateVestingStartTime) * 1000;
       }
-      console.log('checking timePeriod: ', timePeriod);
-      // Set lock timer to zero if timePeriod is zero
-      if (timePeriod === 0) {
+
+      if (timePeriod === 0 || oneMonthTime <= 0) {
         setLockTimer(0);
         return;
       }
-      // Calculate the next lock period
+
       let lockPeriod = timePeriod;
-      while (Date.now() > lockPeriod) {
-        lockPeriod += oneMonthTIme;
+      // Direct calculation instead of while loop
+      const periodsElapsed = Math.ceil(
+        (Date.now() - lockPeriod) / oneMonthTime
+      );
+      if (periodsElapsed > 0) {
+        lockPeriod += periodsElapsed * oneMonthTime;
       }
+
       setLockTimer(lockPeriod);
     } catch (e) {
       toast.error('Oops! An error occurred.');
       console.error(e); // More descriptive error logging
     }
   }
+
   useEffect(() => {
     if (
       address &&
-      modalType !== 'LANDING' &&
-      (seedVestingStartTime !== '0n' || privateVestingStartTime !== '0n')
+      modalType === 'PRESALEVESTING' &&
+      privateVestingStartTime !== '0n'
     ) {
-      console.log('timer set');
+      console.log('timer set PRESALEVESTING');
       setTimerFunction();
     }
-  }, [
-    seedVestingStartTime,
-    modalType,
-    getStakeTime,
-    privateVestingStartTime,
-    address,
-  ]);
+  }, [modalType, privateVestingStartTime, address]);
+
+  useEffect(() => {
+    if (
+      address &&
+      modalType === 'SEEDVESTING' &&
+      seedVestingStartTime !== '0n'
+    ) {
+      console.log('timer set SEEDVESTING');
+      setTimerFunction();
+    }
+  }, [seedVestingStartTime, modalType, address]);
+
+  useEffect(() => {
+    if (address && modalType === 'STAKING' && getStakeTime !== '0n') {
+      console.log('timer set STAKING');
+      setTimerFunction();
+    }
+  }, [modalType, getStakeTime, address]);
+
   const getActionButtons = () => {
     if (claimStatus === 'pending') {
       return <CircularProgress />;
@@ -431,7 +448,7 @@ const updatedtokenPanel = props => {
     if (address) {
       disconnect();
     } else {
-      setModal('CONNECT');
+      setModal('FIRST');
     }
   }, [disconnect, setModal]);
 

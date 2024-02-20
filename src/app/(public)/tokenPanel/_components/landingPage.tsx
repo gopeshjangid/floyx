@@ -6,12 +6,23 @@ import BridgeImage from '@/assets/images/bridgeBackground.png';
 import VestingImage from '@/assets/images/vestingBackground.png';
 import Image from 'next/image';
 
+const aimatedStyle = {
+  '&:hover': {
+    transform: 'scale(1.05)', // Scale the box on hover
+    transition: 'transform 0.3s ease-in-out',
+    '& > button': {
+      backgroundColor: '#f50057', // Highlight the button
+      color: '#fff',
+      transition: 'background-color 0.3s ease-in-out',
+    },
+  },
+};
 const LandingPage = ({ setModal }) => {
   return (
     <Box
       sx={{
         position: 'absolute',
-        top: '50%',
+        top: '60%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '90%',
@@ -22,7 +33,12 @@ const LandingPage = ({ setModal }) => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
-          <Box position={'relative'} width="100%" height="42vh">
+          <Box
+            sx={aimatedStyle}
+            position={'relative'}
+            width="100%"
+            height="52vh"
+          >
             <Image
               src={VestingImage}
               alt="bridge"
@@ -30,16 +46,24 @@ const LandingPage = ({ setModal }) => {
               objectFit="cover"
               objectPosition="center"
             />
-            <Box position="absolute" sx={{ top: '50%', left: '50%' }}>
-              <Typography variant="subtitle1">Vesting</Typography>
-              <Button onClick={() => setModal('FIRST')} variant="outlined">
-                Select
+            <Box position="absolute" sx={{ top: '40%', left: '40%' }}>
+              <Button
+                sx={aimatedStyle}
+                onClick={() => setModal('FIRST')}
+                variant="outlined"
+              >
+                Vesting
               </Button>
             </Box>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Box position={'relative'} width="100%" height="42vh">
+          <Box
+            sx={aimatedStyle}
+            position={'relative'}
+            width="100%"
+            height="52vh"
+          >
             <Image
               src={BridgeImage}
               alt="bridge"
@@ -47,7 +71,7 @@ const LandingPage = ({ setModal }) => {
               objectFit="cover"
               objectPosition="center"
             />
-            <Box position="absolute" sx={{ top: '50%', left: '50%' }}>
+            <Box position="absolute" sx={{ top: '40%', left: '40%' }}>
               <Typography variant="subtitle1">Coming soon</Typography>
             </Box>
           </Box>
