@@ -91,6 +91,9 @@ const SocialLogin: FC = () => {
             </Typography>
           </Box>
         </Box>
+        <Box py={1} sx={{ '& a': { color: '#5798FF' } }}>
+          <Link href="/tokenPanel">Token Panel</Link>
+        </Box>
         <LoginFooter hideLinks />
       </Box>
     </Grid>

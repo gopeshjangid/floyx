@@ -11,29 +11,19 @@ import {
   Stack,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import LogoutOutlined from '@mui/icons-material/LogoutOutlined';
-import WalletConnectIcon from '@mui/icons-material/AccountBalanceWallet';
+import FloyxImage from '@/iconComponents/floyxIcon';
+import { useRouter } from 'next/navigation';
 
-function TokenPanelHeader({
-  navigationItems,
-  modalType,
-  setModal,
-  isConnecting,
-  isConnected,
-  address,
-  connectHandler,
-  FloyxImage,
-  hideNav,
-}) {
+function TokenPanelHeader({ modalType, setModal, hideNav }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
+  const router = useRouter();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  console.log('modalType =>>>', modalType);
   const getNavItems = () => {
     if (hideNav) return;
     return (
@@ -95,13 +85,15 @@ function TokenPanelHeader({
             sx={{ width: '100%' }}
             pb={2}
           >
-            <FloyxImage
-              fill={
-                theme.palette.mode !== 'dark'
-                  ? theme.palette.common.white
-                  : theme.palette.common.black
-              }
-            />
+            <IconButton onClick={() => router.push('/')}>
+              <FloyxImage
+                fill={
+                  theme.palette.mode !== 'dark'
+                    ? theme.palette.common.white
+                    : theme.palette.common.black
+                }
+              />
+            </IconButton>
             {!isMobile ? getNavItems() : ''}
             {!hideNav && (
               <Box sx={{ flexGrow: 0 }}>

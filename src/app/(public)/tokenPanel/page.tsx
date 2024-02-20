@@ -8,7 +8,7 @@ import {
   Floyx_TokenVesting_Address,
   FloyxPrivateSeedClaimer,
 } from '@/constants/Addresses';
-import FloyxImage from '@/iconComponents/floyxIcon';
+
 //import { getFloyxContract } from '@constants/Floyx_Token';
 // import { getNewFloyxContract } from '@/constants/New_Floyx_Token';
 // import { getVestingContract } from '@/constants/Vesting_Contract';
@@ -462,7 +462,6 @@ const updatedtokenPanel = props => {
           isConnecting={isConnecting}
           address={address}
           connectHandler={connectHandler}
-          FloyxImage={FloyxImage}
           hideNav={modalType === 'LANDING'}
         />
       </Suspense>
