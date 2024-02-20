@@ -20,6 +20,7 @@ import {
   useEffect,
   useLayoutEffect,
   useState,
+  useRef
 } from 'react';
 import { getCookie } from 'cookies-next';
 
@@ -110,6 +111,8 @@ export default function Page() {
 
   const viewportHeight =
     typeof window === 'undefined' ? 1000 : window.innerHeight;
+  
+  const mainContainerFeedRef = useRef(null);
 
   return (
     <>
@@ -142,6 +145,7 @@ export default function Page() {
                     },
                   }}
                   id="mainContainerFeed"
+                  ref={mainContainerFeedRef}
                 >
                   <AddPost />
                   <Suspense fallback={<SectionSkeleton />}>
@@ -153,6 +157,7 @@ export default function Page() {
                     hasMore={hasMore}
                     isLoading={isLoading}
                     scrollThreshold={0.8}
+                    mainContainerFeedRef={mainContainerFeedRef}
                   />
                 </Box>
               </Grid>
