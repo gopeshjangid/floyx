@@ -24,7 +24,12 @@ const TimerBox = ({ children, bottomTitle }) => (
 
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
   return (
-    <Stack gap={1} direction="row" alignItems={'center'}>
+    <Stack
+      gap={1}
+      justifyContent={'center'}
+      direction="row"
+      alignItems={'center'}
+    >
       <TimerBox bottomTitle="Days">{days}</TimerBox>
       <Box height="60px">:</Box>
       <TimerBox bottomTitle="Hours">

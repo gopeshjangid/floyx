@@ -41,17 +41,20 @@ function TokenPanelHeader({
         <Button
           onClick={() => setModal('STAKING')}
           variant={modalType === 'STAKING' ? 'outlined' : 'text'}
+          sx={{ color: theme.palette.mode !== 'light' ? '#000' : '#fff' }}
         >
           STAKING PREVIEW
         </Button>
         <Button
           onClick={() => setModal('SEEDVESTING')}
           variant={modalType === 'SEEDVESTING' ? 'outlined' : 'text'}
+          sx={{ color: theme.palette.mode !== 'light' ? '#000' : '#fff' }}
         >
           SEEDVESTING
         </Button>
         <Button
           onClick={() => setModal('PRESALEVESTING')}
+          sx={{ color: theme.palette.mode !== 'light' ? '#000' : '#fff' }}
           variant={modalType === 'PRESALEVESTING' ? 'outlined' : 'text'}
         >
           PRESALEVESTING
