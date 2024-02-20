@@ -16,12 +16,14 @@ const SidebarProfileBar: React.FC = () => {
   const { palette } = useTheme();
   const session = useSession();
   const username = (session as any)?.data?.user?.username ?? '';
-  const { data, isLoading, error } = useGetProfileDetailsQuery(
+  const { data, isFetching, isLoading, error } = useGetProfileDetailsQuery(
     {
       username: username!,
     },
     { skip: !username }
   );
+
+  console.log('side profile view isloading =>', isLoading, isFetching);
   return (
     <Paper
       elevation={0}
@@ -34,7 +36,7 @@ const SidebarProfileBar: React.FC = () => {
         maxWidth: '90%',
       }}
     >
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <Skeleton variant="rectangular" width="100%" height={'100px'} />
       ) : (
         <Link href={`/profile/${data?.username}`}>

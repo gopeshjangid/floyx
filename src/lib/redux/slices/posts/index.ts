@@ -229,6 +229,13 @@ export const postServices = createApi({
       },
 
       merge: (currentCache, newItems, otherArgs) => {
+        if (otherArgs.arg.pageNumber === 1) {
+          console.log('page 1 so resetting cache', newItems.postList);
+          return {
+            postList: [...newItems.postList],
+            hasMore: newItems.postList.length === 10,
+          };
+        }
         if (currentCache) {
           return {
             postList: [...currentCache.postList, ...newItems.postList],
