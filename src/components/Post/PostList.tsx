@@ -14,6 +14,7 @@ interface PostProps {
   scrollThreshold?: number;
   showComments?: boolean;
   isLoading?: boolean;
+  mainContainerFeedRef?:any
 }
 
 const LoaderSkeleton = () => {
@@ -41,6 +42,7 @@ function PostList({
   hasMore,
   scrollThreshold,
   isLoading,
+  mainContainerFeedRef
 }: PostProps) {
   const { palette } = useTheme();
   return (
@@ -54,6 +56,7 @@ function PostList({
               hasMore={hasMore}
               scrollThreshold={scrollThreshold}
               loader={<LoaderSkeleton key="loader-ininfite" />}
+              scrollableTarget={mainContainerFeedRef.current}
               endMessage={
                 <Box
                   sx={{
