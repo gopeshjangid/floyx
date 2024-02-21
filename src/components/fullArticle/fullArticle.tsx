@@ -21,9 +21,16 @@ import {
 export default function FullArticle({ details }: any) {
   const CONTENT =
     details?.article?.content && JSON.parse(details?.article?.content);
-  const createMarkup = (htmlString: string) => {
-    return { __html: htmlString };
+    const createMarkup = (htmlString: string) => {
+      const urlRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/g;
+  
+      const modifiedHTML = htmlString.replace(urlRegex, (match, videoId) => {
+          return `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+      });
+  
+      return { __html: modifiedHTML };
   };
+  
 
   const [language, setLanguage] = useState('EN');
 

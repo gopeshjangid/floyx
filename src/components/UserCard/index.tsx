@@ -58,7 +58,6 @@ function UserCard({
         <UserAvatar
           alt={name}
           src={`${ApiEndpoint.CurrentUserDetails}/avatar/${username}`}
-          sx={{ width: '50px', height: '50px' }}
         />
       </Box>
       <Box

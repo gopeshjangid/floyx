@@ -84,7 +84,7 @@ const Page: React.FC = () => {
   const renderSection = useMemo(() => {
     switch (value) {
       case 0:
-        return <ProfilePostList />;
+        return <ProfilePostList parentRef={parentRef} />;
       case 1:
         return <ProfileArticleList />;
       case 2:

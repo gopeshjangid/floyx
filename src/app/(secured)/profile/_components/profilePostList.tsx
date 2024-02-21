@@ -11,7 +11,7 @@ export interface apiParams {
   username: string;
 }
 
-function ProfilePostList() {
+function ProfilePostList({parentRef}) {
   const params = useParams();
   const username = Array.isArray(params?.username)
     ? params?.username[0]
@@ -46,6 +46,7 @@ function ProfilePostList() {
             hasMore={hasMore}
             scrollThreshold={0.7}
             isLoading={isLoading}
+            mainContainerFeedRef={parentRef}
           />
         </Grid>
       </Grid>
