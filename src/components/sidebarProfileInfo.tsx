@@ -20,7 +20,7 @@ const SidebarProfileBar: React.FC = () => {
     {
       username: username!,
     },
-    { skip: !username }
+    { skip: !username,refetchOnFocus: false }
   );
 
   return (
