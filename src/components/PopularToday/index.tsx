@@ -47,14 +47,15 @@ function RecentArticles() {
           data.map((article, index) => (
             <Box p={1} pb={2} key={`recent-article-${index}`}>
               <Link
-                target="_blank"
+                //target="_blank"
+                style={{cursor: !article.article.publicUrl ? 'not-allowed' : 'pointer'}}
                 href={
                   article.article.publicUrl
                     ? '/article/' +
                       article.user.username +
                       '/' +
                       article.article.publicUrl
-                    : '/'
+                    : ''
                 }
               >
                 <Stack gap={0.8} pb={0.5}>

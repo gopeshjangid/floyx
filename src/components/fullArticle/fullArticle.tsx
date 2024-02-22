@@ -19,8 +19,14 @@ import {
 } from './articleStyled';
 
 export default function FullArticle({ details }: any) {
-  const CONTENT =
-    details?.article?.content && JSON.parse(details?.article?.content);
+  function removeInvalidJsonChars(str) {
+    // Replace only non-standard control characters (e.g., backspace, form feed)
+    return str.replace(/[\u0000-\u0019]+/g, "");
+  }
+  
+  const rawJson = details?.article?.content;
+  const cleanedJson = rawJson ? removeInvalidJsonChars(rawJson) : null;
+  const CONTENT = cleanedJson ? JSON.parse(cleanedJson) : null;
     const createMarkup = (htmlString: string) => {
       const urlRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/g;
   

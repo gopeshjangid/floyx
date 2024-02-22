@@ -70,7 +70,7 @@ export const fetchServerData = async (
     return { isError: false, data: data?.value?.data };
   } catch (e) {
     console.log('Fetch Error:', e);
-    return { isError: true, data: data?.value?.data };
+    return { isError: true, data: JSON.stringify(e)};
   }
 };
 
