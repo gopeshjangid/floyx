@@ -50,7 +50,8 @@ const UserAvatar = ({
             <Image
               src={src}
               alt={alt}
-              fill
+              layout='fill'
+              objectFit='cover'
               onLoad={result => {
                 if (result.currentTarget.naturalWidth === 0) {
                   setLoading(false);

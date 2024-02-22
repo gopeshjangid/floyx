@@ -146,7 +146,7 @@ export const profileService = createApi({
         return error;
       },
       forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
+        return currentArg?.username !== previousArg?.username;
       },
       serializeQueryArgs: ({ queryArgs }) => {
         return JSON.stringify(queryArgs);

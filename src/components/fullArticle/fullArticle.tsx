@@ -10,7 +10,7 @@ import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import SocialButts from './socialMediaButtons';
 import AuthorPoints from './authorPoints';
-import TranslateIcon from '@/assets/images/svg/translateIcon';
+//import TranslateIcon from '@/assets/images/svg/translateIcon';
 import ArticleTags from './articleTags';
 import {
   ArticleDescription,

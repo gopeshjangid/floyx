@@ -169,7 +169,7 @@ function AddComment({
           src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)?.data
             ?.user?.username}`}
           alt={(session as any)?.data?.user?.username}
-          sx={{ width: '49px', height: '49px' }}
+          sx={{ width: '45px', height: '45px' }}
         />
         {(isLoading || updateLoading) && (
           <Box sx={{ position: 'absolute', zIndex: 999, left: '13%' }}>

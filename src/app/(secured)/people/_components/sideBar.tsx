@@ -29,6 +29,8 @@ import UsernameLink from '@/components/usernameLink';
 import useDevice from '@/lib/hooks/useDevice';
 
 const CopyableInput = () => {
+  const session = useSession();
+  const username = (session as any) ? session.data?.user.username : '';
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -57,11 +59,20 @@ const CopyableInput = () => {
     setOpenSnackbar(false);
   };
 
+  const getUrl = () => {
+    const token = btoa(
+      JSON.stringify({
+        username: username,
+      })
+    );
+    return `${window.location.protocol}//${window.location.host}/${'register?token=' + token}}`;
+  };
+
   return (
     <Box>
       <OutlinedInput
         inputRef={inputRef}
-        defaultValue="https://www.floyx.com/registration..."
+        defaultValue={getUrl()}
         endAdornment={
           <InputAdornment position="end">
             <IconButton onClick={handleCopy} edge="end">
@@ -95,8 +106,7 @@ const StyledBox = ({ children }: any) => {
   return (
     <Box
       sx={{
-        maxWidth: isMobile ? '100%' : '360',
-        margin: isMobile ? 1 : 0,
+        maxWidth: isMobile ? '100%' : 360,
         backgroundColor: palette.primary[700], // Adjust the color based on your design
         borderRadius: '8px', // Adjust border radius based on your design
         border: `1px solid ${palette.action.border}`, // Adjust border color based on your design
@@ -129,12 +139,16 @@ const InvitationStatusCard = () => {
         margin: 'auto',
       }}
     >
-      {showHistory && (
+      {showHistory && data && (
         <CustomDialog
+          PaperProps={{
+            elevation: 1,
+            sx: { backgroundColor: palette.primary.mainBackground },
+          }}
           content={
             <Stack gap={2}>
               <Typography variant="h6">
-                Sucessful invitation&nbsp;${data.referralHistory.length}
+                Sucessful invitation&nbsp;{data.referralHistory.length}
               </Typography>
               {data.referralHistory.map((item, index) => (
                 <Box key={'item-' + index}>
@@ -153,7 +167,7 @@ const InvitationStatusCard = () => {
             </Stack>
           }
           open
-          title="Inviation History"
+          title="Invitation History"
           actions={
             <Button onClick={() => setShowHistory(false)} variant="outlined">
               Close
@@ -163,6 +177,7 @@ const InvitationStatusCard = () => {
       )}
       <Button
         variant="outlined"
+        fullWidth
         onClick={() => setShowHistory(true)}
         startIcon={<HistoryIcon />}
         sx={{ marginBottom: 2 }}
@@ -246,7 +261,7 @@ const InvitationStatusCard = () => {
 const EarningsSideBar = () => {
   const { status, data } = useSession();
   return (
-    <Stack spacing={2} m={1} mt={2} paddingTop="24px">
+    <Stack spacing={2} mt={3} paddingTop="24px">
       <Typography variant="h6" color="textPrimary">
         {status === 'loading' ? (
           <Skeleton variant="rectangular" sx={{ width: '200px' }} />
