@@ -131,8 +131,11 @@ const RegisterPage = () => {
   }, [formData.recommendedMe]);
 
   useEffect(() => {
-    if (verifyOtpData === 'success') {
-      router.push(allRoutes.login);
+    if (verifyOtpData === 'phone_number_verified_successfully') {
+      setIsRegisteredSuccess({
+        value: true,
+        type: 'email',
+      });
     }
   }, [verifyOtpData]);
 
@@ -446,20 +449,25 @@ const RegisterPage = () => {
               )}
 
               {!formData.referred && (
-                <FormControl sx={{'&': {
-                  '.MuiFormControlLabel-label' : {
-                    marginBottom: '0rem'
-                  }
-                }}}>
+                <FormControl
+                  sx={{
+                    '&': {
+                      '.MuiFormControlLabel-label': {
+                        marginBottom: '0rem',
+                      },
+                    },
+                  }}
+                >
                   <FormControlLabel
                     name="recommendedMe"
                     control={
-                      <Checkbox sx={{ paddingTop: '2px !important'}}
+                      <Checkbox
+                        sx={{ paddingTop: '2px !important' }}
                         defaultChecked={token ? true : false}
                         onChange={onChangeHandler}
                       />
                     }
-                    labelPlacement='end'
+                    labelPlacement="end"
                     label="Someone recommended Floyx to me (optional)"
                   />
                 </FormControl>
@@ -655,8 +663,6 @@ const RegisterPage = () => {
               justifyContent="center"
               alignItems="center"
             >
-            
-
               <Typography variant="body1">
                 2024 Powered by Floyx LLC.
               </Typography>

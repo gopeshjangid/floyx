@@ -1,5 +1,5 @@
 'use client';
-import { Box, Skeleton } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import moment from 'moment';
@@ -13,9 +13,7 @@ import MessageLoading from '../../loading';
 import ChatBox from '../../components/chat-box';
 import { IUser } from '../../types';
 import { allRoutes } from '@/constants/allRoutes';
-import {
-  useDeleteMessageMutation,
-} from '@/lib/redux/slices/notification';
+import { useDeleteMessageMutation } from '@/lib/redux/slices/notification';
 import { useLazyGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
 
 interface IChatPageData {
@@ -28,13 +26,19 @@ interface IChatPageData {
   disabledSendButton?: boolean;
 }
 
+const userBlockedMessages = [
+  'Unable_to_show_detail_unblock_first',
+  'Unable_to_show_data_user_blocked_you',
+  'Both_user_blocked_each_other',
+];
+
 const ChatPage = () => {
   const router = useRouter();
   const params = useParams();
   const username: string = params?.username?.toString() || '';
 
   const [fetchUsers, { data, isFetching: chatUserDataLoading }] =
-  useLazyGetProfileDetailsQuery();
+    useLazyGetProfileDetailsQuery();
   const [deleteConversation, { data: deleteData, isLoading: deleteLoading }] =
     useDeleteMessageMutation();
 
@@ -57,7 +61,7 @@ const ChatPage = () => {
   const isChatLoading = chatUserDataLoading;
 
   useEffect(() => {
-    if(data){
+    if (data) {
       setChatUserData(data as any);
     }
   }, [data]);
@@ -176,19 +180,37 @@ const ChatPage = () => {
   };
 
   const scrollToEndList = () => {
-    if(document.getElementsByClassName('message-list-end')[0]){
-     document.getElementsByClassName('message-list-end')[0].scrollIntoView();
+    if (document.getElementsByClassName('message-list-end')[0]) {
+      document.getElementsByClassName('message-list-end')[0].scrollIntoView();
     }
   };
 
   const getUserByUserName = (username: string) => {
-    fetchUsers({username});
+    fetchUsers({ username });
   };
 
   const onMessageChange = (message: string) => {
     setSendBtnDisabled(message.trim() === '');
   };
 
+  const getBlockedMessage = () => {
+    switch (data?.code) {
+      case 'Unable_to_show_detail_unblock_first':
+        return 'You blocked this user!';
+        break;
+      case 'Unable_to_show_data_user_blocked_you':
+        return 'User has blocked you ! Can not send message';
+        break;
+      case 'Both_user_blocked_each_other':
+        return 'You have blocked each other';
+        break;
+      default:
+        return 'some thing went wrong!';
+        break;
+    }
+  };
+
+  const isBlocked = userBlockedMessages.indexOf(data?.code ?? '') > -1;
 
   return (
     <>
@@ -217,49 +239,64 @@ const ChatPage = () => {
             />
           </Box>
         ) : (
-          <ChatHeader
-            deleteLoading={deleteLoading}
-            name={chatUserData?.name}
-            username={chatUserData?.username}
-            lastMessageDate={
-              chatPageData?.conversation?.[
-                chatPageData?.conversation?.length - 1
-              ]?.time
-            }
-            handleDelete={onDeleteConversation}
-          />
-        )}
-        <Box padding={{ md: '13px 25px', xs: '13px 15px' }}>
-          <Box
-            sx={{
-              height: '460px',
-              overflowY: 'auto',
-              pr: 1,
-            }}
-            width="100%"
-          >
-            {isChatLoading && <MessageLoading />}
-            {!isChatLoading && (
-              <ChatBox
-                conversations={chatPageData.conversation}
-                receiverUsername={username}
-                loadMore={loadMore}
-                loadMoreMessageBtn={!chatPageData.allPostReceived}
-              />
-            )}
-            <div
-              className="message-list-end"
-              style={{ float: 'left', clear: 'both' }}
+          !isBlocked && (
+            <ChatHeader
+              deleteLoading={deleteLoading}
+              name={chatUserData?.name}
+              username={chatUserData?.username}
+              lastMessageDate={
+                chatPageData?.conversation?.[
+                  chatPageData?.conversation?.length - 1
+                ]?.time
+              }
+              handleDelete={onDeleteConversation}
             />
+          )
+        )}
+        {!isBlocked ? (
+          <Box padding={{ md: '13px 25px', xs: '13px 15px' }}>
+            <Box
+              sx={{
+                height: '460px',
+                overflowY: 'auto',
+                pr: 1,
+              }}
+              width="100%"
+            >
+              {isChatLoading && <MessageLoading />}
+              {!isChatLoading && (
+                <ChatBox
+                  conversations={chatPageData.conversation}
+                  receiverUsername={username}
+                  loadMore={loadMore}
+                  loadMoreMessageBtn={!chatPageData.allPostReceived}
+                />
+              )}
+              <div
+                className="message-list-end"
+                style={{ float: 'left', clear: 'both' }}
+              />
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <Box
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            p={2}
+            sx={{ minHeight: '100px' }}
+          >
+            <Typography variant="subtitle1" color={'red'}>
+              {getBlockedMessage()}
+            </Typography>
+          </Box>
+        )}
       </Wrapper>
-      {!isChatLoading && (
+      {!isChatLoading && !isBlocked && (
         <ChatInput
           onSubmit={sendMessage}
           disabled={sendBtnDisabled}
           onMessageChange={onMessageChange}
-          allowPrivateMassages={chatPageData.conversation.length >0 || !!chatUserData?.allowPrivateMassages}
         />
       )}
     </>

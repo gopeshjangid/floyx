@@ -31,6 +31,7 @@ export type UserProfileDetails = {
   shortDescription: string;
   username: string;
   joinedDate?: string;
+  code?: string;
 };
 
 type About = {
@@ -137,8 +138,10 @@ export const profileService = createApi({
     getProfileDetails: builder.query<UserProfileDetails, { username: string }>({
       query: (params: any) =>
         ApiEndpoint.ProfileDetails + '/' + params?.username,
-      transformResponse: (response: ApiResponse<UserProfileDetails>) =>
-        response?.value?.data,
+      transformResponse: (response: ApiResponse<UserProfileDetails>) => ({
+        ...response?.value?.data,
+        code: response.value.code,
+      }),
       providesTags: (result, data, type) => [
         { type: 'profileDetails', id: type.username },
       ],

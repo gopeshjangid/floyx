@@ -67,12 +67,10 @@ const ChatInput = ({
   onSubmit,
   disabled,
   onMessageChange,
-  allowPrivateMassages,
 }: {
   onSubmit: (message: string) => void;
   disabled: boolean;
   onMessageChange: (message: string) => void;
-  allowPrivateMassages: boolean;
 }) => {
   const [message, setMessage] = useState('');
   const [emojiPicker, setEmojiPicker] = useState(false);
@@ -125,8 +123,9 @@ const ChatInput = ({
         gap={1.5}
       >
         <UserAvatar
-          src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)?.data
-            ?.user?.username}`}
+          src={`${ApiEndpoint.ProfileDetails}/avatar/${
+            (session as any)?.data?.user?.username
+          }`}
           alt={(session as any)?.data?.user?.username}
           sx={{ width: '49px', height: '49px' }}
         />
@@ -136,8 +135,7 @@ const ChatInput = ({
             onChange={handleChange}
             fullWidth
             hiddenLabel
-            disabled={!allowPrivateMassages}
-            placeholder={!allowPrivateMassages ?  "Chat is disabled" : "Write a message..."}
+            placeholder={'Write a message...'}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -166,13 +164,13 @@ const ChatInput = ({
             <Picker data={data} onEmojiSelect={onEmojiSelect} />
           </Box>
         )}
-        {allowPrivateMassages && <IconButton
+        <IconButton
           className="chat-send-icon"
           onClick={() => handleSubmit(message)}
           disabled={disabled || !message}
         >
           <Image src={iconPaperPlane} alt="paper plane icon" />
-        </IconButton>}
+        </IconButton>
       </Box>
     </ChatInputWrapper>
   );
