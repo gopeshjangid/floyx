@@ -12,10 +12,10 @@ export default function RootLayout({
   return (
     <Box>
       <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12} sm={9}>
+        <Grid item xs={12} sm={8}>
           {children}
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
           <ReferralCard />
         </Grid>
       </Grid>
