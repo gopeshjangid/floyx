@@ -164,8 +164,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const { palette } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openWriteDialog, setOpenWriteDialog] = useState(false);
-  const firstTimeUsingSocialMediaLogin = ![true, 'true'].includes(
-    getCookie(FIRST_TIME_LOGIN_USING_SOCIAL) as any
+  const isFirstTimeCookie = getCookie(FIRST_TIME_LOGIN_USING_SOCIAL) as any;
+  const firstTimeUsingSocialMediaLogin = [true, 'true'].includes(
+    isFirstTimeCookie
   );
   const isLoggedIn: boolean = session.status === 'authenticated';
   const navItems = [
@@ -292,7 +293,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     );
   };
   useEffect(() => {
-    const isPrivate = config.matcher.includes(pathname);
+    const isPrivate = config.matcher.some(path => pathname.includes(path));;
     if (
       session.status !== 'loading' &&
       !isLoggedIn &&
@@ -304,10 +305,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       deleteCookie('next-auth.session-token');
       deleteCookie(SOCIAL_SIGNIN_DATA);
       deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
-      signOut({ redirect: true });
-      //router.push('/login');
+      router.push('/login');
     }
-  }, [isLoggedIn, session.status]);
+  }, [isLoggedIn, session.status,firstTimeUsingSocialMediaLogin]);
 
   const getMessageCount = () => {
     setDrawerData(prev => ({

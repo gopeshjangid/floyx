@@ -15,8 +15,8 @@ import { IUser } from '../../types';
 import { allRoutes } from '@/constants/allRoutes';
 import {
   useDeleteMessageMutation,
-  useLazyGetUserBySearchQuery,
 } from '@/lib/redux/slices/notification';
+import { useLazyGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
 
 interface IChatPageData {
   conversation: any[];
@@ -34,7 +34,7 @@ const ChatPage = () => {
   const username: string = params?.username?.toString() || '';
 
   const [fetchUsers, { data, isFetching: chatUserDataLoading }] =
-    useLazyGetUserBySearchQuery();
+  useLazyGetProfileDetailsQuery();
   const [deleteConversation, { data: deleteData, isLoading: deleteLoading }] =
     useDeleteMessageMutation();
 
@@ -54,10 +54,12 @@ const ChatPage = () => {
   const mountedRef = useRef(true);
   const wrapperRef = useRef<HTMLElement>(null);
 
-  const isChatLoading = chatUserDataLoading || !chatUserData?.name;
+  const isChatLoading = chatUserDataLoading;
 
   useEffect(() => {
-    setChatUserData((data as any)?.value?.data?.[0]);
+    if(data){
+      setChatUserData(data as any);
+    }
   }, [data]);
 
   useEffect(() => {
@@ -131,8 +133,8 @@ const ChatPage = () => {
     messageService.loadMessages(username, undefined).then((resp: any) => {
       setChatPageData(prevState => ({
         ...prevState,
-        conversation: resp.value.data,
-        allPostReceived: resp.value.data.length < 10,
+        conversation: resp?.value?.data ?? [],
+        allPostReceived: (resp?.value?.data.length ?? 0) < 10,
       }));
       messageService.reloadAll();
       scrollToEndList();
@@ -174,16 +176,19 @@ const ChatPage = () => {
   };
 
   const scrollToEndList = () => {
-    document.getElementsByClassName('message-list-end')[0].scrollIntoView();
+    if(document.getElementsByClassName('message-list-end')[0]){
+     document.getElementsByClassName('message-list-end')[0].scrollIntoView();
+    }
   };
 
   const getUserByUserName = (username: string) => {
-    fetchUsers(username);
+    fetchUsers({username});
   };
 
   const onMessageChange = (message: string) => {
     setSendBtnDisabled(message.trim() === '');
   };
+
 
   return (
     <>
@@ -239,6 +244,7 @@ const ChatPage = () => {
                 conversations={chatPageData.conversation}
                 receiverUsername={username}
                 loadMore={loadMore}
+                allowPrivateMassages={!!chatUserData?.allowPrivateMassages}
                 loadMoreMessageBtn={!chatPageData.allPostReceived}
               />
             )}
@@ -254,6 +260,7 @@ const ChatPage = () => {
           onSubmit={sendMessage}
           disabled={sendBtnDisabled}
           onMessageChange={onMessageChange}
+          allowPrivateMassages={chatPageData.conversation.length >0 || !!chatUserData?.allowPrivateMassages}
         />
       )}
     </>

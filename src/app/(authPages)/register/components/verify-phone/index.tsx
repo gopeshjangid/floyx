@@ -56,7 +56,7 @@ const VerifyPhone = ({
           onChange={onChange}
         />
 
-        <Button variant="contained" color="primary" type="submit">
+        <Button disabled={submitLoading} variant="contained" color="primary" type="submit">
           {submitLoading ? (
             <CircularProgress size={20} color="inherit" />
           ) : (

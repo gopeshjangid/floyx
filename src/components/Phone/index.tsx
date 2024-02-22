@@ -86,7 +86,7 @@ const Phone = ({ value, onChange, checkPhone, error }: IPhoneProps) => {
           enableLongNumbers={false}
           enableSearch={true}
           searchPlaceholder="Search"
-          country="in"
+          country="us"
           value={value}
           specialLabel=""
           onChange={e => {

@@ -228,14 +228,14 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
             vertical: 'top',
             horizontal: 'right',
           }}
-          sx={{ padding: 1, opacity: 0.4 }}
+          sx={{ padding: 1}}
         >
           <Paper>
             <Stack>
               <Button
                 onClick={() => setModalType('block')}
                 color="inherit"
-                sx={{ fontSize: '12px' }}
+                sx={{ fontSize: '12px', color: palette.mode ==='dark' ? '#fff' : '#000' }}
                 startIcon={<BlockOutlinedIcon />}
               >
                 {' '}
@@ -244,7 +244,7 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
               <Button
                 onClick={() => setModalType('report')}
                 color="inherit"
-                sx={{ fontSize: '12px' }}
+                sx={{ fontSize: '12px', color: palette.mode ==='dark' ? '#fff' : '#000' }}
                 startIcon={<OutlinedFlagOutlinedIcon />}
               >
                 Report User

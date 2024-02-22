@@ -446,7 +446,11 @@ const RegisterPage = () => {
               )}
 
               {!formData.referred && (
-                <FormControl>
+                <FormControl sx={{'&': {
+                  '.MuiFormControlLabel-label' : {
+                    marginBottom: '0rem'
+                  }
+                }}}>
                   <FormControlLabel
                     name="recommendedMe"
                     control={
@@ -455,6 +459,8 @@ const RegisterPage = () => {
                         onChange={onChangeHandler}
                       />
                     }
+                    labelPlacement='end'
+                    sx={{}}
                     label="Someone recommended Floyx to me (optional)"
                   />
                 </FormControl>
@@ -650,9 +656,7 @@ const RegisterPage = () => {
               justifyContent="center"
               alignItems="center"
             >
-              <Link prefetch={false} href={allRoutes.login}>
-                Old Token Panel
-              </Link>
+            
 
               <Typography variant="body1">
                 2024 Powered by Floyx LLC.

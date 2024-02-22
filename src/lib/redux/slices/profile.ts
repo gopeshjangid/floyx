@@ -392,6 +392,7 @@ export const profileService = createApi({
 
 export const {
   useGetProfileDetailsQuery,
+  useLazyGetProfileDetailsQuery,
   useGetCurrentProfileDetailsQuery,
   useGetPopularAccountsToFollowQuery,
   useLazyGetPopularAccountsToFollowQuery,

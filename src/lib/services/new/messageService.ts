@@ -1,10 +1,12 @@
 import * as signalR from '@microsoft/signalr';
-import { CookieValueTypes } from 'cookies-next';
+import { CookieValueTypes, deleteCookie } from 'cookies-next';
 
 import { EventEmitter } from 'events';
 import { tokenService } from './tokenService';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { authService } from './authService';
+import { signOut } from 'next-auth/react';
+import { FIRST_TIME_LOGIN_USING_SOCIAL, SOCIAL_SIGNIN_DATA } from '@/constants';
 
 class MessageService {
   private connection: signalR.HubConnection | undefined;
@@ -85,7 +87,17 @@ class MessageService {
         Authorization: 'Bearer ' + tokenService.getToken(),
       },
     })
-      .then(response => response.json())
+      .then(response => {
+        if(response.status ===200){
+          console.log("respose ", response)
+          return response.json()
+        }else {
+          if(response.status ===401){
+            signOut({redirect: false});
+          }
+          throw  "error";
+        }
+      })
       .then(data => {
         this.messages = data.value.data;
         this.unreadTotal = 0;
@@ -109,11 +121,26 @@ class MessageService {
         Authorization: 'Bearer ' + tokenService.getToken(),
       },
     })
-      .then(response => response.json())
+      .then(response => {
+        if(response){
+          return response.json();
+        } else {
+          throw 401
+        }
+      })
       .then(data => {
         return data;
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        if(err === 401){
+          deleteCookie('FLOYX_TOKEN');
+          deleteCookie('next-auth.session-token');
+          deleteCookie(SOCIAL_SIGNIN_DATA);
+          deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
+          signOut({redirect: false});
+        }
+        console.error(err)
+      });
   }
 }
 

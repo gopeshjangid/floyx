@@ -67,10 +67,12 @@ const ChatInput = ({
   onSubmit,
   disabled,
   onMessageChange,
+  allowPrivateMassages,
 }: {
   onSubmit: (message: string) => void;
   disabled: boolean;
   onMessageChange: (message: string) => void;
+  allowPrivateMassages: boolean;
 }) => {
   const [message, setMessage] = useState('');
   const [emojiPicker, setEmojiPicker] = useState(false);
@@ -134,7 +136,8 @@ const ChatInput = ({
             onChange={handleChange}
             fullWidth
             hiddenLabel
-            placeholder="Write a message..."
+            disabled={!allowPrivateMassages}
+            placeholder={!allowPrivateMassages ?  "Chat is disabled" : "Write a message..."}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -163,13 +166,13 @@ const ChatInput = ({
             <Picker data={data} onEmojiSelect={onEmojiSelect} />
           </Box>
         )}
-        <IconButton
+        {allowPrivateMassages && <IconButton
           className="chat-send-icon"
           onClick={() => handleSubmit(message)}
           disabled={disabled || !message}
         >
           <Image src={iconPaperPlane} alt="paper plane icon" />
-        </IconButton>
+        </IconButton>}
       </Box>
     </ChatInputWrapper>
   );
