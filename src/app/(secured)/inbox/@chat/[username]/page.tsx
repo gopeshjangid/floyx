@@ -244,7 +244,6 @@ const ChatPage = () => {
                 conversations={chatPageData.conversation}
                 receiverUsername={username}
                 loadMore={loadMore}
-                allowPrivateMassages={!!chatUserData?.allowPrivateMassages}
                 loadMoreMessageBtn={!chatPageData.allPostReceived}
               />
             )}
