@@ -17,9 +17,9 @@ export default function RootLayout({
         <Grid item xs={12} sm={8.5}>
           {children}
         </Grid>
-        <Grid item xs={12} sm={3}>
+        {/* <Grid item xs={12} sm={3}>
           <ReferralCard />
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   );
