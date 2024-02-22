@@ -24,9 +24,10 @@ export default function TipColumn({
   const session = useSession();
   const [value, setValue] = useState<number>(30);
   const pathname = usePathname();
+  const [tipHistory, setTipHistory] = useState<any>(undefined);
   const [updateTip, { isLoading: tipLoading, isError, error, isSuccess }] =
     useSetTipMutation();
-  const { refetch, data: tipHistory } = useGetTipHistoryQuery(undefined, {
+  const { refetch, data: fetchedTipHistory  } = useGetTipHistoryQuery(undefined, {
     skip:
       session?.status === 'loading' || session?.status === 'unauthenticated',
   });
@@ -86,8 +87,15 @@ export default function TipColumn({
       refetch();
       toast.success('You tipped!');
       revalidateArticleDetail(pathname);
+
     }
   }, [isSuccess, pathname]);
+  
+  useEffect(() => {
+    if (fetchedTipHistory) {
+      setTipHistory(fetchedTipHistory);
+    }
+  }, [fetchedTipHistory]);
 
   if (!tipHistory) return null;
   return (
