@@ -419,7 +419,7 @@ const RegisterPage = () => {
                   }}
                   error={!!formError.username}
                   helperText={formError.username}
-                  inputProps={{ maxLength: 25 }}
+                  inputProps={{ maxLength: 15 }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="end">
@@ -430,7 +430,7 @@ const RegisterPage = () => {
                     ),
                     endAdornment: (
                       <InputAdornment position="end">
-                        <Box>{`${formData.username.length}/25`}</Box>
+                        <Box>{`${formData.username.length}/15`}</Box>
                       </InputAdornment>
                     ),
                   }}
@@ -460,7 +460,6 @@ const RegisterPage = () => {
                       />
                     }
                     labelPlacement='end'
-                    sx={{}}
                     label="Someone recommended Floyx to me (optional)"
                   />
                 </FormControl>
@@ -482,12 +481,12 @@ const RegisterPage = () => {
                       defaultValue={formData.recommended}
                       error={!!formError.recommended}
                       helperText={formError.recommended}
-                      inputProps={{ maxLength: 25 }}
+                      inputProps={{ maxLength: 15 }}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
                             <Box>
-                              <Box>{`${formData.recommended.length}/25`}</Box>
+                              <Box>{`${formData.recommended.length}/15`}</Box>
                             </Box>
                           </InputAdornment>
                         ),

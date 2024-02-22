@@ -13,7 +13,7 @@ import ListItemButton, {
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import moment from 'moment';
 import { deleteCookie, getCookie } from 'cookies-next';
 import Link from 'next/link';
@@ -55,13 +55,13 @@ import CustomPopover from '@/components/PopoverOptions';
 import LogoutIcon from '@/iconComponents/logOut';
 import SettingsIcon from '@/iconComponents/settingsIcon';
 import { GradientText } from '@/components/usernameLink';
-import SidebarProfileBar from '@/components/sidebarProfileInfo';
+//import SidebarProfileBar from '@/components/sidebarProfileInfo';
 import AddPost from '@/components/Post/AddPost';
 import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
 import { postServices } from '@/lib/redux';
 import { useDispatch } from 'react-redux';
-import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
+//import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
 const drawerWidth = 240;
 
@@ -411,7 +411,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               }}
             >
               {drawer}
-              <SidebarProfileBar />
+              {/* <SidebarProfileBar /> */}
             </Paper>
           ) : (
             <>&nbsp;</>
@@ -500,9 +500,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             }}
           >
             {drawer}
-            <Box pl={2}>
+            {/* <Box pl={2}>
               <SidebarProfileBar />
-            </Box>
+            </Box> */}
           </Drawer>
         )}
         {!isMobile ? (

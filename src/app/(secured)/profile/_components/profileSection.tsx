@@ -23,6 +23,7 @@ import {
   BorderColorOutlined,
   ChevronLeft,
   LocationOn,
+  MailLockOutlined,
 } from '@mui/icons-material';
 import {
   ProfileInfoType,
@@ -150,16 +151,15 @@ const OtherUserProfileActions: React.FC<{
           <React.Suspense fallback={<Typography>Loading...</Typography>}>
             <BlockReportUser username={username} onSuccess={OnSuccessBlock} />
           </React.Suspense>
-
-          {allowPrivateMassages && (
             <RoundPrimaryButton
               onClick={() => router.push('/inbox/' + username)}
               variant="contained"
-              startIcon={<EmailOutlinedIcon color="primary" />}
+              disabled={!allowPrivateMassages}
+              sx={{cursor: !allowPrivateMassages ? 'not-allowed' : 'pointer'}}
+              startIcon={!allowPrivateMassages ? <MailLockOutlined/>  : <EmailOutlinedIcon color="primary" />}
             >
               Message
             </RoundPrimaryButton>
-          )}
           <FollowUser
             username={username}
             isFollowed={accountDetail?.followed}
