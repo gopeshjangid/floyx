@@ -255,7 +255,7 @@ const Login: FC = () => {
                   <FormControlLabel
                     name="remember"
                     control={
-                      <Checkbox
+                      <Checkbox sx={{ paddingTop: '2px !important'}}
                         defaultChecked={false}
                         onChange={onChangeHandler}
                       />

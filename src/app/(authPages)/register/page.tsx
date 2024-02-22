@@ -454,7 +454,7 @@ const RegisterPage = () => {
                   <FormControlLabel
                     name="recommendedMe"
                     control={
-                      <Checkbox
+                      <Checkbox sx={{ paddingTop: '2px !important'}}
                         defaultChecked={token ? true : false}
                         onChange={onChangeHandler}
                       />
