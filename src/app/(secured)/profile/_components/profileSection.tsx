@@ -51,6 +51,7 @@ import FollowUser from '@/components/FollowUser';
 import TextareaAutosize from '@/components/CustomTextArea';
 import Link from 'next/link';
 import CustomDescription from '@/components/customDescription';
+import { getUserBlockStatusMessage, userBlockedStatus } from '@/lib/utils';
 interface ProfileFollowerWrapperProps extends BoxProps {
   top?: string;
 }
@@ -206,10 +207,12 @@ const ProfileSection: React.FC = () => {
       skip: !username,
     }
   );
+ 
+  const isUserBlocked = userBlockedStatus.indexOf(profile?.code ?? '') >-1;
 
   const { data: isFollwed } = useIsUserFollowedQuery(
     { userId: currentUser?.userId ?? '', followedId: profile?.id ?? '' },
-    { skip: !currentUser?.userId || !profile?.id || isSameuser }
+    { skip: isUserBlocked || !currentUser?.userId || !profile?.id || isSameuser }
   );
   const [
     updateProfile,
@@ -277,7 +280,7 @@ const ProfileSection: React.FC = () => {
 
   return (
     <Box mt={4}>
-      <Box my={2}>
+      {!isUserBlocked || isSameuser  && <Box my={2}>
         <Stack direction="row" flexWrap={'wrap'}>
           {isLoading ? (
             <Skeleton
@@ -324,7 +327,7 @@ const ProfileSection: React.FC = () => {
             </>
           )}
         </Stack>
-      </Box>
+      </Box>}
 
       <Paper
         sx={{
@@ -334,7 +337,7 @@ const ProfileSection: React.FC = () => {
           background: palette.primary.mainBackground,
         }}
       >
-        {isUpdating && (
+       {!isUserBlocked || isSameuser ?  <>{isUpdating && (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />
           </Box>
@@ -633,7 +636,9 @@ const ProfileSection: React.FC = () => {
               )}
             </Stack>
           </Box>
-        </Box>
+        </Box></> : <Box p={2}>
+             <Typography color={'red'}>{getUserBlockStatusMessage(profile?.code)}</Typography>
+          </Box>}
       </Paper>
     </Box>
   );

@@ -100,6 +100,7 @@ export const earningsService = createApi({
     getTransactionHistory: builder.query<Wallet, void>({
       query: () => ApiEndpoint.GetTransactionHistory,
       transformResponse: (response: any) => response?.value?.data,
+      extraOptions: {maxRetries: 2}
     }),
     getUserWallet: builder.query<Wallet, void>({
       query: () => ApiEndpoint.UserWallet,
@@ -112,29 +113,34 @@ export const earningsService = createApi({
         return response?.value?.data;
       },
       providesTags: ['tipHistory'],
+      extraOptions: {maxRetries: 2}
     }),
     getArticleTipHistory: builder.query<ArticleHistry[], void>({
       query: () => ApiEndpoint.UserArticleTipHistory,
       transformResponse: (response: any) => response?.value?.data,
       providesTags: ['articleTipHistory'],
+      extraOptions: {maxRetries: 2},
     }),
     getBonusTaskStatus: builder.query<BonusTaskStatusResponse, void>({
       query: () => ApiEndpoint.BonusTaskStatus,
       transformResponse: (response: ApiResponse<BonusTaskStatusResponse>) =>
         response?.value.data,
       providesTags: ['bonusTask'],
+      extraOptions: {maxRetries: 2}
     }),
     getInviteHistory: builder.query<InviteHistoryResponse, void>({
       query: () => ApiEndpoint.GetInviteHistory,
       transformResponse: (response: ApiResponse<InviteHistoryResponse>) =>
         response?.value.data,
       providesTags: ['inviteHistory'],
+      extraOptions: {maxRetries: 2}
     }),
     getActiveCurrency: builder.query<ActiveCurrencyType, void>({
       query: () => ApiEndpoint.ActiveCurrency,
       transformResponse: (response: ApiResponse<ActiveCurrencyType>) =>
         response?.value.data,
       providesTags: ['activeCurrency'],
+      extraOptions: {maxRetries: 2}
     }),
     getIsEarningStopped: builder.query<EarningStopped, void>({
       query: () => ApiEndpoint.IsEarningStopped,
@@ -146,14 +152,18 @@ export const earningsService = createApi({
       query: () => ApiEndpoint.CompletedTaskHistory,
       transformResponse: (
         response: ApiResponse<CompletedHistoryTypeResponse>
-      ) => response?.value.data,
+      ) => {
+        return response?.value.data;
+      },
       providesTags: ['completedTaskHistory'],
+      extraOptions: {maxRetries: 2}
     }),
     getDailyTaskList: builder.query<DailyTaskType[], void>({
       query: () => ApiEndpoint.DailyTaskStatus,
       transformResponse: (response: ApiResponse<DailyTaskType[]>) =>
         response?.value.data,
       providesTags: ['dailTaskList'],
+      extraOptions: {maxRetries: 2}
     }),
     updateWallet: builder.mutation<string, { walletAddress: string }>({
       query: walletData => ({

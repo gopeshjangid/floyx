@@ -2,7 +2,7 @@
 
 import moment from 'moment';
 import { getCookie, deleteCookie } from 'cookies-next';
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 import { signOut } from 'next-auth/react';
 import { FIRST_TIME_LOGIN_USING_SOCIAL, SOCIAL_SIGNIN_DATA } from '@/constants';
 
@@ -39,7 +39,7 @@ const logout = async () => {
   await signOut({ redirect: false });
 };
 
-export const baseQuery = fetchBaseQuery({
+export const baseQuery = retry(fetchBaseQuery({
   baseUrl: '/',
   prepareHeaders: (headers, { getState }) => {
     const token = getCookie(
@@ -50,13 +50,19 @@ export const baseQuery = fetchBaseQuery({
     return headers;
   },
   responseHandler: async response => {
+    const json = await response.json();
     if (response.status === 401) {
       logout();
     }
+    if (response.status ===404 && json.value.code === 'not_found') {
+      console.log("coming inside")
+      return retry.fail(json.value.code);
+      //return {data: json.value}
+    }
     // You need to return a valid response format here
-    return response.json();
+    return json;
   },
-});
+}),{maxRetries: 3});
 
 export const fetchServerData = async (
   url: string
@@ -172,4 +178,27 @@ function fallbackCopyTextToClipboard(text, onCopied) {
     console.error('Fallback: Oops, unable to copy', err);
   }
   document.body.removeChild(textArea);
+}
+
+export const userBlockedStatus = [
+  'Unable_to_show_detail_unblock_first',
+  'Unable_to_show_data_user_blocked_you',
+  'Both_user_blocked_each_other',
+];
+
+export const getUserBlockStatusMessage = (status) =>{
+  switch (status) {
+    case 'Unable_to_show_detail_unblock_first':
+      return 'You blocked this user!';
+      break;
+    case 'Unable_to_show_data_user_blocked_you':
+      return 'User has blocked you ! Can not send message';
+      break;
+    case 'Both_user_blocked_each_other':
+      return 'You have blocked each other';
+      break;
+    default:
+      return 'some thing went wrong!';
+      break;
+  }
 }

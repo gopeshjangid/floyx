@@ -88,7 +88,7 @@ const ArticleHistory = React.memo(function ArticleCard() {
   const username = (session as any) ? session.data?.user.username : '';
   const { data } = useGetArticleTipHistoryQuery();
   const [showHistory, setShowHistory] = useState(false);
-  const getUrl = url => {
+  const getUrl = (url) => {
     return `/article/${encodeURIComponent(username)}/${encodeURIComponent(
       url
     )}`;
@@ -149,12 +149,10 @@ const ArticleHistory = React.memo(function ArticleCard() {
 
 const VoteHistory = React.memo(function VoteHistory() {
   const { palette } = useTheme();
-  const session = useSession();
-  const username = (session as any) ? session.data?.user.username : '';
   const { data } = useGetTipHistoryQuery();
   const [showHistory, setShowHistory] = useState(false);
 
-  const getUrl = url => {
+  const getUrl = (username, url) => {
     return `/article/${encodeURIComponent(username)}/${encodeURIComponent(
       url
     )}`;
@@ -176,10 +174,10 @@ const VoteHistory = React.memo(function VoteHistory() {
                     voted{' '}
                     <Link
                       target="_blank"
-                      style={{ textDecoration: 'underline', color: 'blue' }}
-                      href={getUrl(item.articlePublicUrl)}
+                      style={{ textDecoration: 'underline', color: '#5798FF' }}
+                      href={getUrl(item.articleUserName, item.articlePublicUrl)}
                     >
-                      {getUrl(item.articlePublicUrl)}
+                      {getUrl(item.articleUserName,item.articlePublicUrl)}
                     </Link>
                     {'  '}
                     earned

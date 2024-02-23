@@ -1,8 +1,8 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import React, { useState, useMemo, useRef, useEffect } from 'react'; // Use `useState` and `useMemo` hooks directly
-import { Box } from '@mui/material';
+import React, { useState, useMemo, useRef } from 'react'; // Use `useState` and `useMemo` hooks directly
+import { Box, Typography } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useTheme } from '@mui/material';
@@ -12,23 +12,35 @@ import { GradientText } from '@/components/usernameLink';
 import ProfilePostList from '../_components/profilePostList';
 import ProfileArticleList from '../_components/articleList';
 import PostIcon from '@/assets/images/svg/postIcon';
-import ArticleIcon from '@/iconComponents/articleIcon';
 import AboutIcon from '@/assets/images/svg/aboutIcon';
 import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
+import { useGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
+import { userBlockedStatus } from '@/lib/utils';
+import { useParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const Page: React.FC = () => {
   const { palette } = useTheme();
   const parentRef = useRef(null);
-  const [clientHeight, setClientHeight] = useState(200);
+  const params = useParams();
+  const session = useSession();
   const [value, setValue] = useState(0); // Simplified import
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const username = Array.isArray(params?.username)
+    ? params?.username[0] ?? ''
+    : params?.username || '';
+  const isSameuser = session.data?.user.username === username;
+  const { data: profile } = useGetProfileDetailsQuery(
+    { username: username! },
+    {
+      skip: !username,
+    }
+  );
+ 
+  const isUserBlocked = userBlockedStatus.indexOf(profile?.code ?? '') >-1;
 
-  useEffect(() => {
-    setClientHeight(window?.document?.body?.clientHeight ?? 200);
-  }, []);
 
   // useMemo to avoid unnecessary re-renders of the tabs
   const tabs = useMemo(
@@ -104,7 +116,7 @@ const Page: React.FC = () => {
     >
       <ProfileSection />
       <Box sx={{ mb: 2 }}>{tabs}</Box>
-      <Box>{renderSection}</Box>
+      {isSameuser || !isUserBlocked  ? <Box>{renderSection}</Box> : <Box><Typography>No content</Typography></Box> }
     </Box>
   );
 };
