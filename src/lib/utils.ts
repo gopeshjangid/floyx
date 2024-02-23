@@ -50,17 +50,11 @@ export const baseQuery = retry(fetchBaseQuery({
     return headers;
   },
   responseHandler: async response => {
-    const json = await response.json();
+    
     if (response.status === 401) {
       logout();
     }
-    if (response.status ===404 && json.value.code === 'not_found') {
-      console.log("coming inside")
-      return retry.fail(json.value.code);
-      //return {data: json.value}
-    }
-    // You need to return a valid response format here
-    return json;
+    return response.json();
   },
 }),{maxRetries: 3});
 

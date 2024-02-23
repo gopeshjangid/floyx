@@ -19,7 +19,7 @@ const CustomDialog: React.FC<CustomDialogProps & MUIDialogProps> = ({
 }) => {
   return (
     <Dialog {...dialogProps}>
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle fontSize={18}>{title}</DialogTitle>
       <DialogContent>{content}</DialogContent>
       <DialogActions>{actions}</DialogActions>
     </Dialog>

@@ -271,12 +271,7 @@ const RegisterPage = () => {
         acceptTerms: true,
         phoneNumber: formData.phone,
         isReferred: formData.isReferred,
-
-        invitedbyUsername: formData.isReferred
-          ? formData.referred
-          : formData.recommendedMe
-            ? formData.recommended
-            : '',
+        invitedbyUsername: formData?.recommendedMe ? formData.recommended : formData.isReferred ? formData.referred : '',
       });
     }
   };
@@ -289,10 +284,11 @@ const RegisterPage = () => {
 
       if ((event as any).target.checked) {
         copy.recommendedMe = true;
+        copy.isReferred = true;
       } else {
         copy.recommendedMe = false;
+        copy.isReferred = false;
       }
-
       setFormData(copy);
     } else {
       setFormData(() => ({

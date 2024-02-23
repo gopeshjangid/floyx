@@ -93,13 +93,31 @@ type BonusTaskStatusResponse = Task[];
 type TipHistoryTypeResponse = TipHistoryType[];
 type CompletedHistoryTypeResponse = CompletedTaskHistory[];
 
+const customBaseQuery = async (args, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions);
+  if (result.error && result.error.status === 404) {
+     return {data: result.error.data};
+  }
+  return result;
+};
+
+const customResponse = (response:ApiResponse<any>)=>{
+  if(Array.isArray(response.value.data)){
+    return response.value.data
+  } else if(typeof response.value.data ==='string') {
+    return [];
+  }else{
+    return response.value.data;
+  }
+}
+
 export const earningsService = createApi({
   reducerPath: 'earningsReducer',
-  baseQuery: baseQuery,
+  baseQuery: customBaseQuery,
   endpoints: builder => ({
     getTransactionHistory: builder.query<Wallet, void>({
       query: () => ApiEndpoint.GetTransactionHistory,
-      transformResponse: (response: any) => response?.value?.data,
+      transformResponse: customResponse,
       extraOptions: {maxRetries: 2}
     }),
     getUserWallet: builder.query<Wallet, void>({
@@ -109,15 +127,13 @@ export const earningsService = createApi({
     }),
     getTipHistory: builder.query<TipHistoryTypeResponse, void>({
       query: () => ApiEndpoint.UserTipHistory,
-      transformResponse: (response: ApiResponse<TipHistoryTypeResponse>) => {
-        return response?.value?.data;
-      },
+      transformResponse: customResponse,
       providesTags: ['tipHistory'],
       extraOptions: {maxRetries: 2}
     }),
     getArticleTipHistory: builder.query<ArticleHistry[], void>({
       query: () => ApiEndpoint.UserArticleTipHistory,
-      transformResponse: (response: any) => response?.value?.data,
+      transformResponse: customResponse,
       providesTags: ['articleTipHistory'],
       extraOptions: {maxRetries: 2},
     }),
@@ -130,8 +146,7 @@ export const earningsService = createApi({
     }),
     getInviteHistory: builder.query<InviteHistoryResponse, void>({
       query: () => ApiEndpoint.GetInviteHistory,
-      transformResponse: (response: ApiResponse<InviteHistoryResponse>) =>
-        response?.value.data,
+      transformResponse: customResponse,
       providesTags: ['inviteHistory'],
       extraOptions: {maxRetries: 2}
     }),
@@ -150,11 +165,7 @@ export const earningsService = createApi({
     }),
     getCompletedTaskHistory: builder.query<CompletedHistoryTypeResponse, void>({
       query: () => ApiEndpoint.CompletedTaskHistory,
-      transformResponse: (
-        response: ApiResponse<CompletedHistoryTypeResponse>
-      ) => {
-        return response?.value.data;
-      },
+      transformResponse: customResponse,
       providesTags: ['completedTaskHistory'],
       extraOptions: {maxRetries: 2}
     }),

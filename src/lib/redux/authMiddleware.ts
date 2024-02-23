@@ -16,7 +16,6 @@ export const authMiddleware: Middleware = store => next => action => {
     const statusCode = action.error?.message?.startsWith('Rejected')
       ? payload?.originalStatus
       : null;
-    console.log('statusCode', statusCode);
     if (statusCode === 401) {
       store.dispatch(setLoginModal(true));
       signOut({ redirect: false });

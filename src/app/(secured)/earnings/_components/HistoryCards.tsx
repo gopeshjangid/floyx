@@ -35,7 +35,7 @@ const TransactionHistory = React.memo(function TransactionCard() {
           }}
           content={
             <Stack gap={2}>
-              {data.map((item, index) => (
+              {Array.isArray(data)&& data.length >0 ?  data.map((item, index) => (
                 <Box key={'item-' + index}>
                   <Typography variant="caption">
                     {moment(item.withdrawalDate).format('YYYY/MM/YY')} &nbsp;
@@ -53,7 +53,7 @@ const TransactionHistory = React.memo(function TransactionCard() {
                     </span>{' '}
                   </Typography>
                 </Box>
-              ))}
+              )): <Box  textAlign='center' sx={{height: 200, width: '300px'}}><Typography color='primary'>No History found!</Typography></Box>}
             </Stack>
           }
           open
@@ -103,7 +103,7 @@ const ArticleHistory = React.memo(function ArticleCard() {
           }}
           content={
             <Stack gap={2}>
-              {data.map((item, index) => (
+              {data.length > 0 ? data.map((item, index) => (
                 <Box key={'item-' + index}>
                   <Typography variant="caption">
                     {moment(item.earnedOn).format('YYYY/MM/YY')} &nbsp; You
@@ -123,7 +123,7 @@ const ArticleHistory = React.memo(function ArticleCard() {
                     </span>{' '}
                   </Typography>
                 </Box>
-              ))}
+              )): <Box  textAlign='center' sx={{height: 200, width: '300px'}}><Typography color='primary'>No History found!</Typography></Box>}
             </Stack>
           }
           open
@@ -167,7 +167,7 @@ const VoteHistory = React.memo(function VoteHistory() {
           }}
           content={
             <Stack gap={2}>
-              {data.map((item, index) => (
+              {data.length > 0 ? data.map((item, index) => (
                 <Box key={'item-' + index}>
                   <Typography variant="caption">
                     {moment(item.earnedOn).format('YYYY/MM/YY')} &nbsp; Your
@@ -187,7 +187,7 @@ const VoteHistory = React.memo(function VoteHistory() {
                     </span>{' '}
                   </Typography>
                 </Box>
-              ))}
+              )) : <Box  textAlign='center' sx={{height: 200, width: '300px'}}><Typography color='primary'>No History found!</Typography></Box>}
             </Stack>
           }
           open
@@ -229,7 +229,7 @@ const DailyTaskHistory = React.memo(function DailyHistory() {
           }}
           content={
             <Stack gap={2}>
-              {data.map((item, index) => (
+              {data.length > 0 ? data.map((item, index) => (
                 <Box key={'item-' + index}>
                   <Typography variant="caption">
                     {moment(item.earnedOn).format('YYYY/MM/YY')} &nbsp; You
@@ -241,7 +241,7 @@ const DailyTaskHistory = React.memo(function DailyHistory() {
                     from a daily task
                   </Typography>
                 </Box>
-              ))}
+              )): <Box  textAlign='center' sx={{height: 200, width: '300px'}}><Typography color='primary'>No History found!</Typography></Box>}
             </Stack>
           }
           open
