@@ -277,10 +277,10 @@ const ProfileSection: React.FC = () => {
       window.open(`http://${url}`, '_blank', 'noopener,noreferrer');
     }
   };
-
+console.log({isSameuser});
   return (
     <Box mt={4}>
-      {!isUserBlocked || isSameuser  && <Box my={2}>
+      {(!isUserBlocked || isSameuser)  && <Box my={2}>
         <Stack direction="row" flexWrap={'wrap'}>
           {isLoading ? (
             <Skeleton
