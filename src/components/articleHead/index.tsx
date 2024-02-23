@@ -45,7 +45,7 @@ const defaultTab = [
     icon: (fill: string) => <RecentIcon fill={fill} />,
   },
   {
-    label: 'Liked',
+    label: 'Most Liked',
     value: 'liked',
     icon: (fill: string) => <LikeIcon fill={fill} />,
   },

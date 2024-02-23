@@ -185,9 +185,9 @@ export const postServices = createApi({
         return endpointName;
       },
       merge: (currentCache, newItems, otherArgs) => {
-        if (currentCache) {
+        if (currentCache && otherArgs.arg.pageNumber !==1) {
           return {
-            postList: [...currentCache.postList, ...newItems.postList],
+            postList: [...newItems.postList, ...currentCache.postList],
             hasMore: newItems.postList.length === 10,
           };
         } else
@@ -199,13 +199,13 @@ export const postServices = createApi({
 
       // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
+        return currentArg?.username !== previousArg?.username || currentArg?.pageNumber !== previousArg?.pageNumber || currentArg?.postCreatedDate !== previousArg?.postCreatedDate;
       },
 
       providesTags: (result, error, arg) => [
         {
           type: 'PostListByUser',
-          id: `${arg.username}-${arg.pageNumber}-${arg.postCreatedDate}`,
+          id: `LIST`,
         },
       ],
     }),
@@ -230,25 +230,17 @@ export const postServices = createApi({
 
       merge: (currentCache, newItems, otherArgs) => {
         if (otherArgs.arg.pageNumber === 1) {
-          console.log('page 1 so resetting cache', newItems.postList);
           return {
             postList: [...newItems.postList],
             hasMore: newItems.postList.length === 10,
           };
         }
         if (currentCache) {
-          console.log(
-            'getPost current cache merging',
-            currentCache.postList.length,
-            'pagn =>',
-            otherArgs.arg.pageNumber
-          );
           return {
             postList: [...currentCache.postList, ...newItems.postList],
             hasMore: newItems.postList.length === 10,
           };
         } else {
-          console.log('getPost new  cache merging', newItems.postList.length);
           return {
             postList: [...newItems.postList],
             hasMore: newItems.postList.length === 10,

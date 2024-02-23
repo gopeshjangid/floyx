@@ -3,7 +3,7 @@ import PostList from '@/components/Post/PostList';
 import { useGetPostListByUserQuery } from '@/lib/redux';
 import { Box, Grid } from '@mui/material';
 import { useParams } from 'next/navigation';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 export interface apiParams {
   pageNumber: number;
@@ -21,6 +21,12 @@ function ProfilePostList({parentRef}) {
     postCreatedDate: '',
     username: username || '',
   });
+
+  useEffect(()=>{
+   if(username){
+    setApiParams((params)=>({...params, username, pageNumber : 1}))
+   }
+  },[username])
 
   const { data, isFetching, isLoading } = useGetPostListByUserQuery(apiParams);
   const postData = data?.postList;
