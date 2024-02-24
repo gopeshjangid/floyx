@@ -321,6 +321,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       setMobileOpen(false);
     }
     if (href === '/') {
+      window.location.href="/";
       // dispatch(
       //   postServices.util.invalidateTags([
       //     { type: 'MainFeedList', id: 'ALL' },
