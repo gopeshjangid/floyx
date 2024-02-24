@@ -45,6 +45,7 @@ function PostList({
   mainContainerFeedRef
 }: PostProps) {
   const { palette } = useTheme();
+  console.log("postlits=>",{isLoading,postData});
   return (
     <>
       {!isLoading && Array.isArray(postData) ? (

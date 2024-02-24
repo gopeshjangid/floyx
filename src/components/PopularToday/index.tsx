@@ -35,7 +35,7 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 
 function RecentArticles() {
   const router = useRouter();
-  const { data, isLoading } = useGetArticleListQuery('recent?forHome=true');
+  const { data, isLoading } = useGetArticleListQuery('recent?forHome=true',{refetchOnMountOrArgChange: false});
 
   return (
     <PopularTodaySection>

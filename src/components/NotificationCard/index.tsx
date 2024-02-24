@@ -24,7 +24,7 @@ import {
 } from '@/assets/images';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { getRelativeTime } from '@/lib/utils';
-import { INotification } from '@/app/(secured)/notifications/types';
+import { INotification } from '@/app/(secured)/notifications-list/types';
 import { PARENTHESES_AND_BRACKETS_REGEX, PROFILE_REGEX } from '@/constants';
 import { notificationService } from '@/lib/services/new/notificationService';
 

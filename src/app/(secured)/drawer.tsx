@@ -50,7 +50,7 @@ import {
   FLOYX_USERNAME,
   SOCIAL_SIGNIN_DATA,
 } from '@/constants';
-import { INotification } from './notifications/types';
+import { INotification } from './notifications-list/types';
 import CustomPopover from '@/components/PopoverOptions';
 import LogoutIcon from '@/iconComponents/logOut';
 import SettingsIcon from '@/iconComponents/settingsIcon';
@@ -177,7 +177,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     },
     {
       label: 'Notifications',
-      href: '/notifications',
+      href: '/notifications-list',
       icon: (fill: string) => <NotificationIcon stroke={fill} />,
     },
     {

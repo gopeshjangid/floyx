@@ -1,5 +1,5 @@
 import React from 'react';
-import NotificationLoader from '../notifications/loading';
+import NotificationLoader from '../notifications-list/loading';
 
 const RecoveryCodesLoader = () => {
   return <NotificationLoader />;

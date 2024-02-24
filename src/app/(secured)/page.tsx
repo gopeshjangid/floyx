@@ -97,6 +97,7 @@ export default function Page() {
   useEffect(() => {
     initSignalR();
   }, []);
+  console.log({isFetching, isLoading, postData});
   const loadMore = useCallback(() => {
     if (postData?.length && !isFetching) {
       console.log('post list load more called');

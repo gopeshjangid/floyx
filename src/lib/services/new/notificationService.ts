@@ -4,7 +4,7 @@ import { tokenService } from './tokenService';
 import { authService } from './authService';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { CookieValueTypes } from 'cookies-next';
-import { INotification } from '@/app/(secured)/notifications/types';
+import { INotification } from '@/app/(secured)/notifications-list/types';
 
 interface IRawNotification {
   value: {
