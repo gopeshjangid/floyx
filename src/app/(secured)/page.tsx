@@ -20,7 +20,7 @@ import {
   useEffect,
   useLayoutEffect,
   useState,
-  useRef
+  useRef,
 } from 'react';
 import { getCookie } from 'cookies-next';
 
@@ -111,7 +111,7 @@ export default function Page() {
 
   const viewportHeight =
     typeof window === 'undefined' ? 1000 : window.innerHeight;
-  
+
   const mainContainerFeedRef = useRef(null);
 
   return (
@@ -130,6 +130,7 @@ export default function Page() {
               <Grid item xs={12}>
                 <Suspense fallback={<SectionSkeleton />}>
                   <PostHeader />
+                  <h1>Post Header</h1>
                 </Suspense>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -150,6 +151,7 @@ export default function Page() {
                   <AddPost />
                   <Suspense fallback={<SectionSkeleton />}>
                     <FollowNewAccounts />
+                    <h1>FollowNewAccounts</h1>
                   </Suspense>
                   <PostList
                     postData={postData || []}
@@ -165,6 +167,7 @@ export default function Page() {
                 <Box display={{ xs: 'none', sm: 'block' }}>
                   <Suspense fallback={<SectionSkeleton />}>
                     <RecentArticles />
+                    <h1>Recent Articles</h1>
                   </Suspense>
                 </Box>
               </Grid>
