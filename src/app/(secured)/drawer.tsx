@@ -208,7 +208,8 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const homeRedirect = () => {
     if (pathname === '/') {
       const container = document.querySelector('#mainContainerFeed');
-      if (container) container.scrollTop = 0;
+      //if (container) container.scrollTop = 0;
+      if (container) {window.location.reload()}
     }
     if (pathname !== '/') {
       router.push('/');
@@ -321,12 +322,13 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       setMobileOpen(false);
     }
     if (href === '/') {
-      dispatch(
-        postServices.util.invalidateTags([
-          { type: 'MainFeedList', id: 'ALL' },
-          'MainFeedList',
-        ])
-      );
+      // dispatch(
+      //   postServices.util.invalidateTags([
+      //     { type: 'MainFeedList', id: 'ALL' },
+      //     'MainFeedList',
+      //   ])
+      // );
+      //Unnecessary Calling 
       homeRedirect();
     }
   };
