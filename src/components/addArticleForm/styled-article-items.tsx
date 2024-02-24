@@ -281,6 +281,7 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
               ? theme.palette.text.primary
               : theme.palette?.action?.svg,
         },
+        color:'#2B2B2B',
         fontSize: '18px',
         marginBottom: '15px',
         wordBreak: 'break-word',
