@@ -110,7 +110,7 @@ const ArticleHistory = React.memo(function ArticleCard() {
                     article{' '}
                     <Link
                       target="_blank"
-                      style={{ textDecoration: 'underline', color: 'blue' }}
+                      style={{ textDecoration: 'underline', color: '#5798FF' }}
                       href={getUrl(item.articleUrl)}
                     >
                       {getUrl(item.articleUrl)}

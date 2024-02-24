@@ -391,7 +391,7 @@ console.log({articleTipError},{articleTipHistory});
               stroke={palette.background.default}
             />
           }
-          firstCountTitle="Number of articles added"
+          firstCountTitle="Number of tips received"
           firstCount={
             !articleTipError && articleTipHistory
               ? articleTipHistory?.length
