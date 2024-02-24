@@ -59,7 +59,7 @@ import { GradientText } from '@/components/usernameLink';
 import AddPost from '@/components/Post/AddPost';
 import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
-import { postServices } from '@/lib/redux';
+//import { postServices } from '@/lib/redux';
 import { useDispatch } from 'react-redux';
 //import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
@@ -147,7 +147,7 @@ interface IDrawerState {
 }
 
 export default function DrawerAppBar({ children }: { children: ReactNode }) {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const [drawerData, setDrawerData] = useState<IDrawerState>({
     currentLoggedUser: {
       username: getCookie(FLOYX_USERNAME)?.toString() || '',
@@ -321,13 +321,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       setMobileOpen(false);
     }
     if (href === '/') {
-      window.location.href="/";
       // dispatch(
       //   postServices.util.invalidateTags([
       //     { type: 'MainFeedList', id: 'ALL' },
       //     'MainFeedList',
       //   ])
       // );
+      window.location.href="/";
+
       //homeRedirect();
     }
   };

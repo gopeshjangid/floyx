@@ -229,25 +229,25 @@ export const postServices = createApi({
       },
 
       merge: (currentCache, newItems, otherArgs) => {
-        currentCache.postList.push(...newItems.postList);
-        currentCache.hasMore = newItems.hasMore;
-        // if (otherArgs.arg.pageNumber === 1) {
-        //   return {
-        //     postList: [...newItems.postList],
-        //     hasMore: newItems.postList.length === 10,
-        //   };
-        // }
-        // if (currentCache) {
-        //   return {
-        //     postList: [...currentCache.postList, ...newItems.postList],
-        //     hasMore: newItems.postList.length === 10,
-        //   };
-        // } else {
-        //   return {
-        //     postList: [...newItems.postList],
-        //     hasMore: newItems.postList.length === 10,
-        //   };
-        // }
+        ///currentCache.postList.push(...newItems.postList);
+        //currentCache.hasMore = newItems.hasMore;
+        if (otherArgs.arg.pageNumber === 1) {
+          return {
+            postList: [...newItems.postList],
+            hasMore: newItems.postList.length === 10,
+          };
+        }
+        if (currentCache) {
+          return {
+            postList: [...currentCache.postList, ...newItems.postList],
+            hasMore: newItems.postList.length === 10,
+          };
+        } else {
+          return {
+            postList: [...newItems.postList],
+            hasMore: newItems.postList.length === 10,
+          };
+        }
       },
       providesTags: (result, error, arg) => [
         { type: 'MainFeedList', id: 'ALL' },
