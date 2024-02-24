@@ -58,7 +58,7 @@ export default function Page() {
   });
   const { isMobile } = useDevice();
   const store = useStore({});
-  const { data, isFetching, isLoading, refetch } = useGetPostsQuery(apiParams);
+  const { data, isFetching, isLoading, refetch } = useGetPostsQuery(apiParams,{refetchOnMountOrArgChange: true});
   const postData = data?.postList;
   const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
   const initSignalR = () => {
