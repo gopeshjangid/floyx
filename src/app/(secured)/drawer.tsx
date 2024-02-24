@@ -327,7 +327,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       //     'MainFeedList',
       //   ])
       // );
-      homeRedirect();
+      //homeRedirect();
     }
   };
 
