@@ -321,12 +321,12 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       setMobileOpen(false);
     }
     if (href === '/') {
-      dispatch(
-        postServices.util.invalidateTags([
-          { type: 'MainFeedList', id: 'ALL' },
-          'MainFeedList',
-        ])
-      );
+      // dispatch(
+      //   postServices.util.invalidateTags([
+      //     { type: 'MainFeedList', id: 'ALL' },
+      //     'MainFeedList',
+      //   ])
+      // );
       homeRedirect();
     }
   };
