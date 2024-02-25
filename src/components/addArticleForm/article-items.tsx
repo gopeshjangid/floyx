@@ -79,6 +79,10 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
             // Concatenate img tag outerHTML with remaining text
           value = imgTag.outerHTML + textAfterImg;
       }
+    }else if (item.type != 'ul' && item.type != 'ol'){
+      // If pasted content does not contain an image, remove background styles
+      value = value.replace(/<[^>]+>/g, ''); // Remove all HTML tags
+      value = value.replace(/\n/g, ''); // Remove newlines
     }
     
     if (value.charCodeAt(0) === lineFeedCode) {
