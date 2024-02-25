@@ -72,6 +72,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       if (imgTag) {
           // Set width and height of img tag
           imgTag.setAttribute('width', '100%');
+          imgTag.setAttribute('object-fit', 'cover')
           // imgTag.setAttribute('height', 'auto');
           // Get the src attribute value
           const srcValue = imgTag.getAttribute('src');
