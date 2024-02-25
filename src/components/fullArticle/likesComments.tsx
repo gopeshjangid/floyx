@@ -187,7 +187,7 @@ function LikesComments({
       <Stack direction="row" gap={2} py={1} justifyContent={'flex-start'}>
         <Button
           variant="text"
-          startIcon={<LikeIcon isLiked={likeCount} />}
+          startIcon={<LikeIcon isLiked={likesCommentsDetails?.likedByAuthor} />}
           onClick={handleArticleLike}
           sx={{ padding: 0 }}
         >
@@ -304,26 +304,6 @@ function LikesComments({
           </Suspense>
         </Box>
       )}
-      {showComments && (
-        <Box>
-          {Array.isArray(generalizedComments) &&
-            (commentLimit === 'Most recent'
-              ? generalizedComments.slice(0, 5)
-              : generalizedComments
-            ).map((val: any, index: number) => (
-              <div key={'comment-list-item-' + index}>
-                <Comment
-                  comment={val}
-                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
-                  setCommentText={commentTextHandler}
-                  inputRef={commentRef}
-                  onAction={commentAction}
-                />
-                {index !== generalizedComments.length - 1 && <Divider />}
-              </div>
-            ))}
-        </Box>
-      )}
       {newCreatedComments?.newComments.length > 0 && (
         <Box>
           {Array.isArray(newCreatedComments?.newComments) &&
@@ -342,6 +322,35 @@ function LikesComments({
                 )}
               </div>
             ))}
+        </Box>
+      )}
+      {showComments && (
+        <Box>
+          {Array.isArray(generalizedComments) &&
+            (commentLimit === 'Most recent'
+              ? generalizedComments.slice(0, 5)
+              : generalizedComments
+            ).map((val: any, index: number) => {
+              // Check if val is not in newCreatedComments.newComments array
+              const isCommentInNewComments = newCreatedComments.newComments.some(
+                (newComment: any) => newComment.comment.id === val.comment.id
+              );
+              // Render Comment component only if val is not in newCreatedComments.newComments array
+              if (!isCommentInNewComments) {
+                return (
+                  <div key={'comment-list-item-' + index}>
+                    <Comment
+                      comment={val}
+                      type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                      setCommentText={commentTextHandler}
+                      inputRef={commentRef}
+                      onAction={commentAction}
+                    />
+                    {index !== generalizedComments.length - 1 && <Divider />}
+                  </div>
+                )
+              }
+            })}
         </Box>
       )}
 
