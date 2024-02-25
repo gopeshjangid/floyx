@@ -1,4 +1,5 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { useGetArticleListQuery } from '@/lib/redux';
 import {
   Box,
@@ -35,8 +36,16 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 
 function RecentArticles() {
   const router = useRouter();
-  const { data, isLoading } = useGetArticleListQuery('recent?forHome=true');
+  const [params, setParams] = useState('recent?forHome=true');
+  const { data, isLoading } = useGetArticleListQuery(params);
+  useEffect(() => {
+    if (localStorage.getItem('HomeReload') === 'true') {
+     
 
+      setParams('recent?forHome=true ');
+    }
+  }, [localStorage.getItem('HomeReload')]);
+  
   return (
     <PopularTodaySection>
       <Box textAlign={'center'} marginTop="-10px">
@@ -44,11 +53,15 @@ function RecentArticles() {
       </Box>
       <PopularTodayListSection mt={2}>
         {!isLoading && data ? (
-          data.map((article, index) => (
+          data?.map((article, index) => (
             <Box p={1} pb={2} key={`recent-article-${index}`}>
               <Link
                 //target="_blank"
-                style={{cursor: !article.article.publicUrl ? 'not-allowed' : 'pointer'}}
+                style={{
+                  cursor: !article.article.publicUrl
+                    ? 'not-allowed'
+                    : 'pointer',
+                }}
                 href={
                   article.article.publicUrl
                     ? '/article/' +
@@ -76,7 +89,7 @@ function RecentArticles() {
                   </Stack>
                 </Stack>
               </Link>
-              {data.length - 1 !== index && <Divider />}
+              {data?.length - 1 !== index && <Divider />}
             </Box>
           ))
         ) : (

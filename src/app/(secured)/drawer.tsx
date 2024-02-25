@@ -113,7 +113,7 @@ const LinkListItemButton: React.FC<LinkListItemButtonProps> = ({
   return (
     <Link href={href} passHref prefetch={false}>
       <CustomListItemButton {...props}>{children}</CustomListItemButton>
-    </Link>
+      </Link> 
   );
 };
 
@@ -208,8 +208,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const homeRedirect = () => {
     if (pathname === '/') {
       const container = document.querySelector('#mainContainerFeed');
-      //if (container) container.scrollTop = 0;
-      if (container) {window.location.reload()}
+      if (container) container.scrollTop = 0;
+      localStorage.setItem("HomeReload", "true");
+      //if (container) {window.location.reload()}
     }
     if (pathname !== '/') {
       router.push('/');
@@ -294,7 +295,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     );
   };
   useEffect(() => {
-    const isPrivate = config.matcher.some(path => pathname.includes(path));;
+    const isPrivate = config.matcher.some(path => pathname.includes(path));
     if (
       session.status !== 'loading' &&
       !isLoggedIn &&
@@ -308,7 +309,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
       router.push('/login');
     }
-  }, [isLoggedIn, session.status,firstTimeUsingSocialMediaLogin]);
+  }, [isLoggedIn, session.status, firstTimeUsingSocialMediaLogin]);
 
   const getMessageCount = () => {
     setDrawerData(prev => ({
@@ -328,7 +329,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       //     'MainFeedList',
       //   ])
       // );
-      //Unnecessary Calling 
+      //Unnecessary Calling
       homeRedirect();
     }
   };

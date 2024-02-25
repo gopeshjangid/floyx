@@ -56,6 +56,17 @@ export default function Page() {
     pageNumber: 1,
     postCreatedDate: '',
   });
+  useEffect(() => {
+    if (localStorage.getItem('HomeReload') === 'true') {
+      //localStorage.setItem("HomeReload", "false");
+      localStorage.removeItem('HomeReload');
+
+      setApiParams({
+        pageNumber: 1,
+        postCreatedDate: '',
+      });
+    }
+  }, [localStorage.getItem('HomeReload')]);
   const { isMobile } = useDevice();
   const store = useStore({});
   const { data, isFetching, isLoading } = useGetPostsQuery(apiParams);
@@ -130,7 +141,6 @@ export default function Page() {
               <Grid item xs={12}>
                 <Suspense fallback={<SectionSkeleton />}>
                   <PostHeader />
-                  <h1>Post Header</h1>
                 </Suspense>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -151,7 +161,6 @@ export default function Page() {
                   <AddPost />
                   <Suspense fallback={<SectionSkeleton />}>
                     <FollowNewAccounts />
-                    <h1>FollowNewAccounts</h1>
                   </Suspense>
                   <PostList
                     postData={postData || []}
@@ -167,7 +176,6 @@ export default function Page() {
                 <Box display={{ xs: 'none', sm: 'block' }}>
                   <Suspense fallback={<SectionSkeleton />}>
                     <RecentArticles />
-                    <h1>Recent Articles</h1>
                   </Suspense>
                 </Box>
               </Grid>
