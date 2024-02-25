@@ -60,7 +60,7 @@ import AddPost from '@/components/Post/AddPost';
 import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
 //import { postServices } from '@/lib/redux';
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 //import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
 const drawerWidth = 240;
@@ -146,6 +146,7 @@ interface IDrawerState {
   notifications: INotification[];
 }
 
+const publicPaths = ['/login','/article','/post','/profile'];
 export default function DrawerAppBar({ children }: { children: ReactNode }) {
   //const dispatch = useDispatch();
   const [drawerData, setDrawerData] = useState<IDrawerState>({
@@ -294,12 +295,13 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   };
   useEffect(() => {
     const isPrivate = config.matcher.some(path => pathname.includes(path));;
+    const isPublic = publicPaths.some(path => pathname.includes(path));;
     if (
       session.status !== 'loading' &&
       !isLoggedIn &&
       !firstTimeUsingSocialMediaLogin &&
       !pathname.includes('/login') &&
-      isPrivate
+      isPrivate && !isPublic
     ) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
@@ -336,7 +338,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const drawer = (
     <Box>
       <Box sx={{ padding: 1, background: 'inherit', paddingBottom: 2 }}>
-        <IconButton onClick={homeRedirect}>
+        <IconButton sx={{'&:hover': {backgroundColor: 'inherit'}}} onClick={homeRedirect}>
           <FloyxImage
             fill={
               theme.palette.mode === 'dark'

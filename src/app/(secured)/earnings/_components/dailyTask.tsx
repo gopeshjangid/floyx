@@ -9,10 +9,12 @@ import {
   useMediaQuery,
   Skeleton,
   useTheme,
+  CircularProgress,
 } from '@mui/material';
 import DailTaskSTatusIcon from '@/iconComponents/dailyTaskStatusIcon';
 import {
   DailyTaskType,
+  useCollectTaskCompletedRewardMutation,
   useGetDailyTaskListQuery,
 } from '@/lib/redux/slices/earnings';
 import { styled } from '@mui/material/styles';
@@ -26,6 +28,7 @@ import Paper from '@mui/material/Paper';
 import { GradientOutlinedButton } from '@/components/GradientComponents';
 import { GradientText } from '@/components/usernameLink';
 import RemainingTimer from './remainingTimer';
+import { useToast } from '@/components/Toast/useToast';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,7 +42,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function DailyTaskTable({ rows }: { rows: DailyTaskType[] }) {
+function DailyTaskTable({ rows, collectRewardPoint, isLoading }: { isLoading: boolean; collectRewardPoint: (taskId: string) => void; rows: DailyTaskType[] }) {
+  const [taskId, setTaskId] = React.useState('');
+
+  const collectTaskId = (taskIdValue) => {
+    setTaskId(taskIdValue);
+    collectRewardPoint(taskIdValue);
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="customized table">
@@ -64,9 +74,12 @@ function DailyTaskTable({ rows }: { rows: DailyTaskType[] }) {
               </StyledTableCell>
               <StyledTableCell align="center">{row.taskStatus}</StyledTableCell>
               <StyledTableCell align="right">
-                <GradientOutlinedButton variant="outlined">
-                  <GradientText>{row.taskReward}</GradientText>
-                </GradientOutlinedButton>
+                {
+                  taskId === row.dailyTaskId && isLoading ? <CircularProgress /> : <GradientOutlinedButton onClick={() => row.canGetReward && !row.isCompleted ? collectTaskId(row.dailyTaskId) : void (0)} disabled={!row.canGetReward && !row.isCompleted} variant={row.isCompleted ? "contained" : "outlined"}>
+                    <GradientText>{!row.canGetReward && !row.isCompleted ? row.taskReward : row.isCompleted ? "Collected" : 'Collect'}</GradientText>
+                  </GradientOutlinedButton>
+                }
+
               </StyledTableCell>
             </TableRow>
           ))}
@@ -82,9 +95,25 @@ const DailyTask: React.FC = () => {
   const {
     data: itemsdailyTaskList,
     isLoading: dailtyTaskLoading,
-    error,
   } = useGetDailyTaskListQuery();
+  const toast = useToast();
+  const [collectReward, { isLoading, isSuccess, error }] = useCollectTaskCompletedRewardMutation();
   const isMobile = useMediaQuery('(max-width:480px)');
+  React.useEffect(() => {
+    if (isSuccess) {
+      toast.success("Reward Collected!");
+
+    }
+    if (error) {
+      const message =  (error as any ).data.value.data ==='please_complete_task_first_to_collect_reward' ? "Please complete task first" : "something went wrong!";
+      toast.error(message ?? "Something went wrong in task collection");
+    }
+
+  }, [isSuccess, error]);
+
+  const collectRewardPoint = React.useCallback((taskId) => {
+    collectReward({ taskId });
+  }, []);
 
   return (
     <Box
@@ -108,7 +137,7 @@ const DailyTask: React.FC = () => {
       </Box>
       <Box p={2} textAlign="center">
         {!dailtyTaskLoading && itemsdailyTaskList ? (
-          <DailyTaskTable rows={itemsdailyTaskList} />
+          <DailyTaskTable collectRewardPoint={collectRewardPoint} isLoading={isLoading} rows={itemsdailyTaskList} />
         ) : (
           <Stack gap={1}>
             <Skeleton variant="rectangular" width="100%" height={'60px'} />

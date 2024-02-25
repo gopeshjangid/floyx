@@ -311,7 +311,7 @@ export default function ArticleContainer({
                       ? articleDetails?.title.slice(0, 70)
                       : ''}
                   </CustomDescription>
-                  <Typography variant="caption" sx={{ textWrap: 'nowrap' }}>
+                  <Typography color='green' variant="caption" sx={{ textWrap: 'nowrap' }}>
                     {tipHistory ? (
                       tippedOrNot() ? (
                         '  (!You Tipped)'

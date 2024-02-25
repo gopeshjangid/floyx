@@ -144,6 +144,14 @@ export const earningsService = createApi({
       providesTags: ['bonusTask'],
       extraOptions: {maxRetries: 2}
     }),
+    collectTaskCompletedReward: builder.mutation<string, { taskId: string }>({
+      query: params => ({
+        url: `${ApiEndpoint.CollectDailyTaskReward}/${params.taskId}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+      }),
+      transformResponse: (response: ApiResponse<string>) => response.value.data,
+      invalidatesTags: (result) => result ?  ['dailTaskList'] : [],
+    }),
     getInviteHistory: builder.query<InviteHistoryResponse, void>({
       query: () => ApiEndpoint.GetInviteHistory,
       transformResponse: customResponse,
@@ -216,4 +224,5 @@ export const {
   useUpdateWalletMutation,
   useGetActiveCurrencyQuery,
   useGetIsEarningStoppedQuery,
+  useCollectTaskCompletedRewardMutation,
 } = earningsService;

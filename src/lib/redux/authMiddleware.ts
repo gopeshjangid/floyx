@@ -1,26 +1,17 @@
-import { Middleware, isRejectedWithValue } from '@reduxjs/toolkit';
+import { Middleware } from '@reduxjs/toolkit';
 import { signOut } from 'next-auth/react';
 import { setLoginModal } from './slices/appConfig';
 
-interface MyErrorPayload {
-  status?: string;
-  originalStatus?: number;
-  data?: string;
-  error?: string;
-}
 
-export const authMiddleware: Middleware = store => next => action => {
-  if (isRejectedWithValue(action)) {
-    // Accessing the status code from the error object
-    const payload = action.payload as MyErrorPayload;
-    const statusCode = action.error?.message?.startsWith('Rejected')
-      ? payload?.originalStatus
-      : null;
-    if (statusCode === 401) {
-      store.dispatch(setLoginModal(true));
-      signOut({ redirect: false });
-    }
+export const authMiddleware: Middleware = store => next => (action: any) => {
+ if (action.error && action.error.message === 'Rejected' && action.meta.arg.type === 'mutation') {
+  const response = action.meta.baseQueryMeta?.response;
+  if (response?.status === 401) {
+    store.dispatch(setLoginModal(true));
+    console.log("login modal open")
+    signOut({ redirect: false });
   }
+}
 
   return next(action);
 };

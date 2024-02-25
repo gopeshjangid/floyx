@@ -5,7 +5,7 @@ import { Box, Grid } from '@mui/material';
 
 export default function HomePageLoading() {
   return (
-    <Box mt={4} p={1}>
+    <Box mt={4} p={1} width={'100%'}>
       <Grid container spacing={1}>
         <Grid item xs={12} sm={9}>
           <Skeleton variant="rectangular" width={'100%'} height={180} />

@@ -82,16 +82,17 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
       const response = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
+        remember: false,
+        redirect: false,
       });
 
       setLoading(false);
-
       if (response?.ok) {
         toast.success('Login successfully!');
         handleClose();
       } else {
         console.log('login error response', JSON.stringify(response));
-        toast.error(response?.error || 'Something went wrong!');
+        toast.error(JSON.stringify(response) || 'Something went wrong!');
       }
     }
   };

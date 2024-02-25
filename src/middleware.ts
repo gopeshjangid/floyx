@@ -44,7 +44,7 @@ export async function customMiddleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/',
-    '/notifications',
+    '/notifications-list',
     '/people',
     '/settings',
     '/articles',

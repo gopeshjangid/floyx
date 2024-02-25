@@ -24,12 +24,12 @@ export default function TipColumn({
   const session = useSession();
   const [value, setValue] = useState<number>(30);
   const pathname = usePathname();
-  const [tipHistory, setTipHistory] = useState<any>(undefined);
+  const isSameUser = details.user.username === session.data?.user.username;
   const [updateTip, { isLoading: tipLoading, isError, error, isSuccess }] =
     useSetTipMutation();
-  const { refetch, data: fetchedTipHistory  } = useGetTipHistoryQuery(undefined, {
+  const { data: fetchedTipHistory, isFetching, isLoading  } = useGetTipHistoryQuery(undefined, {
     skip:
-      session?.status === 'loading' || session?.status === 'unauthenticated',
+      session?.status === 'loading' || session?.status === 'unauthenticated' || isSameUser,
   });
   const toast = useToast();
   const { palette } = useTheme();
@@ -48,15 +48,7 @@ export default function TipColumn({
     };
     updateTip(payload);
   };
-  const tippedOrNot = () => {
-    const check = tipHistory?.filter(val => val?.articleId === articleId);
-    if (check?.length === 0) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
+ 
   useEffect(() => {
     if (isError) {
       if (error) {
@@ -84,20 +76,26 @@ export default function TipColumn({
 
   useEffect(() => {
     if (isSuccess) {
-      refetch();
+      //refetch();
       toast.success('You tipped!');
       revalidateArticleDetail(pathname);
 
     }
   }, [isSuccess, pathname]);
   
-  useEffect(() => {
-    if (fetchedTipHistory) {
-      setTipHistory(fetchedTipHistory);
-    }
-  }, [fetchedTipHistory]);
+  
 
-  if (!tipHistory) return null;
+  console.log("session.status === 'loading' || isFetching || isLoading  session->",session.status === 'loading' ,"->isfetching", isFetching , "isloding-->",isLoading)
+
+  if(session.status === 'loading' || isFetching || isLoading){
+    return <Box textAlign={'center'} width={'100%'}><CircularProgress/></Box>;
+  }
+
+  if (isSameUser) return null;
+
+  console.log("fetchedTipHistory: ",fetchedTipHistory);
+
+  const history = (fetchedTipHistory ?? []).filter(val => val?.articleId === articleId);
   return (
     <Box
       p={2}
@@ -108,7 +106,7 @@ export default function TipColumn({
         background: palette.primary.mainBackground,
       }}
     >
-      {!tippedOrNot() ? (
+      {history.length ===0 ? (
         <Box>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography

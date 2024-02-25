@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import { baseQuery } from '@/lib/utils';
 import { postServices } from '../posts';
@@ -199,7 +199,8 @@ export const artcileDetails = createApi({
       query: articleId => `${ApiEndpoint.ArticleTotalEarning}/${articleId}`,
       transformResponse: (response: ApiResponse<ArticleEarning>) =>
         response?.value?.data,
-      providesTags: (result, error, arg) => [{ type: 'articleTip', id: arg }],
+      providesTags: (result, error, arg) => result ?  [{ type: 'articleTip', id: arg }] :['articleTip'],
+      extraOptions: {maxRetries: 2}
     }),
     setTip: builder.mutation<any, string>({
       query: payload => ({
@@ -208,7 +209,8 @@ export const artcileDetails = createApi({
         body: payload,
       }),
       transformErrorResponse: (error: any) => error?.data?.value?.data || '',
-      invalidatesTags: ['articleTip', 'tipHistory', 'walletHistory'],
+      invalidatesTags: (result, error)=> result  ? ['articleTip', 'tipHistory', 'walletHistory'] : [],
+      extraOptions: {maxRetries: 2}
     }),
     getArticleList: builder.query<any, string | undefined>({
       query: tabName =>

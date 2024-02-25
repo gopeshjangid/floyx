@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Box, Typography, Button, Popover, Stack } from '@mui/material';
+import { Box, Typography, Button, Popover, Stack, CircularProgress } from '@mui/material';
 import StarIcon from '@/images/image/star';
 import { useGetArticleTotalEarningsQuery } from '@/lib/redux/slices/articleDetails';
 import { RoundPrimaryButton } from '../CustomButtons';
@@ -13,7 +13,7 @@ export default function AuthorPoints({ details }: any) {
   const articleId = details?.article?.id || '';
   const { data: totalEarningPoints } = useGetArticleTotalEarningsQuery(
     articleId,
-    { skip: session.status === 'unauthenticated' }
+    { skip: session.status === 'unauthenticated' || session.status === 'loading' }
   );
 
   const pointsEarned = totalEarningPoints
@@ -33,6 +33,10 @@ export default function AuthorPoints({ details }: any) {
   };
 
   const open = Boolean(anchorEl);
+
+  if(session.status ==='loading'){
+    return <CircularProgress/>
+  }
 
   return (
     <Stack justifyContent={'flex-end'} alignItems={'flex-end'} gap={1}>

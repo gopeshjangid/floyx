@@ -74,7 +74,7 @@ function UserCard({
                 direction={isArticle ? 'column' : 'row'}
                 gap={isArticle ? 0 : 0.5}
                 flexWrap={'wrap'}
-                alignItems={'center'}
+                alignItems={isArticle ? 'flex-start' : 'center'}
               >
                 <ProfileName variant="subtitle1">{name} </ProfileName>
                 <UsernameLink
