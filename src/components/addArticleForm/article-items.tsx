@@ -63,6 +63,24 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
     let { value } = e.target;
     const lineFeedCode = 10;
 
+    if (value.includes('<img')) {
+      // Create a dummy DOM element to parse HTML string
+      const tempElement = document.createElement('div');
+      tempElement.innerHTML = value;
+      // Extract img tag from the value
+      const imgTag = tempElement.querySelector('img');
+      if (imgTag) {
+          // Set width and height of img tag
+          imgTag.setAttribute('width', '100%');
+          // imgTag.setAttribute('height', 'auto');
+          // Get the src attribute value
+          const srcValue = imgTag.getAttribute('src');
+          const textAfterImg = tempElement.textContent?.replace(imgTag.outerHTML, '') || '';
+            // Concatenate img tag outerHTML with remaining text
+          value = imgTag.outerHTML + textAfterImg;
+      }
+    }
+    
     if (value.charCodeAt(0) === lineFeedCode) {
       value = value.substring(1, value.length);
     }
