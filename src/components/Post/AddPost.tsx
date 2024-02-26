@@ -11,7 +11,7 @@ import {
   useTheme,
   IconButton,
 } from '@mui/material';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -61,7 +61,7 @@ function AddPost({
     setIsVisible(!isVisible);
   };
 
-  const [createPost, { error, isLoading }] = useCreatePostMutation();
+  const [createPost, { error, isLoading,isSuccess: successPublishedPost }] = useCreatePostMutation();
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
   const getUserDetails = async (mentionValue: string, callback: any) => {
     let userList: any = [];
@@ -132,12 +132,17 @@ function AddPost({
     formData.append('text', postObj.postText);
     formData.append('file', imageToUpload);
     await createPost(formData);
-    setPostObj(initialPostObj);
-    setImagePreview('');
-    setImageToUpload('');
-    toast.success('Post is published successfully');
-    if (writeDialog) setOpenWriteDialog(false);
   };
+
+  useEffect(()=>{
+     if(successPublishedPost){
+      setPostObj(initialPostObj);
+      setImagePreview('');
+      setImageToUpload('');
+      toast.success('Post is published successfully');
+      if (writeDialog) setOpenWriteDialog(false);
+     }
+  },[successPublishedPost]);
 
   const publishPost = () => {
     setPostObj(prev => ({ ...prev, publishButtonDisabled: true }));
@@ -219,7 +224,7 @@ function AddPost({
           </Box>
           {error && !isLoading && (
             <Typography component={'span'} color={'error'}>
-              {'Please add photo description to publish it.'}
+              {"Please add photo's description to publish it."}
             </Typography>
           )}
           {imagePreview && (

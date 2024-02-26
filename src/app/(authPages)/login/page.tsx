@@ -70,7 +70,7 @@ const Login: FC = () => {
         if (getCookie(TWO_STEP_AUTH) === 'true') {
           setShow2fa(true);
         } else {
-          router.replace(allRoutes.home);
+          router.push(allRoutes.home);
           toast.success('Login successfully!');
         }
       } else {

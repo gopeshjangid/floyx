@@ -48,3 +48,7 @@ a {
   -webkit-box-orient: vertical;
   word-break: break-word;
 }
+
+html {
+  scroll-behavior: smooth;
+}

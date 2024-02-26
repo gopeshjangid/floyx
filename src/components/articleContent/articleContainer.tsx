@@ -32,6 +32,7 @@ import { useSession } from 'next-auth/react';
 import ShareArticleModal from '../fullArticle/shareArticleModal';
 import CustomDescription from '../customDescription';
 import useDevice from '@/lib/hooks/useDevice';
+import { DeleteOutline, EditRounded } from '@mui/icons-material';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',
@@ -98,6 +99,10 @@ const ArticleContent = styled(Box)(({ theme }) => ({
 
 const articleOptions = [
   {
+    name: 'Edit Article',
+    icon: <EditRounded />,
+  },
+  {
     name: 'Report Article',
     icon: <FlagIcon />,
   },
@@ -120,9 +125,11 @@ const userOptions = [
 const addEditoptions = [
   {
     name: 'Edit',
+    icon : <EditRounded/>
   },
   {
     name: 'Delete',
+    icon: <DeleteOutline/>
   },
 ];
 
@@ -179,7 +186,13 @@ export default function ArticleContainer({
     }
   };
 
+  const editHandler = ()=>{
+    const dynamicUrl = `/composer/create?articleId=${articleDetails.id}&isEditing=true&value=newArticle`;
+    router.push(dynamicUrl);
+  }
+
   const handleOption = (index: number) => {
+    const allowEdit = userDetails?.username === loginUserName;
     if (addEdittype) {
       switch (index) {
         case 0:
@@ -193,6 +206,8 @@ export default function ArticleContainer({
           setOpenConfirmationDialog(true);
           return;
       }
+    } if(index ===0 && allowEdit){
+      editHandler();
     } else {
       // const []
       setOpenDialog(true);
@@ -221,6 +236,7 @@ export default function ArticleContainer({
     [setCommentText]
   );
 
+  const articleOptionsFiltered = articleOptions.filter(item => item.name ==='Edit'  ? userDetails?.username === loginUserName : true );
   return (
     <>
       <ArticleContent onClick={handleClick}>
@@ -250,8 +266,8 @@ export default function ArticleContainer({
                         addEdittype
                           ? addEditoptions
                           : userDetails?.username === loginUserName
-                            ? articleOptions
-                            : [...articleOptions, ...userOptions]
+                            ? articleOptionsFiltered
+                            : [...articleOptionsFiltered, ...userOptions]
                       }
                       setItem={setItem}
                       setOpen={setOpen}
@@ -279,8 +295,8 @@ export default function ArticleContainer({
                         addEdittype
                           ? addEditoptions
                           : userDetails?.username === loginUserName
-                            ? articleOptions
-                            : [...articleOptions, ...userOptions]
+                            ? articleOptionsFiltered
+                            : [...articleOptionsFiltered, ...userOptions]
                       }
                       setItem={setItem}
                       setOpen={setOpen}

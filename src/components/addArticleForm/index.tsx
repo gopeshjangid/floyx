@@ -4,7 +4,6 @@ import { v4 } from 'uuid';
 import {
   Box,
   Stack,
-  TextField,
   Typography,
   useTheme,
   FormControl,
@@ -25,6 +24,7 @@ import {
 import { useToast } from '../Toast/useToast';
 import TagAutocomplete from './articleTags';
 import { useRouter } from 'next/navigation';
+import { revalidateArticleDetail } from '@/actions/actions';
 
 export const AddArticleFormBox = styled(Box)(({ theme }) => ({
   '& h5': {
@@ -54,7 +54,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
   color: '#85838F',
 }));
 
-export default function AddArticleForm({
+ function AddArticleForm({
   isPublish,
   saveDraft,
   setIsDisabled,
@@ -173,18 +173,7 @@ export default function AddArticleForm({
 
   const handleTitleChange = (event: any, articleCreated: boolean) => {
     const { value } = event.target;
-    // let valueValidated = true;
-    // const iChars = '@#$%^&*+=[]\\\';{}|":<>';
-    // for (let i = 0;i < value.length;i++) {
-    //   if (iChars.includes(value.charAt(i))) {
-    //     valueValidated = false;
-    //     break;
-    //   }
-    // }
-    // if (valueValidated) {
     setTitle(value);
-    //}
-
     if (!articleCreated) {
       createDraftArticle(value, content, imageToUpload, hashtags.join(','));
     }
@@ -281,8 +270,12 @@ export default function AddArticleForm({
       if ((response as any)?.error) {
         setIsPublish(false);
       } else {
-        resetAllState();
         const dynamicUrl = `/article/${(response as any)?.data?.publicUrl}`;
+        if(isEditing){
+          revalidateArticleDetail(dynamicUrl);
+        }
+        resetAllState();
+       
         setIsPublish(false);
         router.push(dynamicUrl);
       }
@@ -388,6 +381,7 @@ export default function AddArticleForm({
     [setHashTags]
   );
 
+
   return (
     <AddArticleFormBox>
       <Textarea
@@ -464,3 +458,5 @@ export default function AddArticleForm({
     </AddArticleFormBox>
   );
 }
+
+export default  React.memo(AddArticleForm);

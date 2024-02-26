@@ -10,6 +10,7 @@ import {
   useLazyGetArticleListQuery,
 } from '@/lib/redux/slices/articleDetails';
 import ArticleContent from '@/components/articleContent';
+import {useSearchParams } from 'next/navigation';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -21,7 +22,7 @@ export default function Page() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isPublished, setIsPublished] = useState<boolean>(false);
   const [isReset, setIsReset] = useState<boolean>(false);
-
+  const query = useSearchParams();
   const [getArticleList, { data: articleList, isFetching }] =
     useLazyGetArticleListQuery();
   const { data: articleDraftNumbers } = useGetArticleInfoQuery();
@@ -41,6 +42,20 @@ export default function Page() {
   useEffect(() => {
     getAllArticleList(value);
   }, [value]);
+
+
+  useEffect(()=>{
+    if(query.size > 0){
+      const value = query.get("value");
+      const isEditning = query.get("isEditing");
+      const articleId = query.get("articleId");
+      if(value)
+       setValue(value);
+      if(articleId)
+      setArticleId(articleId);
+    if(isEditning) setIsEditing(isEditning ==='true');
+    }
+  },[query]);
 
   return (
     <Box p={isMobile ? 2 : 0}>

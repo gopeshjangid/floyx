@@ -60,24 +60,31 @@ const ThemeSwitch = () => {
     setMounted(true);
   }, []);
 
+  const getCurrentTheme = ()=>{
+    const systemTheme  = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches  ? 'dark' : 'light';
+    return theme === 'system'  ? systemTheme : theme;
+   }
+
   useEffect(() => {
-    setCookie('theme', theme);
+    let currentTheme = getCurrentTheme();
+    setCookie('theme', currentTheme);
   }, [theme]);
 
   if (!mounted) {
     return <Skeleton width={180} height={60} />;
   }
 
+  const activeTheme = getCurrentTheme();
   return (
     <FormControlLabel
       label=""
       control={
         <MaterialUISwitch
           sx={{ m: 2 }}
-          checked={theme === 'dark'}
+          checked={activeTheme === 'dark'}
           // defaultChecked={theme === 'dark'}
           onChange={() => {
-            if (theme === 'dark') {
+            if (activeTheme === 'dark') {
               setTheme('light');
             } else {
               setTheme('dark');

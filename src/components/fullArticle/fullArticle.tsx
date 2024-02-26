@@ -33,7 +33,7 @@ export default function FullArticle({ details }: any) {
       const urlImgRegex = /(?:https?:\/\/)?(?:www\.)?.*\.(png|jpeg|jpg|gif|bmp|tiff|svg)$/;
       
       const modifiedHTML_ytVideo = htmlString.replace(urlRegex, (match, videoId) => {
-        return `<iframe width="100%" height="290" object-fit="cover" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+        return `<iframe width="710px" height="410px" object-fit="cover" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
       });
 
       const modifiedHTML_res = modifiedHTML_ytVideo.replace(urlImgRegex, (match) => {
