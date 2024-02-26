@@ -86,6 +86,7 @@ function AddPost({
         setImagePreview(reader.result || '');
       };
     }
+    e.target.value = ''; // Clear the input value
   };
 
   const calulcateLength = (str: string) => {
