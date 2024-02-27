@@ -23,28 +23,27 @@ function TokenPanelHeader({ modalType, setModal, hideNav }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+console.log("mode: ",theme.palette.mode);
   const getNavItems = () => {
-    if (hideNav) return;
     return (
       <Stack direction={isMobile ? 'column' : 'row'} gap={1}>
         <Button
           onClick={() => setModal('STAKING')}
           variant={modalType === 'STAKING' ? 'outlined' : 'text'}
-          sx={{ color: theme.palette.mode !== 'light' ? '#000' : '#fff' }}
+          sx={{ color: theme.palette.mode === 'light' ? '#000' : '#fff' }}
         >
           STAKING PREVIEW
         </Button>
         <Button
           onClick={() => setModal('SEEDVESTING')}
           variant={modalType === 'SEEDVESTING' ? 'outlined' : 'text'}
-          sx={{ color: theme.palette.mode !== 'light' ? '#000' : '#fff' }}
+          sx={{ color: theme.palette.mode === 'light' ? '#000' : '#fff' }}
         >
           SEEDVESTING
         </Button>
         <Button
           onClick={() => setModal('PRESALEVESTING')}
-          sx={{ color: theme.palette.mode !== 'light' ? '#000' : '#fff' }}
+          sx={{ color: theme.palette.mode === 'light' ? '#000' : '#fff' }}
           variant={modalType === 'PRESALEVESTING' ? 'outlined' : 'text'}
         >
           PRESALEVESTING
@@ -65,7 +64,7 @@ function TokenPanelHeader({ modalType, setModal, hideNav }) {
         position="fixed"
         sx={{
           backgroundColor:
-            theme.palette.mode === 'dark'
+            theme.palette.mode !== 'dark'
               ? theme.palette.common.white
               : theme.palette.common.black,
           height: '60px',
@@ -83,12 +82,13 @@ function TokenPanelHeader({ modalType, setModal, hideNav }) {
             direction="row"
             justifyContent={'space-between'}
             sx={{ width: '100%' }}
+            alignItems={'end'}
             pb={2}
           >
             <IconButton onClick={() => router.push('/')}>
               <FloyxImage
                 fill={
-                  theme.palette.mode !== 'dark'
+                  theme.palette.mode === 'dark'
                     ? theme.palette.common.white
                     : theme.palette.common.black
                 }
@@ -106,7 +106,9 @@ function TokenPanelHeader({ modalType, setModal, hideNav }) {
                 aria-label="open drawer"
                 edge="start"
                 onClick={handleDrawerToggle}
-                sx={{ mr: 2 }}
+                sx={{ mr: 2, color: theme.palette.mode === 'dark'
+                ? theme.palette.common.white
+                : theme.palette.common.black }}
               >
                 <MenuIcon />
               </IconButton>

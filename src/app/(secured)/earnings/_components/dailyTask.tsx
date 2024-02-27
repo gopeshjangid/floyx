@@ -75,8 +75,8 @@ function DailyTaskTable({ rows, collectRewardPoint, isLoading }: { isLoading: bo
               <StyledTableCell align="center">{row.taskStatus}</StyledTableCell>
               <StyledTableCell align="right">
                 {
-                  taskId === row.dailyTaskId && isLoading ? <CircularProgress /> : <GradientOutlinedButton onClick={() => row.canGetReward && !row.isCompleted ? collectTaskId(row.dailyTaskId) : void (0)} disabled={!row.canGetReward && !row.isCompleted} variant={row.isCompleted ? "contained" : "outlined"}>
-                    <GradientText>{!row.canGetReward && !row.isCompleted ? row.taskReward : row.isCompleted ? "Collected" : 'Collect'}</GradientText>
+                  taskId === row.dailyTaskId && isLoading ? <CircularProgress /> : <GradientOutlinedButton  onClick={() => row.canGetReward && !row.isCompleted ? collectTaskId(row.dailyTaskId) : void (0)} disabled={!row.canGetReward} variant={"outlined"}>
+                    <GradientText>{row.canGetReward && !row.isCompleted ? "Collect" : !row.canGetReward && row.isCompleted ?  "Collected"  : row.taskReward}</GradientText>
                   </GradientOutlinedButton>
                 }
 

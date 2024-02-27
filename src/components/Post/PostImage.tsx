@@ -13,6 +13,18 @@ export default function PostImage({ image, link, shared, isShared }) {
   const [loading, setLoading] = useState(true);
   const { palette } = useTheme();
 
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    if(!image) return;
+
+    const img = new window.Image();
+    img.onload = () => {
+      setDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+    img.src = image.thumbnailPath;
+  }, [image]);
+
   const handleOpen = () => {
     if (!isShared) {
       setOpen(true);
@@ -45,16 +57,15 @@ export default function PostImage({ image, link, shared, isShared }) {
   return (
     <Box>
       {image && (
-        <Box sx={{ borderRadius: '10px', overflow: 'hidden' }}>
+        <Box sx={{ borderRadius: '10px', overflow: 'hidden', position:'relative' }}>
           {loading && (
             <Skeleton variant="rounded" height={300} animation="wave" />
           )}
           <CustomImage
-            width={0}
             onLoad={handleImageLoad}
-            height={0}
-            sizes="100vw"
-            style={{ width: '100%', height: 'auto' }}
+            {...dimensions}
+            layout="responsive"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             onClick={handleOpen}
             src={image.thumbnailPath}
             alt="thumbnail"
@@ -75,16 +86,16 @@ export default function PostImage({ image, link, shared, isShared }) {
           sx={{
             borderRadius: '10px',
             overflow: 'hidden',
+            position: 'relative',
             border: `1px solid ${palette.primary.boxBorder}`,
           }}
         >
           {link.thumbnailPath && (
             <CustomImage
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: '100%', height: 'auto' }}
+            {...dimensions}
+              layout="responsive"
               src={link.thumbnailPath}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
               alt="thumbnail"
               loading="lazy" // Lazy loading
             />
