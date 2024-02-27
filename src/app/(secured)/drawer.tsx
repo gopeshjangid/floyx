@@ -60,7 +60,8 @@ import AddPost from '@/components/Post/AddPost';
 import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
 import { postServices } from '@/lib/redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxState } from '@/lib/redux';
 //import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
 const drawerWidth = 240;
@@ -148,6 +149,9 @@ interface IDrawerState {
 
 export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const dispatch = useDispatch();
+  const { notificationCount } = useSelector(
+    (state: ReduxState) => state.appReducer
+  );
   const [drawerData, setDrawerData] = useState<IDrawerState>({
     currentLoggedUser: {
       username: getCookie(FLOYX_USERNAME)?.toString() || '',
@@ -232,7 +236,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       messageService.publisher.on('threads', getMessageCount);
       getInitialNotification();
     }
-  }, [session?.status]);
+  }, [session?.status,notificationCount]);
 
   const getNotifications = (data: INotification[]) => {
     setDrawerData(prev => ({

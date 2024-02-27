@@ -23,6 +23,10 @@ import { INotification, INotificationData } from './types';
 import { useToast } from '@/components/Toast/useToast';
 import NotificationLoader from './components/NotificationLoader';
 import RecentArticles from '@/components/PopularToday';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNotificationCount } from '@/lib/redux/slices/appConfig';
+import { ReduxState } from '@/lib/redux';
+
 
 const SectionSkeleton = () => (
   <Skeleton variant="rectangular" width="100%" height="200px" />
@@ -88,6 +92,10 @@ const Notifications = () => {
   const toast = useToast();
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { notificationCount } = useSelector(
+    (state: ReduxState) => state.appReducer
+  );
   const [notificationPageData, setNotificationPageData] = useState({
     threads: [],
     currentLoggedUser: {},
@@ -195,7 +203,8 @@ const Notifications = () => {
     if (!response?.success) {
       toast.error('Error marking all as read');
     }
-
+    // for update drawer notification count also
+    dispatch(setNotificationCount(notificationCount+1));
     setMarkAllAsReadLoading(false);
   };
 

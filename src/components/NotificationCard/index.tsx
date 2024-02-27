@@ -27,6 +27,9 @@ import { getRelativeTime } from '@/lib/utils';
 import { INotification } from '@/app/(secured)/notifications/types';
 import { PARENTHESES_AND_BRACKETS_REGEX, PROFILE_REGEX } from '@/constants';
 import { notificationService } from '@/lib/services/new/notificationService';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNotificationCount } from '@/lib/redux/slices/appConfig';
+import { ReduxState } from '@/lib/redux';
 
 const ListItemItem = styled(ListItem)<{ active: number }>(
   ({ theme, active }) => ({
@@ -89,6 +92,10 @@ const NotificationCard = ({
   const { palette } = useTheme();
   const router = useRouter();
   const [markAsReadLoading, setMarkAsReadLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { notificationCount } = useSelector(
+    (state: ReduxState) => state.appReducer
+  );
 
   const addLinksAndFormat = (content: string) => {
     if (!content) {
@@ -149,6 +156,8 @@ const NotificationCard = ({
           break;
       }
       if (url && response.value.code === 'success') {
+        // for update drawer notification count also
+        dispatch(setNotificationCount(notificationCount+1));
         router.push(url);
       }
     }
