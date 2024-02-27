@@ -202,9 +202,10 @@ const Notifications = () => {
     );
     if (!response?.success) {
       toast.error('Error marking all as read');
+    }else{
+      // for update drawer notification count also
+      dispatch(setNotificationCount(notificationCount+1));
     }
-    // for update drawer notification count also
-    dispatch(setNotificationCount(notificationCount+1));
     setMarkAllAsReadLoading(false);
   };
 
