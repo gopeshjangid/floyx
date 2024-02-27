@@ -64,23 +64,25 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
     const lineFeedCode = 10;
 
     if (value.includes('<img')) {
+      const extractdocsInputsList = inputsList.filter((x: any) => x.index != index)
+      setState((prev: any) => ({ ...prev, extractdocsInputsList, contentArticleCreated: true }));
       // Create a dummy DOM element to parse HTML string
-      const tempElement = document.createElement('div');
-      tempElement.innerHTML = value;
-      // Extract img tag from the value
-      const imgTag = tempElement.querySelector('img');
-      if (imgTag) {
-          // Set width and height of img tag
-          imgTag.setAttribute('width', '100%');
-          imgTag.setAttribute('object-fit', 'cover')
-          // imgTag.setAttribute('height', 'auto');
-          // Get the src attribute value
-          const srcValue = imgTag.getAttribute('src');
-          const textAfterImg = tempElement.textContent?.replace(imgTag.outerHTML, '') || '';
-            // Concatenate img tag outerHTML with remaining text
-          value = imgTag.outerHTML + textAfterImg;
-      }
-    }else if (item.type != 'ul' && item.type != 'ol'){
+      // const tempElement = document.createElement('div');
+      // tempElement.innerHTML = value;
+      // // Extract img tag from the value
+      // const imgTag = tempElement.querySelector('img');
+      // if (imgTag) {
+      //     // Set width and height of img tag
+      //     imgTag.setAttribute('width', '100%');
+      //     imgTag.setAttribute('object-fit', 'cover')
+      //     // Get the src attribute value
+      //     const srcValue = imgTag.getAttribute('src');
+      //     const textAfterImg = tempElement.textContent?.replace(imgTag.outerHTML, '') || '';
+      //       // Concatenate img tag outerHTML with remaining text
+      //     value = imgTag.outerHTML + textAfterImg;
+      // }
+      return
+    }else if(item.type != 'ul' && item.type != 'ol') {
       // If pasted content does not contain an image, remove background styles
       value = value.replace(/<[^>]+>/g, ''); // Remove all HTML tags
       value = value.replace(/\n/g, ''); // Remove newlines
