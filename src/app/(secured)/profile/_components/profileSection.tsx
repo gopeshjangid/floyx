@@ -175,6 +175,13 @@ const OtherUserProfileActions: React.FC<{
   );
 };
 
+const initialForm = {
+  avatar: null, // Assuming 'avatar' is an object, you might want to define a more specific type if possible
+  backgroundImage: null, // 'binary' often refers to a Blob type in the context of file data
+  shortDescription: '',
+  deleteAvatar: false,
+};
+
 // Example usage of the styled components
 const ProfileSection: React.FC = () => {
   const params = useParams();
@@ -182,12 +189,8 @@ const ProfileSection: React.FC = () => {
   const { palette } = useTheme();
   const toast = useToast();
   const [isEdit, setIsEdit] = React.useState(false);
-  const [form, setForm] = React.useState<Partial<ProfileInfoType>>({
-    avatar: null, // Assuming 'avatar' is an object, you might want to define a more specific type if possible
-    backgroundImage: null, // 'binary' often refers to a Blob type in the context of file data
-    shortDescription: '',
-    deleteAvatar: false,
-  });
+  const [form, setForm] = React.useState<Partial<ProfileInfoType>>(initialForm);
+  const [tform, setTmpForm] = React.useState<Partial<ProfileInfoType>>(initialForm);
   const [imagePreview, setImagePreview] = React.useState({
     cover: null,
     profile: null,
@@ -229,6 +232,7 @@ const ProfileSection: React.FC = () => {
 
   React.useEffect(() => {
     if (isUpdated) {
+      setTmpForm(form);
       toast.success('Profile updated!');
       setIsEdit(false);
     }
@@ -241,6 +245,10 @@ const ProfileSection: React.FC = () => {
   React.useEffect(() => {
     if (profile) {
       setForm(form => ({
+        ...form,
+        shortDescription: profile.shortDescription,
+      }));
+      setTmpForm(form => ({
         ...form,
         shortDescription: profile.shortDescription,
       }));
@@ -269,6 +277,16 @@ const ProfileSection: React.FC = () => {
     formData.append('username', username);
     updateProfile(formData);
   };
+
+  const cancelHandler = ()=>{
+    setIsEdit(false);
+    setForm(tform);
+  }
+
+  const editHandler = ()=>{
+    setIsEdit(true);
+    //setForm(tform);
+  }
 
   const handleUrl = url => {
     if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -317,7 +335,7 @@ const ProfileSection: React.FC = () => {
                     >
                       Save changes
                     </Button>
-                    <Button onClick={() => setIsEdit(false)} variant="text">
+                    <Button onClick={cancelHandler} variant="text">
                       Cancel
                     </Button>
                   </Stack>
@@ -399,7 +417,7 @@ const ProfileSection: React.FC = () => {
                 >
                   <Box display="flex" p={1} gap={1}>
                     <Button
-                      onClick={() => setIsEdit(true)}
+                      onClick={editHandler}
                       color="inherit"
                       startIcon={<BorderColorOutlined fontSize="small" />}
                     >

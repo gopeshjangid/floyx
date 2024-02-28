@@ -31,6 +31,7 @@ import { CloseOutlined } from '@mui/icons-material';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import MoodIcon from '@mui/icons-material/Mood';
+import { useRouter } from 'next/navigation';
 
 const initialPostObj = {
   postText: '',
@@ -48,6 +49,7 @@ function AddPost({
   setOpenWriteDialog,
 }: MyComponentProps) {
   const toast = useToast();
+  const router = useRouter();
   const imageFileInput = useRef<HTMLInputElement>(null);
   const [postObj, setPostObj] = useState(initialPostObj);
   const session = useSession();
@@ -142,6 +144,7 @@ function AddPost({
       setImageToUpload('');
       toast.success('Post is published successfully');
       if (writeDialog) setOpenWriteDialog(false);
+      window.location.reload();
      }
   },[successPublishedPost]);
 

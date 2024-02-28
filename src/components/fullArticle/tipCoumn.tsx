@@ -76,24 +76,20 @@ export default function TipColumn({
 
   useEffect(() => {
     if (isSuccess) {
-      //refetch();
       toast.success('You tipped!');
       revalidateArticleDetail(pathname);
-
+      window.location.reload();
     }
   }, [isSuccess, pathname]);
   
   
 
-  console.log("session.status === 'loading' || isFetching || isLoading  session->",session.status === 'loading' ,"->isfetching", isFetching , "isloding-->",isLoading)
 
   if(session.status === 'loading' || isFetching || isLoading){
     return <Box textAlign={'center'} width={'100%'}><CircularProgress/></Box>;
   }
 
   if (isSameUser) return null;
-
-  console.log("fetchedTipHistory: ",fetchedTipHistory);
 
   const history = (fetchedTipHistory ?? []).filter(val => val?.articleId === articleId);
   return (

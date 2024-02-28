@@ -295,7 +295,7 @@ const MainComponent: React.FC = () => {
       <Box p={isMobile ? 1 : 0}>
         {error && <Typography color="error">{error}</Typography>}
         {isLoading && <Typography color="info">Searching...</Typography>}
-        {!error && !isLoading && (
+        {!error && !isLoading &&  result?.result && (
           <Typography color="success">{`Found ${
             result?.total ?? 0
           } results`}</Typography>
