@@ -144,7 +144,7 @@ function AddPost({
       setImageToUpload('');
       toast.success('Post is published successfully');
       if (writeDialog) setOpenWriteDialog(false);
-      window.location.reload();
+      //window.location.reload();
      }
   },[successPublishedPost]);
 
@@ -173,7 +173,7 @@ function AddPost({
             <Tab
               component={Link}
               label={
-                <Typography variant="subtitle2">WRITE AN ARTICLE</Typography>
+                <Typography variant="subtitle2">Write article</Typography>
               }
               sx={{ marginTop: '8px' }}
               href="/composer/create"

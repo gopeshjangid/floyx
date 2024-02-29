@@ -71,10 +71,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                 </Stack>
                 {(profile.followed || profile.following) && (
                   <Stack alignItems="center" direction="row" gap={1}>
-                    {profile.following && (
+                    {profile.followed && (
                       <Typography variant="caption">Followed</Typography>
                     )}
-                    {profile.followed && (
+                    {profile.following && (
                       <Typography variant="caption">
                         | &nbsp; Follows you
                       </Typography>

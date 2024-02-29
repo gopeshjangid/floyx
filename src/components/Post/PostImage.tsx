@@ -35,9 +35,9 @@ export default function PostImage({ image, link, shared, isShared }) {
     setMounted(true);
   }, []);
 
-  const openInNewTab = () => {
-    window.open(link.url, '_blank');
-  };
+  // const openInNewTab = () => {
+  //   //window.open(link.url, '_blank');
+  // };
 
   const handleImageLoad = () => {
     setLoading(false);
@@ -81,7 +81,7 @@ export default function PostImage({ image, link, shared, isShared }) {
       )}
       {link && !isShared && (
         <Box
-          onClick={openInNewTab}
+          //onClick={openInNewTab}
           pb={2}
           sx={{
             borderRadius: '10px',

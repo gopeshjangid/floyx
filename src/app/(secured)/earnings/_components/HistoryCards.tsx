@@ -38,7 +38,7 @@ const TransactionHistory = React.memo(function TransactionCard() {
               {Array.isArray(data)&& data.length >0 ?  data.map((item, index) => (
                 <Box key={'item-' + index}>
                   <Typography variant="caption">
-                    {moment(item.withdrawalDate).format('YYYY/MM/YY')} &nbsp;
+                    {moment(item.withdrawalDate).format('MM/DD/YYYY')} &nbsp;
                     You have withdrawn{' '}
                     <span style={{ color: 'green' }}>
                       {item.withdrawalAmount}
@@ -106,7 +106,7 @@ const ArticleHistory = React.memo(function ArticleCard() {
               {data.length > 0 ? data.map((item, index) => (
                 <Box key={'item-' + index}>
                   <Typography variant="caption">
-                    {moment(item.earnedOn).format('YYYY/MM/YY')} &nbsp; You
+                    {moment(item.earnedOn).format('MM/DD/YYYY')} &nbsp; You
                     article{' '}
                     <Link
                       target="_blank"
@@ -170,7 +170,7 @@ const VoteHistory = React.memo(function VoteHistory() {
               {data.length > 0 ? data.map((item, index) => (
                 <Box key={'item-' + index}>
                   <Typography variant="caption">
-                    {moment(item.earnedOn).format('YYYY/MM/YY')} &nbsp; Your
+                    {moment(item.earnedOn).format('MM/DD/YYYY')} &nbsp; Your
                     voted{' '}
                     <Link
                       target="_blank"
@@ -232,7 +232,7 @@ const DailyTaskHistory = React.memo(function DailyHistory() {
               {data.length > 0 ? data.map((item, index) => (
                 <Box key={'item-' + index}>
                   <Typography variant="caption">
-                    {moment(item.earnedOn).format('YYYY/MM/YY')} &nbsp; You
+                    {moment(item.earnedOn).format('MM/DD/YYYY')} &nbsp; You
                     earned
                     <span style={{ color: 'green' }}>
                       {'  '}
