@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -10,11 +11,15 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+import BlockReportPostFeed from '@/app/(secured)/profile/_components/blockReportPostFeed';
 
 export default function SplitButton({
   options,
   handleOptions,
   actionIcon,
+  username,
+  contentId,
+  isAuthor
 }: any) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
@@ -79,7 +84,7 @@ export default function SplitButton({
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList id="split-button-menu" autoFocusItem>
+                <MenuList id="split-button-menu" autoFocusItem sx={{paddingBottom: '0px'}}>
                   {options.map((option: string, index: number) => (
                     <MenuItem
                       key={option}
@@ -90,6 +95,9 @@ export default function SplitButton({
                       {option}
                     </MenuItem>
                   ))}
+                  {['Direct Link'].every(op => options.includes(op)) && !isAuthor && <React.Suspense fallback={<Typography>Loading...</Typography>}>
+                    <BlockReportPostFeed username={username} onSuccess={() => 'success'} options={['Block User', 'Report Post']} contentId={contentId} handleCloseSplit={setOpen}/>
+                  </React.Suspense>}
                 </MenuList>
               </ClickAwayListener>
             </Paper>

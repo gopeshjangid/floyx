@@ -107,6 +107,9 @@ function Post({
               handleOptions={(event: any) =>
                 handleOptions(event, buttonOptions)
               }
+              username={username}
+              contentId={postId}
+              isAuthor={username === userDetail}
             />
           </Box>
         </Box>
