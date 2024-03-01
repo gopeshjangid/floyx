@@ -17,7 +17,6 @@ import {
   debounce,
 } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 
 import { SVGLock, SVGUser } from '@/assets/images';
@@ -40,7 +39,6 @@ import VerifyEmail from './components/verify-email';
 const RegisterPage = () => {
   const theme = useTheme();
   const toast = useToast();
-  const router = useRouter();
   const { palette } = useTheme();
   const searchParams = useSearchParams();
 

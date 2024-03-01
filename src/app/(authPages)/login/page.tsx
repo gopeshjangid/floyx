@@ -208,7 +208,7 @@ const Login: FC = () => {
                       fontWeight="400"
                       sx={{ '& a': { color: '#5798FF' } }}
                     >
-                      <Link prefetch={false} href={allRoutes.login}>
+                      <Link prefetch={false} href={"/forgot-password"}>
                         Forgotten your password?
                       </Link>
                     </Typography>
