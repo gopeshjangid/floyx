@@ -21,7 +21,7 @@ const VerifyPhone = ({
   onChange,
   submitLoading,
 }: IVerifyPhoneProps) => {
-  const {t}=useTranslation()
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -57,7 +57,7 @@ const VerifyPhone = ({
             marginY: '25px',
           }}
           fullWidth
-          translate='no'
+          translate="no"
           hiddenLabel
           placeholder={t('auth.register.label.text32')}
           type="number"
@@ -66,7 +66,7 @@ const VerifyPhone = ({
         />
 
         <Button
-        translate="no"
+          translate="no"
           disabled={submitLoading}
           variant="contained"
           color="primary"
@@ -75,7 +75,7 @@ const VerifyPhone = ({
           {submitLoading ? (
             <CircularProgress size={20} color="inherit" />
           ) : (
-           { t('auth.register.label.text33')}
+            t('auth.register.label.text33')
           )}
         </Button>
       </Box>
