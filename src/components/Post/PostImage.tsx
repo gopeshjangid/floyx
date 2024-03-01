@@ -104,7 +104,7 @@ export default function PostImage({ image, link, shared, isShared }) {
             <Typography variant="subtitle2">
               {link.url ? getUrlHostName(link.url) : window.location.host}
             </Typography>
-            <Link href={link.url}>{link.title}</Link>
+            <Link target='__blank' href={link.url}>{link.title}</Link>
           </Box>
         </Box>
       )}
