@@ -23,6 +23,9 @@ import { INotification, INotificationData } from './types';
 import { useToast } from '@/components/Toast/useToast';
 import NotificationLoader from './components/NotificationLoader';
 import RecentArticles from '@/components/PopularToday';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNotificationCount } from '@/lib/redux/slices/appConfig';
+import { ReduxState } from '@/lib/redux';
 
 const SectionSkeleton = () => (
   <Skeleton variant="rectangular" width="100%" height="200px" />
@@ -85,6 +88,10 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 const Notifications = () => {
+  const dispatch = useDispatch();
+  const { notificationCountState } = useSelector(
+    (state: ReduxState) => state.appReducer
+  );
   const toast = useToast();
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -194,6 +201,9 @@ const Notifications = () => {
     );
     if (!response?.success) {
       toast.error('Error marking all as read');
+    }else{
+      // for update drawer notification count also
+      dispatch(setNotificationCount(notificationCountState+1));
     }
 
     setMarkAllAsReadLoading(false);

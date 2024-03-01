@@ -4,7 +4,7 @@ import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 export default function RemainingTimer() {
   const calculateTimeLeft = () => {
     const endTime = new Date();
-    endTime.setUTCHours(23, 59, 59, 999); // Set to the end of the current UTC day
+    endTime.setHours(23, 59, 59, 999); // Set to the end of the current UTC day
     const difference = endTime.getTime() - new Date().getTime();
 
     let timeLeft = { hours: 0, minutes: 0, seconds: 0 };

@@ -106,30 +106,33 @@ const MyFollowers: React.FC = () => {
         py={2}
         pl={2}
       >
-        <Stack direction={'row'} alignItems={'center'} gap={1} mb={1}>
-          <UserAvatar
-            alt={currentUser?.name ?? ''}
-            src={currentUser?.avatar ?? ''}
-            sx={{ width: '50px', height: '50px' }}
-          />
-          <Stack>
-            {currentLoading || !currentUser ? (
-              <Skeleton variant="text" width="100px" height="40px" />
-            ) : (
-              <Typography
-                variant="body2"
-                sx={{ color: palette.primary.fontLightColor }}
-              >
-                {currentUser.name}
-              </Typography>
-            )}
-            {currentLoading || !currentUser ? (
-              <Skeleton variant="text" width="100px" height="40px" />
-            ) : (
-              <UsernameLink username={currentUser?.username ?? ''} />
-            )}
+        <Link href={"/profile/" + currentUser?.username}>
+          <Stack direction={'row'} alignItems={'center'} gap={1} mb={1}>
+            <UserAvatar
+              alt={currentUser?.name ?? ''}
+              src={currentUser?.avatar ?? ''}
+              sx={{ width: '50px', height: '50px' }}
+              restrictNavigation
+            />
+            <Stack>
+              {currentLoading || !currentUser ? (
+                <Skeleton variant="text" width="100px" height="40px" />
+              ) : (
+                <Typography
+                  variant="body2"
+                  sx={{ color: palette.primary.fontLightColor }}
+                >
+                  {currentUser.name}
+                </Typography>
+              )}
+              {currentLoading || !currentUser ? (
+                <Skeleton variant="text" width="100px" height="40px" />
+              ) : (
+                <UsernameLink username={currentUser?.username ?? ''} />
+              )}
+            </Stack>
           </Stack>
-        </Stack>
+        </Link>
         <Divider />
         {currentLoading ? (
           <Skeleton variant="text" width="60px" height="40px" />
@@ -190,10 +193,10 @@ const MyFollowers: React.FC = () => {
                 >
                   <Stack direction="row" spacing={{ xs: 2, sm: 1, md: 1 }}>
                     <Box width="10%">
-                      <Avatar
+                      <Link href={"/profile/" + follower?.username}><Avatar
                         src={follower.avatar}
                         sx={{ width: 40, height: 40 }}
-                      />
+                      /></Link>
                     </Box>
                     <Stack width="60%" justifyContent={'center'} gap={1}>
                       <Stack alignItems={'center'} direction="row" gap={1}>

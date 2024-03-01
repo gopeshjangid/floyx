@@ -63,6 +63,9 @@ import { CloseOutlined } from '@mui/icons-material';
 //import { postServices } from '@/lib/redux';
 //import { useDispatch } from 'react-redux';
 import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxState } from '@/lib/redux';
+//import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
 const drawerWidth = 240;
 
@@ -147,10 +150,14 @@ interface IDrawerState {
   notifications: INotification[];
 }
 
-const publicPaths = ['/login','/article','/post','/profile'];
+const publicPaths = ['/login', '/article', '/post', '/profile'];
 export default function DrawerAppBar({ children }: { children: ReactNode }) {
-  const {t}=useTranslation()
+  const { t } = useTranslation();
   //const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { notificationCountState } = useSelector(
+    (state: ReduxState) => state.appReducer
+  );
   const [drawerData, setDrawerData] = useState<IDrawerState>({
     currentLoggedUser: {
       username: getCookie(FLOYX_USERNAME)?.toString() || '',
@@ -174,32 +181,32 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const isLoggedIn: boolean = session.status === 'authenticated';
   const navItems = [
     {
-      label: t("Drawer.home"),
+      label: t('Drawer.home'),
       href: '/',
       icon: (fill: string) => <HomeIcon stroke={fill} />,
     },
     {
-      label: t("Drawer.notifications"),
+      label: t('Drawer.notifications'),
       href: '/notifications-list',
       icon: (fill: string) => <NotificationIcon stroke={fill} />,
     },
     {
-      label: t("Drawer.messages"),
+      label: t('Drawer.messages'),
       href: '/inbox',
       icon: (fill: string) => <MessageIcon stroke={fill} />,
     },
     {
-      label: t("Drawer.search"),
+      label: t('Drawer.search'),
       href: '/people',
       icon: (fill: string) => <SearchIcon stroke={fill} />,
     },
     {
-      label: t("Drawer.wallet"),
+      label: t('Drawer.wallet'),
       href: '/earnings',
       icon: (fill: string) => <WalletIcon stroke={fill} />,
     },
     {
-      label: t("Drawer.profile"),
+      label: t('Drawer.profile'),
       href: '/profile',
       icon: (fill: string) => <ProfileIcon stroke={fill} />,
     },
@@ -235,7 +242,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       messageService.publisher.on('threads', getMessageCount);
       getInitialNotification();
     }
-  }, [session?.status]);
+  }, [session?.status, notificationCountState]);
 
   const getNotifications = (data: INotification[]) => {
     setDrawerData(prev => ({
@@ -279,19 +286,19 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             actionOriginIcon={<MoreIcon fill={theme.palette.text.primary} />}
             options={[
               {
-                label: t("Drawer.more.settings"),
+                label: t('Drawer.more.settings'),
                 startIcon: <SettingsIcon />,
                 onClick: () => router.push(`/settings/account`),
               },
               {
-                label: t("Drawer.more.logout"),
+                label: t('Drawer.more.logout'),
                 startIcon: <LogoutIcon />,
                 onClick: () => router.push(`/sign-out`),
               },
             ]}
           />
         </ListItemIcon>
-        <ListItemText primary={t("Drawer.more.title")} />
+        <ListItemText primary={t('Drawer.more.title')} />
       </CustomListItemButton>
     );
   };
@@ -303,7 +310,8 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       !isLoggedIn &&
       !firstTimeUsingSocialMediaLogin &&
       !pathname.includes('/login') &&
-      isPrivate && !isPublic
+      isPrivate &&
+      !isPublic
     ) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
@@ -311,7 +319,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
       router.push('/login');
     }
-  }, [isLoggedIn, session.status,firstTimeUsingSocialMediaLogin]);
+  }, [isLoggedIn, session.status, firstTimeUsingSocialMediaLogin]);
 
   const getMessageCount = () => {
     setDrawerData(prev => ({
@@ -331,7 +339,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       //     'MainFeedList',
       //   ])
       // );
-      window.location.href="/";
+      window.location.href = '/';
 
       //homeRedirect();
     }
@@ -340,7 +348,10 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const drawer = (
     <Box>
       <Box sx={{ padding: 1, background: 'inherit', paddingBottom: 2 }}>
-        <IconButton sx={{'&:hover': {backgroundColor: 'inherit'}}} onClick={homeRedirect}>
+        <IconButton
+          sx={{ '&:hover': { backgroundColor: 'inherit' } }}
+          onClick={homeRedirect}
+        >
           <FloyxImage
             fill={
               theme.palette.mode === 'dark'
@@ -380,8 +391,12 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
         ))}
         <MoreButton />
         <ListItem>
-          <Button translate="no" variant="outlined" onClick={() => setOpenWriteDialog(true)}>
-            <GradientText>{t("Drawer.writePost")}</GradientText>{' '}
+          <Button
+            translate="no"
+            variant="outlined"
+            onClick={() => setOpenWriteDialog(true)}
+          >
+            <GradientText>{t('Drawer.writePost')}</GradientText>{' '}
           </Button>
         </ListItem>
         <List sx={{ display: 'flex', flexDirection: 'row', margin: '0 10px' }}>
@@ -389,9 +404,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <ThemeSwitch />
           </ListItem>
 
-                  <ListItem sx={{padding: '15px 0px 0px 0px'}}>
-            <GoogleTranslatorPicker/>
-          </ListItem> 
+          <ListItem sx={{ padding: '15px 0px 0px 0px' }}>
+            <GoogleTranslatorPicker />
+          </ListItem>
         </List>
       </List>
     </Box>
@@ -444,7 +459,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
           elevation={0}
         >
           <Box
-          className="notranslate"
+            className="notranslate"
             sx={{
               padding: 1,
               height: '50px',

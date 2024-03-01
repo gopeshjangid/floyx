@@ -32,6 +32,7 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import MoodIcon from '@mui/icons-material/Mood';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 
 const initialPostObj = {
   postText: '',
@@ -49,6 +50,7 @@ function AddPost({
   setOpenWriteDialog,
 }: MyComponentProps) {
   const toast = useToast();
+  const router = useRouter();
   const imageFileInput = useRef<HTMLInputElement>(null);
   const [postObj, setPostObj] = useState(initialPostObj);
   const session = useSession();
@@ -89,6 +91,7 @@ function AddPost({
         setImagePreview(reader.result || '');
       };
     }
+    e.target.value = ''; // Clear the input value
   };
 
   const calulcateLength = (str: string) => {
@@ -144,6 +147,7 @@ function AddPost({
       setImageToUpload('');
       toast.success(t('Home.createPost.tab1.successMsg'));
       if (writeDialog) setOpenWriteDialog(false);
+      //window.location.reload();
     }
   }, [successPublishedPost]);
 

@@ -99,7 +99,7 @@ const ArticleContent = styled(Box)(({ theme }) => ({
 
 const articleOptions = [
   {
-    name: 'Edit Article',
+    name: 'Edit',
     icon: <EditRounded />,
   },
   {

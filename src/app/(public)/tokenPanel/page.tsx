@@ -462,16 +462,16 @@ const updatedtokenPanel = props => {
           isConnecting={isConnecting}
           address={address}
           connectHandler={connectHandler}
-          hideNav={modalType === 'LANDING'}
         />
       </Suspense>
       <Box
         sx={{
           backgroundImage: `url(../tokenPanelBg.png)`,
-          height: '100vh', // Adjust the height as needed
+          height: '135vh', // Adjust the height as needed
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
+          width: '100vw' /* Full viewport width */
         }}
       >
         {modalType === 'LANDING' && <LandingPage setModal={setModal} />}

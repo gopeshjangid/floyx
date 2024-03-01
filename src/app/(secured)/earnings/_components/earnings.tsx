@@ -14,6 +14,7 @@ import {
   Grid,
   useMediaQuery,
   Stack,
+  Tooltip,
 } from '@mui/material';
 import {
   useGetArticleTipHistoryQuery,
@@ -42,6 +43,7 @@ import {
   WalletHistory,
 } from './HistoryCards';
 import Image from 'next/image';
+import { LABELS } from '@/constants/labels';
 // Styled components
 const DashboardCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -236,20 +238,23 @@ const PointsBalanceCard = React.memo(() => {
                     gap={2}
                     width="100%"
                   >
+                     <Tooltip title={LABELS.walletFeatureUpcomingMessage}>
                     <EarningButtons
-                      sx={{
-                        borderColor: '#fff',
-                        color: '#fff',
-                        '&:hover': {
-                          borderColor: '#fff',
-                          color: '#fff',
-                        },
-                      }}
+                      // sx={{
+                      //   borderColor: '#fff',
+                      //   color: '#fff',
+                      //   '&:hover': {
+                      //     borderColor: '#fff',
+                      //     color: '#fff',
+                      //   },
+                      // }}
                       disabled={isEarningStopped?.stopEarings}
                     >
                       {isEarningStoppedLoading ? 'Loading...' : 'Withdraw'}
                     </EarningButtons>
-                    <WalletHistory />
+                    </Tooltip>
+                    {/* <WalletHistory /> */}
+                    <Tooltip title={LABELS.walletFeatureUpcomingMessage}><EarningButtons>Wallet</EarningButtons></Tooltip>
                   </Stack>
                 </Grid>
               </Grid>

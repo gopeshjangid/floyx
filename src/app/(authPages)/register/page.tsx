@@ -17,7 +17,6 @@ import {
   debounce,
 } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 
 import { SVGLock, SVGUser } from '@/assets/images';
@@ -41,7 +40,6 @@ import { useTranslation } from 'react-i18next';
 const RegisterPage = () => {
   const theme = useTheme();
   const toast = useToast();
-  const router = useRouter();
   const { palette } = useTheme();
   const searchParams = useSearchParams();
   const { t } = useTranslation();

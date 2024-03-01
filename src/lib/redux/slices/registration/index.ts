@@ -66,9 +66,25 @@ export const registrationService = createApi({
       }),
       transformResponse: (response: any) => response?.value?.code,
     }),
+    resetPassword: builder.mutation({
+      query: body => ({
+        url: ApiEndpoint.ResetPasswordCreateToken,
+        method: 'POST',
+        body: body,
+      }),
+      transformResponse: (response: any) => response?.value?.code,
+    }),
     verifyToken: builder.mutation({
       query: body => ({
         url: ApiEndpoint.VerifyToken,
+        method: 'POST',
+        body: body,
+      }),
+      transformResponse: (response: any) => response?.value?.code,
+    }),
+    verifyResetPassword: builder.mutation({
+      query: body => ({
+        url: ApiEndpoint.ResetPasswordVerify,
         method: 'POST',
         body: body,
       }),
@@ -102,4 +118,6 @@ export const {
   useVerifyTokenMutation,
   useLogin2faMutation,
   useLoginMutation,
+  useResetPasswordMutation,
+  useVerifyResetPasswordMutation,
 } = registrationService;

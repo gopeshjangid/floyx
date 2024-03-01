@@ -87,17 +87,9 @@ export default function TipColumn({
       //refetch();
       toast.success(t('comp.fullArticle.toastMsg.msg10'));
       revalidateArticleDetail(pathname);
+      window.location.reload();
     }
   }, [isSuccess, pathname]);
-
-  console.log(
-    "session.status === 'loading' || isFetching || isLoading  session->",
-    session.status === 'loading',
-    '->isfetching',
-    isFetching,
-    'isloding-->',
-    isLoading
-  );
 
   if (session.status === 'loading' || isFetching || isLoading) {
     return (
@@ -108,8 +100,6 @@ export default function TipColumn({
   }
 
   if (isSameUser) return null;
-
-  console.log('fetchedTipHistory: ', fetchedTipHistory);
 
   const history = (fetchedTipHistory ?? []).filter(
     val => val?.articleId === articleId
