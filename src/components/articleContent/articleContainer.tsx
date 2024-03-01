@@ -33,6 +33,7 @@ import ShareArticleModal from '../fullArticle/shareArticleModal';
 import CustomDescription from '../customDescription';
 import useDevice from '@/lib/hooks/useDevice';
 import { DeleteOutline, EditRounded } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',

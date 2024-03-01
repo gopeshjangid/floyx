@@ -136,7 +136,7 @@ export default function ActionModal({
   const { palette } = useTheme();
   const toast = useToast();
   const commentRef = useRef();
-
+ const { t } = useTranslation();
   const [reportReason, setReportReason] = useState('');
   const [commentText, setCommentText] = useState('');
   const [message, setMessage] = useState('');

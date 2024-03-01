@@ -7,33 +7,32 @@ import { Alert, Skeleton } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { Metadata, ResolvingMetadata } from 'next';
-import { useTranslation } from 'react-i18next';
 
-async function Page({ params,searchParams }: any) {
+async function Page({ params, searchParams }: any) {
   // const isMobile = useMediaQuery('(max-width:480px)');
   const userName = params?.userName;
   let articlePuclicUrl = params?.articlePublicUrl;
   let articleDetails, isError;
-  if(searchParams.id){
+  if (searchParams.id) {
     let fetchResult = await fetchServerData(
       `${ApiEndpoint.GetArticleById}${searchParams.id}`
     );
     articleDetails = fetchResult.data;
     isError = fetchResult.isError;
-  }else{
+  } else {
     let fetchResult = await fetchServerData(
       `${ApiEndpoint.GetArticles}/${userName}/${articlePuclicUrl}`
     );
     articleDetails = fetchResult.data;
     isError = fetchResult.isError;
   }
-  
+
   articlePuclicUrl = articleDetails?.article?.publicUrl;
   const articleId = articleDetails?.article?.id;
-const{t}=useTranslation()
+
   return (
     <>
-      {isError && <Alert trasnlate="no" severity="error">{ t("auth.login.msg.msg2")}</Alert>}
+      {isError && <Alert severity="error">Something went wrong</Alert>}
       {articleId && (
         <>
           <section>

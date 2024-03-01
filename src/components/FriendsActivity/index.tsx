@@ -71,7 +71,7 @@ export default function FriendsActivity() {
   return (
     <FriendActivitySection>
       <Typography translate="no" variant="body1">
-        {t('comp.friendActivity'.newUser)}
+        {t('comp.friendActivity.newUser')}
       </Typography>
       <Box my={2}>
         {friendActivity ? (
