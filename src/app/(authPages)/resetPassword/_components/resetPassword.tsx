@@ -9,6 +9,7 @@ import {
   FormLabel,
   TextField,
   Theme,
+  Typography,
   styled,
 } from '@mui/material';
 
@@ -109,6 +110,9 @@ const ResetPasswordComponent = () => {
           marginTop: '20px',
         }}
       >
+         <Box py={1} pt={2}>
+         <Typography>Set New Password</Typography>
+         </Box>
         <AccountWrapper>
           <Box component="form" noValidate onSubmit={updateAccountDetails}>
             <FormControl>
@@ -133,7 +137,7 @@ const ResetPasswordComponent = () => {
                 fullWidth
                 hiddenLabel
                 type='password'
-                placeholder="Enter your confirm password"
+                placeholder="Confirm password"
                 value={formData.newPasswordConfirmation}
                 onChange={onChangeHandler}
                 error={!!formError.newPasswordConfirmation}
