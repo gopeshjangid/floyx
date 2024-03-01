@@ -36,6 +36,7 @@ import { useToast } from '@/components/Toast/useToast';
 import { showErrorMessages } from '@/lib/utils';
 import VerifyPhone from './components/verify-phone';
 import VerifyEmail from './components/verify-email';
+import { useTranslation } from 'react-i18next';
 
 const RegisterPage = () => {
   const theme = useTheme();
@@ -43,7 +44,7 @@ const RegisterPage = () => {
   const router = useRouter();
   const { palette } = useTheme();
   const searchParams = useSearchParams();
-
+  const { t } = useTranslation();
   const [
     verifyOtp,
     { data: verifyOtpData, isLoading: verifyOtpLoading, error: verifyOtpError },
@@ -140,7 +141,10 @@ const RegisterPage = () => {
   }, [verifyOtpData]);
 
   useEffect(() => {
-    if (registrationData === 'success' && (formData.isReferred || (formData.phone && formData.recommendedMe))) {
+    if (
+      registrationData === 'success' &&
+      (formData.isReferred || (formData.phone && formData.recommendedMe))
+    ) {
       setIsRegisteredSuccess({
         value: true,
         type: 'phone',
@@ -174,7 +178,7 @@ const RegisterPage = () => {
     if (checkPhoneData && checkPhoneData === 'phone_number_already_used') {
       setFormError((prev: any) => ({
         ...prev,
-        phone: 'Phone number already used',
+        phone: t('auth.register.msg.msg1'),
       }));
     }
 
@@ -190,7 +194,7 @@ const RegisterPage = () => {
     if (checkUserNameData && checkUserNameData === 'username_in_use') {
       setFormError((prev: any) => ({
         ...prev,
-        username: 'Username already exists',
+        username: t('auth.register.msg.msg2'),
       }));
     }
 
@@ -206,7 +210,7 @@ const RegisterPage = () => {
     if (checkRefferedUserNameData && checkRefferedUserNameData === 'success') {
       setFormError((prev: any) => ({
         ...prev,
-        recommended: 'User does not exist',
+        recommended: t('auth.register.msg.msg3'),
       }));
     }
 
@@ -222,7 +226,7 @@ const RegisterPage = () => {
     if (checkEmailData === 'email_in_use') {
       setFormError((prev: any) => ({
         ...prev,
-        email: 'Email already exists',
+        email: t('auth.register.msg.msg4'),
       }));
     }
 
@@ -236,23 +240,23 @@ const RegisterPage = () => {
 
   const validateForm = () => {
     const tempErrors: any = {};
-    if (!formData.name) tempErrors.name = 'Name is required!';
+    if (!formData.name) tempErrors.name = t('auth.register.msg.msg5');
     if (formData.name.length > 25)
-      tempErrors.name = 'Name must be less than 25 characters long';
-    if (!formData.username) tempErrors.username = 'Username is required!';
+      tempErrors.name = t('auth.register.msg.msg7');
+    if (!formData.username) tempErrors.username = t('auth.register.msg.msg6');
     if (formData.username.length > 25)
-      tempErrors.username = 'Username must be less than 25 characters long';
-    if (!formData.email) tempErrors.email = 'Email is required!';
+      tempErrors.username = t('auth.register.msg.msg8');
+    if (!formData.email) tempErrors.email = t('auth.register.msg.msg9');
     if (!formData.email.match(/^\S+@\S+$/i))
-      tempErrors.email = 'Email is invalid';
+      tempErrors.email = t('auth.register.msg.msg10');
     if (formData.email !== formData.confirmEmail)
-      tempErrors.confirmEmail = 'Emails do not match';
+      tempErrors.confirmEmail = t('auth.register.msg.msg11');
     if (!formData.password || formData.password.length < 6)
-      tempErrors.password = 'Password must be at least 6 characters long';
+      tempErrors.password = t('auth.register.msg.msg12');
     if (formData.recommendedMe && !formData.recommended)
-      tempErrors.recommended = 'Please enter who recommended you to Floyx';
+      tempErrors.recommended = t('auth.register.msg.msg13');
     if (formData.recommendedMe && formData.recommended.length > 25)
-      tempErrors.recommended = 'Name must be less than 25 characters long';
+      tempErrors.recommended = t('auth.register.msg.msg14');
 
     setFormError(tempErrors);
     return Object.values(tempErrors).every(value => value === '');
@@ -271,7 +275,11 @@ const RegisterPage = () => {
         acceptTerms: true,
         phoneNumber: formData.phone,
         isReferred: formData.isReferred,
-        invitedbyUsername: formData?.recommendedMe ? formData.recommended : formData.isReferred ? formData.referred : '',
+        invitedbyUsername: formData?.recommendedMe
+          ? formData.recommended
+          : formData.isReferred
+            ? formData.referred
+            : '',
       });
     }
   };
@@ -332,31 +340,35 @@ const RegisterPage = () => {
         {!isRegisteredSuccess.value && (
           <>
             <Typography
+              translate="no"
               variant="h3"
               gutterBottom
               color="textPrimary"
               align="center"
             >
-              Create your account
+              {t('auth.register.label.text1')}
             </Typography>
             <Typography
+              translate="no"
               variant="h6"
               gutterBottom
               color="textPrimary"
               align="center"
               mt={3}
             >
-              Join for free today and keep your data safe in the digital space.
+              {t('auth.register.label.text2')}
             </Typography>
             {token && (
               <Typography
+                translate="no"
                 variant="h6"
                 gutterBottom
                 color="textPrimary"
                 align="center"
                 mt={3}
               >
-                Referred By{' '}
+                {t('auth.register.label.text3')}
+
                 <span style={{ color: '#00FF00' }}>{formData.referred}</span>
               </Typography>
             )}
@@ -370,15 +382,18 @@ const RegisterPage = () => {
               borderRadius="20px"
             >
               <Typography
+                translate="no"
                 align="center"
                 variant="h4"
                 gutterBottom
                 color="textPrimary"
               >
-                Personal account
+                {t('auth.register.label.text4')}
               </Typography>
               <FormControl>
-                <FormLabel required>Name</FormLabel>
+                <FormLabel translate="no" required>
+                  {t('auth.register.label.text5')}
+                </FormLabel>
                 <TextField
                   name="name"
                   fullWidth
@@ -406,7 +421,9 @@ const RegisterPage = () => {
               </FormControl>
 
               <FormControl>
-                <FormLabel required>Username</FormLabel>
+                <FormLabel translate="no" required>
+                  {t('auth.register.label.text6')}
+                </FormLabel>
                 <TextField
                   name="username"
                   fullWidth
@@ -445,21 +462,27 @@ const RegisterPage = () => {
               )}
 
               {!formData.referred && (
-                <FormControl sx={{'&': {
-                  '.MuiFormControlLabel-label' : {
-                    marginBottom: '0rem'
-                  }
-                }}}>
+                <FormControl
+                  sx={{
+                    '&': {
+                      '.MuiFormControlLabel-label': {
+                        marginBottom: '0rem',
+                      },
+                    },
+                  }}
+                >
                   <FormControlLabel
+                    translate="no"
                     name="recommendedMe"
                     control={
-                      <Checkbox sx={{ paddingTop: '2px !important'}}
+                      <Checkbox
+                        sx={{ paddingTop: '2px !important' }}
                         defaultChecked={token ? true : false}
                         onChange={onChangeHandler}
                       />
                     }
-                    labelPlacement='end'
-                    label="Someone recommended Floyx to me (optional)"
+                    labelPlacement="end"
+                    label={t('auth.register.label.text7')}
                   />
                 </FormControl>
               )}
@@ -467,12 +490,15 @@ const RegisterPage = () => {
               {formData.recommendedMe && (
                 <>
                   <FormControl>
-                    <FormLabel required>Recommender's username</FormLabel>
+                    <FormLabel translate="no" required>
+                      {t('auth.register.label.text8')}
+                    </FormLabel>
                     <TextField
+                      translate="no"
                       name="recommended"
                       fullWidth
                       hiddenLabel
-                      placeholder="Enter here recommender's username..."
+                      placeholder={t('auth.register.label.text9')}
                       onChange={e => {
                         debouncedCheckRefferedUserName(e.target.value);
                         onChangeHandler(e);
@@ -496,7 +522,9 @@ const RegisterPage = () => {
               )}
 
               <FormControl>
-                <FormLabel required>Email address</FormLabel>
+                <FormLabel required translate="no">
+                  {t('auth.register.label.text10')}
+                </FormLabel>
                 <TextField
                   name="email"
                   fullWidth
@@ -521,12 +549,15 @@ const RegisterPage = () => {
               </FormControl>
 
               <FormControl>
-                <FormLabel required>Email address confirmation</FormLabel>
+                <FormLabel translate="no" required>
+                  {t('auth.register.label.text11')}
+                </FormLabel>
                 <TextField
+                  translate="no"
                   name="confirmEmail"
                   fullWidth
                   hiddenLabel
-                  placeholder="Enter your email address again"
+                  placeholder={t('auth.register.label.text12')}
                   onChange={onChangeHandler}
                   error={!!formError.confirmEmail}
                   helperText={formError.confirmEmail}
@@ -543,7 +574,9 @@ const RegisterPage = () => {
               </FormControl>
 
               <FormControl>
-                <FormLabel required>Password(at least 6 characters)</FormLabel>
+                <FormLabel translate="no" required>
+                  {t('auth.register.label.text13')}
+                </FormLabel>
 
                 <TextField
                   fullWidth
@@ -568,21 +601,22 @@ const RegisterPage = () => {
               <FormControlLabel
                 label={
                   <Typography
+                    translate="no"
                     fontSize="16px"
                     fontWeight="400"
                     sx={{ '& a': { color: '#5798FF', margin: '0 5px' } }}
                   >
-                    {'By Clicking "Sign Up" You agree to Floyx\'s'}
+                    {t('auth.register.label.text14')}
                     <Link prefetch={false} href={allRoutes.termsAndConditions}>
-                      Terms of Service
+                      {t('auth.register.label.text15')}
                     </Link>
                     ,
                     <Link prefetch={false} href={allRoutes.privacyPolicy}>
-                      Privacy Policy
+                      {t('auth.register.label.text16')}
                     </Link>
-                    {'and'}
+                    {t('auth.register.label.text17')}
                     <Link prefetch={false} href={allRoutes.cookiesPolicy}>
-                      Cookie Policy
+                      {t('auth.register.label.text18')}
                     </Link>
                   </Typography>
                 }
@@ -594,6 +628,7 @@ const RegisterPage = () => {
                 }
               />
               <Button
+                translate="no"
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -601,19 +636,20 @@ const RegisterPage = () => {
                 sx={{ mt: 2, mb: 2 }}
                 disabled={isLoading || !termsAndConditions}
               >
-                Sign Up
+                {t('auth.register.label.text19')}
               </Button>
 
               <Typography
+                translate="no"
                 fontSize="16px"
                 fontWeight="400"
                 sx={{ '& a': { color: '#5798FF' } }}
                 align="center"
               >
-                Already have an account?
+                {t('auth.register.label.text20')}
+
                 <Link prefetch={false} href={allRoutes.socialLogin}>
-                  {' '}
-                  Sign in
+                  {t('auth.register.label.text21')}
                 </Link>
               </Typography>
             </Box>
@@ -626,20 +662,16 @@ const RegisterPage = () => {
               }}
             >
               <Typography
+                translate="no"
                 variant="body2"
                 gutterBottom
                 align="center"
                 color={palette.primary[300]}
                 sx={{ '& a': { color: '#5798FF' } }}
               >
-                Administrator the body responsible for administration of data as
-                per Article 4 (7) of GDPR, namely Floyx LLC. – owner and
-                operator of Floyx platform and services, located in 16192
-                Coastal Highway, Lewes, Delaware 19958, County of Sussex,
-                registered by the Delaware Registered as a Limited Liability
-                Company under Companies Act, 1961, registration number 6099676 (
+                {t('auth.register.label.text22')}(
                 <Link prefetch={false} href={allRoutes.login}>
-                  more about processing your data.
+                  {t('auth.register.label.text23')}
                 </Link>
                 )
               </Typography>
@@ -654,10 +686,8 @@ const RegisterPage = () => {
               justifyContent="center"
               alignItems="center"
             >
-            
-
-              <Typography variant="body1">
-                2024 Powered by Floyx LLC.
+              <Typography translate="no" variant="body1">
+                {t('auth.register.label.text24')}
               </Typography>
             </Box>
           </>

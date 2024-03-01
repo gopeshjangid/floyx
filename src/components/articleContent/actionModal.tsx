@@ -33,43 +33,48 @@ import {
   useShareArticleMutation,
 } from '@/lib/redux';
 import AddComment from '../Post/AddComment';
-
+import { useTranslation } from 'react-i18next';
 const BlockUserDisclaimer = () => {
+  const {t}=useTranslation()
   return (
     <Box>
-      <Typography variant="h6" textAlign="center">
-        If you block this user you will no be able to :
+      <Typography translate="no" variant="h6" textAlign="center">
+        {t('comp.articleContent.blockMsg')}
       </Typography>
       <Divider sx={{ marginBottom: 2 }} />
       <Stack gap={1}>
-        <Typography variant="body2" component={'li'}>
-          View their profile, posts, articles and events
+        <Typography
+          translate="no"
+          variant="body2"
+          component={'li'}
+        ></Typography>
+        <Typography translate="no" variant="body2" component={'li'}>
+          {t('comp.articleContent.willBeUnfollow')}
         </Typography>
-        <Typography variant="body2" component={'li'}>
-          You will both unfollow each other
+        <Typography translate="no" variant="body2" component={'li'}>
+          {t('comp.articleContent.haveToFollow')}
         </Typography>
-        <Typography variant="body2" component={'li'}>
-          To see the user content you have to follow him again after unblocking.
-        </Typography>
-        <Typography variant="body2" component={'li'}>
-          Do you really wish to block this user?
+        <Typography translate="no" variant="body2" component={'li'}>
+          {t('comp.articleContent.wishToBlock')}
         </Typography>
       </Stack>
     </Box>
   );
 };
 
-const reportChecks = [
-  'Their Materials are abusive or hateful',
-  "It's suspicious or spam",
-  'It appears their account is hacked',
-  "They're pretending to be me or someone else",
-  'Their profile info and/or images includes abusive or hateful content',
-];
+
 
 const ReportUserDisclaimer = ({ handleReportChange }) => {
   const [radioValue, setRadioValue] = useState('');
-
+const {t} =useTranslation()
+const reportChecks = [
+  t('comp.articleContent.reportCheck1'),
+   t('comp.articleContent.reportCheck2'),
+    t('comp.articleContent.reportCheck3'),
+     t('comp.articleContent.reportCheck4'),
+      t('comp.articleContent.reportCheck'),
+ 
+];
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -86,8 +91,9 @@ const ReportUserDisclaimer = ({ handleReportChange }) => {
   };
   return (
     <Box>
-      <Typography variant="h6" textAlign="center">
-        Help us understand the problem Why do you want to report this User?
+      <Typography translate="no" variant="h6" textAlign="center">
+        {t('comp.articleContent.problemUnderstanding')}
+       
       </Typography>
       <Divider sx={{ marginBottom: 2 }} />
       <Stack gap={1}>
@@ -108,11 +114,11 @@ const ReportUserDisclaimer = ({ handleReportChange }) => {
         </RadioGroup>
 
         <Typography variant="subtitle2">
-          If the user violates the Floyx rules in other ways, Please write to us
-          below :
+          {t('comp.articleContent.violates')}
+       
         </Typography>
 
-        <TextareaAutosize onChange={handleChange} placeholder="Type here..." />
+        <TextareaAutosize onChange={handleChange} placeholder={t('comp.articleContent.violatesPlace')} />
       </Stack>
     </Box>
   );
@@ -176,10 +182,10 @@ export default function ActionModal({
     event.stopPropagation();
     try {
       await blockUser({ username });
-      toast.success('BLOCKED');
+      toast.success(t('comp.articleContent.blockedMsg'));
       setOpenDialog(false);
     } catch (error) {
-      toast.error('Error occured in blocking the user');
+      toast.error(t('comp.articleContent.blockMsgErr'));
       console.error('Error blocking the user:', error);
     }
   };
@@ -192,10 +198,10 @@ export default function ActionModal({
       content: commentText,
     };
     if (status) {
-      toast.error('This article has already been shared');
+      toast.error(t('comp.articleContent.articleMsgErr'));
     } else {
       await publishArticle({ articleId: articleDetails.id, status, payload });
-      toast.success('Article is Published Succesfully ');
+      toast.success(t('comp.articleContent.articleMsg'));
     }
     setCommentText('');
     setOpenDialog(false);
@@ -208,20 +214,20 @@ export default function ActionModal({
       case 4: 
         return (
           <Stack direction={'row'} justifyContent="center" gap={1}>
-            <FlagIcon /> <Typography variant="h6">Report Issue</Typography>
+            <FlagIcon /> <Typography translate="no" variant="h6">{t('comp.articleContent.reportIssue')}</Typography>
           </Stack>
         );
       case 1:
         return (
           <Stack direction={'row'} justifyContent="center" gap={1}>
             <BlockOutlinedIcon />{' '}
-            <Typography variant="h6">Block User</Typography>
+            <Typography translate="no" variant="h6">{t('comp.articleContent.blockUser')}</Typography>
           </Stack>
         );
       case 3:
         return (
           <Stack direction={'row'} justifyContent="center" gap={1}>
-            <ShareIcon /> <Typography variant="h6">Share Article</Typography>
+            <ShareIcon /> <Typography translate="no" variant="h6">{t('comp.articleContent.share')}</Typography>
           </Stack>
         );
 
@@ -243,40 +249,40 @@ export default function ActionModal({
               // disabled={!reportReason}
             >
               {isLoading && <CircularProgress size={20} color="inherit" />}
-              {!isLoading &&  "Report"}
+              {!isLoading && t('comp.articleContent.report')}
             </Button>
-            <Button onClick={handleClose} variant="text">
-              Close
+            <Button translate="no" onClick={handleClose} variant="text">
+              {t('comp.articleContent.close')}
             </Button>
           </>
         );
       case 1:
         return (
           <>
-            <Button variant="contained" autoFocus onClick={handleBlockUser}>
-              Yes
+            <Button translate="no" variant="contained" autoFocus onClick={handleBlockUser}>
+              {t('comp.articleContent.yes')}
             </Button>
-            <Button variant="text" onClick={handleClose} autoFocus>
-              No
+            <Button translate="no" variant="text" onClick={handleClose} autoFocus>
+              {t('comp.articleContent.no')}
             </Button>
           </>
         );
       case 3:
         return (
           <>
-            <Button variant="contained" autoFocus onClick={handlePublish}>
-              Publish
+            <Button translate="no" variant="contained" autoFocus onClick={handlePublish}>
+              {t('comp.articleContent.publish')}
             </Button>
-            <Button variant="text" onClick={handleClose} autoFocus>
-              Close
+            <Button translate="no" variant="text" onClick={handleClose} autoFocus>
+              {t('comp.articleContent.close')}
             </Button>
           </>
         );
       case 4: 
         return (
           <>
-            <Button variant="text" onClick={handleClose} autoFocus>
-              Done
+            <Button translate="no" variant="text" onClick={handleClose} autoFocus>
+              {t('comp.articleContent.done')}
             </Button>
           </>
         )

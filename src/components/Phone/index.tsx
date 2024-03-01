@@ -1,6 +1,14 @@
 import { iconArrowDown } from '@/assets/images';
-import { Box, FormControl, FormHelperText, FormLabel, Theme, styled } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Theme,
+  styled,
+} from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
 
@@ -78,9 +86,12 @@ const StyledPhone = styled(Box)(({ theme }: { theme: Theme }) => ({
 }));
 
 const Phone = ({ value, onChange, checkPhone, error }: IPhoneProps) => {
+  const { t } = useTranslation();
   return (
     <FormControl>
-      <FormLabel required>Phone number</FormLabel>
+      <FormLabel translate="no" required>
+        {t('comp.login.text.phone')}
+      </FormLabel>
       <StyledPhone>
         <PhoneInput
           enableLongNumbers={false}

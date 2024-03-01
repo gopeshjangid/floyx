@@ -12,6 +12,7 @@ import {
 import { styled } from '@mui/material/styles';
 import { UserCardBox } from '../UserCard';
 import UsernameLink from '../usernameLink';
+import { useTranslation } from 'react-i18next';
 
 const FriendActivitySection = styled(Box)(() => ({
   marginTop: '20px',
@@ -24,7 +25,7 @@ const UserBox = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.mainBackground,
   borderRadius: '10px',
 }));
-
+const { t } = useTranslation();
 const ACTIVITY_CARD = [
   {
     name: 'Michele rene',
@@ -69,7 +70,9 @@ export default function FriendsActivity() {
 
   return (
     <FriendActivitySection>
-      <Typography variant="body1">Newly Registered Users</Typography>
+      <Typography translate="no" variant="body1">
+        {t('comp.friendActivity'.newUser)}
+      </Typography>
       <Box my={2}>
         {friendActivity ? (
           <Stack gap={1}>

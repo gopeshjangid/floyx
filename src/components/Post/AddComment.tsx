@@ -1,7 +1,13 @@
 'use client';
 
 import { styled } from '@mui/material/styles';
-import { Box, Button, CircularProgress, Stack, IconButton } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  IconButton,
+} from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
 import UserAvatar from '../UserAvatar';
 import { useSession } from 'next-auth/react';
@@ -18,6 +24,7 @@ import { UserComment } from '@/lib/redux';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import MoodIcon from '@mui/icons-material/Mood';
+import { useTranslation } from 'react-i18next';
 
 const AddCommentBox = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -100,7 +107,7 @@ function AddComment({
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
   const [updateComment, { isLoading: updateLoading }] =
     useUpdateCommentMutation();
-  const handlePostText = (e: any,emoji?:any) => {
+  const handlePostText = (e: any, emoji?: any) => {
     let text = '';
     if (e && e.target) {
       text = e.target.value;
@@ -145,7 +152,7 @@ function AddComment({
         setCommentText('');
       }
     }
-    setIsVisible(false)
+    setIsVisible(false);
   };
 
   const handleEditSubmit = async () => {
@@ -161,13 +168,14 @@ function AddComment({
   const renderUserSuggestion = (user: any) => {
     return <MentionItem user={user} />;
   };
-
+  const { t } = useTranslation();
   return (
     <AddCommentBox>
       <Box gap={1} className="styled-input-container">
         <UserAvatar
-          src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)?.data
-            ?.user?.username}`}
+          src={`${ApiEndpoint.ProfileDetails}/avatar/${
+            (session as any)?.data?.user?.username
+          }`}
           alt={(session as any)?.data?.user?.username}
           sx={{ width: '45px', height: '45px' }}
         />
@@ -186,7 +194,7 @@ function AddComment({
             disabled={isLoading}
             onKeyDown={onEnterPress}
             placeholder={'Add a comment'}
-            style={{width:'95%'}}
+            style={{ width: '95%' }}
           >
             <Mention
               trigger="@"
@@ -196,13 +204,28 @@ function AddComment({
               appendSpaceOnAdd={true}
             />
           </MentionsInput>
-          <IconButton onClick={toggleVisibility} sx={{position: 'absolute', right: '-10px'}}>
-              <MoodIcon />
+          <IconButton
+            onClick={toggleVisibility}
+            sx={{ position: 'absolute', right: '-10px' }}
+          >
+            <MoodIcon />
           </IconButton>
-          <Box sx={{ position: 'absolute', zIndex: 999999, right: '-10px', top: '50px'}}>
-            {isVisible ? <Picker data={data} onEmojiSelect={(emoji)=>
-              handlePostText(null, emoji)
-              } /> : <></>}
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: 999999,
+              right: '-10px',
+              top: '50px',
+            }}
+          >
+            {isVisible ? (
+              <Picker
+                data={data}
+                onEmojiSelect={emoji => handlePostText(null, emoji)}
+              />
+            ) : (
+              <></>
+            )}
           </Box>
         </Box>
       </Box>
@@ -213,11 +236,15 @@ function AddComment({
           gap={1}
           marginTop={1}
         >
-          <Button variant="outlined" onClick={handleEditSubmit}>
-            Update
+          <Button translate="no" variant="outlined" onClick={handleEditSubmit}>
+            {t('comp.comment.update')}
           </Button>
-          <Button variant="outlined" onClick={() => setIsEditing(false)}>
-            Cancel
+          <Button
+            translate="no"
+            variant="outlined"
+            onClick={() => setIsEditing(false)}
+          >
+            {t('comp.comment.deleteCancel')}
           </Button>
         </Stack>
       )}

@@ -15,6 +15,7 @@ import {
 import { GradientButton } from '@/components/gradientButton';
 import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 function ArticleList() {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -47,7 +48,7 @@ function ArticleList() {
       searchArticle({ searchString: dynamicTab.value ?? '' });
     }
   }, [tabName]);
-
+const {t}=useTranslation()
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
       <Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -78,7 +79,7 @@ function ArticleList() {
             >
               <Link href="/composer/create">
                 <GradientButton variant="outlined" color="primary" isSelected>
-                  <span>New Articles</span>
+                  <span translate="no">{t("secure.article.label.text1")}</span>
                 </GradientButton>
               </Link>
             </Box>

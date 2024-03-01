@@ -1,0 +1,366 @@
+{
+  "Drawer": {
+    "home": "Home",
+    "notifications": "Notifications",
+    "messages": "Messages",
+    "search": "Search",
+    "wallet": "Wallet",
+    "profile": "Profile",
+    "more": {
+      "title": "More",
+      "settings": "SETTINGS",
+      "logout": "LOGOUT"
+    },
+    "writePost": "WRITE POST"
+  },
+  "Home": {
+    "articleBtn": "ARTICLE/BLOG",
+    "createPost": {
+      "tab1": {
+        "title": "Post",
+        "happenPlaceholder": "What is happening ?",
+        "addPlaceholder": "Want to add something to your post?",
+        "photoLabel": "Photo",
+        "successMsg": "Post is published successfully",
+        "missingDiscription": "Please add photo's description to publish it.",
+        "publish": "Publish Post",
+        "wait": "Please wait"
+      },
+      "tab2": {
+        "title": "WRITE AN ARTICLE"
+      }
+    },
+    "followSection": {
+      "title": "Follow Accounts ",
+      "followers": "Followers",
+      "following": "Following ",
+      "follow": "Follow",
+      "followed": "Followes"
+    },
+    "postSection": {
+      "ago": "ago",
+      "like": "Like",
+      "likes": "Likes",
+      "comments": "Comments",
+      "share": "Share",
+      "placeholder": "Add a comment",
+      "options": {
+        "directLink": "Direct Link",
+        "deletePost": "Delete Post"
+      },
+      "shared": " shared a ",
+      "post": "post",
+      "seenAll": "Yay! You have seen it all",
+      "copied": "Copied",
+      "noPost": "It seems like there are no posts available on your board.Feel free to share a post!",
+      "loading": "Loading...",
+      "postLike": "PostLike",
+      "articleLike": "ArticleLike",
+      "PostCommentLiked": "PostCommentLiked",
+      "ArticleCommentLiked": "ArticleCommentLiked",
+      "toastMsg": {
+        "msg1": "Post is deleted successfully.",
+        "msg2": "Are you sure you want to delete this post?"
+      }
+    },
+    "articleSection": {
+      "title": "Recent Articles",
+      "showMore": "SHOW MORE"
+    }
+  },
+  "comp": {
+    "addArticleForm": {
+      "error1": "Your article needs a title",
+      "error2": "Your article is too short to publish {{contentLength}}/1000 characters more",
+      "successMsg": "Your draft saved.",
+      "title": "Title",
+      "addTags": "Add hashtags",
+      "coverPic": "Cover Photo (optional)",
+      "subtitle": "Subtitle",
+      "urlPlaceholder": "Paste URL link here",
+      "invalidUrl": "URL is invalid",
+      "nameLinkPlace": "Name of the link",
+      "textPlace": "Type any text",
+      "artTagsError": "Max {{maxSelectedTag}} tags are allowed",
+      "artTagsError1": "You have already added this tag.",
+      "artTagsPlace1": "Search hashtag or press enter to create"
+    },
+    "addArticleHead": {
+      "newArticle": "New Article",
+      "myArticles": "My Articles",
+      "draft": "My Drafts",
+      "newWrite": "Write New",
+      "saveDraft": "Save as Draft",
+      "saveEdit": "Save Edit",
+      "publish": "Publish",
+      "popular": "Popular",
+      "recent": "Recent",
+      "mostLiked": "Most Liked",
+      "following": "Following",
+      "bookmark": "Bookmark"
+    },
+    "articleContent": {
+      "noArticle": "There are no articles yet",
+      "blockMsg": "If you block this user you will no be able to :",
+      "viewProfile": "View their profile, posts, articles and events",
+      "willBeUnfollow": "You will both unfollow each other",
+      "haveToFollow": "To see the user content you have to follow him again after unblocking.",
+      "wishToBlock": "Do you really wish to block this user?",
+      "problemUnderstanding": " Help us understand the problem Why do you want to report this User?",
+      "violates": "If the user violates the Floyx rules in other ways, Please write to us  below :",
+      "violatesPlace": "Type here...",
+      "reportCheck1": "Their Materials are abusive or hateful",
+      "reportCheck2": "It's suspicious or spam",
+      "reportCheck3": "It appears their account is hacked",
+      "reportCheck4": "They're pretending to be me or someone else",
+      "reportCheck5": "Their profile info and/or images includes abusive or hateful content",
+      "blockedMsg": "BLOCKED",
+      "blockMsgErr": "Error occured in blocking the user",
+      "articleMsgErr": "This article has already been shared",
+      "articleMsg": "Article is Published Succesfully ",
+      "reportIssue": "Report Issue",
+      "blockUser": "Block User",
+      "share": "Share Article",
+      "report": "Report",
+      "close": "Close",
+      "yes": "Yes",
+      "no": "No",
+      "publish": "Publish",
+      "done": "Done",
+      "noPhoto": "No Image",
+      "lastSaved": "Last saved on",
+      "tipped": "(!You Tipped)",
+      "confirm": "Please Confirm",
+      "confirmDelete": " Are you sure you want to delete this Article ?"
+    },
+    "blockedUser": {
+      "unblock": "Unblock"
+    },
+    "friendActivity": {
+      "newUser": "Newly Registered Users"
+    },
+    "fullArticle": {
+      "moreFromAuthor": "More From Author",
+      "noTitle": "(No title)",
+      "about": "About Author",
+      "msg": "Message",
+      "follower": "Followers:",
+      "articles": "Articles:",
+      "back": "Back",
+      "earnPoints": "{{pointsEarned}} Points ",
+      "pastPoints": "Past Payouts -{{pointsEarned}} points",
+      "loading": "Loading...",
+      "mostRecent": "Most recent",
+      "allCommnets": "All comments",
+      "toastMsg": {
+        "msg1": "This article has already been shared",
+        "msg2": "This post has already been shared",
+        "msg3": "Article is Published Succesfully",
+        "msg4": "Post is Published Succesfully ",
+        "msg5": "Already tipped this article",
+        "msg6": "You must wait 10 minutes to tip again",
+        "msg7": "You cannot tip your own articles",
+        "msg8": "Your tip limit exceeded for today",
+        "msg9": "Something went wrong! Please try again",
+        "msg10": "You tipped!"
+      },
+      "publish": "Publish",
+      "split": "Split the amount of 0.01 points for you and the author.",
+      "share": "Share:",
+      "startPoints": "Start collecting points on reading articles!",
+      "tip": "Tip"
+    },
+    "login": {
+      "toastMsg": {
+        "msg1": "Login successfully!",
+        "msg2": "Something went wrong!",
+        "msg3": "This field required!",
+        "msg4": "Password is required!",
+        "msg5": "Password should greater than 6 characters!"
+      },
+      "placeholder": {
+        "email": "Username or email",
+        "password": "Password"
+      },
+      "text": {
+        "login": "Login",
+        "forgetLink": "Forgotten your password?",
+        "register": "Register Now",
+        "phone": "Phone Number"
+      }
+    },
+    "comment": {
+      "options": "Options",
+      "reply": "Reply",
+      "deleteCancel": "Cancel",
+      "deleteComment": "Delete Comment",
+      "deleteMsg": "Comment is deleted successfully.",
+      "deleteWarning": " Are you sure you want to delete this comment?",
+      "editComment": "Edit Comment",
+      "like": "Like",
+      "update": "Update"
+    },
+    "privacy": {
+      "updateDate": "Last updated: 16th April 2023",
+      "offerBy": "This Privacy Policy shall apply to the entire service owned and offered by Floyx LLC.",
+      "personalData": "Floyx LLC is the body responsible for the processing of personal data.",
+      "officer": "  Our Data Protection Officer is Mr. Daniel Syrek."
+    },
+    "profile": {
+      "title": "Profile Setup",
+      "msg": {
+        "msg1": "Username already exists",
+        "msg2": "Name is required!",
+        "msg3": "Name must be less than 25 characters long",
+        "msg4": "Username is required!",
+        "msg5": "Username must be less than 25 characters long",
+        "msg6": ""
+      },
+      "text": {
+        "description": " When creating an account in Floyx, enter your NAME and USERNAME under which you want to be visible to other users. You can also select Keep your original data to continue.",
+        "info": " Remember that you can change your NAME and USERNAME in your account settings at any time."
+      },
+      "placeholder": {
+        "name": "Ex. Dustin Max",
+        "username": "Ex. Dusti_69"
+      },
+      "label": {
+        "name": "Name",
+        "username": "Username",
+        "submit": "Submit"
+      }
+    },
+    "recommTopic": {
+      "hot": "Hot Topics",
+      "followed": "Followed",
+      "followYou": "Follows you",
+      "search": "Search for Articles",
+      "sPlace": "Search articles...",
+      "whotofollow": "Who to follow",
+      "wait": "Please Wait ..."
+    }
+  },
+  "auth": {
+    "login": {
+      "msg": {
+        "msg1": "Login successfully!",
+        "msg2": "Something went wrong!",
+        "msg3": "This field required!",
+        "msg4": "Password is required!",
+        "msg5": "Password should greater than 6 characters!",
+        "msg6": "Invalid code",
+        "msg7": "something went wrong, try again"
+      },
+      "text": {
+        "verify": " Verify",
+        "text1": " Join for free today and keep your data safe in the digital Space ",
+        "text2": " Create an account",
+        "text3": " Login to your account",
+        "text4": " By signing in, you agree to",
+        "text5": " Terms of Service ",
+        "text6": " and",
+        "text7": " Privacy Policy, ",
+        "text8": "  including",
+        "text9": " Cookie Use.",
+        "text10": "Back to social login",
+        "text11": "Recovery code",
+        "text12": " Enter your recovery code to verify your identity. The recovery code was provided to you when you enabled two-factor authentication for this profile.",
+        "steps": "Two Step Auth",
+        "twoFac": "Open two-factor authentication app on your device to view your authentication code and verify your identity."
+      },
+      "label": {
+        "username": "Username or email",
+        "password": "Password",
+        "forgetLink": " Forgotten your password?",
+        "submit": "Submit",
+        "rememberMe": "Remember me",
+        "authen": "Authentication code",
+        "dontHave": "Don't have your app ?",
+        "rCode": " Enter recovery code"
+      },
+      "placeholder": {}
+    },
+    "register": {
+      "msg": {
+        "msg1": "Phone number already used",
+        "msg2": "Username already exists",
+        "msg3": "User does not exist",
+        "msg4": "Email already exists",
+        "msg5": "Name is required!",
+        "msg6": "Username is required!",
+        "msg7": "Name must be less than 25 characters long",
+        "msg8": "Username must be less than 25 characters long",
+        "msg9": "Email is required!",
+        "msg10": "Email is invalid",
+        "msg11": "Emails do not match",
+        "msg12": "Password must be at least 6 characters long",
+        "msg13": "Please enter who recommended you to Floyx",
+        "msg14": "Name must be less than 25 characters long",
+        "msg15": "Phone number already used",
+        "msg16": "Phone number already used",
+        "msg17": "Phone number already used",
+        "msg18": "Phone number already used"
+      },
+      "label": {
+        "text1": " Create your account",
+        "text2": " Join for free today and keep your data safe in the digital space.",
+        "text3": " Referred By  ",
+        "text4": " Personal account",
+        "text5": "Name",
+        "text6": "Username",
+        "text7": "Someone recommended Floyx to me (optional)",
+        "text8": "Recommender's username",
+        "text9": "Enter here recommender's username...",
+        "text10": "Email address",
+        "text11": "Email address confirmation",
+        "text12": "Enter your email address again",
+        "text13": "Password(at least 6 characters)",
+        "text14": "By Clicking 'Sign Up' You agree to Floyx's",
+        "text15": " Terms of Service",
+        "text16": "  Privacy Policy ",
+        "text17": "and",
+        "text18": " Cookie Policy ",
+        "text19": "  Sign Up",
+        "text20": " Already have an account?",
+        "text21": " Sign in",
+        "text22": " Administrator the body responsible for administration of data as per Article 4 (7) of GDPR, namely Floyx LLC. – owner and operator of Floyx platform and services, located in 16192 Coastal Highway, Lewes, Delaware 19958, County of Sussex, registered by the Delaware Registered as a Limited Liability Company under Companies Act, 1961, registration number 6099676 ",
+        "text23": "more about processing your data.",
+        "text24": "2024 Powered by Floyx LLC.",
+        "text25": "Verify email address",
+        "text26": "A verification link was sent to your email address. Please check your email to complete registration.",
+        "text27": "Didn’t receive the email?",
+        "text28": "Check your Spam/Junk mail folder or",
+        "text29": "  Resend verification email.",
+        "text30": "Verify phone number",
+        "text31": "A verification code was sent to your phone number. Please check your phone to complete registration.",
+        "text32": "Verification code" ,
+        "text33": "Verify"
+        
+      }
+    },
+    "sLogin":{
+      "text":{
+        "text1": "Join for free today and keep your data safe in the digital Space  ",
+        "text2": "Create an account",
+        "text3": " Login to your account",
+        "text4": " Use username or email",
+        "text5": " By signing up,you agree to",
+        "text6": "  Terms of Service ",
+        "text7": "Privacy Policy,",
+        "text8": "Cookie Use.",
+        "text9": "Token Panel"
+      }
+    }
+  },
+  "secure":{
+    "article":{
+      "label":{
+        "text1": "New Articles",
+        "text2": "Article Editort",
+        "text3": "Earning",
+        "text4": "Daily Task"
+        
+      }
+    }
+  }
+}

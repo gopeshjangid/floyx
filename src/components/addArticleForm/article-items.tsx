@@ -20,7 +20,7 @@ import ImageIcon from '@/assets/images/svg/image';
 import Image from 'next/image';
 import ContentEditable from "../wrapped-content-editable";
 import { useUploadArticleImageMutation } from "@/lib/redux";
-
+import { useTranslation } from 'react-i18next';
 const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) => {
   const { palette } = useTheme();
   const colorVvg =
@@ -42,7 +42,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       setState((prev: any) => ({ ...prev, showEmojiPicker: false }));
     }
   };
-
+const {t}=useTranslation()
   React.useEffect(() => {
     focus(state.index);
     // toggleTooltipIcon(state.index);
@@ -582,10 +582,11 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
                   <AiOutlineOrderedList color={'primary'} />
                 </span>
                 <span
+                translate="no"
                   className="change-type__item subtitle"
                   onClick={() => changeInputType(input.index, 'subtitle')}
                 >
-                  Subtitle
+                  {t("comp.addArticleForm.subtitle")}
                 </span>
                 <span onClick={openContextLink}>
                   <LinkIcon color={colorVvg} />
@@ -615,6 +616,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
                     <div>
                       <React.Fragment>
                         <Input
+                        translate="no"
                           className="editor-link__item"
                           onChange={onURLChange}
                           type="text"
@@ -622,16 +624,17 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
                           onKeyDown={e =>
                             listenerSubmit(e, () => confirmLink(e, index))
                           }
-                          placeholder="Paste URL link here"
+                          placeholder= {t("comp.addArticleForm.urlPlaceholder")}
                           name="urlValue"
                           // invalid={state.errors?.urlValue}
                         />
                         {/* <Input name="website" value={props.website} onChange={handleAbout} invalid={state.errors.website}/> */}
                         {state.errors.urlValue && (
-                          <Typography color={"error"}>URL is invalid</Typography>
+                          <Typography translate="no" color={"error"}>{t("comp.addArticleForm.invalidUrl")}</Typography>
                         )}
                       </React.Fragment>
                       <Input
+                        translate='no'
                         className="editor-link__item"
                         type="text"
                         onChange={onURLChange}
@@ -639,7 +642,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
                           listenerSubmit(e, () => confirmLink(e, index))
                         }
                         value={state.nameLink}
-                        placeholder="Name of the link"
+                        placeholder={t("comp.addArticleForm.nameLinkPlace")}
                         name="nameLink"
                       />
                     </div>
@@ -665,7 +668,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
                 onMouseUp={openTextSelected}
                 onKeyDown={(e: any) => handleKey(input.index, e)}
                 // onBlur={() => toggleTooltipIcon(input.index)}
-                placeholder="Type any text"
+                placeholder={t("comp.addArticleForm.textPlace")}
                 name="value"
                 value={input.value}
               />

@@ -31,6 +31,7 @@ import { CloseOutlined } from '@mui/icons-material';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import MoodIcon from '@mui/icons-material/Mood';
+import { useTranslation } from 'react-i18next';
 
 const initialPostObj = {
   postText: '',
@@ -56,12 +57,14 @@ function AddPost({
   const [imagePreview, setImagePreview] = useState<any>('');
   const [imageToUpload, setImageToUpload] = useState<string | Blob>('');
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useTranslation();
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
 
-  const [createPost, { error, isLoading,isSuccess: successPublishedPost }] = useCreatePostMutation();
+  const [createPost, { error, isLoading, isSuccess: successPublishedPost }] =
+    useCreatePostMutation();
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
   const getUserDetails = async (mentionValue: string, callback: any) => {
     let userList: any = [];
@@ -134,20 +137,20 @@ function AddPost({
     await createPost(formData);
   };
 
-  useEffect(()=>{
-     if(successPublishedPost){
+  useEffect(() => {
+    if (successPublishedPost) {
       setPostObj(initialPostObj);
       setImagePreview('');
       setImageToUpload('');
-      toast.success('Post is published successfully');
+      toast.success(t('Home.createPost.tab1.successMsg'));
       if (writeDialog) setOpenWriteDialog(false);
-     }
-  },[successPublishedPost]);
+    }
+  }, [successPublishedPost]);
 
   const publishPost = () => {
     setPostObj(prev => ({ ...prev, publishButtonDisabled: true }));
     publishImage();
-    setIsVisible(false)
+    setIsVisible(false);
   };
 
   const renderUserSuggestion = (user: any) => {
@@ -155,7 +158,7 @@ function AddPost({
   };
   return (
     <>
-      <PostBox>
+      <PostBox translate="no">
         {!writeDialog && (
           <Tabs
             value={value}
@@ -164,12 +167,18 @@ function AddPost({
           >
             <Tab
               sx={{ paddingX: 2 }}
-              label={<GradientText>Post</GradientText>}
+              label={
+                <GradientText translate="no">
+                  {t('Home.createPost.tab1.title')}
+                </GradientText>
+              }
             />
             <Tab
               component={Link}
               label={
-                <Typography variant="subtitle2">WRITE AN ARTICLE</Typography>
+                <Typography translate="no" variant="subtitle2">
+                  {t('Home.createPost.tab2.title')}
+                </Typography>
               }
               sx={{ marginTop: '8px' }}
               href="/composer/create"
@@ -187,8 +196,9 @@ function AddPost({
         >
           <Box gap={1} className="styled-input-container">
             <UserAvatar
-              src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)
-                ?.data?.user?.username}`}
+              src={`${ApiEndpoint.ProfileDetails}/avatar/${
+                (session as any)?.data?.user?.username
+              }`}
               alt={(session as any)?.data?.user?.username}
               sx={{ width: '49px', height: '49px' }}
             />
@@ -200,8 +210,8 @@ function AddPost({
                 onChange={handlePostText}
                 placeholder={
                   userDetail.sharedPost && !userDetail.sharedEvent
-                    ? 'What is happening?'
-                    : 'Want to add something to your post?'
+                    ? t('Home.createPost.tab1.happenPlaceholder')
+                    : t('Home.createPost.tab1.addPlaceholder')
                 }
               >
                 <Mention
@@ -223,8 +233,8 @@ function AddPost({
             </Box>
           </Box>
           {error && !isLoading && (
-            <Typography component={'span'} color={'error'}>
-              {"Please add photo's description to publish it."}
+            <Typography translate="no" component={'span'} color={'error'}>
+              {t('Home.createPost.tab1.missingDiscription')}
             </Typography>
           )}
           {imagePreview && (
@@ -247,38 +257,48 @@ function AddPost({
           )}
         </Box>
         <Divider />
-        <Box sx={{ display: 'inline-flex'}}>
-        <Box className="upload-media">
-          <Box>
-            <input
-              className="file-imput"
-              type="file"
-              onChange={handleImg}
-              accept="image/x-png,image/gif,image/jpeg"
-              ref={imageFileInput}
-            />
-            <label
-              className="image-upload"
-              onClick={() => {
-                imageFileInput?.current?.click();
-              }}
-            >
-              <CropOriginalIcon />
-              <Typography variant="subtitle1">Photo</Typography>
-            </label>
+        <Box sx={{ display: 'inline-flex' }}>
+          <Box className="upload-media">
+            <Box>
+              <input
+                className="file-imput"
+                type="file"
+                onChange={handleImg}
+                accept="image/x-png,image/gif,image/jpeg"
+                ref={imageFileInput}
+              />
+              <label
+                className="image-upload"
+                onClick={() => {
+                  imageFileInput?.current?.click();
+                }}
+              >
+                <CropOriginalIcon />
+                <Typography translate="no" variant="subtitle1">
+                  {t('Home.createPost.tab1.photoLabel')}
+                </Typography>
+              </label>
+            </Box>
+          </Box>
+          <Box sx={{ padding: '9px 0px' }}>
+            <IconButton onClick={toggleVisibility}>
+              <MoodIcon />
+            </IconButton>
+            {isVisible ? (
+              <Picker
+                data={data}
+                onEmojiSelect={emoji => handlePostText(null, null, null, emoji)}
+              />
+            ) : (
+              <></>
+            )}
           </Box>
         </Box>
-        <Box sx={{ padding: '9px 0px' }}>
-          <IconButton onClick={toggleVisibility}>
-            <MoodIcon />
-          </IconButton>
-          {isVisible ? <Picker data={data} onEmojiSelect={(emoji)=>handlePostText(null, null, null, emoji)} /> : <></>}
-        </Box>
-        </Box>
       </PostBox>
-      <Box mt={2} position={'relative'}>
+      <Box translate="no" mt={2} position={'relative'}>
         {(imagePreview || postObj.postText !== '') && (
           <Button
+            translate="no"
             variant="contained"
             fullWidth
             disabled={isLoading}
@@ -292,7 +312,9 @@ function AddPost({
             }}
             onClick={publishPost}
           >
-            {!isLoading ? 'Publish Post' : 'Please wait'}
+            {!isLoading
+              ? t('Home.createPost.tab1.publish')
+              : t('Home.createPost.tab1.wait')}
           </Button>
         )}
         {isLoading && (

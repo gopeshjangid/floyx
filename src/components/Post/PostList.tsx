@@ -6,6 +6,7 @@ import Post from './Post';
 import { PostDetailResult } from '@/lib/redux/slices/posts';
 import React from 'react';
 import CustomDescription from '../customDescription';
+import { useTranslation } from 'react-i18next';
 
 interface PostProps {
   postData: PostDetailResult[];
@@ -45,7 +46,7 @@ function PostList({
   mainContainerFeedRef
 }: PostProps) {
   const { palette } = useTheme();
-
+const {t}=useTranslation()
   return (
     <>
       {!isLoading && Array.isArray(postData) ? (
@@ -60,6 +61,7 @@ function PostList({
               scrollableTarget={mainContainerFeedRef.current}
               endMessage={
                 <Box
+                  translate="no"
                   sx={{
                     border: `1px solid ${palette.primary.boxBorder}`,
                     borderRadius: '10px',
@@ -69,11 +71,12 @@ function PostList({
                   mt={1}
                 >
                   <Typography
+                    translate="no"
                     textAlign="center"
                     variant="subtitle1"
                     color="info"
                   >
-                    Yay! You have seen it all
+                    {t('Home.postSection.seenAll')}
                   </Typography>
                 </Box>
               }
@@ -109,9 +112,8 @@ function PostList({
                     padding: '20px 0px',
                   }}
                 >
-                  <CustomDescription variant="subtitle1">
-                    It seems like there are no posts available on your board.
-                    Feel free to share a post!
+                  <CustomDescription translate="no" variant="subtitle1">
+                    {t('Home.postSection.noPost')}
                   </CustomDescription>
                 </Box>
               </Box>

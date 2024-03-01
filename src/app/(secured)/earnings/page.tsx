@@ -12,6 +12,7 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material';
 import DailyTask from './_components/dailyTask';
 import { GradientText } from '@/components/usernameLink';
+import { useTranslation } from 'react-i18next';
 
 const Page: React.FC = () => {
   const { palette } = useTheme();
@@ -21,7 +22,7 @@ const Page: React.FC = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
+const {t}=useTranslation()
   return (
     <Box>
       <Box sx={{ mb: 2 }}>
@@ -31,23 +32,25 @@ const Page: React.FC = () => {
           aria-label="icon tabs example"
         >
           <Tab
+          translate="no"
             iconPosition="start"
             icon={
               <EaringTabIcon fill={value === 0 && palette.background.paper} />
             }
             label={
-              value === 0 ? <GradientText>Earnings</GradientText> : 'Earnings'
+              value === 0 ? <GradientText>  {t("secure.article.label.text3")}</GradientText> :t("secure.article.label.text3")
             }
             aria-label="phone"
           />
           <Tab
+          translate="no"
             iconPosition="start"
             icon={<DailyIcon fill={value === 1 && palette.background.paper} />}
             label={
               value === 1 ? (
-                <GradientText>Daily Task</GradientText>
+                <GradientText>{t("secure.article.label.text4")}</GradientText>
               ) : (
-                'Daily Task'
+                t("secure.article.label.text4")
               )
             }
             aria-label="favorite"

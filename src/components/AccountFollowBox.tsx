@@ -17,6 +17,7 @@ import {
 import ButtonWithLoading from './ButtonWithLoading';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 const AccountBox = styled(Stack)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.boxBorder}`,
@@ -27,6 +28,7 @@ const AccountBox = styled(Stack)(({ theme }) => ({
 }));
 
 export default function FollowNewAccounts() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [item, setItem] = useState('');
   const [
@@ -60,10 +62,10 @@ export default function FollowNewAccounts() {
     return null;
   }
   return (
-    <Box mt={2} display="flex" flexDirection="column">
+    <Box translate="no" mt={2} display="flex" flexDirection="column">
       <Box display="flex" justifyContent="space-between">
         <Typography variant="h6" sx={{ marginRight: '8px' }}>
-          Follow Accounts
+          {t('Home.followSection.title')}
         </Typography>
         <Box display="flex" alignItems="center">
           <Box
@@ -119,14 +121,14 @@ export default function FollowNewAccounts() {
               </Stack>
               <Link href={`/profile/${account.username}`}>
                 <Stack direction="row" gap={1} alignItems="flex-start">
-                  <Typography variant="caption">
-                    Followers{'  '}
+                  <Typography translate="no" variant="caption">
+                    {t('Home.followSection.followers')}{' '}
                     <span style={{ color: theme.palette.primary.main }}>
                       {account.numberOfFollowers}
                     </span>
                   </Typography>
-                  <Typography variant="caption">
-                    Following{'  '}
+                  <Typography translate="no" variant="caption">
+                    {t('Home.followSection.following')}
                     <span style={{ color: theme.palette.primary.main }}>
                       {' '}
                       {account.numberOfFollowing}
@@ -135,6 +137,7 @@ export default function FollowNewAccounts() {
                 </Stack>
               </Link>
               <ButtonWithLoading
+                translate="no"
                 onClick={() => followAccount({ username: account.username })}
                 variant="outlined"
                 isLoading={isFollowing && item === account.username}
@@ -143,7 +146,9 @@ export default function FollowNewAccounts() {
                 buttonType="ROUND"
                 sx={{ borderRadius: '4px' }}
               >
-                {isSuccess && item === account.username ? 'Followed' : 'Follow'}
+                {isSuccess && item === account.username
+                  ? t('Home.followSection.followed')
+                  : t('Home.followSection.follow')}
               </ButtonWithLoading>
             </AccountBox>
           ))

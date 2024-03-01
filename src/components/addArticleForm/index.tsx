@@ -25,7 +25,7 @@ import { useToast } from '../Toast/useToast';
 import TagAutocomplete from './articleTags';
 import { useRouter } from 'next/navigation';
 import { revalidateArticleDetail } from '@/actions/actions';
-
+import { useTranslation } from 'react-i18next';
 export const AddArticleFormBox = styled(Box)(({ theme }) => ({
   '& h5': {
     color:
@@ -66,7 +66,8 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
   setIsPublished,
   isReset,
 }: any) {
-  const router = useRouter();
+  const router = useRouter(); 
+  const {t}=useTranslation()
 
   const [articleCreated, setArticleCreated] = useState<boolean>(false);
   const [startAutoSave, setStartAutoSave] = useState<boolean>(false);
@@ -211,13 +212,11 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
       }
     });
     if (title.trim() === '') {
-      toast.error('Your article needs a title');
+      toast.error(t("comp.addArticleForm.error1"));
       return false;
     }
     if (!(contentLength >= 1000)) {
-      toast.error(
-        `Your article is too short to publish ${contentLength}/1000 characters more`
-      );
+      toast.error((t("comp.addArticleForm.error2",{contentLength})));
       return false;
     }
     return true;
@@ -304,7 +303,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
       setSaveDraft(false);
       if (forceUpdate) {
         setIsDisabled(false);
-        toast.success('Your draft saved.');
+        toast.success(t("comp.addArticleForm.successMsg"));
       }
     }
   };
@@ -385,7 +384,8 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
   return (
     <AddArticleFormBox>
       <Textarea
-        placeholder="Title"
+      translate="no"
+        placeholder={t("comp.addArticleForm.title")}
         maxRows={2}
         value={title}
         maxLength={200}
@@ -395,7 +395,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
         <Typography textAlign={'right'}> {`${title.length}/200`} </Typography>
       )}
       <FormControl>
-        <FormLabel sx={{ color: palette.primary[300] }}>Add hashtags</FormLabel>
+        <FormLabel translate="no" sx={{ color: palette.primary[300] }}>{t("comp.addArticleForm.addTags")}</FormLabel>
         <TagAutocomplete
           onSelectTags={onSelectTags}
           maxSelectedTag={5}
@@ -442,8 +442,8 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
                     : palette?.action?.svg
                 }
               />
-              <Typography className="photoImage" variant="subtitle2">
-                Cover Photo (optional)
+              <Typography translate="no" className="photoImage" variant="subtitle2">
+                {t("comp.addArticleForm.coverPic")}
               </Typography>
             </Stack>
           </>

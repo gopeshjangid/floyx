@@ -9,6 +9,9 @@ import { initializeStore } from '@/lib/redux';
 import NextTopLoader from 'nextjs-toploader';
 import '../components/ThemeRegistry/global.css';
 import { useTheme } from 'next-themes';
+import { I18nextProvider } from 'react-i18next';
+import i18n from "../components/i18next";
+
 
 const initializeStoreValues = {
   earningsReducer: {},
@@ -36,6 +39,7 @@ export default function RootLayout({
         className={`bg-white dark:bg-black min-h-[100dvh] ${currentTheme}-theme`}
       >
         <ToastProvider>
+           <I18nextProvider i18n={i18n}>
           <AuthProvider>
             <Provider store={initializeStore(initializeStoreValues)}>
               <NextTopLoader
@@ -54,6 +58,7 @@ export default function RootLayout({
               <PageProvider>{children}</PageProvider>
             </Provider>
           </AuthProvider>
+           </I18nextProvider>
         </ToastProvider>
       </body>
     </html>

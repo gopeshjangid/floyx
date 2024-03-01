@@ -1,0 +1,364 @@
+{
+  "Drawer": {
+    "home": "Dom",
+    "notifications": "Powiadomienia",
+    "messages": "Wiadomości",
+    "search": "Szukaj",
+    "wallet": "Portfel",
+    "profile": "Profil",
+    "more": {
+      "title": "Więcej",
+      "settings": "USTAWIENIA",
+      "logout": "WYLOGUJ"
+    },
+    "writePost": "NAPISZ POST"
+  },
+  "Home": {
+    "articleBtn": "ARTYKUŁ/BLOG",
+    "createPost": {
+      "tab1": {
+        "title": "Post",
+        "happenPlaceholder": "Co się dzieje ?",
+        "addPlaceholder": "Chcesz dodać coś do swojego wpisu?",
+        "photoLabel": "Zdjęcie",
+        "successMsg": "Post został pomyślnie opublikowany",
+        "missingDiscription": "Aby opublikować zdjęcie, dodaj opis zdjęcia.",
+        "publish": "Opublikuj post",
+        "wait": "Proszę czekać"
+      },
+      "tab2": {
+        "title": "PISAĆ ARTYKUŁ"
+      }
+    },
+    "followSection": {
+      "title": "Śledź konta ",
+      "followers": "Obserwujący",
+      "following": "Następny ",
+      "follow": "Podążać",
+      "followed": "Następuje"
+    },
+    "postSection": {
+      "ago": "temu",
+      "like": "Tak jak",
+      "likes": "Lubi",
+      "comments": "Uwagi",
+      "share": "Udział",
+      "placeholder": "Dodaj komentarz",
+      "options": {
+        "directLink": "Link bezpośredni",
+        "deletePost": "Usuń post"
+      },
+      "shared": " udostępnił A ",
+      "post": "post",
+      "seenAll": "Tak! ",
+      "copied": "Skopiowano",
+      "noPost": "Wygląda na to, że na Twoim forum nie ma żadnych postów. Możesz udostępnić post!",
+      "loading": "Ładowanie...",
+      "postLike": "Opublikuj Lubię to",
+      "articleLike": "ArtykułJak",
+      "PostCommentLiked": "PostKomentarzPolubione",
+      "ArticleCommentLiked": "ArtykułKomentarzPolubiony",
+      "toastMsg": {
+        "msg1": "Post został pomyślnie usunięty.",
+        "msg2": "Czy na pewno chcesz usunąć ten post?"
+      }
+    },
+    "articleSection": {
+      "title": "Ostatnie Artykuły",
+      "showMore": "POKAŻ WIĘCEJ"
+    }
+  },
+  "comp": {
+    "addArticleForm": {
+      "error1": "Twój artykuł potrzebuje tytułu",
+      "error2": "Twój artykuł jest za krótki, aby go opublikować {{contentLength}}/1000 znaków więcej",
+      "successMsg": "Twoja wersja robocza została zapisana.",
+      "title": "Tytuł",
+      "addTags": "Dodaj hashtagi",
+      "coverPic": "Zdjęcie na okładce (opcjonalnie)",
+      "subtitle": "Podtytuł",
+      "urlPlaceholder": "Wklej tutaj link URL",
+      "invalidUrl": "Adres URL jest nieprawidłowy",
+      "nameLinkPlace": "Nazwa łącza",
+      "textPlace": "Wpisz dowolny tekst",
+      "artTagsError": "Maks {{maxSelectedTag}} tagi są dozwolone",
+      "artTagsError1": "Już dodałeś ten tag.",
+      "artTagsPlace1": "Wyszukaj hashtag lub naciśnij Enter, aby go utworzyć"
+    },
+    "addArticleHead": {
+      "newArticle": "Nowy artykuł",
+      "myArticles": "Moje artykuły",
+      "draft": "Moje wersje robocze",
+      "newWrite": "Napisz Nowy",
+      "saveDraft": "Zapisz jako szkic",
+      "saveEdit": "Zapisz edycję",
+      "publish": "Publikować",
+      "popular": "Popularny",
+      "recent": "Ostatni",
+      "mostLiked": "Najbardziej lubiany",
+      "following": "Następny",
+      "bookmark": "Zakładka"
+    },
+    "articleContent": {
+      "noArticle": "Nie ma jeszcze żadnych artykułów",
+      "blockMsg": "Jeśli zablokujesz tego użytkownika, nie będziesz mógł:",
+      "viewProfile": "Zobacz ich profil, posty, artykuły i wydarzenia",
+      "willBeUnfollow": "Oboje przestaniecie się obserwować",
+      "haveToFollow": "Aby zobaczyć zawartość użytkownika, musisz go ponownie obserwować po odblokowaniu.",
+      "wishToBlock": "Czy na pewno chcesz zablokować tego użytkownika?",
+      "problemUnderstanding": " Pomóż nam zrozumieć problem Dlaczego chcesz zgłosić tego Użytkownika?",
+      "violates": "Jeżeli użytkownik w inny sposób naruszy zasady Floyx, napisz do nas poniżej:",
+      "violatesPlace": "Pisz tutaj...",
+      "reportCheck1": "Ich Materiały są obraźliwe lub nienawistne",
+      "reportCheck2": "To podejrzane lub spam",
+      "reportCheck3": "Wygląda na to, że ktoś zhakował ich konto",
+      "reportCheck4": "Udają, że są mną lub kimś innym",
+      "reportCheck5": "Informacje profilowe i/lub zdjęcia zawierają treści obraźliwe lub szerzące nienawiść",
+      "blockedMsg": "ZABLOKOWANY",
+      "blockMsgErr": "Wystąpił błąd podczas blokowania użytkownika",
+      "articleMsgErr": "Ten artykuł został już udostępniony",
+      "articleMsg": "Artykuł został pomyślnie opublikowany ",
+      "reportIssue": "Zgłoś problem",
+      "blockUser": "Zablokować użytkownika",
+      "share": "Udostępnij artykuł",
+      "report": "Raport",
+      "close": "Zamknąć",
+      "yes": "Tak",
+      "no": "NIE",
+      "publish": "Publikować",
+      "done": "Zrobione",
+      "noPhoto": "Brak obrazka",
+      "lastSaved": "Ostatnio zapisano",
+      "tipped": "(!Dałeś napiwek)",
+      "confirm": "Proszę potwierdzić",
+      "confirmDelete": " Czy na pewno chcesz usunąć ten artykuł?"
+    },
+    "blockedUser": {
+      "unblock": "Odblokować"
+    },
+    "friendActivity": {
+      "newUser": "Nowo zarejestrowani użytkownicy"
+    },
+    "fullArticle": {
+      "moreFromAuthor": "Więcej od autora",
+      "noTitle": "(Bez tytułu)",
+      "about": "o autorze",
+      "msg": "Wiadomość",
+      "follower": "Obserwujący:",
+      "articles": "Artykuły:",
+      "back": "Z powrotem",
+      "earnPoints": "{{pointsEarned}} Zwrotnica ",
+      "pastPoints": "Wcześniejsze wypłaty —{{pointsEarned}} zwrotnica",
+      "loading": "Ładowanie...",
+      "mostRecent": "Najnowszy",
+      "allCommnets": "Wszystkie komentarze",
+      "toastMsg": {
+        "msg1": "Ten artykuł został już udostępniony",
+        "msg2": "Ten post został już udostępniony",
+        "msg3": "Artykuł został pomyślnie opublikowany",
+        "msg4": "Post został pomyślnie opublikowany ",
+        "msg5": "Już podałem ten artykuł",
+        "msg6": "Aby ponownie dać napiwek, musisz poczekać 10 minut",
+        "msg7": "Nie możesz nadawać napiwków swoim własnym artykułom",
+        "msg8": "Twój limit napiwków został przekroczony na dzisiaj",
+        "msg9": "Coś poszło nie tak! ",
+        "msg10": "Dałeś napiwek!"
+      },
+      "publish": "Publikować",
+      "split": "Podziel kwotę 0,01 punktu dla siebie i autora.",
+      "share": "Udział:",
+      "startPoints": "Zacznij zbierać punkty za czytanie artykułów!",
+      "tip": "Wskazówka"
+    },
+    "login": {
+      "toastMsg": {
+        "msg1": "Zaloguj się pomyślnie!",
+        "msg2": "Coś poszło nie tak!",
+        "msg3": "To pole wymagane!",
+        "msg4": "Wymagane jest hasło!",
+        "msg5": "Hasło powinno mieć więcej niż 6 znaków!"
+      },
+      "placeholder": {
+        "email": "Nazwa użytkownika lub email",
+        "password": "Hasło"
+      },
+      "text": {
+        "login": "Zaloguj sie",
+        "forgetLink": "Zapomniałeś swojego hasła?",
+        "register": "Zarejestruj się teraz",
+        "phone": "Numer telefonu"
+      }
+    },
+    "comment": {
+      "options": "Opcje",
+      "reply": "Odpowiedź",
+      "deleteCancel": "Anulować",
+      "deleteComment": "Usuń komentarz",
+      "deleteMsg": "Komentarz został pomyślnie usunięty.",
+      "deleteWarning": " Czy na pewno chcesz usunąć ten komentarz?",
+      "editComment": "Edytuj komentarz",
+      "like": "Tak jak",
+      "update": "Aktualizacja"
+    },
+    "privacy": {
+      "updateDate": "Ostatnia aktualizacja: 16 kwietnia 2023 r",
+      "offerBy": "Niniejsza Polityka prywatności ma zastosowanie do całej usługi będącej własnością i oferowanej przez Floyx LLC.",
+      "personalData": "Podmiotem odpowiedzialnym za przetwarzanie danych osobowych jest Floyx LLC.",
+      "officer": "  Naszym Inspektorem Ochrony Danych jest Pan Daniel Syrek."
+    },
+    "profile": {
+      "title": "Konfiguracja profilu",
+      "msg": {
+        "msg1": "Nazwa użytkownika już istnieje",
+        "msg2": "Imie jest wymagane!",
+        "msg3": "Nazwa musi mieć mniej niż 25 znaków",
+        "msg4": "Wymagana jest nazwa użytkownika!",
+        "msg5": "Nazwa użytkownika musi mieć mniej niż 25 znaków",
+        "msg6": ""
+      },
+      "text": {
+        "description": " Tworząc konto we Floyx, wpisz swoje IMIĘ i NAZWĘ UŻYTKOWNIKA, pod którym chcesz być widoczny dla innych użytkowników. ",
+        "info": " Pamiętaj, że w każdej chwili możesz zmienić swoje IMIĘ i NAZWĘ UŻYTKOWNIKA w ustawieniach swojego konta."
+      },
+      "placeholder": {
+        "name": "Były. ",
+        "username": "Były. "
+      },
+      "label": {
+        "name": "Nazwa",
+        "username": "Nazwa użytkownika",
+        "submit": "Składać"
+      }
+    },
+    "recommTopic": {
+      "hot": "Gorące tematy",
+      "followed": "Śledzono",
+      "followYou": "Śledzi cię",
+      "search": "Wyszukaj artykuły",
+      "sPlace": "Wyszukaj artykuły...",
+      "whotofollow": "Za kim podążać",
+      "wait": "Proszę czekać ..."
+    }
+  },
+  "auth": {
+    "login": {
+      "msg": {
+        "msg1": "Zaloguj się pomyślnie!",
+        "msg2": "Coś poszło nie tak!",
+        "msg3": "To pole wymagane!",
+        "msg4": "Wymagane jest hasło!",
+        "msg5": "Hasło powinno mieć więcej niż 6 znaków!",
+        "msg6": "Zły kod",
+        "msg7": "coś poszło nie tak, spróbuj ponownie"
+      },
+      "text": {
+        "verify": " Zweryfikować",
+        "text1": " Dołącz bezpłatnie już dziś i zadbaj o bezpieczeństwo swoich danych w przestrzeni cyfrowej ",
+        "text2": " Utwórz konto",
+        "text3": " Zaloguj się na swoje konto",
+        "text4": " Logując się wyrażasz zgodę",
+        "text5": " Warunki usługi ",
+        "text6": " I",
+        "text7": " Polityka prywatności, ",
+        "text8": "  w tym",
+        "text9": " Wykorzystanie plików cookie.",
+        "text10": "Powrót do logowania społecznościowego",
+        "text11": "Kod odzyskiwania",
+        "text12": " Wprowadź kod odzyskiwania, aby zweryfikować swoją tożsamość. ",
+        "steps": "Autoryzacja dwuetapowa",
+        "twoFac": "Otwórz aplikację do uwierzytelniania dwuskładnikowego na swoim urządzeniu, aby wyświetlić kod uwierzytelniający i zweryfikować swoją tożsamość."
+      },
+      "label": {
+        "username": "Nazwa użytkownika lub email",
+        "password": "Hasło",
+        "forgetLink": " Zapomniałeś swojego hasła?",
+        "submit": "Składać",
+        "rememberMe": "Zapamiętaj mnie",
+        "authen": "Kod weryfikacyjny",
+        "dontHave": "Nie masz swojej aplikacji?",
+        "rCode": " Wprowadź kod odzyskiwania"
+      },
+      "placeholder": {}
+    },
+    "register": {
+      "msg": {
+        "msg1": "Numer telefonu jest już używany",
+        "msg2": "Nazwa użytkownika już istnieje",
+        "msg3": "użytkownik nie istnieje",
+        "msg4": "email już istnieje",
+        "msg5": "Imie jest wymagane!",
+        "msg6": "Wymagana jest nazwa użytkownika!",
+        "msg7": "Nazwa musi mieć mniej niż 25 znaków",
+        "msg8": "Nazwa użytkownika musi mieć mniej niż 25 znaków",
+        "msg9": "Email jest wymagany!",
+        "msg10": "E-mail jest nie prawidłowy",
+        "msg11": "e-maile się nie zgadzają",
+        "msg12": "Hasło musi mieć co najmniej 6 znaków",
+        "msg13": "Wpisz, kto polecił Cię firmie Floyx",
+        "msg14": "Nazwa musi mieć mniej niż 25 znaków",
+        "msg15": "Numer telefonu jest już używany",
+        "msg16": "Numer telefonu jest już używany",
+        "msg17": "Numer telefonu jest już używany",
+        "msg18": "Numer telefonu jest już używany"
+      },
+      "label": {
+        "text1": " Utwórz swoje konto",
+        "text2": " Dołącz bezpłatnie już dziś i zadbaj o bezpieczeństwo swoich danych w przestrzeni cyfrowej.",
+        "text3": " Polecony przez  ",
+        "text4": " Konto osobiste",
+        "text5": "Nazwa",
+        "text6": "Nazwa użytkownika",
+        "text7": "Ktoś polecił mi Floyx (opcjonalnie)",
+        "text8": "Nazwa użytkownika polecającego",
+        "text9": "Wpisz tutaj nazwę użytkownika polecającego...",
+        "text10": "Adres e-mail",
+        "text11": "Potwierdzenie adresu e-mail",
+        "text12": "Wpisz ponownie swój adres e-mail",
+        "text13": "Hasło (co najmniej 6 znaków)",
+        "text14": "Klikając „Zarejestruj się”, wyrażasz zgodę na warunki Floyx",
+        "text15": " Warunki usługi",
+        "text16": "  Polityka prywatności ",
+        "text17": "I",
+        "text18": " Polityka Cookie ",
+        "text19": "  Zapisać się",
+        "text20": " Posiadasz już konto?",
+        "text21": " Zalogować się",
+        "text22": " Administrator podmiot odpowiedzialny za administrowanie danymi w rozumieniu art. 4 ust. 7 RODO, czyli Floyx LLC.  ",
+        "text23": "więcej o przetwarzaniu Twoich danych.",
+        "text24": "2024 Obsługiwane przez Floyx LLC.",
+        "text25": "Zweryfikuj adres e-mail",
+        "text26": "Link weryfikacyjny został wysłany na Twój adres e-mail. ",
+        "text27": "Nie otrzymałeś e-maila?",
+        "text28": "Sprawdź folder spamu/śmieci lub",
+        "text29": "  Ponownie wysłać e-mail weryfikacyjny.",
+        "text30": "Zweryfikuj numer telefonu",
+        "text31": "Kod weryfikacyjny został wysłany na Twój numer telefonu. ",
+        "text32": "Kod weryfikacyjny",
+        "text33": "Zweryfikować"
+      }
+    },
+    "sLogin": {
+      "text": {
+        "text1": "Dołącz bezpłatnie już dziś i zadbaj o bezpieczeństwo swoich danych w przestrzeni cyfrowej  ",
+        "text2": "Utwórz konto",
+        "text3": " Zaloguj się na swoje konto",
+        "text4": " Użyj nazwy użytkownika lub adresu e-mail",
+        "text5": " Rejestrując się wyrażasz zgodę",
+        "text6": "  Warunki usługi ",
+        "text7": "Polityka prywatności,",
+        "text8": "Wykorzystanie plików cookie.",
+        "text9": "Panel tokenów"
+      }
+    }
+  },
+  "secure": {
+    "article": {
+      "label": {
+        "text1": "Nowe artykuły",
+        "text2": "Redaktor artykułu",
+        "text3": "Zarobkowy",
+        "text4": "Dzienne zadanie"
+      }
+    }
+  }
+}

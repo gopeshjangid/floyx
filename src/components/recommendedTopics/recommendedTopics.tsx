@@ -3,6 +3,7 @@ import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material';
 import CustomChip from '../CustomGridientChip';
 import { useGetPopularTagsQuery } from '@/lib/redux/slices/tags';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 export default function RecommendedTopics({ setDynamicTab }) {
   const { palette } = useTheme();
@@ -14,13 +15,15 @@ export default function RecommendedTopics({ setDynamicTab }) {
       value: val.tagName,
     });
   };
+  const {t}=useTranslation()
   return (
     <Box sx={{ marginTop: '30px', width: '100%' }}>
       <Typography
+        translate="no"
         color={palette.mode === 'light' ? 'primary' : 'textPrimary'}
         variant="h5"
       >
-        Hot Topics
+        {t('comp.recommTopic.hot')}
       </Typography>
       <Stack
         flexWrap="wrap"

@@ -7,6 +7,7 @@ import { Alert, Skeleton } from '@mui/material';
 import { fetchServerData } from '@/lib/utils';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 import { Metadata, ResolvingMetadata } from 'next';
+import { useTranslation } from 'react-i18next';
 
 async function Page({ params,searchParams }: any) {
   // const isMobile = useMediaQuery('(max-width:480px)');
@@ -29,10 +30,10 @@ async function Page({ params,searchParams }: any) {
   
   articlePuclicUrl = articleDetails?.article?.publicUrl;
   const articleId = articleDetails?.article?.id;
-
+const{t}=useTranslation()
   return (
     <>
-      {isError && <Alert severity="error">Something went wrong</Alert>}
+      {isError && <Alert trasnlate="no" severity="error">{ t("auth.login.msg.msg2")}</Alert>}
       {articleId && (
         <>
           <section>

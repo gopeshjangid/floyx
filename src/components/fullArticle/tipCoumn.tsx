@@ -15,6 +15,7 @@ import { useToast } from '../Toast/useToast';
 import { useSession } from 'next-auth/react';
 import { revalidateArticleDetail } from '@/actions/actions';
 import { usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export default function TipColumn({
   details,
@@ -27,11 +28,18 @@ export default function TipColumn({
   const isSameUser = details.user.username === session.data?.user.username;
   const [updateTip, { isLoading: tipLoading, isError, error, isSuccess }] =
     useSetTipMutation();
-  const { data: fetchedTipHistory, isFetching, isLoading  } = useGetTipHistoryQuery(undefined, {
+  const {
+    data: fetchedTipHistory,
+    isFetching,
+    isLoading,
+  } = useGetTipHistoryQuery(undefined, {
     skip:
-      session?.status === 'loading' || session?.status === 'unauthenticated' || isSameUser,
+      session?.status === 'loading' ||
+      session?.status === 'unauthenticated' ||
+      isSameUser,
   });
   const toast = useToast();
+  const { t } = useTranslation();
   const { palette } = useTheme();
 
   const handleChange = (event: any, newValue: any) => {
@@ -48,26 +56,26 @@ export default function TipColumn({
     };
     updateTip(payload);
   };
- 
+
   useEffect(() => {
     if (isError) {
       if (error) {
         let message = '';
         switch (error as string) {
           case 'already_tipped_article':
-            message = 'Already tipped this article';
+            message = t('comp.fullArticle.toastMsg.msg5');
             break;
           case 'Please_tip_after_10_minutes':
-            message = 'You must wait 10 minutes to tip again';
+            message = t('comp.fullArticle.toastMsg.msg6');
             break;
           case 'you_cannot_tip_your_own_article':
-            message = 'You cannot tip your own articles';
+            message = t('comp.fullArticle.toastMsg.msg7');
             break;
           case 'tip_limit_exceeded_for_today':
-            message = 'Your tip limit exceeded for today';
+            message = t('comp.fullArticle.toastMsg.msg8');
             break;
           default:
-            message = 'Something went wrong! Please try again';
+            message = t('comp.fullArticle.toastMsg.msg9');
         }
         toast.error(message);
       }
@@ -77,25 +85,35 @@ export default function TipColumn({
   useEffect(() => {
     if (isSuccess) {
       //refetch();
-      toast.success('You tipped!');
+      toast.success(t('comp.fullArticle.toastMsg.msg10'));
       revalidateArticleDetail(pathname);
-
     }
   }, [isSuccess, pathname]);
-  
-  
 
-  console.log("session.status === 'loading' || isFetching || isLoading  session->",session.status === 'loading' ,"->isfetching", isFetching , "isloding-->",isLoading)
+  console.log(
+    "session.status === 'loading' || isFetching || isLoading  session->",
+    session.status === 'loading',
+    '->isfetching',
+    isFetching,
+    'isloding-->',
+    isLoading
+  );
 
-  if(session.status === 'loading' || isFetching || isLoading){
-    return <Box textAlign={'center'} width={'100%'}><CircularProgress/></Box>;
+  if (session.status === 'loading' || isFetching || isLoading) {
+    return (
+      <Box textAlign={'center'} width={'100%'}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (isSameUser) return null;
 
-  console.log("fetchedTipHistory: ",fetchedTipHistory);
+  console.log('fetchedTipHistory: ', fetchedTipHistory);
 
-  const history = (fetchedTipHistory ?? []).filter(val => val?.articleId === articleId);
+  const history = (fetchedTipHistory ?? []).filter(
+    val => val?.articleId === articleId
+  );
   return (
     <Box
       p={2}
@@ -106,14 +124,15 @@ export default function TipColumn({
         background: palette.primary.mainBackground,
       }}
     >
-      {history.length ===0 ? (
+      {history.length === 0 ? (
         <Box>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography
+              translate="no"
               variant="body1"
               sx={{ textAlign: 'center', color: palette.primary[300] }}
             >
-              Split the amount of 0.01 points for you and the author.
+              {t('comp.fullArticle.split')}
             </Typography>
           </Box>
           <Box
@@ -157,8 +176,8 @@ export default function TipColumn({
             {tipLoading ? (
               <CircularProgress color="secondary" />
             ) : (
-              <Button variant="contained" onClick={handleTip}>
-                Tip
+              <Button translate="no" variant="contained" onClick={handleTip}>
+                {t('comp.fullArticle.tip')}
               </Button>
             )}
           </Box>
@@ -169,15 +188,19 @@ export default function TipColumn({
               marginTop: '10px',
             }}
           >
-            <Typography variant="body1" sx={{ textAlign: 'center' }}>
-              Start collecting points on reading articles!
+            <Typography
+              translate="no"
+              variant="body1"
+              sx={{ textAlign: 'center' }}
+            >
+              {t('comp.fullArticle.startPoints')}
             </Typography>
           </Box>
         </Box>
       ) : (
         <Box display="flex" gap={1}>
-          <Typography variant="body1">
-            You have already tipped this article
+          <Typography translate="no" variant="body1">
+            {t('comp.fullArticle.toastMsg.msg5')}
           </Typography>
           <TaskAltSharpIcon />
         </Box>

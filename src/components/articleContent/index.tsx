@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import ArticleContainer from './articleContainer';
 import ArticleCardSkeleton from '../ArticleCardSkeleton';
-
+import { useTranslation } from 'react-i18next';
 export default function ArticleContent({
   articleList,
   loadingList,
@@ -11,6 +11,7 @@ export default function ArticleContent({
   setValue,
   setIsReset,
 }: any) {
+  const {t}=useTranslation()
   return (
     <Box>
       {loadingList ? (
@@ -37,7 +38,7 @@ export default function ArticleContent({
             height: '100px',
           }}
         >
-          <Typography variant="h5">There are no articles yet</Typography>
+          <Typography translate="no" variant="h5">{t("comp.articleContent.noArticle")}</Typography>
         </Box>
       )}
     </Box>

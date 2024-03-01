@@ -12,6 +12,7 @@ import { GradientButton } from '../gradientButton';
 import { GradientText } from '../GradientComponents';
 import Link from 'next/link';
 import SearchIcon from '@/assets/images/svg/search';
+import { useTranslation } from 'react-i18next';
 
 const ArticleHeadContainer = styled(Box)(() => ({
   display: 'flex',
@@ -28,38 +29,41 @@ const ArticleHeadContainer = styled(Box)(() => ({
   },
 }));
 
-const defaultTab = [
-  {
-    label: 'Popular',
-    value: 'liked?limited=true',
-    icon: (fill: string) => <PopularIcon fill={fill} />,
-  },
-  {
-    label: 'Following',
-    value: 'following',
-    icon: (fill: string) => <ProfileTickIcon fill={fill} />,
-  },
-  {
-    label: 'Recent',
-    value: 'recent',
-    icon: (fill: string) => <RecentIcon fill={fill} />,
-  },
-  {
-    label: 'Most Liked',
-    value: 'liked',
-    icon: (fill: string) => <LikeIcon fill={fill} />,
-  },
-  // {
-  //   label: "Bookmark",
-  //   value: "bookmark",
-  //   icon: (fill: string) => <BookMarkIcon fill={fill} />,
-  // }
-];
+
 export default function ArticleHead({
   setTabName,
   dynamicTab,
   dynamicTabType,
 }: any) {
+  
+  const {t}=useTranslation()
+  const defaultTab = [
+    {
+      label: t("comp.addArticleHead.popular"),
+      value: 'liked?limited=true',
+      icon: (fill: string) => <PopularIcon fill={fill} />,
+    },
+    {
+      label: t("comp.addArticleHead.following"),
+      value: 'following',
+      icon: (fill: string) => <ProfileTickIcon fill={fill} />,
+    },
+    {
+      label: t("comp.addArticleHead.recent"),
+      value: 'recent',
+      icon: (fill: string) => <RecentIcon fill={fill} />,
+    },
+    {
+      label: t("comp.addArticleHead.mostLiked"),
+      value: 'liked',
+      icon: (fill: string) => <LikeIcon fill={fill} />,
+    },
+    // {
+    //   label: t("comp.addArticleHead.bookmark"),
+    //   value: "bookmark",
+    //   icon: (fill: string) => <BookMarkIcon fill={fill} />,
+    // }
+  ];
   const [value, setValue] = useState('liked?limited=true');
   const [articleTabs, setArticleTabs] = useState(defaultTab);
 
@@ -113,7 +117,7 @@ export default function ArticleHead({
               iconPosition="start"
               value={item.value}
               label={
-                <Typography variant="subtitle2">
+                <Typography translate="no" variant="subtitle2">
                   {value === item.value ? (
                     <GradientText>{item.label}</GradientText>
                   ) : (
@@ -127,7 +131,7 @@ export default function ArticleHead({
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           <Link href="/composer/create">
             <GradientButton variant="outlined" color="primary" isSelected>
-              <span>New Article</span>
+              <span translate="no">t("comp.addArticleHead.newArticle")</span>
             </GradientButton>
           </Link>
         </Box>
