@@ -11,7 +11,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 
-export default function SplitButton({
+function SplitButton({
   options,
   handleOptions,
   actionIcon,
@@ -99,3 +99,5 @@ export default function SplitButton({
     </React.Fragment>
   );
 }
+
+export default React.memo(SplitButton);

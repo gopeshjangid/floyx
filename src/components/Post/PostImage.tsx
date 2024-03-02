@@ -53,6 +53,8 @@ import CustomImage from '../Image';
     []
   );
 
+  const height = dimensions.height > 900 ? 900 : dimensions.height;
+
   return (
     <Box>
       {image && (
@@ -63,9 +65,10 @@ import CustomImage from '../Image';
           <CustomImage
             onLoad={handleImageLoad}
             width={500}
-            height={dimensions.height}
+            height={height}
             layout="responsive"
-            //sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            style={{borderRadius: '10px'}}
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             onClick={handleOpen}
             src={image?.path ?? image.thumbnailPath}
             alt="thumbnail"
@@ -84,7 +87,6 @@ import CustomImage from '../Image';
           //onClick={openInNewTab}
           pb={2}
           sx={{
-            borderRadius: '10px',
             overflow: 'hidden',
             position: 'relative',
             border: `1px solid ${palette.primary.boxBorder}`,
@@ -93,10 +95,11 @@ import CustomImage from '../Image';
           {link.thumbnailPath && (
             <CustomImage
               width={500}
-              height={dimensions.height}
+              height={height}
+              style={{borderRadius: '10px'}}
               layout="responsive"
               src={link?.path ?? link?.thumbnailPath}
-              //sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
               alt="thumbnail"
               loading="lazy" // Lazy loading
             />

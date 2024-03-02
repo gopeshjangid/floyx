@@ -10,7 +10,7 @@ import {
 import React, { useEffect } from 'react';
 import { useToast } from '../Toast/useToast';
 
-export default function PostActionModal({
+function PostActionModal({
   action,
   open,
   setOpen,
@@ -108,3 +108,5 @@ export default function PostActionModal({
     </Modal>
   );
 }
+
+export default React.memo(PostActionModal);

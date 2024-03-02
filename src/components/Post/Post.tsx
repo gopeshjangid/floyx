@@ -1,11 +1,11 @@
 'use client';
 
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';
 import PostImage from './PostImage';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import PostActionModal from './PostActionModal';
 import { usePathname, useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
@@ -58,7 +58,7 @@ function Post({
 
   const onCopied = () => toast.info('Copied');
 
-  const handleOptions = (val: any, options: Array<string>) => {
+  const handleOptions = useCallback((val: any, options: Array<string>) => {
     setButtonAction(options[val]);
     if (options[val] === 'Delete Post') {
       setOpen(true);
@@ -68,7 +68,8 @@ function Post({
       const text = `${protocol}//${host}${allRoutes.post}/${postId}`;
       copyTextToClipboard(text, onCopied);
     }
-  };
+  },[setButtonAction,setOpen,copyTextToClipboard]);
+
   useEffect(() => {
     if (username === userDetail) {
       const actions = ['Delete Post'];
@@ -102,12 +103,14 @@ function Post({
             isPost={true}
           />
           <Box sx={{ padding: '20px 0' }}>
-            <SplitButton
-              options={buttonOptions}
-              handleOptions={(event: any) =>
-                handleOptions(event, buttonOptions)
-              }
-            />
+            <Suspense fallback={<CircularProgress size={'small'} />}>
+              <SplitButton
+                options={buttonOptions}
+                handleOptions={(event: any) =>
+                  handleOptions(event, buttonOptions)
+                }
+              />
+            </Suspense>
           </Box>
         </Box>
         <Box pb={1}>
