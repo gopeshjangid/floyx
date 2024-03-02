@@ -1,13 +1,12 @@
 // @ts-check
 import { Box, Skeleton, Typography, useTheme } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import Lightbox from 'react-image-lightbox-rotate-fixed';
 import Post from './Post';
 import CustomImage from '../Image';
 
-export default function PostImage({ image, link, shared, isShared }) {
+ function PostImage({ image, link, shared, isShared }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -68,7 +67,7 @@ export default function PostImage({ image, link, shared, isShared }) {
             layout="responsive"
             //sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             onClick={handleOpen}
-            src={image.thumbnailPath}
+            src={image?.path ?? image.thumbnailPath}
             alt="thumbnail"
             loading="lazy" // Lazy loading
           />
@@ -96,7 +95,7 @@ export default function PostImage({ image, link, shared, isShared }) {
               width={500}
               height={dimensions.height}
               layout="responsive"
-              src={link.thumbnailPath}
+              src={link?.path ?? link?.thumbnailPath}
               //sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
               alt="thumbnail"
               loading="lazy" // Lazy loading
@@ -128,3 +127,6 @@ export default function PostImage({ image, link, shared, isShared }) {
     </Box>
   );
 }
+
+
+export default React.memo(PostImage);
