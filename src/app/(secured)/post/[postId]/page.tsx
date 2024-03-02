@@ -1,5 +1,5 @@
 'use client';
-import { Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import DefaultPageSkelton from '@/components/DefaultPageSkelton';
 import LoginModal from '@/components/LoginModal';
 import Post from '@/components/Post/Post';
@@ -7,12 +7,19 @@ import { useGetPostDetailQuery } from '@/lib/redux/slices/posts';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
+import { getUserBlockStatusMessage, userBlockedStatus } from '@/lib/utils';
 
 export default function Page({ params }: { params: { postId: string } }) {
   const { data: postDetail, isLoading } = useGetPostDetailQuery(params.postId);
   const { openLoginModel } = useSelector(
     (state: ReduxState) => state.appReducer
   );
+
+  const isBlocked = userBlockedStatus.indexOf(String(postDetail)) > -1;
+  if (isBlocked) {
+    return <Alert severity="error">{getUserBlockStatusMessage(postDetail)}</Alert>
+  }
+
   return (
     <>
       {openLoginModel && <LoginModal isForceOpened={true} />}

@@ -59,10 +59,14 @@ export const baseQuery = retry(fetchBaseQuery({
 }),{maxRetries: 3});
 
 export const fetchServerData = async (
-  url: string
+  url: string, token:string
 ): { isError: boolean; data: any } => {
   try {
-    const res = await fetch(url);
+    console.log("TOKEN ->",token);
+    const res = await fetch(url,{headers:{
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+  }});
     if (!res.ok) {
       return { isError: true, data: null };
     }

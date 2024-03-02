@@ -63,7 +63,8 @@ export default function PostImage({ image, link, shared, isShared }) {
           )}
           <CustomImage
             onLoad={handleImageLoad}
-            {...dimensions}
+            width={500}
+            height={300}
             layout="responsive"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             onClick={handleOpen}

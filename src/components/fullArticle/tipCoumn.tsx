@@ -8,7 +8,7 @@ import {
   useTheme,
   CircularProgress,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
 import { useSetTipMutation } from '@/lib/redux/slices/articleDetails';
 import { useToast } from '../Toast/useToast';
@@ -16,7 +16,7 @@ import { useSession } from 'next-auth/react';
 import { revalidateArticleDetail } from '@/actions/actions';
 import { usePathname } from 'next/navigation';
 
-export default function TipColumn({
+function TipColumn({
   details,
   articlePuclicUrl,
   articleId,
@@ -27,7 +27,7 @@ export default function TipColumn({
   const isSameUser = details.user.username === session.data?.user.username;
   const [updateTip, { isLoading: tipLoading, isError, error, isSuccess }] =
     useSetTipMutation();
-  const { data: fetchedTipHistory, isFetching, isLoading  } = useGetTipHistoryQuery(undefined, {
+  const {refetch, data: fetchedTipHistory, isFetching, isLoading  } = useGetTipHistoryQuery(undefined, {
     skip:
       session?.status === 'loading' || session?.status === 'unauthenticated' || isSameUser,
   });
@@ -37,6 +37,12 @@ export default function TipColumn({
   const handleChange = (event: any, newValue: any) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    if (session?.status !== 'loading' && session?.status !== 'unauthenticated' && !isSameUser) {
+      refetch();
+    }
+  }, [session, isSameUser]);
 
   const handleTip = () => {
     const payload: any = {
@@ -181,3 +187,5 @@ export default function TipColumn({
     </Box>
   );
 }
+
+export default React.memo(TipColumn);
