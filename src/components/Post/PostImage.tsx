@@ -64,9 +64,9 @@ export default function PostImage({ image, link, shared, isShared }) {
           <CustomImage
             onLoad={handleImageLoad}
             width={500}
-            height={300}
+            height={dimensions.height}
             layout="responsive"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            //sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             onClick={handleOpen}
             src={image.thumbnailPath}
             alt="thumbnail"
@@ -93,10 +93,11 @@ export default function PostImage({ image, link, shared, isShared }) {
         >
           {link.thumbnailPath && (
             <CustomImage
-            {...dimensions}
+              width={500}
+              height={dimensions.height}
               layout="responsive"
               src={link.thumbnailPath}
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              //sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
               alt="thumbnail"
               loading="lazy" // Lazy loading
             />

@@ -116,19 +116,19 @@ const onCreateQueryStarted = async (
 
     if (getPostsArgs.length > 0) {
       getPostsArgs.forEach(arg => {
-        if (arg.pageNumber === 0) {
+        if (arg.pageNumber === 1) {
           appendGetPost(arg);
         }
       });
     } else {
       appendGetPost({
-        pageNumber: 0,
+        pageNumber: 1,
         postCreatedDate: data.post.createdDateTime,
       });
     }
 
     postListByUserArgs.forEach(arg => {
-      if (arg.pageNumber === 0) {
+      if (arg.pageNumber === 1) {
         appendPostByUser(arg);
       }
     });
@@ -136,7 +136,7 @@ const onCreateQueryStarted = async (
     if (postListByUserArgs.length === 0) {
       appendPostByUser({
         username: data.author.username,
-        pageNumber: 0,
+        pageNumber: 1,
         postCreatedDate: data.post.createdDateTime,
       });
     }
