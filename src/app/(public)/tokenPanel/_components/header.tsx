@@ -23,7 +23,6 @@ function TokenPanelHeader({ modalType, setModal, hideNav }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-console.log("mode: ",theme.palette.mode);
   const getNavItems = () => {
     return (
       <Stack direction={isMobile ? 'column' : 'row'} gap={1}>

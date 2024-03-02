@@ -103,12 +103,15 @@ function Post({
             isPost={true}
           />
           <Box sx={{ padding: '20px 0' }}>
-            <Suspense fallback={<CircularProgress size={'small'} />}>
+           <Suspense fallback={<CircularProgress size={'small'} />}>
               <SplitButton
                 options={buttonOptions}
                 handleOptions={(event: any) =>
                   handleOptions(event, buttonOptions)
                 }
+                username={username}
+                contentId={postId}
+                isAuthor={username === userDetail}
               />
             </Suspense>
           </Box>

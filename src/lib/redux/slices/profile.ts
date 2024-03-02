@@ -151,8 +151,8 @@ export const profileService = createApi({
       forceRefetch({ currentArg, previousArg }) {
         return currentArg?.username !== previousArg?.username;
       },
-      serializeQueryArgs: ({ queryArgs }) => {
-        return JSON.stringify(queryArgs);
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
       },
     }),
     getPopularAccountsToFollow: builder.query<

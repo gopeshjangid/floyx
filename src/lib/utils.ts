@@ -62,7 +62,6 @@ export const fetchServerData = async (
   url: string, token:string
 ): { isError: boolean; data: any } => {
   try {
-    console.log("TOKEN ->",token);
     const res = await fetch(url,{headers:{
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

@@ -325,6 +325,16 @@ export const postServices = createApi({
         }
       },
     }),
+    reportPost : builder.mutation<any, Partial<any>>({
+      query: postAbout => ({
+        url: `${ApiEndpoint.ReportPost}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+        body: postAbout,
+      }),
+      transformResponse: (response: any) =>
+        response.value.data,
+      invalidatesTags: ['MainFeedList'],
+    }),
   }),
   tagTypes: [
     'Posts',
@@ -343,4 +353,5 @@ export const {
   useDeletePostMutation,
   useGetPostListByUserQuery,
   useSharePostMutation,
+  useReportPostMutation
 } = postServices;
