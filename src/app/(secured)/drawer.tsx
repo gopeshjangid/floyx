@@ -62,7 +62,7 @@ import { CloseOutlined } from '@mui/icons-material';
 //import { postServices } from '@/lib/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
-import SidebarProfileBar from '@/components/sidebarProfileInfo';
+//import SidebarProfileBar from '@/components/sidebarProfileInfo';
 //import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
 const drawerWidth = 240;
@@ -420,7 +420,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               }}
             >
               {drawer}
-              <SidebarProfileBar />
+              {/* <SidebarProfileBar /> */}
             </Paper>
           ) : (
             <>&nbsp;</>
@@ -509,9 +509,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             }}
           >
             {drawer}
-            <Box pl={2}>
+            {/* <Box pl={2}>
               <SidebarProfileBar />
-            </Box>
+            </Box> */}
           </Drawer>
         )}
         {!isMobile ? (

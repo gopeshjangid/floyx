@@ -182,6 +182,8 @@ function LikesComments({
     setCommentLimit(commentLimitOptions[index]);
   }, []);
 
+  const commentCount = isArticle ? commentList?.length : likesCommentsDetails?.numberOfComments;
+
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
@@ -225,7 +227,7 @@ function LikesComments({
                 marginBottom={0}
                 sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
               >
-                {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
+                {formatIndianNumber(commentCount)}{' '}
                 Comments
               </Typography>
             )}

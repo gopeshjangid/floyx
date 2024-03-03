@@ -351,7 +351,7 @@ const Earnings: React.FC = () => {
     isLoading: articleTipLoading,
     isError: articleTipError,
   } = useGetArticleTipHistoryQuery();
-console.log({articleTipError},{articleTipHistory});
+
   const articlePoints = articleTipHistory?.length
     ? articleTipHistory.reduce((accumulator, current) => {
         return accumulator + current.amountEarned;
