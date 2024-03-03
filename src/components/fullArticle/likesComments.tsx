@@ -85,10 +85,10 @@ function LikesComments({
   const [updateLike, { isLoading: isLikeLoading }] = useLikeItemMutation();
 
   useEffect(()=>{
-    if(articleId){
+    if(articleId && isArticle){
       fetchComments(articleId);
     }
-  },[likesCommentsDetails,articleId]);
+  },[likesCommentsDetails,articleId, isArticle]);
 
   const handleClick = () => {
     setOpen(true);
@@ -181,7 +181,7 @@ function LikesComments({
   const onCommentHandler = useCallback(index => {
     setCommentLimit(commentLimitOptions[index]);
   }, []);
-  console.log({newCreatedComments, generalizedComments});
+
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}

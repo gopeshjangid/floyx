@@ -184,10 +184,10 @@ export const postServices = createApi({
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
-      merge: (currentCache, newItems, otherArgs) => {
-        if (currentCache && otherArgs.arg.pageNumber !==1) {
+      merge: (currentCache, newItems) => {
+        if (currentCache) {
           return {
-            postList: [...newItems.postList, ...currentCache.postList],
+            postList: [...currentCache.postList,...newItems.postList],
             hasMore: newItems.postList.length === 10,
           };
         } else

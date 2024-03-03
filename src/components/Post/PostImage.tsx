@@ -54,10 +54,7 @@ function PostImage({ image, link, shared, isShared }) {
   );
 
   const sizeType = dimensions.width < 600 && dimensions.height > 1200 ? 'verticle' : 'normal';
-  console.log({ height: dimensions.height, width: dimensions.width }, "sizeType=>", sizeType);
   const height = dimensions.height > 1300 ? 800 : dimensions.height;
-
-
 
   return (
     <Box>
