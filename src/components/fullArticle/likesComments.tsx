@@ -129,7 +129,7 @@ function LikesComments({
   const onCreatedArticleComment = useCallback(
     commentData => {
       if (commentData && isArticle) {
-        revalidateArticleDetail(pathname);
+        fetchComments(articleId);
       }
     },
     [setNewCreatedComments, pathname]
