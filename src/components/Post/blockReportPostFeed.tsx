@@ -84,6 +84,7 @@ const ReportUserDisclaimer: React.FC<{
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    event.stopPropagation()
     const value = event.target.value; // No need for optional chaining here
     const name = event.target.name;
 
@@ -284,6 +285,7 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
         onClose={closeDialog}
         aria-labelledby="responsive-dialog-title"
         PaperProps={{ sx: { background: palette.background.default } }}
+        className='specific_item'
       >
         <DialogTitle id="responsive-dialog-title">
           {modalType === 'report' ? (

@@ -102,7 +102,7 @@ function Post({
             shared={shared}
             isPost={true}
           />
-          <Box sx={{ padding: '20px 0' }}>
+          <Box sx={{ padding: '20px 0' }} className='specific_item'>
            <Suspense fallback={<CircularProgress size={'small'} />}>
               <SplitButton
                 options={buttonOptions}

@@ -136,7 +136,11 @@ function PostImage({ image, link, shared, isShared }) {
         </Box>
       )}
       {shared && !isShared && shared?.author?.username && (
-        <Link href={`/post/${shared?.post?.id}`}>
+        <div style={{cursor:'pointer'}} onClick={(event) => {
+          if(!(event.target as Element).closest('.specific_item')){
+            window.location.href = (`/post/${shared?.post?.id}`)
+          }
+        }} >
           <Post
             name={shared?.author?.name || ''}
             username={shared?.author?.username || ''}
@@ -148,7 +152,7 @@ function PostImage({ image, link, shared, isShared }) {
             postId={shared?.post?.id}
             isShared={true}
           />
-        </Link>
+          </div>
       )}
     </Box>
   );
