@@ -19,13 +19,6 @@ const SidebarProfileBar: React.FC = () => {
   const [fetchProfileDetails,{ data, isFetching, isLoading }] = useLazyGetProfileDetailsQuery();
 
   useEffect(()=>{
-console.log("sidebar mount")
-    return ()=>{
-      console.log("side bar unmount")
-    }
-  },[]);
-console.log("sidebar usrname", username)
-  useEffect(()=>{
    if(username){
     fetchProfileDetails({username});
    }
