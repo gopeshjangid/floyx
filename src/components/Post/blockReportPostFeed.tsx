@@ -214,6 +214,22 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
     setModalType('');
   };
 
+  const buttonSx = {
+    fontSize: '16px',
+    color: palette.mode === 'dark' ? '#fff' : '#000',
+    fontWeight: '400',
+    fontFamily: "'__Poppins_6fcd13', '__Poppins_Fallback_6fcd13', 'Helvetica Neue', Arial, sans-serif",
+    textTransform: 'capitalize',
+    marginRight: '10px'
+  };
+
+  const iconSx = {
+    marginLeft: '10px'
+  };
+  const contentStyle = {
+    marginLeft:'7px'
+  }
+
   return (
     <>
       {deleteModal && (
@@ -224,7 +240,7 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
         />
       )}
 
-      <Box position="relative">
+      <Box position="relative" sx={{paddingLeft:'0px'}}>
         {/* <IconButton onClick={handleClick}>
           <MoreHorizOutlined color="primary" />
         </IconButton> */}
@@ -248,21 +264,21 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
               <Button
                 onClick={() => setModalType('block')}
                 color="inherit"
-                sx={{ fontSize: '12px', color: palette.mode ==='dark' ? '#fff' : '#000' }}
-                startIcon={<BlockOutlinedIcon />}
+                sx={{ ...buttonSx }}
+                startIcon={<BlockOutlinedIcon sx={iconSx}/>}
               >
                 {' '}
                 {/* Block User */}
-                {options?.length ? options[0] : 'Block User'}
+                <span style={contentStyle}>{options?.length ? options[0] : 'Block User'}</span>
               </Button>
               <Button
                 onClick={() => setModalType('report')}
                 color="inherit"
-                sx={{ fontSize: '12px', color: palette.mode ==='dark' ? '#fff' : '#000' }}
-                startIcon={<OutlinedFlagOutlinedIcon />}
+                sx={{ ...buttonSx, paddingRight:'2px', }}
+                startIcon={<OutlinedFlagOutlinedIcon sx={{marginLeft:'12px'}}/>}
               >
                 {/* Report User */}
-                {options?.length ? options[1] : 'Report User'}
+                <span style={contentStyle}>{options?.length ? options[1] : 'Report User'}</span>
               </Button>
 
               {isDeleteUser && (
