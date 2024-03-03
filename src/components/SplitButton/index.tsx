@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Typography } from '@mui/material';
+import { ListItemIcon, ListItemText, Typography, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -12,8 +12,10 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import BlockReportPostFeed from '@/components/Post/blockReportPostFeed';
+import { DeleteOutline, LinkOutlined } from '@mui/icons-material';
+import LinkIcon from '@/images/image/linkIcon';
 
-export default function SplitButton({
+function SplitButton({
   options,
   handleOptions,
   actionIcon,
@@ -24,7 +26,7 @@ export default function SplitButton({
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
-
+  const theme = useTheme();
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number
@@ -48,6 +50,17 @@ export default function SplitButton({
 
     setOpen(false);
   };
+
+  const getIcon = (option: string)=>{
+    console.log(option)
+     if('Delete Post'.indexOf(option) > -1){
+      return <DeleteOutline sx={{color : theme.palette.primary.titleColor}} color='primary'/>
+     }
+
+     if('Direct Link'.indexOf(option) > -1){
+      return <LinkOutlined sx={{color : theme.palette.primary.titleColor}} />
+     }
+  }
 
   return (
     <React.Fragment>
@@ -84,19 +97,21 @@ export default function SplitButton({
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList id="split-button-menu" autoFocusItem sx={{paddingBottom: '0px'}}>
+                <MenuList id="split-button-menu" autoFocusItem sx={{ paddingBottom: '0px' }}>
                   {options.map((option: string, index: number) => (
                     <MenuItem
                       key={option}
-                      disabled={index === 2}
                       selected={index === selectedIndex}
                       onClick={event => handleMenuItemClick(event, index)}
                     >
-                      {option}
+                      <ListItemIcon>
+                        {getIcon(option)}
+                      </ListItemIcon>
+                      <ListItemText sx={{color : theme.palette.primary.titleColor}}>{option}</ListItemText>
                     </MenuItem>
                   ))}
                   {['Direct Link'].every(op => options.includes(op)) && !isAuthor && <React.Suspense fallback={<Typography>Loading...</Typography>}>
-                    <BlockReportPostFeed username={username} onSuccess={() => 'success'} options={['Block User', 'Report Post']} contentId={contentId} handleCloseSplit={setOpen}/>
+                    <BlockReportPostFeed username={username} onSuccess={() => 'success'} options={['Block User', 'Report Post']} contentId={contentId} handleCloseSplit={setOpen} />
                   </React.Suspense>}
                 </MenuList>
               </ClickAwayListener>
@@ -107,3 +122,5 @@ export default function SplitButton({
     </React.Fragment>
   );
 }
+
+export default React.memo(SplitButton);

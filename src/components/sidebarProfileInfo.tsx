@@ -6,7 +6,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
 import UsernameLink, { ProfileName } from './usernameLink';
 import { useSession } from 'next-auth/react';
@@ -16,12 +16,19 @@ const SidebarProfileBar: React.FC = () => {
   const { palette } = useTheme();
   const session = useSession();
   const username = (session as any)?.data?.user?.username ?? '';
-  const { data, isFetching, isLoading, error } = useGetProfileDetailsQuery(
+  const { data, isFetching, isLoading, refetch } = useGetProfileDetailsQuery(
     {
       username: username!,
     },
     { skip: !username,refetchOnFocus: false }
   );
+
+
+  useEffect(()=>{
+   if(session.status === 'authenticated'){
+    refetch();
+   }
+  },[session]);
 
   return (
     <Paper
