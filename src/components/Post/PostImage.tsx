@@ -6,7 +6,7 @@ import Lightbox from 'react-image-lightbox-rotate-fixed';
 import Post from './Post';
 import CustomImage from '../Image';
 
- function PostImage({ image, link, shared, isShared }) {
+function PostImage({ image, link, shared, isShared }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -15,13 +15,13 @@ import CustomImage from '../Image';
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    if(!image) return;
+    if (!image) return;
 
     const img = new window.Image();
     img.onload = () => {
       setDimensions({ width: img.naturalWidth, height: img.naturalHeight });
     };
-    img.src = image.thumbnailPath;
+    img.src = image?.path ?? image.thumbnailPath;
   }, [image]);
 
   const handleOpen = () => {
@@ -53,27 +53,42 @@ import CustomImage from '../Image';
     []
   );
 
-  const height = dimensions.height > 900 ? 900 : dimensions.height;
+  const sizeType = dimensions.width < 600 && dimensions.height > 1200 ? 'verticle' : 'normal';
+  const height = dimensions.height > 1300 ? 800 : dimensions.height;
 
   return (
     <Box>
       {image && (
-        <Box sx={{ borderRadius: '10px', overflow: 'hidden', position:'relative' }}>
+        <Box sx={{ width: '100%', height: sizeType === 'verticle' ? height : 'auto', display: 'block', borderRadius: '10px', overflow: 'hidden', position: 'relative' }}>
           {loading && (
             <Skeleton variant="rounded" height={300} animation="wave" />
           )}
-          <CustomImage
+          {sizeType === 'verticle' ? <CustomImage
             onLoad={handleImageLoad}
-            width={500}
-            height={height}
-            layout="responsive"
-            style={{borderRadius: '10px'}}
+            fill
+            className='post-image'
+            quality={100}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             onClick={handleOpen}
+            style={{borderRadius: '10px'}}
+            blurDataURL={image?.thumbnailPath}
             src={image?.path ?? image.thumbnailPath}
             alt="thumbnail"
             loading="lazy" // Lazy loading
-          />
+          /> : <CustomImage
+            onLoad={handleImageLoad}
+            width={0}
+            height={0}
+            layout="responsive"
+            quality={100}
+            style={{borderRadius: '10px'}}
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            onClick={handleOpen}
+            blurDataURL={image?.thumbnailPath}
+            src={image?.path ?? image.thumbnailPath}
+            alt="thumbnail"
+            loading="lazy" // Lazy loading
+          />}
           {open && mounted && (
             <Lightbox
               mainSrc={image.path}
@@ -93,16 +108,21 @@ import CustomImage from '../Image';
           }}
         >
           {link.thumbnailPath && (
-            <CustomImage
-              width={500}
-              height={height}
-              style={{borderRadius: '10px'}}
-              layout="responsive"
-              src={link?.path ?? link?.thumbnailPath}
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              alt="thumbnail"
-              loading="lazy" // Lazy loading
-            />
+            <Box sx={{ height: 'auto', maxHeight: height, width: '100%' }}>
+              <CustomImage
+                width={0}
+                height={height}
+                style={{ borderRadius: '10px', width: '100%' }}
+                layout="responsive"
+                objectFit='contain'
+                quality={100}
+                blurDataURL={image?.thumbnailPath}
+                src={link?.path ?? link?.thumbnailPath}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                alt="thumbnail"
+                loading="lazy" // Lazy loading
+              />
+            </Box>
           )}
           <Box pl={1}>
             <Typography variant="subtitle2">
@@ -113,7 +133,11 @@ import CustomImage from '../Image';
         </Box>
       )}
       {shared && !isShared && shared?.author?.username && (
-        <Link href={`/post/${shared?.post?.id}`}>
+        <div style={{cursor:'pointer'}} onClick={(event) => {
+          if(!(event.target as Element).closest('.specific_item')){
+            window.location.href = (`/post/${shared?.post?.id}`)
+          }
+        }} >
           <Post
             name={shared?.author?.name || ''}
             username={shared?.author?.username || ''}
@@ -125,7 +149,7 @@ import CustomImage from '../Image';
             postId={shared?.post?.id}
             isShared={true}
           />
-        </Link>
+          </div>
       )}
     </Box>
   );

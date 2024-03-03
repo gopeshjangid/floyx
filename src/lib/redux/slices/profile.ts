@@ -142,14 +142,14 @@ export const profileService = createApi({
         ...response?.value?.data,
         code: response.value.code,
       }),
-      providesTags: (result, data, type) => [
+      providesTags: (result, data, type) => result ? [
         { type: 'profileDetails', id: type.username },
-      ],
+      ] : ['profileDetails'],
       transformErrorResponse: (error, meta) => {
         return error;
       },
       forceRefetch({ currentArg, previousArg }) {
-        return currentArg?.username !== previousArg?.username;
+        return currentArg !== previousArg;
       },
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;

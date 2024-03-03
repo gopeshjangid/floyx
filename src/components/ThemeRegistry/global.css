@@ -52,3 +52,8 @@ a {
 html {
   scroll-behavior: smooth;
 }
+
+.post-image {
+  object-fit: contain; /* or cover, depending on your need */
+  object-position: center;
+}
