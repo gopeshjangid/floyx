@@ -19,7 +19,7 @@ const SidebarProfileBar: React.FC = () => {
   const [fetchProfileDetails,{ data, isFetching, isLoading }] = useLazyGetProfileDetailsQuery();
 
   useEffect(()=>{
-   if(session.status === 'authenticated'){
+   if(session.status === 'authenticated' && username){
     fetchProfileDetails({username});
    }
   },[session, username]);
