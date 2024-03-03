@@ -33,6 +33,8 @@ import { useToast } from '@/components/Toast/useToast';
 import DeleteModal from '../../app/(secured)/inbox/components/delete-modal';
 import { useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
+import MenuItem from '@mui/material/MenuItem';
+
 
 interface UserActionModalProps {
   onSuccess: (status: string) => void;
@@ -214,6 +216,18 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
     setModalType('');
   };
 
+  const buttonSx = {
+    fontSize: '16px',
+    color: palette.mode === 'dark' ? '#fff' : '#000',
+    fontWeight: '400',
+    fontFamily: "'__Poppins_6fcd13', '__Poppins_Fallback_6fcd13', 'Helvetica Neue', Arial, sans-serif",
+    textTransform: 'capitalize',
+  };
+
+  const contentStyle = {
+    marginLeft:'7px'
+  }
+
   return (
     <>
       {deleteModal && (
@@ -224,7 +238,7 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
         />
       )}
 
-      <Box position="relative">
+      <Box position="relative" sx={{paddingLeft:'0px'}}>
         {/* <IconButton onClick={handleClick}>
           <MoreHorizOutlined color="primary" />
         </IconButton> */}
@@ -245,25 +259,29 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
         > */}
           <Paper>
             <Stack>
+            <MenuItem>
               <Button
                 onClick={() => setModalType('block')}
                 color="inherit"
-                sx={{ fontSize: '12px', color: palette.mode ==='dark' ? '#fff' : '#000' }}
+                sx={{ ...buttonSx }}
                 startIcon={<BlockOutlinedIcon />}
               >
                 {' '}
                 {/* Block User */}
-                {options?.length ? options[0] : 'Block User'}
+                <span style={contentStyle}>{options?.length ? options[0] : 'Block User'}</span>
               </Button>
+              </MenuItem>
+              <MenuItem>
               <Button
                 onClick={() => setModalType('report')}
                 color="inherit"
-                sx={{ fontSize: '12px', color: palette.mode ==='dark' ? '#fff' : '#000' }}
+                sx={{ ...buttonSx }}
                 startIcon={<OutlinedFlagOutlinedIcon />}
               >
                 {/* Report User */}
-                {options?.length ? options[1] : 'Report User'}
+                <span style={contentStyle}>{options?.length ? options[1] : 'Report User'}</span>
               </Button>
+              </MenuItem>
 
               {isDeleteUser && (
                 <Button
