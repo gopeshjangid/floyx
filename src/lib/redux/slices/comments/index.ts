@@ -173,6 +173,7 @@ export const commentService = createApi({
 export const {
   useCreateCommentMutation,
   useGetCommentListQuery,
+  useLazyGetCommentListQuery,
   useLazyGetUserSuggestionQuery,
   useUpdateCommentMutation,
   useDeleteCommentMutation,

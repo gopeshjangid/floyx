@@ -11,7 +11,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
 import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
-import { useGetCommentListQuery } from '@/lib/redux/slices/comments';
+import { useGetCommentListQuery, useLazyGetCommentListQuery } from '@/lib/redux/slices/comments';
 import {
   Box,
   Divider,
@@ -38,6 +38,7 @@ import SplitButton from '../SplitButton';
 import { useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
 import LoginModal from '../LoginModal';
+import LikeButton from '../LikeButton';
 
 const commentLimitOptions = ['Most recent', 'All comments'];
 
@@ -63,10 +64,7 @@ function LikesComments({
   const { openLoginModel } = useSelector(
     (state: ReduxState) => state.appReducer
   );
-  const { data: commentList, isLoading } = useGetCommentListQuery(
-    articleId! || '',
-    { skip: !showComments }
-  );
+  const [fetchComments,{ data: commentList, isLoading }] = useLazyGetCommentListQuery();
   const [generalizedComments, setGeneralizedComments] = useState<UserComment[]>(
     []
   );
@@ -85,7 +83,13 @@ function LikesComments({
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
 
-  const [updateLike, { data, isSuccess }] = useLikeItemMutation();
+  const [updateLike, { data, isSuccess, isLoading: isLikeLoading }] = useLikeItemMutation();
+
+  useEffect(()=>{
+    if(articleId){
+      fetchComments(articleId);
+    }
+  },[likesCommentsDetails,articleId]);
 
   const handleClick = () => {
     setOpen(true);
@@ -108,13 +112,13 @@ function LikesComments({
       );
   }, [commentList]);
 
-  const handleArticleLike = async () => {
+  const handleArticleLike = useCallback( async() => {
     const type: string = likeType();
     await updateLike({ articleId: itemId, type });
     if (isArticle) {
       revalidateArticleDetail(pathname);
     }
-  };
+  },[isArticle,revalidateArticleDetail,updateLike, pathname, articleId, itemId]);
 
   const commentTextHandler = useCallback(
     text => {
@@ -180,16 +184,16 @@ function LikesComments({
   const onCommentHandler = useCallback(index => {
     setCommentLimit(commentLimitOptions[index]);
   }, []);
+  console.log("isliked",likesCommentsDetails?.likedByAuthor)
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
       {openLoginModel && <LoginModal isForceOpened />}
       <Stack direction="row" gap={2} py={1} justifyContent={'flex-start'}>
-        <Button
-          variant="text"
-          startIcon={<LikeIcon isLiked={likesCommentsDetails?.likedByAuthor} />}
+        <LikeButton
           onClick={handleArticleLike}
-          sx={{ padding: 0 }}
+          isLiked={likesCommentsDetails?.likedByAuthor}
+          isLoading={isLikeLoading}
         >
           <Typography
             component={'span'}
@@ -201,7 +205,7 @@ function LikesComments({
             {likeCount}&nbsp;
             {Number(likesCommentsDetails.numberOfLikes) > 1 ? 'Likes' : 'Like'}
           </Typography>
-        </Button>
+        </LikeButton>
         <Link
           href={isPost ? `${allRoutes.post}/${itemId}` : '#'}
           style={{ pointerEvents: isPost ? undefined : 'none' }}
