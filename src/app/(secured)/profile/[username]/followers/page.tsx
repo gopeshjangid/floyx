@@ -200,7 +200,7 @@ const MyFollowers: React.FC = () => {
                           src={follower.avatar}
                           sx={{ width: 40, height: 40 }}
                         />
-                      </Link>''
+                      </Link>
                     </Box>
                     <Stack width="60%" justifyContent={'center'} gap={1}>
                       <Stack alignItems={'center'} direction="row" gap={1}>
