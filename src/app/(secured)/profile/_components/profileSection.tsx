@@ -19,11 +19,9 @@ import {
   Tooltip,
   FormHelperText,
   CircularProgress,
-  Grid
+  Grid,
 } from '@mui/material';
-import {
-  useUnblockUserMutation,
-} from '@/lib/redux/slices/accountSetting';
+import { useUnblockUserMutation } from '@/lib/redux/slices/accountSetting';
 import {
   BorderColorOutlined,
   ChevronLeft,
@@ -157,15 +155,21 @@ const OtherUserProfileActions: React.FC<{
           <React.Suspense fallback={<Typography>Loading...</Typography>}>
             <BlockReportUser username={username} onSuccess={OnSuccessBlock} />
           </React.Suspense>
-            <RoundPrimaryButton
-              onClick={() => router.push('/inbox/' + username)}
-              variant="contained"
-              disabled={!allowPrivateMassages}
-              sx={{cursor: !allowPrivateMassages ? 'not-allowed' : 'pointer'}}
-              startIcon={!allowPrivateMassages ? <MailLockOutlined/>  : <EmailOutlinedIcon color="primary" />}
-            >
-              Message
-            </RoundPrimaryButton>
+          <RoundPrimaryButton
+            onClick={() => router.push('/inbox/' + username)}
+            variant="contained"
+            disabled={!allowPrivateMassages}
+            sx={{ cursor: !allowPrivateMassages ? 'not-allowed' : 'pointer' }}
+            startIcon={
+              !allowPrivateMassages ? (
+                <MailLockOutlined />
+              ) : (
+                <EmailOutlinedIcon color="primary" />
+              )
+            }
+          >
+            Message
+          </RoundPrimaryButton>
           <FollowUser
             username={username}
             isFollowed={accountDetail?.followed}
@@ -195,7 +199,8 @@ const ProfileSection: React.FC = () => {
   const toast = useToast();
   const [isEdit, setIsEdit] = React.useState(false);
   const [form, setForm] = React.useState<Partial<ProfileInfoType>>(initialForm);
-  const [tform, setTmpForm] = React.useState<Partial<ProfileInfoType>>(initialForm);
+  const [tform, setTmpForm] =
+    React.useState<Partial<ProfileInfoType>>(initialForm);
   const [imagePreview, setImagePreview] = React.useState({
     cover: null,
     profile: null,
@@ -215,12 +220,14 @@ const ProfileSection: React.FC = () => {
       skip: !username,
     }
   );
- 
-  const isUserBlocked = userBlockedStatus.indexOf(profile?.code ?? '') >-1;
+
+  const isUserBlocked = userBlockedStatus.indexOf(profile?.code ?? '') > -1;
 
   const { data: isFollwed } = useIsUserFollowedQuery(
     { userId: currentUser?.userId ?? '', followedId: profile?.id ?? '' },
-    { skip: isUserBlocked || !currentUser?.userId || !profile?.id || isSameuser }
+    {
+      skip: isUserBlocked || !currentUser?.userId || !profile?.id || isSameuser,
+    }
   );
   const [
     updateProfile,
@@ -283,15 +290,15 @@ const ProfileSection: React.FC = () => {
     updateProfile(formData);
   };
 
-  const cancelHandler = ()=>{
+  const cancelHandler = () => {
     setIsEdit(false);
     setForm(tform);
-  }
+  };
 
-  const editHandler = ()=>{
+  const editHandler = () => {
     setIsEdit(true);
     //setForm(tform);
-  }
+  };
 
   const handleUrl = url => {
     if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -300,10 +307,11 @@ const ProfileSection: React.FC = () => {
       window.open(`http://${url}`, '_blank', 'noopener,noreferrer');
     }
   };
-    const [
+  const [
     unBlockUser,
     { data: unBlockUserData, isLoading: isUnBlockUserLoading },
-  ] = useUnblockUserMutation()
+  ] = useUnblockUserMutation();
+  const isBlocked = 'Unable_to_show_detail_unblock_first';
   return (
     <Box mt={4}>
       {(!isUserBlocked || isSameuser) && (
@@ -692,43 +700,44 @@ const ProfileSection: React.FC = () => {
         ) : (
           <Box p={2}>
             <Grid container spacing={2}>
-  <Grid item xs={10}>
-    <Typography color={'red'}>
-              {getUserBlockStatusMessage(profile?.code)}
-            </Typography>
-  </Grid>
-  <Grid item xs={2}>
-      <Button
-              sx={{
-                borderRadius: '20px',
-                padding: '5px 15px',
-                background: '#5798FF3B',
-              }}
-              onClick={() => {
-                unBlockUser({ username })
-                  .unwrap()
-                  .then(res => {
-                 
-                    window.location.reload();
-                  });
-              }}
-              disabled={isUnBlockUserLoading}
-            >
-              {isUnBlockUserLoading && (
-                <CircularProgress
-                  size={16}
-                  sx={{
-                    marginRight: '5px',
-                  }}
-                />
+              <Grid item xs={10}>
+                <Typography color={'red'}>
+                  {getUserBlockStatusMessage(profile?.code)}
+                </Typography>
+              </Grid>
+              {isBlocked === profile?.code && (
+                <Grid item xs={2}>
+                  <Button
+                    sx={{
+                      borderRadius: '20px',
+                      padding: '5px 15px',
+                      background: '#5798FF3B',
+                    }}
+                    onClick={() => {
+                      debugger;
+                      console.log(isUserBlocked);
+                      unBlockUser({ username })
+                        .unwrap()
+                        .then(res => {
+                          debugger;
+                          window.location.reload();
+                        });
+                    }}
+                    disabled={isUnBlockUserLoading}
+                  >
+                    {isUnBlockUserLoading && (
+                      <CircularProgress
+                        size={16}
+                        sx={{
+                          marginRight: '5px',
+                        }}
+                      />
+                    )}
+                    Unblock
+                  </Button>
+                </Grid>
               )}
-              Unblock
-            </Button>
-  </Grid>
- 
-</Grid>
-           
-          
+            </Grid>
           </Box>
         )}
       </Paper>

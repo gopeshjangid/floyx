@@ -189,7 +189,7 @@ export const getUserBlockStatusMessage = (status) =>{
       return 'You blocked this user!';
       break;
     case 'Unable_to_show_data_user_blocked_you':
-      return 'User has blocked you ! Can not send message';
+      return 'This user has blocked you. Unfortunately, you can not view the content of the profile, as well as you will not be able to access the content published by this profile';
       break;
     case 'Both_user_blocked_each_other':
       return 'You have blocked each other';
