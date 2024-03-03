@@ -310,7 +310,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
       }
     }
   };
-
+   
   const getArticleDetail = async () => {
     const response = await getDraftDetail(articleId);
     if (response.data) {
@@ -475,6 +475,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
         handleContentChange={handleContentChange}
         state={state}
         setState={setState}
+      
       />
     </AddArticleFormBox>
   );
