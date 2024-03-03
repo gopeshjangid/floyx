@@ -33,6 +33,8 @@ import { useToast } from '@/components/Toast/useToast';
 import DeleteModal from '../../app/(secured)/inbox/components/delete-modal';
 import { useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
+import MenuItem from '@mui/material/MenuItem';
+
 
 interface UserActionModalProps {
   onSuccess: (status: string) => void;
@@ -220,12 +222,8 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
     fontWeight: '400',
     fontFamily: "'__Poppins_6fcd13', '__Poppins_Fallback_6fcd13', 'Helvetica Neue', Arial, sans-serif",
     textTransform: 'capitalize',
-    marginRight: '10px'
   };
 
-  const iconSx = {
-    marginLeft: '10px'
-  };
   const contentStyle = {
     marginLeft:'7px'
   }
@@ -261,25 +259,29 @@ const BlockReportPostFeed: React.FC<UserActionModalProps> = ({
         > */}
           <Paper>
             <Stack>
+            <MenuItem>
               <Button
                 onClick={() => setModalType('block')}
                 color="inherit"
                 sx={{ ...buttonSx }}
-                startIcon={<BlockOutlinedIcon sx={iconSx}/>}
+                startIcon={<BlockOutlinedIcon />}
               >
                 {' '}
                 {/* Block User */}
                 <span style={contentStyle}>{options?.length ? options[0] : 'Block User'}</span>
               </Button>
+              </MenuItem>
+              <MenuItem>
               <Button
                 onClick={() => setModalType('report')}
                 color="inherit"
-                sx={{ ...buttonSx, paddingRight:'2px', }}
-                startIcon={<OutlinedFlagOutlinedIcon sx={{marginLeft:'12px'}}/>}
+                sx={{ ...buttonSx }}
+                startIcon={<OutlinedFlagOutlinedIcon />}
               >
                 {/* Report User */}
                 <span style={contentStyle}>{options?.length ? options[1] : 'Report User'}</span>
               </Button>
+              </MenuItem>
 
               {isDeleteUser && (
                 <Button
