@@ -82,7 +82,7 @@ function LikesComments({
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
 
-  const [updateLike, { data, isSuccess, isLoading: isLikeLoading }] = useLikeItemMutation();
+  const [updateLike, { isLoading: isLikeLoading }] = useLikeItemMutation();
 
   useEffect(()=>{
     if(articleId){
@@ -127,12 +127,10 @@ function LikesComments({
   );
 
   const onCreatedArticleComment = useCallback(
-    commentData => {
-      if (commentData && isArticle) {
+    () => {
         fetchComments(articleId);
-      }
     },
-    [setNewCreatedComments, pathname]
+    []
   );
   const onCreatedNewComment = useCallback(
     (commentData, isLoading) => {
@@ -161,7 +159,7 @@ function LikesComments({
           return comment.comment.id !== data.id;
         });
         if (isArticle) {
-          revalidateArticleDetail(pathname);
+          fetchComments(articleId);
         }
       } else {
         _comments = newCreatedComments.newComments.map(comment => {
@@ -183,7 +181,6 @@ function LikesComments({
   const onCommentHandler = useCallback(index => {
     setCommentLimit(commentLimitOptions[index]);
   }, []);
-  console.log("isliked",likesCommentsDetails?.likedByAuthor)
   console.log({newCreatedComments, generalizedComments});
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
