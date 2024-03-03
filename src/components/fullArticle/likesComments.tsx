@@ -9,9 +9,8 @@ import React, {
 } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
-import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
-import { useGetCommentListQuery, useLazyGetCommentListQuery } from '@/lib/redux/slices/comments';
+import { useLazyGetCommentListQuery } from '@/lib/redux/slices/comments';
 import {
   Box,
   Divider,
@@ -185,6 +184,7 @@ function LikesComments({
     setCommentLimit(commentLimitOptions[index]);
   }, []);
   console.log("isliked",likesCommentsDetails?.likedByAuthor)
+  console.log({newCreatedComments, generalizedComments});
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
