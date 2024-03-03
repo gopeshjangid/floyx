@@ -73,6 +73,7 @@ function PostImage({ image, link, shared, isShared }) {
             quality={100}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             onClick={handleOpen}
+            style={{borderRadius: '10px'}}
             blurDataURL={image?.thumbnailPath}
             src={image?.path ?? image.thumbnailPath}
             alt="thumbnail"
@@ -83,6 +84,7 @@ function PostImage({ image, link, shared, isShared }) {
             height={0}
             layout="responsive"
             quality={100}
+            style={{borderRadius: '10px'}}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             onClick={handleOpen}
             blurDataURL={image?.thumbnailPath}
