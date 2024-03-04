@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { postId: string } }) {
               username={postDetail?.author?.username}
               createdDateTime={postDetail?.post?.createdDateTime}
               content={postDetail?.post?.content}
-              shared={postDetail?.post?.link}
+              shared={postDetail?.post?.shared}
               image={postDetail?.post?.image}
               link={postDetail?.post?.link}
               postDetails={postDetail?.post}

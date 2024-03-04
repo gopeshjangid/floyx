@@ -90,7 +90,7 @@ function LikesComments({
   const [updateLike, { isLoading: isLikeLoading }] = useLikeItemMutation();
 
   useEffect(() => {
-    if (articleId && isArticle) {
+    if (articleId) {
       fetchComments(articleId);
     }
   }, [likesCommentsDetails, articleId, isArticle]);
