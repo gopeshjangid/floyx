@@ -3,7 +3,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 // import ContentEditable from 'react-contenteditable';
 import YouTube from 'react-youtube';
 import Vimeo from 'react-vimeo';
-import { Input, Typography, useTheme } from '@mui/material';
+import { Input, Typography, useTheme, Grid } from '@mui/material';
 import { v4 } from 'uuid';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -21,12 +21,15 @@ import Image from 'next/image';
 import ContentEditable from "../wrapped-content-editable";
 import { useUploadArticleImageMutation } from "@/lib/redux";
 import { useTranslation } from 'react-i18next';
+import IconButton from '@mui/material/IconButton'
+import CancelIcon from '@mui/icons-material/Cancel'
+
 const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) => {
   const { palette } = useTheme();
   const colorVvg =
     palette?.mode === 'light' ? palette.text.primary : palette?.primary?.main;
   const [isTextSelected, setIsTextSelected] = React.useState(false);
-  
+
   const wrapperRef: any = React.useRef(null);
   const [uploadImage] = useUploadArticleImageMutation()
   React.useEffect(() => {
@@ -82,12 +85,12 @@ const {t}=useTranslation()
       //     value = imgTag.outerHTML + textAfterImg;
       // }
       return
-    }else if(item.type != 'ul' && item.type != 'ol') {
+    } else if (item.type != 'ul' && item.type != 'ol') {
       // If pasted content does not contain an image, remove background styles
       value = value.replace(/<[^>]+>/g, ''); // Remove all HTML tags
       value = value.replace(/\n/g, ''); // Remove newlines
     }
-    
+
     if (value.charCodeAt(0) === lineFeedCode) {
       value = value.substring(1, value.length);
     }
@@ -212,7 +215,36 @@ const {t}=useTranslation()
       nameLink: '',
     }));
   };
+  const removeImg = (index: number) => {
+    const inputsList = state['inputsList']
+    let newInputsList = inputsList.filter((el: any, i: any) => i !== index)
+    const lastIndex = (newInputsList.length - 1 > 0) ? newInputsList.length - 1 : 0
+    
+    // setState((prev: any) => ({ ...prev, inputsList: newInputsList }))
+    // addInput(index)
+    const arrayIndex =newInputsList.findIndex((x: any) => x.index === index);
+    let maximumIndex: number = Math.max(
+      ...newInputsList.map((item: any) => item.index)
+    );
+    maximumIndex = maximumIndex === -Infinity ? 0 : maximumIndex + 1;
 
+    newInputsList = [
+      ...newInputsList.slice(0, arrayIndex + 1),
+      {
+        autoFocus: true,
+        index: maximumIndex,
+        key: v4(),
+        tooltip: false,
+        tooltipIcon: true,
+        type: 'paragraph',
+        value: '',
+      },
+      ...newInputsList.slice(arrayIndex + 1),
+    ];
+    setState((prev: any) => ({ ...prev, index: maximumIndex, inputsList: newInputsList }));
+    debugger
+
+  }
   const addInput = (index: number) => {
     let { inputsList } = state;
     const arrayIndex = inputsList.findIndex((x: any) => x.index === index);
@@ -282,6 +314,7 @@ const {t}=useTranslation()
     const { inputsList } = state;
     const arrayIndex = inputsList.findIndex((x: any) => x.index === index);
     setState((prev: any) => ({ ...prev, currentImgIndex: arrayIndex }));
+    debugger
   };
 
   const handleImg = (e: any) => {
@@ -309,6 +342,7 @@ const {t}=useTranslation()
         }
         setState((prev: any) => ({ ...prev, currentImgIndex: null, inputsList }))
         addInput(currentImgIndex)
+        debugger
       };
     }
   };
@@ -498,9 +532,8 @@ const {t}=useTranslation()
     if (correct_urlValue === false) {
       return;
     }
-    inputsList[index].value = `<a href="${correct_urlValue}">${
-      nameLink || urlValue
-    }</a>`;
+    inputsList[index].value = `<a href="${correct_urlValue}">${nameLink || urlValue
+      }</a>`;
 
     setState((prev: any) => ({
       ...prev,
@@ -599,13 +632,16 @@ const {t}=useTranslation()
 
                 <label
                   className="change-type__item"
-                  onClick={() => saveImgIndex(input.index)}
+                  onClick={() => {
+
+                    saveImgIndex(input.index)
+                  }}
                   htmlFor="img"
                 >
-                   <ImageIcon color={colorVvg} />
+                  <ImageIcon color={colorVvg} />
                   <input id="img" type="file" onChange={handleImg} />
                 </label>
-               
+
                 <span
                   className="change-type__item"
                   onClick={() => changeInputType(input.index, 'youtube')}
@@ -628,7 +664,7 @@ const {t}=useTranslation()
                           }
                           placeholder= {t("comp.addArticleForm.urlPlaceholder")}
                           name="urlValue"
-                          // invalid={state.errors?.urlValue}
+                        // invalid={state.errors?.urlValue}
                         />
                         {/* <Input name="website" value={props.website} onChange={handleAbout} invalid={state.errors.website}/> */}
                         {state.errors.urlValue && (
@@ -748,20 +784,42 @@ const {t}=useTranslation()
               <div>
                 {input.value && (
                   <div className="articles-editor__photo articles-editor__item toggle-media">
-                    <Image
-                      className={
-                        'articles-editor__photo-preview toggle-media ' +
-                        (input.active ? 'active' : '')
-                      }
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      style={{ width: '100%', height: 'auto' }}
-                      // fill
-                      alt="image-article"
-                      src={input.value}
-                      onClick={() => toggleMediaActive(input.index)}
-                    />
+                    <Grid
+                      item
+                      sx={{
+                        position: 'relative'
+                      }}
+                    >
+                      <IconButton
+                        aria-label='delete image'
+                        style={{
+                          position: 'absolute',
+                          top: 10,
+                          right: 0,
+                          color: '#aaa'
+                        }}
+                        onClick={() => {
+                          removeImg(index)
+                        }}
+                      >
+                        <CancelIcon />
+                      </IconButton>
+                      <Image
+                        className={
+                          'articles-editor__photo-preview toggle-media ' +
+                          (input.active ? 'active' : '')
+                        }
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        style={{ width: '100%', height: 'auto' }}
+                        // fill
+                        alt="image-article"
+                        src={input.value}
+                        onClick={() => toggleMediaActive(input.index)}
+                      />
+                    </Grid>
+
                     {(input.caption || input.captionFocused) && (
                       <TextareaAutosize
                         className="articles-editor__caption"

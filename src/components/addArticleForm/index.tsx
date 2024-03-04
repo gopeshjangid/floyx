@@ -1,6 +1,7 @@
 'use client';
 import { v4 } from 'uuid';
-
+import IconButton from '@mui/material/IconButton'
+import CancelIcon from '@mui/icons-material/Cancel'
 import {
   Box,
   Stack,
@@ -9,6 +10,7 @@ import {
   FormControl,
   FormLabel,
   TextareaAutosize,
+  Grid
 } from '@mui/material';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
@@ -307,7 +309,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
       }
     }
   };
-
+   
   const getArticleDetail = async () => {
     const response = await getDraftDetail(articleId);
     if (response.data) {
@@ -408,6 +410,24 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
         borderRadius={2}
       >
         {imagePreview && (
+          <Grid
+            item
+            sx={{
+              position: 'relative'
+            }}
+          >
+            <IconButton
+               aria-label='delete image'
+               style={{
+                position: 'absolute',
+                top: 10,
+                right: 0,
+                color: '#aaa'
+              }}
+              onClick={() => setImagePreview("")}
+            >
+              <CancelIcon />
+            </IconButton>
           <Image
             width={0}
             height={0}
@@ -416,6 +436,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
             src={imagePreview}
             alt="thumbnail"
           />
+          </Grid>
         )}
         {imagePreview === '' && (
           <>
@@ -424,7 +445,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
               type="file"
               onChange={handleFileUpload}
               ref={fileInputRef}
-              style={{ display: 'none' }}
+              style={{ display: 'none',cursor: "pointer" }}
               accept="image/x-png,image/gif,image/jpeg"
             />
             <Stack
@@ -442,7 +463,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
                     : palette?.action?.svg
                 }
               />
-              <Typography translate="no" className="photoImage" variant="subtitle2">
+              <Typography translate="no" style={{ cursor: "pointer" }} className="photoImage" variant="subtitle2">
                 {t("comp.addArticleForm.coverPic")}
               </Typography>
             </Stack>
@@ -454,6 +475,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
         handleContentChange={handleContentChange}
         state={state}
         setState={setState}
+      
       />
     </AddArticleFormBox>
   );

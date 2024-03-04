@@ -116,19 +116,19 @@ const onCreateQueryStarted = async (
 
     if (getPostsArgs.length > 0) {
       getPostsArgs.forEach(arg => {
-        if (arg.pageNumber === 0) {
+        if (arg.pageNumber === 1) {
           appendGetPost(arg);
         }
       });
     } else {
       appendGetPost({
-        pageNumber: 0,
+        pageNumber: 1,
         postCreatedDate: data.post.createdDateTime,
       });
     }
 
     postListByUserArgs.forEach(arg => {
-      if (arg.pageNumber === 0) {
+      if (arg.pageNumber === 1) {
         appendPostByUser(arg);
       }
     });
@@ -136,7 +136,7 @@ const onCreateQueryStarted = async (
     if (postListByUserArgs.length === 0) {
       appendPostByUser({
         username: data.author.username,
-        pageNumber: 0,
+        pageNumber: 1,
         postCreatedDate: data.post.createdDateTime,
       });
     }
@@ -184,10 +184,11 @@ export const postServices = createApi({
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
-      merge: (currentCache, newItems, otherArgs) => {
-        if (currentCache && otherArgs.arg.pageNumber !==1) {
+      merge: (currentCache, newItems,otherArgs) => {
+        
+        if (currentCache && otherArgs?.arg?.pageNumber !== 1) {
           return {
-            postList: [...newItems.postList, ...currentCache.postList],
+            postList: [...currentCache.postList,...newItems.postList],
             hasMore: newItems.postList.length === 10,
           };
         } else
@@ -325,6 +326,16 @@ export const postServices = createApi({
         }
       },
     }),
+    reportPost : builder.mutation<any, Partial<any>>({
+      query: postAbout => ({
+        url: `${ApiEndpoint.ReportPost}`, // Assuming `id` is part of investmentData
+        method: 'POST', // or 'PATCH' for partial updates
+        body: postAbout,
+      }),
+      transformResponse: (response: any) =>
+        response.value.data,
+      invalidatesTags: ['MainFeedList'],
+    }),
   }),
   tagTypes: [
     'Posts',
@@ -343,4 +354,5 @@ export const {
   useDeletePostMutation,
   useGetPostListByUserQuery,
   useSharePostMutation,
+  useReportPostMutation
 } = postServices;

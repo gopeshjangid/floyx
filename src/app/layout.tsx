@@ -26,7 +26,6 @@ export default function RootLayout({
 }) {
   const { resolvedTheme } = useTheme();
   const [currentTheme, setCurrentTheme] = useState('dark');
-  //console.log('currentTheme:', currentTheme);
 
   useEffect(() => {
     if (!resolvedTheme) return;

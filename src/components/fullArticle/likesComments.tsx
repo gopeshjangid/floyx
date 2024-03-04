@@ -9,9 +9,8 @@ import React, {
 } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import CommentIcon from '@/images/image/commentIcon';
-import LikeIcon from '@/images/image/likeIcon';
 import ShareIcon from '@/images/image/shareIcon';
-import { useGetCommentListQuery } from '@/lib/redux/slices/comments';
+import { useLazyGetCommentListQuery } from '@/lib/redux/slices/comments';
 import {
   Box,
   Divider,
@@ -39,7 +38,7 @@ import { useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
 import LoginModal from '../LoginModal';
 import { useTranslation } from 'react-i18next';
-
+import LikeButton from '../LikeButton';
 
 
 type LikeCommentType = {
@@ -69,16 +68,13 @@ function LikesComments({
   const { openLoginModel } = useSelector(
     (state: ReduxState) => state.appReducer
   );
-  const { data: commentList, isLoading } = useGetCommentListQuery(
-    articleId! || '',
-    { skip: !showComments }
-  );
+  const [fetchComments, { data: commentList, isLoading }] = useLazyGetCommentListQuery();
   const [generalizedComments, setGeneralizedComments] = useState<UserComment[]>(
     []
   );
   const isSmallDevice = useMediaQuery('(max-width:400px)');
   const [commentText, setCommentText] = useState('');
-  const [commentLimit, setCommentLimit] = useState (t('comp.fullArticle.mostRecent'));
+  const [commentLimit, setCommentLimit] = useState(t('comp.fullArticle.mostRecent'));
   const [newCreatedComments, setNewCreatedComments] = useState<{
     isAdding: boolean;
     newComments: UserComment[];
@@ -91,8 +87,13 @@ function LikesComments({
   const [open, setOpen] = useState(false);
   const commentRef = useRef();
 
-  const [updateLike, { data, isSuccess }] = useLikeItemMutation();
-  
+  const [updateLike, { isLoading: isLikeLoading }] = useLikeItemMutation();
+
+  useEffect(() => {
+    if (articleId && isArticle) {
+      fetchComments(articleId);
+    }
+  }, [likesCommentsDetails, articleId, isArticle]);
 
   const handleClick = () => {
     setOpen(true);
@@ -102,7 +103,7 @@ function LikesComments({
     if (isPost) {
       return t("Home.postSection.postLike");
     } else {
-      return  t("Home.postSection.articleLike");
+      return t("Home.postSection.articleLike");
     }
   };
 
@@ -115,13 +116,13 @@ function LikesComments({
       );
   }, [commentList]);
 
-  const handleArticleLike = async () => {
+  const handleArticleLike = useCallback(async () => {
     const type: string = likeType();
     await updateLike({ articleId: itemId, type });
     if (isArticle) {
       revalidateArticleDetail(pathname);
     }
-  };
+  }, [isArticle, revalidateArticleDetail, updateLike, pathname, articleId, itemId]);
 
   const commentTextHandler = useCallback(
     text => {
@@ -131,12 +132,10 @@ function LikesComments({
   );
 
   const onCreatedArticleComment = useCallback(
-    commentData => {
-      if (commentData && isArticle) {
-        revalidateArticleDetail(pathname);
-      }
+    () => {
+      fetchComments(articleId);
     },
-    [setNewCreatedComments, pathname]
+    []
   );
   const onCreatedNewComment = useCallback(
     (commentData, isLoading) => {
@@ -165,7 +164,7 @@ function LikesComments({
           return comment.comment.id !== data.id;
         });
         if (isArticle) {
-          revalidateArticleDetail(pathname);
+          fetchComments(articleId);
         }
       } else {
         _comments = newCreatedComments.newComments.map(comment => {
@@ -187,16 +186,18 @@ function LikesComments({
   const onCommentHandler = useCallback(index => {
     setCommentLimit(commentLimitOptions[index]);
   }, []);
+
+  const commentCount = isArticle ? commentList?.length : likesCommentsDetails?.numberOfComments;
+
   return (
     <Box sx={{ marginTop: '16px', width: '100%' }}>
       {isArticle && <Divider />}
       {openLoginModel && <LoginModal isForceOpened />}
       <Stack direction="row" gap={2} py={1} justifyContent={'flex-start'}>
-        <Button
-          variant="text"
-          startIcon={<LikeIcon isLiked={likesCommentsDetails?.likedByAuthor} />}
+        <LikeButton
           onClick={handleArticleLike}
-          sx={{ padding: 0 }}
+          isLiked={likesCommentsDetails?.likedByAuthor}
+          isLoading={isLikeLoading}
         >
           <Typography
             translate="no"
@@ -211,7 +212,7 @@ function LikesComments({
               ? t('Home.postSection.likes')
               : t('Home.postSection.like')}
           </Typography>
-        </Button>
+        </LikeButton>
         <Link
           href={isPost ? `${allRoutes.post}/${itemId}` : '#'}
           style={{ pointerEvents: isPost ? undefined : 'none' }}
@@ -235,7 +236,7 @@ function LikesComments({
                 marginBottom={0}
                 sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
               >
-                {formatIndianNumber(likesCommentsDetails?.numberOfComments)}{' '}
+                {formatIndianNumber(commentCount)}{' '}
                 {t('Home.postSection.comments')}
               </Typography>
             )}

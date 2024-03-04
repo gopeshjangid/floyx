@@ -18,10 +18,10 @@ import {
 } from '@/lib/redux/slices/registration';
 import { allRoutes } from '@/constants/allRoutes';
 import { useTranslation } from 'react-i18next';
-
+import { TFunction } from 'i18next';
 const TwoStepAuth = ({ remember, username, password }: any) => {
   const toast = useToast();
-  const { t } = useTranslation();
+  const { t }: { t: TFunction } = useTranslation();
   const router = useRouter();
   const [enableRecoveryCodes, setEnableRecoveryCodes] =
     React.useState<boolean>(false);

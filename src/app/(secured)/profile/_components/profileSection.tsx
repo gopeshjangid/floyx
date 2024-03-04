@@ -18,7 +18,10 @@ import {
   Alert,
   Tooltip,
   FormHelperText,
+  CircularProgress,
+  Grid,
 } from '@mui/material';
+import { useUnblockUserMutation } from '@/lib/redux/slices/accountSetting';
 import {
   BorderColorOutlined,
   ChevronLeft,
@@ -152,15 +155,21 @@ const OtherUserProfileActions: React.FC<{
           <React.Suspense fallback={<Typography>Loading...</Typography>}>
             <BlockReportUser username={username} onSuccess={OnSuccessBlock} />
           </React.Suspense>
-            <RoundPrimaryButton
-              onClick={() => router.push('/inbox/' + username)}
-              variant="contained"
-              disabled={!allowPrivateMassages}
-              sx={{cursor: !allowPrivateMassages ? 'not-allowed' : 'pointer'}}
-              startIcon={!allowPrivateMassages ? <MailLockOutlined/>  : <EmailOutlinedIcon color="primary" />}
-            >
-              Message
-            </RoundPrimaryButton>
+          <RoundPrimaryButton
+            onClick={() => router.push('/inbox/' + username)}
+            variant="contained"
+            disabled={!allowPrivateMassages}
+            sx={{ cursor: !allowPrivateMassages ? 'not-allowed' : 'pointer' }}
+            startIcon={
+              !allowPrivateMassages ? (
+                <MailLockOutlined />
+              ) : (
+                <EmailOutlinedIcon color="primary" />
+              )
+            }
+          >
+            Message
+          </RoundPrimaryButton>
           <FollowUser
             username={username}
             isFollowed={accountDetail?.followed}
@@ -190,7 +199,8 @@ const ProfileSection: React.FC = () => {
   const toast = useToast();
   const [isEdit, setIsEdit] = React.useState(false);
   const [form, setForm] = React.useState<Partial<ProfileInfoType>>(initialForm);
-  const [tform, setTmpForm] = React.useState<Partial<ProfileInfoType>>(initialForm);
+  const [tform, setTmpForm] =
+    React.useState<Partial<ProfileInfoType>>(initialForm);
   const [imagePreview, setImagePreview] = React.useState({
     cover: null,
     profile: null,
@@ -210,12 +220,14 @@ const ProfileSection: React.FC = () => {
       skip: !username,
     }
   );
- 
-  const isUserBlocked = userBlockedStatus.indexOf(profile?.code ?? '') >-1;
+
+  const isUserBlocked = userBlockedStatus.indexOf(profile?.code ?? '') > -1;
 
   const { data: isFollwed } = useIsUserFollowedQuery(
     { userId: currentUser?.userId ?? '', followedId: profile?.id ?? '' },
-    { skip: isUserBlocked || !currentUser?.userId || !profile?.id || isSameuser }
+    {
+      skip: isUserBlocked || !currentUser?.userId || !profile?.id || isSameuser,
+    }
   );
   const [
     updateProfile,
@@ -278,15 +290,15 @@ const ProfileSection: React.FC = () => {
     updateProfile(formData);
   };
 
-  const cancelHandler = ()=>{
+  const cancelHandler = () => {
     setIsEdit(false);
     setForm(tform);
-  }
+  };
 
-  const editHandler = ()=>{
+  const editHandler = () => {
     setIsEdit(true);
     //setForm(tform);
-  }
+  };
 
   const handleUrl = url => {
     if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -295,56 +307,65 @@ const ProfileSection: React.FC = () => {
       window.open(`http://${url}`, '_blank', 'noopener,noreferrer');
     }
   };
+  const [
+    unBlockUser,
+    { data: unBlockUserData, isLoading: isUnBlockUserLoading },
+  ] = useUnblockUserMutation();
+  const isBlocked = 'Unable_to_show_detail_unblock_first';
   return (
     <Box mt={4}>
-      {(!isUserBlocked || isSameuser)  && <Box my={2}>
-        <Stack direction="row" flexWrap={'wrap'}>
-          {isLoading ? (
-            <Skeleton
-              variant="rectangular"
-              sx={{ width: '100%', height: '20px' }}
-            />
-          ) : (
-            <>
-              {!isEdit && (
-                <Stack direction="row" gap={0} alignItems={'center'}>
-                  <IconButton
-                    onClick={() => router.back()}
-                    sx={{ marginBottom: '4px' }}
-                  >
-                    <ChevronLeft fontSize="medium" color="secondary" />
-                  </IconButton>
-                  <ProfileName variant="subtitle1">{profile?.name}</ProfileName>
-                  &nbsp;
-                  <UsernameLink username={profile?.username ?? ''} />
-                </Stack>
-              )}
-              {isEdit && (
-                <Stack
-                  width={'100%'}
-                  direction="row"
-                  gap={2}
-                  justifyContent={'space-between'}
-                >
-                  <Typography>Edit Profile</Typography>
-                  <Stack direction="row" gap={1}>
-                    <Button
-                      disabled={isUpdating}
-                      onClick={onUpdateSubmit}
-                      variant="contained"
+      {(!isUserBlocked || isSameuser) && (
+        <Box my={2}>
+          <Stack direction="row" flexWrap={'wrap'}>
+            {isLoading ? (
+              <Skeleton
+                variant="rectangular"
+                sx={{ width: '100%', height: '20px' }}
+              />
+            ) : (
+              <>
+                {!isEdit && (
+                  <Stack direction="row" gap={0} alignItems={'center'}>
+                    <IconButton
+                      onClick={() => router.back()}
+                      sx={{ marginBottom: '4px' }}
                     >
-                      Save changes
-                    </Button>
-                    <Button onClick={cancelHandler} variant="text">
-                      Cancel
-                    </Button>
+                      <ChevronLeft fontSize="medium" color="secondary" />
+                    </IconButton>
+                    <ProfileName variant="subtitle1">
+                      {profile?.name}
+                    </ProfileName>
+                    &nbsp;
+                    <UsernameLink username={profile?.username ?? ''} />
                   </Stack>
-                </Stack>
-              )}
-            </>
-          )}
-        </Stack>
-      </Box>}
+                )}
+                {isEdit && (
+                  <Stack
+                    width={'100%'}
+                    direction="row"
+                    gap={2}
+                    justifyContent={'space-between'}
+                  >
+                    <Typography>Edit Profile</Typography>
+                    <Stack direction="row" gap={1}>
+                      <Button
+                        disabled={isUpdating}
+                        onClick={onUpdateSubmit}
+                        variant="contained"
+                      >
+                        Save changes
+                      </Button>
+                      <Button onClick={cancelHandler} variant="text">
+                        Cancel
+                      </Button>
+                    </Stack>
+                  </Stack>
+                )}
+              </>
+            )}
+          </Stack>
+        </Box>
+      )}
 
       <Paper
         sx={{
@@ -354,308 +375,371 @@ const ProfileSection: React.FC = () => {
           background: palette.primary.mainBackground,
         }}
       >
-       {!isUserBlocked || isSameuser ?  <>{isUpdating && (
-          <Box sx={{ width: '100%' }}>
-            <LinearProgress />
-          </Box>
-        )}
-        <ProfileCover>
-          {isLoading && !profile ? (
-            <Skeleton
-              variant="rectangular"
-              animation="wave"
-              sx={{ width: '100%', height: '200px' }}
-            />
-          ) : (
-            <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
-              <React.Suspense
-                fallback={
-                  <Skeleton
-                    animation="wave"
-                    variant="rectangular"
-                    sx={{ width: '100%', height: '200px' }}
-                  />
-                }
-              >
-                {profile?.backgroundImage ? (
-                  <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
-                    <Image
-                      alt="profile image"
-                      style={{ borderRadius: '10px' }}
-                      fill
-                      objectFit="cover"
-                      objectPosition="center"
-                      src={
-                        isEdit && imagePreview.cover
-                          ? imagePreview.cover
-                          : profile?.backgroundImage
-                      }
-                    />
-                  </Box>
-                ) : (
-                  <Skeleton
-                    animation="wave"
-                    variant="rectangular"
-                    sx={{ width: '100%', height: '200px' }}
-                  />
-                )}
-              </React.Suspense>
-              {isEdit && (
-                <Tooltip title="Please use a background photo with a minimum resolution of 1200x900 pixels or higher for the best results">
-                  <ProfileCoverUploader>
-                    <ImageUploader
-                      onImageUpload={onCoverUploaded}
-                      getPreviewData={getCoverPreviewData}
-                    />
-                  </ProfileCoverUploader>
-                </Tooltip>
-              )}
-              {!isEdit && isSameuser && (
-                <ProfileFollowerWrapper
-                  top="4%"
-                  sx={{ top: '16px', right: '16px' }}
-                >
-                  <Box display="flex" p={1} gap={1}>
-                    <Button
-                      onClick={editHandler}
-                      color="inherit"
-                      startIcon={<BorderColorOutlined fontSize="small" />}
-                    >
-                      Edit Profile
-                    </Button>
-                  </Box>
-                </ProfileFollowerWrapper>
-              )}
-              <ProfileFollowerWrapper top="70%">
-                <Box display="flex" p={1} alignItems="center" gap={1}>
-                  <Link href={`/profile/${username}/following`}>
-                    <Typography variant="subtitle2">Following</Typography>
-                  </Link>
-                  <Typography
-                    variant="subtitle2"
-                    sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
-                  >
-                    {profile?.numberOfFollowing}
-                  </Typography>
-                  <Typography>|</Typography>
-                  <Link href={`/profile/${username}/followers`}>
-                    <Typography variant="subtitle2">Followers</Typography>
-                  </Link>
-                  <Typography
-                    variant="subtitle2"
-                    sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
-                  >
-                    {profile?.numberOfFollowers}
-                  </Typography>
-                </Box>
-              </ProfileFollowerWrapper>
-            </Box>
-          )}
-          <ProfilePic>
-            {isLoading && !profile ? (
-              <Skeleton
-                variant="circular"
-                animation="wave"
-                sx={{
-                  width: '92%',
-                  height: '92%',
-                  left: '3.5%',
-                  top: '3%',
-                  position: 'relative',
-                }}
-              />
-            ) : (
-              <Box sx={{ position: 'relative', height: '100%', width: '100%' }}>
-                <Avatar
-                  src={
-                    isEdit && imagePreview.profile
-                      ? imagePreview.profile
-                      : profile?.avatar
-                  }
-                  sx={{
-                    width: '92%',
-                    height: '92%',
-                    left: '3.5%',
-                    top: '3%',
-                    border: `3px solid ${palette.primary.main}`,
-                  }}
+        {!isUserBlocked || isSameuser ? (
+          <>
+            {isUpdating && (
+              <Box sx={{ width: '100%' }}>
+                <LinearProgress />
+              </Box>
+            )}
+            <ProfileCover>
+              {isLoading && !profile ? (
+                <Skeleton
+                  variant="rectangular"
+                  animation="wave"
+                  sx={{ width: '100%', height: '200px' }}
                 />
-                {isEdit && (
-                  <Tooltip title="For optimal profile picture quality, use a minimum resolution of 400x400 pixels or higher.">
-                    <ProfilePicUploader>
-                      <ImageUploader
-                        onImageUpload={onProfileUploaded}
-                        getPreviewData={getProfilePreviewData}
+              ) : (
+                <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
+                  <React.Suspense
+                    fallback={
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        sx={{ width: '100%', height: '200px' }}
                       />
-                    </ProfilePicUploader>
-                  </Tooltip>
+                    }
+                  >
+                    {profile?.backgroundImage ? (
+                      <Box sx={{ overflow: 'hidden', borderRadius: '10px' }}>
+                        <Image
+                          alt="profile image"
+                          style={{ borderRadius: '10px' }}
+                          fill
+                          objectFit="cover"
+                          objectPosition="center"
+                          src={
+                            isEdit && imagePreview.cover
+                              ? imagePreview.cover
+                              : profile?.backgroundImage
+                          }
+                        />
+                      </Box>
+                    ) : (
+                      <Skeleton
+                        animation="wave"
+                        variant="rectangular"
+                        sx={{ width: '100%', height: '200px' }}
+                      />
+                    )}
+                  </React.Suspense>
+                  {isEdit && (
+                    <Tooltip title="Please use a background photo with a minimum resolution of 1200x900 pixels or higher for the best results">
+                      <ProfileCoverUploader>
+                        <ImageUploader
+                          onImageUpload={onCoverUploaded}
+                          getPreviewData={getCoverPreviewData}
+                        />
+                      </ProfileCoverUploader>
+                    </Tooltip>
+                  )}
+                  {!isEdit && isSameuser && (
+                    <ProfileFollowerWrapper
+                      top="4%"
+                      sx={{ top: '16px', right: '16px' }}
+                    >
+                      <Box display="flex" p={1} gap={1}>
+                        <Button
+                          onClick={editHandler}
+                          color="inherit"
+                          startIcon={<BorderColorOutlined fontSize="small" />}
+                        >
+                          Edit Profile
+                        </Button>
+                      </Box>
+                    </ProfileFollowerWrapper>
+                  )}
+                  <ProfileFollowerWrapper top="70%">
+                    <Box display="flex" p={1} alignItems="center" gap={1}>
+                      <Link href={`/profile/${username}/following`}>
+                        <Typography variant="subtitle2">Following</Typography>
+                      </Link>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
+                      >
+                        {profile?.numberOfFollowing}
+                      </Typography>
+                      <Typography>|</Typography>
+                      <Link href={`/profile/${username}/followers`}>
+                        <Typography variant="subtitle2">Followers</Typography>
+                      </Link>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ color: 'rgba(87, 152, 255, 1)', fontWeight: 500 }}
+                      >
+                        {profile?.numberOfFollowers}
+                      </Typography>
+                    </Box>
+                  </ProfileFollowerWrapper>
+                </Box>
+              )}
+              <ProfilePic>
+                {isLoading && !profile ? (
+                  <Skeleton
+                    variant="circular"
+                    animation="wave"
+                    sx={{
+                      width: '92%',
+                      height: '92%',
+                      left: '3.5%',
+                      top: '3%',
+                      position: 'relative',
+                    }}
+                  />
+                ) : (
+                  <Box
+                    sx={{ position: 'relative', height: '100%', width: '100%' }}
+                  >
+                    <Avatar
+                      src={
+                        isEdit && imagePreview.profile
+                          ? imagePreview.profile
+                          : profile?.avatar
+                      }
+                      sx={{
+                        width: '92%',
+                        height: '92%',
+                        left: '3.5%',
+                        top: '3%',
+                        border: `3px solid ${palette.primary.main}`,
+                      }}
+                    />
+                    {isEdit && (
+                      <Tooltip title="For optimal profile picture quality, use a minimum resolution of 400x400 pixels or higher.">
+                        <ProfilePicUploader>
+                          <ImageUploader
+                            onImageUpload={onProfileUploaded}
+                            getPreviewData={getProfilePreviewData}
+                          />
+                        </ProfilePicUploader>
+                      </Tooltip>
+                    )}
+                  </Box>
                 )}
-              </Box>
-            )}
-          </ProfilePic>
-        </ProfileCover>
+              </ProfilePic>
+            </ProfileCover>
 
-        {!isLoading && (
-          <Box mt={isMobile ? 8 : 0}>
-            {!isSameuser && session.status === 'authenticated' ? (
-              <OtherUserProfileActions
-                allowPrivateMassages={!!profile?.allowPrivateMassages}
-                username={username ?? ''}
-              />
-            ) : (
-              <Box height="50px" width="100%">
-                &nbsp;
+            {!isLoading && (
+              <Box mt={isMobile ? 8 : 0}>
+                {!isSameuser && session.status === 'authenticated' ? (
+                  <OtherUserProfileActions
+                    allowPrivateMassages={!!profile?.allowPrivateMassages}
+                    username={username ?? ''}
+                  />
+                ) : (
+                  <Box height="50px" width="100%">
+                    &nbsp;
+                  </Box>
+                )}
               </Box>
             )}
-          </Box>
-        )}
-        <Box mt={1} p={2} pt={isEdit ? 5 : 2} textAlign="center">
-          <Stack
-            alignItems={'center'}
-            direction="row"
-            spacing={{ xs: 1, sm: 1, md: 1 }}
-          >
-            {isLoading ? (
-              <Skeleton
-                animation="wave"
-                variant="rectangular"
-                sx={{ width: '100%', height: '20px' }}
-              />
-            ) : (
-              <>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontWeight: '500',
-                    color: palette.primary.fontLightColor,
-                  }}
-                >
-                  {profile?.name}
-                </Typography>
-                <UsernameLink variant="h6" username={profile?.username ?? ''} />
-                {isFollwed && (
-                  <>
-                    &nbsp;|
-                    <Typography color="primary" variant="body2">
-                      Follows you
-                    </Typography>
-                  </>
-                )}
-              </>
-            )}
-          </Stack>
-          <Box my={2}>
-            {!isEdit ? (
-              <CustomDescription
-                textAlign="justify"
-                variant="subtitle2"
-                sx={{
-                  opacity: 0.9,
-                  color: palette.mode === 'dark' ? '#fff' : '#000',
-                }}
+            <Box mt={1} p={2} pt={isEdit ? 5 : 2} textAlign="center">
+              <Stack
+                alignItems={'center'}
+                direction="row"
+                spacing={{ xs: 1, sm: 1, md: 1 }}
               >
                 {isLoading ? (
-                  <Skeleton variant="rectangular" width="100%" height="60px" />
+                  <Skeleton
+                    animation="wave"
+                    variant="rectangular"
+                    sx={{ width: '100%', height: '20px' }}
+                  />
                 ) : (
-                  profile?.shortDescription
+                  <>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontWeight: '500',
+                        color: palette.primary.fontLightColor,
+                      }}
+                    >
+                      {profile?.name}
+                    </Typography>
+                    <UsernameLink
+                      variant="h6"
+                      username={profile?.username ?? ''}
+                    />
+                    {isFollwed && (
+                      <>
+                        &nbsp;|
+                        <Typography color="primary" variant="body2">
+                          Follows you
+                        </Typography>
+                      </>
+                    )}
+                  </>
                 )}
-              </CustomDescription>
-            ) : (
-              <>
-                <TextareaAutosize
-                  onChange={event =>
-                    setForm(form => ({
-                      ...form,
-                      shortDescription: event.target.value,
-                    }))
-                  }
-                  placeholder="Enter short description..."
-                  value={form.shortDescription}
-                  minRows={5}
-                  maxLength={600}
-                  sx={{ color: palette.mode === 'dark' ? '#fff' : '#000' }}
-                />
-                <FormHelperText sx={{ textAlign: 'right' }}>
-                  {`${form.shortDescription?.length ?? 0}/600`}
-                </FormHelperText>
-              </>
-            )}
-          </Box>
-          <Stack
-            direction="row"
-            flexWrap="wrap"
-            alignItems="center"
-            justifyContent={'flex-start'}
-            gap={0.5}
-            spacing={{ xs: 0, sm: 1, md: 1 }}
-          >
-            {aboutLoading ? (
-              <Skeleton variant="rectangular" height={'30px'} width="100%" />
-            ) : (
-              <Stack direction={'row'} gap={1} alignItems={'flex-end'}>
-                <Box display="flex" gap={1}>
-                  <LocationOn />
-                  <Typography variant="body2" color="textPrimary">
-                    {profileAbout?.about?.location}
-                  </Typography>
-                </Box>
-                <Box display="flex" gap={1}>
-                  <Button
-                    variant="text"
-                    size="small"
-                    startIcon={<Image src={LinkIcon} alt="website link icon" />}
-                    onClick={() => handleUrl(profileAbout?.about?.website)}
-                    sx={{ fontSize: '.825rem', textTransform: 'none' }}
-                  >
-                    {profileAbout?.about?.website}
-                  </Button>
-                </Box>
-                <Box display="flex" gap={1}>
-                  <Image
-                    src={Calender}
-                    width={20}
-                    height={20}
-                    alt="Calender Icon"
-                  />
-                  <Typography variant="subtitle2" sx={{ color: 'grey' }}>
-                    Joined {profile?.joinedDate}
-                  </Typography>
-                </Box>
               </Stack>
-            )}
-          </Stack>
-          <Box my={2}>
-            <Typography textAlign="left" variant="body1">
-              {!aboutLoading && 'Skills'}
-            </Typography>
-            <Stack
-              flexWrap="wrap"
-              my={2}
-              display="flex"
-              direction="row"
-              justifyContent="flex-start"
-              rowGap={2}
-              spacing={{ xs: 1, sm: 3, md: 4 }}
-            >
-              {aboutLoading ? (
-                <Skeleton variant="rectangular" width="100%" height="100px" />
-              ) : (
-                profileAbout &&
-                profileAbout?.about?.skills.map((skill, index) => (
-                  <CustomChip
-                    key={'skill' + index}
-                    label={skill}
-                    component="a"
-                    href="#basic-chip"
-                    clickable
+              <Box my={2}>
+                {!isEdit ? (
+                  <CustomDescription
+                    textAlign="justify"
+                    variant="subtitle2"
+                    sx={{
+                      opacity: 0.9,
+                      color: palette.mode === 'dark' ? '#fff' : '#000',
+                    }}
+                  >
+                    {isLoading ? (
+                      <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height="60px"
+                      />
+                    ) : (
+                      profile?.shortDescription
+                    )}
+                  </CustomDescription>
+                ) : (
+                  <>
+                    <TextareaAutosize
+                      onChange={event =>
+                        setForm(form => ({
+                          ...form,
+                          shortDescription: event.target.value,
+                        }))
+                      }
+                      placeholder="Enter short description..."
+                      value={form.shortDescription}
+                      minRows={5}
+                      maxLength={600}
+                      sx={{ color: palette.mode === 'dark' ? '#fff' : '#000' }}
+                    />
+                    <FormHelperText sx={{ textAlign: 'right' }}>
+                      {`${form.shortDescription?.length ?? 0}/600`}
+                    </FormHelperText>
+                  </>
+                )}
+              </Box>
+              <Stack
+                direction="row"
+                flexWrap="wrap"
+                alignItems="center"
+                justifyContent={'flex-start'}
+                gap={0.5}
+                spacing={{ xs: 0, sm: 1, md: 1 }}
+              >
+                {aboutLoading ? (
+                  <Skeleton
+                    variant="rectangular"
+                    height={'30px'}
+                    width="100%"
                   />
-                ))
+                ) : (
+                  <Stack direction={'row'} gap={1} alignItems={'flex-end'}>
+                    <Box display="flex" gap={1}>
+                      <LocationOn />
+                      <Typography variant="body2" color="textPrimary">
+                        {profileAbout?.about?.location}
+                      </Typography>
+                    </Box>
+                    <Box display="flex" gap={1}>
+                      <Button
+                        variant="text"
+                        size="small"
+                        startIcon={
+                          <Image src={LinkIcon} alt="website link icon" />
+                        }
+                        onClick={() => handleUrl(profileAbout?.about?.website)}
+                        sx={{ fontSize: '.825rem', textTransform: 'none' }}
+                      >
+                        {profileAbout?.about?.website}
+                      </Button>
+                    </Box>
+                    <Box display="flex" gap={1}>
+                      <Image
+                        src={Calender}
+                        width={20}
+                        height={20}
+                        alt="Calender Icon"
+                      />
+                      <Typography variant="subtitle2" sx={{ color: 'grey' }}>
+                        Joined {profile?.joinedDate}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                )}
+              </Stack>
+              <Box my={2}>
+                <Typography textAlign="left" variant="body1">
+                  {!aboutLoading && 'Skills'}
+                </Typography>
+                <Stack
+                  flexWrap="wrap"
+                  my={2}
+                  display="flex"
+                  direction="row"
+                  justifyContent="flex-start"
+                  rowGap={2}
+                  spacing={{ xs: 1, sm: 3, md: 4 }}
+                >
+                  {aboutLoading ? (
+                    <Skeleton
+                      variant="rectangular"
+                      width="100%"
+                      height="100px"
+                    />
+                  ) : (
+                    profileAbout &&
+                    profileAbout?.about?.skills.map((skill, index) => (
+                      <CustomChip
+                        key={'skill' + index}
+                        label={skill}
+                        component="a"
+                        href="#basic-chip"
+                        clickable
+                      />
+                    ))
+                  )}
+                </Stack>
+              </Box>
+            </Box>
+          </>
+        ) : (
+          <Box p={2}>
+            <Grid container spacing={2}>
+              <Grid item xs={10}>
+                <Typography color={'red'}>
+                  {getUserBlockStatusMessage(profile?.code)}
+                </Typography>
+              </Grid>
+              {isBlocked === profile?.code && (
+                <Grid item xs={2}>
+                  <Button
+                    sx={{
+                      borderRadius: '20px',
+                      padding: '5px 15px',
+                      background: '#5798FF3B',
+                    }}
+                    onClick={() => {
+                      debugger;
+                      console.log(isUserBlocked);
+                      unBlockUser({ username })
+                        .unwrap()
+                        .then(res => {
+                          debugger;
+                          window.location.reload();
+                        });
+                    }}
+                    disabled={isUnBlockUserLoading}
+                  >
+                    {isUnBlockUserLoading && (
+                      <CircularProgress
+                        size={16}
+                        sx={{
+                          marginRight: '5px',
+                        }}
+                      />
+                    )}
+                    Unblock
+                  </Button>
+                </Grid>
               )}
-            </Stack>
+            </Grid>
           </Box>
-        </Box></> : <Box p={2}>
-             <Typography color={'red'}>{getUserBlockStatusMessage(profile?.code)}</Typography>
-          </Box>}
+        )}
       </Paper>
     </Box>
   );

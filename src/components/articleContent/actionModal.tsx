@@ -372,7 +372,6 @@ export default function ActionModal({
         setItem(4);
         setOpenDialog(true);
       }
-      console.log(reportArticleData);
     }
   }, [reportArticleData, reportArticleData])
   useEffect(() => {

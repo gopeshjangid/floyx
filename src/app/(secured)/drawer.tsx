@@ -65,6 +65,7 @@ import { CloseOutlined } from '@mui/icons-material';
 import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
+//import SidebarProfileBar from '@/components/sidebarProfileInfo';
 //import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
 const drawerWidth = 240;

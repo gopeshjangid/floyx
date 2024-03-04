@@ -24,9 +24,9 @@ export const commentService = createApi({
     getCommentList: builder.query<UserComment[], string>({
       query: articleId => `${ApiEndpoint.GetComments}/${articleId}`,
       transformResponse: (response: any) => response?.value?.data || [],
-      providesTags: (result, error, articleId) => [
+      providesTags: (result, error, articleId) => result ? [
         { type: 'CommentList', id: articleId },
-      ],
+      ] : ['CommentList'],
     }),
     createComment: builder.mutation<UserComment, any>({
       query: commantData => ({
@@ -173,6 +173,7 @@ export const commentService = createApi({
 export const {
   useCreateCommentMutation,
   useGetCommentListQuery,
+  useLazyGetCommentListQuery,
   useLazyGetUserSuggestionQuery,
   useUpdateCommentMutation,
   useDeleteCommentMutation,

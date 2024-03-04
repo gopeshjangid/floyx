@@ -6,8 +6,8 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import React from 'react';
-import { useGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
+import React, { useEffect } from 'react';
+import { useLazyGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
 import UsernameLink, { ProfileName } from './usernameLink';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -17,13 +17,15 @@ const SidebarProfileBar: React.FC = () => {
   const { palette } = useTheme();
   const session = useSession();
   const username = (session as any)?.data?.user?.username ?? '';
-  const { data, isFetching, isLoading, error } = useGetProfileDetailsQuery(
-    {
-      username: username!,
-    },
-    { skip: !username,refetchOnFocus: false }
-  );
+  const [fetchProfileDetails,{ data, isFetching, isLoading }] = useLazyGetProfileDetailsQuery();
 const {t}=useTranslation()
+
+  useEffect(()=>{
+   if(username){
+    fetchProfileDetails({username});
+   }
+  },[session, username]);
+
   return (
     <Paper
       elevation={0}
@@ -85,4 +87,4 @@ const {t}=useTranslation()
   );
 };
 
-export default SidebarProfileBar;
+export default React.memo(SidebarProfileBar);

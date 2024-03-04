@@ -1,11 +1,11 @@
 'use client';
 
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 import UserCard from '../UserCard';
 import { PostBox } from './styledPostBox';
 import SplitButton from '../SplitButton';
 import PostImage from './PostImage';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import PostActionModal from './PostActionModal';
 import { usePathname, useRouter } from 'next/navigation';
 import { allRoutes } from '@/constants/allRoutes';
@@ -62,7 +62,7 @@ function Post({
 
   const onCopied = () => toast.info(t('Home.postSection.copied'));
 
-  const handleOptions = (val: any, options: Array<string>) => {
+  const handleOptions = useCallback((val: any, options: Array<string>) => {
     setButtonAction(options[val]);
     if (options[val] === t('Home.postSection.options.deletePost')) {
       setOpen(true);
@@ -72,7 +72,8 @@ function Post({
       const text = `${protocol}//${host}${allRoutes.post}/${postId}`;
       copyTextToClipboard(text, onCopied);
     }
-  };
+  },[setButtonAction,setOpen,copyTextToClipboard]);
+
   useEffect(() => {
     if (username === userDetail) {
       const actions = [t('Home.postSection.options.deletePost')];
@@ -105,13 +106,18 @@ function Post({
             shared={shared}
             isPost={true}
           />
-          <Box sx={{ padding: '20px 0' }}>
-            <SplitButton
-              options={buttonOptions}
-              handleOptions={(event: any) =>
-                handleOptions(event, buttonOptions)
-              }
-            />
+          <Box sx={{ padding: '20px 0' }} className='specific_item'>
+           <Suspense fallback={<CircularProgress size={'small'} />}>
+              <SplitButton
+                options={buttonOptions}
+                handleOptions={(event: any) =>
+                  handleOptions(event, buttonOptions)
+                }
+                username={username}
+                contentId={postId}
+                isAuthor={username === userDetail}
+              />
+            </Suspense>
           </Box>
         </Box>
         <Box pb={1}>

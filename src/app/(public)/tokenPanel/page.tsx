@@ -160,7 +160,6 @@ const updatedtokenPanel = props => {
   }, [vestingScheduledAmount]);
 
   useEffect(() => {
-    console.log('vestingScheduledAmount: ', vestingReleasedAmount);
     if (vestingReleasedAmount) {
       setVestingAmount(amount => ({
         ...amount,
@@ -170,7 +169,6 @@ const updatedtokenPanel = props => {
   }, [vestingReleasedAmount]);
 
   useEffect(() => {
-    console.log('vestingScheduledAmount: ', vestingClaimableAmount);
     if (vestingClaimableAmount) {
       setVestingAmount(amount => ({
         ...amount,
@@ -290,7 +288,6 @@ const updatedtokenPanel = props => {
   };
 
   useEffect(() => {
-    console.log('funcToGetStakedAmount: ', funcToGetStakedAmount);
     if (funcToGetStakedAmount) {
       setStakingAmount(stakeAmount => ({
         ...stakeAmount,
@@ -300,7 +297,6 @@ const updatedtokenPanel = props => {
   }, [funcToGetStakedAmount]);
 
   useEffect(() => {
-    console.log('funcTogetRewardAmount: ', funcTogetRewardAmount);
     if (funcTogetRewardAmount) {
       setStakingAmount(stakeAmount => ({
         ...stakeAmount,
@@ -361,7 +357,6 @@ const updatedtokenPanel = props => {
       modalType === 'PRESALEVESTING' &&
       privateVestingStartTime !== '0n'
     ) {
-      console.log('timer set PRESALEVESTING');
       setTimerFunction();
     }
   }, [modalType, privateVestingStartTime, address]);

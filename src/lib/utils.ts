@@ -59,10 +59,13 @@ export const baseQuery = retry(fetchBaseQuery({
 }),{maxRetries: 3});
 
 export const fetchServerData = async (
-  url: string
+  url: string, token:string
 ): { isError: boolean; data: any } => {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url,{headers:{
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+  }});
     if (!res.ok) {
       return { isError: true, data: null };
     }
@@ -186,7 +189,7 @@ export const getUserBlockStatusMessage = (status) =>{
       return 'You blocked this user!';
       break;
     case 'Unable_to_show_data_user_blocked_you':
-      return 'User has blocked you ! Can not send message';
+      return 'This user has blocked you. Unfortunately, you can not view the content of the profile, as well as you will not be able to access the content published by this profile';
       break;
     case 'Both_user_blocked_each_other':
       return 'You have blocked each other';
