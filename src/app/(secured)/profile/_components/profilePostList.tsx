@@ -11,7 +11,7 @@ export interface apiParams {
   username: string;
 }
 
-function ProfilePostList({parentRef}) {
+function ProfilePostList({ parentRef }) {
   const params = useParams();
   const username = Array.isArray(params?.username)
     ? params?.username[0]
@@ -22,42 +22,43 @@ function ProfilePostList({parentRef}) {
     username: username || '',
   });
 
-  useEffect(()=>{
-   if(username){
-    setApiParams((params)=>({...params, username, pageNumber : 1}))
-   }
-  },[username])
-
-  const { data, isFetching, isLoading } = useGetPostListByUserQuery(apiParams);
+  const { data, isFetching, isLoading,} = useGetPostListByUserQuery(apiParams);
   const postData = data?.postList;
-  const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
-  const loadMore = useCallback(() => {
-    if (postData?.length && !isFetching) {
-      const lastPost = postData[postData.length - 1];
-      setApiParams(prevParams => ({
-        ...prevParams,
-        pageNumber: prevParams.pageNumber + 1,
-        postCreatedDate: lastPost?.post?.createdDateTime,
-      }));
+  useEffect(() => {
+    if (username) {
+      setApiParams((params) => ({ ...params, username, pageNumber: 1 }))
     }
-  }, [postData, isFetching, setApiParams]);
+   
+  }, [username])
 
-  return (
-    <Box>
-      <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12} sm={12} marginTop={2} marginBottom={2}>
-          <PostList
-            postData={postData || []}
-            loadMore={loadMore}
-            hasMore={hasMore}
-            scrollThreshold={0.7}
-            isLoading={isLoading}
-            mainContainerFeedRef={parentRef}
-          />
-        </Grid>
+const hasMore = typeof data?.hasMore != 'undefined' ? data?.hasMore : true;
+const loadMore = useCallback(() => {
+  if (postData?.length && !isFetching) {
+    const lastPost = postData[postData.length - 1];
+    setApiParams(prevParams => ({
+      ...prevParams,
+      pageNumber: prevParams.pageNumber + 1,
+      postCreatedDate: lastPost?.post?.createdDateTime,
+    }));
+  }
+}, [postData, isFetching, setApiParams]);
+
+return (
+  <Box>
+    <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid item xs={12} sm={12} marginTop={2} marginBottom={2}>
+        <PostList
+          postData={postData || []}
+          loadMore={loadMore}
+          hasMore={hasMore}
+          scrollThreshold={0.7}
+          isLoading={isLoading}
+          mainContainerFeedRef={parentRef}
+        />
       </Grid>
-    </Box>
-  );
+    </Grid>
+  </Box>
+);
 }
 
 export default React.memo(ProfilePostList);
