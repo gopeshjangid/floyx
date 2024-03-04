@@ -31,7 +31,7 @@ const ArticleHeadContainer = styled(Box)(() => ({
 const defaultTab = [
   {
     label: 'Popular',
-    value: 'liked?limited=true',
+    value: 'popular',
     icon: (fill: string) => <PopularIcon fill={fill} />,
   },
   {
@@ -80,6 +80,7 @@ export default function ArticleHead({
   };
   useEffect(() => {
     if (dynamicTabType) {
+      console.log("1")
       setArticleTabs([
         {
           icon: (fill: string) => <SearchIcon fill={fill} />,
@@ -91,9 +92,10 @@ export default function ArticleHead({
       setValue(dynamicTabType);
       setTabName(dynamicTabType);
     } else {
+      console.log("2")
       setArticleTabs(defaultTab);
       setValue('liked?limited=true');
-      setTabName('liked?limited=true');
+      setTabName('popular');
     }
   }, [dynamicTab, dynamicTabType]);
   return (

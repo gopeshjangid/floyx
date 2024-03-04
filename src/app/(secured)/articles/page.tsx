@@ -18,7 +18,7 @@ import Link from 'next/link';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
-  const [tabName, setTabName] = useState('liked?limited=true');
+  const [tabName, setTabName] = useState('popular');
 
   const [dynamicTab, setDynamicTab] = useState({
     searchBy: '',
@@ -30,12 +30,15 @@ export default function Page() {
     useLazyGetArticleListQuery();
 
   useEffect(() => {
+    debugger
     if (window.location.hash) {
+
       setDynamicTab(tab => ({
         ...tab,
         searchBy: 'tag',
         tagId: window.location.hash.slice(1),
       }));
+   
     }
   }, []);
   // const [
@@ -49,16 +52,22 @@ export default function Page() {
 
   useEffect(() => {
     if (tabName !== dynamicTab.tagId) {
+      console.log(tabName,"tabname1",dynamicTab)
+      debugger
       getArticleList(tabName);
     } else if (dynamicTab.searchBy === 'tag' && dynamicTab.tagId) {
+      debugger
+      console.log(tabName,"tabname2",dynamicTab)
       searchArticle({ searchString: dynamicTab.tagId });
     } else if (dynamicTab.searchBy === 'search' && dynamicTab.tagId) {
+      debugger
+      console.log(tabName,"tabname3",dynamicTab)
       searchArticle({ searchString: dynamicTab.value ?? '' });
     }
   }, [tabName]);
+  console.log(tabName,"tabname",dynamicTab)
   const viewportHeight =
     typeof window === 'undefined' ? 1000 : window.innerHeight;
-
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
       <Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
