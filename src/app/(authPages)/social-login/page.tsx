@@ -9,11 +9,12 @@ import SignInGoogle from './components/sign-in-google';
 // import SignInFacebook from './components/sign-in-facebook';
 import { allRoutes } from '@/constants/allRoutes';
 import LoginFooter from './components/login-footer';
+import { useTranslation } from 'react-i18next';
 
 const SocialLogin: FC = () => {
   const { palette } = useTheme();
   const router = useRouter();
-
+  const { t } = useTranslation();
   return (
     <Grid item md={6} sm={12}>
       <Box
@@ -21,12 +22,13 @@ const SocialLogin: FC = () => {
         padding={{ md: '113px 15px 40px', xs: '38px 25px 38px' }}
       >
         <Typography
+          translate="no"
           variant="h5"
           fontSize="16px"
           color={palette.text.primary}
           marginBottom="26px"
         >
-          Join for free today and keep your data safe in the digital Space{' '}
+          {t('auth.sLogin.text.text1')}
         </Typography>
         <Box
           display="flex"
@@ -37,36 +39,40 @@ const SocialLogin: FC = () => {
         >
           <Box mb="3px">
             <Button
+              translate="no"
               variant="outlined"
               className="outline-btn"
               onClick={() => router.push(allRoutes.register)}
             >
-              Create an account
+              {t('auth.sLogin.text.text2')}
             </Button>
           </Box>
           <Typography
+            translate="no"
             variant="h3"
             fontSize="24px"
             fontWeight="600"
             color={palette.text.primary}
             textAlign="left"
           >
-            Login to your account
+            {t('auth.sLogin.text.text3')}
           </Typography>
           <SignInGoogle />
           {/* TODO: add fb in future */}
           {/* <SignInFacebook /> */}
           <Box mb="3px">
             <Button
+              translate="no"
               variant="outlined"
               className="outline-btn"
               onClick={() => router.push(allRoutes.login)}
             >
-              Use username or email
+              {t('auth.sLogin.text.text4')}
             </Button>
           </Box>
           <Box mt="3px">
             <Typography
+              translate="no"
               variant="h6"
               fontSize="16px"
               fontWeight="400"
@@ -74,25 +80,25 @@ const SocialLogin: FC = () => {
               color={palette.primary[300]}
               sx={{ '& a': { color: '#5798FF' } }}
             >
-              By signing up,you agree to
+              {t('auth.sLogin.text.text5')}
               <Link prefetch={false} href={allRoutes.termsAndConditions}>
-                Terms of Service{' '}
+                {t('auth.sLogin.text.text6')}
               </Link>{' '}
               and
               <Link prefetch={false} href={allRoutes.privacyPolicy}>
                 {' '}
-                Privacy Policy,{' '}
+                {t('auth.sLogin.text.text7')}{' '}
               </Link>
               including
               <Link prefetch={false} href={allRoutes.cookiesPolicy}>
                 {' '}
-                Cookie Use.
+                {t('auth.sLogin.text.text8')}
               </Link>
             </Typography>
           </Box>
         </Box>
-        <Box py={1} sx={{ '& a': { color: '#5798FF' } }}>
-          <Link href="/tokenPanel">Token Panel</Link>
+        <Box translate="no" py={1} sx={{ '& a': { color: '#5798FF' } }}>
+          <Link href="/tokenPanel">{t('auth.sLogin.text.text9')}</Link>
         </Box>
         <LoginFooter hideLinks />
       </Box>

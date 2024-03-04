@@ -15,6 +15,7 @@ import LikesComments from '../fullArticle/likesComments';
 import { addLinks, copyTextToClipboard } from '@/lib/utils';
 import { useToast } from '../Toast/useToast';
 import CollapseDescription from '../collapseText';
+import { useTranslation } from 'react-i18next';
 // import { useSession } from "next-auth/react";
 interface postDetail {
   name: string;
@@ -46,23 +47,26 @@ function Post({
   postId,
   showComments,
 }: postDetail) {
+  const { t } = useTranslation();
   const session = useSession();
   const toast = useToast();
   const { palette } = useTheme();
   const userDetail = (session as any)?.data?.user?.username;
   const pathname = usePathname();
   const router = useRouter();
-  const [buttonOptions, setButtonOptions] = useState(['Direct Link']);
+  const [buttonOptions, setButtonOptions] = useState([
+    t('Home.postSection.options.directLink'),
+  ]);
   const [buttonAction, setButtonAction] = useState('');
   const [open, setOpen] = useState<boolean>(false);
 
-  const onCopied = () => toast.info('Copied');
+  const onCopied = () => toast.info(t('Home.postSection.copied'));
 
   const handleOptions = useCallback((val: any, options: Array<string>) => {
     setButtonAction(options[val]);
-    if (options[val] === 'Delete Post') {
+    if (options[val] === t('Home.postSection.options.deletePost')) {
       setOpen(true);
-    } else if (options[val] === 'Direct Link') {
+    } else if (options[val] === t('Home.postSection.options.directLink')) {
       const protocol = window.location.protocol;
       const host = window.location.host;
       const text = `${protocol}//${host}${allRoutes.post}/${postId}`;
@@ -72,9 +76,9 @@ function Post({
 
   useEffect(() => {
     if (username === userDetail) {
-      const actions = ['Delete Post'];
+      const actions = [t('Home.postSection.options.deletePost')];
       if (pathname.indexOf('post') === -1) {
-        actions.push('Direct Link');
+        actions.push(t('Home.postSection.options.directLink'));
       }
       setButtonOptions(actions);
     }
@@ -147,7 +151,11 @@ function Post({
         )}
       </Box>
       <React.Suspense
-        fallback={<Typography variant="overline">Loading...</Typography>}
+        fallback={
+          <Typography translate="no" variant="overline">
+            {t('Home.postSection.loading')}
+          </Typography>
+        }
       >
         <PostActionModal
           open={open}

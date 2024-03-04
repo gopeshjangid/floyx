@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { Button, Grid, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
 const HeaderSection = styled(Box)(() => ({
   display: 'flex',
@@ -23,19 +24,23 @@ const HeaderSection = styled(Box)(() => ({
 }));
 export default function Header() {
   const { palette } = useTheme();
-
+  const { t } = useTranslation();
   return (
     <HeaderSection pb={1.5}>
       <Grid container>
         <Grid item xs={12} sm={9}>
-          <Link href={'/articles'} style={{ textDecoration: 'none' }}>
+          <Link
+            translate="no"
+            href={'/articles'}
+            style={{ textDecoration: 'none' }}
+          >
             <Button
               sx={{ color: palette.mode === 'light' ? '#000' : '#fff' }}
               variant="outlined"
               color="primary"
               startIcon={<ArticleProfileIcon active={true} />}
             >
-              Article/Blog
+              {t('Home.articleBtn')}
             </Button>
           </Link>
         </Grid>

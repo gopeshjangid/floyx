@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useToast } from '../Toast/useToast';
+import { useTranslation } from 'react-i18next';
 
 function PostActionModal({
   action,
@@ -23,14 +24,15 @@ function PostActionModal({
   postId: string;
   onDeleted?: () => void;
 }) {
+  const { t } = useTranslation();
   const toast = useToast();
   const [deletePost, { isLoading: isDeleting, isSuccess }] =
     useDeletePostMutation();
 
   const performAction = async () => {
-    if (action === 'Delete Post') {
+    if (action === t('Home.postSection.options.deletePost')) {
       await deletePost(postId);
-      toast.success('Post is deleted successfully.');
+      toast.success(t('Home.postSection.toastMsg.msg1'));
     }
   };
 
@@ -74,11 +76,12 @@ function PostActionModal({
             <DeleteOutline /> {action}
           </Typography>
           <Typography
+            translate="no"
             id="keep-mounted-modal-description"
             sx={{ margin: '32px 0' }}
           >
-            {action === 'Delete Post' &&
-              'Are you sure you want to delete this post?'}
+            {action === t('Home.postSection.options.deletePost') &&
+              t('Home.postSection.toastMsg.msg2')}
           </Typography>
         </Box>
         <Box sx={{ textAlign: 'end' }}>
@@ -101,7 +104,7 @@ function PostActionModal({
             color="primary"
             onClick={() => setOpen(false)}
           >
-            Cancel
+            {t('comp.comment.deleteCancel')}
           </Button>
         </Box>
       </Box>

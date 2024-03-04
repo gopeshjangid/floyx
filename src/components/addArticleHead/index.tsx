@@ -7,6 +7,7 @@ import DocumentText from '@/assets/images/svg/documentText';
 import EditIcon from '@/assets/images/svg/editIcon';
 import { GradientButton } from '../gradientButton';
 import AddIcon from '@/assets/images/svg/addIcon';
+import { useTranslation } from 'react-i18next';
 
 const StyledTypography = styled(Typography)({
   marginTop: '4px',
@@ -26,6 +27,7 @@ function AddArticleHead({
   setArticleId,
 }) {
   const { palette } = useTheme();
+  const {t}=useTranslation()
   const handleSaveDraft = () => {
     setSaveDraft(true);
     setIsPublish(false);
@@ -71,12 +73,12 @@ function AddArticleHead({
             }
             label={
               value === 'my' ? (
-                <GradientText>
-                  My Articles [{articleDraftNumbers?.info?.numberOfArticles}]
+                <GradientText translate="no">
+                  {t("comp.addArticleHead.myArticles")} [{articleDraftNumbers?.info?.numberOfArticles}]
                 </GradientText>
               ) : (
-                <StyledTypography variant="subtitle2">
-                  My Articles [{articleDraftNumbers?.info?.numberOfArticles}]
+                <StyledTypography translate="no" variant="subtitle2">
+                  {t("comp.addArticleHead.myArticles")} [{articleDraftNumbers?.info?.numberOfArticles}]
                 </StyledTypography>
               )
             }
@@ -97,12 +99,12 @@ function AddArticleHead({
             }
             label={
               value === 'draft' ? (
-                <GradientText>
-                  My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]
+                <GradientText translate="no">
+                 {t("comp.addArticleHead.draft")} [{articleDraftNumbers?.info?.numberOfDrafts}]
                 </GradientText>
               ) : (
-                <StyledTypography variant="subtitle2">
-                  My Drafts [{articleDraftNumbers?.info?.numberOfDrafts}]
+                <StyledTypography translate="no" variant="subtitle2">
+                  {t("comp.addArticleHead.draft")}[{articleDraftNumbers?.info?.numberOfDrafts}]
                 </StyledTypography>
               )
             }
@@ -123,9 +125,9 @@ function AddArticleHead({
             }
             label={
               value === 'newArticle' ? (
-                <GradientText>Write New</GradientText>
+                <GradientText translate="no">{t("comp.addArticleHead.newWrite")}</GradientText>
               ) : (
-                <StyledTypography variant="subtitle2">Write New</StyledTypography>
+                <StyledTypography translate="no" variant="subtitle2">{t("comp.addArticleHead.newWrite")}</StyledTypography>
               )
             }
             value={'newArticle'}
@@ -136,20 +138,22 @@ function AddArticleHead({
       {value === 'newArticle' && (
         <Stack direction="row" gap={1} alignItems={'flex-end'} marginBottom={1}>
           <GradientButton
+          translate="no"
             variant="outlined"
             onClick={handleSaveDraft}
             disabled={isDisabled}
             isSelected
           >
-            <span>Save as Draft</span>
+            <span translate="no">{t("comp.addArticleHead.saveDraft")}</span>
           </GradientButton>
           <Button
+          translate="no"
             variant="contained"
             sx={{ borderRadius: '10px' }}
             onClick={handlePublish}
             disabled={isDisabled}
           >
-            {isPublished ? 'Save Edit' : 'Publish'}
+            {isPublished ? t("comp.addArticleHead.saveEdit") : t("comp.addArticleHead.publish")}
           </Button>
         </Stack>
       )}

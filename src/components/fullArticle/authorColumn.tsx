@@ -19,6 +19,7 @@ import { LocationOn } from '@mui/icons-material';
 import Image from 'next/image';
 import ArticleProfileIcon from '@/assets/images/svg/articleIcon';
 import { useSession } from 'next-auth/react';
+import { useTranslation } from 'react-i18next';
 // import { useGetArticleDetailsQuery } from "@/lib/redux";
 
 export const AuthorDetailBox = styled(Box)(({ theme }) => ({
@@ -59,7 +60,7 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
 export default function AuthorCoulmn({ details }: any) {
   const router = useRouter();
   const session = useSession();
-
+const {t}=useTranslation()
   // const {data: articleDAtaaaa} = useGetArticleDetailsQuery({userName: 'saddam_beta', articlePuclicUrl: 'lorem-ipsum-2-9d7c9e27be'})
   const { data: profile } = useGetProfileDetailsQuery(
     { username: details?.user?.username },
@@ -84,19 +85,22 @@ export default function AuthorCoulmn({ details }: any) {
     <AuthorDetailBox>
       <Box className="header" py={1}>
         <Box minWidth={'40%'}>
-          <Typography variant="body1">About Author</Typography>
+          <Typography translate="no" variant="body1">
+            {t('comp.fullArticle.about')}
+          </Typography>
         </Box>
         {session?.data?.user?.username !== details?.user?.username && (
           <Box className="position-center">
             {details?.user?.allowPrivateMassages && (
-              <Box>
+              <Box translate="no">
                 <RoundPrimaryButton
+                  translate="no"
                   variant="outlined"
                   size="small"
                   sx={{ borderRadius: '30px', padding: '4px 14px' }}
                   onClick={() => router.push('/inbox')}
                 >
-                  Message
+                  {t('comp.fullArticle.msg')}
                 </RoundPrimaryButton>
               </Box>
             )}
@@ -127,8 +131,12 @@ export default function AuthorCoulmn({ details }: any) {
           <Stack justifyContent={'flex-start'} direction="row" gap={2}>
             <Stack direction="row">
               <ProfileTickIcon height={20} stroke={'rgb(124, 147, 174)'} />
-              <Typography variant="body2" sx={{ margin: '0px 5px' }}>
-                Followers:
+              <Typography
+                translate="no"
+                variant="body2"
+                sx={{ margin: '0px 5px' }}
+              >
+                {t('comp.fullArticle.follower')}
               </Typography>
               <Typography variant="body2">
                 {profile?.numberOfFollowers}
@@ -136,8 +144,13 @@ export default function AuthorCoulmn({ details }: any) {
             </Stack>
             <Stack direction="row">
               <ArticleProfileIcon active={true} width="20px" height="20px" />
-              <Typography variant="body2" sx={{ margin: '0px 5px' }}>
-                Articles:
+              <Typography
+                translate="no"
+                variant="body2"
+                sx={{ margin: '0px 5px' }}
+              >
+               
+                {t('comp.fullArticle.articles')}
               </Typography>
               <Typography variant="body2">
                 {profile?.numberOfArticles}

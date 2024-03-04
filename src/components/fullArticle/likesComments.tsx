@@ -37,9 +37,9 @@ import SplitButton from '../SplitButton';
 import { useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
 import LoginModal from '../LoginModal';
+import { useTranslation } from 'react-i18next';
 import LikeButton from '../LikeButton';
 
-const commentLimitOptions = ['Most recent', 'All comments'];
 
 type LikeCommentType = {
   likesCommentsDetails: any;
@@ -59,17 +59,22 @@ function LikesComments({
   articleId,
   isArticle = false,
 }: LikeCommentType) {
+  const { t } = useTranslation();
+  const commentLimitOptions = [
+    t('comp.fullArticle.mostRecent'),
+    t('comp.fullArticle.allCommnets'),
+  ];
   const pathname = usePathname();
   const { openLoginModel } = useSelector(
     (state: ReduxState) => state.appReducer
   );
-  const [fetchComments,{ data: commentList, isLoading }] = useLazyGetCommentListQuery();
+  const [fetchComments, { data: commentList, isLoading }] = useLazyGetCommentListQuery();
   const [generalizedComments, setGeneralizedComments] = useState<UserComment[]>(
     []
   );
   const isSmallDevice = useMediaQuery('(max-width:400px)');
   const [commentText, setCommentText] = useState('');
-  const [commentLimit, setCommentLimit] = useState('Most recent');
+  const [commentLimit, setCommentLimit] = useState(t('comp.fullArticle.mostRecent'));
   const [newCreatedComments, setNewCreatedComments] = useState<{
     isAdding: boolean;
     newComments: UserComment[];
@@ -84,11 +89,11 @@ function LikesComments({
 
   const [updateLike, { isLoading: isLikeLoading }] = useLikeItemMutation();
 
-  useEffect(()=>{
-    if(articleId && isArticle){
+  useEffect(() => {
+    if (articleId && isArticle) {
       fetchComments(articleId);
     }
-  },[likesCommentsDetails,articleId, isArticle]);
+  }, [likesCommentsDetails, articleId, isArticle]);
 
   const handleClick = () => {
     setOpen(true);
@@ -96,9 +101,9 @@ function LikesComments({
 
   const likeType = () => {
     if (isPost) {
-      return 'PostLike';
+      return t("Home.postSection.postLike");
     } else {
-      return 'ArticleLike';
+      return t("Home.postSection.articleLike");
     }
   };
 
@@ -111,13 +116,13 @@ function LikesComments({
       );
   }, [commentList]);
 
-  const handleArticleLike = useCallback( async() => {
+  const handleArticleLike = useCallback(async () => {
     const type: string = likeType();
     await updateLike({ articleId: itemId, type });
     if (isArticle) {
       revalidateArticleDetail(pathname);
     }
-  },[isArticle,revalidateArticleDetail,updateLike, pathname, articleId, itemId]);
+  }, [isArticle, revalidateArticleDetail, updateLike, pathname, articleId, itemId]);
 
   const commentTextHandler = useCallback(
     text => {
@@ -128,7 +133,7 @@ function LikesComments({
 
   const onCreatedArticleComment = useCallback(
     () => {
-        fetchComments(articleId);
+      fetchComments(articleId);
     },
     []
   );
@@ -195,6 +200,7 @@ function LikesComments({
           isLoading={isLikeLoading}
         >
           <Typography
+            translate="no"
             component={'span'}
             color={'textPrimary'}
             textTransform={'none'}
@@ -202,7 +208,9 @@ function LikesComments({
             sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
             {likeCount}&nbsp;
-            {Number(likesCommentsDetails.numberOfLikes) > 1 ? 'Likes' : 'Like'}
+            {Number(likesCommentsDetails.numberOfLikes) > 1
+              ? t('Home.postSection.likes')
+              : t('Home.postSection.like')}
           </Typography>
         </LikeButton>
         <Link
@@ -221,6 +229,7 @@ function LikesComments({
               <Skeleton variant="text" width="100%" height="40px" />
             ) : (
               <Typography
+                translate="no"
                 component={'span'}
                 color={'textPrimary'}
                 textTransform={'none'}
@@ -228,7 +237,7 @@ function LikesComments({
                 sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
               >
                 {formatIndianNumber(commentCount)}{' '}
-                Comments
+                {t('Home.postSection.comments')}
               </Typography>
             )}
           </Button>
@@ -240,13 +249,15 @@ function LikesComments({
           onClick={handleClick}
         >
           <Typography
+            translate="no"
             component={'span'}
             color={'textPrimary'}
             textTransform={'none'}
             marginBottom={0}
             sx={{ fontSize: isSmallDevice ? '.825rem' : '1rem' }}
           >
-            {formatIndianNumber(likesCommentsDetails?.numberOfShares)} Share
+            {formatIndianNumber(likesCommentsDetails?.numberOfShares)}{' '}
+            {t('Home.postSection.share')}
           </Typography>
         </Button>
       </Stack>
@@ -286,8 +297,8 @@ function LikesComments({
       )}
       {isArticle && <Divider />}
       {!isPost && !isShared && (
-        <Typography variant="h5" sx={{ marginTop: '40px' }}>
-          Comments
+        <Typography translate="no" variant="h5" sx={{ marginTop: '40px' }}>
+          {t('Home.postSection.comments')}
         </Typography>
       )}
       {isLoading && (
@@ -314,7 +325,11 @@ function LikesComments({
               <div key={'new-comment-list-item-' + index}>
                 <Comment
                   comment={val}
-                  type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                  type={
+                    isPost
+                      ? t('Home.postSection.PostCommentLiked')
+                      : t('Home.postSection.ArticleCommentLiked')
+                  }
                   setCommentText={commentTextHandler}
                   inputRef={commentRef}
                   onAction={commentAction}
@@ -330,28 +345,33 @@ function LikesComments({
       {showComments && (
         <Box>
           {Array.isArray(generalizedComments) &&
-            (commentLimit === 'Most recent'
+            (commentLimit === t('comp.fullArticle.mostRecent')
               ? generalizedComments.slice(0, 5)
               : generalizedComments
             ).map((val: any, index: number) => {
               // Check if val is not in newCreatedComments.newComments array
-              const isCommentInNewComments = newCreatedComments.newComments.some(
-                (newComment: any) => newComment.comment.id === val.comment.id
-              );
+              const isCommentInNewComments =
+                newCreatedComments.newComments.some(
+                  (newComment: any) => newComment.comment.id === val.comment.id
+                );
               // Render Comment component only if val is not in newCreatedComments.newComments array
               if (!isCommentInNewComments) {
                 return (
                   <div key={'comment-list-item-' + index}>
                     <Comment
                       comment={val}
-                      type={isPost ? 'PostCommentLiked' : 'ArticleCommentLiked'}
+                      type={
+                        isPost
+                          ? t('Home.postSection.PostCommentLiked')
+                          : t('Home.postSection.ArticleCommentLiked')
+                      }
                       setCommentText={commentTextHandler}
                       inputRef={commentRef}
                       onAction={commentAction}
                     />
                     {index !== generalizedComments.length - 1 && <Divider />}
                   </div>
-                )
+                );
               }
             })}
         </Box>

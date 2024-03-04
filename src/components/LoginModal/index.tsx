@@ -21,6 +21,7 @@ import { allRoutes } from '@/constants/allRoutes';
 import { useDispatch } from 'react-redux';
 import { setLoginModal } from '@/lib/redux/slices/appConfig';
 import useDevice from '@/lib/hooks/useDevice';
+import { useTranslation } from 'react-i18next';
 
 interface ILogin {
   email: string;
@@ -47,6 +48,7 @@ const style = {
 };
 
 const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { isMobile } = useDevice();
   const { palette } = useTheme();
@@ -88,11 +90,11 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
 
       setLoading(false);
       if (response?.ok) {
-        toast.success('Login successfully!');
+        toast.success(t('comp.login.toastMsg.msg1'));
         handleClose();
       } else {
         console.log('login error response', JSON.stringify(response));
-        toast.error(JSON.stringify(response) || 'Something went wrong!');
+        toast.error(JSON.stringify(response) || t('comp.login.toastMsg.msg2'));
       }
     }
   };
@@ -111,13 +113,13 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
     };
 
     if (formData.email === '') {
-      err.email = 'This field required!';
+      err.email = t('comp.login.toastMsg.msg3');
     }
     if (formData.password === '') {
-      err.password = 'Password is required!';
+      err.password = t('comp.login.toastMsg.msg4');
     } else {
       if (formData.password.length < 6) {
-        err.password = 'Password should greater than 6 characters!';
+        err.password = t('comp.login.toastMsg.msg5');
       }
     }
 
@@ -155,13 +157,16 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
             >
               <Grid item xs={12}>
                 <FormControl>
-                  <FormLabel>Username or email </FormLabel>
+                  <FormLabel translate="no">
+                    {t('comp.login.placeholder.email')}
+                  </FormLabel>
 
                   <TextField
+                    translate="no"
                     margin="normal"
                     name="email"
                     hiddenLabel
-                    placeholder="Username or email"
+                    placeholder={t('comp.login.placeholder.email')}
                     onChange={onChangeHandler}
                     autoFocus
                     error={!!formError.email}
@@ -171,12 +176,15 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
               </Grid>
               <Grid item xs={12}>
                 <FormControl>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel translate="no">
+                    {t('comp.login.placeholder.password')}
+                  </FormLabel>
 
                   <TextField
+                    translate="no"
                     margin="normal"
                     hiddenLabel
-                    placeholder="Password"
+                    placeholder={t('comp.login.placeholder.password')}
                     type="password"
                     name="password"
                     onChange={onChangeHandler}
@@ -186,35 +194,52 @@ const LoginModal = ({ isForceOpened }: { isForceOpened?: boolean }) => {
                 </FormControl>
               </Grid>
               <Grid item sm={6} xs={6}>
-                <Button variant="contained" type="submit" disabled={loading}>
+                <Button
+                  translate="no"
+                  variant="contained"
+                  type="submit"
+                  disabled={loading}
+                >
                   {loading ? (
                     <CircularProgress size={24} color="inherit" />
                   ) : (
-                    'Login'
+                    t('comp.login.text.login')
                   )}
                 </Button>
               </Grid>
               <Grid item xs={6}>
                 <Link href={allRoutes.register}>
-                  <Button variant="outlined" size="large" disabled={loading}>
-                    Register Now
+                  <Button
+                    translate="no"
+                    variant="outlined"
+                    size="large"
+                    disabled={loading}
+                  >
+                    {t('comp.login.text.register')}
                   </Button>
                 </Link>
               </Grid>
               <Grid item sm={12} xs={12}>
                 <Typography
+                  translate="no"
                   fontSize="16px"
                   fontWeight="400"
                   sx={{ '& a': { color: '#5798FF' } }}
                 >
-                  <Link href={allRoutes.login}>Forgotten your password?</Link>
+                  <Link translate="no" href={allRoutes.login}>
+                    {t('comp.login.text.forgetLink')}
+                  </Link>
                 </Typography>
               </Grid>
             </Grid>
           </Box>
         </Modal>
       )}
-      {!open && <Button onClick={() => setOpen(true)}>Login</Button>}
+      {!open && (
+        <Button translate="no" onClick={() => setOpen(true)}>
+          {t('comp.login.text.login')}
+        </Button>
+      )}
     </>
   );
 };

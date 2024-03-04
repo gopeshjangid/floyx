@@ -9,6 +9,7 @@ import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import UsernameLink, { ProfileName } from '../usernameLink';
 import React from 'react';
 import { GradientText } from '../GradientComponents';
+import { useTranslation } from 'react-i18next';
 
 export const UserCardBox = styled(Box)(() => ({
   display: 'flex',
@@ -39,14 +40,17 @@ function UserCard({
   isArticle?: boolean;
   isPost?: boolean;
 }) {
+  const { t } = useTranslation();
   const getSharedLink = () => (
-    <Stack direction="row" gap={1}>
-      <Typography variant="subtitle1">
-        {` ${shared ? ' shared a ' : ''}`}
+    <Stack translate="no" direction="row" gap={1}>
+      <Typography translate="no" variant="subtitle1">
+        {` ${shared ? t('Home.postSection.shared') : ''}`}
       </Typography>
       {shared && (
         <Link href={`/post/${shared.id}`} underline="none">
-          <GradientText>post</GradientText>
+          <GradientText translate="no">
+            {t('Home.postSection.post')}
+          </GradientText>
         </Link>
       )}
     </Stack>
@@ -58,7 +62,7 @@ function UserCard({
         <UserAvatar
           alt={name}
           src={`${ApiEndpoint.CurrentUserDetails}/avatar/${username}`}
-          sx={{width:'45px', height: '45px'}}
+          sx={{ width: '45px', height: '45px' }}
         />
       </Box>
       <Box
@@ -83,7 +87,7 @@ function UserCard({
                   onClick={e => e.stopPropagation()}
                 />
                 {shared && (
-                  <Box display={{ xs: 'none', sm: 'block' }}>
+                  <Box translate="no" display={{ xs: 'none', sm: 'block' }}>
                     {getSharedLink()}
                   </Box>
                 )}
@@ -95,7 +99,7 @@ function UserCard({
                   </Box>
                 )}
                 {shared && (
-                  <Box display={{ xs: 'block', sm: 'none' }}>
+                  <Box translate="no" display={{ xs: 'block', sm: 'none' }}>
                     {getSharedLink()}
                   </Box>
                 )}

@@ -21,6 +21,7 @@ import DailyTaskIcon from '@/iconComponents/dailyTaskIcon';
 import ArticleSvgIcon from '@/iconComponents/articleSvgIcon';
 import Link from 'next/link';
 import CustomDescription from '../customDescription';
+import { useTranslation } from 'react-i18next';
 
 interface SearchResultProps {
   profile: UserDetailsType;
@@ -39,6 +40,7 @@ const StyledAvatar = styled(Avatar)(({ theme }: { theme: Theme }) => ({
 
 const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   return (
     <StyledCard>
       <CardContent>
@@ -71,12 +73,15 @@ const SearchResult: React.FC<SearchResultProps> = ({ profile, isLoading }) => {
                 </Stack>
                 {(profile.followed || profile.following) && (
                   <Stack alignItems="center" direction="row" gap={1}>
-                    {profile.followed && (
-                      <Typography variant="caption">Followed</Typography>
-                    )}
                     {profile.following && (
-                      <Typography variant="caption">
-                        | &nbsp; Follows you
+                      <Typography translate="no" variant="caption">
+                        {' '}
+                        {t('comp.recommTopic.followed')}
+                      </Typography>
+                    )}
+                    {profile.followed && (
+                      <Typography translate="no" variant="caption">
+                        | &nbsp; {t('comp.recommTopic.followYou')}
                       </Typography>
                     )}
                   </Stack>

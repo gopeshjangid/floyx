@@ -10,6 +10,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Mention, MentionsInput } from 'react-mentions';
 
 export default function SearchBarArcticleRight({ setDynamicTab }) {
@@ -36,15 +37,18 @@ export default function SearchBarArcticleRight({ setDynamicTab }) {
   function handleArticleSearch(e: any) {
     handleInputChange(e.target.value);
   }
-
+const {t}=useTranslation()
   return (
     <Box>
-      <Typography variant="subtitle1">Search for Articles</Typography>
+      <Typography translate="no" variant="subtitle1">
+        {t('comp.recommTopic.search')}
+      </Typography>
       <TextField
+        translate='no'
         name="email"
         fullWidth
         hiddenLabel
-        placeholder="Search articles..."
+        placeholder= {t('comp.recommTopic.sPlace')}
         onChange={handleArticleSearch}
         sx={{
           '.MuiOutlinedInput-root': {

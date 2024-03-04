@@ -1,12 +1,18 @@
-"use client";
+'use client';
 
-import moment from 'moment'
-import * as React from 'react'
-import { StyledTypography } from "../StyledSecondaryText"
+import moment from 'moment';
+import * as React from 'react';
+import { StyledTypography } from '../StyledSecondaryText';
+import { useTranslation } from 'react-i18next';
 
 const DateParser = ({ date }: any) => {
-  const dateVal = `${moment(new Date(date)).fromNow(true)} ago`
-  return <StyledTypography variant="body2" color={"text"}>{dateVal}</StyledTypography>
-}
+  const { t } = useTranslation();
+  const dateVal = `${moment(new Date(date)).fromNow(true)} ${t('Home.postSection.ago')}`;
+  return (
+    <StyledTypography translate="no" variant="body2" color={'text'}>
+      {dateVal}
+    </StyledTypography>
+  );
+};
 
-export default DateParser
+export default DateParser;

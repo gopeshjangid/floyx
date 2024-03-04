@@ -10,7 +10,7 @@ import {
   useTheme,
 } from '@mui/material';
 import Link from 'next/link';
-
+import { useTranslation } from 'react-i18next';
 import UserAvatar from '../UserAvatar';
 import { ApiEndpoint } from '@/lib/API/ApiEndpoints';
 
@@ -74,6 +74,7 @@ const BlockedUserItem = ({
   loading,
 }: IBlockedUserItem) => {
   const { palette } = useTheme();
+  const {t}=useTranslation()
 
   return (
     <ListItemItem>
@@ -136,7 +137,7 @@ const BlockedUserItem = ({
             }}
           />
         )}
-        Unblock
+       {t("comp.blockedUser.unblock")}
       </Button>
     </ListItemItem>
   );
