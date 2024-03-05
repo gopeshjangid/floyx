@@ -57,9 +57,7 @@ const GoogleTranslate: React.FC = () => {
   }, []);
   useEffect(() => {
     const hasPreviousScript = document.querySelector("[src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit']");
-
-    debugger
-    if(hasPreviousScript){
+      if(hasPreviousScript){
       hasPreviousScript.remove()
     }
     var addScript = document.createElement('script');
