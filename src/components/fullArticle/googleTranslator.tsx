@@ -42,6 +42,12 @@ const GoogleTranslate: React.FC = () => {
   const cookieValue = getCookie('googtrans');
   const [selected, setSelected] = useState('English');
   useEffect(() => {
+    var addScript = document.createElement('script');
+    addScript.setAttribute(
+      'src',
+      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+    );
+    document.body.appendChild(addScript);
     setSelected(cookieValue ? languagesCode[cookieValue] : 'English');
     if (cookieValue) {
       i18n.changeLanguage(cookieValue.substr(6));
@@ -50,6 +56,12 @@ const GoogleTranslate: React.FC = () => {
     }
   }, []);
   useEffect(() => {
+    const hasPreviousScript = document.querySelector("[src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit']");
+
+    debugger
+    if(hasPreviousScript){
+      hasPreviousScript.remove()
+    }
     var addScript = document.createElement('script');
     addScript.setAttribute(
       'src',
@@ -58,11 +70,11 @@ const GoogleTranslate: React.FC = () => {
     document.body.appendChild(addScript);
     window.googleTranslateElementInit = googleTranslateElementInit;
 
-    setSelected(cookieValue ? languagesCode[cookieValue] : 'English');
-    if (cookieValue) {
-      i18n.changeLanguage(cookieValue.substr(6));
-    }
-  }, [selected]);
+    // setSelected(cookieValue ? languagesCode[cookieValue] : 'English');
+    // if (cookieValue) {
+    //   i18n.changeLanguage(cookieValue.substr(6));
+    // }
+  }, [getCookie('googtrans')]);
 
   const langChange = (e: SelectChangeEvent<string>) => {
     const value = e.target.value;
