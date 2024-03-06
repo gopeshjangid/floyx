@@ -13,13 +13,11 @@ export default function Page({ params }: { params: { postId: string } }) {
   const { openLoginModel } = useSelector(
     (state: ReduxState) => state.appReducer
   );
-console.log("eeeee")
   const isBlocked = userBlockedStatus.indexOf(String(postDetail)) > -1;
   if (isBlocked) {
     return <Alert severity="error">{getUserBlockStatusMessage(postDetail)}</Alert>
   }
 
-  return "dsad";
   return (
     <>
       {openLoginModel && <LoginModal isForceOpened={true} />}
