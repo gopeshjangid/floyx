@@ -9,13 +9,14 @@ export default function RecommendedTopics({ setDynamicTab }) {
   const { palette } = useTheme();
   const { data: hotTopics, isLoading } = useGetPopularTagsQuery();
   const handleClick = val => {
+   
     setDynamicTab({
       searchBy: 'tag',
-      tagId: val.tagName,
+      tagId: val.tagId,
       value: val.tagName,
     });
   };
-  const {t}=useTranslation()
+  const { t } = useTranslation()
   return (
     <Box sx={{ marginTop: '30px', width: '100%' }}>
       <Typography
@@ -38,11 +39,12 @@ export default function RecommendedTopics({ setDynamicTab }) {
         {!isLoading &&
           hotTopics &&
           hotTopics.map((val, index) => (
+
             <CustomChip
               key={'topics' + index}
               label={val?.tagName}
-              component={Link}
-              href={`/articles/#${val.tagName}`}
+              //component={Link}
+             // href={`/articles/#${val.tagId}`}
               clickable
               style={{ marginBottom: 10, marginRight: 10 }}
               onClick={() => handleClick(val)}
