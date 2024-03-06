@@ -190,7 +190,7 @@ const ProfileSetupModal = ({
       }}
       open={open}
     >
-      <Modal open={open} onClose={handleClose} hideBackdrop>
+      <Modal disableEscapeKeyDown={true} open={open} onClose={handleClose} hideBackdrop>
         <Box sx={style}>
           <Box display="flex" gap={2} flexDirection="column">
             <Typography translate="no" variant="h2">

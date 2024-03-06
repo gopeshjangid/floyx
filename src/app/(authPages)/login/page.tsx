@@ -220,7 +220,7 @@ const Login: FC = () => {
                       <Link
                         translate="no"
                         prefetch={false}
-                        href={allRoutes.login}
+                        href={'/forgot-password'}
                       >
                         {t('auth.login.label.forgetLink')}
                       </Link>

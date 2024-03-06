@@ -29,6 +29,8 @@ import { ApiEndpoint } from '@/lib/services/ApiEndpoints';
 import useDevice from '@/lib/hooks/useDevice';
 import ProfileSetupModal from '@/components/ProfileSetupModal';
 import { FIRST_TIME_LOGIN_USING_SOCIAL } from '@/constants';
+import { useToast } from '@/components/Toast/useToast';
+import { useSession } from 'next-auth/react';
 export interface apiParams {
   pageNumber: number;
   postCreatedDate: number | string;
@@ -41,8 +43,11 @@ const SectionSkeleton = () => (
 export default function Page() {
   const [firstTimeLoginUsingSocialMedia, setFirstTimeLoginUsingSocialMedia] =
     useState<boolean | null>(null);
+  const toast = useToast();  
+  const session = useSession();
 
   useLayoutEffect(() => {
+    console.log({session});
     if (
       [true, 'true'].includes(getCookie(FIRST_TIME_LOGIN_USING_SOCIAL) as any)
     ) {
@@ -51,6 +56,12 @@ export default function Page() {
       setFirstTimeLoginUsingSocialMedia(false);
     }
   }, []);
+
+  useEffect(()=>{
+   if(session.status !=='loading' && session.status !=='unauthenticated' && !firstTimeLoginUsingSocialMedia && !session.data?.user.username){
+     setFirstTimeLoginUsingSocialMedia(true);
+   }
+  },[session, firstTimeLoginUsingSocialMedia]);
 
   const [apiParams, setApiParams] = useState<apiParams>({
     pageNumber: 1,
@@ -115,12 +126,15 @@ export default function Page() {
   
   const mainContainerFeedRef = useRef(null);
 
+  const onProfileClose = ()=>{
+     toast.info("You have to complete profile setup to access your account!");
+  }
   return (
     <>
       {firstTimeLoginUsingSocialMedia && (
         <ProfileSetupModal
           open={firstTimeLoginUsingSocialMedia}
-          handleClose={() => setFirstTimeLoginUsingSocialMedia(false)}
+          handleClose={onProfileClose}
           onSubmit={() => setFirstTimeLoginUsingSocialMedia(false)}
         />
       )}
@@ -153,7 +167,6 @@ export default function Page() {
                     <FollowNewAccounts />
                   </Suspense>
                   <PostList
-                 
                     postData={postData || []}
                     loadMore={loadMore}
                     hasMore={hasMore}

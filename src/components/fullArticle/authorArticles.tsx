@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetArticlesByAuthorQuery } from '@/lib/redux/slices/articleDetails';
+import { useLazyGetArticlesByAuthorQuery } from '@/lib/redux/slices/articleDetails';
 import { Box, Typography, Grid, Stack, Skeleton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Image from 'next/image';
@@ -10,22 +10,23 @@ import CustomDescription from '../customDescription';
 import { useTranslation } from 'react-i18next';
 import { useSession } from 'next-auth/react';
 
-export default function AuthorArticles({ username }: { username: string }) {
+ function AuthorArticles({ username }: { username: string }) {
   const {t}=useTranslation()
   const { palette } = useTheme();
   const router = useRouter();
   const session = useSession();
   
-  const { data: articleList, isLoading,refetch } = useGetArticlesByAuthorQuery({
-    username: username,
-    pageSize: 6,
-  });
-  const isSameUser = username === session.data?.user.username;
+  const [fetchAuthorArticles, { data: articleList, isLoading }] = useLazyGetArticlesByAuthorQuery();
+  //const isSameUser = username === session.data?.user.username;
+
   useEffect(() => {
-    if (session?.status !== 'loading' && session?.status !== 'unauthenticated' && !isSameUser) {
-      refetch();
+    if (session?.status !== 'loading' && username) {
+      fetchAuthorArticles({
+        username: username,
+        pageSize: 6,
+      });
     }
-  }, [session, isSameUser]);
+  }, [session, username]);
   return (
     <Box>
       <Typography translate="no" variant="h5">
@@ -90,3 +91,5 @@ export default function AuthorArticles({ username }: { username: string }) {
     </Box>
   );
 }
+
+export default React.memo(AuthorArticles);

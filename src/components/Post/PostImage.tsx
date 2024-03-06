@@ -1,6 +1,6 @@
 // @ts-check
 import { Box, Skeleton, Typography, useTheme } from '@mui/material';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Lightbox from 'react-image-lightbox-rotate-fixed';
 import Post from './Post';
@@ -24,23 +24,19 @@ function PostImage({ image, link, shared, isShared }) {
     img.src = image?.path ?? image.thumbnailPath;
   }, [image]);
 
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     if (!isShared) {
       setOpen(true);
     }
-  };
+  }, [isShared]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // const openInNewTab = () => {
-  //   //window.open(link.url, '_blank');
-  // };
-
-  const handleImageLoad = () => {
+  const handleImageLoad = useCallback(() => {
     setLoading(false);
-  };
+  }, [setLoading]);
   const getUrlHostName = useMemo(
     () => url => {
       try {
@@ -56,6 +52,41 @@ function PostImage({ image, link, shared, isShared }) {
   const sizeType = dimensions.width < 600 && dimensions.height > 1200 ? 'verticle' : 'normal';
   const height = dimensions.height > 1300 ? 800 : dimensions.height;
 
+  const getImageContainer = useMemo(() => (imageSource) => {
+    if(!imageSource) return null;
+
+    if (sizeType === 'verticle') return <CustomImage
+      onLoad={handleImageLoad}
+      fill
+      className='post-image'
+      quality={100}
+      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+      onClick={handleOpen}
+      style={{ borderRadius: '10px' }}
+      blurDataURL={imageSource?.thumbnailPath}
+      src={imageSource?.path ?? imageSource?.thumbnailPath}
+      alt="thumbnail"
+      loading="lazy" // Lazy loading
+    />;
+
+
+    return (<CustomImage
+      onLoad={handleImageLoad}
+      width={0}
+      height={0}
+      layout="responsive"
+      quality={100}
+      style={{ borderRadius: '10px' }}
+      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+      onClick={handleOpen}
+      blurDataURL={imageSource?.thumbnailPath}
+      src={imageSource?.path ?? imageSource?.thumbnailPath}
+      alt="thumbnail"
+      loading="lazy" // Lazy loading
+    />);
+  }, [image, handleImageLoad, handleOpen, sizeType]);
+
+ 
   return (
     <Box>
       {image && (
@@ -63,32 +94,7 @@ function PostImage({ image, link, shared, isShared }) {
           {loading && (
             <Skeleton variant="rounded" height={300} animation="wave" />
           )}
-          {sizeType === 'verticle' ? <CustomImage
-            onLoad={handleImageLoad}
-            fill
-            className='post-image'
-            quality={100}
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            onClick={handleOpen}
-            style={{borderRadius: '10px'}}
-            blurDataURL={image?.thumbnailPath}
-            src={image?.path ?? image.thumbnailPath}
-            alt="thumbnail"
-            loading="lazy" // Lazy loading
-          /> : <CustomImage
-            onLoad={handleImageLoad}
-            width={0}
-            height={0}
-            layout="responsive"
-            quality={100}
-            style={{borderRadius: '10px'}}
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            onClick={handleOpen}
-            blurDataURL={image?.thumbnailPath}
-            src={image?.path ?? image.thumbnailPath}
-            alt="thumbnail"
-            loading="lazy" // Lazy loading
-          />}
+          {getImageContainer(image)}
           {open && mounted && (
             <Lightbox
               mainSrc={image.path}
@@ -99,7 +105,6 @@ function PostImage({ image, link, shared, isShared }) {
       )}
       {link && !isShared && (
         <Box
-          //onClick={openInNewTab}
           pb={2}
           sx={{
             overflow: 'hidden',
@@ -108,20 +113,8 @@ function PostImage({ image, link, shared, isShared }) {
           }}
         >
           {link.thumbnailPath && (
-            <Box sx={{ height: 'auto', maxHeight: height, width: '100%' }}>
-              <CustomImage
-                width={0}
-                height={height}
-                style={{ borderRadius: '10px', width: '100%' }}
-                layout="responsive"
-                objectFit='contain'
-                quality={100}
-                blurDataURL={image?.thumbnailPath}
-                src={link?.path ?? link?.thumbnailPath}
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                alt="thumbnail"
-                loading="lazy" // Lazy loading
-              />
+            <Box sx={{ width: '100%', height: sizeType === 'verticle' ? height : 'auto', display: 'block', borderRadius: '10px', overflow: 'hidden', position: 'relative' }}>
+              {getImageContainer(link)}
             </Box>
           )}
           <Box pl={1}>
@@ -133,8 +126,8 @@ function PostImage({ image, link, shared, isShared }) {
         </Box>
       )}
       {shared && !isShared && shared?.author?.username && (
-        <div style={{cursor:'pointer'}} onClick={(event) => {
-          if(!(event.target as Element).closest('.specific_item')){
+        <div style={{ cursor: 'pointer' }} onClick={(event) => {
+          if (!(event.target as Element).closest('.specific_item')) {
             window.location.href = (`/post/${shared?.post?.id}`)
           }
         }} >
@@ -149,7 +142,7 @@ function PostImage({ image, link, shared, isShared }) {
             postId={shared?.post?.id}
             isShared={true}
           />
-          </div>
+        </div>
       )}
     </Box>
   );

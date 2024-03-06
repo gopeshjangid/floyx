@@ -215,6 +215,7 @@ export const {
   useGetTransactionHistoryQuery,
   useGetArticleTipHistoryQuery,
   useGetTipHistoryQuery,
+  useLazyGetTipHistoryQuery,
   useGetUserWalletQuery,
   useLazyGetTransactionHistoryQuery,
   useGetBonusTaskStatusQuery,

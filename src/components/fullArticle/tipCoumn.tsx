@@ -1,5 +1,5 @@
 'use client';
-import { useGetTipHistoryQuery } from '@/lib/redux/slices/earnings';
+import { useGetTipHistoryQuery, useLazyGetTipHistoryQuery } from '@/lib/redux/slices/earnings';
 import {
   Box,
   Typography,
@@ -8,7 +8,7 @@ import {
   useTheme,
   CircularProgress,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import TaskAltSharpIcon from '@mui/icons-material/TaskAltSharp';
 import { useSetTipMutation } from '@/lib/redux/slices/articleDetails';
 import { useToast } from '../Toast/useToast';
@@ -24,16 +24,12 @@ function TipColumn({
 }: any) {
   const session = useSession();
   const [value, setValue] = useState<number>(30);
+  const [loaded, setLoaded] = useState(false);
   const pathname = usePathname();
   const isSameUser = details.user.username === session.data?.user.username;
   const [updateTip, { isLoading: tipLoading, isError, error, isSuccess }] =
     useSetTipMutation();
-  const {refetch, data: fetchedTipHistory, isFetching, isLoading  } = useGetTipHistoryQuery(undefined, {
-    skip:
-      session?.status === 'loading' ||
-      session?.status === 'unauthenticated' ||
-      isSameUser,
-  });
+  const [fetchTip, {data: fetchedTipHistory, isFetching, isLoading  }] = useLazyGetTipHistoryQuery();
   const toast = useToast();
   const { t } = useTranslation();
   const { palette } = useTheme();
@@ -42,11 +38,16 @@ function TipColumn({
     setValue(newValue);
   };
 
+  useLayoutEffect(()=>{
+    setLoaded(true);
+  },[]);
+
   useEffect(() => {
-    if (session?.status !== 'loading' && session?.status !== 'unauthenticated' && !isSameUser) {
-      refetch();
+    if (loaded && session?.status !== 'loading' && session?.status !== 'unauthenticated' && !isSameUser) {
+      fetchTip();
+      setLoaded(false);
     }
-  }, [session, isSameUser]);
+  }, [session,loaded, isSameUser,details]);
 
   const handleTip = () => {
     const payload: any = {
@@ -89,7 +90,7 @@ function TipColumn({
       //refetch();
       toast.success(t('comp.fullArticle.toastMsg.msg10'));
       revalidateArticleDetail(pathname);
-      window.location.reload();
+      //window.location.reload();
     }
   }, [isSuccess, pathname]);
 

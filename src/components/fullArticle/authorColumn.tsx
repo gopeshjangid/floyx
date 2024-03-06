@@ -53,7 +53,6 @@ export const AuthorDetailBox = styled(Box)(({ theme }) => ({
   },
   '& .more-about-auhtor': {
     marginTop: '35px',
-    marginBottom: '45px',
   },
 }));
 

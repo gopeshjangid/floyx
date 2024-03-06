@@ -351,6 +351,7 @@ export const {
   useDeleteArticleMutation,
   useLazyGetDraftDetailQuery,
   useGetArticlesByAuthorQuery,
+  useLazyGetArticlesByAuthorQuery,
   useLazyGetSearchArticleQuery,
    useLazyGetArticleByTagsQuery,
   useUploadArticleImageMutation,

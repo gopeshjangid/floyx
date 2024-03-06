@@ -19,7 +19,7 @@ import {
 } from '@/lib/redux/slices/comments';
 //import { useToast } from '../Toast/useToast';
 import MentionItem from '../MentionItem';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { UserComment } from '@/lib/redux';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
@@ -102,6 +102,9 @@ function AddComment({
   isNewComment,
 }: Props) {
   const session = useSession();
+  const { t } = useTranslation();
+  const triggerRef = useRef<HTMLButtonElement>(null); // Reference to the button or element that triggers the picker
+  const pickerRef = useRef(null); // Reference to the emoji picker element
   const [createComment, { isLoading, isSuccess, data: createdComment }] =
     useCreateCommentMutation();
   const [getUserSuggestion] = useLazyGetUserSuggestionQuery();
@@ -120,6 +123,7 @@ function AddComment({
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
+    adjustPickerPosition();
   };
 
   const getUserDetails = async (mentionValue: string, callback: any) => {
@@ -165,10 +169,45 @@ function AddComment({
     setIsEditing(false);
   };
 
+  
+  const [pickerStyle, setPickerStyle] = useState({});
+
+
+  const adjustPickerPosition = () => {
+    if (triggerRef.current) {
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - triggerRect.bottom;
+
+      // Adjust this threshold as needed
+      const neededSpace = 355; // Approximate height of the picker
+
+      if (spaceBelow < neededSpace) {
+        // Not enough space below, show above
+        setPickerStyle({
+          position: 'absolute',
+          top: `-${neededSpace+77}px`
+        });
+      } else {
+        // Enough space below, show below
+        setPickerStyle({
+          position: 'absolute',
+          top: `${40}px`,
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', adjustPickerPosition);
+    return () => {
+      window.removeEventListener('resize', adjustPickerPosition);
+    };
+  }, []);
+
   const renderUserSuggestion = (user: any) => {
     return <MentionItem user={user} />;
   };
-  const { t } = useTranslation();
+  
   return (
     <AddCommentBox>
       <Box gap={1} className="styled-input-container">
@@ -206,6 +245,7 @@ function AddComment({
           </MentionsInput>
           <IconButton
             onClick={toggleVisibility}
+            ref={triggerRef}
             sx={{ position: 'absolute', right: '-10px' }}
           >
             <MoodIcon />
@@ -216,12 +256,16 @@ function AddComment({
               zIndex: 999999,
               right: '-10px',
               top: '50px',
+              ...pickerStyle
             }}
+            ref={pickerRef}
           >
             {isVisible ? (
               <Picker
                 data={data}
                 onEmojiSelect={emoji => handlePostText(null, emoji)}
+                onClickOutside={()=>setIsVisible(false)}
+
               />
             ) : (
               <></>
