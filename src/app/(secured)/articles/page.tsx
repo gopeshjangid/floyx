@@ -11,15 +11,16 @@ import WhoToFollowLoader from '@/components/whoToFollow/loader';
 import {
   useLazyGetArticleListQuery,
   useLazyGetSearchArticleQuery,
+  useLazyGetArticleByTagsQuery
 } from '@/lib/redux';
 import { GradientButton } from '@/components/gradientButton';
-//import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
+// import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
-  const [tabName, setTabName] = useState('liked?limited=true');
+  const [tabName, setTabName] = useState('popular');
 
   const [dynamicTab, setDynamicTab] = useState({
     searchBy: '',
@@ -29,37 +30,41 @@ export default function Page() {
 
   const [getArticleList, { data: articleList, isFetching }] =
     useLazyGetArticleListQuery();
-
-  useEffect(() => {
-    if (window.location.hash) {
-      setDynamicTab(tab => ({
-        ...tab,
-        searchBy: 'tag',
-        tagId: window.location.hash.slice(1),
-      }));
-    }
-  }, []);
-  // const [
-  //   getArticlesByTag,
-  //   { data: articleListByTags, isFetching: articleListFetching },
-  // ] = useLazyGetArticleByTagsQuery();
+  const [
+    getArticlesByTags,
+    { data: articleListByTags, isFetching: articleListFetching },
+  ] = useLazyGetArticleByTagsQuery();
   const [
     searchArticle,
     { data: searchedArticle, isFetching: searchIsFetching },
   ] = useLazyGetSearchArticleQuery();
+  // useEffect(() => {
+  //   // const newDynamic ={...dynamicTab}
+  //   console.log(dynamicTab)
+  //   debugger
+  //   if (window.location.hash) {
+  //     //setDynamicTab(newDynamic);
 
+  //   }
+  // }, []);
+
+const valueChanges =(val)=>{
+       setDynamicTab(val);  
+}
   useEffect(() => {
-    if (tabName !== dynamicTab.tagId) {
-      getArticleList(tabName);
-    } else if (dynamicTab.searchBy === 'tag' && dynamicTab.tagId) {
-      searchArticle({ searchString: dynamicTab.tagId });
-    } else if (dynamicTab.searchBy === 'search' && dynamicTab.tagId) {
-      searchArticle({ searchString: dynamicTab.value ?? '' });
+    if (dynamicTab.searchBy === 'tag') {
+      getArticlesByTags({ tagId: dynamicTab.tagId })    
+    } else if (dynamicTab.searchBy === 'search') { 
+    
+      searchArticle({ searchString: dynamicTab.value ?? '' });      
+    } else if (tabName !== dynamicTab.tagId) {
+            getArticleList(tabName);     
     }
-  }, [tabName]);
+  }, [tabName, dynamicTab]);
   const viewportHeight =
     typeof window === 'undefined' ? 1000 : window.innerHeight;
-const {t}=useTranslation()
+  const { t } = useTranslation()
+
   return (
     <Box p={isMobile ? 2 : 2} mt={2}>
       <Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -81,6 +86,7 @@ const {t}=useTranslation()
               setTabName={setTabName}
               dynamicTab={dynamicTab.value}
               dynamicTabType={dynamicTab.tagId}
+              setDynamicTab={valueChanges}
             />
             <Box
               width="100%"
@@ -90,23 +96,26 @@ const {t}=useTranslation()
             >
               <Link href="/composer/create">
                 <GradientButton variant="outlined" color="primary" isSelected>
-                  <span translate='no'>{ t("secure.article.label.text1")}</span>
+                  <span translate='no'>{t("secure.article.label.text1")}</span>
                 </GradientButton>
               </Link>
             </Box>
             <ArticleContent
+            a={dynamicTab}
+            b={searchArticle}
               articleList={
-                tabName !== dynamicTab.tagId ? articleList : searchedArticle
+              dynamicTab.searchBy === 'tag' ?  articleListByTags :( dynamicTab.searchBy === 'search' ? searchedArticle :articleList)  
               }
               loadingList={
-                tabName !== dynamicTab.tagId ? isFetching : searchIsFetching
+            dynamicTab.searchBy === 'tag' ?  articleListFetching :( dynamicTab.searchBy === 'search' ? searchIsFetching :isFetching) 
+                
               }
             />
           </Box>
         </Grid>
         <Grid item xs={12} sm={3} paddingRight={1} paddingLeft={1}>
-          <SearchBarArcticleRight setDynamicTab={setDynamicTab} />
-          <RecommendedTopics setDynamicTab={setDynamicTab} />
+          <SearchBarArcticleRight setDynamicTab={valueChanges} />
+          <RecommendedTopics setDynamicTab={valueChanges} />
           <Suspense fallback={<WhoToFollowLoader />}>
             <WhoToFollow />
           </Suspense>

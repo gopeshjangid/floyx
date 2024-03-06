@@ -57,7 +57,7 @@ const GoogleTranslate: React.FC = () => {
   }, []);
   useEffect(() => {
     const hasPreviousScript = document.querySelector("[src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit']");
-      if(hasPreviousScript){
+    if (hasPreviousScript) {
       hasPreviousScript.remove()
     }
     var addScript = document.createElement('script');
@@ -67,6 +67,7 @@ const GoogleTranslate: React.FC = () => {
     );
     document.body.appendChild(addScript);
     window.googleTranslateElementInit = googleTranslateElementInit;
+    console.log(hasCookie('googtrans'), '111cookies test on effect', getCookie('googtrans'),"selectValue",selected);
 
     // setSelected(cookieValue ? languagesCode[cookieValue] : 'English');
     // if (cookieValue) {
@@ -76,7 +77,7 @@ const GoogleTranslate: React.FC = () => {
 
   const langChange = (e: SelectChangeEvent<string>) => {
     const value = e.target.value;
-    console.log(hasCookie('googtrans'), 'cookies test', getCookie('googtrans'));
+    console.log(hasCookie('googtrans'), '111cookies test on handle', getCookie('googtrans'),"selectValue",selected);
 
     if (hasCookie('googtrans')) {
       if (getCookie('googtrans') != value) {
@@ -84,13 +85,18 @@ const GoogleTranslate: React.FC = () => {
         setCookie('googtrans', value);
         setSelected(languagesCode[value]);
         i18n.changeLanguage(value.substr(6));
+        console.log("111has Value",hasCookie('googtrans'),getCookie('googtrans'),"get cookie in handle change","selectValue",selected)
         //value.substr(6)
         // window.location.reload();
       }
+      //  console.log("111have value outside of if",hasCookie('googtrans'),getCookie('googtrans'),"get cookie in handle change")
     } else {
+       console.log("111doest have",hasCookie('googtrans'),getCookie('googtrans'),"get cookie in handle change","selectValue",selected)
+
       setCookie('googtrans', value);
       setSelected(languagesCode[value]);
       i18n.changeLanguage(value.substr(6));
+      console.log("")
       // window.location.reload();
     }
   };

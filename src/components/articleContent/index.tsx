@@ -1,3 +1,4 @@
+import React, { Suspense, useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import ArticleContainer from './articleContainer';
 import ArticleCardSkeleton from '../ArticleCardSkeleton';
@@ -9,14 +10,14 @@ export default function ArticleContent({
   setIsEditing,
   setArticleId,
   setValue,
-  setIsReset,
+  setIsReset
 }: any) {
-  const {t}=useTranslation()
+  const { t } = useTranslation()   
   return (
     <Box>
       {loadingList ? (
         <ArticleCardSkeleton repeats={2} />
-      ) : articleList && articleList.length !== 0 ? (
+      ) : Array.isArray(articleList) && articleList && articleList.length !== 0 ? (
         articleList?.map((data: any, index: number) => (
           <ArticleContainer
             key={`articleContainer${index}`}
