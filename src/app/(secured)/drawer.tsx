@@ -62,7 +62,7 @@ import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
 //import { postServices } from '@/lib/redux';
 //import { useDispatch } from 'react-redux';
-import GoogleTranslatorPicker from '../../components/googleTranslate/googleTranslator';
+//import GoogleTranslatorPicker from '../../components/googleTranslate/googleTranslator';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
 //import SidebarProfileBar from '@/components/sidebarProfileInfo';
@@ -405,9 +405,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <ThemeSwitch />
           </ListItem>
 
-          <ListItem sx={{ padding: '15px 0px 0px 0px' }}>
+          {/* <ListItem sx={{ padding: '15px 0px 0px 0px' }}>
             <GoogleTranslatorPicker />
-          </ListItem>
+          </ListItem> */}
         </List>
       </List>
     </Box>
