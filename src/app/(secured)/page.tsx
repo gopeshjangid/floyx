@@ -167,7 +167,6 @@ export default function Page() {
                     <FollowNewAccounts />
                   </Suspense>
                   <PostList
-                 
                     postData={postData || []}
                     loadMore={loadMore}
                     hasMore={hasMore}

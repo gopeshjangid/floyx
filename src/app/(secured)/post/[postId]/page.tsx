@@ -4,7 +4,6 @@ import DefaultPageSkelton from '@/components/DefaultPageSkelton';
 import LoginModal from '@/components/LoginModal';
 import Post from '@/components/Post/Post';
 import { useGetPostDetailQuery } from '@/lib/redux/slices/posts';
-import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
 import { getUserBlockStatusMessage, userBlockedStatus } from '@/lib/utils';
@@ -14,12 +13,13 @@ export default function Page({ params }: { params: { postId: string } }) {
   const { openLoginModel } = useSelector(
     (state: ReduxState) => state.appReducer
   );
-
+console.log("eeeee")
   const isBlocked = userBlockedStatus.indexOf(String(postDetail)) > -1;
   if (isBlocked) {
     return <Alert severity="error">{getUserBlockStatusMessage(postDetail)}</Alert>
   }
 
+  return "dsad";
   return (
     <>
       {openLoginModel && <LoginModal isForceOpened={true} />}
@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { postId: string } }) {
               username={postDetail?.author?.username}
               createdDateTime={postDetail?.post?.createdDateTime}
               content={postDetail?.post?.content}
-              shared={postDetail?.post?.link}
+              shared={postDetail?.post?.shared}
               image={postDetail?.post?.image}
               link={postDetail?.post?.link}
               postDetails={postDetail?.post}

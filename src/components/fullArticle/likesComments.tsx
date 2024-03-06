@@ -307,7 +307,7 @@ function LikesComments({
           <Skeleton width="100%" height="50px" />
         </Stack>
       )}
-      {generalizedComments.length > 0 && (
+      {showComments && generalizedComments.length > 0 && (
         <Box width="100%" textAlign="right">
           <Suspense fallback="loading...">
             <SplitButton

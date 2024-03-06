@@ -7,7 +7,6 @@ import {
   CircularProgress,
   Stack,
   IconButton,
-  IconButtonProps,
 } from '@mui/material';
 import { MentionsInput, Mention } from 'react-mentions';
 import UserAvatar from '../UserAvatar';

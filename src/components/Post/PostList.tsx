@@ -95,7 +95,7 @@ const {t}=useTranslation()
                       link={val?.post?.link}
                       postDetails={val?.post}
                       postId={val?.id}
-                      showComments={showComments}
+                      showComments={false}
                     />
                   )}
                 </React.Fragment>
