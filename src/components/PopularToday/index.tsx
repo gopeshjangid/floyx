@@ -14,6 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CustomDescription from '../customDescription';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 const PopularTodaySection = styled(Box)(() => ({
   alignItems: 'center',
@@ -34,13 +35,18 @@ const PopularTodayListSection = styled(Box)(({ theme }) => ({
 }));
 
 function RecentArticles() {
+  const { t } = useTranslation();
   const router = useRouter();
-  const { data, isLoading } = useGetArticleListQuery('recent?forHome=true',{refetchOnMountOrArgChange: true});
+  const { data, isLoading } = useGetArticleListQuery('recent?forHome=true', {
+    refetchOnMountOrArgChange: true,
+  });
 
   return (
     <PopularTodaySection>
       <Box textAlign={'center'} marginTop="-10px">
-        <Typography variant="body1">Recent Articles</Typography>
+        <Typography translate="no" variant="body1">
+          {t('Home.articleSection.title')}
+        </Typography>
       </Box>
       <PopularTodayListSection mt={2}>
         {!isLoading && data ? (
@@ -48,7 +54,11 @@ function RecentArticles() {
             <Box p={1} pb={2} key={`recent-article-${index}`}>
               <Link
                 //target="_blank"
-                style={{cursor: !article.article.publicUrl ? 'not-allowed' : 'pointer'}}
+                style={{
+                  cursor: !article.article.publicUrl
+                    ? 'not-allowed'
+                    : 'pointer',
+                }}
                 href={
                   article.article.publicUrl
                     ? '/article/' +
@@ -119,12 +129,13 @@ function RecentArticles() {
       </PopularTodayListSection>
       <Box width="100%" textAlign={'center'} mt={1} mb={1}>
         <Button
+          translate="no"
           onClick={() => router.push('/articles')}
           variant="text"
           size="small"
           sx={{ fontSize: '.65rem' }}
         >
-          show more
+          {t('Home.articleSection.showMore')}
         </Button>
       </Box>
     </PopularTodaySection>

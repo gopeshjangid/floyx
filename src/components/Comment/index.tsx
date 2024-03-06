@@ -12,6 +12,7 @@ import { addLinks, formatIndianNumber } from '@/lib/utils';
 import SplitButton from '../SplitButton';
 import AddComment from '../Post/AddComment';
 import DeleteComment from './DeleteComment';
+import { useTranslation } from 'react-i18next';
 
 function Comment({
   comment,
@@ -24,11 +25,11 @@ function Comment({
   const [updateLike, { data, isSuccess }] = useLikeItemMutation();
   const session = useSession();
   const updateCommentRef = useRef();
-
+const {t}=useTranslation()
   const [isEditing, setIsEditing] = useState(false);
   const { palette } = useTheme();
   const userName = (session as any)?.data?.user?.username;
-  const commentAction = ['Edit Comment', 'Delete Comment'];
+  const commentAction = [t('comp.comment.editComment'), t('comp.comment.deleteComment')];
   const [updateComment, setUpdateComment] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const commentLikeUnlike = async () => {
@@ -41,7 +42,7 @@ function Comment({
   };
 
   const handleOptions = (index: number) => {
-    if (commentAction[index] === 'Edit Comment') {
+    if (commentAction[index] === t('comp.comment.editComment')) {
       setIsEditing(true);
       setUpdateComment(comment?.comment?.content);
     } else {
@@ -110,13 +111,13 @@ function Comment({
                   sx={{ marginRight: '25px' }}
                   onClick={commentLikeUnlike}
                 >
-                  <Typography
+                  <Typography translate="no"
                     component={'span'}
                     color={'textPrimary'}
                     textTransform={'none'}
                     marginBottom={0}
                   >
-                    {formatIndianNumber(comment?.comment?.numberOfLikes)} Like
+                    {formatIndianNumber(comment?.comment?.numberOfLikes)}{t('comp.comment.like')}
                   </Typography>
                 </Button>
                 <Button
@@ -128,12 +129,14 @@ function Comment({
                   sx={{ marginRight: '25px' }}
                 >
                   <Typography
+                  translate="no"
                     component={'span'}
                     color={'textPrimary'}
                     textTransform={'none'}
                     marginBottom={0}
                   >
-                    Reply
+                    {t('comp.comment.reply')}
+                  
                   </Typography>
                 </Button>
               </Box>

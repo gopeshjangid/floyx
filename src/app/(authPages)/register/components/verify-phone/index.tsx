@@ -6,6 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface IVerifyPhoneProps {
   onSubmit: (e: any) => void;
@@ -20,6 +21,7 @@ const VerifyPhone = ({
   onChange,
   submitLoading,
 }: IVerifyPhoneProps) => {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -29,18 +31,24 @@ const VerifyPhone = ({
         alignItems: 'center',
       }}
     >
-      <Typography variant="h3" gutterBottom color="textPrimary" align="center">
-        Verify phone number
+      <Typography
+        translate="no"
+        variant="h3"
+        gutterBottom
+        color="textPrimary"
+        align="center"
+      >
+        {t('auth.register.label.text30')}
       </Typography>
       <Typography
         variant="h6"
+        translate="no"
         gutterBottom
         color="textPrimary"
         align="center"
         mt={3}
       >
-        A verification code was sent to your phone number. Please check your
-        phone to complete registration.
+        {t('auth.register.label.text31')}
       </Typography>
 
       <Box component="form" noValidate textAlign="center" onSubmit={onSubmit}>
@@ -49,18 +57,25 @@ const VerifyPhone = ({
             marginY: '25px',
           }}
           fullWidth
+          translate="no"
           hiddenLabel
-          placeholder="Verification code"
+          placeholder={t('auth.register.label.text32')}
           type="number"
           value={value}
           onChange={onChange}
         />
 
-        <Button disabled={submitLoading} variant="contained" color="primary" type="submit">
+        <Button
+          translate="no"
+          disabled={submitLoading}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
           {submitLoading ? (
             <CircularProgress size={20} color="inherit" />
           ) : (
-            'Verify'
+            t('auth.register.label.text33')
           )}
         </Button>
       </Box>

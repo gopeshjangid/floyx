@@ -17,6 +17,7 @@ import {
   ArticleTypographyHeading,
   ArticleUserName,
 } from './articleStyled';
+import { useTranslation } from 'react-i18next';
 
 export default function FullArticle({ details }: any) {
   function removeInvalidJsonChars(str) {
@@ -50,7 +51,7 @@ export default function FullArticle({ details }: any) {
   const handleChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value as string);
   };
-
+const {t}=useTranslation()
 
   return (
     <Box>
@@ -161,7 +162,7 @@ export default function FullArticle({ details }: any) {
         
       {/* </Box> */}
       <Box py={1}>
-        <Suspense fallback={<Typography>Loading...</Typography>}>
+        <Suspense fallback={<Typography translate="no">{t("comp.fullArticle.loading")}</Typography>}>
           <SocialButts details={details} />
         </Suspense>
       </Box>

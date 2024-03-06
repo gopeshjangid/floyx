@@ -25,6 +25,7 @@ import { useCheckUsernameMutation } from '@/lib/redux/slices/registration';
 import { showErrorMessages } from '@/lib/utils';
 import { useToast } from '../Toast/useToast';
 import { FIRST_TIME_LOGIN_USING_SOCIAL } from '@/constants';
+import { useTranslation } from 'react-i18next';
 
 const style = {
   position: 'absolute',
@@ -64,6 +65,7 @@ const ProfileSetupModal = ({
   handleClose: () => void;
   onSubmit: () => void;
 }) => {
+  const { t } = useTranslation();
   const toast = useToast();
   const { data: session, update } = useSession();
 
@@ -121,7 +123,7 @@ const ProfileSetupModal = ({
     if (checkUserNameData && checkUserNameData === 'username_in_use') {
       setFormError((prev: any) => ({
         ...prev,
-        username: 'Username already exists',
+        username: t('comp.profile.msg.msg1'),
       }));
     }
 
@@ -151,7 +153,7 @@ const ProfileSetupModal = ({
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = e => {
     const allowedCharacters = /^[a-zA-Z0-9_]+$/;
     if (!allowedCharacters.test(e.key)) {
       e.preventDefault();
@@ -160,12 +162,11 @@ const ProfileSetupModal = ({
 
   const validateForm = () => {
     const tempErrors: any = {};
-    if (!formData.name) tempErrors.name = 'Name is required!';
-    if (formData.name.length > 25)
-      tempErrors.name = 'Name must be less than 25 characters long';
-    if (!formData.username) tempErrors.username = 'Username is required!';
+    if (!formData.name) tempErrors.name = t('comp.profile.msg.msg2');
+    if (formData.name.length > 25) tempErrors.name = t('comp.profile.msg.msg3');
+    if (!formData.username) tempErrors.username = t('comp.profile.msg.msg4');
     if (formData.username.length > 25)
-      tempErrors.username = 'Username must be less than 25 characters long';
+      tempErrors.username = t('comp.profile.msg.msg5');
 
     setFormError(tempErrors);
     return Object.values(tempErrors).every(value => value === '');
@@ -192,17 +193,16 @@ const ProfileSetupModal = ({
       <Modal open={open} onClose={handleClose} hideBackdrop>
         <Box sx={style}>
           <Box display="flex" gap={2} flexDirection="column">
-            <Typography variant="h2">Profile Setup</Typography>
-
-            <Typography>
-              When creating an account in Floyx, enter your NAME and USERNAME
-              under which you want to be visible to other users. You can also
-              select Keep your original data to continue.
+            <Typography translate="no" variant="h2">
+              {t('comp.profile.title')}
             </Typography>
 
-            <Typography>
-              Remember that you can change your NAME and USERNAME in your
-              account settings at any time.
+            <Typography translate="no">
+              {t('comp.profile.text.description')}
+            </Typography>
+
+            <Typography translate="no">
+              {t('comp.profile.text.info')}
             </Typography>
           </Box>
           <Grid
@@ -224,12 +224,15 @@ const ProfileSetupModal = ({
               onSubmit={e => updateAccountDetails(e)}
             >
               <FormControl>
-                <FormLabel required>Name</FormLabel>
+                <FormLabel translate="no" required>
+                  {t('comp.profile.label.name')}
+                </FormLabel>
                 <TextField
+                  translate="no"
                   name="name"
                   fullWidth
                   hiddenLabel
-                  placeholder="Ex. Dustin Max"
+                  placeholder={t('comp.profile.placeholder.name')}
                   onChange={onChangeHandler}
                   error={!!formError.name}
                   helperText={formError.name}
@@ -252,12 +255,15 @@ const ProfileSetupModal = ({
               </FormControl>
 
               <FormControl>
-                <FormLabel required>Username</FormLabel>
+                <FormLabel translate="no" required>
+                  {t('comp.profile.label.username')}
+                </FormLabel>
                 <TextField
+                  translate="no"
                   name="username"
                   fullWidth
                   hiddenLabel
-                  placeholder="Ex. Dusti_69"
+                  placeholder={t('comp.profile.placeholder.username')}
                   onChange={e => {
                     debouncedCheckUserName(e.target.value);
                     onChangeHandler(e);
@@ -285,6 +291,7 @@ const ProfileSetupModal = ({
 
               <FormControl>
                 <Button
+                  translate="no"
                   variant="contained"
                   color="primary"
                   type="submit"
@@ -293,10 +300,10 @@ const ProfileSetupModal = ({
                   {settingUpdateLoading ? (
                     <>
                       <CircularProgress size={24} color="inherit" />
-                      Submit
+                      {t('comp.profile.label.submit')}
                     </>
                   ) : (
-                    'Submit'
+                    t('comp.profile.label.submit')
                   )}
                 </Button>
               </FormControl>

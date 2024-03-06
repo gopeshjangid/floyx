@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Typography, useTheme } from "@mui/material";
 import { GradientButton } from "../gradientButton";
+import { useTranslation } from 'react-i18next';
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -58,17 +59,20 @@ export default function CustomizedMenus({ startIcon, menuItem }: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+const {t}=useTranslation()
   return (
     <div>
       <GradientButton
+      translate="no"
         variant="outlined"
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon sx={{ stroke: palette.primary.fontLightColor}} />}
         startIcon={startIcon}
       >
-        <span>Options</span>
+        <span  translate="no">
+          {t('comp.comment.options')}
+          </span>
       </GradientButton>
       <StyledMenu
         id="demo-customized-menu"

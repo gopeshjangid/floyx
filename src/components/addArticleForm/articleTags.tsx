@@ -7,7 +7,7 @@ import { Button, CircularProgress, Stack, styled } from '@mui/material';
 import { GradientText } from '../GradientComponents';
 import { debounce } from '@/lib/utils';
 import { useToast } from "../Toast/useToast";
-
+import { useTranslation } from 'react-i18next';
 const RenderOptionWrapper = styled(Stack)(({ theme }) => ({
   '&:hover': {
     backgroundColor: theme.palette.primary.mainBackground,
@@ -33,7 +33,8 @@ const TagAutocomplete = ({
     onSelectTags: (tags: string[]) => void;
     maxSelectedTag?: number;
     resetAll: boolean;
-}) => {
+  }) => {
+  const {t}=useTranslation()
   const [inputValue, setInputValue] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[] | never[]>([]);
   const [searchTag, { data: tags, isLoading, isFetching }] =
@@ -54,7 +55,11 @@ const TagAutocomplete = ({
       }
     } else {
       setInputValue('');
-      toast.error(`Max ${maxSelectedTag} tags are allowed`);
+      toast.error(
+        t(
+          'comp.addArticleForm.artTagsError',{maxSelectedTag}
+        )
+      );
     }
   };
 
@@ -66,7 +71,7 @@ const TagAutocomplete = ({
     if (reason === 'selectOption') {
       setSelectedTags(prevTags => {
         if (prevTags.find(val => newValue.toLowerCase() === val.toLowerCase())) {
-          toast.error(`You have already added this tag.`);
+          toast.error(t('comp.addArticleForm.artTagsError1'));
           return [...prevTags];
         }
         return [...prevTags, newValue];
@@ -177,7 +182,8 @@ const TagAutocomplete = ({
       renderOption={renderOption}
       renderInput={params => (
         <TextField
-          placeholder="Search hashtag or press enter to create"
+        translate="no"
+          placeholder={t('comp.addArticleForm.artTagsPlace1')}
           {...params}
           InputProps={{
             ...params.InputProps,

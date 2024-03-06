@@ -4,14 +4,17 @@ import UserAvatar from '../UserAvatar';
 import UsernameLink, { ProfileName } from '../usernameLink';
 import FollowUser from '../FollowUser';
 import { useGetFollowMoreAccountQuery } from '@/lib/redux/slices/profile';
+import { useTranslation } from 'react-i18next';
 
 export default function WhoToFollow() {
   const { palette } = useTheme();
   const { data: whoToFollow } = useGetFollowMoreAccountQuery();
-
+const{t}=useTranslation()
   return (
     <Box mt={4}>
-      <Typography sx={{ marginLeft: '12px' }}>Who to follow</Typography>
+      <Typography translate="no" sx={{ marginLeft: '12px' }}>
+        {t('comp.recommTopic.whotofollow')}
+      </Typography>
       {whoToFollow !== undefined &&
         whoToFollow?.result &&
         whoToFollow?.result?.length > 0 &&

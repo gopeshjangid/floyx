@@ -33,6 +33,7 @@ import ShareArticleModal from '../fullArticle/shareArticleModal';
 import CustomDescription from '../customDescription';
 import useDevice from '@/lib/hooks/useDevice';
 import { DeleteOutline, EditRounded } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',
@@ -142,6 +143,7 @@ export default function ArticleContainer({
   setValue,
   setIsReset,
 }: any) {
+  const {t}=useTranslation()
   const { palette } = useTheme();
   const ref = useRef<HTMLElement>(null);
   const router = useRouter();
@@ -287,7 +289,7 @@ export default function ArticleContainer({
                       backgroundColor: palette.background.paper,
                     }}
                   >
-                    <Typography variant="body2">No Image</Typography>
+                    <Typography translate="no" variant="body2">{t("comp.articleContent.noPhoto")}</Typography>
                   </Box>
                   <Box className="dottedButton">
                     <DottedButton
@@ -312,8 +314,8 @@ export default function ArticleContainer({
               <Box className="top">
                 <Stack justifyContent={'flex-start'} direction={'column'}>
                   {articleDetails.modifiedDate && (
-                    <Typography>
-                      {`Last saved on ${moment(
+                    <Typography translate="no">
+                      {` ${t("comp.articleContent.lastSaved")} ${moment(
                         articleDetails.modifiedDate
                       ).format('LL')}`}
                     </Typography>
@@ -327,10 +329,10 @@ export default function ArticleContainer({
                       ? articleDetails?.title.slice(0, 70)
                       : ''}
                   </CustomDescription>
-                  <Typography color='green' variant="caption" sx={{ textWrap: 'nowrap' }}>
+                  <Typography translate ="no" color='green' variant="caption" sx={{ textWrap: 'nowrap' }}>
                     {tipHistory ? (
-                      tippedOrNot() ? (
-                        '  (!You Tipped)'
+                      tippedOrNot() ? (t("comp.articleContent.tipped")
+                        
                       ) : (
                         ''
                       )
@@ -401,13 +403,14 @@ export default function ArticleContainer({
         PaperProps={{ sx: { background: palette.background.default } }}
         onClick={event => event.stopPropagation()}
       >
-        <DialogTitle id="responsive-dialog-title">Please Confirm</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete this Article ?
+        <DialogTitle translate="no" id="responsive-dialog-title">{t("comp.articleContent.confirm")}</DialogTitle>
+        <DialogContent translate="no">
+          {t("comp.articleContent.confirmDelete")}
+         
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteArticle}>Yes</Button>
-          <Button onClick={handleClose}>No</Button>
+          <Button translate="no" onClick={handleDeleteArticle}>{t("comp.articleContent.yes")}</Button>
+          <Button translate="no" onClick={handleClose}>{t("comp.articleContent.no")}</Button>
         </DialogActions>
       </Dialog>
     </>

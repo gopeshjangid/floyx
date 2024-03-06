@@ -1,0 +1,364 @@
+{
+  "Drawer": {
+    "home": "Lar",
+    "notifications": "Notificações",
+    "messages": "Mensagens",
+    "search": "Procurar",
+    "wallet": "Carteira",
+    "profile": "Perfil",
+    "more": {
+      "title": "Mais",
+      "settings": "CONFIGURAÇÕES",
+      "logout": "SAIR"
+    },
+    "writePost": "ESCREVER POSTAGEM"
+  },
+  "Home": {
+    "articleBtn": "ARTIGO/BLOG",
+    "createPost": {
+      "tab1": {
+        "title": "Publicar",
+        "happenPlaceholder": "O que está acontecendo ?",
+        "addPlaceholder": "Quer adicionar algo à sua postagem?",
+        "photoLabel": "foto",
+        "successMsg": "A postagem foi publicada com sucesso",
+        "missingDiscription": "Por favor, adicione a descrição da foto para publicá-la.",
+        "publish": "Publicar postagem",
+        "wait": "Por favor, aguarde"
+      },
+      "tab2": {
+        "title": "ESCREVER UM ARTIGO"
+      }
+    },
+    "followSection": {
+      "title": "Seguir contas ",
+      "followers": "Seguidores",
+      "following": "Seguindo ",
+      "follow": "Seguir",
+      "followed": "Segue"
+    },
+    "postSection": {
+      "ago": "atrás",
+      "like": "Como",
+      "likes": "Curtidas",
+      "comments": "Comentários",
+      "share": "Compartilhar",
+      "placeholder": "Adicione um comentário",
+      "options": {
+        "directLink": "Link direto",
+        "deletePost": "Apague a postagem"
+      },
+      "shared": " compartilhou um ",
+      "post": "publicar",
+      "seenAll": "Yay! ",
+      "copied": "Copiado",
+      "noPost": "Parece que não há postagens disponíveis no seu quadro. Sinta-se à vontade para compartilhar uma postagem!",
+      "loading": "Carregando...",
+      "postLike": "Postar como",
+      "articleLike": "ArtigoLike",
+      "PostCommentLiked": "PostCommentGostei",
+      "ArticleCommentLiked": "ArtigoCommentGostei",
+      "toastMsg": {
+        "msg1": "A postagem foi excluída com sucesso.",
+        "msg2": "Tem certeza de que deseja excluir esta postagem?"
+      }
+    },
+    "articleSection": {
+      "title": "Artigos recentes",
+      "showMore": "MOSTRE MAIS"
+    }
+  },
+  "comp": {
+    "addArticleForm": {
+      "error1": "Seu artigo precisa de um título",
+      "error2": "Seu artigo é muito curto para ser publicado {{contentLength}}/1000 caracteres a mais",
+      "successMsg": "Seu rascunho foi salvo.",
+      "title": "Título",
+      "addTags": "Adicionar hashtags",
+      "coverPic": "Foto da capa (opcional)",
+      "subtitle": "Legenda",
+      "urlPlaceholder": "Cole o link do URL aqui",
+      "invalidUrl": "O URL é inválido",
+      "nameLinkPlace": "Nome do link",
+      "textPlace": "Digite qualquer texto",
+      "artTagsError": "Máx. {{maxSelectedTag}} tags são permitidas",
+      "artTagsError1": "Você já adicionou esta tag.",
+      "artTagsPlace1": "Pesquise hashtag ou pressione Enter para criar"
+    },
+    "addArticleHead": {
+      "newArticle": "Novo artigo",
+      "myArticles": "Meus artigos",
+      "draft": "Meus rascunhos",
+      "newWrite": "Escreva novo",
+      "saveDraft": "Salvar como rascunho",
+      "saveEdit": "Salvar edição",
+      "publish": "Publicar",
+      "popular": "Popular",
+      "recent": "Recente",
+      "mostLiked": "O mais adorado",
+      "following": "Seguindo",
+      "bookmark": "marca páginas"
+    },
+    "articleContent": {
+      "noArticle": "Ainda não há artigos",
+      "blockMsg": "Se você bloquear este usuário, você não poderá:",
+      "viewProfile": "Veja seu perfil, postagens, artigos e eventos",
+      "willBeUnfollow": "Vocês dois deixarão de seguir um ao outro",
+      "haveToFollow": "Para ver o conteúdo do usuário você deve segui-lo novamente após o desbloqueio.",
+      "wishToBlock": "Você realmente deseja bloquear este usuário?",
+      "problemUnderstanding": " Ajude-nos a entender o problema Por que você deseja denunciar este usuário?",
+      "violates": "Se o usuário violar as regras do Floyx de outras maneiras, escreva-nos abaixo:",
+      "violatesPlace": "Digite aqui...",
+      "reportCheck1": "Seus materiais são abusivos ou odiosos",
+      "reportCheck2": "É suspeito ou spam",
+      "reportCheck3": "Parece que a conta deles foi hackeada",
+      "reportCheck4": "Eles estão fingindo ser eu ou outra pessoa",
+      "reportCheck5": "As informações e/ou imagens do perfil incluem conteúdo abusivo ou de ódio",
+      "blockedMsg": "BLOQUEADO",
+      "blockMsgErr": "Ocorreu um erro ao bloquear o usuário",
+      "articleMsgErr": "Este artigo já foi compartilhado",
+      "articleMsg": "O artigo foi publicado com sucesso ",
+      "reportIssue": "Reportar problema",
+      "blockUser": "Bloquear usuário",
+      "share": "Compartilhar artigo",
+      "report": "Relatório",
+      "close": "Fechar",
+      "yes": "Sim",
+      "no": "Não",
+      "publish": "Publicar",
+      "done": "Feito",
+      "noPhoto": "Sem imagem",
+      "lastSaved": "Salvo pela última vez em",
+      "tipped": "(!Você deu uma gorjeta)",
+      "confirm": "Por favor confirme",
+      "confirmDelete": " Tem certeza de que deseja excluir este artigo?"
+    },
+    "blockedUser": {
+      "unblock": "Desbloquear"
+    },
+    "friendActivity": {
+      "newUser": "Usuários recém-registrados"
+    },
+    "fullArticle": {
+      "moreFromAuthor": "Mais do autor",
+      "noTitle": "(Sem título)",
+      "about": "sobre o autor",
+      "msg": "Mensagem",
+      "follower": "Seguidores:",
+      "articles": "Artigos:",
+      "back": "Voltar",
+      "earnPoints": "{{pointsEarned}} Pontos ",
+      "pastPoints": "Pagamentos anteriores -{{pointsEarned}} pontos",
+      "loading": "Carregando...",
+      "mostRecent": "Mais recente",
+      "allCommnets": "Todos os comentários",
+      "toastMsg": {
+        "msg1": "Este artigo já foi compartilhado",
+        "msg2": "Esta postagem já foi compartilhada",
+        "msg3": "O artigo foi publicado com sucesso",
+        "msg4": "A postagem foi publicada com sucesso ",
+        "msg5": "Já indiquei este artigo",
+        "msg6": "Você deve esperar 10 minutos para dar gorjeta novamente",
+        "msg7": "Você não pode dar gorjeta aos seus próprios artigos",
+        "msg8": "Seu limite de gorjeta foi excedido hoje",
+        "msg9": "Algo deu errado! ",
+        "msg10": "Você deu gorjeta!"
+      },
+      "publish": "Publicar",
+      "split": "Divida a quantia de 0,01 pontos para você e para o autor.",
+      "share": "Compartilhar:",
+      "startPoints": "Comece a acumular pontos lendo artigos!",
+      "tip": "Dica"
+    },
+    "login": {
+      "toastMsg": {
+        "msg1": "Login com sucesso!",
+        "msg2": "Algo deu errado!",
+        "msg3": "Este campo é obrigatório!",
+        "msg4": "Senha requerida!",
+        "msg5": "A senha deve ter mais de 6 caracteres!"
+      },
+      "placeholder": {
+        "email": "Nome de usuário ou email",
+        "password": "Senha"
+      },
+      "text": {
+        "login": "Conecte-se",
+        "forgetLink": "Esqueceu sua senha?",
+        "register": "Registrar agora",
+        "phone": "Número de telefone"
+      }
+    },
+    "comment": {
+      "options": "Opções",
+      "reply": "Responder",
+      "deleteCancel": "Cancelar",
+      "deleteComment": "Excluir comentário",
+      "deleteMsg": "O comentário foi excluído com sucesso.",
+      "deleteWarning": " Tem certeza de que deseja excluir este comentário?",
+      "editComment": "Editar comentário",
+      "like": "Como",
+      "update": "Atualizar"
+    },
+    "privacy": {
+      "updateDate": "Última atualização: 16 de abril de 2023",
+      "offerBy": "Esta Política de Privacidade se aplica a todo o serviço de propriedade e oferecido pela Floyx LLC.",
+      "personalData": "Floyx LLC é o órgão responsável pelo tratamento dos dados pessoais.",
+      "officer": "  Nosso responsável pela proteção de dados é o Sr. Daniel Syrek."
+    },
+    "profile": {
+      "title": "Configuração de perfil",
+      "msg": {
+        "msg1": "O nome de usuário já existe",
+        "msg2": "O nome é obrigatório!",
+        "msg3": "O nome deve ter menos de 25 caracteres",
+        "msg4": "Nome de usuário é requerido!",
+        "msg5": "O nome de usuário deve ter menos de 25 caracteres",
+        "msg6": ""
+      },
+      "text": {
+        "description": " Ao criar uma conta no Floyx, insira seu NOME e NOME DE USUÁRIO sob os quais deseja ficar visível para outros usuários. ",
+        "info": " Lembre-se de que você pode alterar seu NOME e NOME DE USUÁRIO nas configurações da sua conta a qualquer momento."
+      },
+      "placeholder": {
+        "name": "Ex. ",
+        "username": "Ex. "
+      },
+      "label": {
+        "name": "Nome",
+        "username": "Nome de usuário",
+        "submit": "Enviar"
+      }
+    },
+    "recommTopic": {
+      "hot": "Tópicos quentes",
+      "followed": "Seguido",
+      "followYou": "Segue você",
+      "search": "Pesquisar artigos",
+      "sPlace": "Pesquisar artigos...",
+      "whotofollow": "Quem seguir",
+      "wait": "Por favor, aguarde ..."
+    }
+  },
+  "auth": {
+    "login": {
+      "msg": {
+        "msg1": "Login com sucesso!",
+        "msg2": "Algo deu errado!",
+        "msg3": "Este campo é obrigatório!",
+        "msg4": "Senha requerida!",
+        "msg5": "A senha deve ter mais de 6 caracteres!",
+        "msg6": "Código inválido",
+        "msg7": "algo deu errado, tente novamente"
+      },
+      "text": {
+        "verify": " Verificar",
+        "text1": " Cadastre-se gratuitamente hoje e mantenha seus dados seguros no espaço digital ",
+        "text2": " Crie a sua conta aqui",
+        "text3": " Faça login na sua conta",
+        "text4": " Ao fazer login, você concorda em",
+        "text5": " Termos de serviço ",
+        "text6": " e",
+        "text7": " Política de Privacidade, ",
+        "text8": "  Incluindo",
+        "text9": " Uso de cookies.",
+        "text10": "Voltar ao login social",
+        "text11": "Código de recuperação",
+        "text12": " Digite seu código de recuperação para verificar sua identidade. ",
+        "steps": "Autenticação em duas etapas",
+        "twoFac": "Abra o aplicativo de autenticação de dois fatores no seu dispositivo para visualizar seu código de autenticação e verificar sua identidade."
+      },
+      "label": {
+        "username": "Nome de usuário ou email",
+        "password": "Senha",
+        "forgetLink": " Esqueceu sua senha?",
+        "submit": "Enviar",
+        "rememberMe": "Lembre de mim",
+        "authen": "Código de Autenticação",
+        "dontHave": "Não tem seu aplicativo?",
+        "rCode": " Digite o código de recuperação"
+      },
+      "placeholder": {}
+    },
+    "register": {
+      "msg": {
+        "msg1": "Número de telefone já utilizado",
+        "msg2": "O nome de usuário já existe",
+        "msg3": "Usuário não existe",
+        "msg4": "e-mail já existe",
+        "msg5": "O nome é obrigatório!",
+        "msg6": "Nome de usuário é requerido!",
+        "msg7": "O nome deve ter menos de 25 caracteres",
+        "msg8": "O nome de usuário deve ter menos de 25 caracteres",
+        "msg9": "O e-mail é obrigatório!",
+        "msg10": "Email inválido",
+        "msg11": "Emails não coincidem",
+        "msg12": "A senha deve ter pelo menos 6 caracteres",
+        "msg13": "Por favor, insira quem recomendou você ao Floyx",
+        "msg14": "O nome deve ter menos de 25 caracteres",
+        "msg15": "Número de telefone já utilizado",
+        "msg16": "Número de telefone já utilizado",
+        "msg17": "Número de telefone já utilizado",
+        "msg18": "Número de telefone já utilizado"
+      },
+      "label": {
+        "text1": " crie sua conta",
+        "text2": " Cadastre-se gratuitamente hoje e mantenha seus dados seguros no espaço digital.",
+        "text3": " Referido por  ",
+        "text4": " Conta pessoal",
+        "text5": "Nome",
+        "text6": "Nome de usuário",
+        "text7": "Alguém me recomendou Floyx (opcional)",
+        "text8": "Nome de usuário do recomendador",
+        "text9": "Digite aqui o nome de usuário do recomendador...",
+        "text10": "Endereço de email",
+        "text11": "Confirmação de endereço de e-mail",
+        "text12": "Digite seu endereço de e-mail novamente",
+        "text13": "Senha (pelo menos 6 caracteres)",
+        "text14": "Ao clicar em 'Inscrever-se' você concorda com os termos do Floyx",
+        "text15": " Termos de serviço",
+        "text16": "  política de Privacidade ",
+        "text17": "e",
+        "text18": " Política de Cookies ",
+        "text19": "  Inscrever-se",
+        "text20": " já tem uma conta?",
+        "text21": " Entrar",
+        "text22": " Administrador o órgão responsável pela administração dos dados nos termos do artigo 4.º, n.º 7, do RGPD, nomeadamente Floyx LLC.  ",
+        "text23": "mais sobre o processamento dos seus dados.",
+        "text24": "2024 Desenvolvido por Floyx LLC.",
+        "text25": "Verifique o endereço de e-mail",
+        "text26": "Um link de verificação foi enviado para seu endereço de e-mail. ",
+        "text27": "Não recebeu o e-mail?",
+        "text28": "Verifique sua pasta de spam/lixo eletrônico ou",
+        "text29": "  Reenviar email de verificação.",
+        "text30": "Verifique o número de telefone",
+        "text31": "Um código de verificação foi enviado para o seu número de telefone. ",
+        "text32": "Código de verificação",
+        "text33": "Verificar"
+      }
+    },
+    "sLogin": {
+      "text": {
+        "text1": "Cadastre-se gratuitamente hoje e mantenha seus dados seguros no espaço digital  ",
+        "text2": "Crie a sua conta aqui",
+        "text3": " Faça login na sua conta",
+        "text4": " Use nome de usuário ou e-mail",
+        "text5": " Ao se inscrever, você concorda em",
+        "text6": "  Termos de serviço ",
+        "text7": "Política de Privacidade,",
+        "text8": "Uso de cookies.",
+        "text9": "Painel de tokens"
+      }
+    }
+  },
+  "secure": {
+    "article": {
+      "label": {
+        "text1": "Novos artigos",
+        "text2": "Editor de artigos",
+        "text3": "Ganho",
+        "text4": "Tarefa diária"
+      }
+    }
+  }
+}

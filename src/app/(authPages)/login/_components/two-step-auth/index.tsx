@@ -17,9 +17,11 @@ import {
   useLoginMutation,
 } from '@/lib/redux/slices/registration';
 import { allRoutes } from '@/constants/allRoutes';
-
+import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 const TwoStepAuth = ({ remember, username, password }: any) => {
   const toast = useToast();
+  const { t }: { t: TFunction } = useTranslation();
   const router = useRouter();
   const [enableRecoveryCodes, setEnableRecoveryCodes] =
     React.useState<boolean>(false);
@@ -35,32 +37,32 @@ const TwoStepAuth = ({ remember, username, password }: any) => {
   useEffect(() => {
     if (loginData?.value?.code === 'success') {
       router.replace(allRoutes.home);
-      toast.success('Login successfully!');
+      toast.success(t('auth.login.msg.msg1'));
     }
   }, [loginData]);
 
   useEffect(() => {
     if (loginData?.value?.code && loginData?.value?.code !== 'success') {
-      toast.error('Invalid code');
+      toast.error(t('auth.login.msg.msg6'));
     }
   }, [loginData, loginError]);
 
   useEffect(() => {
     if (error || loginError) {
-      toast.error('something went wrong, try again');
+      toast.error(t('auth.login.msg.msg7'));
     }
   }, [error]);
 
   useEffect(() => {
     if (data?.value?.code === 'success' && data?.value?.data === true) {
       router.replace(allRoutes.home);
-      toast.success('Login successfully!');
+      toast.success(t('auth.login.msg.msg1'));
     }
   }, [data]);
 
   useEffect(() => {
     if (data?.value?.code === 'success' && data?.value?.data === false) {
-      toast.error('Invalid code');
+      toast.error(t('auth.login.msg.msg6'));
     }
   }, [data]);
 
@@ -99,11 +101,11 @@ const TwoStepAuth = ({ remember, username, password }: any) => {
             padding: '0 20px',
           }}
         >
-          <Typography variant="h4">Recovery code</Typography>
-          <Typography variant="h6">
-            Enter your recovery code to verify your identity. The recovery code
-            was provided to you when you enabled two-factor authentication for
-            this profile.
+          <Typography translate="no" variant="h4">
+            {t('auth.login.text.text11')}
+          </Typography>
+          <Typography translate="no" variant="h6">
+            {t('auth.login.text.text12')}
           </Typography>
 
           <Box
@@ -113,7 +115,10 @@ const TwoStepAuth = ({ remember, username, password }: any) => {
             onSubmit={onsubmitRecoveryCode}
           >
             <FormControl>
-              <FormLabel>Recovery code</FormLabel>
+              <FormLabel translate="no">
+                {' '}
+                {t('auth.login.text.text11')}
+              </FormLabel>
               <TextField
                 name="code"
                 fullWidth
@@ -129,6 +134,7 @@ const TwoStepAuth = ({ remember, username, password }: any) => {
             </FormControl>
 
             <Button
+              translate="no"
               variant="contained"
               sx={{
                 textAlign: 'center',
@@ -138,7 +144,8 @@ const TwoStepAuth = ({ remember, username, password }: any) => {
               type="submit"
             >
               {isLoadingLogin && <CircularProgress size={24} color="inherit" />}
-              Verify
+
+              {t('auth.login.text.verify')}
             </Button>
           </Box>
         </Box>
@@ -156,15 +163,19 @@ const TwoStepAuth = ({ remember, username, password }: any) => {
             padding: '0 20px',
           }}
         >
-          <Typography variant="h4">Two Step Auth</Typography>
-          <Typography variant="h6">
-            Open two-factor authentication app on your device to view your
-            authentication code and verify your identity.
+          <Typography translate="no" variant="h4">
+            {' '}
+            {t('auth.login.text.steps')}
+          </Typography>
+          <Typography translate="no" variant="h6">
+            {t('auth.login.text.twoFac')}
           </Typography>
 
           <Box component="form" mt={3} noValidate onSubmit={onsubmit}>
             <FormControl>
-              <FormLabel>Authentication code</FormLabel>
+              <FormLabel translate="no">
+                {t('auth.login.label.authen')}
+              </FormLabel>
               <TextField
                 name="code"
                 fullWidth
@@ -180,6 +191,7 @@ const TwoStepAuth = ({ remember, username, password }: any) => {
             </FormControl>
 
             <Button
+              translate="no"
               variant="contained"
               sx={{
                 textAlign: 'center',
@@ -189,14 +201,14 @@ const TwoStepAuth = ({ remember, username, password }: any) => {
               type="submit"
             >
               {isLoading && <CircularProgress size={24} color="inherit" />}
-              Verify
+              {t('auth.login.text.verify')}
             </Button>
           </Box>
 
-          <Typography variant="h6">
-            Don&apos;t have your app ?
-            <Button onClick={() => setEnableRecoveryCodes(true)}>
-              Enter recovery code
+          <Typography translate="no" variant="h6">
+            {t('auth.login.label.dontHave')}
+            <Button translate="no" onClick={() => setEnableRecoveryCodes(true)}>
+              {t('auth.login.label.rCode')}
             </Button>
           </Typography>
         </Box>

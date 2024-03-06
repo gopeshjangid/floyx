@@ -17,6 +17,7 @@ import {
 } from '@/lib/redux';
 import { useToast } from '../Toast/useToast';
 import { usePathname } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 const style = {
   position: 'absolute',
@@ -66,7 +67,7 @@ export default function ShareArticleModal({
     useShareArticleMutation();
   const [publishPost, { isLoading: postLoading }] = useSharePostMutation();
   const toast = useToast();
-
+  const { t } = useTranslation();
   const handlePublish = async () => {
     const result: any = await checkIsShared(itemId);
     const status: boolean = result?.data;
@@ -75,20 +76,20 @@ export default function ShareArticleModal({
     };
     if (status) {
       if (isArticle) {
-        toast.error('This article has already been shared');
+        toast.error(t('comp.fullArticle.toastMsg.msg1'));
       } else {
-        toast.error('This post has already been shared');
+        toast.error(t('comp.fullArticle.toastMsg.msg2'));
       }
     } else {
       if (isArticle) {
         await publishArticle({ articleId: itemId, status, payload });
-        toast.success('Article is Published Succesfully ');
+        toast.success(t('comp.fullArticle.toastMsg.msg3'));
         if (revalidate) {
           revalidate(pathname);
         }
       } else {
         await publishPost({ postId: itemId, payload });
-        toast.success('Post is Published Succesfully ');
+        toast.success(t('comp.fullArticle.toastMsg.msg4'));
       }
     }
     setCommentText('');
@@ -132,7 +133,7 @@ export default function ShareArticleModal({
                 textTransform: 'capitalize',
               }}
             >
-              <Typography variant="h1" fontSize="20px" className='text-clamp-2'>
+              <Typography variant="h1" fontSize="20px" className="text-clamp-2">
                 {likesCommentsDetails?.title}
               </Typography>
             </Box>
@@ -144,11 +145,15 @@ export default function ShareArticleModal({
                 justifyContent: 'flex-end',
               }}
             >
-              <Button variant="contained" onClick={handlePublish}>
+              <Button
+                translate="no"
+                variant="contained"
+                onClick={handlePublish}
+              >
                 {(isLoading || publishLoading || postLoading) && (
                   <CircularProgress size={24} color="inherit" />
                 )}
-                Publish
+                {t('comp.fullArticle.publish')}
               </Button>
             </Box>
           </>
@@ -182,8 +187,12 @@ export default function ShareArticleModal({
                 justifyContent: 'flex-end',
               }}
             >
-              <Button variant="contained" onClick={handlePublish}>
-                Publish
+              <Button
+                translate="no"
+                variant="contained"
+                onClick={handlePublish}
+              >
+                {t('comp.fullArticle.publish')}
               </Button>
             </Box>
           </>

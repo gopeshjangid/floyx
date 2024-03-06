@@ -27,6 +27,7 @@ import { SVGArrowLeft, SVGLock, SVGUser } from '@/assets/images';
 import LoginFooter from '../social-login/components/login-footer';
 import TwoStepAuth from './_components/two-step-auth';
 import { TWO_STEP_AUTH } from '@/constants';
+import { useTranslation } from 'react-i18next';
 
 interface ILogin {
   email: string;
@@ -41,6 +42,7 @@ interface IFormError {
 }
 
 const Login: FC = () => {
+  const { t } = useTranslation();
   const toast = useToast();
   const { palette } = useTheme();
   const router = useRouter();
@@ -71,11 +73,11 @@ const Login: FC = () => {
           setShow2fa(true);
         } else {
           router.push(allRoutes.home);
-          toast.success('Login successfully!');
+          toast.success(t('auth.login.msg.msg1'));
         }
       } else {
         console.log('login error response', JSON.stringify(response));
-        toast.error(response?.error || 'Something went wrong!');
+        toast.error(response?.error || t('auth.login.msg.msg2'));
         setLoading(false);
       }
     }
@@ -108,13 +110,13 @@ const Login: FC = () => {
     };
 
     if (formData.email === '') {
-      err.email = 'This field required!';
+      err.email = t('auth.login.msg.msg3');
     }
     if (formData.password === '') {
-      err.password = 'Password is required!';
+      err.password = t('auth.login.msg.msg4');
     } else {
       if (formData.password.length < 6) {
-        err.password = 'Password should greater than 6 characters!';
+        err.password = t('auth.login.msg.msg5');
       }
     }
 
@@ -140,12 +142,13 @@ const Login: FC = () => {
             padding={{ md: '47px 15px 40px', xs: '38px 25px 38px' }}
           >
             <Typography
+              translate="no"
               variant="h5"
               fontSize="16px"
               color={palette.text.primary}
               marginBottom="26px"
             >
-              Join for free today and keep your data safe in the digital Space{' '}
+              {t('auth.login.text.text1')}
             </Typography>
             <Box
               display="flex"
@@ -156,25 +159,29 @@ const Login: FC = () => {
             >
               <Box mb="3px">
                 <Button
+                  translate="no"
                   variant="outlined"
                   className="outline-btn"
                   onClick={() => router.push(allRoutes.register)}
                 >
-                  Create an account
+                  {t('auth.login.text.text2')}
                 </Button>
               </Box>
               <Typography
+                translate="no"
                 variant="h3"
                 fontSize="24px"
                 fontWeight="600"
                 color={palette.text.primary}
                 textAlign="left"
               >
-                Login to your account
+                {t('auth.login.text.text3')}
               </Typography>
               <Box component="form" m={0} noValidate onSubmit={login}>
                 <FormControl>
-                  <FormLabel>Username or email </FormLabel>
+                  <FormLabel translate="no">
+                    {t('auth.login.label.username')}{' '}
+                  </FormLabel>
                   <TextField
                     name="email"
                     fullWidth
@@ -202,14 +209,20 @@ const Login: FC = () => {
                     sx={{ '& label': { marginBottom: '0 !important' } }}
                     mb={1.5}
                   >
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel translate="no">
+                      {t('auth.login.label.password')}
+                    </FormLabel>
                     <Typography
                       fontSize="16px"
                       fontWeight="400"
                       sx={{ '& a': { color: '#5798FF' } }}
                     >
-                      <Link prefetch={false} href={"/forgot-password"}>
-                        Forgotten your password?
+                      <Link
+                        translate="no"
+                        prefetch={false}
+                        href={allRoutes.login}
+                      >
+                        {t('auth.login.label.forgetLink')}
                       </Link>
                     </Typography>
                   </Box>
@@ -235,6 +248,7 @@ const Login: FC = () => {
                 </FormControl>
                 <FormControl>
                   <Button
+                    translate="no"
                     variant="contained"
                     color="primary"
                     type="submit"
@@ -244,28 +258,31 @@ const Login: FC = () => {
                     {loading ? (
                       <>
                         <CircularProgress size={24} color="inherit" />
-                        Submit
+                        {t('auth.login.label.submit')}
                       </>
                     ) : (
-                      'Submit'
+                      t('auth.login.label.submit')
                     )}
                   </Button>
                 </FormControl>
                 <FormControl sx={{ marginBottom: '0 !important' }}>
                   <FormControlLabel
+                    translate="no"
                     name="remember"
                     control={
-                      <Checkbox sx={{ paddingTop: '2px !important'}}
+                      <Checkbox
+                        sx={{ paddingTop: '2px !important' }}
                         defaultChecked={false}
                         onChange={onChangeHandler}
                       />
                     }
-                    label="Remember me"
+                    label={t('auth.login.label.rememberMe')}
                   />
                 </FormControl>
               </Box>
               <Box mt="3px">
                 <Typography
+                  translate="no"
                   variant="h6"
                   fontSize="16px"
                   fontWeight="400"
@@ -273,30 +290,30 @@ const Login: FC = () => {
                   color={palette.primary[300]}
                   sx={{ '& a': { color: '#5798FF' } }}
                 >
-                  By signing in, you agree to
+                  {t('auth.login.text.text4')}
                   <Link prefetch={false} href={allRoutes.termsAndConditions}>
-                    Terms of Service{' '}
+                    {t('auth.login.text.text5')}
                   </Link>{' '}
-                  and
+                  {t('auth.login.text.text6')}
                   <Link prefetch={false} href={allRoutes.privacyPolicy}>
-                    {' '}
-                    Privacy Policy,{' '}
+                    {t('auth.login.text.text7')}
                   </Link>
-                  including
+                  {t('auth.login.text.text8')}
                   <Link prefetch={false} href={allRoutes.cookiesPolicy}>
-                    {' '}
-                    Cookie Use.
+                    {t('auth.login.text.text9')}
                   </Link>
                 </Typography>
               </Box>
-              <Box mt="20px" textAlign="left">
+              <Box translate="no" mt="20px" textAlign="left">
                 <Link
                   prefetch={false}
                   href={allRoutes.socialLogin}
                   className="social-login"
                 >
                   <SVGArrowLeft />
-                  <span className="gradient-text">Back to social login</span>
+                  <span className="gradient-text">
+                    {t('auth.login.text.text10')}
+                  </span>
                 </Link>
               </Box>
             </Box>

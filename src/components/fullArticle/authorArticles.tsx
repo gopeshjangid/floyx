@@ -7,9 +7,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React,{useEffect} from 'react';
 import CustomDescription from '../customDescription';
+import { useTranslation } from 'react-i18next';
 import { useSession } from 'next-auth/react';
 
 export default function AuthorArticles({ username }: { username: string }) {
+  const {t}=useTranslation()
   const { palette } = useTheme();
   const router = useRouter();
   const session = useSession();
@@ -26,7 +28,9 @@ export default function AuthorArticles({ username }: { username: string }) {
   }, [session, isSameUser]);
   return (
     <Box>
-      <Typography variant="h5">More From Author</Typography>
+      <Typography translate="no" variant="h5">
+        {t('comp.fullArticle.moreFromAuthor')}
+      </Typography>
       {isLoading && (
         <Box p={1}>
           <Skeleton width="100%" height="50px" variant="rectangular" />
@@ -72,7 +76,9 @@ export default function AuthorArticles({ username }: { username: string }) {
                     />
                     <Box padding="20px 5px">
                       <CustomDescription className="text-clamp-2">
-                        {article?.title ? article?.title : '(No title)'}
+                        {article?.title
+                          ? article?.title
+                          : t('comp.fullArticle.noTitle')}
                       </CustomDescription>
                     </Box>
                   </Stack>

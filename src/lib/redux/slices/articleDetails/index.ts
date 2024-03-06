@@ -221,6 +221,10 @@ export const artcileDetails = createApi({
       ],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
+     getArticleByTags: builder.query<any, any>({
+      query: ({ tagId }) => `${ApiEndpoint.GetArticleByTag}?tagId=${tagId}`,
+      transformResponse: (response: any) => response?.value?.data,
+    }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
@@ -327,6 +331,7 @@ export const artcileDetails = createApi({
     'CommentList',
     'tipHistory',
     'walletHistory',
+    "getArticleByTags"
   ],
 });
 
@@ -347,5 +352,6 @@ export const {
   useLazyGetDraftDetailQuery,
   useGetArticlesByAuthorQuery,
   useLazyGetSearchArticleQuery,
+   useLazyGetArticleByTagsQuery,
   useUploadArticleImageMutation,
 } = artcileDetails;

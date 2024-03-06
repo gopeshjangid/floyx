@@ -11,6 +11,7 @@ import {
 } from '@/lib/redux/slices/articleDetails';
 import ArticleContent from '@/components/articleContent';
 import {useSearchParams } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export default function Page() {
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -56,7 +57,7 @@ export default function Page() {
     if(isEditning) setIsEditing(isEditning ==='true');
     }
   },[query]);
-
+const {t}=useTranslation()
   return (
     <Box p={isMobile ? 2 : 0}>
       <Grid
@@ -66,8 +67,8 @@ export default function Page() {
         justifyContent={'center'}
       >
         <Grid item xs={12} sm={9} marginTop={2} marginBottom={2}>
-          <Typography variant="h5" sx={{ padding: '15px 20px 0 0' }}>
-            Article Editor
+          <Typography translate="no" variant="h5" sx={{ padding: '15px 20px 0 0' }}>
+            {t("secure.article.label.text2")}
           </Typography>
           <Suspense fallback={<Typography>Loading...</Typography>}>
             <AddArticleHead

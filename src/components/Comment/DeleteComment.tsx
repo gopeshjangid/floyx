@@ -9,8 +9,8 @@ import {
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useToast } from '../Toast/useToast';
-import { useDeleteCommentMutation } from "@/lib/redux/slices/comments";
-
+import { useDeleteCommentMutation } from '@/lib/redux/slices/comments';
+import { useTranslation } from 'react-i18next';
 export default function DeleteComment({
   open,
   setOpen,
@@ -24,16 +24,19 @@ export default function DeleteComment({
   commentType: string;
   onAction: (comment) => void;
 }) {
+  const { t } = useTranslation();
   const toast = useToast();
-  const [deletComment, { isLoading: isDeleting }] =
-    useDeleteCommentMutation();
+  const [deletComment, { isLoading: isDeleting }] = useDeleteCommentMutation();
 
   const performAction = async () => {
     const post = 'post';
-    await deletComment({commentId: commentId, type: (commentType.toLowerCase()).includes(post)});
+    await deletComment({
+      commentId: commentId,
+      type: commentType.toLowerCase().includes(post),
+    });
     setOpen(false);
-    onAction({id: commentId, isDeleted: true })
-    toast.success('Comment is deleted successfully.');
+    onAction({ id: commentId, isDeleted: true });
+    toast.success(t('comp.comment.deleteMsg'));
   };
 
   return (
@@ -60,24 +63,26 @@ export default function DeleteComment({
       >
         <Box>
           <Typography
+            translate="no"
             variant="h6"
             component="h2"
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
           >
-            <DeleteOutline /> Delete Comment
+            <DeleteOutline /> {t('comp.comment.deleteComment')}
           </Typography>
           <Typography
+            translate="no"
             id="keep-mounted-modal-description"
             sx={{ margin: '32px 0' }}
           >
-           
-              Are you sure you want to delete this comment?
+            {t('comp.comment.deleteWarning')}
           </Typography>
         </Box>
         <Box sx={{ textAlign: 'end' }}>
           <Button
+            translate="no"
             variant="contained"
             color="error"
             sx={{
@@ -88,15 +93,16 @@ export default function DeleteComment({
             disabled={isDeleting}
             onClick={performAction}
           >
-            {!isDeleting && 'Delete Comment'}
+            {!isDeleting && t('comp.comment.deleteComment')}
             {isDeleting && <CircularProgress color="primary" size={25} />}
           </Button>
           <Button
+            translate="no"
             variant="contained"
             color="primary"
             onClick={() => setOpen(false)}
           >
-            Cancel
+            {t('comp.comment.deleteCancel')}
           </Button>
         </Box>
       </Box>

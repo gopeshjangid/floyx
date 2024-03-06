@@ -32,6 +32,7 @@ import {
   Skeleton,
   Stack,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import FloyxImage from '@/iconComponents/floyxIcon';
 import HomeIcon from '@/iconComponents/homeIcon';
@@ -60,6 +61,8 @@ import AddPost from '@/components/Post/AddPost';
 import { config } from '@/middleware';
 import { CloseOutlined } from '@mui/icons-material';
 //import { postServices } from '@/lib/redux';
+//import { useDispatch } from 'react-redux';
+import GoogleTranslatorPicker from '../../components/googleTranslate/googleTranslator';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '@/lib/redux';
 //import SidebarProfileBar from '@/components/sidebarProfileInfo';
@@ -148,8 +151,10 @@ interface IDrawerState {
   notifications: INotification[];
 }
 
-const publicPaths = ['/login','/article','/post','/profile'];
+const publicPaths = ['/login', '/article', '/post', '/profile'];
 export default function DrawerAppBar({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
+  //const dispatch = useDispatch();
   const dispatch = useDispatch();
   const { notificationCountState } = useSelector(
     (state: ReduxState) => state.appReducer
@@ -177,32 +182,32 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const isLoggedIn: boolean = session.status === 'authenticated';
   const navItems = [
     {
-      label: 'Home',
+      label: t('Drawer.home'),
       href: '/',
       icon: (fill: string) => <HomeIcon stroke={fill} />,
     },
     {
-      label: 'Notifications',
+      label: t('Drawer.notifications'),
       href: '/notifications-list',
       icon: (fill: string) => <NotificationIcon stroke={fill} />,
     },
     {
-      label: 'Messages',
+      label: t('Drawer.messages'),
       href: '/inbox',
       icon: (fill: string) => <MessageIcon stroke={fill} />,
     },
     {
-      label: 'Search',
+      label: t('Drawer.search'),
       href: '/people',
       icon: (fill: string) => <SearchIcon stroke={fill} />,
     },
     {
-      label: 'Wallet',
+      label: t('Drawer.wallet'),
       href: '/earnings',
       icon: (fill: string) => <WalletIcon stroke={fill} />,
     },
     {
-      label: 'Profile',
+      label: t('Drawer.profile'),
       href: '/profile',
       icon: (fill: string) => <ProfileIcon stroke={fill} />,
     },
@@ -238,7 +243,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       messageService.publisher.on('threads', getMessageCount);
       getInitialNotification();
     }
-  }, [session?.status,notificationCountState]);
+  }, [session?.status, notificationCountState]);
 
   const getNotifications = (data: INotification[]) => {
     setDrawerData(prev => ({
@@ -273,7 +278,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
 
     return (
       <CustomListItemButton onClick={handleClick}>
-        <ListItemIcon>
+        <ListItemIcon translate="no">
           <CustomPopover
             open={open}
             id={id}
@@ -282,31 +287,32 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             actionOriginIcon={<MoreIcon fill={theme.palette.text.primary} />}
             options={[
               {
-                label: 'Settings',
+                label: t('Drawer.more.settings'),
                 startIcon: <SettingsIcon />,
                 onClick: () => router.push(`/settings/account`),
               },
               {
-                label: 'Logout',
+                label: t('Drawer.more.logout'),
                 startIcon: <LogoutIcon />,
                 onClick: () => router.push(`/sign-out`),
               },
             ]}
           />
         </ListItemIcon>
-        <ListItemText primary={'More'} />
+        <ListItemText primary={t('Drawer.more.title')} />
       </CustomListItemButton>
     );
   };
   useEffect(() => {
-    const isPrivate = config.matcher.some(path => pathname.includes(path));;
-    const isPublic = publicPaths.some(path => pathname.includes(path));;
+    const isPrivate = config.matcher.some(path => pathname.includes(path));
+    const isPublic = publicPaths.some(path => pathname.includes(path));
     if (
       session.status !== 'loading' &&
       !isLoggedIn &&
       !firstTimeUsingSocialMediaLogin &&
       !pathname.includes('/login') &&
-      isPrivate && !isPublic
+      isPrivate &&
+      !isPublic
     ) {
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
@@ -314,7 +320,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       deleteCookie(FIRST_TIME_LOGIN_USING_SOCIAL);
       router.push('/login');
     }
-  }, [isLoggedIn, session.status,firstTimeUsingSocialMediaLogin]);
+  }, [isLoggedIn, session.status, firstTimeUsingSocialMediaLogin]);
 
   const getMessageCount = () => {
     setDrawerData(prev => ({
@@ -334,7 +340,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       //     'MainFeedList',
       //   ])
       // );
-      window.location.href="/";
+      window.location.href = '/';
 
       //homeRedirect();
     }
@@ -343,7 +349,10 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const drawer = (
     <Box>
       <Box sx={{ padding: 1, background: 'inherit', paddingBottom: 2 }}>
-        <IconButton sx={{'&:hover': {backgroundColor: 'inherit'}}} onClick={homeRedirect}>
+        <IconButton
+          sx={{ '&:hover': { backgroundColor: 'inherit' } }}
+          onClick={homeRedirect}
+        >
           <FloyxImage
             fill={
               theme.palette.mode === 'dark'
@@ -368,7 +377,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               <ListItemIcon sx={{ marginTop: '-5px' }}>
                 {item?.icon && item?.icon(theme.palette.text.primary)}
               </ListItemIcon>
-              <ListItemText primary={item.label} />
+              <ListItemText translate="no" primary={item.label} />
               <ListItemSecondaryAction>
                 {item.label === 'Notifications' &&
                 drawerData.notificationCount > 0 ? (
@@ -383,8 +392,12 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
         ))}
         <MoreButton />
         <ListItem>
-          <Button variant="outlined" onClick={() => setOpenWriteDialog(true)}>
-            <GradientText>Write Post</GradientText>{' '}
+          <Button
+            translate="no"
+            variant="outlined"
+            onClick={() => setOpenWriteDialog(true)}
+          >
+            <GradientText>{t('Drawer.writePost')}</GradientText>{' '}
           </Button>
         </ListItem>
         <List sx={{ display: 'flex', flexDirection: 'row', margin: '0 10px' }}>
@@ -392,9 +405,9 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
             <ThemeSwitch />
           </ListItem>
 
-          {/*           <ListItem sx={{padding: '15px 0px 0px 0px'}}>
-            <GoogleTranslatorPicker/>
-          </ListItem> */}
+          <ListItem sx={{ padding: '15px 0px 0px 0px' }}>
+            <GoogleTranslatorPicker />
+          </ListItem>
         </List>
       </List>
     </Box>
@@ -447,6 +460,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
           elevation={0}
         >
           <Box
+            className="notranslate"
             sx={{
               padding: 1,
               height: '50px',

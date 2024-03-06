@@ -1,7 +1,8 @@
+import React, { Suspense, useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import ArticleContainer from './articleContainer';
 import ArticleCardSkeleton from '../ArticleCardSkeleton';
-
+import { useTranslation } from 'react-i18next';
 export default function ArticleContent({
   articleList,
   loadingList,
@@ -9,13 +10,14 @@ export default function ArticleContent({
   setIsEditing,
   setArticleId,
   setValue,
-  setIsReset,
+  setIsReset
 }: any) {
+  const { t } = useTranslation()   
   return (
     <Box>
       {loadingList ? (
         <ArticleCardSkeleton repeats={2} />
-      ) : articleList && articleList.length !== 0 ? (
+      ) : Array.isArray(articleList) && articleList && articleList.length !== 0 ? (
         articleList?.map((data: any, index: number) => (
           <ArticleContainer
             key={`articleContainer${index}`}
@@ -37,7 +39,7 @@ export default function ArticleContent({
             height: '100px',
           }}
         >
-          <Typography variant="h5">There are no articles yet</Typography>
+          <Typography translate="no" variant="h5">{t("comp.articleContent.noArticle")}</Typography>
         </Box>
       )}
     </Box>

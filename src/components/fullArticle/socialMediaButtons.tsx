@@ -10,13 +10,17 @@ import {
   FacebookIcon,
   LinkedinIcon,
 } from 'react-share';
+import { useTranslation } from 'react-i18next';
 
 export default function SocialButts({ details }: any) {
+  const { t } = useTranslation();
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box sx={{ marginRight: '5px' }}>
-          <Typography variant="body1">Share:</Typography>
+          <Typography translate="no" variant="body1">
+            {t('comp.fullArticle.share')}
+          </Typography>
         </Box>
         <Box sx={{ marginRight: '5px' }}>
           <FacebookShareButton

@@ -11,12 +11,14 @@ import { useLazyGetProfileDetailsQuery } from '@/lib/redux/slices/profile';
 import UsernameLink, { ProfileName } from './usernameLink';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 const SidebarProfileBar: React.FC = () => {
   const { palette } = useTheme();
   const session = useSession();
   const username = (session as any)?.data?.user?.username ?? '';
   const [fetchProfileDetails,{ data, isFetching, isLoading }] = useLazyGetProfileDetailsQuery();
+const {t}=useTranslation()
 
   useEffect(()=>{
    if(username){
@@ -58,17 +60,19 @@ const SidebarProfileBar: React.FC = () => {
               />
               <Stack direction="row" gap={1}>
                 <Typography
+                  translate="no"
                   display="inline-flex"
                   variant="caption"
                   color="textPrimary"
                 >
-                  Followers
+                  {t('comp.fullArticle.follower')}
                   <span style={{ color: palette.primary.main }}>
                     &nbsp;{data?.numberOfFollowers}
                   </span>
                 </Typography>
-                <Typography variant="caption" color="textPrimary">
-                  Following
+                <Typography translate="no" variant="caption" color="textPrimary">
+                 
+                  {t('Home.followSection.following')}
                   <span style={{ color: palette.primary.main }}>
                     {' '}
                     {data?.numberOfFollowing}
