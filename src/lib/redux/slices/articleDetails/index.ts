@@ -346,6 +346,7 @@ export const {
   useDeleteArticleMutation,
   useLazyGetDraftDetailQuery,
   useGetArticlesByAuthorQuery,
+  useLazyGetArticlesByAuthorQuery,
   useLazyGetSearchArticleQuery,
   useUploadArticleImageMutation,
 } = artcileDetails;
