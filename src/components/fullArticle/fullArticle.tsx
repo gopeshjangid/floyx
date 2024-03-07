@@ -41,8 +41,13 @@ export default function FullArticle({ details }: any) {
         return `<img width="100%" object-fit="cover" src="${match}" frameborder="0" allowfullscreen></img>`;
       });
 
+      const colorRegex = /style="[^"]color:[^;"];[^"]*"/g;
+      // const colorRegex = /style="[^"]color:(?! rgb\(124, 147, 174\))(?:\s[^;"];?[^"])*"/g
+      const modifiedHTML_final = modifiedHTML_res.replace(colorRegex, (match) => {
+        return '';
+      });
       
-    return { __html: modifiedHTML_res };
+      return { __html: modifiedHTML_final };
   };
   
 
