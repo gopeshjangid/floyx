@@ -45,7 +45,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       setState((prev: any) => ({ ...prev, showEmojiPicker: false }));
     }
   };
-const {t}=useTranslation()
+  const { t } = useTranslation()
   React.useEffect(() => {
     focus(state.index);
     // toggleTooltipIcon(state.index);
@@ -158,6 +158,9 @@ const {t}=useTranslation()
           item.value = item.value.replace('<li><br></li></ol>', '</ol>');
           addInput(index);
         }
+      } else if (shiftKey && key === 'Enter') {
+        item.value += '\n'; // or use '<br>' for HTML content
+        e.preventDefault();
       } else if (key === 'Backspace') {
         if (
           !item.value ||
@@ -173,6 +176,13 @@ const {t}=useTranslation()
       if (key === 'Enter' && !shiftKey) {
         e.preventDefault();
         addInput(item.index);
+        return;
+      } else if (shiftKey && key === 'Enter') {
+        e.preventDefault();
+        if (item.type === 'paragraph' || item.type === 'subtitle' || item.type === 'quote') {
+          item.value += '<br>';
+          e.preventDefault();
+        }
         return;
       }
       if (key === 'Backspace') {
@@ -219,10 +229,10 @@ const {t}=useTranslation()
     const inputsList = state['inputsList']
     let newInputsList = inputsList.filter((el: any, i: any) => i !== index)
     const lastIndex = (newInputsList.length - 1 > 0) ? newInputsList.length - 1 : 0
-    
+
     // setState((prev: any) => ({ ...prev, inputsList: newInputsList }))
     // addInput(index)
-    const arrayIndex =newInputsList.findIndex((x: any) => x.index === index);
+    const arrayIndex = newInputsList.findIndex((x: any) => x.index === index);
     let maximumIndex: number = Math.max(
       ...newInputsList.map((item: any) => item.index)
     );
@@ -242,7 +252,6 @@ const {t}=useTranslation()
       ...newInputsList.slice(arrayIndex + 1),
     ];
     setState((prev: any) => ({ ...prev, index: maximumIndex, inputsList: newInputsList }));
-    debugger
 
   }
   const addInput = (index: number) => {
@@ -617,7 +626,7 @@ const {t}=useTranslation()
                   <AiOutlineOrderedList color={'primary'} />
                 </span>
                 <span
-                translate="no"
+                  translate="no"
                   className="change-type__item subtitle"
                   onClick={() => changeInputType(input.index, 'subtitle')}
                 >
@@ -654,7 +663,7 @@ const {t}=useTranslation()
                     <div>
                       <React.Fragment>
                         <Input
-                        translate="no"
+                          translate="no"
                           className="editor-link__item"
                           onChange={onURLChange}
                           type="text"
@@ -662,7 +671,7 @@ const {t}=useTranslation()
                           onKeyDown={e =>
                             listenerSubmit(e, () => confirmLink(e, index))
                           }
-                          placeholder= {t("comp.addArticleForm.urlPlaceholder")}
+                          placeholder={t("comp.addArticleForm.urlPlaceholder")}
                           name="urlValue"
                         // invalid={state.errors?.urlValue}
                         />

@@ -23,7 +23,7 @@ import DottedButton from './dottedButton';
 import ShareIcon from '@/images/image/shareIcon';
 import FlagIcon from '@/images/image/flagIcon';
 import BlockUserIcon from '@/images/image/blockUser';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ActionModal from './actionModal';
 import { useDeleteArticleMutation } from '@/lib/redux';
 import { useRouter } from 'next/navigation';
@@ -34,6 +34,7 @@ import CustomDescription from '../customDescription';
 import useDevice from '@/lib/hooks/useDevice';
 import { DeleteOutline, EditRounded } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '../Toast/useToast';
 
 const ArticleContent = styled(Box)(({ theme }) => ({
   marginTop: '40px',
@@ -101,14 +102,17 @@ const ArticleContent = styled(Box)(({ theme }) => ({
 const articleOptions = [
   {
     name: 'Edit',
+    value: 'edit',
     icon: <EditRounded />,
   },
   {
     name: 'Report Article',
+    value: 'report-article',
     icon: <FlagIcon />,
   },
   {
     name: 'Share Article',
+    value: 'share-article',
     icon: <ShareIcon articleOption={true} />,
   },
 ];
@@ -116,21 +120,41 @@ const articleOptions = [
 const userOptions = [
   {
     name: 'Block User',
+    value: 'block-user',
     icon: <BlockUserIcon />,
   },
   {
     name: 'Report User',
+    value: 'report-user',
     icon: <FlagIcon />,
   },
 ];
+
+const currentUserArticleOptions = [{
+  name: 'Edit',
+  value: 'edit',
+  icon: <EditRounded />,
+},
+{
+  name: 'Delete',
+  value: 'delete',
+  icon: <DeleteOutline />
+},
+{
+  name: 'Share Article',
+  value: 'share-article',
+  icon: <ShareIcon articleOption={true} />,
+}]
 const addEditoptions = [
   {
     name: 'Edit',
-    icon : <EditRounded/>
+    value: 'edit',
+    icon: <EditRounded />
   },
   {
     name: 'Delete',
-    icon: <DeleteOutline/>
+    value: 'delete',
+    icon: <DeleteOutline />
   },
 ];
 
@@ -143,21 +167,22 @@ export default function ArticleContainer({
   setValue,
   setIsReset,
 }: any) {
-  const {t}=useTranslation()
+  const { t } = useTranslation()
   const { palette } = useTheme();
   const ref = useRef<HTMLElement>(null);
   const router = useRouter();
   const session = useSession();
   const loginUserName = session.data?.user?.username;
-  const [open, setOpen] = useState(false);
+  const [openShareModal, setOpenShareModal] = useState(false);
   const commentRef = useRef();
+  const toast = useToast();
   const [commentText, setCommentText] = useState('');
   const { isMobile } = useDevice();
-  const [item, setItem] = useState<number>();
+  const [item, setItem] = useState<string>();
   const [openDialog, setOpenDialog] = useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
   const { data: tipHistory } = useGetTipHistoryQuery();
-  const [deleteArtice] = useDeleteArticleMutation();
+  const [deleteArtice, { isSuccess: isArticleDeleted, isError: isDeleteArticleError }] = useDeleteArticleMutation();
 
   const content = articleDetails?.content
     ? JSON.parse(articleDetails?.content)
@@ -168,12 +193,24 @@ export default function ArticleContainer({
     return { __html: htmlString };
   };
 
+  useEffect(() => {
+    if (isArticleDeleted) {
+      toast.success("Article deleted!");
+      setOpenConfirmationDialog(false);
+    }
+
+    if (isDeleteArticleError) {
+      toast.error("Error in deleting article!")
+    }
+
+  }, [isArticleDeleted, isDeleteArticleError]);
+
   const handleClick = () => {
     if (userDetails) {
       const dynamicUrl = `/article/${userDetails?.username}/${articleDetails?.publicUrl}`;
       router.push(dynamicUrl);
     } else {
-      handleOption(0);
+      handleOption('edit');
     }
   };
 
@@ -188,32 +225,36 @@ export default function ArticleContainer({
     }
   };
 
-  const editHandler = ()=>{
+  const editHandler = () => {
     const dynamicUrl = `/composer/create?articleId=${articleDetails.id}&isEditing=true&value=newArticle`;
     router.push(dynamicUrl);
   }
 
-  const handleOption = (index: number) => {
-    const allowEdit = userDetails?.username === loginUserName;
+  const handleOption = (type: string) => {
+    const isSameUser = userDetails?.username === loginUserName;
     if (addEdittype) {
-      switch (index) {
-        case 0:
+      switch (type) {
+        case 'edit':
           setArticleId(articleDetails?.id);
           setIsEditing(true);
           setIsReset(false);
           setValue('newArticle');
           // window.open('/composer/create');
           return;
-        case 1:
+        case 'delete':
           setOpenConfirmationDialog(true);
           return;
       }
-    } if(index ===0 && allowEdit){
+    } else if (type === 'share-article') {
+      setOpenShareModal(true);
+    } else if (type === 'delete' && isSameUser) {
+      setOpenConfirmationDialog(true);
+    } else if (type === 'edit' && isSameUser) {
       editHandler();
     } else {
       // const []
       setOpenDialog(true);
-      setItem(index);
+      setItem(type);
     }
   };
 
@@ -223,14 +264,12 @@ export default function ArticleContainer({
   };
 
   const handleDeleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     event.stopPropagation();
     deleteArtice(articleDetails?.id);
-    setOpenConfirmationDialog(false);
+
   };
-  const { offsetHeight, offsetWidth } = ref?.current ?? {
-    offsetHeight: 0,
-    offsetWidth: 0,
-  };
+
   const commentTextHandler = useCallback(
     text => {
       setCommentText(text);
@@ -238,7 +277,7 @@ export default function ArticleContainer({
     [setCommentText]
   );
 
-  const articleOptionsFiltered = articleOptions.filter(item => item.name ==='Edit'  ? userDetails?.username === loginUserName : true );
+  const articleOptionsFiltered = articleOptions.filter(item => item.name === 'Edit' ? userDetails?.username === loginUserName : true);
   return (
     <>
       <ArticleContent onClick={handleClick}>
@@ -246,7 +285,7 @@ export default function ArticleContainer({
           <Grid item xs={12} sm={5}>
             <Box className="thumbnail" ref={ref}>
               {articleDetails?.coverPhotoThumbnail ||
-              articleDetails?.coverPhotoPath ? (
+                articleDetails?.coverPhotoPath ? (
                 <Box
                   position="relative"
                   height={isMobile ? 300 : 240}
@@ -268,11 +307,9 @@ export default function ArticleContainer({
                         addEdittype
                           ? addEditoptions
                           : userDetails?.username === loginUserName
-                            ? articleOptionsFiltered
+                            ? currentUserArticleOptions
                             : [...articleOptionsFiltered, ...userOptions]
                       }
-                      setItem={setItem}
-                      setOpen={setOpen}
                       handleOption={handleOption}
                     />
                   </Box>
@@ -297,11 +334,9 @@ export default function ArticleContainer({
                         addEdittype
                           ? addEditoptions
                           : userDetails?.username === loginUserName
-                            ? articleOptionsFiltered
+                            ? currentUserArticleOptions
                             : [...articleOptionsFiltered, ...userOptions]
                       }
-                      setItem={setItem}
-                      setOpen={setOpen}
                       handleOption={handleOption}
                     />
                   </Box>
@@ -329,10 +364,10 @@ export default function ArticleContainer({
                       ? articleDetails?.title.slice(0, 70)
                       : ''}
                   </CustomDescription>
-                  <Typography translate ="no" color='green' variant="caption" sx={{ textWrap: 'nowrap' }}>
+                  <Typography translate="no" color='green' variant="caption" sx={{ textWrap: 'nowrap' }}>
                     {tipHistory ? (
                       tippedOrNot() ? (t("comp.articleContent.tipped")
-                        
+
                       ) : (
                         ''
                       )
@@ -341,7 +376,7 @@ export default function ArticleContainer({
                     )}
                   </Typography>
                 </Stack>
-                <IconButton onClick={e => e.stopPropagation()} sx={{width:40,height:40}}>
+                <IconButton onClick={e => e.stopPropagation()} sx={{ width: 40, height: 40 }}>
                   <BookMarkIcon />
                 </IconButton>
               </Box>
@@ -375,17 +410,17 @@ export default function ArticleContainer({
           </Grid>
         </Grid>
       </ArticleContent>
-      <ActionModal
+      {openDialog && <ActionModal
         item={item}
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         articleDetails={articleDetails}
         username={userDetails?.username}
         setItem={setItem}
-        text={item === 4 ? 'Material' : 'User'}
-      />
-      <ShareArticleModal
-        open={open}
+        text={item === 'report-content' ? 'Material' : 'User'}
+      />}
+      {openShareModal && <ShareArticleModal
+        open={openShareModal}
         isArticle={true}
         itemId={articleDetails.id}
         commentRef={commentRef}
@@ -394,9 +429,9 @@ export default function ArticleContainer({
         commentTextHandler={commentTextHandler}
         likesCommentsDetails={articleDetails}
         setCommentText={setCommentText}
-        setOpen={setOpen}
-      />
-      <Dialog
+        setOpen={setOpenShareModal}
+      />}
+      {openConfirmationDialog && <Dialog
         open={openConfirmationDialog}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
@@ -406,13 +441,13 @@ export default function ArticleContainer({
         <DialogTitle translate="no" id="responsive-dialog-title">{t("comp.articleContent.confirm")}</DialogTitle>
         <DialogContent translate="no">
           {t("comp.articleContent.confirmDelete")}
-         
+
         </DialogContent>
         <DialogActions>
-          <Button translate="no" onClick={handleDeleteArticle}>{t("comp.articleContent.yes")}</Button>
-          <Button translate="no" onClick={handleClose}>{t("comp.articleContent.no")}</Button>
+          <Button variant='outlined' translate="no" onClick={handleClose}>{t("comp.articleContent.no")}</Button>
+          <Button variant='contained' translate="no" onClick={handleDeleteArticle}>{t("comp.articleContent.yes")}</Button>
         </DialogActions>
-      </Dialog>
+      </Dialog>}
     </>
   );
 }

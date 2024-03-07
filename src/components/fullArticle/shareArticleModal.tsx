@@ -18,6 +18,7 @@ import {
 import { useToast } from '../Toast/useToast';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 const style = {
   position: 'absolute',
@@ -34,7 +35,7 @@ const style = {
   padding: 3,
 };
 
-export default function ShareArticleModal({
+ function ShareArticleModal({
   open,
   isArticle,
   itemId,
@@ -201,3 +202,5 @@ export default function ShareArticleModal({
     </Modal>
   );
 }
+
+export default React.memo(ShareArticleModal);

@@ -2,6 +2,7 @@
 import PostList from '@/components/Post/PostList';
 import { useGetPostListByUserQuery } from '@/lib/redux';
 import { Box, Grid } from '@mui/material';
+import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import React, { useState, useCallback, useEffect } from 'react';
 
@@ -21,6 +22,7 @@ function ProfilePostList({ parentRef }) {
     postCreatedDate: '',
     username: username || '',
   });
+  const session = useSession();
 
   const { data, isFetching, isLoading,} = useGetPostListByUserQuery(apiParams);
   const postData = data?.postList;
@@ -54,6 +56,7 @@ return (
           scrollThreshold={0.7}
           isLoading={isLoading}
           mainContainerFeedRef={parentRef}
+          isSameUser={username === session.data?.user.username}
         />
       </Grid>
     </Grid>

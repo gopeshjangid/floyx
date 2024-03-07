@@ -326,7 +326,7 @@ export const profileService = createApi({
       transformResponse: (response: ApiResponse<ReportUser>) =>
         response.value.data,
 
-      invalidatesTags: ['profileAbout', 'profileDetails'],
+      invalidatesTags: ['profileAbout', 'profileDetails',{type: 'ArticleList', id: 'LIST'}],
     }),
     addReportArticle: builder.mutation<ReportArticle, Partial<ReportArticle>>({
       query: profileAbout => ({
@@ -341,7 +341,7 @@ export const profileService = createApi({
           api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
         });
       },
-      invalidatesTags: ['profileAbout', 'profileDetails'],
+      invalidatesTags: ['profileAbout', 'profileDetails',{type: 'ArticleList', id: 'LIST'}],
     }),
     blockUser: builder.mutation<ReportUser, Partial<{ username: string }>>({
       query: user => ({
@@ -356,7 +356,7 @@ export const profileService = createApi({
       },
       transformResponse: (response: ApiResponse<ReportUser>) =>
         response.value.data,
-      invalidatesTags: ['profileAbout', 'profileDetails'],
+      invalidatesTags: ['profileAbout', 'profileDetails',{type: 'ArticleList', id: 'LIST'}],
     }),
     followUser: builder.mutation<void, Partial<{ username: string }>>({
       query: user => ({
@@ -390,6 +390,7 @@ export const profileService = createApi({
     'isUserFollowedBy',
     'userFollowers',
     'UserFollowed',
+    'ArticleList'
   ],
 });
 

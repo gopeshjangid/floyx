@@ -7,6 +7,7 @@ import { PostDetailResult } from '@/lib/redux/slices/posts';
 import React from 'react';
 import CustomDescription from '../customDescription';
 import { useTranslation } from 'react-i18next';
+import { LABELS } from '@/constants/labels';
 
 interface PostProps {
   postData: PostDetailResult[];
@@ -15,7 +16,8 @@ interface PostProps {
   scrollThreshold?: number;
   showComments?: boolean;
   isLoading?: boolean;
-  mainContainerFeedRef?:any
+  mainContainerFeedRef?: any,
+  isSameUser?: boolean;
 }
 
 const LoaderSkeleton = () => {
@@ -43,10 +45,11 @@ function PostList({
   hasMore,
   scrollThreshold,
   isLoading,
-  mainContainerFeedRef
+  mainContainerFeedRef,
+  isSameUser = true
 }: PostProps) {
   const { palette } = useTheme();
-const {t}=useTranslation()
+  const { t } = useTranslation()
   return (
     <>
       {!isLoading && Array.isArray(postData) ? (
@@ -113,7 +116,7 @@ const {t}=useTranslation()
                   }}
                 >
                   <CustomDescription translate="no" variant="subtitle1">
-                    {t('Home.postSection.noPost')}
+                    {isSameUser? t('Home.postSection.noPost'): LABELS.anotherProfileEmptyBoardMessage}
                   </CustomDescription>
                 </Box>
               </Box>

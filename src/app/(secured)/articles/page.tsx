@@ -38,27 +38,18 @@ export default function Page() {
     searchArticle,
     { data: searchedArticle, isFetching: searchIsFetching },
   ] = useLazyGetSearchArticleQuery();
-  // useEffect(() => {
-  //   // const newDynamic ={...dynamicTab}
-  //   console.log(dynamicTab)
-  //   debugger
-  //   if (window.location.hash) {
-  //     //setDynamicTab(newDynamic);
 
-  //   }
-  // }, []);
-
-const valueChanges =(val)=>{
-       setDynamicTab(val);  
-}
+  const valueChanges = (val) => {
+    setDynamicTab(val);
+  }
   useEffect(() => {
     if (dynamicTab.searchBy === 'tag') {
-      getArticlesByTags({ tagId: dynamicTab.tagId })    
-    } else if (dynamicTab.searchBy === 'search') { 
-    
-      searchArticle({ searchString: dynamicTab.value ?? '' });      
+      getArticlesByTags({ tagId: dynamicTab.tagId })
+    } else if (dynamicTab.searchBy === 'search') {
+
+      searchArticle({ searchString: dynamicTab.value ?? '' });
     } else if (tabName !== dynamicTab.tagId) {
-            getArticleList(tabName);     
+      getArticleList(tabName);
     }
   }, [tabName, dynamicTab]);
   const viewportHeight =
@@ -101,14 +92,12 @@ const valueChanges =(val)=>{
               </Link>
             </Box>
             <ArticleContent
-            a={dynamicTab}
-            b={searchArticle}
               articleList={
-              dynamicTab.searchBy === 'tag' ?  articleListByTags :( dynamicTab.searchBy === 'search' ? searchedArticle :articleList)  
+                dynamicTab.searchBy === 'tag' ? articleListByTags : (dynamicTab.searchBy === 'search' ? searchedArticle : articleList)
               }
               loadingList={
-            dynamicTab.searchBy === 'tag' ?  articleListFetching :( dynamicTab.searchBy === 'search' ? searchIsFetching :isFetching) 
-                
+                dynamicTab.searchBy === 'tag' ? articleListFetching : (dynamicTab.searchBy === 'search' ? searchIsFetching : isFetching)
+
               }
             />
           </Box>
