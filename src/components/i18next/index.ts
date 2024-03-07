@@ -2,8 +2,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import enTranslation from '../../constant/locales/en.json';
-import plTranslation from '../../constant/locales/pl.json';
-import ptTranslation from '../../constant/locales/pt.json';
+// import plTranslation from '../../constant/locales/pl.json';
+// import ptTranslation from '../../constant/locales/pt.json';
 
 
 i18n
@@ -14,12 +14,12 @@ i18n
       en: {
         translation: enTranslation,
       },
-      pl: {
-        translation: plTranslation,
-      },
-      pt:{
-          translation: ptTranslation,
-      }
+      // pl: {
+      //   translation: plTranslation,
+      // },
+      // pt:{
+      //     translation: ptTranslation,
+      // }
     },
     fallbackLng: 'en',
     debug: true,
