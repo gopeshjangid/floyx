@@ -2,10 +2,8 @@ import * as React from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 export const DefaultCircularProgress = () => {
-  const {t}=useTranslation()
   return (
     <Box
       pt={4}
@@ -13,7 +11,7 @@ export const DefaultCircularProgress = () => {
       textAlign={'center'}
     >
       <CircularProgress />
-      <Typography translate="no">{t('comp.recommTopic.wait')}</Typography>
+      <Typography translate="no">Please wait...</Typography>
     </Box>
   );
 };
