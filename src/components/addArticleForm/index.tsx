@@ -28,6 +28,7 @@ import TagAutocomplete from './articleTags';
 import { useRouter } from 'next/navigation';
 import { revalidateArticleDetail } from '@/actions/actions';
 import { useTranslation } from 'react-i18next';
+
 export const AddArticleFormBox = styled(Box)(({ theme }) => ({
   '& h5': {
     color:
@@ -115,7 +116,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
     nameLink: '',
     contentArticleCreated: articleCreated,
   });
-  const [createDraft] = useCreateArticleDraftMutation();
+  const [createDraft, {isSuccess: isArticleCreated}] = useCreateArticleDraftMutation();
   const [updateDraft, { isLoading }] = useUpdateDraftArticleMutation();
   const [publishArticle, { isLoading: publishLoading }] =
     usePublishArticleMutation();
@@ -182,12 +183,12 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
     }
   };
 
-  const handleContentChange = (title: string, content: any) => {
+  const handleContentChange = useCallback((title: string, content: any) => {
     if (!articleCreatedRef.current) {
       createDraftArticle(title, content, imageToUpload, hashtags.join(','));
     }
     setContent(content);
-  };
+  },[createDraftArticle,imageToUpload, hashtags,setContent, articleCreatedRef ]);
 
   const handleFileUpload = e => {
     e.preventDefault();
@@ -309,7 +310,6 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
       }
     }
   };
-   
   const getArticleDetail = async () => {
     const response = await getDraftDetail(articleId);
     if (response.data) {
@@ -338,14 +338,12 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
   useEffect(() => {
     const sub = setInterval(() => {
       if (startAutoSave) updateDraftArticle(false);
-    }, 3000);
+    }, 15000);
 
     return () => {
       clearInterval(sub);
-
-      setStartAutoSave(false);
     };
-  }, [startAutoSave, articleId, syncState, title, content, imageToUpload]);
+  }, [startAutoSave]);
 
   useEffect(() => {
     if (saveDraft && !isLoading) {

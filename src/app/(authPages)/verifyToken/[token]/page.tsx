@@ -10,7 +10,6 @@ import { useVerifyTokenMutation } from '@/lib/redux/slices/registration';
 const VerifyToken = () => {
   const router = useRouter();
   const [verifyToken, { data, isLoading, error }] = useVerifyTokenMutation();
-  console.log('VerifyToken ~ data:', data);
   const { token } = useParams<{ token: string }>();
 
   useEffect(() => {

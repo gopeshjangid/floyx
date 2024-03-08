@@ -237,7 +237,7 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
       '.articles-editor__item': {
         background: theme.palette.primary[400],
         borderRadius: '10px',
-        padding: '2px 0',
+        padding: '2px 8px',
         fontSize: '18px',
         marginBottom: '15px',
       },

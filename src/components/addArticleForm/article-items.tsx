@@ -48,7 +48,6 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
   const { t } = useTranslation()
   React.useEffect(() => {
     focus(state.index);
-    // toggleTooltipIcon(state.index);
   }, [state.index]);
 
   const initArticleComposer = () => {
@@ -69,21 +68,6 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
     if (value.includes('<img')) {
       const extractdocsInputsList = inputsList.filter((x: any) => x.index != index)
       setState((prev: any) => ({ ...prev, extractdocsInputsList, contentArticleCreated: true }));
-      // Create a dummy DOM element to parse HTML string
-      // const tempElement = document.createElement('div');
-      // tempElement.innerHTML = value;
-      // // Extract img tag from the value
-      // const imgTag = tempElement.querySelector('img');
-      // if (imgTag) {
-      //     // Set width and height of img tag
-      //     imgTag.setAttribute('width', '100%');
-      //     imgTag.setAttribute('object-fit', 'cover')
-      //     // Get the src attribute value
-      //     const srcValue = imgTag.getAttribute('src');
-      //     const textAfterImg = tempElement.textContent?.replace(imgTag.outerHTML, '') || '';
-      //       // Concatenate img tag outerHTML with remaining text
-      //     value = imgTag.outerHTML + textAfterImg;
-      // }
       return
     } else if (item.type != 'ul' && item.type != 'ol') {
       // If pasted content does not contain an image, remove background styles
@@ -180,7 +164,14 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       } else if (shiftKey && key === 'Enter') {
         e.preventDefault();
         if (item.type === 'paragraph' || item.type === 'subtitle' || item.type === 'quote') {
-          item.value += '<br>';
+          console.log("else shift")
+          //item.value += '<br/>';
+          setState((state)=>({...state, inputsList: inputsList.map((x: any) => {
+            if(x.index === index){
+              item.value += '<br/>';
+            }
+            return x;
+          })}));
           e.preventDefault();
         }
         return;
@@ -703,9 +694,9 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
             {input.type === 'paragraph' && (
               <ContentEditable
                 className={
-                  'articles-editor__paragraph contenteditable articles-editor__item ' +
+                  'articles-editor__paragraph contenteditable articles-editor__item paragraph-'+input.index +
                   (state.inputsList.length === 1 && input.index === 0
-                    ? 'first'
+                    ? ' first'
                     : '')
                 }
                 html={input.value}

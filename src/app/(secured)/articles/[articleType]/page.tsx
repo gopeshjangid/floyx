@@ -59,11 +59,6 @@ const {t}=useTranslation()
               overflow: 'auto',
               maxHeight: '102vh',
               overflowY: 'auto',
-              scrollbarWidth: 'none', // For Firefox
-              msOverflowStyle: 'none', // For IE 10+
-              '&::-webkit-scrollbar': {
-                display: 'none', // For Chrome, Safari, and newer versions of Edge
-              },
             }}
           >
             <PostHeader />

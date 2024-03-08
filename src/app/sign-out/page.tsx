@@ -7,12 +7,18 @@ import { signOut } from 'next-auth/react';
 import FloyxImage from '@/iconComponents/floyxIcon';
 import { deleteCookie } from 'cookies-next';
 import { FIRST_TIME_LOGIN_USING_SOCIAL, SOCIAL_SIGNIN_DATA } from '@/constants';
+import { useDispatch } from 'react-redux';
+import { profileService } from '@/lib/redux/slices/profile';
+import { postServices } from '@/lib/redux';
 
 export default function SignOut() {
   const router = useRouter();
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
+    dispatch(profileService.util.resetApiState());
+    dispatch(postServices.util.resetApiState());
     deleteCookie('FLOYX_TOKEN');
     deleteCookie('next-auth.session-token');
     deleteCookie(SOCIAL_SIGNIN_DATA);

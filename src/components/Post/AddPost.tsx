@@ -33,6 +33,7 @@ import Picker from '@emoji-mart/react';
 import MoodIcon from '@mui/icons-material/Mood';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
+import CustomEmojiPopup from '../CustomEmojiPopup';
 
 const initialPostObj = {
   postText: '',
@@ -285,17 +286,7 @@ function AddPost({
             </Box>
           </Box>
           <Box sx={{ padding: '9px 0px' }}>
-            <IconButton onClick={toggleVisibility}>
-              <MoodIcon />
-            </IconButton>
-            {isVisible ? (
-              <Picker
-                data={data}
-                onEmojiSelect={emoji => handlePostText(null, null, null, emoji)}
-              />
-            ) : (
-              <></>
-            )}
+            <CustomEmojiPopup onEmojiChange={(emoji) => handlePostText(null,null,null,emoji) } />
           </Box>
         </Box>
       </PostBox>

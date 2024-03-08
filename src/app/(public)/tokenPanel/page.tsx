@@ -367,14 +367,12 @@ const updatedtokenPanel = props => {
       modalType === 'SEEDVESTING' &&
       seedVestingStartTime !== '0n'
     ) {
-      console.log('timer set SEEDVESTING');
       setTimerFunction();
     }
   }, [seedVestingStartTime, modalType, address]);
 
   useEffect(() => {
     if (address && modalType === 'STAKING' && getStakeTime !== '0n') {
-      console.log('timer set STAKING');
       setTimerFunction();
     }
   }, [modalType, getStakeTime, address]);

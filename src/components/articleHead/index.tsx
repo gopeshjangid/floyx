@@ -91,7 +91,6 @@ export default function ArticleHead({
   };
   useEffect(() => {
     if (dynamicTabType) {
-      console.log("1")
       setArticleTabs([
         {
           icon: (fill: string) => <SearchIcon fill={fill} />,
@@ -103,7 +102,6 @@ export default function ArticleHead({
       setValue(dynamicTab);
       setTabName(dynamicTab);    
     } else {
-      console.log("2")
       setArticleTabs(defaultTab);
       setValue('popular');
       setTabName('popular');

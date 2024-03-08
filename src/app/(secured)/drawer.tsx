@@ -64,7 +64,8 @@ import { CloseOutlined } from '@mui/icons-material';
 //import { useDispatch } from 'react-redux';
 //import GoogleTranslatorPicker from '../../components/googleTranslate/googleTranslator';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxState } from '@/lib/redux';
+import { ReduxState, postServices } from '@/lib/redux';
+import { profileService } from '@/lib/redux/slices/profile';
 //import SidebarProfileBar from '@/components/sidebarProfileInfo';
 //import GoogleTranslatorPicker from '../../components/fullArticle/googleTranslator';
 
@@ -314,6 +315,8 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
       isPrivate &&
       !isPublic
     ) {
+      dispatch(profileService.util.resetApiState());
+      dispatch(postServices.util.resetApiState());
       deleteCookie('FLOYX_TOKEN');
       deleteCookie('next-auth.session-token');
       deleteCookie(SOCIAL_SIGNIN_DATA);
