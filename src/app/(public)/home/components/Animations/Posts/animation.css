@@ -1,0 +1,220 @@
+@keyframes animation-03148 {
+  from {
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    transform: rotate(0deg);
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    transform: rotate(0deg);
+  }
+}
+.animationClass-03148 {
+  animation: animation-03148 100s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 100s normal
+    forwards;
+}
+@keyframes animation-0328 {
+  from {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transform: rotate(0deg);
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transform: rotate(0deg);
+  }
+}
+.animationClass-0328 {
+  animation: animation-0328 17.24s ease-in-out 0s normal forwards;
+}
+@keyframes animation-0325 {
+  from {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transform: rotate(0deg);
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transform: rotate(0deg);
+  }
+}
+.animationClass-0325 {
+  animation: animation-0325 100s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
+    forwards;
+}
+@keyframes animation-I03148_933178 {
+  from {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+  }
+}
+.animationClass-I03148_933178 {
+  animation: animation-I03148_933178 100s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
+    forwards;
+}
+@keyframes animation-0329 {
+  from {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+  }
+}
+.animationClass-0329 {
+  animation: animation-0329 17.24s ease-in-out 0s normal forwards;
+}
+@keyframes animation-0326 {
+  from {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+  }
+}
+.animationClass-0326 {
+  animation: animation-0326 100s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
+    forwards;
+}
+@keyframes animation-I03148_933179 {
+  from {
+    width: 72.46%;
+    height: 100%;
+    top: 0%;
+    transform: rotate(0deg);
+    overflow: hidden;
+  }
+  to {
+    width: 72.46%;
+    height: 99.86%;
+    top: 0.14%;
+    transform: rotate(0deg);
+    overflow: hidden;
+  }
+}
+.animationClass-I03148_933179 {
+  animation: animation-I03148_933179 100s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
+    forwards;
+}
+@keyframes animationBg-0330 {
+  from {
+    background-image: var(--post-9);
+    opacity: 1;
+  }
+  to {
+    background-image: var(--post-9);
+    opacity: 1;
+    width: calc(572 * var(--ratio));
+    height: calc(2970.340839042457 * var(--ratio));
+    left: calc(0.2504478913033381 * var(--ratio));
+    top: calc(-2293.879980546808 * var(--ratio));
+  }
+}
+.bgClass-0330 {
+  animation: animationBg-0330 100s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
+    forwards;
+}
+@keyframes animation-0330 {
+  from {
+    width: 72.46%;
+    height: 99.86%;
+    top: 0.14%;
+    transform: rotate(0deg);
+    overflow: hidden;
+  }
+  to {
+    width: 72.46%;
+    height: 100%;
+    top: 0%;
+    transform: rotate(0deg);
+    overflow: hidden;
+  }
+}
+.animationClass-0330 {
+  animation: animation-0330 17.24s ease-in-out 0s normal forwards;
+}
+@keyframes animationBg-0327 {
+  from {
+    background-image: var(--post-9);
+    opacity: 1;
+  }
+  to {
+    background-image: var(--post-9);
+    opacity: 1;
+    width: calc(572 * var(--ratio));
+    height: calc(2970.3407620059456 * var(--ratio));
+    left: calc(-3.645139745600545e-12 * var(--ratio));
+    top: calc(47.668985656315165 * var(--ratio));
+  }
+}
+.bgClass-0327 {
+  animation: animationBg-0327 17.24s ease-in-out 0s normal forwards;
+}
+@keyframes animation-0327 {
+  from {
+    width: 72.46%;
+    height: 100%;
+    top: 0%;
+    transform: rotate(0deg);
+    overflow: hidden;
+  }
+  to {
+    width: 72.46%;
+    height: 99.86%;
+    top: 0.14%;
+    transform: rotate(0deg);
+    overflow: hidden;
+  }
+}
+.animationClass-0327 {
+  animation: animation-0327 100s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
+    forwards;
+}
+@keyframes animationBg-0330 {
+  from {
+    background-image: var(--post-9);
+    opacity: 1;
+  }
+  to {
+    background-image: var(--post-9);
+    opacity: 1;
+    width: calc(572 * var(--ratio));
+    height: calc(2970.340839042457 * var(--ratio));
+    left: calc(0.2504478913033381 * var(--ratio));
+    top: calc(-2293.879980546808 * var(--ratio));
+  }
+}
+.bgClass-0330 {
+  animation: animationBg-0330 100s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
+    forwards;
+}
