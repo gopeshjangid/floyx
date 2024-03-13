@@ -100,13 +100,14 @@ const RegisterFormGroupRoot = styled.section`
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  padding: 0px 20px 18px;
+  padding: 0px 20px 0px;
   box-sizing: border-box;
   max-width: 100%;
   text-align: left;
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
+  overflow:hidden;
 `;
 
 const RegisterFormGroup: NextPage = () => {

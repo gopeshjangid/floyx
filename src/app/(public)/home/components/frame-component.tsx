@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import { Button } from "@mui/material";
-import styled from '@emotion/styled'
-  ;
+import styled from '@emotion/styled';
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const FrameChild = styled.div`
   align-self: stretch;
@@ -401,140 +402,152 @@ const ShineBackgroundParentRoot = styled.div`
 `;
 
 const FrameComponent: NextPage = () => {
+  const data = [
+    {
+      heading: "Floyx Marketplace", title: "Have you heard of NFT? Are you a talented graphic designer, painter, musician, photographer or just want to try your hand at this art? Check out our modern and innovative Marketplace, which allows you to monetize your artwork, as well as profit from each subsequent sale through a loyalty system. ", subTitle: "Are you a beginner? No problem! Floyx has created tools that will allow you to create your first NFT collection completely free of charge!", img: "/landing-page-2@2x.png"
+    },
+    { heading: "Floyx Launchpad", title: "Are you interested in the cryptocurrency industry? Do you have an innovative idea? Maybe you already have a working project but don't know how you should get started and how to raise capital for further development and marketing? You know perfectly well that without connections, contacts and a big name you will not be able to interest VCs, Angel Investors, big funds in your project? We know this problem! ", subTitle: "hat's why we built Launchpad - which allows you to show up to investors and raise capital in a safe and decentralized way! ", img: "/title2j.png" },
+    { heading: "Floyx Airdrops", title: "Are you a beginner in the cryptocurrency space? Maybe you are an advanced project that wants to expand its reach and attract many thousands or millions of active users to your product?  We have created a full token distribution machine within airdrops, in a tasks system where users will face your tasks starting from the easy ones to the most complicated ones! ", subTitle: "This is the perfect tool for people who spend long hours every day searching for the best airdrops to earn extra cryptocurrencies. A fair and automatic distribution method, based on the achieved results in a point system - this is what you are looking for! ", img: "/title3js.png" },
+    {
+      heading: "Decentralized Floyx Exchange", title: "If you have taken advantage of the entire Floyx ecosystem dedicated to the cryptocurrency industry and blockchain projects - it's time for your first listing! ", subTitle: "Floyx offers the safest trading option available in today's market. Connect your wallet, trade cryptocurrencies and receive them directly to your wallet - without any centralized intermediaries!", img: "/title4js.png"
+    }]
   return (
-    <ShineBackgroundParentRoot>
-      <ShineBackground>
-        <FrameParent>
-          <LineParent>
-            <FrameChild />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace1 />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace2 />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-            <SocialFiMarketplace />
-          </LineParent>
-          <FrameWrapper>
-            <UsernameInputParent>
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput1 />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-              <UsernameInput />
-            </UsernameInputParent>
-          </FrameWrapper>
-        </FrameParent>
-        <ShineBackgroundInner>
-          <FrameItem />
-        </ShineBackgroundInner>
-        <ShineBackgroundChild>
-          <FrameInner />
-        </ShineBackgroundChild>
-        <FrameDiv>
-          <FrameInner />
-        </FrameDiv>
-        <ShineBackgroundInner1>
-          <FrameChild1 />
-        </ShineBackgroundInner1>
-        <LineGroup>
-          <FrameChild2 />
-          <LineWrapper>
-            <FrameChild3 />
-          </LineWrapper>
-        </LineGroup>
-      </ShineBackground>
-      <EcoSystem>
-        <EcoSystemInner>
-          <FrameGroup>
-            <FloyxMarketplaceWrapper>
-              <FloyxMarketplace>Floyx Marketplace</FloyxMarketplace>
-            </FloyxMarketplaceWrapper>
-            <HaveYouHeardContainer>
-              <HaveYouHeard>{`Have you heard of NFT? Are you a talented graphic designer, painter, musician, photographer or just want to try your hand at this art? Check out our modern and innovative Marketplace, which allows you to monetize your artwork, as well as profit from each subsequent sale through a loyalty system. `}</HaveYouHeard>
-              <HaveYouHeard>&nbsp;</HaveYouHeard>
-              <HaveYouHeard>
-                Are you a beginner? No problem! Floyx has created tools that
-                will allow you to create your first NFT collection completely
-                free of charge!
-              </HaveYouHeard>
-            </HaveYouHeardContainer>
-          </FrameGroup>
-        </EcoSystemInner>
-        <FloyxMarketplaceWrapper>
-          <FrameContainer>
-            <FrameButton
-              disableElevation={true}
-              variant="contained"
-              sx={{
-                textTransform: "none",
-                color: "#0b081f",
-                fontSize: "16",
-                background:
-                  "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
-                borderRadius: "10px",
-                "&:hover": {
-                  background:
-                    "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
-                },
-                height: 48,
-              }}
-            >
-              Check more details
-            </FrameButton>
-            <FrameWrapper1>
-              <EllipseParent>
-                <EllipseDiv />
-                <TextFrame>
-                  <TextInput />
-                </TextFrame>
-                <TextFrame>
-                  <TextInput />
-                </TextFrame>
-                <TextFrame>
-                  <TextInput />
-                </TextFrame>
-              </EllipseParent>
-            </FrameWrapper1>
-          </FrameContainer>
-        </FloyxMarketplaceWrapper>
-        <LandingPage loading="lazy" alt="" src="/landing-page-2@2x.png" />
-      </EcoSystem>
-    </ShineBackgroundParentRoot>
+    <></>
+    // <ShineBackgroundParentRoot>
+    //   <ShineBackground>
+    //     <FrameParent>
+    //       <LineParent>
+    //         <FrameChild />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace1 />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace2 />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //         <SocialFiMarketplace />
+    //       </LineParent>
+    //       <FrameWrapper>
+    //         <UsernameInputParent>
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput1 />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //           <UsernameInput />
+    //         </UsernameInputParent>
+    //       </FrameWrapper>
+    //     </FrameParent>
+    //     <ShineBackgroundInner>
+    //       <FrameItem />
+    //     </ShineBackgroundInner>
+    //     <ShineBackgroundChild>
+    //       <FrameInner />
+    //     </ShineBackgroundChild>
+    //     <FrameDiv>
+    //       <FrameInner />
+    //     </FrameDiv>
+    //     <ShineBackgroundInner1>
+    //       <FrameChild1 />
+    //     </ShineBackgroundInner1>
+    //     <LineGroup>
+    //       <FrameChild2 />
+    //       <LineWrapper>
+    //         <FrameChild3 />
+    //       </LineWrapper>
+    //     </LineGroup>
+    //   </ShineBackground>
+    //   {/* <Carousel autoPlay> */}
+    //     {data.map((item, index) => {
+    //       return (<EcoSystem>
+    //         <EcoSystemInner>
+    //           <FrameGroup>
+    //             <FloyxMarketplaceWrapper>
+    //               <FloyxMarketplace>{item.heading}</FloyxMarketplace>
+    //             </FloyxMarketplaceWrapper>
+    //             <HaveYouHeardContainer>
+    //               <HaveYouHeard>{item.title}</HaveYouHeard>
+    //               <HaveYouHeard>&nbsp;</HaveYouHeard>
+    //               <HaveYouHeard>
+    //                 {item.subTitle}
+    //               </HaveYouHeard>
+    //             </HaveYouHeardContainer>
+    //           </FrameGroup>
+    //         </EcoSystemInner>
+    //         <FloyxMarketplaceWrapper>
+    //           <FrameContainer>
+    //             <FrameButton
+    //               disableElevation={true}
+    //               variant="contained"
+    //               sx={{
+    //                 textTransform: "none",
+    //                 color: "#0b081f",
+    //                 fontSize: "16",
+    //                 background:
+    //                   "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
+    //                 borderRadius: "10px",
+    //                 "&:hover": {
+    //                   background:
+    //                     "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
+    //                 },
+    //                 height: 48,
+    //               }}
+    //             >
+    //               Check more details
+    //             </FrameButton>
+    //             <FrameWrapper1>
+    //               <EllipseParent>
+    //                 <EllipseDiv />
+    //                 <TextFrame>
+    //                   <TextInput />
+    //                 </TextFrame>
+    //                 <TextFrame>
+    //                   <TextInput />
+    //                 </TextFrame>
+    //                 <TextFrame>
+    //                   <TextInput />
+    //                 </TextFrame>
+    //               </EllipseParent>
+    //             </FrameWrapper1>
+    //           </FrameContainer>
+    //         </FloyxMarketplaceWrapper>
+    //         <LandingPage loading="lazy" alt="" src={item.img} />
+    //       </EcoSystem>)
+    //     })}
+    //   {/* </Carousel> */}
+    // </ShineBackgroundParentRoot>
   );
 };
 

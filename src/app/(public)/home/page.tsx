@@ -351,7 +351,7 @@ const VideoLive = styled.div`
   gap: 0px 4px;
 `;
 const ImageGoogleLogo = styled.div`
-  flex: 1;
+   flex: 1;
   position: relative;
   font-size: 14px;
   letter-spacing: 0.25px;
@@ -359,7 +359,7 @@ const ImageGoogleLogo = styled.div`
   font-weight: 600;
   font-family: Poppins;
   color: #eff0fa;
-  text-align: center;
+   text-align: center;
 `;
 const TextContainer1 = styled.div`
   flex: 1;
@@ -930,7 +930,22 @@ const Home: NextPage = () => {
               </VideoLive>
               <Chip>
                 <TextContainer1>
-                  <ImageGoogleLogo>10 others in session</ImageGoogleLogo>
+                  <ImageGoogleLogo><div className="wrap43">
+                    <h4 className="wordCarousel">
+
+                      <div>
+
+                        <ul className="flip5">
+                          <li>100k</li>
+                          <li>10k</li>
+                          <li>23k</li>
+                          <li>67k</li>
+                          <li>231k</li>
+                        </ul>
+                      </div>
+                    </h4>
+                    <span className="spanWord">others in session</span>
+                  </div> </ImageGoogleLogo>
                 </TextContainer1>
               </Chip>
             </VideoLiveParent>

@@ -57,6 +57,7 @@
     "react-mentions": "^4.4.10",
     "react-phone-input-2": "^2.15.1",
     "react-redux": "8.1.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-share": "^5.0.3",
     "react-textarea-autosize": "^8.5.3",
     "react-vimeo": "^2.0.0",
