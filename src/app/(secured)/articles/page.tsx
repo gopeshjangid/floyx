@@ -18,7 +18,7 @@ import { GradientButton } from '@/components/gradientButton';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
-export default function Page() {
+export default function Page({searchParams}) {
   const isMobile = useMediaQuery('(max-width:480px)');
   const [tabName, setTabName] = useState('popular');
 
@@ -40,8 +40,30 @@ export default function Page() {
   ] = useLazyGetSearchArticleQuery();
 
   const valueChanges = (val) => {
+    if(searchParams?.id){
+      removeQueryParam()
+    }
     setDynamicTab(val);
   }
+  
+  const removeQueryParam = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.delete('id'); 
+    searchParams.delete('name'); 
+    const newUrl = `${window.location.pathname}`;
+    window.history.replaceState(null, '', newUrl);
+  };
+
+  useEffect(() => {
+    if(searchParams?.id && searchParams?.name){
+      setDynamicTab({
+        searchBy: 'tag',
+        tagId: searchParams.id,
+        value: searchParams.name,
+      });
+    }
+  },[searchParams?.id, searchParams?.name])
+
   useEffect(() => {
     if (dynamicTab.searchBy === 'tag') {
       getArticlesByTags({ tagId: dynamicTab.tagId })
