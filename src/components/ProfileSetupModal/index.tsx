@@ -93,7 +93,10 @@ const ProfileSetupModal = ({
 
   useEffect(() => {
     if (settingUpdateData === 'success') {
-      onSubmit();
+      if(onSubmit) {
+
+        onSubmit()
+      }
       handleUpdate({
         username: formData.username,
         name: formData.name,
