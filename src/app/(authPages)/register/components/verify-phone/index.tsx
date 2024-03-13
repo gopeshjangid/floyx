@@ -9,7 +9,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface IVerifyPhoneProps {
-  onSubmit: (e: any) => void;
+  onSubmit?: (e: any) => void;
   value: string;
   onChange: (e: any) => void;
   submitLoading: boolean;
