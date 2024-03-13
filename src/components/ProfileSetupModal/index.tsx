@@ -63,7 +63,7 @@ const ProfileSetupModal = ({
 }: {
   open: boolean;
   handleClose: () => void;
-  onSubmit: () => void;
+  onSubmit?: () => any;
 }) => {
   const { t } = useTranslation();
   const toast = useToast();
