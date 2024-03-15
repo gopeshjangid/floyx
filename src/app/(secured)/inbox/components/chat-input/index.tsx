@@ -94,8 +94,18 @@ const ChatInput = ({
   };
 
   const handleSubmit = (message: string) => {
-    setMessage('');
-    onSubmit(message);
+    if (message.trim() !== '') {
+      onSubmit(message);
+      setMessage(''); // Clear the message input
+
+      // Append a newline if Shift key is pressed along with Enter
+      if (message.includes('\n')) {
+        onMessageChange('\n');
+        // setMessage('\n')
+      } else {
+        onMessageChange(''); // If Enter is pressed without Shift, reset message input
+      }
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,9 +133,8 @@ const ChatInput = ({
         gap={1.5}
       >
         <UserAvatar
-          src={`${ApiEndpoint.ProfileDetails}/avatar/${
-            (session as any)?.data?.user?.username
-          }`}
+          src={`${ApiEndpoint.ProfileDetails}/avatar/${(session as any)?.data?.user?.username
+            }`}
           alt={(session as any)?.data?.user?.username}
           sx={{ width: '49px', height: '49px' }}
         />
@@ -133,8 +142,15 @@ const ChatInput = ({
           <TextField
             value={message}
             onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                handleSubmit(message);
+              }
+            }}
             fullWidth
             hiddenLabel
+            multiline  // Enable multiline input
+            // rows={2}   // Set the number of rows (adjust as needed)
             placeholder={'Write a message...'}
             InputProps={{
               endAdornment: (
@@ -150,6 +166,7 @@ const ChatInput = ({
               ),
             }}
           />
+
         </Box>
         {emojiPicker && (
           <Box
