@@ -16,7 +16,7 @@ const ChatSenderCard = ({
   username: string;
 }) => {
   const { palette } = useTheme();
-
+  console.log("message2", message)
   return (
     <Box width="fit-content" alignSelf="flex-end">
       <Box
@@ -37,6 +37,7 @@ const ChatSenderCard = ({
           borderRadius="10px 0px 10px 10px"
         >
           <Typography
+            sx={{ wordBreak: "break-word" }}
             variant="body1"
             color={palette?.mode === 'light' ? '#fff' : '#0B081F'}
             fontSize="15px"
@@ -44,7 +45,12 @@ const ChatSenderCard = ({
             lineHeight={{ md: '28px', xs: '24px' }}
             margin={0}
           >
-            {message}
+            {message.split('\n').map((line, index) => (
+              <React.Fragment key={index}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
           </Typography>
         </Box>
 
