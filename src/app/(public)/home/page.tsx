@@ -8,14 +8,14 @@ import styled from '@emotion/styled';
 import NavBar from "./components/frame-component1";
 import EmailInputLabelFrame from "./components/email-input-label-frame";
 import RegisterFormGroup from "./components/register-form-group";
-import CenteredRectangle from "./components/centered-rectangle";
-import Rectangle from "./components/rectangle";
+import CenteredRectangle from "./components/podcastContainer";
+import Rectangle from "./components/chatContainer";
 import Group from "./components/formLayout";
 import DownloadApp from "./components/download-app";
 import FrameComponent from "./components/frame-component";
 import RegisterContainer from "./components/register-container";
 import FrameGroups from "./components/frame-groups";
-
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 const Desktop110Child = styled.img`
   width: 1717.6px;
   height: 1606.5px;

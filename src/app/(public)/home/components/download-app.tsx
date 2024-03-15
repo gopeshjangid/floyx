@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from '@emotion/styled';
 
-const CtaIcon = styled.img`
+const Background = styled.img`
   position: absolute;
   top: 104px;
   left: calc(50% - 651.45px);
@@ -124,18 +124,20 @@ const DownloadApp = () => {
   useEffect(() => {
     if (isIntersecting) {
       document.querySelector("#download-dd")?.classList.add("download-mobile");
-     // document.querySelector("#id-I03221_1366701").classList.add("object");
+       document.querySelector("#download-ll").classList.add("download-mobile-ll");
     }
     else {
       document.querySelector("#download-dd")?.classList.remove("download-mobile");
-      document.querySelector("#id-I03221_1366701").classList.add("download-mobile-reverse");
+         document.querySelector("#download-ll")?.classList.remove("download-mobile-ll");
+     
     };
 
   }, [isIntersecting]);
   return (
     // <><AnimateDownload /></>
     <DownloadAppRoot ref={ref}>
-      <CtaIcon alt="" src="/cta@2x.png" />
+      <img className="mobile-img-left" id="download-ll" loading="lazy" alt="" src="leftLogMobile.png" />
+      <Background alt="" src="/downloadBg.png" />
       <img className="mobile-img" id="download-dd" loading="lazy" alt="" src="/group-3@2x.png" />
       <TermsOfService>
         <DownloadTheAppParent>

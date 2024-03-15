@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { Button } from "@mui/material";
 import styled from '@emotion/styled'
-  ;
+import React, { useState, useEffect, useRef } from "react"
 import { AnimateText } from "./Animations/Header/animateText";
 
 const T = styled.span``;
@@ -709,8 +709,63 @@ const EmailInputLabelFrameRoot = styled.div`
 `;
 
 const EmailInputLabelFrame: NextPage = () => {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const ref = useRef(null);
+
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
+      { rootMargin: "-300px" }
+    );
+
+    observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, [isIntersecting]);
+
+ let left = document.getElementById("left");
+
+left?.addEventListener("mouseover", leftIn, false);
+left?.addEventListener("mouseout", leftOut, false);
+
+function leftIn()
+{   document.querySelector("#postPhoto").classList.add("left-hover");
+ console.log(left,document.querySelector("#postPhoto").classList,"llllllllllllll")}
+
+
+function leftOut()
+{  document.querySelector("#postPhoto").classList.remove("left-hover");}
+
+  let right = document.getElementById("right");
+ 
+  right?.addEventListener("mouseover", rightIn);
+  right?.addEventListener("mouseout", rightOut);
+
+  function rightIn() { document.querySelector("#postPhoto").classList.add("right-hover");
+
+ console.log(right,document.querySelector("#postPhoto").classList,"rrrrrrrrrrrrrrrr")}
+
+  function rightOut() { document.querySelector("#postPhoto").classList.remove("right-hover"); }
+  useEffect(() => {
+
+    if (isIntersecting) {
+      document.querySelector("#postPhoto").classList.add("zoom-in-out-box");
+      // document.querySelector("#id-I03221_1366701").classList.add("object");
+      // item.addEventListener("mouseout", func1, false);
+    }
+    else {
+      document.querySelector("#postPhoto").classList.remove("zoom-in-out-box");
+
+    };
+
+
+  }, [isIntersecting]);
   return (
-    <EmailInputLabelFrameRoot>
+    <EmailInputLabelFrameRoot ref={ref}>
+      {/* <AnimateText className="abc"/> */}
       <InputFieldContainerRectangl>
         <TermsAgreementTextFrameParent>
           <TermsAgreementTextFrame>
@@ -752,14 +807,14 @@ const EmailInputLabelFrame: NextPage = () => {
         {/* <PasswordInputLabelFrame>
         </PasswordInputLabelFrame> */}
         <HeroNewScreenAnimation >
-          <WrapperDesktop11Parent id="p" className="zoom-in-out-box op" >
+          <WrapperDesktop11Parent id="postPhoto" className="" >
             <WrapperDesktop >
               <Desktop loading="lazy" alt="" src="/desktop--1-1@2x.png" />
             </WrapperDesktop >
-            <DesktopRectangle className="left" />
+            <DesktopRectangle id="left" className="" />
             <DesktopRectangle1 className="2s" />
-            <Image1 className="3s">
-              <DesktopRectangle2 />
+            <Image1  >
+              <DesktopRectangle2 className="" id="right" />
             </Image1>
           </WrapperDesktop11Parent>
         </HeroNewScreenAnimation>

@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
 import { Button } from "@mui/material";
 import styled from '@emotion/styled';
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-
+import React,{useState,useEffect,useRef} from 'react'
 const FrameChild = styled.div`
   align-self: stretch;
   width: 1px;
@@ -402,6 +400,9 @@ const ShineBackgroundParentRoot = styled.div`
 `;
 
 const FrameComponent: NextPage = () => {
+  const [value,setValue]=useState({index:0,
+      heading: "Floyx Marketplace", title: "Have you heard of NFT? Are you a talented graphic designer, painter, musician, photographer or just want to try your hand at this art? Check out our modern and innovative Marketplace, which allows you to monetize your artwork, as well as profit from each subsequent sale through a loyalty system. ", subTitle: "Are you a beginner? No problem! Floyx has created tools that will allow you to create your first NFT collection completely free of charge!", img: "/landing-page-2@2x.png"
+    })
   const data = [
     {
       heading: "Floyx Marketplace", title: "Have you heard of NFT? Are you a talented graphic designer, painter, musician, photographer or just want to try your hand at this art? Check out our modern and innovative Marketplace, which allows you to monetize your artwork, as well as profit from each subsequent sale through a loyalty system. ", subTitle: "Are you a beginner? No problem! Floyx has created tools that will allow you to create your first NFT collection completely free of charge!", img: "/landing-page-2@2x.png"
@@ -411,143 +412,177 @@ const FrameComponent: NextPage = () => {
     {
       heading: "Decentralized Floyx Exchange", title: "If you have taken advantage of the entire Floyx ecosystem dedicated to the cryptocurrency industry and blockchain projects - it's time for your first listing! ", subTitle: "Floyx offers the safest trading option available in today's market. Connect your wallet, trade cryptocurrencies and receive them directly to your wallet - without any centralized intermediaries!", img: "/title4js.png"
     }]
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const ref = useRef(null);
+
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
+      { rootMargin: "-300px" }
+    );
+
+    observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, [isIntersecting]);
+
+  useEffect(() => {
+    
+    if (isIntersecting) {
+      let newValue
+       if(data[value.index+1]){
+                 newValue ={...data[value.index+1],index:value.index+1}
+         }else{
+              newValue ={...data[0],index:0}
+
+         }
+          
+     
+         const interval = setInterval(() => {
+      setValue(newValue);
+    }, 3000);
+
+    return () => clearInterval(interval);
+
+    }
+    else {
+      
+    };
+
+  }, [isIntersecting,value]);
+   
   return (
-    <></>
-    // <ShineBackgroundParentRoot>
-    //   <ShineBackground>
-    //     <FrameParent>
-    //       <LineParent>
-    //         <FrameChild />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace1 />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace2 />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //         <SocialFiMarketplace />
-    //       </LineParent>
-    //       <FrameWrapper>
-    //         <UsernameInputParent>
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput1 />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //           <UsernameInput />
-    //         </UsernameInputParent>
-    //       </FrameWrapper>
-    //     </FrameParent>
-    //     <ShineBackgroundInner>
-    //       <FrameItem />
-    //     </ShineBackgroundInner>
-    //     <ShineBackgroundChild>
-    //       <FrameInner />
-    //     </ShineBackgroundChild>
-    //     <FrameDiv>
-    //       <FrameInner />
-    //     </FrameDiv>
-    //     <ShineBackgroundInner1>
-    //       <FrameChild1 />
-    //     </ShineBackgroundInner1>
-    //     <LineGroup>
-    //       <FrameChild2 />
-    //       <LineWrapper>
-    //         <FrameChild3 />
-    //       </LineWrapper>
-    //     </LineGroup>
-    //   </ShineBackground>
-    //   {/* <Carousel autoPlay> */}
-    //     {data.map((item, index) => {
-    //       return (<EcoSystem>
-    //         <EcoSystemInner>
-    //           <FrameGroup>
-    //             <FloyxMarketplaceWrapper>
-    //               <FloyxMarketplace>{item.heading}</FloyxMarketplace>
-    //             </FloyxMarketplaceWrapper>
-    //             <HaveYouHeardContainer>
-    //               <HaveYouHeard>{item.title}</HaveYouHeard>
-    //               <HaveYouHeard>&nbsp;</HaveYouHeard>
-    //               <HaveYouHeard>
-    //                 {item.subTitle}
-    //               </HaveYouHeard>
-    //             </HaveYouHeardContainer>
-    //           </FrameGroup>
-    //         </EcoSystemInner>
-    //         <FloyxMarketplaceWrapper>
-    //           <FrameContainer>
-    //             <FrameButton
-    //               disableElevation={true}
-    //               variant="contained"
-    //               sx={{
-    //                 textTransform: "none",
-    //                 color: "#0b081f",
-    //                 fontSize: "16",
-    //                 background:
-    //                   "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
-    //                 borderRadius: "10px",
-    //                 "&:hover": {
-    //                   background:
-    //                     "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
-    //                 },
-    //                 height: 48,
-    //               }}
-    //             >
-    //               Check more details
-    //             </FrameButton>
-    //             <FrameWrapper1>
-    //               <EllipseParent>
-    //                 <EllipseDiv />
-    //                 <TextFrame>
-    //                   <TextInput />
-    //                 </TextFrame>
-    //                 <TextFrame>
-    //                   <TextInput />
-    //                 </TextFrame>
-    //                 <TextFrame>
-    //                   <TextInput />
-    //                 </TextFrame>
-    //               </EllipseParent>
-    //             </FrameWrapper1>
-    //           </FrameContainer>
-    //         </FloyxMarketplaceWrapper>
-    //         <LandingPage loading="lazy" alt="" src={item.img} />
-    //       </EcoSystem>)
-    //     })}
-    //   {/* </Carousel> */}
-    // </ShineBackgroundParentRoot>
+    <ShineBackgroundParentRoot ref={ref}>
+      <ShineBackground>
+        <FrameParent>
+          <LineParent>
+            <FrameChild />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace1 />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace2 />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+            <SocialFiMarketplace />
+          </LineParent>
+          <FrameWrapper>
+            <UsernameInputParent>
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput1 />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+              <UsernameInput />
+            </UsernameInputParent>
+          </FrameWrapper>
+        </FrameParent>
+        <ShineBackgroundInner>
+          <FrameItem />
+        </ShineBackgroundInner>
+        <ShineBackgroundChild>
+          <FrameInner />
+        </ShineBackgroundChild>
+        <FrameDiv>
+          <FrameInner />
+        </FrameDiv>
+        <ShineBackgroundInner1>
+          <FrameChild1 />
+        </ShineBackgroundInner1>
+        <LineGroup>
+          <FrameChild2 />
+          <LineWrapper>
+            <FrameChild3 />
+          </LineWrapper>
+        </LineGroup>
+      </ShineBackground>
+       
+          <EcoSystem>
+            <EcoSystemInner>
+              <FrameGroup>
+                <FloyxMarketplaceWrapper>
+                  <FloyxMarketplace>{value.heading}</FloyxMarketplace>
+                </FloyxMarketplaceWrapper>
+                <HaveYouHeardContainer>
+                  <HaveYouHeard>{value.title}</HaveYouHeard>
+                  <HaveYouHeard>&nbsp;</HaveYouHeard>
+                  <HaveYouHeard>
+                    {value.subTitle}
+                  </HaveYouHeard>
+                </HaveYouHeardContainer>
+              </FrameGroup>
+            </EcoSystemInner>
+            <FloyxMarketplaceWrapper>
+              <FrameContainer>
+                <FrameButton
+                  disableElevation={true}
+                  variant="contained"
+                  sx={{
+                    textTransform: "none",
+                    color: "#0b081f",
+                    fontSize: "16",
+                    background:
+                      "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
+                    borderRadius: "10px",
+                    "&:hover": {
+                      background:
+                        "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
+                    },
+                    height: 48,
+                  }}
+                >
+                  Check more details
+                </FrameButton>
+                <FrameWrapper1>
+                 { <EllipseParent>
+                   
+                    { data.map((item,index)=><TextFrame onClick={()=>{setValue({...item,index:index})}}>
+                      <TextInput  className={value.heading==item.heading && "active-pointer"} />
+                    </TextFrame>)}
+                   
+                  </EllipseParent>}
+                </FrameWrapper1>
+              </FrameContainer>
+            </FloyxMarketplaceWrapper>
+            <LandingPage loading="lazy" alt="" src={value.img} />
+          </EcoSystem>
+        
+    </ShineBackgroundParentRoot>
   );
 };
 

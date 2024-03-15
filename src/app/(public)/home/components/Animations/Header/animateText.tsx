@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
+import "./style.css";
 
 import "./animation.css";
 import runAnimations, { allLinks, allFunctions } from "./scripts";
 export const AnimateText = () => {
     useEffect(() => {
         debugger
-        runAnimations();
+        // runAnimations();
     }, []);
     return (
-        <div className="parent-div">
+        <div className="parent-div-heading">
             <div className="frame-427320676-1-533532 pos-abs" id="id-03084">
                 <div className="floyx-is-a-dece-1-576079 pos-abs" id="id-03137">
                     {/* <span className="floyx-is-a-dece-1-576079-0">

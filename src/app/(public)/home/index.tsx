@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import NavBar from "./components/frame-component1";
 import EmailInputLabelFrame from "./components/email-input-label-frame";
 import RegisterFormGroup from "./components/register-form-group";
-import CenteredRectangle from "./components/centered-rectangle";
+import CenteredRectangle from "./components/podcastContainer";
 import Rectangle from "./components/rectangle";
 import Group from "./components/formLayout";
 import DownloadApp from "./components/download-app";
