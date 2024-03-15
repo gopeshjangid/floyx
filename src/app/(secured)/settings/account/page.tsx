@@ -410,6 +410,8 @@ const AccountSetting = () => {
 
             <Button
               variant="outlined"
+              onClick={()=>{   toast.success('Please Wait...');
+              window.location = "mailto:data.protection@floyx.com?subject=Account Deletion Request";}}
               color="error"
               sx={{
                 border: theme => `1px solid ${theme.palette.error.main}`,

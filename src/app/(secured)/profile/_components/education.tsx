@@ -197,6 +197,7 @@ const EducationForm: React.FC = () => {
               key={'education-' + index}
               {...education}
               type="Education"
+              isSameuser={isSameuser}
             />
           ))
         ) : (

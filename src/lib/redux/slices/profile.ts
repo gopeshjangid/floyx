@@ -237,6 +237,20 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout'],
     }),
+    deleteData: builder.mutation<Education, Partial<Education>>({
+      query: Data => {
+       
+        return{
+        url: `${ApiEndpoint.RemoveProfileDetails}/${Data.type.toLowerCase()}/remove/${Data.id}`,
+        method: 'DELETE',
+       
+      }
+      
+      },
+      transformResponse: (response: ApiResponse<Education>, meta, arg) =>
+        response.value.data,
+      invalidatesTags: ['profileAbout'],
+    }),
     addExperience: builder.mutation<Experience, Partial<Experience>>({
       query: experienceData => ({
         url: ApiEndpoint.AddProfileExperience,
@@ -402,6 +416,7 @@ export const {
   useLazyGetPopularAccountsToFollowQuery,
   useGetProfileAboutQuery,
   useAddEducationMutation,
+  useDeleteDataMutation,
   useAddExperienceMutation,
   useAddInvestmentMutation,
   useUpdateEducationMutation,
