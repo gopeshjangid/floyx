@@ -483,7 +483,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 />
               </IconButton>
             </Box>
-            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+            <Box sx={{ pr:1,display: { xs: 'block', sm: 'none' } }}>
               <IconButton
                 aria-label="open drawer"
                 edge="end"

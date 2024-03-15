@@ -33,6 +33,7 @@ export class ApiEndpoint {
   public static FindUserByName = ApiEndpoint.BasePath + '/api/v1/users/find'
   public static UserByName = ApiEndpoint.BasePath + '/api/v1/users/byName'
   public static GetAboutProfile = ApiEndpoint.BasePath + '/api/v1/users/about'
+  public static RemoveProfileDetails = ApiEndpoint.BasePath + '/api/v1/users/about'
   public static UpdateAboutProfile = ApiEndpoint.BasePath + '/api/v1/users/about'
   public static AddProfileExperience = ApiEndpoint.BasePath + '/api/v1/users/about/experience'
   public static EditProfileExperience = ApiEndpoint.BasePath + '/api/v1/users/about/experience?experienceId='

@@ -16,7 +16,6 @@ const ChatSenderCard = ({
   username: string;
 }) => {
   const { palette } = useTheme();
-  console.log("message2", message)
   return (
     <Box width="fit-content" alignSelf="flex-end">
       <Box

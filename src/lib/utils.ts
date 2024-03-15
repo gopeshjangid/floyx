@@ -39,33 +39,38 @@ const logout = async () => {
   await signOut({ redirect: false });
 };
 
-export const baseQuery = retry(fetchBaseQuery({
-  baseUrl: '/',
-  prepareHeaders: (headers, { getState }) => {
-    const token = getCookie(
-      'FLOYX_TOKEN',
-      isServer() ? getState()?.req : getCookie('FLOYX_TOKEN')
-    );
-    headers.set('authorization', `Bearer ${token}`);
-    return headers;
-  },
-  responseHandler: async response => {
-    
-    if (response.status === 401) {
-      logout();
-    }
-    return response.json();
-  },
-}),{maxRetries: 3});
+export const baseQuery = retry(
+  fetchBaseQuery({
+    baseUrl: '/',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getCookie(
+        'FLOYX_TOKEN',
+        isServer() ? getState()?.req : getCookie('FLOYX_TOKEN')
+      );
+      headers.set('authorization', `Bearer ${token}`);
+      return headers;
+    },
+    responseHandler: async response => {
+      if (response.status === 401) {
+        logout();
+      }
+      return response.json();
+    },
+  }),
+  { maxRetries: 3 }
+);
 
 export const fetchServerData = async (
-  url: string, token:string
+  url: string,
+  token: string
 ): { isError: boolean; data: any } => {
   try {
-    const res = await fetch(url,{headers:{
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-  }});
+    const res = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (!res.ok) {
       return { isError: true, data: null };
     }
@@ -73,7 +78,7 @@ export const fetchServerData = async (
     return { isError: false, data: data?.value?.data };
   } catch (e) {
     console.log('Fetch Error:', e);
-    return { isError: true, data: JSON.stringify(e)};
+    return { isError: true, data: JSON.stringify(e) };
   }
 };
 
@@ -92,7 +97,7 @@ export const months = [
   { label: 'December', value: '12' },
 ];
 
-export const years = Array.from({ length: 2023 - 2000 + 1 }, (_, index) => ({
+export const years = Array.from({ length: 2024 - 2000 + 1 }, (_, index) => ({
   label: String(index + 2000),
   value: String(index + 2000),
 }));
@@ -183,7 +188,7 @@ export const userBlockedStatus = [
   'Both_user_blocked_each_other',
 ];
 
-export const getUserBlockStatusMessage = (status) =>{
+export const getUserBlockStatusMessage = status => {
   switch (status) {
     case 'Unable_to_show_detail_unblock_first':
       return 'You blocked this user!';
@@ -198,4 +203,4 @@ export const getUserBlockStatusMessage = (status) =>{
       return 'some thing went wrong!';
       break;
   }
-}
+};

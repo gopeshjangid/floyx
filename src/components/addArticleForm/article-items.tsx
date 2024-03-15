@@ -164,7 +164,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       } else if (shiftKey && key === 'Enter') {
         e.preventDefault();
         if (item.type === 'paragraph' || item.type === 'subtitle' || item.type === 'quote') {
-          console.log("else shift")
+       
           //item.value += '<br/>';
           setState((state)=>({...state, inputsList: inputsList.map((x: any) => {
             if(x.index === index){
