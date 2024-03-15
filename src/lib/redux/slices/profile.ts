@@ -237,7 +237,7 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout'],
     }),
-    deleteData: builder.mutation<Education, Partial<Education>>({
+    deleteData: builder.mutation<Education,{ id: string,type:string }>({
       query: Data => {
        
         return{
