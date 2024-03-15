@@ -71,7 +71,7 @@
   "comp": {
     "addArticleForm": {
       "error1": "Your article needs a title",
-      "error2": "Your article is too short to publish {{contentLength}}/1000 characters more",
+      "error2": "Your article is too short to publish {{contentLength}}/500 characters more",
       "successMsg": "Your draft saved.",
       "title": "Title",
       "addTags": "Add hashtags",

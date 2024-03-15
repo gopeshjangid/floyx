@@ -218,7 +218,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
       toast.error(t("comp.addArticleForm.error1"));
       return false;
     }
-    if (!(contentLength >= 1000)) {
+    if (!(contentLength >= 500)) {
       toast.error((t("comp.addArticleForm.error2",{contentLength})));
       return false;
     }
@@ -362,7 +362,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
   ]);
 
   useEffect(() => {
-    if (isEditing) {
+    if (isEditing && articleId) {
       getArticleDetail();
     }
   }, [isEditing, articleId]);
@@ -400,6 +400,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
           onSelectTags={onSelectTags}
           maxSelectedTag={5}
           resetAll={resetAll}
+          // initialTags={hashtags} 
         />
       </FormControl>
       <Stack

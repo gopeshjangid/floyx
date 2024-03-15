@@ -133,7 +133,7 @@ const {t}=useTranslation()
                 />
               ) : (
                 <ArticleDescription
-                  variant="body1"
+                  variant="h2"
                   dangerouslySetInnerHTML={createMarkup(val?.value)}
                 />
               )}
