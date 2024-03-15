@@ -237,7 +237,7 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout'],
     }),
-    deleteData: builder.mutation<Education,{ id: string,type:string }>({
+    deleteProfileData: builder.mutation<Education,{ id: string,type:string }>({
       query: Data => {
        
         return{
@@ -416,7 +416,7 @@ export const {
   useLazyGetPopularAccountsToFollowQuery,
   useGetProfileAboutQuery,
   useAddEducationMutation,
-  useDeleteDataMutation,
+  useDeleteProfileDataMutation,
   useAddExperienceMutation,
   useAddInvestmentMutation,
   useUpdateEducationMutation,

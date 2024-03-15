@@ -17,7 +17,7 @@ import EducationIcon from '@/assets/images/icons/educationIcon.svg';
 import InvestmentIcon from '@/assets/images/icons/investmentIcon.svg';
 import Image from 'next/image';
 import {
-  useDeleteDataMutation
+  useDeleteProfileDataMutation
 } from '@/lib/redux/slices/profile';
 import { useToast } from '@/components/Toast/useToast';
 export type CommonFields = {
@@ -87,9 +87,9 @@ const ProfileActivityInfo: React.FC<
   const { onEdit, isSameuser, ...data } = props;
   const isMobile = useMediaQuery('(max-width:480px)');
 const [
-    deleteData,
+    deleteProfileData,
     { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSucess },
-  ] = useDeleteDataMutation();
+    ] = useDeleteProfileDataMutation();
   const getIcon = () => {
     let icon = null;
     switch (props.type) {
@@ -118,7 +118,7 @@ const [
   };
 
   return (
-    <Box className="Profilewala">
+    <Box >
       <Grid container spacing={1}>
         <Grid item xs={12} sm={6}>
           <Stack direction="row" gap={2}>
@@ -132,7 +132,7 @@ const [
                   </IconButton>
                    <IconButton onClick={() => {
                   
-                    deleteData({id:props.id,type:props.type}).unwrap().then((res)=>{
+                    deleteProfileData({id:props.id,type:props.type}).unwrap().then((res)=>{
                      toast.success("Deleted Successfully");
                     })}} size="small">
                     <DeleteForeverOutlinedIcon  sx={{ fontSize: '12px' }} />
