@@ -1,6 +1,6 @@
 function runAnimations() {
   setTimeout(() => {
-    document.querySelector("#id-03215").classList.add("animationClass-03215");
+    document?.querySelector("#id-03215")?.classList.add("animationClass-03215");
     document
       .querySelector("#id-I03215_933077")
       .classList.add("animationClass-I03215_933077");
@@ -25,7 +25,7 @@ function runAnimations() {
     document
       .querySelector("#id-I03215_933053")
       .classList.add("animationClass-I03215_933053");
-    document.querySelector("#id-I03215_933053 > div:first-child").classList.add(
+    document?.querySelector("#id-I03215_933053 > div:first-child")?.classList.add(
       "bgClass-0424",
 
       "bg-no-repeat",
@@ -64,7 +64,7 @@ function runAnimations() {
   }, 3000);
 
   setTimeout(() => {
-    document.querySelector("#id-03215").classList.add("animationClass-0419");
+    document?.querySelector("#id-03215")?.classList.add("animationClass-0419");
     document
       .querySelector("#id-I03215_933077")
       .classList.add("animationClass-0420");
@@ -125,7 +125,7 @@ function runAnimations() {
   }, 6300);
 
   setTimeout(() => {
-    document.querySelector("#id-03215").classList.add("animationClass-0430");
+    document?.querySelector("#id-03215")?.classList.add("animationClass-0430");
     document
       .querySelector("#id-I03215_933077")
       .classList.add("animationClass-0431");
@@ -186,14 +186,14 @@ function runAnimations() {
   }, 9600);
 
   setTimeout(() => {
-    document.querySelector("#id-03215").classList.add("animationClass-0441");
+    document?.querySelector("#id-03215")?.classList.add("animationClass-0441");
     document
       .querySelector("#id-I03215_933077")
       .classList.add("animationClass-0442");
     document
       .querySelector("#id-I03215_932941")
       .classList.add("animationClass-0443");
-    document.querySelector("#id-I03215_932941 > div:first-child").classList.add(
+    document?.querySelector("#id-I03215_932941 > div:first-child")?.classList.add(
       "bgClass-0410",
 
       "bg-no-repeat",
@@ -250,7 +250,7 @@ function runAnimations() {
   }, 10100);
 
   setTimeout(() => {
-    document.querySelector("#id-03215").classList.add("animationClass-0408");
+    document?.querySelector("#id-03215")?.classList.add("animationClass-0408");
     document
       .querySelector("#id-I03215_933077")
       .classList.add("animationClass-0409");
@@ -275,7 +275,7 @@ function runAnimations() {
     document
       .querySelector("#id-I03215_933053")
       .classList.add("animationClass-0413");
-    document.querySelector("#id-I03215_933053 > div:first-child").classList.add(
+    document?.querySelector("#id-I03215_933053 > div:first-child")?.classList.add(
       "bgClass-0424",
 
       "bg-no-repeat",

@@ -14,19 +14,19 @@ export const AnimateForm = () => {
       { rootMargin: "-300px" }
     );
 
-    observer.observe(ref.current);
+    if (ref?.current) { observer.observe(ref.current); }
 
     return () => observer.disconnect();
   }, [isIntersecting]);
 
   useEffect(() => {
     if (isIntersecting) {
-      document.querySelector("#id-I03221_1366730").classList.add("object");
-      document.querySelector("#id-I03221_1366701").classList.add("object");
+      document?.querySelector("#id-I03221_1366730")?.classList.add("object");
+      document?.querySelector("#id-I03221_1366701")?.classList.add("object");
     }
     else {
-      document.querySelector("#id-I03221_1366730").classList.remove("object");
-      document.querySelector("#id-I03221_1366701").classList.remove("object");
+      document?.querySelector("#id-I03221_1366730")?.classList.remove("object");
+      document?.querySelector("#id-I03221_1366701")?.classList.remove("object");
     };
 
   }, [isIntersecting]);

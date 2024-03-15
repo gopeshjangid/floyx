@@ -444,7 +444,7 @@ const GroupRoot = styled.div`
   font-family: Poppins;
 `;
 
-const Group: NextPage = () => {
+const FormGroupLayout: NextPage = () => {
   return (
     <>
       <AnimateForm/>
@@ -567,4 +567,4 @@ const Group: NextPage = () => {
   );
 };
 
-export default Group;
+export default FormGroupLayout;

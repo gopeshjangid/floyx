@@ -116,20 +116,20 @@ const DownloadApp = () => {
       { rootMargin: "-300px" }
     );
 
-    observer.observe(ref.current);
+    if (ref?.current) { observer.observe(ref.current); }
 
     return () => observer.disconnect();
   }, [isIntersecting]);
 
   useEffect(() => {
     if (isIntersecting) {
-      document.querySelector("#download-dd")?.classList.add("download-mobile");
-       document.querySelector("#download-ll").classList.add("download-mobile-ll");
+      document?.querySelector("#download-dd")?.classList.add("download-mobile");
+      document?.querySelector("#download-ll")?.classList.add("download-mobile-ll");
     }
     else {
-      document.querySelector("#download-dd")?.classList.remove("download-mobile");
-         document.querySelector("#download-ll")?.classList.remove("download-mobile-ll");
-     
+      document?.querySelector("#download-dd")?.classList.remove("download-mobile");
+      document?.querySelector("#download-ll")?.classList.remove("download-mobile-ll");
+
     };
 
   }, [isIntersecting]);

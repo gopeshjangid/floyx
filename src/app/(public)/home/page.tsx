@@ -3,15 +3,15 @@ import { AnimateText } from "./components/Animations/Header/animateText"
 import { CommentsCards } from './components/Animations/CommentsCard/cards'
 import type { NextPage } from "next";
 import { Button } from "@mui/material";
-import AboutUs from "./components/about-us";
+import AboutUs from "./components/AboutUs";
 import styled from '@emotion/styled';
 import NavBar from "./components/frame-component1";
-import EmailInputLabelFrame from "./components/email-input-label-frame";
+import EmailInputLabelFrame from "./components/description";
 import RegisterFormGroup from "./components/register-form-group";
 import CenteredRectangle from "./components/podcastContainer";
 import Rectangle from "./components/chatContainer";
 import Group from "./components/formLayout";
-import DownloadApp from "./components/download-app";
+import DownloadApp from "./components/downloadNow";
 import FrameComponent from "./components/frame-component";
 import RegisterContainer from "./components/register-container";
 import FrameGroups from "./components/frame-groups";

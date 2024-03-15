@@ -12,7 +12,7 @@ function runAnimations() {
   runAnimations_0809();
 
   setTimeout(() => {
-    document.querySelector("#id-03216").classList.add("animationClass-03216");
+    document?.querySelector("#id-03216")?.classList.add("animationClass-03216");
     document
       .querySelector("#id-I03216_936089")
       .classList.add("animationClass-I03216_936089");
@@ -31,93 +31,93 @@ function runAnimations() {
     document
       .querySelector("#id-I03216_936093")
       .classList.add("animationClass-I03216_936093");
-    document.querySelector("#id-0699").classList.add("animationClass-null0699");
-    document.querySelector("#id-0680").classList.add("nullAnimation-0680");
-    document.querySelector("#id-0700").classList.add("animationClass-null0700");
-    document.querySelector("#id-0704").classList.add("animationClass-null0704");
-    document.querySelector("#id-0705").classList.add("animationClass-null0705");
-    document.querySelector("#id-0706").classList.add("animationClass-null0706");
-    document.querySelector("#id-0707").classList.add("animationClass-null0707");
-    document.querySelector("#id-0701").classList.add("animationClass-null0701");
-    document.querySelector("#id-0702").classList.add("animationClass-null0702");
+    document?.querySelector("#id-0699")?.classList.add("animationClass-null0699");
+    document?.querySelector("#id-0680")?.classList.add("nullAnimation-0680");
+    document?.querySelector("#id-0700")?.classList.add("animationClass-null0700");
+    document?.querySelector("#id-0704")?.classList.add("animationClass-null0704");
+    document?.querySelector("#id-0705")?.classList.add("animationClass-null0705");
+    document?.querySelector("#id-0706")?.classList.add("animationClass-null0706");
+    document?.querySelector("#id-0707")?.classList.add("animationClass-null0707");
+    document?.querySelector("#id-0701")?.classList.add("animationClass-null0701");
+    document?.querySelector("#id-0702")?.classList.add("animationClass-null0702");
     document
       .querySelector("#id-0702 > div:first-child")
       .classList.add("bgClass-0702");
-    document.querySelector("#id-0703").classList.add("animationClass-null0703");
-    document.querySelector("#id-0708").classList.add("animationClass-null0708");
-    document.querySelector("#id-0709").classList.add("animationClass-null0709");
-    document.querySelector("#id-0713").classList.add("animationClass-null0713");
-    document.querySelector("#id-0714").classList.add("animationClass-null0714");
-    document.querySelector("#id-0715").classList.add("animationClass-null0715");
-    document.querySelector("#id-0716").classList.add("animationClass-null0716");
-    document.querySelector("#id-0711").classList.add("animationClass-null0711");
-    document.querySelector("#id-0712").classList.add("animationClass-null0712");
+    document?.querySelector("#id-0703")?.classList.add("animationClass-null0703");
+    document?.querySelector("#id-0708")?.classList.add("animationClass-null0708");
+    document?.querySelector("#id-0709")?.classList.add("animationClass-null0709");
+    document?.querySelector("#id-0713")?.classList.add("animationClass-null0713");
+    document?.querySelector("#id-0714")?.classList.add("animationClass-null0714");
+    document?.querySelector("#id-0715")?.classList.add("animationClass-null0715");
+    document?.querySelector("#id-0716")?.classList.add("animationClass-null0716");
+    document?.querySelector("#id-0711")?.classList.add("animationClass-null0711");
+    document?.querySelector("#id-0712")?.classList.add("animationClass-null0712");
     document
       .querySelector("#id-0712 > div:first-child")
       .classList.add("bgClass-0712");
-    document.querySelector("#id-0747").classList.add("nullAnimation-0747");
-    document.querySelector("#id-0748").classList.add("nullAnimation-0748");
-    document.querySelector("#id-0749").classList.add("nullAnimation-0749");
-    document.querySelector("#id-0710").classList.add("animationClass-null0710");
-    document.querySelector("#id-0718").classList.add("animationClass-null0718");
-    document.querySelector("#id-0719").classList.add("animationClass-null0719");
-    document.querySelector("#id-0720").classList.add("animationClass-null0720");
-    document.querySelector("#id-0721").classList.add("animationClass-null0721");
-    document.querySelector("#id-0726").classList.add("animationClass-null0726");
-    document.querySelector("#id-0727").classList.add("animationClass-null0727");
-    document.querySelector("#id-0728").classList.add("animationClass-null0728");
+    document?.querySelector("#id-0747")?.classList.add("nullAnimation-0747");
+    document?.querySelector("#id-0748")?.classList.add("nullAnimation-0748");
+    document?.querySelector("#id-0749")?.classList.add("nullAnimation-0749");
+    document?.querySelector("#id-0710")?.classList.add("animationClass-null0710");
+    document?.querySelector("#id-0718")?.classList.add("animationClass-null0718");
+    document?.querySelector("#id-0719")?.classList.add("animationClass-null0719");
+    document?.querySelector("#id-0720")?.classList.add("animationClass-null0720");
+    document?.querySelector("#id-0721")?.classList.add("animationClass-null0721");
+    document?.querySelector("#id-0726")?.classList.add("animationClass-null0726");
+    document?.querySelector("#id-0727")?.classList.add("animationClass-null0727");
+    document?.querySelector("#id-0728")?.classList.add("animationClass-null0728");
     document
       .querySelector("#id-0728 > div:first-child")
       .classList.add("bgClass-0728");
-    document.querySelector("#id-0722").classList.add("animationClass-null0722");
-    document.querySelector("#id-0723").classList.add("animationClass-null0723");
-    document.querySelector("#id-0724").classList.add("animationClass-null0724");
-    document.querySelector("#id-0725").classList.add("animationClass-null0725");
+    document?.querySelector("#id-0722")?.classList.add("animationClass-null0722");
+    document?.querySelector("#id-0723")?.classList.add("animationClass-null0723");
+    document?.querySelector("#id-0724")?.classList.add("animationClass-null0724");
+    document?.querySelector("#id-0725")?.classList.add("animationClass-null0725");
     document
       .querySelector("#id-0725 > div:first-child")
       .classList.add("bgClass-0725");
-    document.querySelector("#id-0753").classList.add("nullAnimation-0753");
-    document.querySelector("#id-0754").classList.add("nullAnimation-0754");
-    document.querySelector("#id-0758").classList.add("nullAnimation-0758");
-    document.querySelector("#id-0759").classList.add("nullAnimation-0759");
-    document.querySelector("#id-0760").classList.add("nullAnimation-0760");
-    document.querySelector("#id-0761").classList.add("nullAnimation-0761");
-    document.querySelector("#id-0755").classList.add("nullAnimation-0755");
-    document.querySelector("#id-0756").classList.add("nullAnimation-0756");
-    document.querySelector("#id-0757").classList.add("nullAnimation-0757");
-    document.querySelector("#id-0798").classList.add("nullAnimation-0798");
-    document.querySelector("#id-0799").classList.add("nullAnimation-0799");
-    document.querySelector("#id-0803").classList.add("nullAnimation-0803");
-    document.querySelector("#id-0804").classList.add("nullAnimation-0804");
-    document.querySelector("#id-0805").classList.add("nullAnimation-0805");
-    document.querySelector("#id-0806").classList.add("nullAnimation-0806");
-    document.querySelector("#id-0800").classList.add("nullAnimation-0800");
-    document.querySelector("#id-0801").classList.add("nullAnimation-0801");
-    document.querySelector("#id-0802").classList.add("nullAnimation-0802");
-    document.querySelector("#id-0807").classList.add("nullAnimation-0807");
-    document.querySelector("#id-0808").classList.add("nullAnimation-0808");
-    document.querySelector("#id-0815").classList.add("nullAnimation-0815");
-    document.querySelector("#id-0810").classList.add("nullAnimation-0810");
-    document.querySelector("#id-0811").classList.add("nullAnimation-0811");
-    document.querySelector("#id-0812").classList.add("nullAnimation-0812");
-    document.querySelector("#id-0813").classList.add("nullAnimation-0813");
-    document.querySelector("#id-0814").classList.add("nullAnimation-0814");
-    document.querySelector("#id-0809").classList.add("nullAnimation-0809");
+    document?.querySelector("#id-0753")?.classList.add("nullAnimation-0753");
+    document?.querySelector("#id-0754")?.classList.add("nullAnimation-0754");
+    document?.querySelector("#id-0758")?.classList.add("nullAnimation-0758");
+    document?.querySelector("#id-0759")?.classList.add("nullAnimation-0759");
+    document?.querySelector("#id-0760")?.classList.add("nullAnimation-0760");
+    document?.querySelector("#id-0761")?.classList.add("nullAnimation-0761");
+    document?.querySelector("#id-0755")?.classList.add("nullAnimation-0755");
+    document?.querySelector("#id-0756")?.classList.add("nullAnimation-0756");
+    document?.querySelector("#id-0757")?.classList.add("nullAnimation-0757");
+    document?.querySelector("#id-0798")?.classList.add("nullAnimation-0798");
+    document?.querySelector("#id-0799")?.classList.add("nullAnimation-0799");
+    document?.querySelector("#id-0803")?.classList.add("nullAnimation-0803");
+    document?.querySelector("#id-0804")?.classList.add("nullAnimation-0804");
+    document?.querySelector("#id-0805")?.classList.add("nullAnimation-0805");
+    document?.querySelector("#id-0806")?.classList.add("nullAnimation-0806");
+    document?.querySelector("#id-0800")?.classList.add("nullAnimation-0800");
+    document?.querySelector("#id-0801")?.classList.add("nullAnimation-0801");
+    document?.querySelector("#id-0802")?.classList.add("nullAnimation-0802");
+    document?.querySelector("#id-0807")?.classList.add("nullAnimation-0807");
+    document?.querySelector("#id-0808")?.classList.add("nullAnimation-0808");
+    document?.querySelector("#id-0815")?.classList.add("nullAnimation-0815");
+    document?.querySelector("#id-0810")?.classList.add("nullAnimation-0810");
+    document?.querySelector("#id-0811")?.classList.add("nullAnimation-0811");
+    document?.querySelector("#id-0812")?.classList.add("nullAnimation-0812");
+    document?.querySelector("#id-0813")?.classList.add("nullAnimation-0813");
+    document?.querySelector("#id-0814")?.classList.add("nullAnimation-0814");
+    document?.querySelector("#id-0809")?.classList.add("nullAnimation-0809");
     document
       .querySelector("#id-I03216_936103")
       .classList.add("animationClass-I03216_936103");
     document
       .querySelector("#id-I03216_936094")
       .classList.add("animationClass-I03216_936094");
-    document.querySelector("#id-0717").classList.add("animationClass-null0717");
-    document.querySelector("#id-0762").classList.add("nullAnimation-0762");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-null0717");
+    document?.querySelector("#id-0762")?.classList.add("nullAnimation-0762");
     document
       .querySelector("#id-I03216_936379")
       .classList.add("animationClass-I03216_936379");
   }, 2000);
 
   setTimeout(() => {
-    document.querySelector("#id-03216").classList.add("animationClass-0693");
+    document?.querySelector("#id-03216")?.classList.add("animationClass-0693");
     document
       .querySelector("#id-I03216_936089")
       .classList.add("animationClass-0694");
@@ -136,98 +136,98 @@ function runAnimations() {
     document
       .querySelector("#id-I03216_936093")
       .classList.add("animationClass-0698");
-    document.querySelector("#id-0699").classList.add("animationClass-0699");
-    document.querySelector("#id-0700").classList.add("animationClass-0700");
+    document?.querySelector("#id-0699")?.classList.add("animationClass-0699");
+    document?.querySelector("#id-0700")?.classList.add("animationClass-0700");
     document
       .querySelector(".heading-2--inte-1-402633-0")
       .classList.add("animationClass-0704-0704-0");
-    document.querySelector("#id-0704").classList.add("animationClass-0704");
-    document.querySelector("#id-0705").classList.add("animationClass-0705");
+    document?.querySelector("#id-0704")?.classList.add("animationClass-0704");
+    document?.querySelector("#id-0705")?.classList.add("animationClass-0705");
     document
       .querySelector(".michele-1-134966-0")
       .classList.add("animationClass-0706-0706-0");
-    document.querySelector("#id-0706").classList.add("animationClass-0706");
+    document?.querySelector("#id-0706")?.classList.add("animationClass-0706");
     document
       .querySelector(".c-14-days-ago-1-445155-0")
       .classList.add("animationClass-0707-0707-0");
-    document.querySelector("#id-0707").classList.add("animationClass-0707");
-    document.querySelector("#id-0701").classList.add("animationClass-0701");
-    document.querySelector("#id-0702").classList.add("animationClass-0702");
+    document?.querySelector("#id-0707")?.classList.add("animationClass-0707");
+    document?.querySelector("#id-0701")?.classList.add("animationClass-0701");
+    document?.querySelector("#id-0702")?.classList.add("animationClass-0702");
     document
       .querySelector("#id-0702 > div:first-child")
       .classList.add("bgClass-0738");
-    document.querySelector("#id-0703").classList.add("animationClass-0703");
-    document.querySelector("#id-0708").classList.add("animationClass-0708");
-    document.querySelector("#id-0709").classList.add("animationClass-0709");
+    document?.querySelector("#id-0703")?.classList.add("animationClass-0703");
+    document?.querySelector("#id-0708")?.classList.add("animationClass-0708");
+    document?.querySelector("#id-0709")?.classList.add("animationClass-0709");
     document
       .querySelector(".heading-2--inte-1-90771-0")
       .classList.add("animationClass-0713-0713-0");
-    document.querySelector("#id-0713").classList.add("animationClass-0713");
-    document.querySelector("#id-0714").classList.add("animationClass-0714");
+    document?.querySelector("#id-0713")?.classList.add("animationClass-0713");
+    document?.querySelector("#id-0714")?.classList.add("animationClass-0714");
     document
       .querySelector(".c-5-days-ago-1-32736-0")
       .classList.add("animationClass-0715-0715-0");
-    document.querySelector("#id-0715").classList.add("animationClass-0715");
+    document?.querySelector("#id-0715")?.classList.add("animationClass-0715");
     document
       .querySelector(".bryan-1-56376-0")
       .classList.add("animationClass-0716-0716-0");
-    document.querySelector("#id-0716").classList.add("animationClass-0716");
-    document.querySelector("#id-0711").classList.add("animationClass-0711");
-    document.querySelector("#id-0712").classList.add("animationClass-0712");
+    document?.querySelector("#id-0716")?.classList.add("animationClass-0716");
+    document?.querySelector("#id-0711")?.classList.add("animationClass-0711");
+    document?.querySelector("#id-0712")?.classList.add("animationClass-0712");
     document
       .querySelector("#id-0712 > div:first-child")
       .classList.add("bgClass-0751");
-    document.querySelector("#id-0747").classList.add("animationClass-null0747");
-    document.querySelector("#id-0748").classList.add("animationClass-null0748");
-    document.querySelector("#id-0749").classList.add("animationClass-null0749");
-    document.querySelector("#id-0710").classList.add("animationClass-0710");
-    document.querySelector("#id-0718").classList.add("animationClass-0718");
-    document.querySelector("#id-0719").classList.add("animationClass-0719");
-    document.querySelector("#id-0720").classList.add("animationClass-0720");
-    document.querySelector("#id-0721").classList.add("animationClass-0721");
-    document.querySelector("#id-0726").classList.add("animationClass-0726");
+    document?.querySelector("#id-0747")?.classList.add("animationClass-null0747");
+    document?.querySelector("#id-0748")?.classList.add("animationClass-null0748");
+    document?.querySelector("#id-0749")?.classList.add("animationClass-null0749");
+    document?.querySelector("#id-0710")?.classList.add("animationClass-0710");
+    document?.querySelector("#id-0718")?.classList.add("animationClass-0718");
+    document?.querySelector("#id-0719")?.classList.add("animationClass-0719");
+    document?.querySelector("#id-0720")?.classList.add("animationClass-0720");
+    document?.querySelector("#id-0721")?.classList.add("animationClass-0721");
+    document?.querySelector("#id-0726")?.classList.add("animationClass-0726");
     document
       .querySelector(".message-to-mich-1-700112-0")
       .classList.add("animationClass-0727-0727-0");
-    document.querySelector("#id-0727").classList.add("animationClass-0727");
-    document.querySelector("#id-0728").classList.add("animationClass-0728");
+    document?.querySelector("#id-0727")?.classList.add("animationClass-0727");
+    document?.querySelector("#id-0728")?.classList.add("animationClass-0728");
     document
       .querySelector("#id-0728 > div:first-child")
       .classList.add("bgClass-0773");
-    document.querySelector("#id-0722").classList.add("animationClass-0722");
-    document.querySelector("#id-0723").classList.add("animationClass-0723");
-    document.querySelector("#id-0724").classList.add("animationClass-0724");
-    document.querySelector("#id-0725").classList.add("animationClass-0725");
+    document?.querySelector("#id-0722")?.classList.add("animationClass-0722");
+    document?.querySelector("#id-0723")?.classList.add("animationClass-0723");
+    document?.querySelector("#id-0724")?.classList.add("animationClass-0724");
+    document?.querySelector("#id-0725")?.classList.add("animationClass-0725");
     document
       .querySelector("#id-0725 > div:first-child")
       .classList.add("bgClass-0770");
-    document.querySelector("#id-0753").classList.add("animationClass-null0753");
-    document.querySelector("#id-0754").classList.add("animationClass-null0754");
-    document.querySelector("#id-0758").classList.add("animationClass-null0758");
-    document.querySelector("#id-0759").classList.add("animationClass-null0759");
-    document.querySelector("#id-0760").classList.add("animationClass-null0760");
-    document.querySelector("#id-0761").classList.add("animationClass-null0761");
-    document.querySelector("#id-0755").classList.add("animationClass-null0755");
-    document.querySelector("#id-0756").classList.add("animationClass-null0756");
+    document?.querySelector("#id-0753")?.classList.add("animationClass-null0753");
+    document?.querySelector("#id-0754")?.classList.add("animationClass-null0754");
+    document?.querySelector("#id-0758")?.classList.add("animationClass-null0758");
+    document?.querySelector("#id-0759")?.classList.add("animationClass-null0759");
+    document?.querySelector("#id-0760")?.classList.add("animationClass-null0760");
+    document?.querySelector("#id-0761")?.classList.add("animationClass-null0761");
+    document?.querySelector("#id-0755")?.classList.add("animationClass-null0755");
+    document?.querySelector("#id-0756")?.classList.add("animationClass-null0756");
     document
       .querySelector("#id-0756 > div:first-child")
       .classList.add("bgClass-0756");
-    document.querySelector("#id-0757").classList.add("animationClass-null0757");
+    document?.querySelector("#id-0757")?.classList.add("animationClass-null0757");
     document
       .querySelector("#id-I03216_936103")
       .classList.add("nullAnimation-I03216_936103");
     document
       .querySelector("#id-I03216_936094")
       .classList.add("nullAnimation-I03216_936094");
-    document.querySelector("#id-0717").classList.add("animationClass-0717");
-    document.querySelector("#id-0762").classList.add("animationClass-null0762");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0717");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-null0762");
     document
       .querySelector("#id-I03216_936379")
       .classList.add("nullAnimation-I03216_936379");
   }, 4890.000000000001);
 
   setTimeout(() => {
-    document.querySelector("#id-03216").classList.add("animationClass-0729");
+    document?.querySelector("#id-03216")?.classList.add("animationClass-0729");
     document
       .querySelector("#id-I03216_936089")
       .classList.add("animationClass-0730");
@@ -246,100 +246,100 @@ function runAnimations() {
     document
       .querySelector("#id-I03216_936093")
       .classList.add("animationClass-0734");
-    document.querySelector("#id-0699").classList.add("animationClass-0735");
-    document.querySelector("#id-0700").classList.add("animationClass-0736");
+    document?.querySelector("#id-0699")?.classList.add("animationClass-0735");
+    document?.querySelector("#id-0700")?.classList.add("animationClass-0736");
     document
       .querySelector(".heading-2--inte-1-402633-0")
       .classList.add("animationClass-0740-0740-0");
-    document.querySelector("#id-0704").classList.add("animationClass-0740");
-    document.querySelector("#id-0705").classList.add("animationClass-0741");
+    document?.querySelector("#id-0704")?.classList.add("animationClass-0740");
+    document?.querySelector("#id-0705")?.classList.add("animationClass-0741");
     document
       .querySelector(".michele-1-134966-0")
       .classList.add("animationClass-0742-0742-0");
-    document.querySelector("#id-0706").classList.add("animationClass-0742");
+    document?.querySelector("#id-0706")?.classList.add("animationClass-0742");
     document
       .querySelector(".c-14-days-ago-1-445155-0")
       .classList.add("animationClass-0743-0743-0");
-    document.querySelector("#id-0707").classList.add("animationClass-0743");
-    document.querySelector("#id-0701").classList.add("animationClass-0737");
-    document.querySelector("#id-0702").classList.add("animationClass-0738");
+    document?.querySelector("#id-0707")?.classList.add("animationClass-0743");
+    document?.querySelector("#id-0701")?.classList.add("animationClass-0737");
+    document?.querySelector("#id-0702")?.classList.add("animationClass-0738");
     document
       .querySelector("#id-0702 > div:first-child")
       .classList.add("bgClass-0783");
-    document.querySelector("#id-0703").classList.add("animationClass-0739");
-    document.querySelector("#id-0708").classList.add("animationClass-0744");
-    document.querySelector("#id-0709").classList.add("animationClass-0745");
+    document?.querySelector("#id-0703")?.classList.add("animationClass-0739");
+    document?.querySelector("#id-0708")?.classList.add("animationClass-0744");
+    document?.querySelector("#id-0709")?.classList.add("animationClass-0745");
     document
       .querySelector(".heading-2--inte-1-90771-0")
       .classList.add("animationClass-0752-0752-0");
-    document.querySelector("#id-0713").classList.add("animationClass-0752");
-    document.querySelector("#id-0714").classList.add("nullAnimation-0714");
-    document.querySelector("#id-0711").classList.add("animationClass-0750");
-    document.querySelector("#id-0712").classList.add("animationClass-0751");
+    document?.querySelector("#id-0713")?.classList.add("animationClass-0752");
+    document?.querySelector("#id-0714")?.classList.add("nullAnimation-0714");
+    document?.querySelector("#id-0711")?.classList.add("animationClass-0750");
+    document?.querySelector("#id-0712")?.classList.add("animationClass-0751");
     document
       .querySelector("#id-0712 > div:first-child")
       .classList.add("bgClass-0796");
-    document.querySelector("#id-0747").classList.add("animationClass-0747");
+    document?.querySelector("#id-0747")?.classList.add("animationClass-0747");
     document
       .querySelector(".c-5-days-ago-1-13583-0")
       .classList.add("animationClass-0748-0748-0");
-    document.querySelector("#id-0748").classList.add("animationClass-0748");
+    document?.querySelector("#id-0748")?.classList.add("animationClass-0748");
     document
       .querySelector(".bryan-1-105569-0")
       .classList.add("animationClass-0749-0749-0");
-    document.querySelector("#id-0749").classList.add("animationClass-0749");
-    document.querySelector("#id-0710").classList.add("animationClass-0746");
-    document.querySelector("#id-0718").classList.add("animationClass-0763");
-    document.querySelector("#id-0719").classList.add("animationClass-0764");
-    document.querySelector("#id-0720").classList.add("animationClass-0765");
-    document.querySelector("#id-0721").classList.add("animationClass-0766");
-    document.querySelector("#id-0726").classList.add("animationClass-0771");
+    document?.querySelector("#id-0749")?.classList.add("animationClass-0749");
+    document?.querySelector("#id-0710")?.classList.add("animationClass-0746");
+    document?.querySelector("#id-0718")?.classList.add("animationClass-0763");
+    document?.querySelector("#id-0719")?.classList.add("animationClass-0764");
+    document?.querySelector("#id-0720")?.classList.add("animationClass-0765");
+    document?.querySelector("#id-0721")?.classList.add("animationClass-0766");
+    document?.querySelector("#id-0726")?.classList.add("animationClass-0771");
     document
       .querySelector(".message-to-mich-1-700112-0")
       .classList.add("animationClass-0772-0772-0");
-    document.querySelector("#id-0727").classList.add("animationClass-0772");
-    document.querySelector("#id-0728").classList.add("animationClass-0773");
+    document?.querySelector("#id-0727")?.classList.add("animationClass-0772");
+    document?.querySelector("#id-0728")?.classList.add("animationClass-0773");
     document
       .querySelector("#id-0728 > div:first-child")
       .classList.add("bgClass-0826");
-    document.querySelector("#id-0722").classList.add("animationClass-0767");
-    document.querySelector("#id-0723").classList.add("animationClass-0768");
-    document.querySelector("#id-0724").classList.add("animationClass-0769");
-    document.querySelector("#id-0725").classList.add("animationClass-0770");
+    document?.querySelector("#id-0722")?.classList.add("animationClass-0767");
+    document?.querySelector("#id-0723")?.classList.add("animationClass-0768");
+    document?.querySelector("#id-0724")?.classList.add("animationClass-0769");
+    document?.querySelector("#id-0725")?.classList.add("animationClass-0770");
     document
       .querySelector("#id-0725 > div:first-child")
       .classList.add("bgClass-0823");
-    document.querySelector("#id-0753").classList.add("animationClass-0753");
-    document.querySelector("#id-0798").classList.add("animationClass-null0798");
-    document.querySelector("#id-0799").classList.add("animationClass-null0799");
-    document.querySelector("#id-0803").classList.add("animationClass-null0803");
-    document.querySelector("#id-0804").classList.add("animationClass-null0804");
-    document.querySelector("#id-0805").classList.add("animationClass-null0805");
-    document.querySelector("#id-0806").classList.add("animationClass-null0806");
-    document.querySelector("#id-0800").classList.add("animationClass-null0800");
-    document.querySelector("#id-0801").classList.add("animationClass-null0801");
+    document?.querySelector("#id-0753")?.classList.add("animationClass-0753");
+    document?.querySelector("#id-0798")?.classList.add("animationClass-null0798");
+    document?.querySelector("#id-0799")?.classList.add("animationClass-null0799");
+    document?.querySelector("#id-0803")?.classList.add("animationClass-null0803");
+    document?.querySelector("#id-0804")?.classList.add("animationClass-null0804");
+    document?.querySelector("#id-0805")?.classList.add("animationClass-null0805");
+    document?.querySelector("#id-0806")?.classList.add("animationClass-null0806");
+    document?.querySelector("#id-0800")?.classList.add("animationClass-null0800");
+    document?.querySelector("#id-0801")?.classList.add("animationClass-null0801");
     document
       .querySelector("#id-0801 > div:first-child")
       .classList.add("bgClass-0801");
-    document.querySelector("#id-0802").classList.add("animationClass-null0802");
-    document.querySelector("#id-0807").classList.add("animationClass-null0807");
-    document.querySelector("#id-0808").classList.add("animationClass-null0808");
-    document.querySelector("#id-0815").classList.add("animationClass-null0815");
-    document.querySelector("#id-0810").classList.add("animationClass-null0810");
-    document.querySelector("#id-0811").classList.add("animationClass-null0811");
-    document.querySelector("#id-0812").classList.add("animationClass-null0812");
-    document.querySelector("#id-0813").classList.add("animationClass-null0813");
-    document.querySelector("#id-0814").classList.add("animationClass-null0814");
+    document?.querySelector("#id-0802")?.classList.add("animationClass-null0802");
+    document?.querySelector("#id-0807")?.classList.add("animationClass-null0807");
+    document?.querySelector("#id-0808")?.classList.add("animationClass-null0808");
+    document?.querySelector("#id-0815")?.classList.add("animationClass-null0815");
+    document?.querySelector("#id-0810")?.classList.add("animationClass-null0810");
+    document?.querySelector("#id-0811")?.classList.add("animationClass-null0811");
+    document?.querySelector("#id-0812")?.classList.add("animationClass-null0812");
+    document?.querySelector("#id-0813")?.classList.add("animationClass-null0813");
+    document?.querySelector("#id-0814")?.classList.add("animationClass-null0814");
     document
       .querySelector("#id-0814 > div:first-child")
       .classList.add("bgClass-0814");
-    document.querySelector("#id-0809").classList.add("animationClass-null0809");
-    document.querySelector("#id-0717").classList.add("nullAnimation-0717");
-    document.querySelector("#id-0762").classList.add("animationClass-0762");
+    document?.querySelector("#id-0809")?.classList.add("animationClass-null0809");
+    document?.querySelector("#id-0717")?.classList.add("nullAnimation-0717");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0762");
   }, 7780);
 
   setTimeout(() => {
-    document.querySelector("#id-03216").classList.add("animationClass-0774");
+    document?.querySelector("#id-03216")?.classList.add("animationClass-0774");
     document
       .querySelector("#id-I03216_936089")
       .classList.add("animationClass-0775");
@@ -358,71 +358,71 @@ function runAnimations() {
     document
       .querySelector("#id-I03216_936093")
       .classList.add("animationClass-0779");
-    document.querySelector("#id-0699").classList.add("animationClass-0780");
-    document.querySelector("#id-0680").classList.add("animationClass-null0680");
+    document?.querySelector("#id-0699")?.classList.add("animationClass-0780");
+    document?.querySelector("#id-0680")?.classList.add("animationClass-null0680");
     document
       .querySelector("#id-0680 > div:first-child")
       .classList.add("bgClass-0680");
-    document.querySelector("#id-0700").classList.add("animationClass-0781");
+    document?.querySelector("#id-0700")?.classList.add("animationClass-0781");
     document
       .querySelector(".heading-2--inte-1-402633-0")
       .classList.add("animationClass-0785-0785-0");
-    document.querySelector("#id-0704").classList.add("animationClass-0785");
-    document.querySelector("#id-0705").classList.add("animationClass-0786");
+    document?.querySelector("#id-0704")?.classList.add("animationClass-0785");
+    document?.querySelector("#id-0705")?.classList.add("animationClass-0786");
     document
       .querySelector(".michele-1-134966-0")
       .classList.add("animationClass-0787-0787-0");
-    document.querySelector("#id-0706").classList.add("animationClass-0787");
+    document?.querySelector("#id-0706")?.classList.add("animationClass-0787");
     document
       .querySelector(".c-14-days-ago-1-445155-0")
       .classList.add("animationClass-0788-0788-0");
-    document.querySelector("#id-0707").classList.add("animationClass-0788");
-    document.querySelector("#id-0701").classList.add("animationClass-0782");
-    document.querySelector("#id-0702").classList.add("animationClass-0783");
-    document.querySelector("#id-0703").classList.add("animationClass-0784");
-    document.querySelector("#id-0708").classList.add("animationClass-0789");
-    document.querySelector("#id-0709").classList.add("animationClass-0790");
+    document?.querySelector("#id-0707")?.classList.add("animationClass-0788");
+    document?.querySelector("#id-0701")?.classList.add("animationClass-0782");
+    document?.querySelector("#id-0702")?.classList.add("animationClass-0783");
+    document?.querySelector("#id-0703")?.classList.add("animationClass-0784");
+    document?.querySelector("#id-0708")?.classList.add("animationClass-0789");
+    document?.querySelector("#id-0709")?.classList.add("animationClass-0790");
     document
       .querySelector(".heading-2--inte-1-90771-0")
       .classList.add("animationClass-0797-0797-0");
-    document.querySelector("#id-0713").classList.add("animationClass-0797");
-    document.querySelector("#id-0714").classList.add("animationClass-null0714");
-    document.querySelector("#id-0711").classList.add("animationClass-0795");
-    document.querySelector("#id-0712").classList.add("animationClass-0796");
+    document?.querySelector("#id-0713")?.classList.add("animationClass-0797");
+    document?.querySelector("#id-0714")?.classList.add("animationClass-null0714");
+    document?.querySelector("#id-0711")?.classList.add("animationClass-0795");
+    document?.querySelector("#id-0712")?.classList.add("animationClass-0796");
     document
       .querySelector("#id-0712 > div:first-child")
       .classList.add("bgClass-0712");
-    document.querySelector("#id-0747").classList.add("animationClass-0792");
-    document.querySelector("#id-0710").classList.add("animationClass-0791");
-    document.querySelector("#id-0718").classList.add("animationClass-0816");
-    document.querySelector("#id-0719").classList.add("animationClass-0817");
-    document.querySelector("#id-0720").classList.add("animationClass-0818");
-    document.querySelector("#id-0721").classList.add("animationClass-0819");
-    document.querySelector("#id-0726").classList.add("animationClass-0824");
+    document?.querySelector("#id-0747")?.classList.add("animationClass-0792");
+    document?.querySelector("#id-0710")?.classList.add("animationClass-0791");
+    document?.querySelector("#id-0718")?.classList.add("animationClass-0816");
+    document?.querySelector("#id-0719")?.classList.add("animationClass-0817");
+    document?.querySelector("#id-0720")?.classList.add("animationClass-0818");
+    document?.querySelector("#id-0721")?.classList.add("animationClass-0819");
+    document?.querySelector("#id-0726")?.classList.add("animationClass-0824");
     document
       .querySelector(".message-to-mich-1-700112-0")
       .classList.add("animationClass-0825-0825-0");
-    document.querySelector("#id-0727").classList.add("animationClass-0825");
-    document.querySelector("#id-0728").classList.add("animationClass-0826");
+    document?.querySelector("#id-0727")?.classList.add("animationClass-0825");
+    document?.querySelector("#id-0728")?.classList.add("animationClass-0826");
     document
       .querySelector("#id-0728 > div:first-child")
       .classList.add("bgClass-0692");
-    document.querySelector("#id-0722").classList.add("animationClass-0820");
-    document.querySelector("#id-0723").classList.add("animationClass-0821");
-    document.querySelector("#id-0724").classList.add("animationClass-0822");
-    document.querySelector("#id-0725").classList.add("animationClass-0823");
+    document?.querySelector("#id-0722")?.classList.add("animationClass-0820");
+    document?.querySelector("#id-0723")?.classList.add("animationClass-0821");
+    document?.querySelector("#id-0724")?.classList.add("animationClass-0822");
+    document?.querySelector("#id-0725")?.classList.add("animationClass-0823");
     document
       .querySelector("#id-0725 > div:first-child")
       .classList.add("bgClass-0689");
-    document.querySelector("#id-0798").classList.add("animationClass-0798");
-    document.querySelector("#id-0807").classList.add("animationClass-0807");
+    document?.querySelector("#id-0798")?.classList.add("animationClass-0798");
+    document?.querySelector("#id-0807")?.classList.add("animationClass-0807");
     document
       .querySelector("#id-I03216_936103")
       .classList.add("animationClass-null0681");
   }, 9470);
 
   setTimeout(() => {
-    document.querySelector("#id-03216").classList.add("animationClass-0666");
+    document?.querySelector("#id-03216")?.classList.add("animationClass-0666");
     document
       .querySelector("#id-I03216_936089")
       .classList.add("animationClass-0667");
@@ -441,53 +441,53 @@ function runAnimations() {
     document
       .querySelector("#id-I03216_936093")
       .classList.add("animationClass-0671");
-    document.querySelector("#id-0699").classList.add("animationClass-0672");
-    document.querySelector("#id-0680").classList.add("animationClass-0680");
-    document.querySelector("#id-0700").classList.add("animationClass-0673");
+    document?.querySelector("#id-0699")?.classList.add("animationClass-0672");
+    document?.querySelector("#id-0680")?.classList.add("animationClass-0680");
+    document?.querySelector("#id-0700")?.classList.add("animationClass-0673");
     document
       .querySelector(".heading-2--inte-1-402633-0")
       .classList.add("animationClass-0676-0676-0");
-    document.querySelector("#id-0704").classList.add("animationClass-0676");
-    document.querySelector("#id-0705").classList.add("animationClass-0677");
+    document?.querySelector("#id-0704")?.classList.add("animationClass-0676");
+    document?.querySelector("#id-0705")?.classList.add("animationClass-0677");
     document
       .querySelector(".michele-1-134966-0")
       .classList.add("animationClass-0678-0678-0");
-    document.querySelector("#id-0706").classList.add("animationClass-0678");
+    document?.querySelector("#id-0706")?.classList.add("animationClass-0678");
     document
       .querySelector(".c-14-days-ago-1-445155-0")
       .classList.add("animationClass-0679-0679-0");
-    document.querySelector("#id-0707").classList.add("animationClass-0679");
-    document.querySelector("#id-0701").classList.add("animationClass-0674");
-    document.querySelector("#id-0702").classList.add("animationClass-null0702");
+    document?.querySelector("#id-0707")?.classList.add("animationClass-0679");
+    document?.querySelector("#id-0701")?.classList.add("animationClass-0674");
+    document?.querySelector("#id-0702")?.classList.add("animationClass-null0702");
     document
       .querySelector("#id-0702 > div:first-child")
       .classList.add("bgClass-0702");
-    document.querySelector("#id-0703").classList.add("animationClass-0675");
-    document.querySelector("#id-0708").classList.add("animationClass-null0708");
-    document.querySelector("#id-0718").classList.add("animationClass-0682");
-    document.querySelector("#id-0719").classList.add("animationClass-0683");
-    document.querySelector("#id-0720").classList.add("animationClass-0684");
-    document.querySelector("#id-0721").classList.add("animationClass-0685");
-    document.querySelector("#id-0726").classList.add("animationClass-0690");
+    document?.querySelector("#id-0703")?.classList.add("animationClass-0675");
+    document?.querySelector("#id-0708")?.classList.add("animationClass-null0708");
+    document?.querySelector("#id-0718")?.classList.add("animationClass-0682");
+    document?.querySelector("#id-0719")?.classList.add("animationClass-0683");
+    document?.querySelector("#id-0720")?.classList.add("animationClass-0684");
+    document?.querySelector("#id-0721")?.classList.add("animationClass-0685");
+    document?.querySelector("#id-0726")?.classList.add("animationClass-0690");
     document
       .querySelector(".message-to-mich-1-700112-0")
       .classList.add("animationClass-0691-0691-0");
-    document.querySelector("#id-0727").classList.add("animationClass-0691");
-    document.querySelector("#id-0728").classList.add("animationClass-0692");
+    document?.querySelector("#id-0727")?.classList.add("animationClass-0691");
+    document?.querySelector("#id-0728")?.classList.add("animationClass-0692");
     document
       .querySelector("#id-0728 > div:first-child")
       .classList.add("bgClass-0728");
-    document.querySelector("#id-0722").classList.add("animationClass-0686");
-    document.querySelector("#id-0723").classList.add("animationClass-0687");
-    document.querySelector("#id-0724").classList.add("animationClass-0688");
-    document.querySelector("#id-0725").classList.add("animationClass-0689");
+    document?.querySelector("#id-0722")?.classList.add("animationClass-0686");
+    document?.querySelector("#id-0723")?.classList.add("animationClass-0687");
+    document?.querySelector("#id-0724")?.classList.add("animationClass-0688");
+    document?.querySelector("#id-0725")?.classList.add("animationClass-0689");
     document
       .querySelector("#id-0725 > div:first-child")
       .classList.add("bgClass-0725");
     document
       .querySelector("#id-I03216_936103")
       .classList.add("animationClass-0681");
-    document.querySelector("#id-0717").classList.add("animationClass-null0717");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-null0717");
 
     setTimeout(() => {
       //loop login
@@ -515,7 +515,7 @@ function runAnimations() {
       document
         .querySelector("#id-0699")
         .classList.remove("animationClass-null0699");
-      document.querySelector("#id-0680").classList.remove("nullAnimation-0680");
+      document?.querySelector("#id-0680")?.classList.remove("nullAnimation-0680");
       document
         .querySelector("#id-0700")
         .classList.remove("animationClass-null0700");
@@ -570,9 +570,9 @@ function runAnimations() {
       document
         .querySelector("#id-0712 > div:first-child")
         .classList.remove("bgClass-0712");
-      document.querySelector("#id-0747").classList.remove("nullAnimation-0747");
-      document.querySelector("#id-0748").classList.remove("nullAnimation-0748");
-      document.querySelector("#id-0749").classList.remove("nullAnimation-0749");
+      document?.querySelector("#id-0747")?.classList.remove("nullAnimation-0747");
+      document?.querySelector("#id-0748")?.classList.remove("nullAnimation-0748");
+      document?.querySelector("#id-0749")?.classList.remove("nullAnimation-0749");
       document
         .querySelector("#id-0710")
         .classList.remove("animationClass-null0710");
@@ -615,33 +615,33 @@ function runAnimations() {
       document
         .querySelector("#id-0725 > div:first-child")
         .classList.remove("bgClass-0725");
-      document.querySelector("#id-0753").classList.remove("nullAnimation-0753");
-      document.querySelector("#id-0754").classList.remove("nullAnimation-0754");
-      document.querySelector("#id-0758").classList.remove("nullAnimation-0758");
-      document.querySelector("#id-0759").classList.remove("nullAnimation-0759");
-      document.querySelector("#id-0760").classList.remove("nullAnimation-0760");
-      document.querySelector("#id-0761").classList.remove("nullAnimation-0761");
-      document.querySelector("#id-0755").classList.remove("nullAnimation-0755");
-      document.querySelector("#id-0756").classList.remove("nullAnimation-0756");
-      document.querySelector("#id-0757").classList.remove("nullAnimation-0757");
-      document.querySelector("#id-0798").classList.remove("nullAnimation-0798");
-      document.querySelector("#id-0799").classList.remove("nullAnimation-0799");
-      document.querySelector("#id-0803").classList.remove("nullAnimation-0803");
-      document.querySelector("#id-0804").classList.remove("nullAnimation-0804");
-      document.querySelector("#id-0805").classList.remove("nullAnimation-0805");
-      document.querySelector("#id-0806").classList.remove("nullAnimation-0806");
-      document.querySelector("#id-0800").classList.remove("nullAnimation-0800");
-      document.querySelector("#id-0801").classList.remove("nullAnimation-0801");
-      document.querySelector("#id-0802").classList.remove("nullAnimation-0802");
-      document.querySelector("#id-0807").classList.remove("nullAnimation-0807");
-      document.querySelector("#id-0808").classList.remove("nullAnimation-0808");
-      document.querySelector("#id-0815").classList.remove("nullAnimation-0815");
-      document.querySelector("#id-0810").classList.remove("nullAnimation-0810");
-      document.querySelector("#id-0811").classList.remove("nullAnimation-0811");
-      document.querySelector("#id-0812").classList.remove("nullAnimation-0812");
-      document.querySelector("#id-0813").classList.remove("nullAnimation-0813");
-      document.querySelector("#id-0814").classList.remove("nullAnimation-0814");
-      document.querySelector("#id-0809").classList.remove("nullAnimation-0809");
+      document?.querySelector("#id-0753")?.classList.remove("nullAnimation-0753");
+      document?.querySelector("#id-0754")?.classList.remove("nullAnimation-0754");
+      document?.querySelector("#id-0758")?.classList.remove("nullAnimation-0758");
+      document?.querySelector("#id-0759")?.classList.remove("nullAnimation-0759");
+      document?.querySelector("#id-0760")?.classList.remove("nullAnimation-0760");
+      document?.querySelector("#id-0761")?.classList.remove("nullAnimation-0761");
+      document?.querySelector("#id-0755")?.classList.remove("nullAnimation-0755");
+      document?.querySelector("#id-0756")?.classList.remove("nullAnimation-0756");
+      document?.querySelector("#id-0757")?.classList.remove("nullAnimation-0757");
+      document?.querySelector("#id-0798")?.classList.remove("nullAnimation-0798");
+      document?.querySelector("#id-0799")?.classList.remove("nullAnimation-0799");
+      document?.querySelector("#id-0803")?.classList.remove("nullAnimation-0803");
+      document?.querySelector("#id-0804")?.classList.remove("nullAnimation-0804");
+      document?.querySelector("#id-0805")?.classList.remove("nullAnimation-0805");
+      document?.querySelector("#id-0806")?.classList.remove("nullAnimation-0806");
+      document?.querySelector("#id-0800")?.classList.remove("nullAnimation-0800");
+      document?.querySelector("#id-0801")?.classList.remove("nullAnimation-0801");
+      document?.querySelector("#id-0802")?.classList.remove("nullAnimation-0802");
+      document?.querySelector("#id-0807")?.classList.remove("nullAnimation-0807");
+      document?.querySelector("#id-0808")?.classList.remove("nullAnimation-0808");
+      document?.querySelector("#id-0815")?.classList.remove("nullAnimation-0815");
+      document?.querySelector("#id-0810")?.classList.remove("nullAnimation-0810");
+      document?.querySelector("#id-0811")?.classList.remove("nullAnimation-0811");
+      document?.querySelector("#id-0812")?.classList.remove("nullAnimation-0812");
+      document?.querySelector("#id-0813")?.classList.remove("nullAnimation-0813");
+      document?.querySelector("#id-0814")?.classList.remove("nullAnimation-0814");
+      document?.querySelector("#id-0809")?.classList.remove("nullAnimation-0809");
       document
         .querySelector("#id-I03216_936103")
         .classList.remove("animationClass-I03216_936103");
@@ -651,7 +651,7 @@ function runAnimations() {
       document
         .querySelector("#id-0717")
         .classList.remove("animationClass-null0717");
-      document.querySelector("#id-0762").classList.remove("nullAnimation-0762");
+      document?.querySelector("#id-0762")?.classList.remove("nullAnimation-0762");
       document
         .querySelector("#id-I03216_936379")
         .classList.remove("animationClass-I03216_936379");
@@ -922,7 +922,7 @@ function runAnimations() {
       document
         .querySelector("#id-0713")
         .classList.remove("animationClass-0752");
-      document.querySelector("#id-0714").classList.remove("nullAnimation-0714");
+      document?.querySelector("#id-0714")?.classList.remove("nullAnimation-0714");
       document
         .querySelector("#id-0711")
         .classList.remove("animationClass-0750");
@@ -1055,7 +1055,7 @@ function runAnimations() {
       document
         .querySelector("#id-0809")
         .classList.remove("animationClass-null0809");
-      document.querySelector("#id-0717").classList.remove("nullAnimation-0717");
+      document?.querySelector("#id-0717")?.classList.remove("nullAnimation-0717");
       document
         .querySelector("#id-0762")
         .classList.remove("animationClass-0762");
@@ -1521,7 +1521,7 @@ function runAnimations_0710() {}
 function runAnimations_0719() {}
 function runAnimations_0717() {
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0717");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0717");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-I0717_936084");
@@ -1540,7 +1540,7 @@ function runAnimations_0717() {
   }, 800);
 
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0525");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0525");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-0526");
@@ -1559,7 +1559,7 @@ function runAnimations_0717() {
   }, 930);
 
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0520");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0520");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-0521");
@@ -1578,7 +1578,7 @@ function runAnimations_0717() {
   }, 1280);
 
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0515");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0515");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-0516");
@@ -1597,7 +1597,7 @@ function runAnimations_0717() {
   }, 1630);
 
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0510");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0510");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-0511");
@@ -1616,7 +1616,7 @@ function runAnimations_0717() {
   }, 1980);
 
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0505");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0505");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-0506");
@@ -1635,7 +1635,7 @@ function runAnimations_0717() {
   }, 2330);
 
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0500");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0500");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-0501");
@@ -1654,7 +1654,7 @@ function runAnimations_0717() {
   }, 2680);
 
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0495");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0495");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-0496");
@@ -1673,7 +1673,7 @@ function runAnimations_0717() {
   }, 3030.0000000000005);
 
   setTimeout(() => {
-    document.querySelector("#id-0717").classList.add("animationClass-0490");
+    document?.querySelector("#id-0717")?.classList.add("animationClass-0490");
     document
       .querySelector("#id-I0717_936084")
       .classList.add("animationClass-0491");
@@ -1697,7 +1697,7 @@ function runAnimations_0757() {}
 function runAnimations_0764() {}
 function runAnimations_0762() {
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0762");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0762");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-I0762_936084");
@@ -1716,7 +1716,7 @@ function runAnimations_0762() {
   }, 800);
 
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0525");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0525");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-0526");
@@ -1735,7 +1735,7 @@ function runAnimations_0762() {
   }, 930);
 
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0520");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0520");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-0521");
@@ -1754,7 +1754,7 @@ function runAnimations_0762() {
   }, 1280);
 
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0515");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0515");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-0516");
@@ -1773,7 +1773,7 @@ function runAnimations_0762() {
   }, 1630);
 
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0510");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0510");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-0511");
@@ -1792,7 +1792,7 @@ function runAnimations_0762() {
   }, 1980);
 
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0505");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0505");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-0506");
@@ -1811,7 +1811,7 @@ function runAnimations_0762() {
   }, 2330);
 
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0500");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0500");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-0501");
@@ -1830,7 +1830,7 @@ function runAnimations_0762() {
   }, 2680);
 
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0495");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0495");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-0496");
@@ -1849,7 +1849,7 @@ function runAnimations_0762() {
   }, 3030.0000000000005);
 
   setTimeout(() => {
-    document.querySelector("#id-0762").classList.add("animationClass-0490");
+    document?.querySelector("#id-0762")?.classList.add("animationClass-0490");
     document
       .querySelector("#id-I0762_936084")
       .classList.add("animationClass-0491");
@@ -1876,7 +1876,7 @@ function runAnimations_0675() {}
 function runAnimations_0683() {}
 function runAnimations_0681() {
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0681");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0681");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-I0681_936084");
@@ -1895,7 +1895,7 @@ function runAnimations_0681() {
   }, 800);
 
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0525");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0525");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-0526");
@@ -1914,7 +1914,7 @@ function runAnimations_0681() {
   }, 930);
 
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0520");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0520");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-0521");
@@ -1933,7 +1933,7 @@ function runAnimations_0681() {
   }, 1280);
 
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0515");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0515");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-0516");
@@ -1952,7 +1952,7 @@ function runAnimations_0681() {
   }, 1630);
 
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0510");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0510");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-0511");
@@ -1971,7 +1971,7 @@ function runAnimations_0681() {
   }, 1980);
 
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0505");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0505");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-0506");
@@ -1990,7 +1990,7 @@ function runAnimations_0681() {
   }, 2330);
 
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0500");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0500");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-0501");
@@ -2009,7 +2009,7 @@ function runAnimations_0681() {
   }, 2680);
 
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0495");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0495");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-0496");
@@ -2028,7 +2028,7 @@ function runAnimations_0681() {
   }, 3030.0000000000005);
 
   setTimeout(() => {
-    document.querySelector("#id-0681").classList.add("animationClass-0490");
+    document?.querySelector("#id-0681")?.classList.add("animationClass-0490");
     document
       .querySelector("#id-I0681_936084")
       .classList.add("animationClass-0491");

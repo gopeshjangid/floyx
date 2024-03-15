@@ -4,7 +4,7 @@ function runAnimations() {
 export default runAnimations;
 function runAnimations_03148() {
   setTimeout(() => {
-    document.querySelector("#id-03148").classList.add("animationClass-03148");
+    document?.querySelector("#id-03148")?.classList.add("animationClass-03148");
     document
       .querySelector("#id-I03148_933178")
       .classList.add("animationClass-I03148_933178");
@@ -17,7 +17,7 @@ function runAnimations_03148() {
   }, 800);
 
   setTimeout(() => {
-    document.querySelector("#id-03148").classList.add("animationClass-0328");
+    document?.querySelector("#id-03148")?.classList.add("animationClass-0328");
     document
       .querySelector("#id-I03148_933178")
       .classList.add("animationClass-0329");
@@ -30,7 +30,7 @@ function runAnimations_03148() {
   }, 11600.000000000002);
 
   setTimeout(() => {
-    document.querySelector("#id-03148").classList.add("animationClass-0325");
+    document?.querySelector("#id-03148")?.classList.add("animationClass-0325");
     document
       .querySelector("#id-I03148_933178")
       .classList.add("animationClass-0326");

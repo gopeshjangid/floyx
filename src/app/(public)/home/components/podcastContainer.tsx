@@ -176,7 +176,7 @@ const CenteredRectangleRoot = styled.section`
 import React, { useEffect, useRef, useState } from "react";
 
 const CenteredRectangle: NextPage = () => {
-   const [isIntersecting, setIsIntersecting] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
   const ref = useRef(null);
 
 
@@ -188,25 +188,25 @@ const CenteredRectangle: NextPage = () => {
       { rootMargin: "-300px" }
     );
 
-    observer.observe(ref.current);
+    if (ref?.current) { observer.observe(ref.current); }
 
     return () => observer.disconnect();
   }, [isIntersecting]);
 
   useEffect(() => {
     if (isIntersecting) {
-      document.querySelector("#overBox")?.classList.add("vertical-shake");
-       document.querySelector("#mobBox")?.classList.add("horizontal-shake");
-        document.querySelector("#overBoxLeft")?.classList.add("vertical-shake-left");
-       document.querySelector("#mobBoxLeft")?.classList.add("horizontal-shake");
+      document?.querySelector("#overBox")?.classList.add("vertical-shake");
+      document?.querySelector("#mobBox")?.classList.add("horizontal-shake");
+      document?.querySelector("#overBoxLeft")?.classList.add("vertical-shake-left");
+      document?.querySelector("#mobBoxLeft")?.classList.add("horizontal-shake");
     }
     else {
-      document.querySelector("#overBox")?.classList?.remove("vertical-shake");
-       document.querySelector("#mobBox")?.classList?.remove("horizontal-shake");
-        document.querySelector("#overBoxLeft")?.classList?.remove("vertical-shake");
-       document.querySelector("#mobBoxLeft")?.classList?.remove("horizontal-shake");
-      // document.querySelector("#id-I03221_1366730").classList.remove("object");
-      // document.querySelector("#id-I03221_1366701").classList.remove("object");
+      document?.querySelector("#overBox")?.classList?.remove("vertical-shake");
+      document?.querySelector("#mobBox")?.classList?.remove("horizontal-shake");
+      document?.querySelector("#overBoxLeft")?.classList?.remove("vertical-shake");
+      document?.querySelector("#mobBoxLeft")?.classList?.remove("horizontal-shake");
+      // document?.querySelector("#id-I03221_1366730")?.classList.remove("object");
+      // document?.querySelector("#id-I03221_1366701")?.classList.remove("object");
     };
 
   }, [isIntersecting]);
@@ -215,13 +215,13 @@ const CenteredRectangle: NextPage = () => {
       <Podcast>
         <PodcastChild alt="" src="/group-338@2x.png" />
         <Scribble />
-         <img id="overBoxLeft" className="image-box-download-left" src="/threeBox.png"/>
+        <img id="overBoxLeft" className="image-box-download-left" src="/threeBox.png" />
         <HomeIcon id="mobBoxLeft" className="qwerty" loading="lazy" alt="" src="/left-mob-img.png" />
         <SparkleIcon alt="" src="/sparkle@2x.png" />
         <SparkleIcon1 loading="lazy" alt="" src="/sparkle-1@2x.png" />
         <SparkleIcon2 alt="" src="/sparkle-2@2x.png" />
-        <img id="overBox" className="image-box-download" src="play-1frame.png"/>
-        <PlayIcon id="mobBox"  className="qwerty" loading="lazy" alt="" src="/play-1.png" />
+        <img id="overBox" className="image-box-download" src="play-1frame.png" />
+        <PlayIcon id="mobBox" className="qwerty" loading="lazy" alt="" src="/play-1.png" />
         <SignUpButton>
           <AccessKeyField>
             <Podcasts>Podcasts</Podcasts>

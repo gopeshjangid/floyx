@@ -1,18 +1,8 @@
-import type { NextPage } from "next";
 import { Button } from "@mui/material";
-import styled from '@emotion/styled' ;
+import styled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from "react";
 
-
-const Icon1 = styled.img`
-  position: absolute;
-  top: 34px;
-  left: 240px;
-  width: 784px;
-  height: 682px;
-  object-fit: cover;
-`;
-const FrameChild = styled.div`
+const GradientBg = styled.div`
   position: absolute;
   top: 56px;
   left: 197px;
@@ -26,7 +16,7 @@ const FrameChild = styled.div`
   height: 638px;
   z-index: 1;
 `;
-const FrameItem = styled.div`
+const GradientItems = styled.div`
   position: absolute;
   top: 777px;
   left: 197px;
@@ -42,7 +32,7 @@ const FrameItem = styled.div`
   transform-origin: 0 0;
   z-index: 2;
 `;
-const FrameInner = styled.div`
+const GradientInner = styled.div`
   position: absolute;
   top: 0px;
   left: 19px;
@@ -58,7 +48,7 @@ const FrameInner = styled.div`
   transform-origin: 0 0;
   z-index: 2;
 `;
-const Parent1 = styled.div`
+const BackgroundWrapper = styled.div`
   position: absolute;
   height: 100%;
   top: 0px;
@@ -66,7 +56,7 @@ const Parent1 = styled.div`
   left: 326px;
   width: 1024px;
 `;
-const AboutUs1 = styled.b`
+const Heading1 = styled.b`
   width: 224px;
   position: relative;
   letter-spacing: -0.02em;
@@ -81,7 +71,7 @@ const AboutUs1 = styled.b`
     line-height: 36px;
   }
 `;
-const WeAreOn = styled.div`
+const Heading2 = styled.div`
   align-self: stretch;
   position: relative;
   font-size: 16px;
@@ -89,7 +79,7 @@ const WeAreOn = styled.div`
   color: rgba(255, 255, 255, 0.7);
   text-align: left;
 `;
-const AboutUsParent = styled.div`
+const HeadingContainer = styled.div`
   width: 685px;
   display: flex;
   flex-direction: column;
@@ -100,10 +90,10 @@ const AboutUsParent = styled.div`
   gap: 23px 0px;
   max-width: 100%;
 `;
-const YouWontFind = styled.p`
+const SubHeadings = styled.p`
   margin: 0;
 `;
-const YouWontFindContainer = styled.div`
+const TextContainer = styled.div`
   height: 216px;
   position: relative;
   font-size: 16px;
@@ -112,7 +102,7 @@ const YouWontFindContainer = styled.div`
   text-align: left;
   display: inline-block;
 `;
-const FrameContainer = styled.div`
+const FrameInnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -120,11 +110,11 @@ const FrameContainer = styled.div`
   gap: 16px 0px;
   max-width: 100%;
 `;
-const FrameButton = styled(Button)`
+const ButtonStyled = styled(Button)`
   width: 246px;
   height: 48px;
 `;
-const FrameGroup = styled.div`
+const FrameOuterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -132,11 +122,11 @@ const FrameGroup = styled.div`
   gap: 20px 0px;
   max-width: 100%;
 `;
-const ConnectWithFloyx = styled.div`
+const SocialMediaText = styled.div`
   position: relative;
   line-height: 27px;
 `;
-const TwitterAlt2Icon = styled.img`
+const SocialMediaIcon = styled.img`
   height: 23px;
   width: 23px;
   position: relative;
@@ -150,7 +140,7 @@ const YoutubeIcon = styled.img`
   overflow: hidden;
   flex-shrink: 0;
 `;
-const TwitterAlt2Parent = styled.div`
+const SocialMediaContainer = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -158,7 +148,7 @@ const TwitterAlt2Parent = styled.div`
   justify-content: space-between;
   gap: 20px;
 `;
-const ConnectWithFloyxParent = styled.div`
+const SocialMediaOutterContainer = styled.div`
   width: 270px;
   display: flex;
   flex-direction: column;
@@ -171,7 +161,7 @@ const ConnectWithFloyxParent = styled.div`
   font-size: 16px;
   color: rgba(181, 180, 185, 0.65);
 `;
-const FrameParent = styled.div`
+const InnerContainer = styled.div`
   position: absolute;
   top: 130px;
   left: 0px;
@@ -183,7 +173,7 @@ const FrameParent = styled.div`
   max-width: 100%;
   z-index: 3;
 `;
-const AboutUsChild = styled.div`
+const BgDecors = styled.div`
   position: absolute;
   top: 165.5px;
   left: 886.5px;
@@ -194,7 +184,7 @@ const AboutUsChild = styled.div`
   height: 5px;
   z-index: 3;
 `;
-const AboutUsRoot = styled.section`
+const MainContainer = styled.section`
   width: 1350px;
   height: 777px;
   position: absolute;
@@ -208,11 +198,9 @@ const AboutUsRoot = styled.section`
   font-family: Poppins;
 `;
 
-const AboutUs: NextPage = () => {
-   const [isIntersecting, setIsIntersecting] = useState(false);
+const AboutUs = () => {
+  const [isIntersecting, setIsIntersecting] = useState(false);
   const ref = useRef(null);
-
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -221,47 +209,45 @@ const AboutUs: NextPage = () => {
       { rootMargin: "-300px" }
     );
 
-    observer.observe(ref.current);
+    if (ref?.current) { observer.observe(ref.current); }
 
     return () => observer.disconnect();
   }, [isIntersecting]);
 
   useEffect(() => {
     if (isIntersecting) {
-      document.querySelector("#imgPeople").classList.add("fade-in-image");
+      document?.querySelector("#imgPeople")?.classList.add("fade-in-image");
     }
     else {
-      document.querySelector("#imgPeople").classList.remove("fade-in-image");
+      document?.querySelector("#imgPeople")?.classList.remove("fade-in-image");
     };
 
   }, [isIntersecting]);
   return (
-    <AboutUsRoot ref={ref}>
-      <Parent1>
-        {/* <Icon1 loading="lazy" alt="" src="/2151003744-1@2x.png" /> */}
-
-        <FrameChild />
-        <FrameItem />
-        <FrameInner />
-      </Parent1>
-      <FrameParent>
-        <FrameGroup>
-          <FrameContainer>
-            <AboutUsParent>
-              <AboutUs1>About Us</AboutUs1>
-              <WeAreOn>{`We are on a mission to create a secure and uncensored digital space, driven by creators and accessible to millions of people around the world. `}</WeAreOn>
-            </AboutUsParent>
-            <YouWontFindContainer>
-              <YouWontFind>{`You won't find EX founders from Google, Meta, Linkedin here. `}</YouWontFind>
-              <YouWontFind>{`You won't find here big Venture Capitals, Angel Investors who value money above freedom. `}</YouWontFind>
-              <YouWontFind>{`You won't read about us in Forbes, Bloomberg, The New York Times etc. `}</YouWontFind>
-              <YouWontFind>&nbsp;</YouWontFind>
-              <YouWontFind>{`Instead, you will find people like you who work hard for you every day and believe in a censorship-free and safe haven for every internet user. `}</YouWontFind>
-              <YouWontFind>{` `}</YouWontFind>
-              <YouWontFind>Be with us and join Floyx today.</YouWontFind>
-            </YouWontFindContainer>
-          </FrameContainer>
-          <FrameButton
+    <MainContainer ref={ref}>
+      <BackgroundWrapper>
+        <GradientBg />
+        <GradientItems />
+        <GradientInner />
+      </BackgroundWrapper>
+      <InnerContainer>
+        <FrameOuterContainer>
+          <FrameInnerContainer>
+            <HeadingContainer>
+              <Heading1>About Us</Heading1>
+              <Heading2>We are on a mission to create a secure and uncensored digital space, driven by creators and accessible to millions of people around the world.</Heading2>
+            </HeadingContainer>
+            <TextContainer>
+              <SubHeadings>You won't find EX founders from Google, Meta, Linkedin here.</SubHeadings>
+              <SubHeadings>You won't find here big Venture Capitals, Angel Investors who value money above freedom.</SubHeadings>
+              <SubHeadings>You won't read about us in Forbes, Bloomberg, The New York Times etc.</SubHeadings>
+              <SubHeadings>&nbsp;</SubHeadings>
+              <SubHeadings>Instead, you will find people like you who work hard for you every day and believe in a censorship-free and safe haven for every internet user.</SubHeadings>
+              <SubHeadings>{` `}</SubHeadings>
+              <SubHeadings>Be with us and join Floyx today.</SubHeadings>
+            </TextContainer>
+          </FrameInnerContainer>
+          <ButtonStyled
             disableElevation={true}
             variant="contained"
             sx={{
@@ -280,23 +266,23 @@ const AboutUs: NextPage = () => {
             }}
           >
             Join now
-          </FrameButton>
-        </FrameGroup>
-        <ConnectWithFloyxParent>
-          <ConnectWithFloyx>Connect with Floyx:</ConnectWithFloyx>
-          <TwitterAlt2Parent>
-            <TwitterAlt2Icon loading="lazy" alt="" src="/twitteralt-2.svg" />
-            <TwitterAlt2Icon loading="lazy" alt="" src="/instagram-1.svg" />
+          </ButtonStyled>
+        </FrameOuterContainer>
+        <SocialMediaOutterContainer>
+          <SocialMediaText>Connect with Floyx:</SocialMediaText>
+          <SocialMediaContainer>
+            <SocialMediaIcon loading="lazy" alt="" src="/twitteralt-2.svg" />
+            <SocialMediaIcon loading="lazy" alt="" src="/instagram-1.svg" />
             <YoutubeIcon loading="lazy" alt="" src="/youtube.svg" />
-            <TwitterAlt2Icon loading="lazy" alt="" src="/tiktok.svg" />
-            <TwitterAlt2Icon loading="lazy" alt="" src="/facebook-1.svg" />
-            <TwitterAlt2Icon alt="" src="/envelope-1.svg" />
-          </TwitterAlt2Parent>
-        </ConnectWithFloyxParent>
-      </FrameParent>
-      <AboutUsChild />
+            <SocialMediaIcon loading="lazy" alt="" src="/tiktok.svg" />
+            <SocialMediaIcon loading="lazy" alt="" src="/facebook-1.svg" />
+            <SocialMediaIcon alt="" src="/envelope-1.svg" />
+          </SocialMediaContainer>
+        </SocialMediaOutterContainer>
+      </InnerContainer>
+      <BgDecors />
       <img id="imgPeople" className="fadeInImg" src="/people.png" />
-    </AboutUsRoot>
+    </MainContainer>
   );
 };
 

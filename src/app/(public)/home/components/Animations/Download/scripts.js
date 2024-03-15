@@ -11,7 +11,7 @@ function runAnimations() {
     function func_03223_02275() {
       //e.stopPropagation();
 
-      document.querySelector("#id-dd03223-dd").classList.add("animationClass-03223");
+      document?.querySelector("#id-dd03223-dd")?.classList.add("animationClass-03223");
       document
         .querySelector("#id-ddI03223_1521612dd")
         .classList.add("animationClass-I03223_1521612");
@@ -332,7 +332,7 @@ function runAnimations() {
     func_03223_02275();
 
     setTimeout(() => {
-      document.querySelector("#id-dd03223-dd").classList.add("animationClass-02275");
+      document?.querySelector("#id-dd03223-dd")?.classList.add("animationClass-02275");
       document
         .querySelector("#id-ddI03223_1521612dd")
         .classList.add("animationClass-02293");
@@ -360,19 +360,19 @@ function runAnimations() {
       document
         .querySelector("#id-ddI03223_1521617")
         .classList.add("animationClass-02299");
-      document.querySelector("#id-dd02276").classList.add("animationClass-02276");
-      document.querySelector("#id-dd02282").classList.add("animationClass-02282");
-      document.querySelector("#id-dd02277").classList.add("animationClass-02277");
-      document.querySelector("#id-dd02278").classList.add("animationClass-02278");
-      document.querySelector("#id-dd02279").classList.add("animationClass-02279");
-      document.querySelector("#id-dd02280").classList.add("animationClass-02280");
-      document.querySelector("#id-dd02281").classList.add("animationClass-02281");
-      document.querySelector("#id-dd02283").classList.add("animationClass-02283");
-      document.querySelector("#id-dd02284").classList.add("animationClass-02284");
+      document?.querySelector("#id-dd02276")?.classList.add("animationClass-02276");
+      document?.querySelector("#id-dd02282")?.classList.add("animationClass-02282");
+      document?.querySelector("#id-dd02277")?.classList.add("animationClass-02277");
+      document?.querySelector("#id-dd02278")?.classList.add("animationClass-02278");
+      document?.querySelector("#id-dd02279")?.classList.add("animationClass-02279");
+      document?.querySelector("#id-dd02280")?.classList.add("animationClass-02280");
+      document?.querySelector("#id-dd02281")?.classList.add("animationClass-02281");
+      document?.querySelector("#id-dd02283")?.classList.add("animationClass-02283");
+      document?.querySelector("#id-dd02284")?.classList.add("animationClass-02284");
       document
         .querySelector("#id-dd02284 > div:first-child")
         .classList.add("bgClass-02309");
-      document.querySelector("#id-dd02285").classList.add("animationClass-02285");
+      document?.querySelector("#id-dd02285")?.classList.add("animationClass-02285");
       document
         .querySelector("#id-dd02285 > div:first-child")
         .classList.add("bgClass-02310");
@@ -406,7 +406,7 @@ function runAnimations() {
   function func_03223_02250(e) {
     //e.stopPropagation();
 
-    document.querySelector("#id-dd03223-dd").classList.add("animationClass-02300");
+    document?.querySelector("#id-dd03223-dd")?.classList.add("animationClass-02300");
     document
       .querySelector("#id-ddI03223_1521612dd")
       .classList.add("animationClass-02318");
@@ -434,19 +434,19 @@ function runAnimations() {
     document
       .querySelector("#id-ddI03223_1521617")
       .classList.add("animationClass-02324");
-    document.querySelector("#id-dd02276").classList.add("animationClass-02301");
-    document.querySelector("#id-dd02282").classList.add("animationClass-02307");
-    document.querySelector("#id-dd02277").classList.add("animationClass-02302");
-    document.querySelector("#id-dd02278").classList.add("animationClass-02303");
-    document.querySelector("#id-dd02279").classList.add("animationClass-02304");
-    document.querySelector("#id-dd02280").classList.add("animationClass-02305");
-    document.querySelector("#id-dd02281").classList.add("animationClass-02306");
-    document.querySelector("#id-dd02283").classList.add("animationClass-02308");
-    document.querySelector("#id-dd02284").classList.add("animationClass-02309");
+    document?.querySelector("#id-dd02276")?.classList.add("animationClass-02301");
+    document?.querySelector("#id-dd02282")?.classList.add("animationClass-02307");
+    document?.querySelector("#id-dd02277")?.classList.add("animationClass-02302");
+    document?.querySelector("#id-dd02278")?.classList.add("animationClass-02303");
+    document?.querySelector("#id-dd02279")?.classList.add("animationClass-02304");
+    document?.querySelector("#id-dd02280")?.classList.add("animationClass-02305");
+    document?.querySelector("#id-dd02281")?.classList.add("animationClass-02306");
+    document?.querySelector("#id-dd02283")?.classList.add("animationClass-02308");
+    document?.querySelector("#id-dd02284")?.classList.add("animationClass-02309");
     document
       .querySelector("#id-dd02284 > div:first-child")
       .classList.add("bgClass-02259");
-    document.querySelector("#id-dd02285").classList.add("animationClass-02310");
+    document?.querySelector("#id-dd02285")?.classList.add("animationClass-02310");
     document
       .querySelector("#id-dd02285 > div:first-child")
       .classList.add("bgClass-02260");
@@ -481,7 +481,7 @@ function runAnimations() {
     function func_03223_02275(e) {
       //e.stopPropagation();
 
-      document.querySelector("#id-dd03223-dd").classList.add("animationClass-02250");
+      document?.querySelector("#id-dd03223-dd")?.classList.add("animationClass-02250");
       document
         .querySelector("#id-ddI03223_1521612dd")
         .classList.add("animationClass-02268");
@@ -509,19 +509,19 @@ function runAnimations() {
       document
         .querySelector("#id-ddI03223_1521617")
         .classList.add("animationClass-02274");
-      document.querySelector("#id-dd02276").classList.add("animationClass-02251");
-      document.querySelector("#id-dd02282").classList.add("animationClass-02257");
-      document.querySelector("#id-dd02277").classList.add("animationClass-02252");
-      document.querySelector("#id-dd02278").classList.add("animationClass-02253");
-      document.querySelector("#id-dd02279").classList.add("animationClass-02254");
-      document.querySelector("#id-dd02280").classList.add("animationClass-02255");
-      document.querySelector("#id-dd02281").classList.add("animationClass-02256");
-      document.querySelector("#id-dd02283").classList.add("animationClass-02258");
-      document.querySelector("#id-dd02284").classList.add("animationClass-02259");
+      document?.querySelector("#id-dd02276")?.classList.add("animationClass-02251");
+      document?.querySelector("#id-dd02282")?.classList.add("animationClass-02257");
+      document?.querySelector("#id-dd02277")?.classList.add("animationClass-02252");
+      document?.querySelector("#id-dd02278")?.classList.add("animationClass-02253");
+      document?.querySelector("#id-dd02279")?.classList.add("animationClass-02254");
+      document?.querySelector("#id-dd02280")?.classList.add("animationClass-02255");
+      document?.querySelector("#id-dd02281")?.classList.add("animationClass-02256");
+      document?.querySelector("#id-dd02283")?.classList.add("animationClass-02258");
+      document?.querySelector("#id-dd02284")?.classList.add("animationClass-02259");
       document
         .querySelector("#id-dd02284 > div:first-child")
         .classList.add("bgClass-02284");
-      document.querySelector("#id-dd02285").classList.add("animationClass-02260");
+      document?.querySelector("#id-dd02285")?.classList.add("animationClass-02260");
       document
         .querySelector("#id-dd02285 > div:first-child")
         .classList.add("bgClass-02285");

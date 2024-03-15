@@ -3,7 +3,7 @@ import { TextField, InputAdornment, Icon, IconButton } from "@mui/material";
 import styled from '@emotion/styled';
 import { ChatAnimation } from '../components/Animations/ChatsAnimations/chatAnimations'
 
-const PrivateMessaging = styled.b`
+const Heading1 = styled.b`
   align-self: stretch;
   position: relative;
   letter-spacing: -0.02em;
@@ -17,14 +17,14 @@ const PrivateMessaging = styled.b`
     line-height: 36px;
   }
 `;
-const UseOurInternal = styled.div`
+const Heading2 = styled.div`
   flex: 1;
   position: relative;
   line-height: 27px;
   display: inline-block;
   max-width: 100%;
 `;
-const Vector = styled.div`
+const BgWrapper = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -36,7 +36,7 @@ const Vector = styled.div`
   font-size: 18px;
   color: rgba(255, 255, 255, 0.7);
 `;
-const PrivateMessagingParent = styled.div`
+const HeadingContainer = styled.div`
   width: 462px;
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@ const PrivateMessagingParent = styled.div`
   gap: 23px 0px;
   max-width: 100%;
 `;
-const Frame = styled.img`
+const BgImageWrap = styled.img`
   height: 368px;
   width: calc(100% - 20px);
   position: absolute;
@@ -57,7 +57,7 @@ const Frame = styled.img`
   overflow: hidden;
   object-fit: cover;
 `;
-const ChatHead = styled.div`
+const ChatHeadBgWrap = styled.div`
   height: 388px;
   width: 333px;
   margin: 0 !important;
@@ -72,7 +72,7 @@ const ChatHead = styled.div`
   box-sizing: border-box;
   z-index: 2;
 `;
-const Group = styled.div`
+const ChatHeadContainer = styled.div`
   width: 632px;
   display: flex;
   flex-direction: row;
@@ -83,7 +83,7 @@ const Group = styled.div`
   position: relative;
   max-width: 100%;
 `;
-const Chat = styled.div`
+const Heading = styled.div`
   width: 47px;
   position: relative;
   font-weight: 600;
@@ -94,7 +94,7 @@ const Chat = styled.div`
     font-size: 16px;
   }
 `;
-const Line = styled.div`
+const BgLine = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -103,7 +103,7 @@ const Line = styled.div`
   padding: 0px 20px;
   text-align: center;
 `;
-const LabelFrameIcon = styled.img`
+const ChatBoxImage = styled.img`
   align-self: stretch;
   height: 63px;
   position: relative;
@@ -112,21 +112,21 @@ const LabelFrameIcon = styled.img`
   flex-shrink: 0;
   object-fit: contain;
 `;
-const TextFrame = styled.div`
+const BgTypingFrame = styled.div`
   height: 8px;
   width: 8px;
   position: relative;
   border-radius: 50%;
   background-color: #fff;
 `;
-const GroupFrame = styled.div`
+const BgTypingInnerContainer = styled.div`
   width: 6px;
   height: 6px;
   position: relative;
   border-radius: 50%;
   background-color: #939393;
 `;
-const NameUsernameFrameEmailaddre = styled.div`
+const TypingInnerContainer = styled.div`
   height: -34.5px;
   display: flex;
   flex-direction: column;
@@ -135,11 +135,7 @@ const NameUsernameFrameEmailaddre = styled.div`
   padding: 1px 0px 0px;
   box-sizing: border-box;
 `;
-const Heyya = styled.div`
-  width: 36px;
-  position: relative;
-  display: none;
-`;
+
 const TypingComponent = styled.div`
   height: 1px;
   border-radius: 16px 16px 16px 1px;
@@ -171,7 +167,7 @@ const Checkbox = styled.div`
   justify-content: flex-start;
   padding: 4px 0px 0px;
 `;
-const TwitterTelegramDiscordInsta = styled(TextField)`
+const SendBoxOutline = styled(TextField)`
   border: none;
   background-color: transparent;
   height: 100%;
@@ -182,10 +178,10 @@ const TwitterTelegramDiscordInsta = styled(TextField)`
   bottom: 0px;
   left: 0px;
 `;
-const MessageToMichele = styled.div`
+const InnerText = styled.div`
   position: relative;
 `;
-const TermsPrivacyCookiesFrame = styled.div`
+const SendBoxInner = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -194,7 +190,7 @@ const TermsPrivacyCookiesFrame = styled.div`
   padding: 0px 36px 0px 0px;
   z-index: 1;
 `;
-const Rectangle1 = styled.div`
+const SendBox = styled.div`
   width: 205px;
   display: flex;
   flex-direction: column;
@@ -203,13 +199,13 @@ const Rectangle1 = styled.div`
   padding: 15px 0px 0px;
   box-sizing: border-box;
 `;
-const SignUpButtonGroup = styled.img`
+const SendBtn = styled.img`
   width: 22px;
   height: 22.3px;
   position: relative;
   z-index: 1;
 `;
-const EmailAddress = styled.div`
+const SendButtonInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -249,7 +245,7 @@ const PasswordInputFrameParent = styled.button`
   flex: 1;
   position: relative;
 `;
-const Name1 = styled.div`
+const SendButtonContainer = styled.div`
   width: 121px;
   display: flex;
   flex-direction: row;
@@ -257,7 +253,7 @@ const Name1 = styled.div`
   justify-content: flex-start;
   gap: 0px 44px;
 `;
-const LegalFrame = styled.div`
+const SendBoxContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -286,7 +282,7 @@ const CheckboxParent = styled.div`
   color: rgba(255, 255, 255, 0.3);
   font-family: Poppins;
 `;
-const LabelFrame = styled.div`
+const LabelContainer = styled.div`
   flex: 1;
   overflow: hidden;
   display: flex;
@@ -308,7 +304,7 @@ const AutoLayoutHorizontal = styled.div`
   box-sizing: border-box;
   max-width: 100%;
 `;
-const Message = styled.div`
+const MessageContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -316,7 +312,7 @@ const Message = styled.div`
   justify-content: flex-start;
   max-width: 100%;
 `;
-const Chat1 = styled.div`
+const ChatContainer = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -336,7 +332,7 @@ const Chat1 = styled.div`
     box-sizing: border-box;
   }
 `;
-const Groups = styled.b`
+const GHeading = styled.b`
   width: 182px;
   position: relative;
   letter-spacing: -0.02em;
@@ -352,7 +348,7 @@ const Groups = styled.b`
     line-height: 36px;
   }
 `;
-const BlogFAQSupport = styled.div`
+const GroupInnerContainer = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -368,7 +364,7 @@ const CreateAGroup = styled.div`
   color: rgba(255, 255, 255, 0.7);
   z-index: 1;
 `;
-const CompanyBrandAssets = styled.div`
+const GroupOuterContainer = styled.div`
   width: 440px;
   display: flex;
   flex-direction: column;
@@ -377,7 +373,7 @@ const CompanyBrandAssets = styled.div`
   gap: 23px 0px;
   max-width: 100%;
 `;
-const Wallet = styled.div`
+const GroupContainer = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -387,7 +383,7 @@ const Wallet = styled.div`
   box-sizing: border-box;
   max-width: 100%;
 `;
-const Line1 = styled.div`
+const InnerContainer = styled.div`
   width: 808px;
   display: flex;
   flex-direction: column;
@@ -395,7 +391,7 @@ const Line1 = styled.div`
   justify-content: flex-start;
   max-width: 100%;
 `;
-const RectangleRoot = styled.div`
+const MainContainer = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -424,58 +420,57 @@ const Rectangle: NextPage = () => {
       { rootMargin: "-300px" }
     );
 
-    observer.observe(ref.current);
+    if (ref?.current) { observer.observe(ref.current); }
 
     return () => observer.disconnect();
   }, [isIntersecting]);
 
   useEffect(() => {
     if (isIntersecting) {
-      document.querySelector("#chat2").classList.add("chatScroll");
-      //document.querySelector("#id-I03221_1366701").classList.add("object");
+      document?.querySelector("#chat2")?.classList.add("chatScroll");
+      //document?.querySelector("#id-I03221_1366701")?.classList.add("object");
     }
     else {
-       document.querySelector("#chat2").classList.remove("chatScroll");
-      // document.querySelector("#id-I03221_1366701").classList.remove("object");
+      document?.querySelector("#chat2")?.classList.remove("chatScroll");
+      // document?.querySelector("#id-I03221_1366701")?.classList.remove("object");
     };
 
   }, [isIntersecting]);
   return (
-    <RectangleRoot ref={ref}>
-      <Line1>
-        <Group>
-          <PrivateMessagingParent>
-            <PrivateMessaging>Private Messaging</PrivateMessaging>
-            <Vector>
-              <UseOurInternal>{`Use our internal encrypted messenger, which is the only one in the world that doesn't store data! `}</UseOurInternal>
-            </Vector>
-          </PrivateMessagingParent>
-          <ChatHead>
-            <Frame loading="lazy" alt="" src="/frame-427320687-2@2x.png" />
-          </ChatHead>
-        </Group>
-       
-        <Chat1>
-          <Message>
+    <MainContainer ref={ref}>
+      <InnerContainer>
+        <ChatHeadContainer>
+          <HeadingContainer>
+            <Heading1>Private Messaging</Heading1>
+            <BgWrapper>
+              <Heading2>Use our internal encrypted messenger, which is the only one in the world that doesn't store data!</Heading2>
+            </BgWrapper>
+          </HeadingContainer>
+          <ChatHeadBgWrap>
+            <BgImageWrap loading="lazy" alt="" src="/frame-427320687-2@2x.png" />
+          </ChatHeadBgWrap>
+        </ChatHeadContainer>
+        <ChatContainer>
+          <MessageContainer>
             <AutoLayoutHorizontal>
-              <LabelFrame>
-                <Line>
-                  <Chat>Chat</Chat>
-                </Line>
+              <LabelContainer>
+                <BgLine>
+                  <Heading>Chat</Heading>
+                </BgLine>
                 <div id="chat2" className="slideDiv">
-                  <LabelFrameIcon alt="" src="/label-frame@2x.png" />
-                <LabelFrameIcon  className="" alt="" src="/chat2.png" /> <LabelFrameIcon alt="" src="/chat3.png" />
-                <LabelFrameIcon alt="" src="/chat4.png" />
+                  <ChatBoxImage alt="" src="/label-frame@2x.png" />
+                  <ChatBoxImage className="" alt="" src="/chat2.png" />
+                  <ChatBoxImage alt="" src="/chat3.png" />
+                  <ChatBoxImage alt="" src="/chat4.png" />
                 </div>
                 <TypingComponent>
-                  <TextFrame />
-                  <NameUsernameFrameEmailaddre>
-                    <GroupFrame />
-                  </NameUsernameFrameEmailaddre>
-                  <NameUsernameFrameEmailaddre>
-                    <GroupFrame />
-                  </NameUsernameFrameEmailaddre>
-                  <Heyya>Heyya</Heyya>
+                  <BgTypingFrame />
+                  <TypingInnerContainer>
+                    <BgTypingInnerContainer />
+                  </TypingInnerContainer>
+                  <TypingInnerContainer>
+                    <BgTypingInnerContainer />
+                  </TypingInnerContainer>
                 </TypingComponent>
                 <CheckboxParent>
                   <Checkbox>
@@ -485,8 +480,8 @@ const Rectangle: NextPage = () => {
                       src="/my-profile-pic@2x.png"
                     />
                   </Checkbox>
-                  <LegalFrame>
-                    <TwitterTelegramDiscordInsta
+                  <SendBoxContainer>
+                    <SendBoxOutline
                       variant="outlined"
                       sx={{
                         "& fieldset": { border: "none" },
@@ -498,41 +493,41 @@ const Rectangle: NextPage = () => {
                         width: "612px",
                       }}
                     />
-                    <Rectangle1>
-                      <TermsPrivacyCookiesFrame>
-                        <MessageToMichele>
+                    <SendBox>
+                      <SendBoxInner>
+                        <InnerText>
                           Message to Michele...
-                        </MessageToMichele>
-                      </TermsPrivacyCookiesFrame>
-                    </Rectangle1>
-                    <Name1>
-                      <EmailAddress>
-                        <SignUpButtonGroup
+                        </InnerText>
+                      </SendBoxInner>
+                    </SendBox>
+                    <SendButtonContainer>
+                      <SendButtonInner>
+                        <SendBtn
                           alt=""
                           src="/sign-up-button-group.svg"
                         />
-                      </EmailAddress>
+                      </SendButtonInner>
                       <PasswordInputFrameParent>
                         <PasswordInputFrame />
                         <PaperPlaneIcon alt="" src="/paperplane.svg" />
                       </PasswordInputFrameParent>
-                    </Name1>
-                  </LegalFrame>
+                    </SendButtonContainer>
+                  </SendBoxContainer>
                 </CheckboxParent>
-              </LabelFrame>
+              </LabelContainer>
             </AutoLayoutHorizontal>
-          </Message>
-        </Chat1>
-        <Wallet>
-          <CompanyBrandAssets>
-            <BlogFAQSupport>
-              <Groups>Groups</Groups>
-            </BlogFAQSupport>
-            <CreateAGroup>{`Create a group, add dedicated channels and manage everything in an unprecedented way! `}</CreateAGroup>
-          </CompanyBrandAssets>
-        </Wallet>
-      </Line1>
-    </RectangleRoot>
+          </MessageContainer>
+        </ChatContainer>
+        <GroupContainer>
+          <GroupOuterContainer>
+            <GroupInnerContainer>
+              <GHeading>Groups</GHeading>
+            </GroupInnerContainer>
+            <CreateAGroup>Create a group, add dedicated channels and manage everything in an unprecedented way! </CreateAGroup>
+          </GroupOuterContainer>
+        </GroupContainer>
+      </InnerContainer>
+    </MainContainer>
   );
 };
 

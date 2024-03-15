@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { Button } from "@mui/material";
 import styled from '@emotion/styled';
-import React,{useState,useEffect,useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 const FrameChild = styled.div`
   align-self: stretch;
   width: 1px;
@@ -400,9 +400,10 @@ const ShineBackgroundParentRoot = styled.div`
 `;
 
 const FrameComponent: NextPage = () => {
-  const [value,setValue]=useState({index:0,
-      heading: "Floyx Marketplace", title: "Have you heard of NFT? Are you a talented graphic designer, painter, musician, photographer or just want to try your hand at this art? Check out our modern and innovative Marketplace, which allows you to monetize your artwork, as well as profit from each subsequent sale through a loyalty system. ", subTitle: "Are you a beginner? No problem! Floyx has created tools that will allow you to create your first NFT collection completely free of charge!", img: "/landing-page-2@2x.png"
-    })
+  const [value, setValue] = useState({
+    index: 0,
+    heading: "Floyx Marketplace", title: "Have you heard of NFT? Are you a talented graphic designer, painter, musician, photographer or just want to try your hand at this art? Check out our modern and innovative Marketplace, which allows you to monetize your artwork, as well as profit from each subsequent sale through a loyalty system. ", subTitle: "Are you a beginner? No problem! Floyx has created tools that will allow you to create your first NFT collection completely free of charge!", img: "/landing-page-2@2x.png"
+  })
   const data = [
     {
       heading: "Floyx Marketplace", title: "Have you heard of NFT? Are you a talented graphic designer, painter, musician, photographer or just want to try your hand at this art? Check out our modern and innovative Marketplace, which allows you to monetize your artwork, as well as profit from each subsequent sale through a loyalty system. ", subTitle: "Are you a beginner? No problem! Floyx has created tools that will allow you to create your first NFT collection completely free of charge!", img: "/landing-page-2@2x.png"
@@ -424,36 +425,36 @@ const FrameComponent: NextPage = () => {
       { rootMargin: "-300px" }
     );
 
-    observer.observe(ref.current);
+    if (ref?.current) { observer.observe(ref.current); }
 
     return () => observer.disconnect();
   }, [isIntersecting]);
 
   useEffect(() => {
-    
+
     if (isIntersecting) {
       let newValue
-       if(data[value.index+1]){
-                 newValue ={...data[value.index+1],index:value.index+1}
-         }else{
-              newValue ={...data[0],index:0}
+      if (data[value.index + 1]) {
+        newValue = { ...data[value.index + 1], index: value.index + 1 }
+      } else {
+        newValue = { ...data[0], index: 0 }
 
-         }
-          
-     
-         const interval = setInterval(() => {
-      setValue(newValue);
-    }, 3000);
+      }
 
-    return () => clearInterval(interval);
+
+      const interval = setInterval(() => {
+        setValue(newValue);
+      }, 3000);
+
+      return () => clearInterval(interval);
 
     }
     else {
-      
+
     };
 
-  }, [isIntersecting,value]);
-   
+  }, [isIntersecting, value]);
+
   return (
     <ShineBackgroundParentRoot ref={ref}>
       <ShineBackground>
@@ -531,57 +532,57 @@ const FrameComponent: NextPage = () => {
           </LineWrapper>
         </LineGroup>
       </ShineBackground>
-       
-          <EcoSystem>
-            <EcoSystemInner>
-              <FrameGroup>
-                <FloyxMarketplaceWrapper>
-                  <FloyxMarketplace>{value.heading}</FloyxMarketplace>
-                </FloyxMarketplaceWrapper>
-                <HaveYouHeardContainer>
-                  <HaveYouHeard>{value.title}</HaveYouHeard>
-                  <HaveYouHeard>&nbsp;</HaveYouHeard>
-                  <HaveYouHeard>
-                    {value.subTitle}
-                  </HaveYouHeard>
-                </HaveYouHeardContainer>
-              </FrameGroup>
-            </EcoSystemInner>
+
+      <EcoSystem>
+        <EcoSystemInner>
+          <FrameGroup>
             <FloyxMarketplaceWrapper>
-              <FrameContainer>
-                <FrameButton
-                  disableElevation={true}
-                  variant="contained"
-                  sx={{
-                    textTransform: "none",
-                    color: "#0b081f",
-                    fontSize: "16",
-                    background:
-                      "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
-                    borderRadius: "10px",
-                    "&:hover": {
-                      background:
-                        "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
-                    },
-                    height: 48,
-                  }}
-                >
-                  Check more details
-                </FrameButton>
-                <FrameWrapper1>
-                 { <EllipseParent>
-                   
-                    { data.map((item,index)=><TextFrame onClick={()=>{setValue({...item,index:index})}}>
-                      <TextInput  className={value.heading==item.heading && "active-pointer"} />
-                    </TextFrame>)}
-                   
-                  </EllipseParent>}
-                </FrameWrapper1>
-              </FrameContainer>
+              <FloyxMarketplace>{value.heading}</FloyxMarketplace>
             </FloyxMarketplaceWrapper>
-            <LandingPage loading="lazy" alt="" src={value.img} />
-          </EcoSystem>
-        
+            <HaveYouHeardContainer>
+              <HaveYouHeard>{value.title}</HaveYouHeard>
+              <HaveYouHeard>&nbsp;</HaveYouHeard>
+              <HaveYouHeard>
+                {value.subTitle}
+              </HaveYouHeard>
+            </HaveYouHeardContainer>
+          </FrameGroup>
+        </EcoSystemInner>
+        <FloyxMarketplaceWrapper>
+          <FrameContainer>
+            <FrameButton
+              disableElevation={true}
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                color: "#0b081f",
+                fontSize: "16",
+                background:
+                  "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
+                borderRadius: "10px",
+                "&:hover": {
+                  background:
+                    "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
+                },
+                height: 48,
+              }}
+            >
+              Check more details
+            </FrameButton>
+            <FrameWrapper1>
+              {<EllipseParent>
+
+                {data.map((item, index) => <TextFrame onClick={() => { setValue({ ...item, index: index }) }}>
+                  <TextInput className={(value.heading == item.heading)?"active-pointer":""} />
+                </TextFrame>)}
+
+              </EllipseParent>}
+            </FrameWrapper1>
+          </FrameContainer>
+        </FloyxMarketplaceWrapper>
+        <LandingPage loading="lazy" alt="" src={value.img} />
+      </EcoSystem>
+
     </ShineBackgroundParentRoot>
   );
 };
