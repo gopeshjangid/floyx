@@ -3,12 +3,109 @@ import ReactDOM from "react-dom/client";
 import "./style.css";
 import "./animation.css";
 import runAnimations, { allLinks, allFunctions } from "./scripts";
+import styled from '@emotion/styled';
+
+const MainContainer = styled.section`
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 556px 22px;
+  box-sizing: border-box;
+  gap: 58px 0px;
+  max-width: 100%;
+  text-align: left;
+  font-size: 50px;
+  color: #fff;
+  font-family: Poppins;
+  @media screen and (max-width: 1350px) {
+    padding-left: 278px;
+    padding-right: 278px;
+    box-sizing: border-box;
+  }
+  @media screen and (max-width: 800px) {
+    gap: 29px 0px;
+    padding-left: 139px;
+    padding-right: 139px;
+    box-sizing: border-box;
+  }
+  @media screen and (max-width: 450px) {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+`;
+const HeadingWrap = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 18px 0px;
+`;
+const HeadingContainer = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0px 20px 0px 21px;
+`;
+const Heading = styled.b`
+  position: relative;
+  letter-spacing: 1px;
+  line-height: 45px;
+  text-transform: capitalize;
+  z-index: 2;
+  @media screen and (max-width: 800px) {
+    font-size: 40px;
+    line-height: 36px;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 30px;
+    line-height: 27px;
+  }
+`;
+const SubHeading = styled.div`
+  align-self: stretch;
+  height: 47px;
+  position: relative;
+  font-size: 18px;
+  line-height: 27px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  display: inline-block;
+  flex-shrink: 0;
+  z-index: 2;
+`;
+const CarasoulContainer = styled.div`
+  margin-left: -614px;
+  width: 1579px;
+  height: 526px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  object-fit: cover;
+  max-width: 481%;
+  z-index: 2;
+`;
 export const CommentsCards = () => {
   useEffect(() => {
     runAnimations();
   }, []);
   return (
-    <div className="parent-div-1">
+    <> <MainContainer>
+        <HeadingWrap>
+          <HeadingContainer>
+            <Heading>Posts</Heading>
+          </HeadingContainer>
+          <SubHeading>
+            Create quick posts without worrying about the character limit!
+          </SubHeading>
+        </HeadingWrap>
+        <CarasoulContainer  >
+        <div className="parent-div-1">
       <div className="posts-1-151107 pos-abs" id="id-03215">
         <div className="frame-427320742-1-97812 pos-abs" id="id-I03215_933077">
           <div
@@ -104,5 +201,8 @@ export const CommentsCards = () => {
         </div>
       </div>
     </div>
+        </CarasoulContainer  >
+      </MainContainer></>
+    
   );
 };

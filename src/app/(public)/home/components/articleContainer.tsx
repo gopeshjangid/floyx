@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import styled from '@emotion/styled'  ;
 import { AnimateArticles } from "../components/Animations/Posts/animateArticles"
 
-const Articles = styled.b`
+const Heading1 = styled.b`
   position: relative;
   letter-spacing: 1px;
   line-height: 40px;
@@ -16,7 +16,7 @@ const Articles = styled.b`
     line-height: 27px;
   }
 `;
-const TextInput = styled.div`
+const TextWrap = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -24,7 +24,7 @@ const TextInput = styled.div`
   justify-content: center;
   padding: 0px 20px;
 `;
-const ManageYourBlog = styled.div`
+const Heading2 = styled.div`
   align-self: stretch;
   height: 47px;
   position: relative;
@@ -44,7 +44,7 @@ const TextContainer = styled.div`
   gap: 29px 0px;
   max-width: 100%;
 `;
-const PasswordInput = styled.div`
+const TextOutterContainer = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -54,7 +54,7 @@ const PasswordInput = styled.div`
   box-sizing: border-box;
   max-width: 100%;
 `;
-const ArticleChild = styled.div`
+const ArticleAnimateBg = styled.div`
   position: absolute;
   top: 0px;
   left: calc(50% - 394px);
@@ -76,13 +76,13 @@ const ArticleContent = styled.img`
   object-fit: cover;
   z-index: 1;
 `;
-const Article = styled.div`
+const ArticleAnimateWrap = styled.div`
   align-self: stretch;
   height: 694px;
   position: relative;
   z-index: 1;
 `;
-const FrameInput = styled.div`
+const InnerContainer = styled.div`
   width: 788px;
   display: flex;
   flex-direction: column;
@@ -94,7 +94,7 @@ const FrameInput = styled.div`
     gap: 22px 0px;
   }
 `;
-const RegisterFormGroupRoot = styled.section`
+const MainContainer = styled.section`
   align-self: stretch;
   display: flex;
   flex-direction: row;
@@ -110,30 +110,26 @@ const RegisterFormGroupRoot = styled.section`
   overflow:hidden;
 `;
 
-const RegisterFormGroup: NextPage = () => {
+const ArticleContainer = () => {
   return (
-    // <>
-    //   <Articles>Articles</Articles>
-    //   <ManageYourBlog>{`Manage your blog, collect tips and build a loyal audience appreciating the noble art of writing. `}</ManageYourBlog>
-    //   <AnimateArticles/>
-    // </>
-    <RegisterFormGroupRoot>
-      <FrameInput>
-        <PasswordInput>
+    
+    <MainContainer>
+      <InnerContainer>
+        <TextOutterContainer>
           <TextContainer>
-            <TextInput>
-              <Articles>Articles</Articles>
-            </TextInput>
-            <ManageYourBlog>{`Manage your blog, collect tips and build a loyal audience appreciating the noble art of writing. `}</ManageYourBlog>
+            <TextWrap>
+              <Heading1>Articles</Heading1>
+            </TextWrap>
+            <Heading2>Manage your blog, collect tips and build a loyal audience appreciating the noble art of writing. </Heading2>
           </TextContainer>
-        </PasswordInput>
-        <Article>
-          <ArticleChild />
+        </TextOutterContainer>
+        <ArticleAnimateWrap>
+          <ArticleAnimateBg />
           <AnimateArticles />
-        </Article>
-      </FrameInput>
-    </RegisterFormGroupRoot>
+        </ArticleAnimateWrap>
+      </InnerContainer>
+    </MainContainer>
   );
 };
 
-export default RegisterFormGroup;
+export default ArticleContainer;
