@@ -24,6 +24,7 @@ export const PostBox = styled(Box)(({ theme }) => ({
       display: 'none',
     },
     '& .image-upload': {
+      cursor:'pointer',
       display: 'flex',
       justifyContent: 'space-between',
       alignItem: 'center',

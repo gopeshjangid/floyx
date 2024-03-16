@@ -714,8 +714,6 @@ const ProfileSection: React.FC = () => {
                       background: '#5798FF3B',
                     }}
                     onClick={() => {
-                      debugger;
-                      console.log(isUserBlocked);
                       unBlockUser({ username })
                         .unwrap()
                         .then(res => {

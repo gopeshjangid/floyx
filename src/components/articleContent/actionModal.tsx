@@ -20,20 +20,21 @@ import {
 } from '@mui/material';
 import TextareaAutosize from '@/components/CustomTextArea';
 
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import { ChangeEvent, useEffect, useState } from 'react';
 import {
   useAddReportArticleMutation,
   useAddReportUserMutation,
   useBlockUserMutation,
 } from '@/lib/redux/slices/profile';
+
 import { useToast } from '../Toast/useToast';
 import {
   useCheckArticleIsSharedMutation,
   useShareArticleMutation,
 } from '@/lib/redux';
-import AddComment from '../Post/AddComment';
+
 import { useTranslation } from 'react-i18next';
+
 const BlockUserDisclaimer = () => {
   const {t}=useTranslation()
   return (
@@ -135,17 +136,16 @@ export default function ActionModal({
 }: any) {
   const { palette } = useTheme();
   const toast = useToast();
-  const commentRef = useRef();
- const { t } = useTranslation();
+  const { t } = useTranslation();
   const [reportReason, setReportReason] = useState('');
   const [commentText, setCommentText] = useState('');
   const [message, setMessage] = useState('');
 
-  const [blockUser, { isSuccess: isBlocked, error: blockError }] =
+  const [blockUser, { isSuccess: isBlocked, error: blockError, isLoading: userBlocking }] =
     useBlockUserMutation();
-  const [reportUser, { isSuccess: isUserReported, error: userError }] =
+  const [reportUser, { isSuccess: isUserReported, error: userError, isLoading: isReportingUser }] =
     useAddReportUserMutation();
-  const [reportArticle, { data: reportArticleData, isSuccess: isArticleReported, error: articleError, isLoading }] =
+  const [reportArticle, { data: reportArticleData, isSuccess: isArticleReported, error: articleError, isLoading: isReportingArticle }] =
     useAddReportArticleMutation();
   const [checkIsShared] = useCheckArticleIsSharedMutation();
   const [publishArticle] = useShareArticleMutation();
@@ -159,7 +159,7 @@ export default function ActionModal({
   ) => {
     event.stopPropagation();
     try {
-      if (item === 2) {
+      if (item === 'report-user') {
         await reportUser({ Username: username, Reason: reportReason });
       } else {
         await reportArticle({
@@ -170,7 +170,7 @@ export default function ActionModal({
       // setOpenDialog(false);
     } catch (error) {
       toast.error(
-        `Error occured in reporting the ${item === 2 ? 'user' : 'article'}`
+        `Error occured in reporting the ${item === 'report-user' ? 'user' : 'article'}`
       );
       console.error('Error reporting the user:', error);
     }
@@ -206,40 +206,55 @@ export default function ActionModal({
     setCommentText('');
     setOpenDialog(false);
   };
-
-  const getModalHeading = (item: number) => {
+  const getModalHeading = (item: string) => {
     switch (item) {
-      case 0:
-      case 2:
-      case 4: 
+      case 'edit':
+      case 'report-article':
         return (
           <Stack direction={'row'} justifyContent="center" gap={1}>
             <FlagIcon /> <Typography translate="no" variant="h6">{t('comp.articleContent.reportIssue')}</Typography>
           </Stack>
         );
-      case 1:
+      case 'block-user':
         return (
           <Stack direction={'row'} justifyContent="center" gap={1}>
             <BlockOutlinedIcon />{' '}
             <Typography translate="no" variant="h6">{t('comp.articleContent.blockUser')}</Typography>
           </Stack>
         );
-      case 3:
+        case 'report-article':
+        return (
+          <Stack direction={'row'} justifyContent="center" gap={1}>
+            <BlockOutlinedIcon />{' '}
+            <Typography translate="no" variant="h6">{t('comp.articleContent.reportArticle')}</Typography>
+          </Stack>
+        );
+      case 'share-article':
         return (
           <Stack direction={'row'} justifyContent="center" gap={1}>
             <ShareIcon /> <Typography translate="no" variant="h6">{t('comp.articleContent.share')}</Typography>
           </Stack>
         );
+        case 'report-user':
+          case 'reported-user':
+          return (
+            <Stack direction={'row'} justifyContent="center" gap={1}>
+              <BlockOutlinedIcon /> <Typography translate="no" variant="h6">{t('comp.articleContent.reportUser')}</Typography>
+            </Stack>
+          );  
 
       default:
         break;
     }
   };
 
-  const getModalButtons = (item: number) => {
+  const getModalButtons = (item: string) => {
+    if(isReportingArticle || isReportingUser || userBlocking){
+      return <Box p={1}><CircularProgress size={20} color="inherit" /></Box>
+    }
     switch (item) {
-      case 0:
-      case 2:
+      case 'report-article':
+      case 'report-user':
         return (
           <>
             <Button
@@ -248,40 +263,39 @@ export default function ActionModal({
               onClick={handleReportSubmit}
               // disabled={!reportReason}
             >
-              {isLoading && <CircularProgress size={20} color="inherit" />}
-              {!isLoading && t('comp.articleContent.report')}
+              {(item =='report-user' ? t('comp.articleContent.reportUser'):  t('comp.articleContent.report'))}
             </Button>
-            <Button translate="no" onClick={handleClose} variant="text">
+            <Button  translate="no" onClick={handleClose} variant="outlined">
               {t('comp.articleContent.close')}
             </Button>
           </>
         );
-      case 1:
+      case 'block-user':
         return (
           <>
             <Button translate="no" variant="contained" autoFocus onClick={handleBlockUser}>
               {t('comp.articleContent.yes')}
             </Button>
-            <Button translate="no" variant="text" onClick={handleClose} autoFocus>
+            <Button translate="no" variant="outlined" onClick={handleClose} autoFocus>
               {t('comp.articleContent.no')}
             </Button>
           </>
         );
-      case 3:
+      // case 3:
+      //   return (
+      //     <>
+      //       <Button translate="no" variant="contained" autoFocus onClick={handlePublish}>
+      //         {t('comp.articleContent.publish')}
+      //       </Button>
+      //       <Button translate="no" variant="text" onClick={handleClose} autoFocus>
+      //         {t('comp.articleContent.close')}
+      //       </Button>
+      //     </>
+      //   );
+      default: 
         return (
           <>
-            <Button translate="no" variant="contained" autoFocus onClick={handlePublish}>
-              {t('comp.articleContent.publish')}
-            </Button>
-            <Button translate="no" variant="text" onClick={handleClose} autoFocus>
-              {t('comp.articleContent.close')}
-            </Button>
-          </>
-        );
-      case 4: 
-        return (
-          <>
-            <Button translate="no" variant="text" onClick={handleClose} autoFocus>
+            <Button translate="no" variant="outlined" onClick={handleClose} autoFocus>
               {t('comp.articleContent.done')}
             </Button>
           </>
@@ -289,54 +303,65 @@ export default function ActionModal({
     }
   };
 
-  const getModalContent = (item: number) => {
+  const getModalContent = (item: string) => {
     switch (item) {
-      case 0:
-      case 2:
+      case 'edit':
+      case 'report-user':
+        case 'report-article':
         return <ReportUserDisclaimer handleReportChange={handleReportChange} />;
-      case 1:
+      case 'block-user':
         return <BlockUserDisclaimer />;
 
-      case 3:
-        return (
-          <Box>
-            <Box sx={{ padding: '10px' }}>
-              <AddComment
-                id={articleDetails.id}
-                commentRef={commentRef}
-                commentType={'ArticleComment'}
-                commentText={commentText}
-                setCommentText={setCommentText}
-              />
-            </Box>
-            <Box sx={{ padding: '10px' }}>
-              <Image
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{ width: '100%', height: '100%' }}
-                src={articleDetails?.coverPhotoPath}
-                alt="thumbnail"
-              />
-            </Box>
-            <Box
-              sx={{
-                padding: '10px',
-                paddingTop: '1px',
-                textTransform: 'capitalize',
-              }}
-            >
-              <Typography variant="h1">{articleDetails?.title}</Typography>
-            </Box>
-            <Divider />
-          </Box>
-        );
-      case 4: 
+      // case 3:
+      //   return (
+      //     <Box>
+      //       <Box sx={{ padding: '10px' }}>
+      //         <AddComment
+      //           id={articleDetails.id}
+      //           commentRef={commentRef}
+      //           commentType={'ArticleComment'}
+      //           commentText={commentText}
+      //           setCommentText={setCommentText}
+      //         />
+      //       </Box>
+      //       <Box sx={{ padding: '10px' }}>
+      //         <Image
+      //           width={0}
+      //           height={0}
+      //           sizes="100vw"
+      //           style={{ width: '100%', height: '100%' }}
+      //           src={articleDetails?.coverPhotoPath}
+      //           alt="thumbnail"
+      //         />
+      //       </Box>
+      //       <Box
+      //         sx={{
+      //           padding: '10px',
+      //           paddingTop: '1px',
+      //           textTransform: 'capitalize',
+      //         }}
+      //       >
+      //         <Typography variant="h1">{articleDetails?.title}</Typography>
+      //       </Box>
+      //       <Divider />
+      //     </Box>
+      //   );
+      case 'report-content': 
         return (
           <>
             <div> {message} </div>
             <div>
               The Floyx team will check {text === 'Material' ? 'content posted by user' : 'user profile'}, as soon as possible and will
+              take the appropriate steps.
+            </div>
+          </>
+        )
+        case 'reported-user': 
+        return (
+          <>
+            <div> {message} </div>
+            <div>
+              The Floyx team will check user profile, as soon as possible and will
               take the appropriate steps.
             </div>
           </>
@@ -355,25 +380,34 @@ export default function ActionModal({
         toast.success('The user has been blocked !');
       }
       if (isUserReported) {
+        setItem('reported-user');
         toast.success('The user has been reported!');
       }
     }
   }, [isBlocked, isUserReported]);
 
   useEffect(() => {
-    if (reportArticleData && reportArticleData) {
+    if (reportArticleData) {
       if (typeof reportArticleData === 'string') {
         if (reportArticleData === 'Already_reported') {
+          setItem('report-user');
           setMessage('The user has been reported!');
         }
         if (reportArticleData === 'Content_has_been_reported_thank_you') {
+          setItem('report-content');
           setMessage('Content has been reported Successfully!! Thank you.');
         }
-        setItem(4);
         setOpenDialog(true);
       }
     }
-  }, [reportArticleData, reportArticleData])
+  }, [reportArticleData]);
+
+  useEffect(()=>{
+    if(isArticleReported){
+      toast.success("Article reported!")
+    }
+  },[isArticleReported]);
+
   useEffect(() => {
     if (blockError || articleError || userError)
       if (blockError) {

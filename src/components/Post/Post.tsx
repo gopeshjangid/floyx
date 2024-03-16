@@ -134,6 +134,7 @@ function Post({
           link={link}
           shared={shared}
           isShared={isShared}
+          isSharedPostAvailable={postDetails?.isSharedPostAvailable}
         />
         {(!isShared || showComments) && (
           <LikesComments

@@ -286,7 +286,7 @@ const PrivacyPolicyPage = () => {
       </Typography>
       <Typography variant="subtitle1" paragraph>
         User may contact the Service administrator via e-mail:
-        support@floyx.com. support@floyx.com.
+        support@floyx.com
         <br /> Regarding any data protection question, please direct Your
         queries to our Data Protection Officer, Mr. Daniel Syrek:
         data.protection@floyx.com.

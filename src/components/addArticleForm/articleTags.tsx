@@ -28,14 +28,17 @@ const CustomAutoComplete = styled(Autocomplete)(({ theme }) => ({
 const TagAutocomplete = ({
   onSelectTags,
   maxSelectedTag,
-  resetAll
+  resetAll,
+  // initialTags
 }: {
     onSelectTags: (tags: string[]) => void;
     maxSelectedTag?: number;
     resetAll: boolean;
+    // initialTags?: string[]; 
   }) => {
   const {t}=useTranslation()
   const [inputValue, setInputValue] = useState('');
+  // const [selectedTags, setSelectedTags] = useState<string[] | never[]>(initialTags || []); 
   const [selectedTags, setSelectedTags] = useState<string[] | never[]>([]);
   const [searchTag, { data: tags, isLoading, isFetching }] =
     useLazySearchArticleTagsQuery();

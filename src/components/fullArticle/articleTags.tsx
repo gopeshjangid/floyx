@@ -13,6 +13,7 @@ export default function ArticleTags({ tags }) {
           label={`#${val.tagName}`}
           component={Link}
           href={`/articles/#${val.tagName}`}
+          // href={`/articles/?id=${val.tagId}&name=${val.tagName}`}
           clickable
         />
       ))}

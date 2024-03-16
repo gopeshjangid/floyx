@@ -45,10 +45,9 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       setState((prev: any) => ({ ...prev, showEmojiPicker: false }));
     }
   };
-const {t}=useTranslation()
+  const { t } = useTranslation()
   React.useEffect(() => {
     focus(state.index);
-    // toggleTooltipIcon(state.index);
   }, [state.index]);
 
   const initArticleComposer = () => {
@@ -69,21 +68,6 @@ const {t}=useTranslation()
     if (value.includes('<img')) {
       const extractdocsInputsList = inputsList.filter((x: any) => x.index != index)
       setState((prev: any) => ({ ...prev, extractdocsInputsList, contentArticleCreated: true }));
-      // Create a dummy DOM element to parse HTML string
-      // const tempElement = document.createElement('div');
-      // tempElement.innerHTML = value;
-      // // Extract img tag from the value
-      // const imgTag = tempElement.querySelector('img');
-      // if (imgTag) {
-      //     // Set width and height of img tag
-      //     imgTag.setAttribute('width', '100%');
-      //     imgTag.setAttribute('object-fit', 'cover')
-      //     // Get the src attribute value
-      //     const srcValue = imgTag.getAttribute('src');
-      //     const textAfterImg = tempElement.textContent?.replace(imgTag.outerHTML, '') || '';
-      //       // Concatenate img tag outerHTML with remaining text
-      //     value = imgTag.outerHTML + textAfterImg;
-      // }
       return
     } else if (item.type != 'ul' && item.type != 'ol') {
       // If pasted content does not contain an image, remove background styles
@@ -158,6 +142,9 @@ const {t}=useTranslation()
           item.value = item.value.replace('<li><br></li></ol>', '</ol>');
           addInput(index);
         }
+      } else if (shiftKey && key === 'Enter') {
+        item.value += '\n'; // or use '<br>' for HTML content
+        e.preventDefault();
       } else if (key === 'Backspace') {
         if (
           !item.value ||
@@ -173,6 +160,20 @@ const {t}=useTranslation()
       if (key === 'Enter' && !shiftKey) {
         e.preventDefault();
         addInput(item.index);
+        return;
+      } else if (shiftKey && key === 'Enter') {
+        e.preventDefault();
+        if (item.type === 'paragraph' || item.type === 'subtitle' || item.type === 'quote') {
+       
+          //item.value += '<br/>';
+          setState((state)=>({...state, inputsList: inputsList.map((x: any) => {
+            if(x.index === index){
+              item.value += '<br/>';
+            }
+            return x;
+          })}));
+          e.preventDefault();
+        }
         return;
       }
       if (key === 'Backspace') {
@@ -219,10 +220,10 @@ const {t}=useTranslation()
     const inputsList = state['inputsList']
     let newInputsList = inputsList.filter((el: any, i: any) => i !== index)
     const lastIndex = (newInputsList.length - 1 > 0) ? newInputsList.length - 1 : 0
-    
+
     // setState((prev: any) => ({ ...prev, inputsList: newInputsList }))
     // addInput(index)
-    const arrayIndex =newInputsList.findIndex((x: any) => x.index === index);
+    const arrayIndex = newInputsList.findIndex((x: any) => x.index === index);
     let maximumIndex: number = Math.max(
       ...newInputsList.map((item: any) => item.index)
     );
@@ -242,7 +243,6 @@ const {t}=useTranslation()
       ...newInputsList.slice(arrayIndex + 1),
     ];
     setState((prev: any) => ({ ...prev, index: maximumIndex, inputsList: newInputsList }));
-    debugger
 
   }
   const addInput = (index: number) => {
@@ -617,7 +617,7 @@ const {t}=useTranslation()
                   <AiOutlineOrderedList color={'primary'} />
                 </span>
                 <span
-                translate="no"
+                  translate="no"
                   className="change-type__item subtitle"
                   onClick={() => changeInputType(input.index, 'subtitle')}
                 >
@@ -654,7 +654,7 @@ const {t}=useTranslation()
                     <div>
                       <React.Fragment>
                         <Input
-                        translate="no"
+                          translate="no"
                           className="editor-link__item"
                           onChange={onURLChange}
                           type="text"
@@ -662,7 +662,7 @@ const {t}=useTranslation()
                           onKeyDown={e =>
                             listenerSubmit(e, () => confirmLink(e, index))
                           }
-                          placeholder= {t("comp.addArticleForm.urlPlaceholder")}
+                          placeholder={t("comp.addArticleForm.urlPlaceholder")}
                           name="urlValue"
                         // invalid={state.errors?.urlValue}
                         />
@@ -694,9 +694,9 @@ const {t}=useTranslation()
             {input.type === 'paragraph' && (
               <ContentEditable
                 className={
-                  'articles-editor__paragraph contenteditable articles-editor__item ' +
+                  'articles-editor__paragraph contenteditable articles-editor__item paragraph-'+input.index +
                   (state.inputsList.length === 1 && input.index === 0
-                    ? 'first'
+                    ? ' first'
                     : '')
                 }
                 html={input.value}

@@ -216,8 +216,7 @@ export const artcileDetails = createApi({
       query: tabName =>
         `${ApiEndpoint.GetArticles}${tabName ? `/${tabName}` : ''}`,
       providesTags: (result, error, type) => [
-        { type: 'ArticleList', id: type },
-        'deleteArticle',
+        { type: 'ArticleList', id: type },{type: 'ArticleList', id: 'LIST'}
       ],
       transformResponse: (response: any) => response?.value?.data || [],
     }),
@@ -228,7 +227,7 @@ export const artcileDetails = createApi({
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
       transformResponse: (response: any) => response?.value?.data || {},
-      providesTags: ['ArticleInfoNumber', 'deleteArticle'],
+      providesTags: ['ArticleInfoNumber'],
     }),
     checkArticleIsShared: builder.mutation<boolean, string>({
       query: articleId => ({
@@ -301,7 +300,7 @@ export const artcileDetails = createApi({
         url: `${ApiEndpoint.DeleteArticle}/${articleId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['deleteArticle'],
+      invalidatesTags: (res, error, args) => [{type: 'ArticleList', id: args}, {type: 'ArticleList', id: 'LIST'}],
     }),
 
     getDraftDetail: builder.query<any, void>({

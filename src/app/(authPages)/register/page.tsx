@@ -319,7 +319,7 @@ const RegisterPage = () => {
               value={otp}
               onChange={e => setOtp(e.target.value)}
               submitLoading={verifyOtpLoading}
-              onSubmit={e => {
+            onSubmit={(e:any) => {
                 e.preventDefault();
                 if (!otp) return;
                 verifyOtp({

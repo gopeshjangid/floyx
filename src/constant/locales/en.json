@@ -71,7 +71,7 @@
   "comp": {
     "addArticleForm": {
       "error1": "Your article needs a title",
-      "error2": "Your article is too short to publish {{contentLength}}/1000 characters more",
+      "error2": "Your article is too short to publish {{contentLength}}/500 characters more",
       "successMsg": "Your draft saved.",
       "title": "Title",
       "addTags": "Add hashtags",
@@ -119,6 +119,7 @@
       "articleMsgErr": "This article has already been shared",
       "articleMsg": "Article is Published Succesfully ",
       "reportIssue": "Report Issue",
+      "reportUser": "Report User",
       "blockUser": "Block User",
       "share": "Share Article",
       "report": "Report",
@@ -356,7 +357,7 @@
     "article":{
       "label":{
         "text1": "New Articles",
-        "text2": "Article Editort",
+        "text2": "Article Editor",
         "text3": "Earning",
         "text4": "Daily Task"
         

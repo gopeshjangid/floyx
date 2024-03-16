@@ -9,10 +9,10 @@ import {
   Popover,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 
-export default function DottedButton({options, handleOption, setOpen}: any) {
+ function DottedButton({options, handleOption}: any) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
@@ -20,6 +20,7 @@ export default function DottedButton({options, handleOption, setOpen}: any) {
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
+    event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
 
@@ -30,29 +31,12 @@ export default function DottedButton({options, handleOption, setOpen}: any) {
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    index: number,
-    optionName: string,
+    value: string
   ) => {
+    event.preventDefault();
     event.stopPropagation();
-    // const options = ['Report Article', 'Block User', 'Report User'];
-    const options = {
-      'Edit':0,
-      'Delete':1,
-      'Report Article':0,
-      'Block User':1,
-      'Report User':2
-    }
-    // let optionsIndex = options.indexOf(optionName);
-    let optionsIndex = options[optionName];
-    if(optionsIndex == undefined){
-      optionsIndex = -1
-    }
-    if (optionsIndex !== -1) {
-      handleOption(optionsIndex);
+      handleOption(value);
       setAnchorEl(null);
-    } else {
-      setOpen(true);
-    }
   };
 
   return (
@@ -60,7 +44,7 @@ export default function DottedButton({options, handleOption, setOpen}: any) {
       <IconButton onClick={handleClick} sx={{ opacity: 1 }}>
         <HorizontalDottedIcon />
       </IconButton>
-      <Popover
+      {open && <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -79,8 +63,7 @@ export default function DottedButton({options, handleOption, setOpen}: any) {
           {options.map((option:any, index: number) => (
             <MenuItem
               key={index}
-              //   selected={index}
-              onClick={event => handleMenuItemClick(event, index, option?.name)}
+              onClick={event => handleMenuItemClick(event, option.value)}
             >
               <Box sx={{ display: 'flex' }}>
                 {option?.icon && (
@@ -93,7 +76,9 @@ export default function DottedButton({options, handleOption, setOpen}: any) {
             </MenuItem>
           ))}
         </MenuList>
-      </Popover>
+      </Popover> }
     </>
   );
 }
+
+export default React.memo(DottedButton);

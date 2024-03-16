@@ -68,8 +68,10 @@ export default function TermsOfService() {
         Service under the supervision of a parent or legal guardian who agrees
         to be bound by this Agreement.
       </Typography>
+      <Typography my={2} color={color}
+        variant="h6"> Copyright and Limited License</Typography>
       <Typography color={color} variant="subtitle2" gutterBottom>
-        Copyright and Limited License We may retain data, text, photographs,
+        We may retain data, text, photographs,
         images, video, audio, graphics, articles, comments, software, code,
         scripts, and other content supplied by us. Our content is protected by
         intellectual property laws, including copyright and other proprietary

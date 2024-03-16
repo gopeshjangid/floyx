@@ -5,8 +5,9 @@ import Link from 'next/link';
 import Lightbox from 'react-image-lightbox-rotate-fixed';
 import Post from './Post';
 import CustomImage from '../Image';
+import { PostBox } from './styledPostBox';
 
-function PostImage({ image, link, shared, isShared }) {
+function PostImage({ image, link, shared, isShared, isSharedPostAvailable }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -86,7 +87,6 @@ function PostImage({ image, link, shared, isShared }) {
     />);
   }, [image, handleImageLoad, handleOpen, sizeType]);
 
- 
   return (
     <Box>
       {image && (
@@ -110,6 +110,8 @@ function PostImage({ image, link, shared, isShared }) {
             overflow: 'hidden',
             position: 'relative',
             border: `1px solid ${palette.primary.boxBorder}`,
+            borderRadius: '10px',
+            padding: 1,
           }}
         >
           {link.thumbnailPath && (
@@ -125,7 +127,7 @@ function PostImage({ image, link, shared, isShared }) {
           </Box>
         </Box>
       )}
-      {shared && !isShared && shared?.author?.username && (
+      {(shared && !isShared && shared?.author?.username ) ? (
         <div style={{ cursor: 'pointer' }} onClick={(event) => {
           if (!(event.target as Element).closest('.specific_item')) {
             window.location.href = (`/post/${shared?.post?.id}`)
@@ -143,7 +145,11 @@ function PostImage({ image, link, shared, isShared }) {
             isShared={true}
           />
         </div>
-      )}
+      ): !shared && !isSharedPostAvailable &&  <PostBox>
+        <Box p={1}>
+          <Typography variant='subtitle1'>The content is not available! As you have blocked the author of the post</Typography>
+        </Box>
+      </PostBox> }
     </Box>
   );
 }

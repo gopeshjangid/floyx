@@ -1,9 +1,10 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React from 'react';
 import { Box, Typography } from '@mui/material';
 import ArticleContainer from './articleContainer';
 import ArticleCardSkeleton from '../ArticleCardSkeleton';
 import { useTranslation } from 'react-i18next';
-export default function ArticleContent({
+
+ function ArticleContent({
   articleList,
   loadingList,
   addEdittype = false,
@@ -45,3 +46,5 @@ export default function ArticleContent({
     </Box>
   );
 }
+
+export default React.memo(ArticleContent);

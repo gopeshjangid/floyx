@@ -18,6 +18,7 @@ import { useToast } from '@/components/Toast/useToast';
 import { showErrorMessages } from '@/lib/utils';
 import { useParams, useRouter } from 'next/navigation';
 import { useVerifyResetPasswordMutation } from '@/lib/redux/slices/registration';
+import Link from 'next/link';
 
 const AccountWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   '& .MuiInputBase-root': {
@@ -146,7 +147,7 @@ const ResetPasswordComponent = () => {
             </FormControl>
 
             <FormControl margin="normal">
-              <Button variant="contained" color="primary" type="submit">
+              <Button disabled={isLoading} variant="contained" color="primary" type="submit">
                 {isLoading ? (
                   <>
                     <CircularProgress size={24} color="inherit" />
@@ -157,6 +158,7 @@ const ResetPasswordComponent = () => {
                 )}
               </Button>
             </FormControl>
+            <Link style={{textDecoration: 'underline'}} href="/login">Go back to login</Link>
           </Box>
 
         </AccountWrapper>

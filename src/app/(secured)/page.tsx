@@ -47,7 +47,6 @@ export default function Page() {
   const session = useSession();
 
   useLayoutEffect(() => {
-    console.log({session});
     if (
       [true, 'true'].includes(getCookie(FIRST_TIME_LOGIN_USING_SOCIAL) as any)
     ) {
@@ -153,11 +152,7 @@ export default function Page() {
                     overflow: 'auto',
                     maxHeight: viewportHeight + 100,
                     overflowY: 'auto',
-                    scrollbarWidth: 'none', // For Firefox
-                    msOverflowStyle: 'none', // For IE 10+
-                    '&::-webkit-scrollbar': {
-                      display: 'none', // For Chrome, Safari, and newer versions of Edge
-                    },
+                   
                   }}
                   id="mainContainerFeed"
                   ref={mainContainerFeedRef}

@@ -237,6 +237,20 @@ export const profileService = createApi({
         response.value.data,
       invalidatesTags: ['profileAbout'],
     }),
+    deleteProfileData: builder.mutation<Education,{ id: string,type:string }>({
+      query: Data => {
+       
+        return{
+        url: `${ApiEndpoint.RemoveProfileDetails}/${Data.type.toLowerCase()}/remove/${Data.id}`,
+        method: 'DELETE',
+       
+      }
+      
+      },
+      transformResponse: (response: ApiResponse<Education>, meta, arg) =>
+        response.value.data,
+      invalidatesTags: ['profileAbout'],
+    }),
     addExperience: builder.mutation<Experience, Partial<Experience>>({
       query: experienceData => ({
         url: ApiEndpoint.AddProfileExperience,
@@ -326,7 +340,7 @@ export const profileService = createApi({
       transformResponse: (response: ApiResponse<ReportUser>) =>
         response.value.data,
 
-      invalidatesTags: ['profileAbout', 'profileDetails'],
+      invalidatesTags: ['profileAbout', 'profileDetails',{type: 'ArticleList', id: 'LIST'}],
     }),
     addReportArticle: builder.mutation<ReportArticle, Partial<ReportArticle>>({
       query: profileAbout => ({
@@ -341,7 +355,7 @@ export const profileService = createApi({
           api.dispatch(artcileDetails.util.invalidateTags(['getArticleList']));
         });
       },
-      invalidatesTags: ['profileAbout', 'profileDetails'],
+      invalidatesTags: ['profileAbout', 'profileDetails',{type: 'ArticleList', id: 'LIST'}],
     }),
     blockUser: builder.mutation<ReportUser, Partial<{ username: string }>>({
       query: user => ({
@@ -356,7 +370,7 @@ export const profileService = createApi({
       },
       transformResponse: (response: ApiResponse<ReportUser>) =>
         response.value.data,
-      invalidatesTags: ['profileAbout', 'profileDetails'],
+      invalidatesTags: ['profileAbout', 'profileDetails',{type: 'ArticleList', id: 'LIST'}],
     }),
     followUser: builder.mutation<void, Partial<{ username: string }>>({
       query: user => ({
@@ -390,6 +404,7 @@ export const profileService = createApi({
     'isUserFollowedBy',
     'userFollowers',
     'UserFollowed',
+    'ArticleList'
   ],
 });
 
@@ -401,6 +416,7 @@ export const {
   useLazyGetPopularAccountsToFollowQuery,
   useGetProfileAboutQuery,
   useAddEducationMutation,
+  useDeleteProfileDataMutation,
   useAddExperienceMutation,
   useAddInvestmentMutation,
   useUpdateEducationMutation,

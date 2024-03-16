@@ -1,13 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Button, Typography, Tabs, Tab, Stack, useTheme, styled } from '@mui/material';
+import { Button, Typography, Tabs, Tab, Stack, useTheme, styled, Box } from '@mui/material';
 import { GradientText } from '../usernameLink';
 import DocumentText from '@/assets/images/svg/documentText';
 import EditIcon from '@/assets/images/svg/editIcon';
 import { GradientButton } from '../gradientButton';
 import AddIcon from '@/assets/images/svg/addIcon';
 import { useTranslation } from 'react-i18next';
+import SyncIcon from '@mui/icons-material/Sync';
 
 const StyledTypography = styled(Typography)({
   marginTop: '4px',
@@ -155,6 +156,7 @@ function AddArticleHead({
           >
             {isPublished ? t("comp.addArticleHead.saveEdit") : t("comp.addArticleHead.publish")}
           </Button>
+          
         </Stack>
       )}
     </Stack>

@@ -173,6 +173,7 @@ const InvestmentForm: React.FC = () => {
               key={'investment-' + index}
               {...investment}
               type="Investment"
+              isSameuser={isSameuser}
             />
           ))
         ) : (
