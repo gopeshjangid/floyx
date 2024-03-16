@@ -121,12 +121,36 @@ export const artcileDetails = createApi({
       providesTags: ['ArticleDetail'],
     }),
     getArticlesByAuthor: builder.query<
-      ArticleData[],
-      { username: string; pageSize: number }
+    {articlesList:any; hasMore: boolean},
+      { username: string; pageSize: number; articleCreatedDate: any}
     >({
-      query: ({ username, pageSize }) =>
-        `${ApiEndpoint.GetArticles}/${username}?count=${pageSize}`,
-      transformResponse: (response: any) => response?.value?.data,
+      query: ({ username, pageSize, articleCreatedDate }) =>
+        `${ApiEndpoint.GetArticles}/${username}?count=${10}&articleCreatedDate=${articleCreatedDate}`,
+        transformResponse: (response: any) => ({
+          articlesList: response?.value?.data,
+          hasMore: response?.value?.hasMore,
+        }),
+        serializeQueryArgs: ({ endpointName }) => {
+          return endpointName;
+        },
+        merge: (currentCache, newItems,otherArgs) => {
+          
+          if (currentCache && otherArgs?.arg?.pageSize !== 1) {
+            return {
+              articlesList: [...currentCache.articlesList,...newItems.articlesList],
+              hasMore: newItems.articlesList.length === 10,
+            };
+          } else
+            return {
+              articlesList: [...newItems.articlesList],
+              hasMore: newItems.articlesList.length === 10,
+            };
+        },
+  
+        // Refetch when the page arg changes
+        forceRefetch({ currentArg, previousArg }) {
+          return currentArg?.username !== previousArg?.username || currentArg?.pageSize !== previousArg?.pageSize || currentArg?.articleCreatedDate !== previousArg?.articleCreatedDate;;
+        },
       providesTags: (result, error, arg) => [
         { type: 'articleListByuser', id: arg.username },
       ],
@@ -223,6 +247,33 @@ export const artcileDetails = createApi({
      getArticleByTags: builder.query<any, any>({
       query: ({ tagId }) => `${ApiEndpoint.GetArticleByTag}?tagId=${tagId}`,
       transformResponse: (response: any) => response?.value?.data,
+    }),
+    getArticleByTagsPage: builder.query<any, any>({
+      query: ({ tagId, pageNo }) => `${ApiEndpoint.GetArticleByTag}?tagId=${tagId}&pageSize=10&pageNo=${pageNo}`,
+      transformResponse: (response: any) => ({
+        articleList: response?.value?.data,
+        hasMore: response?.value?.hasMore,
+      }),
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      merge: (currentCache, newItems,otherArgs) => {
+        if (currentCache && otherArgs?.arg?.pageNo !== 1) {
+          return {
+            articleList: [...currentCache.articleList,...newItems.articleList],
+            hasMore: newItems.articleList.length === 10,
+          };
+        } else
+          return {
+            articleList: [...newItems.articleList],
+            hasMore: newItems.articleList.length === 10,
+          };
+      },
+
+      // Refetch when the page arg changes
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.username !== previousArg?.username || currentArg?.pageNo !== previousArg?.pageNo;
+      },
     }),
     getArticleInfo: builder.query<ArticleDraftsNumber, void>({
       query: () => `${ApiEndpoint.GetArticlesInfo}`,
@@ -352,6 +403,7 @@ export const {
   useGetArticlesByAuthorQuery,
   useLazyGetArticlesByAuthorQuery,
   useLazyGetSearchArticleQuery,
-   useLazyGetArticleByTagsQuery,
+  useLazyGetArticleByTagsQuery,
+  useLazyGetArticleByTagsPageQuery,
   useUploadArticleImageMutation,
 } = artcileDetails;

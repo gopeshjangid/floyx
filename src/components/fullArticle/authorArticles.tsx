@@ -16,14 +16,16 @@ import { useSession } from 'next-auth/react';
   const router = useRouter();
   const session = useSession();
   
-  const [fetchAuthorArticles, { data: articleList, isLoading }] = useLazyGetArticlesByAuthorQuery();
+  const [fetchAuthorArticles, { data, isLoading }] = useLazyGetArticlesByAuthorQuery();
   //const isSameUser = username === session.data?.user.username;
+  const articleList = data?.articlesList
 
   useEffect(() => {
     if (session?.status !== 'loading' && username) {
       fetchAuthorArticles({
         username: username,
         pageSize: 6,
+        articleCreatedDate: ''
       });
     }
   }, [session, username]);
@@ -44,7 +46,7 @@ import { useSession } from 'next-auth/react';
         sx={{ cursor: 'pointer', marginTop: '8px' }}
       >
         {articleList &&
-          articleList.map(({ article, user }: any, index: number) => (
+          articleList?.map(({ article, user }: any, index: number) => (
             <React.Fragment key={`author-article-${index}`}>
               {index < 4 && (
                 <Grid
