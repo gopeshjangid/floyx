@@ -43,17 +43,12 @@ export default function Page({searchParams}) {
 
   const [getArticleList, { data: articleList, isFetching }] =
     useLazyGetArticleListQuery();
-  // const [
-  //   getArticlesByTags,
-  //   { data: articleListByTags, isFetching: articleListFetching },
-  // ] = useLazyGetArticleByTagsQuery();
   const [getArticleByTagsPage, { data:tagsArticleList, isFetching: articleListFetching, isLoading }] = useLazyGetArticleByTagsPageQuery(apiParams);
   const articleListByTags = tagsArticleList?.articleList
 
   const hasMore = typeof tagsArticleList?.hasMore != 'undefined' ? tagsArticleList?.hasMore : true;
   const loadMore = useCallback(() => {
     if (articleListByTags?.length && !isFetching) {
-      // const lastArticle = articleListByTags[articleListByTags.length - 1];s
       setApiParams(prevParams => ({
         ...prevParams,
         pageNo: prevParams.pageNo + 1,
