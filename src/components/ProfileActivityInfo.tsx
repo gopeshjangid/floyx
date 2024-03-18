@@ -10,11 +10,16 @@ import {
   Divider,
   Skeleton,
 } from '@mui/material';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { BorderColorOutlined } from '@mui/icons-material';
 import ExperienceIcon from '@/assets/images/icons/experienceIcon.svg';
 import EducationIcon from '@/assets/images/icons/educationIcon.svg';
 import InvestmentIcon from '@/assets/images/icons/investmentIcon.svg';
 import Image from 'next/image';
+import {
+  useDeleteProfileDataMutation
+} from '@/lib/redux/slices/profile';
+import { useToast } from '@/components/Toast/useToast';
 export type CommonFields = {
   id: string;
   fromMonth: string;
@@ -76,10 +81,15 @@ const ProfileActivityInfo: React.FC<
     type?: string;
     isSameuser: boolean;
   }
-> = props => {
+  > = props => {
+   const toast = useToast();
+
   const { onEdit, isSameuser, ...data } = props;
   const isMobile = useMediaQuery('(max-width:480px)');
-
+const [
+    deleteProfileData,
+    { isLoading: isUpdating, error: updateError, isSuccess: isUpdateSucess },
+    ] = useDeleteProfileDataMutation();
   const getIcon = () => {
     let icon = null;
     switch (props.type) {
@@ -108,7 +118,7 @@ const ProfileActivityInfo: React.FC<
   };
 
   return (
-    <Box>
+    <Box >
       <Grid container spacing={1}>
         <Grid item xs={12} sm={6}>
           <Stack direction="row" gap={2}>
@@ -116,10 +126,18 @@ const ProfileActivityInfo: React.FC<
             <Box textAlign="justify">
               <Typography variant="subtitle1">
                 {props.school || props.name || props.position}
-                {isSameuser && (
+                {isSameuser && (<>
                   <IconButton onClick={() => onEdit(data)} size="small">
                     <BorderColorOutlined sx={{ fontSize: '12px' }} />
                   </IconButton>
+                   <IconButton onClick={() => {
+                  
+                    deleteProfileData({id:props.id,type:props.type}).unwrap().then((res)=>{
+                     toast.success("Deleted Successfully");
+                    })}} size="small">
+                    <DeleteForeverOutlinedIcon  sx={{ fontSize: '12px' }} />
+                  </IconButton>
+                    </>
                 )}
               </Typography>
               <Typography sx={{ opacity: 0.8 }} variant="caption">

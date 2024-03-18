@@ -156,6 +156,7 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
           },
           '&.subtitle': {
             position: 'relative',
+            // fontSize:'1.2rem',
             top: '-6px',
             color:
               theme.palette?.mode === 'light'

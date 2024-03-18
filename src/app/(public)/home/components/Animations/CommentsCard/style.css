@@ -1,0 +1,235 @@
+/*
+  Note: These are temporary previews of the images. 
+  They're active for 10-15 days only. You should replace them with the actual images before using the code in production.
+*/
+:root {
+  --image-0: url("./images/image0.png");
+  --image-1: url("./images/image1.png");
+  --image-2: url("./images/image2.png");
+  --custom-width: min(1579px, 100vw);
+  --design-width: 1579;
+  --ratio: calc(var(--custom-width) / var(--design-width));
+}
+
+/* Default classes */
+.pos-abs {
+  position: absolute;
+}
+.fill-parent {
+  width: 100%;
+  height: 100%;
+}
+.bg-contain {
+  background-size: contain;
+}
+.bg-cover {
+  background-size: cover;
+}
+.bg-auto {
+  background-size: auto;
+}
+.bg-crop {
+  background-size: 100% 100%;
+}
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+.pos-init {
+  top: 0px;
+  left: 0px;
+}
+.image-div {
+  background-color: transparent;
+  background-position: center;
+}
+/* Default classes end */
+body {
+  margin: 0px;
+  padding: 0px;
+}
+.parent-div-1 {
+  position: relative;
+  /* width: 100%; */
+  height: calc(1.33 * var(--custom-width));
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.posts-1-151107 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+  overflow: hidden;
+}
+.frame-427320742-1-97812 {
+  width: 328.31%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 0;
+  transform: rotate(0deg);
+}
+.nodeBg-I03215_932941 {
+  width: calc(352.1900048061386 * var(--ratio));
+  height: calc(407 * var(--ratio));
+  left: calc(-0.5949999990728324 * var(--ratio));
+  top: calc(0 * var(--ratio));
+  background-image: var(--image-0);
+  opacity: 1;
+}
+.frame-427320707-1-134178 {
+  width: 6.77%;
+  height: 77.19%;
+  top: 11.41%;
+  left: 0%;
+  opacity: 1;
+  z-index: 0;
+  transform: rotate(0deg);
+  overflow: hidden;
+  background: #000000bf;
+}
+.nodeBg-I03215_932942 {
+  width: calc(641 * var(--ratio));
+  height: calc(527.0059883084159 * var(--ratio));
+  left: calc(0 * var(--ratio));
+  top: calc(-0.00299258122983198 * var(--ratio));
+  background-image: var(--image-1);
+  opacity: 1;
+}
+.feed-1-1-1-489500 {
+  width: 12.35%;
+  height: 100%;
+  top: 0%;
+  left: 9.47%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+  overflow: hidden;
+}
+.nodeBg-I03215_932943 {
+  width: calc(460.82322098163775 * var(--ratio));
+  height: calc(407 * var(--ratio));
+  left: calc(0.08839994762243839 * var(--ratio));
+  top: calc(1.7229488946668425e-8 * var(--ratio));
+  background-image: var(--image-2);
+  opacity: 1;
+}
+.frame-427320707-1-806478 {
+  width: 8.87%;
+  height: 77.19%;
+  top: 11.41%;
+  left: 24.52%;
+  opacity: 1;
+  z-index: 2;
+  transform: rotate(0deg);
+  overflow: hidden;
+  background: #000000bf;
+}
+.nodeBg-I03215_933053 {
+  background-image: var(--image-0);
+  opacity: 1;
+}
+.frame-427320707-1-360552 {
+  width: 6.75%;
+  height: 77.19%;
+  top: 11.41%;
+  left: 36.09%;
+  opacity: 1;
+  z-index: 3;
+  transform: rotate(0deg);
+  overflow: hidden;
+  background: #00000033;
+}
+.nodeBg-I03215_933054 {
+  width: calc(497 * var(--ratio));
+  height: calc(407.0046221544046 * var(--ratio));
+  left: calc(0 * var(--ratio));
+  top: calc(-0.002309863078539513 * var(--ratio));
+  background-image: var(--image-1);
+  opacity: 1;
+}
+.feed-1-3-1-2276 {
+  width: 9.57%;
+  height: 77.19%;
+  top: 11.41%;
+  left: 45.54%;
+  opacity: 1;
+  z-index: 4;
+  transform: rotate(0deg);
+  overflow: hidden;
+}
+.nodeBg-I03215_933055 {
+  width: calc(460.82322098163775 * var(--ratio));
+  height: calc(407 * var(--ratio));
+  left: calc(0.08839994762243839 * var(--ratio));
+  top: calc(1.7229488946668425e-8 * var(--ratio));
+  background-image: var(--image-2);
+  opacity: 1;
+}
+.frame-427320707-1-60514 {
+  width: 8.87%;
+  height: 77.19%;
+  top: 11.41%;
+  left: 57.81%;
+  opacity: 1;
+  z-index: 5;
+  transform: rotate(0deg);
+  overflow: hidden;
+}
+.nodeBg-I03215_933059 {
+  background-image: var(--image-0);
+  opacity: 1;
+}
+.frame-427320707-1-90650 {
+  width: 6.75%;
+  height: 77.19%;
+  top: 11.41%;
+  left: 69.39%;
+  opacity: 1;
+  z-index: 6;
+  transform: rotate(0deg);
+  overflow: hidden;
+  background: #00000033;
+}
+.nodeBg-I03215_933060 {
+  width: calc(497 * var(--ratio));
+  height: calc(407.0046221544046 * var(--ratio));
+  left: calc(0 * var(--ratio));
+  top: calc(-0.002309863078539513 * var(--ratio));
+  background-image: var(--image-1);
+  opacity: 1;
+}
+.feed-1-4-1-544553 {
+  width: 9.57%;
+  height: 77.19%;
+  top: 11.41%;
+  left: 78.84%;
+  opacity: 1;
+  z-index: 7;
+  transform: rotate(0deg);
+  overflow: hidden;
+}
+.nodeBg-I03215_933061 {
+  width: calc(460.82322098163775 * var(--ratio));
+  height: calc(407 * var(--ratio));
+  left: calc(0.08839994762243839 * var(--ratio));
+  top: calc(1.7229488946668425e-8 * var(--ratio));
+  background-image: var(--image-2);
+  opacity: 1;
+}
+.frame-427320707-1-903438 {
+  width: 8.87%;
+  height: 77.19%;
+  top: 11.41%;
+  left: 91.11%;
+  opacity: 1;
+  z-index: 8;
+  transform: rotate(0deg);
+  overflow: hidden;
+}

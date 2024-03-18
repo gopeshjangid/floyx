@@ -56,7 +56,7 @@
 //     }
 //   }, []);
 //   useEffect(() => {
-//     const hasPreviousScript = document.querySelector("[src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit']");
+//     const hasPreviousScript = document?.querySelector("[src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit']");
 //     if (hasPreviousScript) {
 //       hasPreviousScript.remove()
 //     }

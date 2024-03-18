@@ -219,7 +219,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
 
   const homeRedirect = () => {
     if (pathname === '/') {
-      const container = document.querySelector('#mainContainerFeed');
+      const container = document?.querySelector('#mainContainerFeed');
       if (container) container.scrollTop = 0;
     }
     if (pathname !== '/') {
@@ -383,7 +383,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
               <ListItemText translate="no" primary={item.label} />
               <ListItemSecondaryAction>
                 {item.label === 'Notifications' &&
-                drawerData.notificationCount > 0 ? (
+                  drawerData.notificationCount > 0 ? (
                   <CountWrapper count={drawerData.notificationCount} />
                 ) : item.label === 'Messages' &&
                   drawerData.messagesCount > 0 ? (
@@ -483,7 +483,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
                 />
               </IconButton>
             </Box>
-            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+            <Box sx={{ pr:1,display: { xs: 'block', sm: 'none' } }}>
               <IconButton
                 aria-label="open drawer"
                 edge="end"

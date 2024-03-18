@@ -1,0 +1,176 @@
+/*
+  Note: These are temporary previews of the images. 
+  They're active for 10-15 days only. You should replace them with the actual images before using the code in production.
+*/
+:root {
+  --post-9: url("./images/post.png");
+  --custom-width: min(788px, 100vw);
+  --design-width: 788;
+  --ratio: calc(var(--custom-width) / var(--design-width));
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* Default classes */
+.pos-abs {
+  position: absolute;
+}
+.fill-parent {
+  width: 100%;
+  height: 100%;
+}
+.bg-contain {
+  background-size: contain;
+}
+.bg-cover {
+  background-size: cover;
+}
+.bg-auto {
+  background-size: auto;
+}
+.bg-crop {
+  background-size: 100% 100%;
+}
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+.pos-init {
+  top: 0px;
+  left: 0px;
+}
+.image-div {
+  background-color: transparent;
+  background-position: center;
+}
+/* Default classes end */
+body {
+  margin: 0px;
+  padding: 0px;
+}
+.parent-div-post {
+  position: relative;
+  width: var(--custom-width);
+  height: calc(1.09 * var(--custom-width));
+  /* overflow: hidden; */
+  margin-bottom: 108px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.frame-427320682-1-92879 {
+  width: 100%;
+  height: 80%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.frame-427320677-1-65464 {
+  width: 56.09%;
+  height: 13.57%;
+  top: 0%;
+  left: 21.95%;
+  opacity: 1;
+  z-index: 0;
+  transform: rotate(0deg);
+}
+.articles-1-40828 {
+  width: 47.96%;
+  height: 34.48%;
+  top: 0%;
+  left: 26.02%;
+  opacity: 1;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: left;
+  line-height: 0px;
+}
+.articles-1-40828-0 {
+  font-size: calc(49 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: capitalize;
+  letter-spacing: calc(1 * var(--ratio));
+  line-height: calc(45 * var(--ratio));
+  color: #ffffffff;
+}
+
+.manage-your-blo-1-141360 {
+  width: 100%;
+  height: 40.52%;
+  top: 59.48%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.manage-your-blo-1-141360-0 {
+  font-size: calc(17 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 400;
+
+  text-decoration: none;
+  text-transform: none;
+
+  line-height: calc(27 * var(--ratio));
+  color: #ffffffb2;
+}
+
+.article-1-762125-container {
+  width: 100%;
+  height: 81.17%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.article-1-828360 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.rectangle-1078-1-4125 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0.5;
+  z-index: 0;
+  transform: rotate(0deg);
+  border-radius: 10px 10px 10px 10px;
+  background: #0b081fff;
+  box-sizing: border-box;
+  border-left: 1px solid
+    linear-gradient(127.19deg, #ab59ffff 0%, #858fffff 56%, #4d9affff 100%);
+  border-right: 1px solid
+    linear-gradient(127.19deg, #ab59ffff 0%, #858fffff 56%, #4d9affff 100%);
+  border-top: 1px solid
+    linear-gradient(127.19deg, #ab59ffff 0%, #858fffff 56%, #4d9affff 100%);
+  border-bottom: 1px solid
+    linear-gradient(127.19deg, #ab59ffff 0%, #858fffff 56%, #4d9affff 100%);
+}
+.nodeBg-I03148_933179 {
+  width: calc(572 * var(--ratio));
+  height: calc(2970.3407620059456 * var(--ratio));
+  left: calc(-3.645139745600545e-12 * var(--ratio));
+  top: calc(47.668985656315165 * var(--ratio));
+  background-image: var(--post-9);
+  opacity: 1;
+}
+.article-content-1-305660 {
+  width: 72.46%;
+  height: 100%;
+  top: 0%;
+  left: 13.71%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+  overflow: hidden;
+}

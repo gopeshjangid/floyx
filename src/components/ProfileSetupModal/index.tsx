@@ -63,7 +63,7 @@ const ProfileSetupModal = ({
 }: {
   open: boolean;
   handleClose: () => void;
-  onSubmit: () => void;
+  onSubmit?: () => any;
 }) => {
   const { t } = useTranslation();
   const toast = useToast();
@@ -93,7 +93,10 @@ const ProfileSetupModal = ({
 
   useEffect(() => {
     if (settingUpdateData === 'success') {
-      onSubmit();
+      if(onSubmit) {
+
+        onSubmit()
+      }
       handleUpdate({
         username: formData.username,
         name: formData.name,

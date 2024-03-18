@@ -69,9 +69,11 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       const extractdocsInputsList = inputsList.filter((x: any) => x.index != index)
       setState((prev: any) => ({ ...prev, extractdocsInputsList, contentArticleCreated: true }));
       return
-    } else if (item.type != 'ul' && item.type != 'ol') {
+    } 
+    else if (item.type != 'ul' && item.type != 'ol') {
       // If pasted content does not contain an image, remove background styles
-      value = value.replace(/<[^>]+>/g, ''); // Remove all HTML tags
+      // value = value.replace(/<[^>]+>/g, ''); // Remove all HTML tags
+      value = value.replace(/<(\w+)\s+[^>]*\s*style="[^"]*"/g, '<$1').replace(/<\/(\w+)>/g, '</$1>'); // remove all style regex
       value = value.replace(/\n/g, ''); // Remove newlines
     }
 
@@ -164,7 +166,7 @@ const ArticleItems = ({ handleContentChange, articleCreated, setState, state }) 
       } else if (shiftKey && key === 'Enter') {
         e.preventDefault();
         if (item.type === 'paragraph' || item.type === 'subtitle' || item.type === 'quote') {
-          console.log("else shift")
+       
           //item.value += '<br/>';
           setState((state)=>({...state, inputsList: inputsList.map((x: any) => {
             if(x.index === index){

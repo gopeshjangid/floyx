@@ -1,0 +1,3522 @@
+/*
+  Note: These are temporary previews of the images. 
+  They're active for 10-15 days only. You should replace them with the actual images before using the code in production.
+*/
+:root {
+  --custom-width: min(1009px, 100vw);
+  --design-width: 1009;
+  --ratio: calc(var(--custom-width) / var(--design-width));
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* Default classes */
+.pos-abs {
+  position: absolute;
+}
+.fill-parent {
+  width: 100%;
+  height: 100%;
+}
+.bg-contain {
+  background-size: contain;
+}
+.bg-cover {
+  background-size: cover;
+}
+.bg-auto {
+  background-size: auto;
+}
+.bg-crop {
+  background-size: 100% 100%;
+}
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+.pos-init {
+  top: 0px;
+  left: 0px;
+}
+.image-div {
+  background-color: transparent;
+  background-position: center;
+}
+/* Default classes end */
+body {
+  margin: 0px;
+  padding: 0px;
+}
+.parent-div-heading {
+  position: relative;
+  width: var(--custom-width);
+  height: calc(0.21 * var(--custom-width));
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  z-index:9999
+}
+.frame-427320676-1-533532 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.floyx-is-a-dece-1-576079 {
+  width: 98.61%;
+  height: 22.64%;
+  top: 77.36%;
+  left: 0.69%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.floyx-is-a-dece-1-576079-0 {
+  font-size: calc(15 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 400;
+
+  text-decoration: none;
+  text-transform: none;
+
+  line-height: calc(24 * var(--ratio));
+  color: #ffffffb2;
+}
+
+.time-for-a-revo-1-687456 {
+  width: 100%;
+  height: 65.09%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 0;
+  transform: rotate(0deg);
+}
+.t-1-310105-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 0;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.t-1-539982 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-696673 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-696673-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-696673-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.i-1-354879-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.i-1-170496 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-295394 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-295394-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-295394-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-295394-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.m-1-306016-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 2;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.m-1-569350 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-305283 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-305283-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-305283-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-305283-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.e-1-160718-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 3;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.e-1-89520 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-6477 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-6477-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-6477-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-6477-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-1-227700-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 4;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-510150 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-635435 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-635435-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-635435-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-635435-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.f-1-27554-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 5;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.f-1-431739 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-766320 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-766320-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-766320-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-766320-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.o-1-66783-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 6;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.o-1-89100 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-48906 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-48906-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-48906-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-48906-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.r-1-19670-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 7;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.r-1-74704 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-527982 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-527982-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-527982-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-527982-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-2-81496-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 8;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-196834 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-303929 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-303929-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-303929-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-303929-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.a-1-193200-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 9;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.a-1-395857 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-54560 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-54560-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-54560-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-54560-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-3-244757-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 10;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-450094 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-18612 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-18612-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-18612-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-18612-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.r-1-359450-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 11;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.r-1-420640 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-286224 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-286224-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-286224-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-286224-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.e-2-294168-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 12;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.e-1-712420 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-181937 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-181937-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-181937-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-181937-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.v-1-160128-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 13;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.v-1-282768 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-170340 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-170340-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-170340-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-170340-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.o-2-25377-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 14;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.o-1-518400 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-26967 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-26967-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-26967-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-26967-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.l-1-690580-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 15;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.l-1-373219 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-834350 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-834350-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-834350-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-834350-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.u-1-48853-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 16;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.u-1-27216 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-508260 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-508260-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-508260-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-508260-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.t-1-331325-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 17;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.t-1-358568 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-628180 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-628180-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-628180-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-628180-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.i-2-475648-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 18;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.i-1-155390 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-725735 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-725735-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-725735-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-725735-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.o-3-485239-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 19;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.o-1-576114 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-41160 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-41160-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-41160-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-41160-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.n-1-364875-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 20;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.n-1-354315 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-655344 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-655344-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-655344-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-655344-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-4-463032-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 21;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-402129 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-239200 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-239200-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-239200-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-239200-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.i-3-113816-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 22;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.i-1-137853 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-97308 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-97308-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-97308-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-97308-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.n-2-497760-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 23;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.n-1-8288 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-279888 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-279888-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-279888-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-279888-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-5-41302-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 24;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-22248 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-481327 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-481327-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-481327-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-481327-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.t-2-510000-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 25;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.t-1-402960 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-262449 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-262449-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-262449-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-262449-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.h-1-105452-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 26;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.h-1-147402 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-191730 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-191730-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-191730-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-191730-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.e-3-9139-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 27;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.e-1-23430 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-63264 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-63264-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-63264-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-63264-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-6-46224-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 28;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-79902 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-266616 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-266616-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-266616-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-266616-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.s-1-224750-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 29;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.s-1-130204 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-5310 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-5310-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-5310-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-5310-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.o-4-36425-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 30;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.o-1-313337 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-17226 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-17226-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-17226-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-17226-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.c-1-355975-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 31;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.c-1-309236 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-67838 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-67838-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-67838-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-67838-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.i-4-508225-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 32;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.i-1-149073 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-125513 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-125513-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-125513-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-125513-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.a-2-50358-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 33;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.a-1-173448 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-526350 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-526350-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-526350-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-526350-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.l-2-178908-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 34;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.l-1-237216 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-68712 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-68712-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-68712-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-68712-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-7-223088-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 35;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-488241 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-172542 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-172542-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-172542-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-172542-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.m-1-407550-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 36;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.m-1-53570 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-72921 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-72921-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-72921-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-72921-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.e-4-57451-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 37;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.e-1-303200 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-57230 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-57230-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-57230-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-57230-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.d-1-477204-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 38;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.d-1-117420 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-231768 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-231768-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-231768-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-231768-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.i-5-267615-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 39;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.i-1-9711 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-312390 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-312390-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-312390-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-312390-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.a-3-258989-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 40;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.a-1-613930 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-606648 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-606648-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-606648-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  background: linear-gradient(
+    123.63deg,
+    #ab59ffff 0%,
+    #858fffff 56%,
+    #4d9affff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.time-for-a-revo-1-606648-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-8-98903-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 41;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-56817 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-151420 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-151420-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-151420-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-151420-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.i-1-361860-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 42;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.i-1-165775 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-358818 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-358818-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-358818-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-358818-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.n-3-0-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 43;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.n-1-267988 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-4906 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-4906-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-4906-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-4906-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.d-2-237834-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 44;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.d-1-337330 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-372813 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-372813-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-372813-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-372813-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.u-2-311948-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 45;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.u-1-717950 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-40108 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-40108-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-40108-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-40108-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.s-1-326390-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 46;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.s-1-110732 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-148770 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-148770-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-148770-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-148770-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.t-2-123375-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 47;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.t-1-363248 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-515844 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-515844-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-515844-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-515844-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.r-2-216996-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 48;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.r-1-259522 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-84826 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-84826-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-84826-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-84826-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.y-1-4620-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 49;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.y-1-583828 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-149975 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-149975-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-149975-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}
+
+.time-for-a-revo-1-149975-2 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.div-1-102312-container {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 50;
+  transform: rotate(0deg);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+.div-1-498085 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 1;
+  z-index: 1;
+  transform: rotate(0deg);
+}
+.time-for-a-revo-1-61902 {
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  opacity: 0;
+  z-index: 0;
+  transform: rotate(0deg);
+  text-align: center;
+  line-height: 0px;
+}
+.time-for-a-revo-1-61902-0 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: "#FFFFFF";
+}
+
+.time-for-a-revo-1-61902-1 {
+  font-size: calc(58 * var(--ratio));
+  font-family: Poppins;
+  font-weight: 700;
+
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: calc(0.6800000071525574 * var(--ratio));
+  line-height: calc(69 * var(--ratio));
+  color: #ffffffff;
+}

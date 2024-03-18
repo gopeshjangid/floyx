@@ -98,7 +98,7 @@ const Page: React.FC = () => {
       case 0:
         return <ProfilePostList parentRef={parentRef} />;
       case 1:
-        return <ProfileArticleList />;
+        return <ProfileArticleList parentRef={parentRef}/>;
       case 2:
         return <AboutSection />;
       default:
