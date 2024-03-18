@@ -1,5 +1,5 @@
 'use client';
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect,useCallback, useRef } from 'react';
 import { Box, Grid, useMediaQuery } from '@mui/material';
 import ArticleHead from '@/components/articleHead';
 import ArticleContent from '@/components/articleContent';
@@ -11,16 +11,24 @@ import WhoToFollowLoader from '@/components/whoToFollow/loader';
 import {
   useLazyGetArticleListQuery,
   useLazyGetSearchArticleQuery,
-  useLazyGetArticleByTagsQuery
+  useLazyGetArticleByTagsQuery,
+  useLazyGetArticleByTagsPageQuery
 } from '@/lib/redux';
 import { GradientButton } from '@/components/gradientButton';
 // import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
-export default function Page() {//{searchParams}
+export interface apiParams {
+  tagId: string;
+  pageNo: number;
+}
+
+export default function Page({searchParams}) {
   const isMobile = useMediaQuery('(max-width:480px)');
   const [tabName, setTabName] = useState('popular');
+  const parentRef = useRef(null);
+
 
   const [dynamicTab, setDynamicTab] = useState({
     searchBy: '',
@@ -28,45 +36,60 @@ export default function Page() {//{searchParams}
     tagId: '',
   });
 
+  const [apiParams, setApiParams] = useState<any>({
+    tagId: '',
+    pageNo: 1
+  });
+
   const [getArticleList, { data: articleList, isFetching }] =
     useLazyGetArticleListQuery();
-  const [
-    getArticlesByTags,
-    { data: articleListByTags, isFetching: articleListFetching },
-  ] = useLazyGetArticleByTagsQuery();
+  const [getArticleByTagsPage, { data:tagsArticleList, isFetching: articleListFetching, isLoading }] = useLazyGetArticleByTagsPageQuery(apiParams);
+  const articleListByTags = tagsArticleList?.articleList
+
+  const hasMore = typeof tagsArticleList?.hasMore != 'undefined' ? tagsArticleList?.hasMore : true;
+  const loadMore = useCallback(() => {
+    if (articleListByTags?.length && !isFetching) {
+      setApiParams(prevParams => ({
+        ...prevParams,
+        pageNo: prevParams.pageNo + 1,
+        tagId: dynamicTab?.tagId,
+      }));
+    }
+  }, [tagsArticleList, articleListFetching, setApiParams]);
+
   const [
     searchArticle,
     { data: searchedArticle, isFetching: searchIsFetching },
   ] = useLazyGetSearchArticleQuery();
 
   const valueChanges = (val) => {
-    // if(searchParams?.id){
-    //   removeQueryParam()
-    // }
+    if(searchParams?.id){
+      removeQueryParam()
+    }
     setDynamicTab(val);
   }
   
-  // const removeQueryParam = () => {
-  //   const searchParams = new URLSearchParams(window.location.search);
-  //   searchParams.delete('id'); 
-  //   searchParams.delete('name'); 
-  //   const newUrl = `${window.location.pathname}`;
-  //   window.history.replaceState(null, '', newUrl);
-  // };
+  const removeQueryParam = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.delete('id'); 
+    searchParams.delete('name'); 
+    const newUrl = `${window.location.pathname}`;
+    window.history.replaceState(null, '', newUrl);
+  };
 
-  // useEffect(() => {
-  //   if(searchParams?.id && searchParams?.name){
-  //     setDynamicTab({
-  //       searchBy: 'tag',
-  //       tagId: searchParams.id,
-  //       value: searchParams.name,
-  //     });
-  //   }
-  // },[searchParams?.id, searchParams?.name])
+  useEffect(() => {
+    if(searchParams?.id && searchParams?.name){
+      setDynamicTab({
+        searchBy: 'tag',
+        tagId: searchParams.id,
+        value: searchParams.name,
+      });
+    }
+  },[searchParams?.id, searchParams?.name])
 
   useEffect(() => {
     if (dynamicTab.searchBy === 'tag') {
-      getArticlesByTags({ tagId: dynamicTab.tagId })
+      getArticleByTagsPage({ tagId: dynamicTab.tagId , pageNo: 1})
     } else if (dynamicTab.searchBy === 'search') {
 
       searchArticle({ searchString: dynamicTab.value ?? '' });
@@ -85,7 +108,7 @@ export default function Page() {//{searchParams}
           <Box
             sx={{
               overflow: 'auto',
-              maxHeight: viewportHeight + 450,
+              maxHeight: viewportHeight + 700,
               overflowY: 'auto',
               scrollbarWidth: 'none', // For Firefox
               msOverflowStyle: 'none', // For IE 10+
@@ -93,6 +116,7 @@ export default function Page() {//{searchParams}
                 display: 'none', // For Chrome, Safari, and newer versions of Edge
               },
             }}
+            ref={parentRef}
           >
             <PostHeader />
             <ArticleHead
@@ -120,6 +144,14 @@ export default function Page() {//{searchParams}
               loadingList={
                 dynamicTab.searchBy === 'tag' ? articleListFetching : (dynamicTab.searchBy === 'search' ? searchIsFetching : isFetching)
 
+              }
+              mainContainerFeedRef={parentRef}
+              scrollThreshold={0.7}
+              isLoading={isLoading}
+              loadMore={loadMore} 
+              hasMore={hasMore}
+              islazy={
+                dynamicTab.searchBy === 'tag' ? true : false
               }
             />
           </Box>
