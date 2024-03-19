@@ -94,7 +94,7 @@ export default function FollowNewAccounts() {
         direction="row"
         gap={1}
         my={2}
-        sx={{ overflowX: 'auto' }}
+        sx={{ overflowX: 'hidden' }}
         id="accountsListContainer"
       >
         {!isLoading && data ? (
