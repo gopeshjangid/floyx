@@ -119,6 +119,13 @@ const SearchComponent: React.FC<{
     }));
   };
 
+  const handleNameKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && searchCriteria.name.trim() !== '') {
+      e.preventDefault();
+      onSearch(searchCriteria);
+    }
+  }
+
   return (
     <Box
       component="form"
@@ -138,6 +145,7 @@ const SearchComponent: React.FC<{
               placeholder="Ex. Dustin Max"
               value={searchCriteria.name}
               onChange={handleInputChange}
+              onKeyUp={handleNameKeyPress}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="end">
