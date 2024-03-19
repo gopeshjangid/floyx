@@ -25,7 +25,7 @@ const LoaderSkeleton = () => {
 };
 
 
- function ArticleContent({
+function ArticleContent({
   articleList,
   loadingList,
   addEdittype = false,
@@ -38,87 +38,87 @@ const LoaderSkeleton = () => {
   scrollThreshold,
   mainContainerFeedRef,
   isLoading,
-  islazy=false
+  islazy = false
 }: any) {
-  const { t } = useTranslation()   
+  const { t } = useTranslation()
   const { palette } = useTheme();
   return (
     <Box>
       {loadingList && !islazy ? (
         <ArticleCardSkeleton repeats={2} />
-      ) : 
-      !isLoading && Array.isArray(articleList) && articleList && articleList.length !== 0 ? (
-        islazy ? 
-        (
-        <InfiniteScroll
-              dataLength={articleList.length} //This is important field to render the next data
-              next={loadMore}
-              hasMore={hasMore}
-              scrollThreshold={scrollThreshold}
-              loader={<LoaderSkeleton key="loader-ininfite" />}
-              scrollableTarget={mainContainerFeedRef.current}
-              endMessage={
-                <Box
-                  translate="no"
-                  sx={{
-                    border: `1px solid ${palette.primary.boxBorder}`,
-                    borderRadius: '10px',
-                    background: palette.primary.mainBackground,
-                  }}
-                  p={1}
-                  mt={1}
-                >
-                  <Typography
+      ) :
+        !isLoading && Array.isArray(articleList) && articleList && articleList.length !== 0 ? (
+          islazy ?
+            (
+              <InfiniteScroll
+                dataLength={articleList.length} //This is important field to render the next data
+                next={loadMore}
+                hasMore={hasMore}
+                scrollThreshold={scrollThreshold}
+                loader={<LoaderSkeleton key="loader-ininfite" />}
+                scrollableTarget={mainContainerFeedRef.current}
+                endMessage={
+                  <Box
                     translate="no"
-                    textAlign="center"
-                    variant="subtitle1"
-                    color="info"
+                    sx={{
+                      border: `1px solid ${palette.primary.boxBorder}`,
+                      borderRadius: '10px',
+                      background: palette.primary.mainBackground,
+                    }}
+                    p={1}
+                    mt={1}
                   >
-                    {t('Home.postSection.seenAll')}
-                  </Typography>
-                </Box>
-              }
+                    <Typography
+                      translate="no"
+                      textAlign="center"
+                      variant="subtitle1"
+                      color="info"
+                    >
+                      {t('Home.postSection.seenAll')}
+                    </Typography>
+                  </Box>
+                }
+              >
+                {articleList?.map((data: any, index: number) => (
+                  <ArticleContainer
+                    key={`articleContainer${index}`}
+                    articleDetails={data && data.article ? data.article : data}
+                    userDetails={data && data.user ? data.user : null}
+                    addEdittype={addEdittype}
+                    setIsEditing={setIsEditing}
+                    setArticleId={setArticleId}
+                    setValue={setValue}
+                    setIsReset={setIsReset}
+                  />
+                ))
+                }
+              </InfiniteScroll>) :
+            (articleList?.map((data: any, index: number) => (
+              <ArticleContainer
+                key={`articleContainer${index}`}
+                articleDetails={data && data.article ? data.article : data}
+                userDetails={data && data.user ? data.user : null}
+                addEdittype={addEdittype}
+                setIsEditing={setIsEditing}
+                setArticleId={setArticleId}
+                setValue={setValue}
+                setIsReset={setIsReset}
+              />
+            ))
+            )
+        )
+          : (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '10%',
+                height: '100px',
+              }}
             >
-           { articleList?.map((data: any, index: number) => (
-          <ArticleContainer
-            key={`articleContainer${index}`}
-            articleDetails={data && data.article ? data.article : data}
-            userDetails={data && data.user ? data.user : null}
-            addEdittype={addEdittype}
-            setIsEditing={setIsEditing}
-            setArticleId={setArticleId}
-            setValue={setValue}
-            setIsReset={setIsReset}
-          />
-        ))
-      }
-      </InfiniteScroll>) :
-      (articleList?.map((data: any, index: number) => (
-        <ArticleContainer
-          key={`articleContainer${index}`}
-          articleDetails={data && data.article ? data.article : data}
-          userDetails={data && data.user ? data.user : null}
-          addEdittype={addEdittype}
-          setIsEditing={setIsEditing}
-          setArticleId={setArticleId}
-          setValue={setValue}
-          setIsReset={setIsReset}
-        />
-      ))
-    )
-      )
-      : (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '10%',
-            height: '100px',
-          }}
-        >
-          <Typography translate="no" variant="h5">{t("comp.articleContent.noArticle")}</Typography>
-        </Box>
-      )}
+              <Typography translate="no" variant="h5">{t("comp.articleContent.noArticle")}</Typography>
+            </Box>
+          )}
     </Box>
   );
 }

@@ -249,7 +249,7 @@ export const artcileDetails = createApi({
       transformResponse: (response: any) => response?.value?.data,
     }),
     getArticleByTagsPage: builder.query<any, any>({
-      query: ({ tagId, pageNo }) => `${ApiEndpoint.GetArticleByTag}?tagId=${tagId}&pageSize=10&pageNo=${pageNo}`,
+      query: ({ tagId, pageNo, sortBy }) => `${ApiEndpoint.GetArticleByTag}?tagId=${tagId}&pageSize=10&pageNo=${pageNo}&sortBy=${sortBy}`,
       transformResponse: (response: any) => ({
         articleList: response?.value?.data,
         hasMore: response?.value?.hasMore,

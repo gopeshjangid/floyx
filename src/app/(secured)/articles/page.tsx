@@ -1,6 +1,6 @@
 'use client';
-import React, { Suspense, useState, useEffect,useCallback, useRef } from 'react';
-import { Box, Grid, useMediaQuery } from '@mui/material';
+import React, { Suspense, useState, useEffect, useCallback, useRef } from 'react';
+import { Box, FormControl, Grid, InputLabel, MenuItem, Select, useMediaQuery } from '@mui/material';
 import ArticleHead from '@/components/articleHead';
 import ArticleContent from '@/components/articleContent';
 import PostHeader from '@/components/PostHeader';
@@ -24,9 +24,10 @@ export interface apiParams {
   pageNo: number;
 }
 
-export default function Page({searchParams}) {
+export default function Page({ searchParams }) {
   const isMobile = useMediaQuery('(max-width:480px)');
   const [tabName, setTabName] = useState('popular');
+  const [sortType, setSortType] = useState('popular');
   const parentRef = useRef(null);
 
 
@@ -38,12 +39,13 @@ export default function Page({searchParams}) {
 
   const [apiParams, setApiParams] = useState<any>({
     tagId: '',
-    pageNo: 1
+    pageNo: 1,
+    sortBy: sortType
   });
 
   const [getArticleList, { data: articleList, isFetching }] =
     useLazyGetArticleListQuery();
-  const [getArticleByTagsPage, { data:tagsArticleList, isFetching: articleListFetching, isLoading }] = useLazyGetArticleByTagsPageQuery(apiParams);
+  const [getArticleByTagsPage, { data: tagsArticleList, isFetching: articleListFetching, isLoading }] = useLazyGetArticleByTagsPageQuery(apiParams);
   const articleListByTags = tagsArticleList?.articleList
 
   const hasMore = typeof tagsArticleList?.hasMore != 'undefined' ? tagsArticleList?.hasMore : true;
@@ -63,40 +65,39 @@ export default function Page({searchParams}) {
   ] = useLazyGetSearchArticleQuery();
 
   const valueChanges = (val) => {
-    if(searchParams?.id){
+    if (searchParams?.id) {
       removeQueryParam()
     }
     setDynamicTab(val);
   }
-  
+
   const removeQueryParam = () => {
     const searchParams = new URLSearchParams(window.location.search);
-    searchParams.delete('id'); 
-    searchParams.delete('name'); 
+    searchParams.delete('id');
+    searchParams.delete('name');
     const newUrl = `${window.location.pathname}`;
     window.history.replaceState(null, '', newUrl);
   };
 
   useEffect(() => {
-    if(searchParams?.id && searchParams?.name){
+    if (searchParams?.id && searchParams?.name) {
       setDynamicTab({
         searchBy: 'tag',
         tagId: searchParams.id,
         value: searchParams.name,
       });
     }
-  },[searchParams?.id, searchParams?.name])
+  }, [searchParams?.id, searchParams?.name]);
 
   useEffect(() => {
     if (dynamicTab.searchBy === 'tag') {
-      getArticleByTagsPage({ tagId: dynamicTab.tagId , pageNo: 1})
+      getArticleByTagsPage({sortBy: sortType, tagId: dynamicTab.tagId, pageNo: 1 })
     } else if (dynamicTab.searchBy === 'search') {
-
       searchArticle({ searchString: dynamicTab.value ?? '' });
     } else if (tabName !== dynamicTab.tagId) {
       getArticleList(tabName);
     }
-  }, [tabName, dynamicTab]);
+  }, [tabName, dynamicTab, sortType]);
   const viewportHeight =
     typeof window === 'undefined' ? 1000 : window.innerHeight;
   const { t } = useTranslation()
@@ -137,6 +138,18 @@ export default function Page({searchParams}) {
                 </GradientButton>
               </Link>
             </Box>
+            {dynamicTab?.tagId && <Box pb={0} pt={3} display={'flex'} justifyContent={'flex-end'}><FormControl sx={{ width: '50%' }} >
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={sortType}
+                label="Sort by"
+                onChange={(e) => setSortType(e.target.value)}
+              >
+                <MenuItem value={'popular'}>Popular</MenuItem>
+                <MenuItem value={'latest'}>Latest</MenuItem>
+              </Select>
+            </FormControl></Box>}
             <ArticleContent
               articleList={
                 dynamicTab.searchBy === 'tag' ? articleListByTags : (dynamicTab.searchBy === 'search' ? searchedArticle : articleList)
@@ -148,7 +161,7 @@ export default function Page({searchParams}) {
               mainContainerFeedRef={parentRef}
               scrollThreshold={0.7}
               isLoading={isLoading}
-              loadMore={loadMore} 
+              loadMore={loadMore}
               hasMore={hasMore}
               islazy={
                 dynamicTab.searchBy === 'tag' ? true : false
