@@ -190,7 +190,7 @@ const BlockReportUser: React.FC<UserActionModalProps> = ({
       onSuccess('BLOCKED');
       handleClose();
       setModalType('');
-      router.replace(allRoutes.home);
+      // router.replace(allRoutes.home);
     } catch (error) {
       toast.error('Error occured in blocking the user');
       console.error('Error blocking the user:', error);
