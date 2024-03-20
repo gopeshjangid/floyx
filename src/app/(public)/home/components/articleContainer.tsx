@@ -58,10 +58,7 @@ const ArticleAnimateBg = styled.div`
   position: absolute;
   top: 0px;
   left: calc(50% - 394px);
-  border-radius: 10px;
-  background-color: rgba(11, 8, 31, 0.5);
-  border: 1px solid #ab59ff;
-  box-sizing: border-box;
+  
   width: 100%;
   height: 100%;
 `;
@@ -80,10 +77,24 @@ const ArticleAnimateWrap = styled.div`
   align-self: stretch;
   height: 694px;
   position: relative;
+  margin-top:20px
   z-index: 1;
+   border-radius: 10px;
+  background-color: rgba(11, 8, 31, 0.5);
+  border: 1px solid #ab59ff;
+  box-sizing: border-box;
+   @media screen and (max-width: 550px) {
+   height: 400px;
+   margin-top:20px
+  }
+  @media screen and (max-width: 365px) {
+   height: 400px;
+   margin-top:70px
+  }
+  
 `;
 const InnerContainer = styled.div`
-  width: 788px;
+   width: 788px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -95,12 +106,13 @@ const InnerContainer = styled.div`
   }
 `;
 const MainContainer = styled.section`
-  align-self: stretch;
+width:100%;
+  align-self: center;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  padding: 0px 20px 0px;
+ 
   box-sizing: border-box;
   max-width: 100%;
   text-align: left;

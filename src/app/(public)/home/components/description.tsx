@@ -49,6 +49,11 @@ const ButtonContainer = styled.div`
   padding: 11px 0px 0px;
   box-sizing: border-box;
   z-index: 3;
+   @media screen and (max-width: 425px) {
+    width:100%;
+     
+   
+  }
 `;
 const Subheader = styled.div`
   align-self: stretch;
@@ -69,7 +74,7 @@ const DetailsContainer = styled.div`
 `;
 
 const Image = styled.img`
-  height: 100%;
+ 
   width: 100%;
   object-fit: contain;
   position: absolute;
@@ -97,6 +102,9 @@ const ImageLeftContainer = styled.div`
   min-width: 269px;
   max-width: 100%;
   z-index: 1;
+  @media screen and (max-width: 975px) {
+    display:none
+  }
 `;
 const ImageCenterContainer = styled.div`
   height: 689px;
@@ -105,12 +113,16 @@ const ImageCenterContainer = styled.div`
   transform: rotate(180deg);
   max-width: 100%;
   z-index: 1;
+  
 `;
 const ImageRightContainer = styled.div`
   align-self: stretch;
   height: 689px;
   position: relative;
   z-index: 1;
+   @media screen and (max-width: 975px) {
+    display:none
+  }
 `;
 const Image1 = styled.div`
   flex: 1;
@@ -145,6 +157,15 @@ const AnimatedPostContainer = styled.div`
   box-sizing: border-box;
   max-width: 100%;
   z-index: 2;
+   @media screen and (max-width: 975px) {
+    height:400px;
+    margin-top:23px;
+  }
+  @media screen and (max-width: 618px) {
+    height:235px;
+    margin-top:23px;
+  }
+  
 `;
 const InnerContainer = styled.div`
  
@@ -177,7 +198,7 @@ const MainContainer = styled.div`
   font-family: Poppins;
 `;
 
-const Description= () => {
+const Description = () => {
   const [isIntersecting, setIsIntersecting] = useState(false);
   const ref = useRef(null);
 
@@ -218,8 +239,8 @@ const Description= () => {
   useEffect(() => {
 
     if (isIntersecting) {
-      document?.querySelector("#postPhoto")?.classList.add("zoom-in-out-box");
-          }
+      //document?.querySelector("#postPhoto")?.classList.add("zoom-in-out-box");
+    }
     else {
       document?.querySelector("#postPhoto")?.classList.remove("zoom-in-out-box");
 
@@ -265,14 +286,14 @@ const Description= () => {
             </ButtonContainer>
           </Subheader>
         </DetailsContainer>
-      
+
         <AnimatedPostContainer >
           <AnimatedInnerContainer id="postPhoto" className="" >
             <ImgWrapper >
               <Image loading="lazy" alt="" src="/desktop--1-1@2x.png" />
             </ImgWrapper >
             <ImageLeftContainer id="left" className="" />
-            <ImageCenterContainer  />
+            <ImageCenterContainer />
             <Image1  >
               <ImageRightContainer className="" id="right" />
             </Image1>

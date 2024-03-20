@@ -36,12 +36,16 @@ const MainContainerBg2 = styled.img`
   object-fit: contain;
 `;
 const LinkImage = styled.img`
-  position: absolute;
-  top: 1464.5px;
-  left: -401.8px;
-  width: 700.8px;
-  height: 871.5px;
-  object-fit: contain;
+  z-index: 34;
+    filter: brightness(62%);
+    position: absolute;
+    top: 1258.5px;
+    left: -225px;
+    width: 700.8px;
+    height: 871.5px;
+    object-fit: contain;
+    
+    transform: scaleX(-1);
 `;
 const LinkItemImage = styled.img`
   position: absolute;
@@ -251,12 +255,12 @@ const Home = () => {
   return (
    
     <MainContainer>
-      <AboutUs />
+      {/* <AboutUs /> */}
 
       <MainContainerBg1 alt="" src="/group-342@2x.png" />
-      <MainContainerBg2 alt="" src="/group-340@2x.png" />
+      {/* <MainContainerBg2 alt="" src="/group-340@2x.png" /> */}
       <ImageWrapper>
-        <LinkImage alt="" src="/group-339@2x.png" />
+        <LinkImage alt="" src="/gradientBg.png" />
         <LinkItemImage alt="" src="/group-338@2x.png" />
       </ImageWrapper>
       <ClippedIcon alt="" src="/clipped.svg" />
@@ -271,7 +275,7 @@ const Home = () => {
       </NavBarContainer>
       <CommentsCards />
      
-      <FloyxUniverse>Floyx Universe</FloyxUniverse>
+      {/* <FloyxUniverse>Floyx Universe</FloyxUniverse> */}
       <ArticleContainer />
       <VideoContainer/>
       <CenteredRectangle />
