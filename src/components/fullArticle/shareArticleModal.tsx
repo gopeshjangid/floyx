@@ -33,6 +33,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   padding: 3,
+  borderRadius: '10px',
 };
 
  function ShareArticleModal({
