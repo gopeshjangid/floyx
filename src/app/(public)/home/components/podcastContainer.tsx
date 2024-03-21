@@ -43,6 +43,9 @@ const SparkleIcon = styled.img`
   flex-shrink: 0;
   object-fit: contain;
   z-index: 1;
+  @media screen and (max-width: 797px) {
+    display:none
+  }
 `;
 const SparkleIcon1 = styled.img`
   width: 87.4px;
@@ -55,6 +58,9 @@ const SparkleIcon1 = styled.img`
   flex-shrink: 0;
   object-fit: contain;
   z-index: 2;
+   @media screen and (max-width: 797px) {
+    display:none
+  }
 `;
 const SparkleIcon2 = styled.img`
   width: 35.8px;
@@ -67,6 +73,9 @@ const SparkleIcon2 = styled.img`
   flex-shrink: 0;
   object-fit: contain;
   z-index: 3;
+   @media screen and (max-width: 797px) {
+    display:none
+  }
 `;
 const PlayIcon = styled.img`
   width: 569.3px;
@@ -78,6 +87,9 @@ const PlayIcon = styled.img`
   border-radius: 39.79px;
   object-fit: contain;
   z-index: 0;
+   @media screen and (max-width: 425px) {
+    display:none
+  }
 `;
 const Podcasts = styled.b`
   width: 231px;
@@ -103,7 +115,7 @@ const AccessKeyField = styled.div`
   padding: 0px 20px;
 `;
 const RecordContentConduct = styled.div`
-  align-self: stretch;
+  //align-self: stretch;
   position: relative;
   font-size: 18px;
   line-height: 27px;
@@ -117,6 +129,9 @@ const SignUpButton = styled.div`
   justify-content: flex-start;
   gap: 23px 0px;
   z-index: 1;
+  @media screen and (max-width: 1230px) {
+    margin-top:-251px;
+  }
 `;
 const Podcast = styled.div`
   position: absolute;
@@ -226,12 +241,12 @@ const CenteredRectangle: NextPage = () => {
           <AccessKeyField>
             <Podcasts>Podcasts</Podcasts>
           </AccessKeyField>
-          <RecordContentConduct>{`Record content, conduct interesting interviews and let yourself be found by millions of listeners around the world! `}</RecordContentConduct>
+          <RecordContentConduct>Record content, conduct interesting interviews and let yourself be found by millions of listeners around the world!</RecordContentConduct>
+        <UnionIcon alt="" src="playMusic.gif" />
+      {/* <PodcastVoiceLines>
+      </PodcastVoiceLines> */}
         </SignUpButton>
       </Podcast>
-      <PodcastVoiceLines>
-        <UnionIcon alt="" src="musicPlay.gif" />
-      </PodcastVoiceLines>
     </CenteredRectangleRoot>
   );
 };

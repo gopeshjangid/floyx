@@ -8,11 +8,11 @@ import styled from '@emotion/styled';
 import NavBar from "./components/navBar";
 import Description from "./components/description";
 import ArticleContainer from "./components/articleContainer";
-import CenteredRectangle from "./components/podcastContainer";
-import Rectangle from "./components/chatContainer";
+import PodCastsContainer from "./components/podcastContainer";
+import ChatContainer from "./components/chatContainer";
 import Group from "./components/formLayout";
 import DownloadApp from "./components/downloadNow";
-import FrameComponent from "./components/frame-component";
+import MarketPlaceContainer from "./components/MarketPlace";
 import RegisterContainer from "./components/register-container";
 import FrameGroups from "./components/frame-groups";
 import VideoContainer from "./components/videoContainer";
@@ -141,25 +141,8 @@ const NavBarContainer = styled.section`
 `;
 
 
-const FloyxUniverse = styled.b`
-  width: 359px;
-  position: absolute;
-  margin: 0 !important;
-  right: 539.5px;
-  bottom: 3672px;
-  letter-spacing: -0.02em;
-  line-height: 120%;
-  display: inline-block;
-  z-index: 3;
-  @media screen and (max-width: 800px) {
-    font-size: 40px;
-    line-height: 48px;
-  }
-  @media screen and (max-width: 450px) {
-    font-size: 30px;
-    line-height: 36px;
-  }
-`;const FrameParent = styled.div`
+
+const FrameParent = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -186,26 +169,8 @@ const TextContainer2 = styled.div`
   box-sizing: border-box;
   max-width: 100%;
 `;
-const FloyxAlsoOffers = styled.div`
-  width: 886px;
-  position: relative;
-  line-height: 27px;
-  display: inline-block;
-  flex-shrink: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-  padding-right: 20px;
-`;
-const FloyxAlsoOffersAdditionalAWrapper = styled.div`
-  width: 1172px;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0px 0px 8px 20px;
-  box-sizing: border-box;
-  max-width: 100%;
-`;
+
+
 const TextFrame = styled.section`
   align-self: stretch;
   display: flex;
@@ -220,13 +185,13 @@ const TextFrame = styled.section`
   font-size: 18px;
   color: rgba(255, 255, 255, 0.7);
   font-family: Poppins;
-  @media screen and (max-width: 1350px) {
-    padding-bottom: 20px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 800px) {
-    gap: 28px 0px;
-  }
+  // @media screen and (max-width: 1350px) {
+  //   padding-bottom: 20px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 800px) {
+  //   gap: 28px 0px;
+  // }
 `;
 const MainContainer = styled.div`
   width: 100%;
@@ -275,20 +240,18 @@ const Home = () => {
       </NavBarContainer>
       <CommentsCards />
      
-      {/* <FloyxUniverse>Floyx Universe</FloyxUniverse> */}
+    
       <ArticleContainer />
       <VideoContainer/>
-      <CenteredRectangle />
-      <TextFrame>
-        <Rectangle />
-        <TextContainer2>
+      <PodCastsContainer />
+        <ChatContainer />
           <Group />
           <DownloadApp />
-        </TextContainer2>
-        <FloyxAlsoOffersAdditionalAWrapper>
-          <FloyxAlsoOffers>{`Floyx also offers additional areas. The easiest way to integrate cryptocurrencies, blockchain technology and the web3 world into the traditional market and global community. `}</FloyxAlsoOffers>
-        </FloyxAlsoOffersAdditionalAWrapper>
-        <FrameComponent />
+        <MarketPlaceContainer />
+      <TextFrame>
+        {/* <TextContainer2>
+        </TextContainer2> */}
+        
       </TextFrame>
       <RegisterContainer />
       <FrameGroups />

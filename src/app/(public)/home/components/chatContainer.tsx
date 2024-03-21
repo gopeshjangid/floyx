@@ -46,31 +46,82 @@ const HeadingContainer = styled.div`
   max-width: 100%;
 `;
 const BgImageWrap = styled.img`
-  height: 368px;
-  width: calc(100% - 20px);
-  position: absolute;
-  margin: 0 !important;
-  top: 10px;
-  right: 10px;
-  left: 10px;
-  max-width: 100%;
-  overflow: hidden;
-  object-fit: cover;
+
+    height: 368px;
+    /* width: calc(100% - 20px); */
+    position: absolute;
+    margin: 0 !important;
+    top: -19px;
+    right: 0px;
+    left: -70px;
+    max-width: 100%;
+    overflow: hidden;
+    object-fit: cover;
+     @media screen and (max-width: 1604px) {
+      
+    position: relative;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    top: 172px;
+    right: 0;
+    left: 640px;
+  }
+    @media screen and (max-width: 768px) {
+       position: relative;
+    justify-content: center;
+   top: 0px;
+   right: 0px;
+   left: 0px;
+  }
+  
+  // top: 10px;
+  // right: 10px;
+  // left: 10px;
+ 
 `;
 const ChatHeadBgWrap = styled.div`
-  height: 388px;
-  width: 333px;
-  margin: 0 !important;
-  position: absolute;
-  right: -186px;
-  bottom: -369px;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 10px;
-  box-sizing: border-box;
-  z-index: 2;
+
+    height: 388px;
+    width: 338px;
+    margin: 0 !important;
+    position: absolute;
+    right: -12px;
+    bottom: 4923px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: flex-start;
+    -webkit-box-align: flex-start;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+    box-sizing: border-box;
+     @media screen and (max-width: 1604px) {
+       position: relative;
+    justify-content: center;
+   top: 0px;
+   right: 0px;
+   left: 0px;
+  }
+     @media screen and (max-width: 768px) {
+       position: static;
+       width: 100%;
+    justify-content: center;
+   top: 0px;
+   right: 0px;
+   left: 0px;
+  }
+   
 `;
 const ChatHeadContainer = styled.div`
   width: 632px;
@@ -313,75 +364,56 @@ const MessageContainer = styled.div`
   max-width: 100%;
 `;
 const ChatContainer = styled.div`
-  align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 186px 0px 185px;
-  box-sizing: border-box;
-  max-width: 100%;
-  z-index: 1;
-  text-align: left;
-  font-size: 20px;
-  color: #8a8f98;
-  font-family: Inter;
-  @media screen and (max-width: 800px) {
-    padding-top: 121px;
-    padding-bottom: 120px;
+
+
+    width: 100%;
+    /* -webkit-align-self: stretch; */
+    -ms-flex-item-align: stretch;
+    /* align-self: stretch; */
+    /* display: -webkit-box; */
+    /* display: -webkit-flex; */
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: column;
+    -webkit-align-items: flex-start;
+    -webkit-box-align: flex-start;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    /* padding: 186px 0px 185px; */
     box-sizing: border-box;
-  }
-`;
-const GHeading = styled.b`
-  width: 182px;
-  position: relative;
-  letter-spacing: -0.02em;
-  line-height: 120%;
-  display: inline-block;
-  z-index: 2;
-  @media screen and (max-width: 800px) {
-    font-size: 40px;
-    line-height: 48px;
-  }
-  @media screen and (max-width: 450px) {
-    font-size: 30px;
-    line-height: 36px;
-  }
-`;
-const GroupInnerContainer = styled.div`
-  align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 0px 20px;
-`;
-const CreateAGroup = styled.div`
-  align-self: stretch;
-  position: relative;
-  font-size: 18px;
-  line-height: 27px;
-  color: rgba(255, 255, 255, 0.7);
-  z-index: 1;
-`;
-const GroupOuterContainer = styled.div`
-  width: 440px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 23px 0px;
-  max-width: 100%;
-`;
-const GroupContainer = styled.div`
-  align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 0px 20px;
-  box-sizing: border-box;
-  max-width: 100%;
+    /* max-width: 100%; */
+    z-index: 1;
+    text-align: center;
+    font-size: 20px;
+    color: #8a8f98;
+    font-family: Inter;
+
+
+  // align-self: stretch;
+  // display: flex;
+  // flex-direction: row;
+  // align-items: flex-start;
+  // justify-content: flex-start;
+  // padding: 186px 0px 185px;
+  // box-sizing: border-box;
+  // max-width: 100%;
+  // z-index: 1;
+  // text-align: left;
+  // font-size: 20px;
+  // color: #8a8f98;
+  // font-family: Inter;
+  // @media screen and (max-width: 800px) {
+  //   padding-top: 121px;
+  //   padding-bottom: 120px;
+  //   box-sizing: border-box;
+  // 
+}
 `;
 const InnerContainer = styled.div`
   width: 808px;
@@ -407,7 +439,7 @@ const MainContainer = styled.div`
 `;
 import React, { useEffect, useRef, useState } from "react";
 
-const Rectangle: NextPage = () => {
+const ChatBox = () => {
   const [isIntersecting, setIsIntersecting] = useState(false);
   const ref = useRef(null);
 
@@ -446,11 +478,12 @@ const Rectangle: NextPage = () => {
               <Heading2>Use our internal encrypted messenger, which is the only one in the world that doesn't store data!</Heading2>
             </BgWrapper>
           </HeadingContainer>
-          <ChatHeadBgWrap>
-            <BgImageWrap loading="lazy" alt="" src="/frame-427320687-2@2x.png" />
-          </ChatHeadBgWrap>
         </ChatHeadContainer>
         <ChatContainer>
+          <ChatHeadBgWrap>
+            <BgImageWrap loading="lazy" alt="" src="/frame-427320687-2@2x.png" />
+
+          </ChatHeadBgWrap>
           <MessageContainer>
             <AutoLayoutHorizontal>
               <LabelContainer>
@@ -518,17 +551,10 @@ const Rectangle: NextPage = () => {
             </AutoLayoutHorizontal>
           </MessageContainer>
         </ChatContainer>
-        <GroupContainer>
-          <GroupOuterContainer>
-            <GroupInnerContainer>
-              <GHeading>Groups</GHeading>
-            </GroupInnerContainer>
-            <CreateAGroup>Create a group, add dedicated channels and manage everything in an unprecedented way! </CreateAGroup>
-          </GroupOuterContainer>
-        </GroupContainer>
+      
       </InnerContainer>
     </MainContainer>
   );
 };
 
-export default Rectangle;
+export default ChatBox;

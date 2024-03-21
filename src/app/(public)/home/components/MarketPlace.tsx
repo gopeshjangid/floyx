@@ -201,6 +201,16 @@ const FrameChild3 = styled.div`
   box-sizing: border-box;
   z-index: 2;
 `;
+const FloyxAlsoOffers = styled.div`
+  width: 886px;
+  position: relative;
+  line-height: 27px;
+  display: inline-block;
+  flex-shrink: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-right: 20px;
+`;
 const LineWrapper = styled.div`
   height: 32px;
   width: 76px;
@@ -370,6 +380,8 @@ const EcoSystem = styled.div`
   margin-top: -1014px;
 `;
 const ShineBackgroundParentRoot = styled.div`
+display:flex;
+
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -382,23 +394,51 @@ const ShineBackgroundParentRoot = styled.div`
   font-size: 29px;
   color: rgba(255, 255, 255, 0.7);
   font-family: Poppins;
-  @media screen and (max-width: 1350px) {
-    padding-left: 135px;
-    padding-right: 135px;
-    box-sizing: border-box;
-  }
+  // @media screen and (max-width: 1350px) {
+  //   padding-left: 135px;
+  //   padding-right: 135px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 800px) {
+  //   padding-left: 67px;
+  //   padding-right: 67px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 450px) {
+  //   padding-left: 20px;
+  //   padding-right: 20px;
+  //   box-sizing: border-box;
+  // }
+`;
+const FloyxAlsoOffersAdditionalAWrapper = styled.div`
+  width: 1172px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 0px 8px 20px;
+  box-sizing: border-box;
+  max-width: 100%;
+`;
+const FloyxUniverse = styled.b`
+  width: 359px;
+  // position: absolute;
+  // margin: 0 !important;
+  // right: 539.5px;
+  // bottom: 3672px;
+  letter-spacing: -0.02em;
+  line-height: 120%;
+  display: inline-block;
+  z-index: 3;
   @media screen and (max-width: 800px) {
-    padding-left: 67px;
-    padding-right: 67px;
-    box-sizing: border-box;
+    font-size: 40px;
+    line-height: 48px;
   }
   @media screen and (max-width: 450px) {
-    padding-left: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
+    font-size: 30px;
+    line-height: 36px;
   }
 `;
-
 const FrameComponent: NextPage = () => {
   const [value, setValue] = useState({
     index: 0,
@@ -457,6 +497,10 @@ const FrameComponent: NextPage = () => {
 
   return (
     <ShineBackgroundParentRoot ref={ref}>
+            <FloyxUniverse>Floyx Universe</FloyxUniverse>
+      <FloyxAlsoOffersAdditionalAWrapper>
+          <FloyxAlsoOffers>Floyx also offers additional areas. The easiest way to integrate cryptocurrencies, blockchain technology and the web3 world into the traditional market and global community. </FloyxAlsoOffers>
+        </FloyxAlsoOffersAdditionalAWrapper>
       <ShineBackground>
         <FrameParent>
           <LineParent>
