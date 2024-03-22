@@ -25,7 +25,7 @@ function Comment({
   const [updateLike, { data, isSuccess }] = useLikeItemMutation();
   const session = useSession();
   const updateCommentRef = useRef();
-const {t}=useTranslation()
+  const { t } = useTranslation()
   const [isEditing, setIsEditing] = useState(false);
   const { palette } = useTheme();
   const userName = (session as any)?.data?.user?.username;
@@ -129,14 +129,14 @@ const {t}=useTranslation()
                   sx={{ marginRight: '25px' }}
                 >
                   <Typography
-                  translate="no"
+                    translate="no"
                     component={'span'}
                     color={'textPrimary'}
                     textTransform={'none'}
                     marginBottom={0}
                   >
                     {t('comp.comment.reply')}
-                  
+
                   </Typography>
                 </Button>
               </Box>

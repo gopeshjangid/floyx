@@ -32,7 +32,7 @@ export default function Page({searchParams}) {
   const parentRef = useRef(null);
   const searchId = searchParmtr.get('id');
   const searchName = searchParmtr.get('name');
-console.log({searchId, searchName});
+
   const [dynamicTab, setDynamicTab] = useState({
     searchBy: '',
     value: '',

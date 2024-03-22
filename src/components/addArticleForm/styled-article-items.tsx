@@ -9,6 +9,9 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
   },
   '.articles-editor__editor': {
     position: 'relative',
+    '.articles-editor__subtitle':{
+     padding: 1,
+    },
     '.articles-editor__photo': {
       marginBottom: '35px',
       '.articles-editor__photo-preview': {
@@ -179,12 +182,14 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
           position: 'absolute',
           top: 'calc(100% - 10px)',
           width: '100%',
+          color: theme.palette.primary.fontLightColor,
           '& input': {
             borderRadius: '4px',
             display: 'inline-block',
             lineHeight: '38px',
             marginBottom: '7px',
             paddingLeft: '10px',
+            color: theme.palette.primary.fontLightColor,
             width: '238px !important',
             '& ::placeholder': {
               color: '#9b9bab !important',
@@ -214,6 +219,7 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
         },
         '& ul li': {
           paddingLeft: '10px',
+          color: theme.palette.primary.fontLightColor,
         },
       },
       '.articles-editor__ol': {
@@ -224,9 +230,11 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
           margin: '0 0 0 17px',
           padding: 0,
           wordBreak: 'break-all',
+          color: theme.palette.primary.fontLightColor,
         },
         '& ol li': {
           paddingLeft: '10px',
+          color: theme.palette.primary.fontLightColor,
         },
       },
       '.articles-editor__link': {
@@ -234,6 +242,7 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
         marginBottom: '15px',
         padding: 0,
         textDecoration: 'underline',
+        color: theme.palette.primary.fontLightColor,
       },
       '.articles-editor__item': {
         background: theme.palette.primary[400],
@@ -241,6 +250,7 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
         padding: '2px 8px',
         fontSize: '18px',
         marginBottom: '15px',
+        color: theme.palette.primary.fontLightColor,
       },
 
       '.articles-editor__video': {
@@ -250,6 +260,9 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
             width: '100%',
             fontSize: '18px',
             padding: 0,
+          },
+          'input':{
+            color: theme.palette.primary.fontLightColor,
           },
         '.articles-editor__iframe-container': {
           // height: '600px',
@@ -282,7 +295,7 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
               ? theme.palette.text.primary
               : theme.palette?.action?.svg,
         },
-        color:`${theme.palette?.mode === 'light' ? '#2b2b2b' : 'white'}`,
+        color: theme.palette.primary.fontLightColor,
         fontSize: '18px',
         marginBottom: '15px',
         wordBreak: 'break-word',
@@ -300,7 +313,8 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
         fontSize: '24px',
         fontWeight: '500',
         margin: '-4px 0 22px',
-        padding: 0,
+        padding: 12,
+        color: theme.palette.primary.fontLightColor
       },
       '& .articles-editor__quote': {
         outline: 'none',
@@ -309,6 +323,8 @@ export const ArticleItem = styled(Box)(({ theme }) => ({
         lineHeight: '34px',
         marginBottom: '18px',
         position: 'relative',
+        padding: 12,
+        color: theme.palette.primary.fontLightColor,
         '& :not(:empty)': {
           paddingLeft: '28px',
         },
