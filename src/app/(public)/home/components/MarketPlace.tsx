@@ -201,16 +201,7 @@ const FrameChild3 = styled.div`
   box-sizing: border-box;
   z-index: 2;
 `;
-const FloyxAlsoOffers = styled.div`
-  width: 886px;
-  position: relative;
-  line-height: 27px;
-  display: inline-block;
-  flex-shrink: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-  padding-right: 20px;
-`;
+
 const LineWrapper = styled.div`
   height: 32px;
   width: 76px;
@@ -410,26 +401,42 @@ display:flex;
   //   box-sizing: border-box;
   // }
 `;
-const FloyxAlsoOffersAdditionalAWrapper = styled.div`
-  width: 1172px;
+
+
+const TextContainer = styled.div`
+  align-self: stretch;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0px 0px 8px 20px;
+  justify-content: center;
+  padding: 0px 20px;
   box-sizing: border-box;
   max-width: 100%;
 `;
-const FloyxUniverse = styled.b`
-  width: 359px;
-  // position: absolute;
-  // margin: 0 !important;
-  // right: 539.5px;
-  // bottom: 3672px;
+const TextOuterContainer = styled.div`
+  width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 23px 0px;
+  max-width: 100%;
+`;
+const TextInnerContainer = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0px 20px;
+`;
+const HeadingContainer = styled.b`
+  width: 182px;
+  position: relative;
   letter-spacing: -0.02em;
   line-height: 120%;
   display: inline-block;
-  z-index: 3;
+  z-index: 2;
   @media screen and (max-width: 800px) {
     font-size: 40px;
     line-height: 48px;
@@ -438,6 +445,14 @@ const FloyxUniverse = styled.b`
     font-size: 30px;
     line-height: 36px;
   }
+`;
+const SubHeadingContainer = styled.div`
+  align-self: stretch;
+  position: relative;
+  font-size: 18px;
+  line-height: 27px;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 1;
 `;
 const FrameComponent: NextPage = () => {
   const [value, setValue] = useState({
@@ -497,10 +512,14 @@ const FrameComponent: NextPage = () => {
 
   return (
     <ShineBackgroundParentRoot ref={ref}>
-            <FloyxUniverse>Floyx Universe</FloyxUniverse>
-      <FloyxAlsoOffersAdditionalAWrapper>
-          <FloyxAlsoOffers>Floyx also offers additional areas. The easiest way to integrate cryptocurrencies, blockchain technology and the web3 world into the traditional market and global community. </FloyxAlsoOffers>
-        </FloyxAlsoOffersAdditionalAWrapper>
+<TextContainer>
+          <TextOuterContainer>
+            <TextInnerContainer>
+              <HeadingContainer>Floyx Universe</HeadingContainer>
+            </TextInnerContainer>
+            <SubHeadingContainer>Floyx also offers additional areas. The easiest way to integrate cryptocurrencies, blockchain technology and the web3 world into the traditional market and global community. </SubHeadingContainer>
+          </TextOuterContainer>
+        </TextContainer>
       <ShineBackground>
         <FrameParent>
           <LineParent>
