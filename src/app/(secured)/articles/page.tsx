@@ -29,7 +29,7 @@ export default function Page({ searchParams }) {
   const [tabName, setTabName] = useState('popular');
   const [sortType, setSortType] = useState('popular');
   const parentRef = useRef(null);
-
+console.log({searchParams});
 
   const [dynamicTab, setDynamicTab] = useState({
     searchBy: '',
