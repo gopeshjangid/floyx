@@ -1,6 +1,6 @@
 'use client';
 import React, { Suspense, useState, useEffect, useCallback, useRef } from 'react';
-import { Box, FormControl, Grid, InputLabel, MenuItem, Select, useMediaQuery } from '@mui/material';
+import { Box, FormControl, Grid, MenuItem, Select, useMediaQuery } from '@mui/material';
 import ArticleHead from '@/components/articleHead';
 import ArticleContent from '@/components/articleContent';
 import PostHeader from '@/components/PostHeader';
@@ -11,29 +11,31 @@ import WhoToFollowLoader from '@/components/whoToFollow/loader';
 import {
   useLazyGetArticleListQuery,
   useLazyGetSearchArticleQuery,
-  useLazyGetArticleByTagsQuery,
   useLazyGetArticleByTagsPageQuery
 } from '@/lib/redux';
 import { GradientButton } from '@/components/gradientButton';
 // import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'next/navigation';
 
 export interface apiParams {
   tagId: string;
   pageNo: number;
 }
 
-export default function Page({ searchParams }) {
+export default function Page({searchParams}) {
+  const searchParmtr = useSearchParams();
   const isMobile = useMediaQuery('(max-width:480px)');
   const [tabName, setTabName] = useState('popular');
   const [sortType, setSortType] = useState('popular');
   const parentRef = useRef(null);
-console.log({searchParams});
-
+  const searchId = searchParmtr.get('id');
+  const searchName = searchParmtr.get('name');
+console.log({searchId, searchName});
   const [dynamicTab, setDynamicTab] = useState({
     searchBy: '',
-    value: undefined,
+    value: '',
     tagId: '',
   });
 
@@ -80,14 +82,14 @@ console.log({searchParams});
   };
 
   useEffect(() => {
-    if (searchParams?.id && searchParams?.name) {
+    if (searchId && searchName) {
       setDynamicTab({
         searchBy: 'tag',
-        tagId: searchParams.id,
-        value: searchParams.name,
+        tagId: searchId,
+        value: searchName
       });
     }
-  }, [searchParams?.id, searchParams?.name]);
+  }, [searchId, searchName]);
 
   useEffect(() => {
     if (dynamicTab.searchBy === 'tag') {
