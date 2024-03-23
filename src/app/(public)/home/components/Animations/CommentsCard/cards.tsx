@@ -106,6 +106,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const CommentsCards = () => {
+  console.log("Changes appearing to local")
   useEffect(() => {
    // runAnimations();
   }, []);
