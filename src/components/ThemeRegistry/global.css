@@ -590,3 +590,23 @@ align-item:center;
 .slick-slide{
   opacity:0.5;
 }
+
+
+
+#spin:after {
+  content:"";
+  animation: spin 10s linear infinite;
+}
+@keyframes spin {
+
+
+  
+  0% { content: "10" }
+  20% { content: "50" }
+  40% { content: "80" }
+  60% { content: "100" }
+  80% { content: "800" }
+  100% { content: "1k" }
+  
+ 
+}
