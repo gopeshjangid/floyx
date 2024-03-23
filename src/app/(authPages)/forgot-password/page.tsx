@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Link from 'next/link';
 import {
@@ -18,7 +18,7 @@ import {
 
 import { allRoutes } from '@/constants/allRoutes';
 import { useToast } from '@/components/Toast/useToast';
-import { SVGArrowLeft, SVGLock, SVGUser } from '@/assets/images';
+import { SVGArrowLeft, SVGUser } from '@/assets/images';
 import { useCheckEmailMutation, useResetPasswordMutation } from '@/lib/redux/slices/registration';
 import { debounce } from '@/lib/utils';
 
@@ -33,6 +33,7 @@ interface IFormError {
 const ForgotPassword: FC = () => {
   const toast = useToast();
   const { palette } = useTheme();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<ILogin>({
     email: '',
@@ -44,7 +45,8 @@ const ForgotPassword: FC = () => {
 
   useEffect(()=>{
     if(isSuccess){
-      toast.success('Password reset successfully! Please check your email');
+      toast.success('Password reset email has been successfully sent. Please check you mail.');
+      if(inputRef.current) inputRef.current.value ='';
       setFormData({email: ''});
     }
 
@@ -149,6 +151,7 @@ const ForgotPassword: FC = () => {
                     onChange={onChangeHandler}
                     error={!!formError.email}
                     helperText={formError.email}
+                    inputRef={inputRef}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="end">

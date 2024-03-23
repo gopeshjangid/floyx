@@ -56,13 +56,14 @@ const ResetPasswordComponent = () => {
   useEffect(() => {
     if (data === 'success') {
       toast.success('Password changed successfully!');
-      router.push("/");
+      router.push("/login");
     }
   }, [data]);
 
   useEffect(() => {
     if (error) {
-      toast.error(showErrorMessages(error as string[]));
+      const originalError = (error as any)?.data?.value?.code;
+      toast.error(showErrorMessages(Array.isArray(originalError) ? originalError :  [originalError]));
     }
   }, [error]);
 
@@ -108,7 +109,8 @@ const ResetPasswordComponent = () => {
             md: '100%',
             lg: '70%',
           },
-          marginTop: '20px',
+          marginTop: '30px',
+          paddingTop: '16px'
         }}
       >
          <Box py={1} pt={2}>

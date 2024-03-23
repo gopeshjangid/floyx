@@ -54,7 +54,7 @@ const Textarea = styled(TextareaAutosize)(({ theme }) => ({
   overflow: 'auto',
   textOverflow: 'ellipsis',
   outline: 'none',
-  color: '#85838F',
+  color: theme.palette.primary.titleColor,
 }));
 
  function AddArticleForm({

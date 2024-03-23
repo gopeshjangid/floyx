@@ -14,6 +14,7 @@ import SVGChangePassword from '@/iconComponents/changePassword';
 import SVGBlockUser from '@/iconComponents/blockUser';
 import SVGHelp from '@/iconComponents/help';
 import Wrapper from '@/components/wrapper';
+import SVGDelete from '@/iconComponents/delete';
 
 const SettingsWrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
   borderBottom: 1,
@@ -124,6 +125,21 @@ export default function SettingLayout({
                   <SVGBlockUser
                     stroke={
                       value === allRoutes.settings.blockUser
+                        ? theme.palette.secondary[100]
+                        : theme.palette.action.svg
+                    }
+                  />
+                }
+                iconPosition="start"
+              />
+              <LinkTab
+                value={allRoutes.settings.deleteAccount}
+                href={allRoutes.settings.deleteAccount}
+                label="Delete Account"
+                icon={
+                  <SVGDelete
+                    stroke={
+                      value === allRoutes.settings.deleteAccount
                         ? theme.palette.secondary[100]
                         : theme.palette.action.svg
                     }

@@ -106,23 +106,6 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 0px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-  transition: all 0.3s;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: var(--gradient-color);
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #5798ff;
-}

@@ -12,7 +12,6 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-  Typography,
   debounce,
   useTheme,
   styled
@@ -29,7 +28,6 @@ import {
 } from '@/lib/redux/slices/accountSetting';
 import SVGEmail from '@/iconComponents/email';
 import SVGExclamation from '@/iconComponents/exclamation';
-import SVGDelete from '@/iconComponents/delete';
 import { showErrorMessages } from '@/lib/utils';
 import { SettingWrapper } from '../styled';
 import AccountSettingSkeleton from './loading';
@@ -146,11 +144,6 @@ const AccountSetting = () => {
     }
   }, [settingUpdateData]);
 
-  // useEffect(() => {
-  //   if (messageSettingUpdateData === 'success') {
-  //     toast.success('Message settings updated successfully!');
-  //   }
-  // }, [messageSettingUpdateData]);
   useEffect(() => {
     if (settingUpdateError) {
       toast.error(settingUpdateError as string);
@@ -378,48 +371,6 @@ const AccountSetting = () => {
                 )}
               </Button>
             </FormControl>
-          </Box>
-          <Box
-            display="flex"
-            flexDirection={'column'}
-            gap={0.5}
-            mt={2}
-            borderTop={theme =>
-              `1px solid ${
-                theme.palette?.mode === 'light'
-                  ? '#E7F0FC'
-                  : 'rgba(255, 255, 255, 0.15)'
-              }`
-            }
-          >
-            <Typography
-              mt={2}
-              variant="subtitle2"
-              color={theme => theme.palette.primary[100]}
-            >
-              Delete Account
-            </Typography>
-
-            <Typography
-              variant="subtitle2"
-              color={theme => theme.palette.primary[300]}
-            >
-              This can’t be reversed, so make sure you’re sure this is what you
-              want
-            </Typography>
-
-            <Button
-              variant="outlined"
-              onClick={()=>{   toast.success('Please Wait...');
-              window.location.href = "mailto:data.protection@floyx.com?subject=Account Deletion Request";}}
-              color="error"
-              sx={{
-                border: theme => `1px solid ${theme.palette.error.main}`,
-                borderRadius: '10px',
-              }}
-            >
-              <SVGDelete /> Delete Account
-            </Button>
           </Box>
         </SettingWrapper>
       </Wrapper>

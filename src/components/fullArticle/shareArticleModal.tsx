@@ -30,9 +30,10 @@ const style = {
   maxWidth: '50vw',
   overflowY: 'scroll',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '2px solid gray',
   boxShadow: 24,
   padding: 3,
+  borderRadius: '10px',
 };
 
  function ShareArticleModal({

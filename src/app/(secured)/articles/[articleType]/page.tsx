@@ -1,6 +1,6 @@
 'use client';
 import React, { Suspense, useState, useEffect } from 'react';
-import { Box, Grid, useMediaQuery } from '@mui/material';
+import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
 import ArticleHead from '@/components/articleHead';
 import ArticleContent from '@/components/articleContent';
 import PostHeader from '@/components/PostHeader';

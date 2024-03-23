@@ -14,6 +14,7 @@ export const allRoutes = {
     account: '/settings/account',
     changePassword: '/settings/change-password',
     blockUser: '/settings/blocked-user',
+    deleteAccount: '/settings/delete-account',
     help: '/settings/help',
   },
   post: '/post',

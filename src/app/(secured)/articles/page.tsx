@@ -1,6 +1,6 @@
 'use client';
-import React, { Suspense, useState, useEffect } from 'react';
-import { Box, Grid, useMediaQuery } from '@mui/material';
+import React, { Suspense, useState, useEffect, useCallback, useRef } from 'react';
+import { Box, FormControl, Grid, MenuItem, Select, useMediaQuery } from '@mui/material';
 import ArticleHead from '@/components/articleHead';
 import ArticleContent from '@/components/articleContent';
 import PostHeader from '@/components/PostHeader';
@@ -11,69 +11,95 @@ import WhoToFollowLoader from '@/components/whoToFollow/loader';
 import {
   useLazyGetArticleListQuery,
   useLazyGetSearchArticleQuery,
-  useLazyGetArticleByTagsQuery
+  useLazyGetArticleByTagsPageQuery
 } from '@/lib/redux';
 import { GradientButton } from '@/components/gradientButton';
 // import { useLazyGetArticleByTagsQuery } from '@/lib/redux/slices/tags';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'next/navigation';
 
-export default function Page() {//{searchParams}
+export interface apiParams {
+  tagId: string;
+  pageNo: number;
+}
+
+export default function Page({searchParams}) {
+  const searchParmtr = useSearchParams();
   const isMobile = useMediaQuery('(max-width:480px)');
   const [tabName, setTabName] = useState('popular');
+  const [sortType, setSortType] = useState('popular');
+  const parentRef = useRef(null);
+  const searchId = searchParmtr.get('id');
+  const searchName = searchParmtr.get('name');
 
   const [dynamicTab, setDynamicTab] = useState({
     searchBy: '',
-    value: undefined,
+    value: '',
     tagId: '',
+  });
+
+  const [apiParams, setApiParams] = useState<any>({
+    tagId: '',
+    pageNo: 1,
+    sortBy: sortType
   });
 
   const [getArticleList, { data: articleList, isFetching }] =
     useLazyGetArticleListQuery();
-  const [
-    getArticlesByTags,
-    { data: articleListByTags, isFetching: articleListFetching },
-  ] = useLazyGetArticleByTagsQuery();
+  const [getArticleByTagsPage, { data: tagsArticleList, isFetching: articleListFetching, isLoading }] = useLazyGetArticleByTagsPageQuery(apiParams);
+  const articleListByTags = tagsArticleList?.articleList
+
+  const hasMore = typeof tagsArticleList?.hasMore != 'undefined' ? tagsArticleList?.hasMore : true;
+  const loadMore = useCallback(() => {
+    if (articleListByTags?.length && !isFetching) {
+      setApiParams(prevParams => ({
+        ...prevParams,
+        pageNo: prevParams.pageNo + 1,
+        tagId: dynamicTab?.tagId,
+      }));
+    }
+  }, [tagsArticleList, articleListFetching, setApiParams]);
+
   const [
     searchArticle,
     { data: searchedArticle, isFetching: searchIsFetching },
   ] = useLazyGetSearchArticleQuery();
 
   const valueChanges = (val) => {
-    // if(searchParams?.id){
-    //   removeQueryParam()
-    // }
+    if (searchParams?.id) {
+      removeQueryParam()
+    }
     setDynamicTab(val);
   }
-  
-  // const removeQueryParam = () => {
-  //   const searchParams = new URLSearchParams(window.location.search);
-  //   searchParams.delete('id'); 
-  //   searchParams.delete('name'); 
-  //   const newUrl = `${window.location.pathname}`;
-  //   window.history.replaceState(null, '', newUrl);
-  // };
 
-  // useEffect(() => {
-  //   if(searchParams?.id && searchParams?.name){
-  //     setDynamicTab({
-  //       searchBy: 'tag',
-  //       tagId: searchParams.id,
-  //       value: searchParams.name,
-  //     });
-  //   }
-  // },[searchParams?.id, searchParams?.name])
+  const removeQueryParam = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.delete('id');
+    searchParams.delete('name');
+    const newUrl = `${window.location.pathname}`;
+    window.history.replaceState(null, '', newUrl);
+  };
+
+  useEffect(() => {
+    if (searchId && searchName) {
+      setDynamicTab({
+        searchBy: 'tag',
+        tagId: searchId,
+        value: searchName
+      });
+    }
+  }, [searchId, searchName]);
 
   useEffect(() => {
     if (dynamicTab.searchBy === 'tag') {
-      getArticlesByTags({ tagId: dynamicTab.tagId })
+      getArticleByTagsPage({sortBy: sortType, tagId: dynamicTab.tagId, pageNo: 1 })
     } else if (dynamicTab.searchBy === 'search') {
-
       searchArticle({ searchString: dynamicTab.value ?? '' });
     } else if (tabName !== dynamicTab.tagId) {
       getArticleList(tabName);
     }
-  }, [tabName, dynamicTab]);
+  }, [tabName, dynamicTab, sortType]);
   const viewportHeight =
     typeof window === 'undefined' ? 1000 : window.innerHeight;
   const { t } = useTranslation()
@@ -85,7 +111,7 @@ export default function Page() {//{searchParams}
           <Box
             sx={{
               overflow: 'auto',
-              maxHeight: viewportHeight + 450,
+              maxHeight: viewportHeight + 700,
               overflowY: 'auto',
               scrollbarWidth: 'none', // For Firefox
               msOverflowStyle: 'none', // For IE 10+
@@ -93,6 +119,7 @@ export default function Page() {//{searchParams}
                 display: 'none', // For Chrome, Safari, and newer versions of Edge
               },
             }}
+            ref={parentRef}
           >
             <PostHeader />
             <ArticleHead
@@ -113,6 +140,18 @@ export default function Page() {//{searchParams}
                 </GradientButton>
               </Link>
             </Box>
+            {dynamicTab?.tagId && <Box pb={0} pt={3} display={'flex'} justifyContent={'flex-end'}><FormControl sx={{ width: '50%' }} >
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={sortType}
+                label="Sort by"
+                onChange={(e) => setSortType(e.target.value)}
+              >
+                <MenuItem value={'popular'}>Popular</MenuItem>
+                <MenuItem value={'latest'}>Latest</MenuItem>
+              </Select>
+            </FormControl></Box>}
             <ArticleContent
               articleList={
                 dynamicTab.searchBy === 'tag' ? articleListByTags : (dynamicTab.searchBy === 'search' ? searchedArticle : articleList)
@@ -120,6 +159,14 @@ export default function Page() {//{searchParams}
               loadingList={
                 dynamicTab.searchBy === 'tag' ? articleListFetching : (dynamicTab.searchBy === 'search' ? searchIsFetching : isFetching)
 
+              }
+              mainContainerFeedRef={parentRef}
+              scrollThreshold={0.7}
+              isLoading={isLoading}
+              loadMore={loadMore}
+              hasMore={hasMore}
+              islazy={
+                dynamicTab.searchBy === 'tag' ? true : false
               }
             />
           </Box>
