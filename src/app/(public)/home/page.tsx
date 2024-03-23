@@ -13,8 +13,8 @@ import ChatContainer from "./components/chatContainer";
 import Group from "./components/formLayout";
 import DownloadApp from "./components/downloadNow";
 import MarketPlaceContainer from "./components/MarketPlace";
-import RegisterContainer from "./components/register-container";
-import FrameGroups from "./components/frame-groups";
+import RegisterContainer from "./components/registerContainer";
+import Footer from "./components/frame-groups";
 import VideoContainer from "./components/videoContainer";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 const MainContainerBg1 = styled.img`
@@ -248,13 +248,10 @@ const Home = () => {
           <Group />
           <DownloadApp />
         <MarketPlaceContainer />
-      <TextFrame>
-        {/* <TextContainer2>
-        </TextContainer2> */}
-        
-      </TextFrame>
+     
       <RegisterContainer />
-      <FrameGroups />
+      <AboutUs/>
+      <Footer />
     </MainContainer>
   );
 };

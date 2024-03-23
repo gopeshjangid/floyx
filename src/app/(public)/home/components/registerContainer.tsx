@@ -42,12 +42,16 @@ const AllOfThe = styled.div`
   white-space: pre-wrap;
 `;
 const IntroText = styled.div`
-  align-self: stretch;
+width:1094px;
+  
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 23px 0px;
+  @media screen and (max-width: 1086px) {
+    width: 100%;
+  }
 `;
 const ShadowIcon = styled.img`
   width: 100%;
@@ -77,8 +81,8 @@ const WrapperShadow = styled.div`
   z-index: 0;
 `;
 const Text1 = styled.div`
-  width: 103%;
-  height: 1026.7px;
+  width: 100%;
+  height: 100%;
   position: absolute;
   margin: 0 !important;
   top: 0px;
@@ -89,10 +93,14 @@ const Text1 = styled.div`
   box-sizing: border-box;
   mix-blend-mode: normal;
   z-index: 1;
+  @media screen and (max-width: 920px) {
+    font-size: 24px;
+    height:1672.7px;
+  }
 `;
 const TextIcon = styled.img`
   width: 100%;
-  height: 100%;
+  height: 162px;
   mix-blend-mode: overlay;
   z-index: 3;
   object-fit: contain;
@@ -244,7 +252,7 @@ const WhiteIcon = styled.img`
   z-index: 3;
 `;
 const CreateYourAccount = styled.b`
-  width: 408px;
+  // width: 408px;
   position: relative;
   font-size: 30px;
   display: inline-block;
@@ -604,6 +612,9 @@ const DividerLine = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   gap: 18px 0px;
+  @media screen and (max-width: 1088px) {
+    display:none;
+  }
 `;
 const RegisterWithYour = styled.b`
   width: 378px;
@@ -633,7 +644,7 @@ const PrivacyPolicy = styled.div`
   left: 0px;
   border-radius: 10px;
   background-color: #4285f4;
-  width: 425px;
+  width: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: row;
@@ -669,7 +680,7 @@ const FrameSignupWithGoogleLogo = styled.div`
   max-width: 100%;
 `;
 const ConnectWalletLabel = styled.div`
-  width: 353px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -716,8 +727,8 @@ const GoogleLogo = styled.div`
 const ExistingUsersText = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 0px 69px;
   max-width: 100%;
   z-index: 9;
@@ -727,9 +738,9 @@ const ExistingUsersText = styled.div`
   @media screen and (max-width: 1150px) {
     gap: 0px 34px;
   }
-  @media screen and (max-width: 800px) {
-    gap: 0px 17px;
-  }
+  // @media screen and (max-width: 800px) {
+  //   gap: 0px 17px;
+  // }
 `;
 const NameFrame = styled.div`
   display: flex;
@@ -740,13 +751,13 @@ const NameFrame = styled.div`
   max-width: 100%;
 `;
 const RegisterNow = styled.div`
-  margin-left: -174px;
-  width: 1442px;
+ 
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 70px 142px;
+  align-items: center;
+  justify-content: center;
+  // padding: 70px 142px;
   box-sizing: border-box;
   position: relative;
   min-height: 1148px;
@@ -756,28 +767,33 @@ const RegisterNow = styled.div`
   text-align: left;
   font-size: 16px;
   color: #d1d0d5;
-  @media screen and (max-width: 1350px) {
-    padding-left: 71px;
-    padding-right: 71px;
-    box-sizing: border-box;
+  @media screen and (max-width: 920px) {
+    font-size: 24px;
+    height:1672.7px;
   }
-  @media screen and (max-width: 1150px) {
-    padding-top: 45px;
-    padding-bottom: 45px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 800px) {
-    padding: 29px 35px;
-    box-sizing: border-box;
-  }
+  // @media screen and (max-width: 1350px) {
+  //   padding-left: 71px;
+  //   padding-right: 71px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 1150px) {
+  //   padding-top: 45px;
+  //   padding-bottom: 45px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 800px) {
+  //   padding: 29px 35px;
+  //   box-sizing: border-box;
+  // }
 `;
 const RegisterContainerRoot = styled.section`
+width:100%;
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0px 173px 507px;
+  align-items: center;
+  justify-content:center;
+  
   box-sizing: border-box;
   gap: 40px 0px;
   max-width: 100%;
@@ -785,31 +801,31 @@ const RegisterContainerRoot = styled.section`
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
-  @media screen and (max-width: 1350px) {
-    padding-left: 86px;
-    padding-right: 86px;
-    padding-bottom: 330px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 1150px) {
-    padding-bottom: 214px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 800px) {
-    gap: 20px 0px;
-    padding-left: 43px;
-    padding-right: 43px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 450px) {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 139px;
-    box-sizing: border-box;
-  }
+  // @media screen and (max-width: 1350px) {
+  //   padding-left: 86px;
+  //   padding-right: 86px;
+  //   padding-bottom: 330px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 1150px) {
+  //   padding-bottom: 214px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 800px) {
+  //   gap: 20px 0px;
+  //   padding-left: 43px;
+  //   padding-right: 43px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 450px) {
+  //   padding-left: 20px;
+  //   padding-right: 20px;
+  //   padding-bottom: 139px;
+  //   box-sizing: border-box;
+  // }
 `;
 
-const RegisterContainer: NextPage = () => {
+const RegisterContainer = () => {
   return (
     <RegisterContainerRoot>
       <IntroText>
@@ -823,24 +839,24 @@ const RegisterContainer: NextPage = () => {
           <ShadowIcon alt="" src="/shadow.svg" />
         </WrapperShadow>
         <Text1 />
-        {/* <WrapperText>
+        <WrapperText>
           <TextIcon alt="" src="/vector-1.svg" />
         </WrapperText>
-        <ImageIcon alt="" src="/vector-2.svg" /> */}
+        <ImageIcon alt="" src="/vector-2.svg" />
         <WrapperRectangle>
-          {/* <WrapperRectangle38Child alt="" src="/rectangle-38.svg" /> */}
+          <WrapperRectangle38Child alt="" src="/rectangle-38.svg" />
         </WrapperRectangle>
         <WrapperRectangle1>
-          {/* <WrapperRectangle39Child alt="" src="/rectangle-38.svg" /> */}
+          <WrapperRectangle39Child alt="" src="/rectangle-38.svg" />
         </WrapperRectangle1>
         <NameFrame>
           <WrapperRectangle2>
-            {/* <WrapperRectangle36Child alt="" src="/rectangle-36.svg" /> */}
+            <WrapperRectangle36Child alt="" src="/rectangle-36.svg" />
           </WrapperRectangle2>
           <WrapperRectangle3>
-            {/* <WrapperRectangle37Child alt="" src="/rectangle-37.svg" /> */}
+            <WrapperRectangle37Child alt="" src="/rectangle-37.svg" />
           </WrapperRectangle3>
-          {/* <EmailFormInput alt="" src="/vector-3.svg" /> */}
+          <EmailFormInput alt="" src="/vector-3.svg" />
           <WhiteIcon alt="" src="/white.svg" />
           <ExistingUsersText>
             <CreateAccountText>

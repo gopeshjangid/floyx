@@ -38,10 +38,10 @@ const SocialFiMarketplace2 = styled.div`
   position: relative;
   border-right: 1px solid rgba(38, 36, 51, 0);
   box-sizing: border-box;
-  @media screen and (max-width: 800px) {
-    width: 100%;
-    height: 1px;
-  }
+  // @media screen and (max-width: 800px) {
+  //   width: 100%;
+  //   height: 1px;
+  // }
 `;
 const LineParent = styled.div`
   align-self: stretch;
@@ -51,13 +51,13 @@ const LineParent = styled.div`
   justify-content: space-between;
   padding: 0px 0px 0px 56px;
   gap: 20px;
-  @media screen and (max-width: 1350px) {
-    padding-left: 28px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 800px) {
-    flex-wrap: wrap;
-  }
+  // @media screen and (max-width: 1350px) {
+  //   padding-left: 28px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 800px) {
+  //   flex-wrap: wrap;
+  // }
 `;
 const UsernameInput = styled.div`
   align-self: stretch;
@@ -146,20 +146,20 @@ const ShineBackgroundChild = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  padding: 0px 1112px 0px 0px;
+  // padding: 0px 1112px 0px 0px;
   box-sizing: border-box;
-  @media screen and (max-width: 1150px) {
-    padding-right: 556px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 800px) {
-    padding-right: 278px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 450px) {
-    padding-right: 20px;
-    box-sizing: border-box;
-  }
+  // @media screen and (max-width: 1150px) {
+  //   padding-right: 556px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 800px) {
+  //   padding-right: 278px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 450px) {
+  //   padding-right: 20px;
+  //   box-sizing: border-box;
+  // }
 `;
 const FrameDiv = styled.div`
   flex: 1;
@@ -222,32 +222,32 @@ const LineGroup = styled.div`
   gap: 20px;
 `;
 const ShineBackground = styled.div`
-  margin-right: -280px;
-  width: 1456px;
+ margin-top:25px;
+  width: 100%;
   height: 1064px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 0px 82px 24px 74px;
+  align-items: center;
+  justify-content: center;
+  // padding: 0px 82px 24px 74px;
   box-sizing: border-box;
   position: relative;
   gap: 98px 0px;
   max-width: 162%;
   flex-shrink: 0;
-  @media screen and (max-width: 800px) {
-    height: auto;
-    gap: 49px 0px;
-    padding-left: 37px;
-    padding-right: 41px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 450px) {
-    gap: 24px 0px;
-  }
+  // @media screen and (max-width: 800px) {
+  //   height: auto;
+  //   gap: 49px 0px;
+  //   padding-left: 37px;
+  //   padding-right: 41px;
+  //   box-sizing: border-box;
+  // }
+  // @media screen and (max-width: 450px) {
+  //   gap: 24px 0px;
+  // }
 `;
 const FloyxMarketplace = styled.div`
-  width: 264px;
+  width: 100%;
   position: relative;
   letter-spacing: -0.01em;
   line-height: 120%;
@@ -294,12 +294,13 @@ const FrameGroup = styled.div`
   }
 `;
 const EcoSystemInner = styled.div`
+height:329px;
   align-self: stretch;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0px 40px 26px;
+  align-items: center;
+  justify-content: center;
+ 
   box-sizing: border-box;
   max-width: 100%;
 `;
@@ -352,7 +353,7 @@ const FrameContainer = styled.div`
 `;
 const LandingPage = styled.img`
   align-self: stretch;
-  height: 615px;
+ 
   position: relative;
   max-width: 100%;
   overflow: hidden;
@@ -360,15 +361,19 @@ const LandingPage = styled.img`
   object-fit: cover;
 `;
 const EcoSystem = styled.div`
-  align-self: stretch;
+  width:866px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 28px 0px;
   max-width: 100%;
   z-index: 3;
   margin-top: -1014px;
+  @media screen and (max-width: 800px) {
+    width: 100%;
+    
+  }
 `;
 const ShineBackgroundParentRoot = styled.div`
 display:flex;
@@ -378,7 +383,7 @@ display:flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-start;
-  padding: 0px 271px;
+  
   box-sizing: border-box;
   max-width: 100%;
   text-align: center;
@@ -404,17 +409,18 @@ display:flex;
 
 
 const TextContainer = styled.div`
+  display:flex;
   align-self: stretch;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 0px 20px;
   box-sizing: border-box;
   max-width: 100%;
 `;
 const TextOuterContainer = styled.div`
-  width: 440px;
+  width: 866px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -594,8 +600,6 @@ const FrameComponent: NextPage = () => {
             <FrameChild3 />
           </LineWrapper>
         </LineGroup>
-      </ShineBackground>
-
       <EcoSystem>
         <EcoSystemInner>
           <FrameGroup>
@@ -645,6 +649,8 @@ const FrameComponent: NextPage = () => {
         </FloyxMarketplaceWrapper>
         <LandingPage loading="lazy" alt="" src={value.img} />
       </EcoSystem>
+      </ShineBackground>
+
 
     </ShineBackgroundParentRoot>
   );

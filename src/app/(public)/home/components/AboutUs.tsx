@@ -5,14 +5,14 @@ import React, { useEffect, useRef, useState } from "react";
 const GradientBg = styled.div`
   position: absolute;
   top: 56px;
-  left: 197px;
+  // left: 197px;
   background: linear-gradient(
     90.16deg,
     #080617,
     rgba(8, 6, 23, 0.76) 64.5%,
     rgba(8, 6, 23, 0)
   );
-  width: 376px;
+  width: 100%;
   height: 638px;
   z-index: 1;
 `;
@@ -49,12 +49,18 @@ const GradientInner = styled.div`
   z-index: 2;
 `;
 const BackgroundWrapper = styled.div`
-  position: absolute;
+  position: relative;
   height: 100%;
   top: 0px;
   bottom: 0px;
-  left: 326px;
-  width: 1024px;
+  width: 100%;
+  flex: 25%;
+  padding: 20px;
+  @media screen and (max-width: 992px) {
+  
+    top:668px
+  
+}
 `;
 const Heading1 = styled.b`
   width: 224px;
@@ -162,6 +168,9 @@ const SocialMediaOutterContainer = styled.div`
   color: rgba(181, 180, 185, 0.65);
 `;
 const InnerContainer = styled.div`
+ flex: 25%;
+  padding: 20px;
+width:730px;
   position: absolute;
   top: 130px;
   left: 0px;
@@ -172,11 +181,18 @@ const InnerContainer = styled.div`
   gap: 24px 0px;
   max-width: 100%;
   z-index: 3;
+  flex: 25%;
+  padding: 20px;
+  @media screen and (max-width: 992px) {
+  width:100%;
+    flex: 50%;
+  
+}
 `;
 const BgDecors = styled.div`
   position: absolute;
   top: 165.5px;
-  left: 886.5px;
+  left: 994.5px;
   box-shadow: 0px 0px 17px #9d5ef3;
   border-top: 5px solid rgba(166, 98, 255, 0.07);
   box-sizing: border-box;
@@ -185,17 +201,25 @@ const BgDecors = styled.div`
   z-index: 3;
 `;
 const MainContainer = styled.section`
-  width: 1350px;
+display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   height: 777px;
-  position: absolute;
+  position: relative;
   margin: 0 !important;
   right: -51px;
-  bottom: 323px;
+  // bottom: 323px;
   max-width: 100%;
   text-align: center;
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
+  @media screen and (max-width: 992px) {
+ height:1322px;
+    flex-direction: column;
+    
+  
+}
 `;
 
 const AboutUs = () => {
@@ -225,11 +249,7 @@ const AboutUs = () => {
   }, [isIntersecting]);
   return (
     <MainContainer ref={ref}>
-      <BackgroundWrapper>
-        <GradientBg />
-        <GradientItems />
-        <GradientInner />
-      </BackgroundWrapper>
+     
       <InnerContainer>
         <FrameOuterContainer>
           <FrameInnerContainer>
@@ -280,8 +300,15 @@ const AboutUs = () => {
           </SocialMediaContainer>
         </SocialMediaOutterContainer>
       </InnerContainer>
-      <BgDecors />
+      <BackgroundWrapper>
+      {/* <BgDecors /> */}
+        <GradientBg >
       <img id="imgPeople" className="fadeInImg" src="/people.png" />
+
+        </GradientBg>
+        <GradientItems />
+        <GradientInner />
+      </BackgroundWrapper>
     </MainContainer>
   );
 };

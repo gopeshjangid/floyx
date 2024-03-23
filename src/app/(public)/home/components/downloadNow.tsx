@@ -116,7 +116,7 @@ justify-content: center;
   color: #fff;
   font-family: Poppins;
   @media screen and (max-width: 978px) {
-   height: 697.9px;
+   height: 1178.9px
   }
 `;
 
