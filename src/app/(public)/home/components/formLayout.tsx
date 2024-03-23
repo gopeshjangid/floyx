@@ -17,16 +17,16 @@ const Frame = styled.div`
   border: 1px solid #302d41;
   box-sizing: border-box;
 `;
-const CreateAGroup = styled.div`
-  width: 138px;
-  position: relative;
-  line-height: 27px;
-  background: linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-  z-index: 1;
-`;
+// const CreateAGroup = styled.div`
+//   width: 138px;
+//   position: relative;
+//   line-height: 27px;
+//   background: linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff);
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+//   display: inline-block;
+//   z-index: 1;
+// `;
 const CreateAGroupWrapper = styled.div`
   align-self: stretch;
   display: flex;
@@ -443,127 +443,74 @@ const GroupRoot = styled.div`
   color: #d1d0d5;
   font-family: Poppins;
 `;
-
-const FormGroupLayout: NextPage = () => {
+const GroupContainer = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0px 20px;
+  box-sizing: border-box;
+  max-width: 100%;
+`;
+const GroupOuterContainer = styled.div`
+  width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 23px 0px;
+  max-width: 100%;
+`;
+const GroupInnerContainer = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0px 20px;
+`;
+const GHeading = styled.b`
+  width: 182px;
+  position: relative;
+  letter-spacing: -0.02em;
+  line-height: 120%;
+  display: inline-block;
+  z-index: 2;
+  @media screen and (max-width: 800px) {
+    font-size: 40px;
+    line-height: 48px;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 30px;
+    line-height: 36px;
+  }
+`;
+const CreateAGroup = styled.div`
+  align-self: stretch;
+  position: relative;
+  font-size: 18px;
+  line-height: 27px;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 1;
+`;
+const FormGroupLayout = () => {
   return (
-    <>
+    <>  <GroupContainer>
+          <GroupOuterContainer>
+            <GroupInnerContainer>
+              <GHeading>Groups</GHeading>
+            </GroupInnerContainer>
+            <CreateAGroup>Create a group, add dedicated channels and manage everything in an unprecedented way! </CreateAGroup>
+          </GroupOuterContainer>
+        </GroupContainer>
+        <div className="form-main-div">
+
+
       <AnimateForm/>
+        </div>
     </>
-    // <GroupRoot>
-    //   <FrameText>
-    //     <Frame />
-    //     <CreateAGroupWrapper>
-    //       <CreateAGroup>Create a group</CreateAGroup>
-    //     </CreateAGroupWrapper>
-    //     <Text1>
-    //       <FloyxIntroTextGroup />
-    //       <FrameParent>
-    //         <GroupNameWrapper>
-    //           <GroupName>Group name</GroupName>
-    //         </GroupNameWrapper>
-    //         <EmailVerificationSection
-    //           placeholder="Enter group name"
-    //           variant="outlined"
-    //           sx={{
-    //             "& fieldset": { border: "none" },
-    //             "& .MuiInputBase-root": {
-    //               height: "50px",
-    //               backgroundColor: "#1b1830",
-    //               borderRadius: "10px",
-    //             },
-    //             "& .MuiInputBase-input": { color: "rgba(255, 255, 255, 0.3)" },
-    //           }}
-    //         />
-    //       </FrameParent>
-    //       <FrameParent>
-    //         <GroupNameWrapper>
-    //           <GroupName>{`Description `}</GroupName>
-    //         </GroupNameWrapper>
-    //         <FrameChild
-    //           placeholder="Enter group description"
-    //           rows={6}
-    //           cols={18}
-    //         />
-    //       </FrameParent>
-    //     </Text1>
-    //     <SocialMediaIconsFrame>
-    //       <Line>
-    //         <OutlineArrowsActionUplo
-    //           loading="lazy"
-    //           alt=""
-    //           src="/outline--arrows-action--upload-minimalistic.svg"
-    //         />
-    //       </Line>
-    //       <GroupName>Upload logo</GroupName>
-    //     </SocialMediaIconsFrame>
-    //   </FrameText>
-    //   <GroupInner>
-    //     <FrameContainer>
-    //       <AddAdminsParent>
-    //         <AddAdmins>Add admins</AddAdmins>
-    //         <FrameDiv>
-    //           <FrameItem />
-    //           <OutlineSearchMagniferParent>
-    //             <OutlineSearchMagnifer
-    //               alt=""
-    //               src="/outline--search--magnifer.svg"
-    //             />
-    //             <GroupName>
-    //               <Nor>{`Nor `}</Nor>
-    //               <Span>|</Span>
-    //               <Nor>{` `}</Nor>
-    //             </GroupName>
-    //           </OutlineSearchMagniferParent>
-    //         </FrameDiv>
-    //       </AddAdminsParent>
-    //       <FrameParent4>
-    //         <FrameParent2>
-    //           <FrameParent1>
-    //             <FrameInner alt="" src="/frame-427320691@2x.png" />
-    //             <NoraParent>
-    //               <Nora>Nora</Nora>
-    //               <Jaco>@Jaco</Jaco>
-    //             </NoraParent>
-    //           </FrameParent1>
-    //           <Bttn>
-    //             <Text2>Add</Text2>
-    //           </Bttn>
-    //         </FrameParent2>
-    //         <LineDiv />
-    //         <FrameParent2>
-    //           <FrameParent3>
-    //             <FrameInner alt="" src="/frame-427320693@2x.png" />
-    //             <NoviParent>
-    //               <Nora>Novi</Nora>
-    //               <Miky>@miky</Miky>
-    //             </NoviParent>
-    //           </FrameParent3>
-    //           <Bttn>
-    //             <Text2>Add</Text2>
-    //           </Bttn>
-    //         </FrameParent2>
-    //       </FrameParent4>
-    //     </FrameContainer>
-    //   </GroupInner>
-    //   <GroupChild>
-    //     <FrameWrapper>
-    //       <AddAdminsParent>
-    //         <AddAdmins>Add channels</AddAdmins>
-    //         <FrameParent6>
-    //           <FrameParent5>
-    //             <EnterChannelNameWrapper>
-    //               <EnterChannelName>Enter channel name</EnterChannelName>
-    //             </EnterChannelNameWrapper>
-    //             <Text3>{`Add channel `}</Text3>
-    //           </FrameParent5>
-    //           <EnterAChannelNameWrapper>
-    //             <EnterAChannel>Enter a channel name</EnterAChannel>
-    //           </EnterAChannelNameWrapper>
-    //         </FrameParent6>
-    //       </AddAdminsParent>
-    //     </FrameWrapper>
-    //   </GroupChild>
-    // </GroupRoot>
+    
   );
 };
 

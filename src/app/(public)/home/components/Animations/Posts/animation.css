@@ -13,8 +13,8 @@
   }
 }
 .animationClass-03148 {
-  animation: animation-03148 100s
-    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 100s normal
+  animation: animation-03148 50s
+    cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 50s normal
     forwards;
 }
 @keyframes animation-0328 {
@@ -49,7 +49,7 @@
   }
 }
 .animationClass-0325 {
-  animation: animation-0325 100s
+  animation: animation-0325 50s
     cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
     forwards;
 }
@@ -66,7 +66,7 @@
   }
 }
 .animationClass-I03148_933178 {
-  animation: animation-I03148_933178 100s
+  animation: animation-I03148_933178 50s
     cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
     forwards;
 }
@@ -98,28 +98,28 @@
   }
 }
 .animationClass-0326 {
-  animation: animation-0326 100s
+  animation: animation-0326 50s
     cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
     forwards;
 }
 @keyframes animation-I03148_933179 {
   from {
-    width: 72.46%;
+    width: 100%;
     height: 100%;
     top: 0%;
     transform: rotate(0deg);
     overflow: hidden;
   }
   to {
-    width: 72.46%;
-    height: 99.86%;
+    width: 100%;
+    height: 100%;
     top: 0.14%;
     transform: rotate(0deg);
     overflow: hidden;
   }
 }
 .animationClass-I03148_933179 {
-  animation: animation-I03148_933179 100s
+  animation: animation-I03148_933179 50s
     cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
     forwards;
 }
@@ -133,25 +133,25 @@
     opacity: 1;
     width: calc(572 * var(--ratio));
     height: calc(2970.340839042457 * var(--ratio));
-    left: calc(0.2504478913033381 * var(--ratio));
+    /* left: calc(0.2504478913033381 * var(--ratio)); */
     top: calc(-2293.879980546808 * var(--ratio));
   }
 }
 .bgClass-0330 {
-  animation: animationBg-0330 100s
+  animation: animationBg-0330 50s
     cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
     forwards;
 }
 @keyframes animation-0330 {
   from {
-    width: 72.46%;
+    width: 100%;
     height: 99.86%;
     top: 0.14%;
     transform: rotate(0deg);
     overflow: hidden;
   }
   to {
-    width: 72.46%;
+    width: 100%;
     height: 100%;
     top: 0%;
     transform: rotate(0deg);
@@ -169,9 +169,9 @@
   to {
     background-image: var(--post-9);
     opacity: 1;
-    width: calc(572 * var(--ratio));
+    width: 100%;
     height: calc(2970.3407620059456 * var(--ratio));
-    left: calc(-3.645139745600545e-12 * var(--ratio));
+    /* left: calc(-3.645139745600545e-12 * var(--ratio)); */
     top: calc(47.668985656315165 * var(--ratio));
   }
 }
@@ -180,14 +180,14 @@
 }
 @keyframes animation-0327 {
   from {
-    width: 72.46%;
+    width: 100%;
     height: 100%;
     top: 0%;
     transform: rotate(0deg);
     overflow: hidden;
   }
   to {
-    width: 72.46%;
+    width: 100%;
     height: 99.86%;
     top: 0.14%;
     transform: rotate(0deg);
@@ -195,7 +195,7 @@
   }
 }
 .animationClass-0327 {
-  animation: animation-0327 100s
+  animation: animation-0327 50s
     cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
     forwards;
 }
@@ -207,14 +207,14 @@
   to {
     background-image: var(--post-9);
     opacity: 1;
-    width: calc(572 * var(--ratio));
+    width:100%;
     height: calc(2970.340839042457 * var(--ratio));
-    left: calc(0.2504478913033381 * var(--ratio));
+    /* left: calc(0.2504478913033381 * var(--ratio)); */
     top: calc(-2293.879980546808 * var(--ratio));
   }
 }
 .bgClass-0330 {
-  animation: animationBg-0330 100s
+  animation: animationBg-0330 50s
     cubic-bezier(0.41999998688697815, 0, 0.5799999833106995, 1) 0s normal
     forwards;
 }

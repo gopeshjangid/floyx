@@ -2,33 +2,69 @@ import styled from '@emotion/styled';
 import { Button } from "@mui/material";
 
 const MainContainer = styled.section`
-  width: 1060px;
+//   width: 100%px;
+//   display: flex;
+//   flex-direction: row;
+//   align-items: flex-start;
+//   justify-content: flex-start;
+//   padding: 0px 0px 3px 0px;
+//   box-sizing: border-box;
+//   // gap: 0px 131.2px;
+//   max-width: 100%;
+//   text-align: center;
+//   font-size: 50px;
+//   color: #fff;
+//   font-family: Poppins;
+//   @media screen and (max-width: 1350px) {
+//     flex-wrap: wrap;
+//     //gap: 0px 66px;
+//     justify-content: center;
+//   }
+//   @media screen and (max-width: 800px) {
+//     // gap: 0px 33px;
+//   }
+//   @media screen and (max-width: 450px) {
+//     gap: 0px 16px;
+//   }
+// 
+width:100%;
+  align-self: center;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0px 20px 3px 0px;
+  justify-content: center;
+ 
   box-sizing: border-box;
-  gap: 0px 131.2px;
   max-width: 100%;
-  text-align: center;
+  text-align: left;
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
-  @media screen and (max-width: 1350px) {
-    flex-wrap: wrap;
-    gap: 0px 66px;
-    justify-content: center;
-  }
-  @media screen and (max-width: 800px) {
-    gap: 0px 33px;
-  }
-  @media screen and (max-width: 450px) {
-    gap: 0px 16px;
-  }
+  overflow:hidden;
+
+
 `;
 
 const ImageContainer = styled.div`
+  margin-left: -194.8px;
+  height: 588.1px;
+  width: 463.6px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10.699999999999818px 0px 0px 0px;
+  box-sizing: border-box;
+  min-width: 463.6px;
+  max-width: 100%;
+  @media screen and (max-width: 1350px) {
+    flex: 1;
+  }
+  @media screen and (max-width: 800px) {
+    min-width: 100%;
+  }
+`;
+const ImageContainer2 = styled.div`
   margin-left: -194.8px;
   height: 588.1px;
   width: 463.6px;
@@ -72,21 +108,34 @@ const Unit = styled.div`
   }
 `;
 const InnerContainer = styled.div`
-  width: 640px;
+  // width: 640px;
+  // display: flex;
+  // flex-direction: column;
+   align-items: center;
+  // justify-content: flex-start;
+  // gap: 47px 0px;
+  // min-width: 640px;
+  // max-width: 100%;
+  // z-index: 1;
+  // @media screen and (max-width: 1350px) {
+  //   flex: 1;
+  // }
+  // @media screen and (max-width: 800px) {
+  //   gap: 23px 0px;
+  //   min-width: 100%;
+  // }
+
+position: relative;
+    left: 0px;
+   width: 788px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: flex-start;
   justify-content: flex-start;
-  gap: 47px 0px;
-  min-width: 640px;
+  gap: 45px 0px;
   max-width: 100%;
-  z-index: 1;
-  @media screen and (max-width: 1350px) {
-    flex: 1;
-  }
-  @media screen and (max-width: 800px) {
-    gap: 23px 0px;
-    min-width: 100%;
+  @media screen and (max-width: 450px) {
+    gap: 22px 0px;
   }
 `;
 const IconButton2 = styled.div`
@@ -556,9 +605,11 @@ const InputBox = styled.div`
 `;
 const ImageContainerBg = styled.img`
   align-self: stretch;
-  height: 588.1px;
-  position: relative;
-  max-width: 100%;
+  //height: 588.1px;
+  position: absolute;
+  left:0px;
+  top:2332px;
+  //max-width: 100%;
   overflow: hidden;
   flex-shrink: 0;
   object-fit: contain;
@@ -567,11 +618,43 @@ const ImageContainerBg = styled.img`
     width: auto;
   }
 `;
+const ImageContainerBg2 = styled.img`
+  // align-self: stretch;
+  //     bottom: 1200px;
+  //   left: 567px;
+  // margin:0px;
+  // height: 588.1px;
+  // position: relative;
+  // max-width: 100%;
+  // overflow: hidden;
+  // flex-shrink: 0;
+  // object-fit: contain;
+
+    width: 240px !important;
+    -webkit-align-self: stretch;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+    top: 2152px;
+    right: -2px;
+    margin: 0px;
+    /* height: 588.1px; */
+    position: absolute;
+    max-width: 100%;
+    overflow: hidden;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    object-fit: contain;
+  @media screen and (max-width: 1350px) {
+    align-self: stretch;
+    width: auto;
+  }
+`;
 const VideoContainer =()=>{
     return(<MainContainer>
-        <ImageContainer>
-          <ImageContainerBg  src="/group-341@2x.png" />
-        </ImageContainer>
+          <ImageContainerBg  src="/Group341.png" />
+        {/* <ImageContainer>
+        </ImageContainer> */}
         <InnerContainer>
           <HeadingContainer>
             <Heading1>Videos</Heading1>
@@ -716,6 +799,9 @@ const VideoContainer =()=>{
             </Containerpreview>
           </SubContainer>
         </InnerContainer>
+          <ImageContainerBg2  src="/Group340.png" />
+        {/* <ImageContainer2>
+        </ImageContainer2> */}
       </MainContainer>)
 }
 export default VideoContainer

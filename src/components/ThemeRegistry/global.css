@@ -255,6 +255,9 @@ html {
     right: -128px;
     width: 520px;
     z-index: 1;
+     @media screen and (max-width: 425px) {
+    display:none
+  }
 
 }
 
@@ -481,4 +484,18 @@ html {
 .slideDiv{
    height: 67px;
   overflow: hidden;
+}
+.form-main-div{
+  display: flex;
+      justify-content: center;
+      width: 100%;
+}
+.imageJoiner{
+  position: absolute;
+    top: -71px;
+    @media screen and (max-width: 978px) {
+  
+    top: 450px ;
+    left: -242px;
+  }
 }

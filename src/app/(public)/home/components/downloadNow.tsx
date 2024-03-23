@@ -2,15 +2,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from '@emotion/styled';
 
-const Background = styled.img`
+const Background = styled.div`
+ display: flex;
+  flex-wrap: wrap;
   position: absolute;
-  top: 104px;
-  left: calc(50% - 651.45px);
+  top: 204px;
+  // left: calc(50% - 651.45px);
   border-radius: 10px;
   width: 1157px;
   height: 477px;
   overflow: hidden;
   object-fit: cover;
+   background-image: url("/downloadBg.png");
+     @media screen and (max-width: 978px) {
+       height: 977px;
+    }
 `;
 const DownloadAppChild = styled.img`
   position: absolute;
@@ -78,19 +84,27 @@ const BadgesParent = styled.div`
   gap: 0px 19.3px;
 `;
 const TermsOfService = styled.div`
-  position: absolute;
-  top: 234px;
-  left: 91px;
-  width: 453px;
+position: relative;
+    top: 117px;
+    left: 92px;
+    width: 453px;
+
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 45px 0px;
   max-width: 100%;
   z-index: 1;
+  @media screen and (max-width: 978px) {
+    left: 379px;
+    top: 0px;
+  }
 `;
 const DownloadAppRoot = styled.div`
+display:flex;
+justify-content: center;
+    align-items: center;
   align-self: stretch;
   height: 697.9px;
   position: relative;
@@ -101,6 +115,9 @@ const DownloadAppRoot = styled.div`
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
+  @media screen and (max-width: 978px) {
+   height: 1178.9px
+  }
 `;
 
 const DownloadApp = () => {
@@ -136,9 +153,14 @@ const DownloadApp = () => {
   return (
     // <><AnimateDownload /></>
     <DownloadAppRoot ref={ref}>
+      <Background >
+        <div className="imageJoiner">
       <img className="mobile-img-left" id="download-ll" loading="lazy" alt="" src="leftLogMobile.png" />
-      <Background alt="" src="/downloadBg.png" />
       <img className="mobile-img" id="download-dd" loading="lazy" alt="" src="/group-3@2x.png" />
+
+        </div>
+
+
       <TermsOfService>
         <DownloadTheAppParent>
           <DownloadTheApp>Download the app</DownloadTheApp>
@@ -152,6 +174,7 @@ const DownloadApp = () => {
           <BadgesIcon1 loading="lazy" alt="" src="/badges-1.svg" />
         </BadgesParent>
       </TermsOfService>
+      </Background>
     </DownloadAppRoot>
   );
 };

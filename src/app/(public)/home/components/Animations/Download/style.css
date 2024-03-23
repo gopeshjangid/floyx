@@ -3,7 +3,7 @@
   They're active for 10-15 days only. You should replace them with the actual images before using the code in production.
 */
 :root {
-  --imageDown-0: url("./images/Group3.png");
+  --imageDown-0: url("/Group3.png");
   --custom-width: min(1302.9px, 100vw);
   --design-width: 1302.9;
   --ratio: calc(var(--custom-width) / var(--design-width));
