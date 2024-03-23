@@ -1,9 +1,8 @@
 "use client"
-import { AnimateText } from "./components/Animations/Header/animateText"
+import { TypingAnimation } from "./components/Animations/TypingAnimations"
 import { CommentsCards } from './components/Animations/CommentsCard/cards'
-import type { NextPage } from "next";
 import { Button } from "@mui/material";
-import AboutUs from "./components/AboutUs";
+import AboutUs from "./components/aboutUs";
 import styled from '@emotion/styled';
 import NavBar from "./components/navBar";
 import Description from "./components/description";
@@ -12,7 +11,7 @@ import PodCastsContainer from "./components/podcastContainer";
 import ChatContainer from "./components/chatContainer";
 import Group from "./components/formLayout";
 import DownloadApp from "./components/downloadNow";
-import MarketPlaceContainer from "./components/MarketPlace";
+import MarketPlaceContainer from "./components/marketPlace";
 import RegisterContainer from "./components/registerContainer";
 import Footer from "./components/frame-groups";
 import VideoContainer from "./components/videoContainer";
@@ -216,6 +215,7 @@ const MainContainer = styled.div`
   }
 `;
 
+
 const Home = () => {
   return (
    
@@ -236,19 +236,17 @@ const Home = () => {
       <GradiantContainerBg2 />
       <NavBarContainer>
         <NavBar />
+       <TypingAnimation/>
         <Description />
       </NavBarContainer>
-      <CommentsCards />
-     
-    
+      <CommentsCards />   
       <ArticleContainer />
       <VideoContainer/>
       <PodCastsContainer />
         <ChatContainer />
           <Group />
           <DownloadApp />
-        <MarketPlaceContainer />
-     
+        <MarketPlaceContainer />     
       <RegisterContainer />
       <AboutUs/>
       <Footer />

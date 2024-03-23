@@ -5,8 +5,8 @@ import "./animation.css";
 import runAnimations, { allLinks, allFunctions } from "./scripts";
 export const AnimateText = () => {
     useEffect(() => {
-        debugger
-        // runAnimations();
+        
+        runAnimations();
     }, []);
     return (
         <div className="parent-div-heading">

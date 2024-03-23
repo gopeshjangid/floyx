@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import styled from '@emotion/styled'
 import React, { useState, useEffect, useRef } from "react"
 import { AnimateText } from "./Animations/Header/animateText";
-
+import { TypeAnimation } from 'react-type-animation';
 
 const Heading = styled.div`
   flex: 1;
@@ -96,10 +96,10 @@ const ImgWrapper = styled.div`
   z-index: 0;
 `;
 const ImageLeftContainer = styled.div`
-  height: 689px;
+  height: 807px;
   flex: 1;
   position: relative;
-  min-width: 269px;
+  min-width: 500px;
   max-width: 100%;
   z-index: 1;
   @media screen and (max-width: 975px) {
@@ -116,6 +116,8 @@ const ImageCenterContainer = styled.div`
   
 `;
 const ImageRightContainer = styled.div`
+height:100%;
+width:500px;
   align-self: stretch;
   height: 689px;
   position: relative;
@@ -125,6 +127,7 @@ const ImageRightContainer = styled.div`
   }
 `;
 const Image1 = styled.div`
+height:807px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -218,24 +221,37 @@ const Description = () => {
 
   let left = document.getElementById("left");
 
-  left?.addEventListener("mouseover", leftIn, false);
-  left?.addEventListener("mouseout", leftOut, false);
+  
 
   function leftIn() {
+    document?.querySelector("#postPhoto")?.classList?.remove("left-hover-out");
+    document?.querySelector("#postPhoto")?.classList?.remove("right-hover-out")
+    document?.querySelector("#postPhoto")?.classList?.remove("right-hover")
+
     document?.querySelector("#postPhoto")?.classList.add("left-hover");
   }
 
-  function leftOut() { document?.querySelector("#postPhoto")?.classList.remove("left-hover"); }
+  function leftOut() { document?.querySelector("#postPhoto")?.classList?.remove("left-hover");
+  
+  document?.querySelector("#postPhoto")?.classList.add("left-hover-out")
+
+}
+left?.addEventListener("mouseover", leftIn, false);
+  left?.addEventListener("mouseout", leftOut, false);
 
   let right = document.getElementById("right");
 
-  right?.addEventListener("mouseover", rightIn);
-  right?.addEventListener("mouseout", rightOut);
+  
 
   function rightIn() {
+    document?.querySelector("#postPhoto")?.classList?.remove("right-hover-out")
     document?.querySelector("#postPhoto")?.classList.add("right-hover");
   }
-  function rightOut() { document?.querySelector("#postPhoto")?.classList.remove("right-hover"); }
+  function rightOut() { document?.querySelector("#postPhoto")?.classList?.remove("right-hover");
+     document?.querySelector("#postPhoto")?.classList.add("right-hover-out") }
+
+  right?.addEventListener("mouseover", rightIn);
+  right?.addEventListener("mouseout", rightOut);
   useEffect(() => {
 
     if (isIntersecting) {
@@ -250,9 +266,11 @@ const Description = () => {
   }, [isIntersecting]);
   return (
     <MainContainer ref={ref}>
+       
       <InnerContainer>
         <DetailsContainer>
           <DetailsInnerContainer>
+            
             <HeadingContainer>
               <Heading>
                 Floyx is a decentralized social media platform whose main task
