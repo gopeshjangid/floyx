@@ -3,9 +3,9 @@
   They're active for 10-15 days only. You should replace them with the actual images before using the code in production.
 */
 :root {
-  --image-0: url("./images/image0.png");
-  --image-1: url("./images/image1.png");
-  --image-2: url("./images/image2.png");
+  --image-0: url("/image0.png");
+  --image-1: url("/image1.png");
+  --image-2: url("/image2.png");
   --custom-width: min(1579px, 100vw);
   --design-width: 1579;
   --ratio: calc(var(--custom-width) / var(--design-width));
