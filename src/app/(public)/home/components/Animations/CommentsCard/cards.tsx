@@ -116,7 +116,7 @@ export const CommentsCards = () => {
     centerMode: true,
     infinite: true,
     centerPadding: "60px",
-    slidesToShow: 2,
+    slidesToShow: 3,
     speed: 500,
     responsive: [
       {
@@ -160,7 +160,7 @@ export const CommentsCards = () => {
           <Slider {...settings}>
               <div
                    
-                  id="id-bg-I03215_932941"
+                 
                 >
                  <img width='376' src='/image0.png'/>
                 </div>
@@ -168,13 +168,13 @@ export const CommentsCards = () => {
 
  <div
                    
-                  id="id-bg-I03215_932941"
+                 
                 >
                  <img width='376' src='/image1.png'/>
                 </div>
                  <div
                    
-                  id="id-bg-I03215_932941"
+                 
                 >
                  <img width='376' src='/image2.png'/>
                 </div>

@@ -576,12 +576,13 @@ align-item:center;
 }
 
 /* Cursor blinking animation */
-@keyframes blink-caret {
-  from, to {
-    border-color: transparent; /* Hide cursor */
-  }
+.blink {
+  animation: blinker 4s step-start infinite;
+}
+
+@keyframes blinker {
   50% {
-    border-color: #000; /* Show cursor */
+    opacity: 0;
   }
 }
 .slick-center{
@@ -594,19 +595,30 @@ align-item:center;
 
 
 #spin:after {
-  content:"";
-  animation: spin 10s linear infinite;
+	content: "";
+	animation: spin 10s linear infinite;
 }
 @keyframes spin {
+  0% { content:"10"; }
+  20% { content: "50";}
+  40% { content: "80";}
+  60% { content: "100";}
+  80% { content: "1k";}
+   100% { content: "2k";}
+}
+.slider-container {
+    margin: 0px 54px 0px 54px;
+    /* padding: 62px; */
+}
 
-
+  .slick-slide {
   
-  0% { content: "10" }
-  20% { content: "50" }
-  40% { content: "80" }
-  60% { content: "100" }
-  80% { content: "800" }
-  100% { content: "1k" }
-  
- 
+    float: left;
+    height: 100%;
+    min-height: 1px;
+    margin: 0px 30px 0px 17px;
+    opacity: 0.2;
+}
+.slick-current{
+ opacity: 1.2;
 }

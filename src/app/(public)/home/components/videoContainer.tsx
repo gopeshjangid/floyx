@@ -476,10 +476,9 @@ const OverflowMoreDotsVertica = styled.img`
 const Chip = styled.button`
   cursor: pointer;
   border: 1px solid #1d1f27;
-  padding: 8px 7px 8px 11px;
   background-color: #0b081f;
   align-self: stretch;
-  width: 171px;
+  width: 178px;
   border-radius: 20px;
   box-sizing: border-box;
   display: flex;
@@ -677,7 +676,7 @@ const VideoContainer =()=>{
                 <TextContainer className="blink">
                 
                   <Icon1   />
-                <Heading >LIVE</Heading>
+                <Heading > &nbsp; LIVE</Heading>
                
                 <CrossIcon  src="/cross@2x.png" /> 
 
@@ -690,7 +689,7 @@ const VideoContainer =()=>{
                 <TextContainer1>
                   <ImageAnimateWrap>
                     
-                    <span id="spin"></span>{" "}others in session
+                    <span id="spin"></span> others in session
                   </ImageAnimateWrap>
                 </TextContainer1>
               </Chip>
