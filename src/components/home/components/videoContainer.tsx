@@ -283,9 +283,15 @@ const GeneralControls = styled.div`
   gap: 0px 16px;
 `;
 const Icon1 = styled.img`
-  height: 20px;
-  width: 20px;
-  position: relative;
+  
+    
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    position: relative;
+    top: 2px;
+    background-color: #ffffff;
+    margin: 2px;
 `;
 const ActionButtondesktop1 = styled.button`
   cursor: pointer;
@@ -359,12 +365,12 @@ const Heading = styled.div`
 `;
 const TextContainer = styled.div`
   height: 20px;
-  width: 32px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  opacity: 0;
+  opacity: 1;
 `;
 const CrossIcon = styled.img`
   height: 20px;
@@ -470,10 +476,9 @@ const OverflowMoreDotsVertica = styled.img`
 const Chip = styled.button`
   cursor: pointer;
   border: 1px solid #1d1f27;
-  padding: 8px 7px 8px 11px;
   background-color: #0b081f;
   align-self: stretch;
-  width: 171px;
+  width: 178px;
   border-radius: 20px;
   box-sizing: border-box;
   display: flex;
@@ -661,35 +666,31 @@ const VideoContainer =()=>{
             <Heading2>
               Create interesting videos, launch a live stream and let your
               channel grow.
-            </Heading2>
+          </Heading2>
+          
           </HeadingContainer>
           <SubContainer>
             <VideoLiveParent>
               <VideoLive>
-                <Icon1  />
-                <TextContainer>
-                  <Heading>LIVE</Heading>
+                
+                <TextContainer className="blink">
+                
+                  <Icon1   />
+                <Heading > &nbsp; LIVE</Heading>
+               
+                <CrossIcon  src="/cross@2x.png" /> 
+
+
                 </TextContainer>
-                <CrossIcon  src="/cross@2x.png" />
+                
+               
               </VideoLive>
               <Chip>
                 <TextContainer1>
-                  <ImageAnimateWrap><div className="wrap43">
-                    <h4 className="wordCarousel">
-
-                      <div>
-
-                        <ul className="flip5">
-                          <li>100k</li>
-                          <li>10k</li>
-                          <li>23k</li>
-                          <li>67k</li>
-                          <li>231k</li>
-                        </ul>
-                      </div>
-                    </h4>
-                    <span className="spanWord">others in session</span>
-                  </div> </ImageAnimateWrap>
+                  <ImageAnimateWrap>
+                    
+                    <span id="spin"></span> others in session
+                  </ImageAnimateWrap>
                 </TextContainer1>
               </Chip>
             </VideoLiveParent>

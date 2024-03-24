@@ -61,6 +61,7 @@
     "react-share": "^5.0.3",
     "react-slick": "^0.30.2",
     "react-textarea-autosize": "^8.5.3",
+    "react-type-animation": "^3.2.0",
     "react-vimeo": "^2.0.0",
     "react-youtube": "^10.1.0",
     "reactstrap": "^9.2.2",

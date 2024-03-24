@@ -78,10 +78,13 @@ html {
   }
 }
 .left-hover {
- animation:left-in 5s  ease infinite ;
+ animation:left-in 5s  ease  ;
 /* transform: rotate(100deg); */
 }
-
+.left-hover-out {
+  animation: left-in-reverse 1s ease ;
+  /* transform: rotate(100deg); */
+}
 @keyframes left-in {
   0% {
     transform: rotate(0deg) scale(0.90, 0.90);
@@ -95,8 +98,21 @@ html {
   }
 }
 
+@keyframes left-in-reverse {
+  0% {
+    transform: rotate(-2deg) scale(0.90, 0.90);
+  }
+  
+  50% {
+   transform: rotate(-2deg) scale(0.90, 0.90);;
+  }
+  100% {
+       transform: rotate(0deg) scale(1.0, 1.0);;
+  }
+}
+
 .right-hover {
- animation:right-in 5s  ease infinite ;
+ animation:right-in 5s  ease  ;
 /* transform: rotate(100deg); */
 }
 
@@ -114,7 +130,23 @@ html {
 }
 
 
+.right-hover-out {
+ animation:right-in-reverse 1s  ease  ;
 
+}
+
+@keyframes right-in-reverse {
+  0% {
+    transform: rotate(2deg) scale(0.90, 0.90);
+  }
+  
+  50% {
+   transform: rotate(2deg) scale(0.90, 0.90);
+  }
+  100% {
+       transform: rotate(0deg) scale(1.0, 1.0);
+  }
+}
 
 
 /* Apply the keyframes animation on hover */
@@ -498,4 +530,98 @@ html {
     top: 450px ;
     left: -242px;
   }
+}
+.type-animation-parent{
+display:flex;
+justify-content:center;
+align-item:center;
+    width: 100%;
+    height: 169px;
+}
+.child-type{
+
+    width: 788px;
+
+}
+.jp {
+  font-family: monospace;
+  font-size: 3em;
+  animation: color-change 1s infinite;
+}
+
+@keyframes color-change {
+  0% { color: red; }
+  50% { color: blue; }
+  100% { color: red; }
+}
+
+
+.typing-animation {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  border-right: 2px solid #000; /* Cursor blinking effect */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  animation: typing 6s steps(60, end), blink-caret 0.75s step-end infinite;
+}
+
+/* Typing animation keyframes */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Cursor blinking animation */
+.blink {
+  animation: blinker 4s step-start infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+.slick-center{
+  opacity:1;
+}
+.slick-slide{
+  opacity:0.5;
+}
+
+
+
+#spin:after {
+	content: "";
+	animation: spin 10s linear infinite;
+}
+@keyframes spin {
+  0% { content:"10"; }
+  20% { content: "50";}
+  40% { content: "80";}
+  60% { content: "100";}
+  80% { content: "1k";}
+   100% { content: "2k";}
+}
+.slider-container {
+    margin: 0px 54px 0px 54px;
+    /* padding: 62px; */
+}
+
+.slick-slide {
+  
+    float: left;
+    height: 100%;
+    min-height: 1px;
+    margin: 0px 30px 0px 17px;
+    opacity: 0.2;
+}
+.slick-current{
+ opacity: 1.2;
+}
+.display-show{
+ display:none;
 }

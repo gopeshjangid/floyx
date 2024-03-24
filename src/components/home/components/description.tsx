@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { Button } from "@mui/material";
 import styled from '@emotion/styled'
 import React, { useState, useEffect, useRef } from "react"
-import { AnimateText } from "./Animations/Header/animateText";
+
 import Link from "next/link";
 
 
@@ -98,10 +98,10 @@ const ImgWrapper = styled.div`
   z-index: 0;
 `;
 const ImageLeftContainer = styled.div`
-  height: 689px;
+  height: 807px;
   flex: 1;
   position: relative;
-  min-width: 269px;
+  min-width: 500px;
   max-width: 100%;
   z-index: 1;
   @media screen and (max-width: 975px) {
@@ -118,6 +118,8 @@ const ImageCenterContainer = styled.div`
   
 `;
 const ImageRightContainer = styled.div`
+height:100%;
+width:500px;
   align-self: stretch;
   height: 689px;
   position: relative;
@@ -127,6 +129,7 @@ const ImageRightContainer = styled.div`
   }
 `;
 const Image1 = styled.div`
+height:807px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -202,6 +205,7 @@ const MainContainer = styled.div`
 
 const Description = () => {
   const [isIntersecting, setIsIntersecting] = useState(false);
+
   const ref = useRef(null);
 
 
@@ -210,7 +214,7 @@ const Description = () => {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-300px" }
+      { rootMargin: "-1px" }
     );
 
     if (ref?.current) { observer.observe(ref.current); }
@@ -218,45 +222,66 @@ const Description = () => {
     return () => observer.disconnect();
   }, [isIntersecting]);
 
+ 
+
   let left = document.getElementById("left");
 
-  left?.addEventListener("mouseover", leftIn, false);
-  left?.addEventListener("mouseout", leftOut, false);
+  
 
   function leftIn() {
+    document?.querySelector("#postPhoto")?.classList?.remove("left-hover-out");
+    document?.querySelector("#postPhoto")?.classList?.remove("right-hover-out")
+    document?.querySelector("#postPhoto")?.classList?.remove("right-hover")
+
     document?.querySelector("#postPhoto")?.classList.add("left-hover");
   }
 
-  function leftOut() { document?.querySelector("#postPhoto")?.classList.remove("left-hover"); }
+  function leftOut() { document?.querySelector("#postPhoto")?.classList?.remove("left-hover");
+  
+  document?.querySelector("#postPhoto")?.classList.add("left-hover-out")
+
+}
+left?.addEventListener("mouseover", leftIn, false);
+  left?.addEventListener("mouseout", leftOut, false);
 
   let right = document.getElementById("right");
 
-  right?.addEventListener("mouseover", rightIn);
-  right?.addEventListener("mouseout", rightOut);
+  
 
   function rightIn() {
+    document?.querySelector("#postPhoto")?.classList?.remove("right-hover-out")
     document?.querySelector("#postPhoto")?.classList.add("right-hover");
   }
-  function rightOut() { document?.querySelector("#postPhoto")?.classList.remove("right-hover"); }
+  function rightOut() { document?.querySelector("#postPhoto")?.classList?.remove("right-hover");
+     document?.querySelector("#postPhoto")?.classList.add("right-hover-out") }
+
+  right?.addEventListener("mouseover", rightIn);
+  right?.addEventListener("mouseout", rightOut);
   useEffect(() => {
 
     if (isIntersecting) {
-      //document?.querySelector("#postPhoto")?.classList.add("zoom-in-out-box");
+      document?.querySelector("#stickyBtn")?.classList.remove("display-show")
+      console.log("in")
+      //dconsooleocument?.querySelector("#postPhoto")?.classList.add("zoom-in-out-box");
     }
     else {
+       console.log("gone")
       document?.querySelector("#postPhoto")?.classList.remove("zoom-in-out-box");
 
     };
 
+    
 
   }, [isIntersecting]);
   return (
-    <MainContainer ref={ref}>
+    <MainContainer >
+       
       <InnerContainer>
         <DetailsContainer>
           <DetailsInnerContainer>
+            
             <HeadingContainer>
-              <Heading>
+              <Heading >
                 Floyx is a decentralized social media platform whose main task
                 is to take care of the digital security of all users in the
                 world! Publish censorship-resistant content with innovative
@@ -296,16 +321,17 @@ const Description = () => {
 
         <AnimatedPostContainer >
           <AnimatedInnerContainer id="postPhoto" className="" >
-            <ImgWrapper >
+            <ImgWrapper  >
               <Image loading="lazy" alt="" src="/desktop--1-1@2x.png" />
             </ImgWrapper >
             <ImageLeftContainer id="left" className="" />
             <ImageCenterContainer />
-            <Image1  >
+            <Image1 >
               <ImageRightContainer className="" id="right" />
             </Image1>
           </AnimatedInnerContainer>
         </AnimatedPostContainer>
+        <div ref={ref}></div>
       </InnerContainer>
     </MainContainer>
   );

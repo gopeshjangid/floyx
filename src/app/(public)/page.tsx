@@ -1,5 +1,4 @@
 "use client"
-import { AnimateText } from "../../components/home/components/Animations/Header/animateText"
 import { CommentsCards } from '../../components/home/components/Animations/CommentsCard/cards'
 import type { NextPage, ResolvingMetadata } from "next";
 import { Button } from "@mui/material";
@@ -15,6 +14,8 @@ import DownloadApp from "../../components/home/components/downloadNow";
 import MarketPlaceContainer from "../../components/home/components/MarketPlace";
 import RegisterContainer from "../../components/home/components/registerContainer";
 import Footer from "../../components/home/components/frame-groups";
+import { TypingAnimation } from "../../components/home/components/Animations/TypingAnimations"
+
 import VideoContainer from "../../components/home/components/videoContainer";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 type Props = {
@@ -221,6 +222,7 @@ const MainContainer = styled.div`
   }
 `;
 
+
 const Home = () => {
   return (
    
@@ -241,19 +243,17 @@ const Home = () => {
       <GradiantContainerBg2 />
       <NavBarContainer>
         <NavBar />
+       <TypingAnimation/>
         <Description />
       </NavBarContainer>
-      <CommentsCards />
-     
-    
+      <CommentsCards />   
       <ArticleContainer />
       <VideoContainer/>
       <PodCastsContainer />
         <ChatContainer />
           <Group />
           <DownloadApp />
-        <MarketPlaceContainer />
-     
+        <MarketPlaceContainer />     
       <RegisterContainer />
       <AboutUs/>
       <Footer />
