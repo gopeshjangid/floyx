@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import styled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from "react";
 
@@ -58,7 +58,7 @@ const BackgroundWrapper = styled.div`
   padding: 20px;
   @media screen and (max-width: 992px) {
   
-    top:668px
+    top:840px;
   
 }
 `;
@@ -73,8 +73,9 @@ const Heading1 = styled.b`
     line-height: 48px;
   }
   @media screen and (max-width: 450px) {
-    font-size: 30px;
+    font-size: 35px;
     line-height: 36px;
+    text-align:left;
   }
 `;
 const Heading2 = styled.div`
@@ -119,6 +120,9 @@ const FrameInnerContainer = styled.div`
 const ButtonStyled = styled(Button)`
   width: 246px;
   height: 48px;
+  @media screen and (max-width: 440px) {
+    margin-top: 140px;
+  }
 `;
 const FrameOuterContainer = styled.div`
   display: flex;
@@ -127,6 +131,9 @@ const FrameOuterContainer = styled.div`
   justify-content: flex-start;
   gap: 20px 0px;
   max-width: 100%;
+  @media screen and (max-width: 440px) {
+    height: 660px;
+  }
 `;
 const SocialMediaText = styled.div`
   position: relative;
@@ -173,7 +180,7 @@ const InnerContainer = styled.div`
 width:730px;
   position: absolute;
   top: 130px;
-  left: 0px;
+  left: 50px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -186,7 +193,7 @@ width:730px;
   @media screen and (max-width: 992px) {
   width:100%;
     flex: 50%;
-  
+    left: 0px;
 }
 `;
 const BgDecors = styled.div`
@@ -208,18 +215,18 @@ display: flex;
   position: relative;
   margin: 0 !important;
   right: -51px;
-  // bottom: 323px;
   max-width: 100%;
   text-align: center;
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
   @media screen and (max-width: 992px) {
- height:1322px;
-    flex-direction: column;
-    
-  
-}
+   height:1322px;
+  flex-direction: column;
+  }
+  @media screen and (max-width: 442px) {
+    right: 0px;
+   }
 `;
 
 const AboutUs = () => {
@@ -247,9 +254,12 @@ const AboutUs = () => {
     };
 
   }, [isIntersecting]);
+
+  const joinNowClick = ()=>{
+    window.location.href="/register";
+  }
   return (
     <MainContainer ref={ref}>
-     
       <InnerContainer>
         <FrameOuterContainer>
           <FrameInnerContainer>
@@ -270,6 +280,7 @@ const AboutUs = () => {
           <ButtonStyled
             disableElevation={true}
             variant="contained"
+            onClick={joinNowClick}
             sx={{
               textTransform: "none",
               color: "#0b081f",
@@ -301,10 +312,8 @@ const AboutUs = () => {
         </SocialMediaOutterContainer>
       </InnerContainer>
       <BackgroundWrapper>
-      {/* <BgDecors /> */}
         <GradientBg >
       <img id="imgPeople" className="fadeInImg" src="/people.png" />
-
         </GradientBg>
         <GradientItems />
         <GradientInner />
