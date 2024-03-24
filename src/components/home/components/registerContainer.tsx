@@ -32,6 +32,7 @@ const DecentralizedOperators = styled.div`
   padding: 0px 20px;
 `;
 const AllOfThe = styled.div`
+  margin: 15px;
   align-self: stretch;
   position: relative;
   font-size: 18px;
@@ -310,6 +311,7 @@ const FrameParent = styled.div`
   max-width: 100%;
   @media screen and (max-width: 800px) {
     flex-wrap: wrap;
+   
   }
 `;
 const ConfirmationFrameInner = styled.div`
