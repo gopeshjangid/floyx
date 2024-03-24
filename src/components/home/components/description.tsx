@@ -205,6 +205,7 @@ const MainContainer = styled.div`
 
 const Description = () => {
   const [isIntersecting, setIsIntersecting] = useState(false);
+
   const ref = useRef(null);
 
 
@@ -213,13 +214,15 @@ const Description = () => {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-300px" }
+      { rootMargin: "-1px" }
     );
 
     if (ref?.current) { observer.observe(ref.current); }
 
     return () => observer.disconnect();
   }, [isIntersecting]);
+
+ 
 
   let left = document.getElementById("left");
 
@@ -257,24 +260,28 @@ left?.addEventListener("mouseover", leftIn, false);
   useEffect(() => {
 
     if (isIntersecting) {
-      //document?.querySelector("#postPhoto")?.classList.add("zoom-in-out-box");
+      document?.querySelector("#stickyBtn")?.classList.remove("display-show")
+      console.log("in")
+      //dconsooleocument?.querySelector("#postPhoto")?.classList.add("zoom-in-out-box");
     }
     else {
+       console.log("gone")
       document?.querySelector("#postPhoto")?.classList.remove("zoom-in-out-box");
 
     };
 
+    
 
   }, [isIntersecting]);
   return (
-    <MainContainer ref={ref}>
+    <MainContainer >
        
       <InnerContainer>
         <DetailsContainer>
           <DetailsInnerContainer>
             
             <HeadingContainer>
-              <Heading>
+              <Heading >
                 Floyx is a decentralized social media platform whose main task
                 is to take care of the digital security of all users in the
                 world! Publish censorship-resistant content with innovative
@@ -314,16 +321,17 @@ left?.addEventListener("mouseover", leftIn, false);
 
         <AnimatedPostContainer >
           <AnimatedInnerContainer id="postPhoto" className="" >
-            <ImgWrapper >
+            <ImgWrapper  >
               <Image loading="lazy" alt="" src="/desktop--1-1@2x.png" />
             </ImgWrapper >
             <ImageLeftContainer id="left" className="" />
             <ImageCenterContainer />
-            <Image1  >
+            <Image1 >
               <ImageRightContainer className="" id="right" />
             </Image1>
           </AnimatedInnerContainer>
         </AnimatedPostContainer>
+        <div ref={ref}></div>
       </InnerContainer>
     </MainContainer>
   );

@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState,useRef } from "react";
 import { TypeAnimation } from 'react-type-animation';
 export const TypingAnimation = () => {
-    
+  
     return (
          <div className="type-animation-parent"> 
          <div className="child-type">

@@ -1,15 +1,15 @@
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
   ;
-import { AppBar, Box, Drawer, IconButton, ListItemButton, ListItemText, useTheme } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { AppBar, Box, Drawer, IconButton, ListItemButton, ListItemText, useTheme,Button } from "@mui/material";
 import useDevice from "@/lib/hooks/useDevice";
 import { List } from "reactstrap";
 import Link from "next/link";
 import FloyxImage from '@/iconComponents/floyxIcon';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from "react";
 
-const FrameChild = styled.header`
+const GappingContainer = styled.header`
   height: 75px;
   width: 1444px;
   position: relative;
@@ -24,7 +24,7 @@ const FloyxProducts = styled.div`
   position: relative;
   white-space: nowrap;
 `;
-const Username = styled.div`
+const SubContainer1 = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -47,7 +47,7 @@ const ContactUs = styled.div`
   position: relative;
   white-space: nowrap;
 `;
-const Username1 = styled.div`
+const SubContainer2 = styled.div`
   width: 329px;
   display: flex;
   flex-direction: row;
@@ -59,7 +59,7 @@ const Username1 = styled.div`
     gap: 0px 18px;
   }
 `;
-const Name1 = styled.div`
+const SubContainer = styled.div`
   width: 1070px;
   display: flex;
   flex-direction: row;
@@ -72,7 +72,7 @@ const Name1 = styled.div`
     width: 640px;
   }
 `;
-const RectangleParentRoot = styled.div`
+const MainContainer = styled.div`
   margin-top: -1px;
   align-self: stretch;
   background-color: rgba(8, 6, 23, 0.89);
@@ -103,7 +103,12 @@ const RectangleParentRoot = styled.div`
     box-sizing: border-box;
   }
 `;
-
+const Bttn = styled(Button)`
+  height: 48px;
+  flex: 1;
+  z-index: 1;
+  
+`;
 const navItems = [{
   label: 'Floyx Products',
   href: '/',
@@ -125,6 +130,32 @@ const navItems = [{
 },]
 
 const FrameComponent1: NextPage = () => {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
+      { rootMargin: "-300px" }
+    );
+
+    if (ref?.current) { observer.observe(ref.current); }
+
+    return () => observer.disconnect();
+  }, [isIntersecting]);
+
+  useEffect(() => {
+    if (isIntersecting) {
+       document?.querySelector("#stickyBtn")?.classList.add("display-show")
+      console.log("inNav")
+    }
+    else {
+       console.log("outNav")
+      document?.querySelector("#imgPeople")?.classList.remove("fade-in-image");
+    };
+
+  }, [isIntersecting]);
   const { isMobile } = useDevice();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -207,22 +238,48 @@ const FrameComponent1: NextPage = () => {
   }
   
   return (
-    <AppBar>
-      <RectangleParentRoot>
-        <FrameChild />
-        <Name1>
-          <Username>
+    <AppBar >
+      <MainContainer>
+        <GappingContainer />
+        <SubContainer>
+          <SubContainer1>
             <FloyxProducts>Floyx Products</FloyxProducts>
             <FloyxProducts>Mobile Application</FloyxProducts>
             <FloyxProducts>Crypto Area</FloyxProducts>
-          </Username>
-          <Username1>
+          </SubContainer1>
+          <Bttn id="stickyBtn"
+          className="display-show"
+            disableElevation={true}
+            variant="contained"
+            href="/register"
+            LinkComponent={Link}
+            sx={{
+              position: 'sticky',
+              top: 0,
+              zIndex: 99999,
+              textTransform: "none",
+              color: "#100d26",
+              fontSize: "16",
+              background:
+                "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
+              borderRadius: "4px",
+              "&:hover": {
+                background:
+                  "linear-gradient(86.55deg, #ab59ff, #858fff 56.79%, #4d9aff)",
+              },
+             
+            }}
+          >
+            Get Started
+          </Bttn>
+          <SubContainer2>
             <Registration>Registration</Registration>
             <ContactUs>Contact Us</ContactUs>
             <FloyxProducts>About Us</FloyxProducts>
-          </Username1>
-        </Name1>
-      </RectangleParentRoot>
+          </SubContainer2>
+        </SubContainer>
+      </MainContainer>
+      <div ref={ref}></div>
     </AppBar>
   );
 };

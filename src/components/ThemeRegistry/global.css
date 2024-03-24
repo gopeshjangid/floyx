@@ -622,3 +622,6 @@ align-item:center;
 .slick-current{
  opacity: 1.2;
 }
+.display-show{
+ display:none;
+}
