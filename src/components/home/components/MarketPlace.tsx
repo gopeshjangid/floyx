@@ -1,3 +1,4 @@
+"use client"
 import type { NextPage } from "next";
 import { Button } from "@mui/material";
 import styled from '@emotion/styled';
@@ -41,10 +42,6 @@ const SocialFiMarketplace2 = styled.div`
   position: relative;
   border-right: 1px solid rgba(38, 36, 51, 0);
   box-sizing: border-box;
-  // @media screen and (max-width: 800px) {
-  //   width: 100%;
-  //   height: 1px;
-  // }
 `;
 const LineParent = styled.div`
   align-self: stretch;
@@ -54,13 +51,6 @@ const LineParent = styled.div`
   justify-content: space-between;
   padding: 0px 0px 0px 56px;
   gap: 20px;
-  // @media screen and (max-width: 1350px) {
-  //   padding-left: 28px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 800px) {
-  //   flex-wrap: wrap;
-  // }
 `;
 const UsernameInput = styled.div`
   align-self: stretch;
@@ -151,18 +141,6 @@ const ShineBackgroundChild = styled.div`
   justify-content: center;
   // padding: 0px 1112px 0px 0px;
   box-sizing: border-box;
-  // @media screen and (max-width: 1150px) {
-  //   padding-right: 556px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 800px) {
-  //   padding-right: 278px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 450px) {
-  //   padding-right: 20px;
-  //   box-sizing: border-box;
-  // }
 `;
 const FrameDiv = styled.div`
   flex: 1;
@@ -403,21 +381,6 @@ display:flex;
   font-size: 29px;
   color: rgba(255, 255, 255, 0.7);
   font-family: Poppins;
-  // @media screen and (max-width: 1350px) {
-  //   padding-left: 135px;
-  //   padding-right: 135px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 800px) {
-  //   padding-left: 67px;
-  //   padding-right: 67px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 450px) {
-  //   padding-left: 20px;
-  //   padding-right: 20px;
-  //   box-sizing: border-box;
-  // }
 `;
 
 
@@ -669,8 +632,6 @@ const FrameComponent: NextPage = () => {
         <LandingPage loading="lazy" alt="" src={value.img} />
       </EcoSystem>
       </ShineBackground>
-
-
     </ShineBackgroundParentRoot>
   );
 };

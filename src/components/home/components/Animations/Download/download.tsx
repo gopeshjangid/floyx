@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
-import ReactDOM from "react-dom/client";
+import React from "react";
 import "./style.css";
 import "./animation.css";
-import runAnimations, { allLinks, allFunctions } from "./scripts";
 export const AnimateDownload = () => {
   
-  useEffect(() => {
-    //runAnimations();
-  }, []);
   return (
     <div className="parent-div-download">
       <div className="download-app-1-197656 pos-abs" id="id-dd03223-dd">

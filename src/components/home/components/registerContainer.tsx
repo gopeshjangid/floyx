@@ -1,9 +1,6 @@
-import type { NextPage } from "next";
+"use client";
 import {
   TextField,
-  InputAdornment,
-  Icon,
-  IconButton,
   Button,
   Box,
 } from "@mui/material";

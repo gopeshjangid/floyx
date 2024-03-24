@@ -1,3 +1,4 @@
+"use client";
 function runAnimations() {
   runAnimations_03086();
   runAnimations_03087();
