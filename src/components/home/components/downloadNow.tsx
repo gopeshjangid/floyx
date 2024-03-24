@@ -1,4 +1,4 @@
-// import { AnimateDownload } from "../components/Animations/Download/download";
+"use client"
 import React, { useEffect, useRef, useState } from "react";
 import styled from '@emotion/styled';
 

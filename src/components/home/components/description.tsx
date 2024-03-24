@@ -1,31 +1,13 @@
-import type { NextPage } from "next";
+"use client";
 import { Button } from "@mui/material";
 import styled from '@emotion/styled'
 import React, { useState, useEffect, useRef } from "react"
 
 import Link from "next/link";
+import { CompanyAboutInfo } from "./companyAbout";
 
 
-const Heading = styled.div`
-  flex: 1;
-  position: relative;
-  line-height: 24px;
-  display: inline-block;
-  max-width: 100%;
-  z-index: 3;
-`;
-const HeadingContainer = styled.div`
-  align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0px 7px;
-  box-sizing: border-box;
-  max-width: 100%;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.7);
-`;
+
 const DetailsInnerContainer = styled.div`
   align-self: stretch;
   display: flex;
@@ -279,15 +261,7 @@ left?.addEventListener("mouseover", leftIn, false);
       <InnerContainer>
         <DetailsContainer>
           <DetailsInnerContainer>
-            
-            <HeadingContainer>
-              <Heading >
-                Floyx is a decentralized social media platform whose main task
-                is to take care of the digital security of all users in the
-                world! Publish censorship-resistant content with innovative
-                forms of monetization and stay in touch with everyone through
-              </Heading>
-            </HeadingContainer>
+            <CompanyAboutInfo/>
           </DetailsInnerContainer>
           <Subheader>
             <ButtonContainer>

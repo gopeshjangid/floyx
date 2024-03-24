@@ -1,6 +1,6 @@
+"use client";
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
-  ;
 import React, { useEffect, useRef, useState } from "react";
 import { AppBar, Box, Drawer, IconButton, ListItemButton, ListItemText, useTheme,Button } from "@mui/material";
 import useDevice from "@/lib/hooks/useDevice";
@@ -38,7 +38,7 @@ const SubContainer1 = styled.div`
     gap: 0px 18px;
   }
 `;
-const Registration = styled.div`
+const Registration = styled.a`
   flex: 1;
   position: relative;
 `;
@@ -120,7 +120,7 @@ const navItems = [{
   href: '/',
 },{
   label: 'Registration',
-  href: '/',
+  href: '/register',
 },{
   label: 'Contact Us',
   href: '/',
@@ -130,6 +130,9 @@ const navItems = [{
 },]
 
 const FrameComponent1: NextPage = () => {
+  const { isMobile } = useDevice();
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const ref = useRef(null);
   useEffect(() => {
@@ -156,9 +159,7 @@ const FrameComponent1: NextPage = () => {
     };
 
   }, [isIntersecting]);
-  const { isMobile } = useDevice();
-  const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = useState(false);
+ 
   if(isMobile){
     return(
       <AppBar
@@ -273,7 +274,7 @@ const FrameComponent1: NextPage = () => {
             Get Started
           </Bttn>
           <SubContainer2>
-            <Registration>Registration</Registration>
+            <Registration href='/register'>Registration</Registration>
             <ContactUs>Contact Us</ContactUs>
             <FloyxProducts>About Us</FloyxProducts>
           </SubContainer2>

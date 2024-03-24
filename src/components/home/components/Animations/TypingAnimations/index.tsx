@@ -1,5 +1,7 @@
+"use client";
 import React, { useMemo,useEffect,useState,useRef } from "react";
 import { TypeAnimation } from 'react-type-animation';
+
 export const TypingAnimation = () => {
   const [fontSize, setFontSize] = useState(50); // Default font size
   

@@ -1,5 +1,5 @@
+"use client"
 import React, { useEffect } from "react";
-import ReactDOM from "react-dom/client";
 import "./style.css";
 import "./animation.css";
 import runAnimations, { allLinks, allFunctions } from "./scripts";

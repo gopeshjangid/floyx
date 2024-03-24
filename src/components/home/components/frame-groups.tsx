@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
-  ;
+import Link from "next/link";
 
 const FrameGroupsChild = styled.div`
   height: 383px;
@@ -58,8 +58,9 @@ const Products = styled.div`
   text-transform: uppercase;
   font-weight: 500;
 `;
-const Launchpad = styled.p`
+const Launchpad = styled(Link)`
   margin: 0;
+  display:block;
 `;
 const LaunchpadSocialfiMarketplaceContainer = styled.div`
   position: relative;
@@ -151,7 +152,10 @@ const FrameGroups: NextPage = () => {
         <GroupIcon loading="lazy" alt="" src="/group.svg" />
         <VectorInstance>
           <LinksColumn>
+          <Launchpad href={"/"}>
             <GroupIcon1 alt="" src="/group-1.svg" />
+          </Launchpad>
+           
             <SocialFiMarketplace alt="" src="/vector-4.svg" />
           </LinksColumn>
         </VectorInstance>
@@ -160,47 +164,47 @@ const FrameGroups: NextPage = () => {
         <ProductMenu>
           <Products>Products</Products>
           <LaunchpadSocialfiMarketplaceContainer>
-            <Launchpad>{`Launchpad `}</Launchpad>
-            <Launchpad>{`SocialFi `}</Launchpad>
-            <Launchpad>{`Marketplace `}</Launchpad>
-            <Launchpad>NFT Airdrops</Launchpad>
-            <Launchpad>{`DEX Buy `}</Launchpad>
-            <Launchpad>Floyx Tokens</Launchpad>
+            <Launchpad href={'/'}>{`Launchpad `}</Launchpad>
+            <Launchpad href={'/'}>{`SocialFi `}</Launchpad>
+            <Launchpad href={'/'}>{`Marketplace `}</Launchpad>
+            <Launchpad href={'/'}>NFT Airdrops</Launchpad>
+            <Launchpad href={'/'}>{`DEX Buy `}</Launchpad>
+            <Launchpad href={'/'}>Floyx Tokens</Launchpad>
           </LaunchpadSocialfiMarketplaceContainer>
         </ProductMenu>
         <CompanyHub>
           <Products>Company</Products>
           <LaunchpadSocialfiMarketplaceContainer>
-            <Launchpad>Brand Assets</Launchpad>
-            <Launchpad>Partners</Launchpad>
+            <Launchpad href={'/'}>Brand Assets</Launchpad>
+            <Launchpad href={'/'}>Partners</Launchpad>
           </LaunchpadSocialfiMarketplaceContainer>
         </CompanyHub>
         <CompanyHub>
           <Products>Resources</Products>
           <BlogFaqSupportContainer>
-            <Launchpad>Blog</Launchpad>
-            <Launchpad>FAQ</Launchpad>
-            <Launchpad>Support</Launchpad>
+            <Launchpad href={'/'}>Blog</Launchpad>
+            <Launchpad href={'/'}>FAQ</Launchpad>
+            <Launchpad href={'/'}>Support</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
         <CompanyHub>
           <Products>Social</Products>
           <BlogFaqSupportContainer>
-            <Launchpad>Twitter</Launchpad>
-            <Launchpad>Telegram</Launchpad>
-            <Launchpad>Discord</Launchpad>
-            <Launchpad>Instagram</Launchpad>
-            <Launchpad>Facebook</Launchpad>
-            <Launchpad>TikTok</Launchpad>
-            <Launchpad>YouTube</Launchpad>
+            <Launchpad target="__blank" href={'/https://twitter.com/floyxcom'}>Twitter</Launchpad>
+            <Launchpad href={'/'}>Telegram</Launchpad>
+            <Launchpad href={'/'}>Discord</Launchpad>
+            <Launchpad href={'/'}>Instagram</Launchpad>
+            <Launchpad href={'/'}>Facebook</Launchpad>
+            <Launchpad href={'/'}>TikTok</Launchpad>
+            <Launchpad href={'/'}>YouTube</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
         <CompanyHub>
           <Products>Legal</Products>
           <BlogFaqSupportContainer>
-            <Launchpad>Terms</Launchpad>
-            <Launchpad>Privacy</Launchpad>
-            <Launchpad>Cookies</Launchpad>
+            <Launchpad href="/termsOfService">Terms</Launchpad>
+            <Launchpad href="/privacyPolicy">Privacy</Launchpad>
+            <Launchpad href="/cookiePolicy">Cookies</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
       </RegisterWithEmailOnlyMains>

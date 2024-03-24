@@ -1,6 +1,6 @@
+"use client";
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
-  ;
 
 const PodcastChild = styled.img`
   width: 1690.7px;
