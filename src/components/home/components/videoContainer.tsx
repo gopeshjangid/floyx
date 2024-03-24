@@ -2,31 +2,6 @@ import styled from '@emotion/styled';
 import { Button } from "@mui/material";
 
 const MainContainer = styled.section`
-//   width: 100%px;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: flex-start;
-//   justify-content: flex-start;
-//   padding: 0px 0px 3px 0px;
-//   box-sizing: border-box;
-//   // gap: 0px 131.2px;
-//   max-width: 100%;
-//   text-align: center;
-//   font-size: 50px;
-//   color: #fff;
-//   font-family: Poppins;
-//   @media screen and (max-width: 1350px) {
-//     flex-wrap: wrap;
-//     //gap: 0px 66px;
-//     justify-content: center;
-//   }
-//   @media screen and (max-width: 800px) {
-//     // gap: 0px 33px;
-//   }
-//   @media screen and (max-width: 450px) {
-//     gap: 0px 16px;
-//   }
-// 
 width:100%;
   align-self: center;
   display: flex;
@@ -45,57 +20,6 @@ width:100%;
 
 `;
 
-const ImageContainer = styled.div`
-  margin-left: -194.8px;
-  height: 588.1px;
-  width: 463.6px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 10.699999999999818px 0px 0px 0px;
-  box-sizing: border-box;
-  min-width: 463.6px;
-  max-width: 100%;
-  @media screen and (max-width: 1350px) {
-    flex: 1;
-  }
-  @media screen and (max-width: 800px) {
-    min-width: 100%;
-  }
-`;
-const ImageContainer2 = styled.div`
-  margin-left: -194.8px;
-  height: 588.1px;
-  width: 463.6px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 10.699999999999818px 0px 0px 0px;
-  box-sizing: border-box;
-  min-width: 463.6px;
-  max-width: 100%;
-  @media screen and (max-width: 1350px) {
-    flex: 1;
-  }
-  @media screen and (max-width: 800px) {
-    min-width: 100%;
-  }
-`;
-// const ImageContainer = styled.img`
-//   align-self: stretch;
-//   height: 588.1px;
-//   position: relative;
-//   max-width: 100%;
-//   overflow: hidden;
-//   flex-shrink: 0;
-//   object-fit: contain;
-//   @media screen and (max-width: 1350px) {
-//     align-self: stretch;
-//     width: auto;
-//   }
-// `;
 const Unit = styled.div`
   align-self: stretch;
   display: flex;
@@ -801,8 +725,6 @@ const VideoContainer =()=>{
           </SubContainer>
         </InnerContainer>
           <ImageContainerBg2  src="/Group340.png" />
-        {/* <ImageContainer2>
-        </ImageContainer2> */}
       </MainContainer>)
 }
 export default VideoContainer

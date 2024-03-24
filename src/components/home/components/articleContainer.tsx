@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+"use client";
 import styled from '@emotion/styled'  ;
 import { AnimateArticles } from "./Animations/Posts/animateArticles"
 

@@ -1,6 +1,9 @@
-import { Box, Button } from "@mui/material";
+"use client";
+import { Button } from "@mui/material";
 import styled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from "react";
+import CompanyAboutUs from "./companyAbout";
+import Link from "next/link";
 
 const GradientBg = styled.div`
   position: absolute;
@@ -255,32 +258,17 @@ const AboutUs = () => {
 
   }, [isIntersecting]);
 
-  const joinNowClick = ()=>{
-    window.location.href="/register";
-  }
+  
   return (
     <MainContainer ref={ref}>
       <InnerContainer>
         <FrameOuterContainer>
-          <FrameInnerContainer>
-            <HeadingContainer>
-              <Heading1>About Us</Heading1>
-              <Heading2>We are on a mission to create a secure and uncensored digital space, driven by creators and accessible to millions of people around the world.</Heading2>
-            </HeadingContainer>
-            <TextContainer>
-              <SubHeadings>You won't find EX founders from Google, Meta, Linkedin here.</SubHeadings>
-              <SubHeadings>You won't find here big Venture Capitals, Angel Investors who value money above freedom.</SubHeadings>
-              <SubHeadings>You won't read about us in Forbes, Bloomberg, The New York Times etc.</SubHeadings>
-              <SubHeadings>&nbsp;</SubHeadings>
-              <SubHeadings>Instead, you will find people like you who work hard for you every day and believe in a censorship-free and safe haven for every internet user.</SubHeadings>
-              <SubHeadings>{` `}</SubHeadings>
-              <SubHeadings>Be with us and join Floyx today.</SubHeadings>
-            </TextContainer>
-          </FrameInnerContainer>
+           <CompanyAboutUs/>
           <ButtonStyled
             disableElevation={true}
             variant="contained"
-            onClick={joinNowClick}
+            LinkComponent={Link}
+            href="/register"
             sx={{
               textTransform: "none",
               color: "#0b081f",

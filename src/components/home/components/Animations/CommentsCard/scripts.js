@@ -1,3 +1,4 @@
+"use client";
 function runAnimations() {
   setTimeout(() => {
     document?.querySelector("#id-03215")?.classList?.add("animationClass-03215");

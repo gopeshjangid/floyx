@@ -1,7 +1,7 @@
-import type { NextPage } from "next";
-import { TextField, InputAdornment, Icon, IconButton } from "@mui/material";
+"use client";
+import { TextField } from "@mui/material";
 import styled from '@emotion/styled';
-import { ChatAnimation } from './Animations/ChatsAnimations/chatAnimations'
+import React, { useEffect, useRef, useState } from "react";
 
 const Heading1 = styled.b`
   align-self: stretch;
@@ -393,26 +393,6 @@ const ChatContainer = styled.div`
     font-size: 20px;
     color: #8a8f98;
     font-family: Inter;
-
-
-  // align-self: stretch;
-  // display: flex;
-  // flex-direction: row;
-  // align-items: flex-start;
-  // justify-content: flex-start;
-  // padding: 186px 0px 185px;
-  // box-sizing: border-box;
-  // max-width: 100%;
-  // z-index: 1;
-  // text-align: left;
-  // font-size: 20px;
-  // color: #8a8f98;
-  // font-family: Inter;
-  // @media screen and (max-width: 800px) {
-  //   padding-top: 121px;
-  //   padding-bottom: 120px;
-  //   box-sizing: border-box;
-  // 
 }
 `;
 const InnerContainer = styled.div`
@@ -437,7 +417,7 @@ const MainContainer = styled.div`
   color: #fff;
   font-family: Poppins;
 `;
-import React, { useEffect, useRef, useState } from "react";
+
 
 const ChatBox = () => {
   const [isIntersecting, setIsIntersecting] = useState(false);
@@ -460,11 +440,9 @@ const ChatBox = () => {
   useEffect(() => {
     if (isIntersecting) {
       document?.querySelector("#chat2")?.classList.add("chatScroll");
-      //document?.querySelector("#id-I03221_1366701")?.classList.add("object");
     }
     else {
       document?.querySelector("#chat2")?.classList.remove("chatScroll");
-      // document?.querySelector("#id-I03221_1366701")?.classList.remove("object");
     };
 
   }, [isIntersecting]);
