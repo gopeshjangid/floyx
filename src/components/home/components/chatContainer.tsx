@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { TextField, InputAdornment, Icon, IconButton } from "@mui/material";
 import styled from '@emotion/styled';
-import { ChatAnimation } from '../components/Animations/ChatsAnimations/chatAnimations'
+import { ChatAnimation } from './Animations/ChatsAnimations/chatAnimations'
 
 const Heading1 = styled.b`
   align-self: stretch;

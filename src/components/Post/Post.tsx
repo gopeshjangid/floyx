@@ -86,7 +86,7 @@ function Post({
 
   const onDeletedPost = useCallback(() => {
     if (pathname.indexOf('post') > -1) {
-      router.push('/');
+      router.push('/home');
     }
   }, []);
 
@@ -134,6 +134,7 @@ function Post({
           link={link}
           shared={shared}
           isShared={isShared}
+          type={postDetails?.type}
           isSharedPostAvailable={postDetails?.isSharedPostAvailable}
         />
         {(!isShared || showComments) && (

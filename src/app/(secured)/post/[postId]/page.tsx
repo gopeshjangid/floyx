@@ -25,7 +25,7 @@ export default function Page({ params }: { params: { postId: string } }) {
         <DefaultPageSkelton showOnlyContent />
       ) : (
         <Box>
-          <div style={{cursor:"pointer"}} onClick={() => window.location.href = '/'}>Back to home</div>
+          <div style={{cursor:"pointer"}} onClick={() => window.location.href = '/home'}>Back to home</div>
           {postDetail && postDetail?.author?.username && (
             <Post
               name={postDetail?.author?.name}

@@ -84,7 +84,7 @@ function TokenPanelHeader({ modalType, setModal, hideNav }) {
             alignItems={'end'}
             pb={2}
           >
-            <IconButton onClick={() => router.push('/')}>
+            <IconButton onClick={() => router.push('/home')}>
               <FloyxImage
                 fill={
                   theme.palette.mode === 'dark'

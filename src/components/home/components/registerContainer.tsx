@@ -5,6 +5,7 @@ import {
   Icon,
   IconButton,
   Button,
+  Box,
 } from "@mui/material";
 import styled from '@emotion/styled'
   ;
@@ -94,8 +95,7 @@ const Text1 = styled.div`
   mix-blend-mode: normal;
   z-index: 1;
   @media screen and (max-width: 920px) {
-    font-size: 24px;
-    height:1672.7px;
+    display:none;
   }
 `;
 const TextIcon = styled.img`
@@ -269,8 +269,15 @@ const CreateYourAccount = styled.b`
 `;
 const FrameInput = styled.input`
   margin: 0;
-  height: 21.5px;
+  height: 19px;
   width: 19px;
+  background-color: #1b1830; /* Example background color */
+  -webkit-appearance: none; /* Removes default styling in WebKit browsers */
+  appearance: none; /* Removes default styling */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Custom border */
+  border-radius: 4px; /* Rounded corners */
+  outline: none; /* Removes the default focus outline */
+  cursor: pointer; /* Changes cursor to pointer on hover */
 `;
 const SomeoneReccomendedFloyx = styled.div`
   position: relative;
@@ -344,7 +351,7 @@ const LinearProgressBar = styled.div`
   min-width: 135px;
 `;
 const EmailAddressFrameParent = styled.div`
-  width: 396px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -361,7 +368,7 @@ const EmailAddressFrameParent = styled.div`
 const CreateAccountButton = styled(TextField)`
   border: none;
   background-color: transparent;
-  width: 503px;
+  width: 100%;
   height: 50px;
   font-family: Poppins;
   font-size: 16px;
@@ -394,7 +401,7 @@ const FrameChild = styled.div`
   width: 208px;
 `;
 const FrameContainer = styled.div`
-  width: 351px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -453,7 +460,6 @@ const GoogleLoginButton = styled.div`
   }
 `;
 const GroupContainer = styled(TextField)`
-  border: none;
   background-color: transparent;
   align-self: stretch;
   height: 48px;
@@ -512,11 +518,7 @@ const CreateAccountForm = styled.div`
   justify-content: flex-start;
   max-width: 100%;
 `;
-const LoginFormContainer = styled.input`
-  margin: 0;
-  height: 27px;
-  width: 19px;
-`;
+
 const ByClickingSign = styled.span`
   color: #ceced2;
 `;
@@ -633,6 +635,9 @@ const ForMainstreamUsers = styled.div`
   align-self: stretch;
   position: relative;
   font-size: 18px;
+  @media screen and (max-width: 480px) {
+    font-size: 14px !important;
+  }
 `;
 const SignUpWith = styled.div`
   position: relative;
@@ -691,6 +696,9 @@ const ConnectWalletLabel = styled.div`
 const MakeRegistrationSmooth = styled.div`
   align-self: stretch;
   position: relative;
+  @media screen and (max-width: 480px) {
+    font-size: 14px !important;
+  }
 `;
 const CreateAccountLabel = styled(Button)`
   align-self: stretch;
@@ -738,9 +746,9 @@ const ExistingUsersText = styled.div`
   @media screen and (max-width: 1150px) {
     gap: 0px 34px;
   }
-  // @media screen and (max-width: 800px) {
-  //   gap: 0px 17px;
-  // }
+  @media screen and (max-width: 440px) {
+    padding: 0 12px;
+  }
 `;
 const NameFrame = styled.div`
   display: flex;
@@ -769,7 +777,7 @@ const RegisterNow = styled.div`
   color: #d1d0d5;
   @media screen and (max-width: 920px) {
     font-size: 24px;
-    height:1672.7px;
+    height:1400px;
   }
   // @media screen and (max-width: 1350px) {
   //   padding-left: 71px;
@@ -820,8 +828,6 @@ width:100%;
   // @media screen and (max-width: 450px) {
   //   padding-left: 20px;
   //   padding-right: 20px;
-  //   padding-bottom: 139px;
-  //   box-sizing: border-box;
   // }
 `;
 
@@ -878,8 +884,8 @@ const RegisterContainer = () => {
                     </FrameWrapper>
                   </FrameParent>
                 </ConfirmationFrameInner>
-                <FrameName1>
-                  <FrameGroup>
+                <FrameName2>
+                  <FrameGroup style={{width: '100%'}}>
                     <EmailAddressFrameParent>
                       <EmailAddressFrame>
                         <EmailAddress1>
@@ -889,51 +895,8 @@ const RegisterContainer = () => {
                       </EmailAddressFrame>
                       <LinearProgressBar />
                     </EmailAddressFrameParent>
-                    <CreateAccountButton
-                      placeholder="Ex. name@gmail.com"
-                      variant="outlined"
-                      InputProps={{
-                        startAdornment: (
-                          <img
-                            width="24px"
-                            height="24px"
-                            src="/vuesaxlinearsms.svg"
-                          />
-                        ),
-                      }}
-                      sx={{
-                        "& fieldset": { border: "none" },
-                        "& .MuiInputBase-root": {
-                          height: "50px",
-                          backgroundColor: "#1b1830",
-                          paddingLeft: "21px",
-                          borderRadius: "10px",
-                        },
-                        "& .MuiInputBase-input": {
-                          paddingLeft: "10px",
-                          color: "rgba(255, 255, 255, 0.3)",
-                        },
-                        width: "503px",
-                      }}
-                    />
-                  </FrameGroup>
-                </FrameName1>
-                <FrameName2>
-                  <UsernameInputFrame>
-                    <FrameContainer>
-                      <EmailAddressFrame>
-                        <EmailAddress1>
-                          <EmailAddress>
-                            Email address confirmation
-                          </EmailAddress>
-                          <Span>*</Span>
-                        </EmailAddress1>
-                      </EmailAddressFrame>
-                      <FrameChild />
-                    </FrameContainer>
                     <UsernameInputFrameChild
-                      placeholder="Enter your email address again"
-                      variant="outlined"
+                      placeholder="Ex. name@gmail.com"
                       InputProps={{
                         startAdornment: (
                           <img
@@ -950,12 +913,63 @@ const RegisterContainer = () => {
                           backgroundColor: "#1b1830",
                           paddingLeft: "21px",
                           borderRadius: "10px",
+                          border: 'none'
                         },
                         "& .MuiInputBase-input": {
                           paddingLeft: "10px",
                           color: "rgba(255, 255, 255, 0.3)",
+                          '&::placeholder': { // Targeting the placeholder
+                            fontSize: '1em',
+                            opacity: .5,
+                          },
                         },
-                        width: "503px",
+                        width: "100%",
+                      }}
+                    />
+                  </FrameGroup>
+                </FrameName2>
+                <FrameName2>
+                  <UsernameInputFrame>
+                    <FrameContainer>
+                      <EmailAddressFrame>
+                        <EmailAddress1>
+                          <EmailAddress>
+                            Email address confirmation
+                          </EmailAddress>
+                          <Span>*</Span>
+                        </EmailAddress1>
+                      </EmailAddressFrame>
+                      <FrameChild />
+                    </FrameContainer>
+                    <UsernameInputFrameChild
+                      placeholder="Enter your email address again"
+                      InputProps={{
+                        startAdornment: (
+                          <img
+                            width="24px"
+                            height="24px"
+                            src="/vuesaxlinearsms-1.svg"
+                          />
+                        ),
+                      }}
+                      sx={{
+                        "& fieldset": { border: "none" },
+                        "& .MuiInputBase-root": {
+                          height: "50px",
+                          backgroundColor: "#1b1830",
+                          paddingLeft: "21px",
+                          borderRadius: "10px",
+                          border: 'none'
+                        },
+                        "& .MuiInputBase-input": {
+                          paddingLeft: "10px",
+                          color: "rgba(255, 255, 255, 0.3)",
+                          '&::placeholder': { // Targeting the placeholder
+                            fontSize: '1em',
+                            opacity: .5,
+                          },
+                        },
+                        width: "100%",
                       }}
                     />
                   </UsernameInputFrame>
@@ -974,7 +988,6 @@ const RegisterContainer = () => {
                     </GoogleLoginButton>
                     <GroupContainer
                       placeholder="************"
-                      variant="outlined"
                       InputProps={{
                         startAdornment: (
                           <img
@@ -985,19 +998,24 @@ const RegisterContainer = () => {
                         ),
                       }}
                       sx={{
-                        "& fieldset": { border: "none" },
                         "& .MuiInputBase-root": {
                           height: "48px",
                           backgroundColor: "#1b1830",
                           paddingLeft: "22px",
                           borderRadius: "10px",
                           fontSize: "22px",
+                          border: 'none !important'
                         },
                         "& .MuiInputBase-input": {
                           paddingLeft: "10px",
                           color: "rgba(255, 255, 255, 0.3)",
+                          '&::placeholder': { // Targeting the placeholder
+                            fontSize: '1em',
+                            opacity: .5,
+                          },
+                         
                         },
-                        width: "503px",
+                        width: "100%",
                       }}
                     />
                   </UsernameInputFrame>
@@ -1009,6 +1027,7 @@ const RegisterContainer = () => {
                       <SignUpLabel
                         disableElevation={true}
                         variant="contained"
+                        disabled
                         sx={{
                           textTransform: "none",
                           color: "#0b081f",
@@ -1028,7 +1047,7 @@ const RegisterContainer = () => {
                     </Selection1>
                   </CreateAccountForm>
                   <ContainerFrame>
-                    <LoginFormContainer type="checkbox" />
+                    <FrameInput type="checkbox" />
                     <ByClickingSignContainer>
                       <ByClickingSign>{`By clicking “Sign up” you agree to Floyx’s `}</ByClickingSign>
                       <TermsOfService>Terms of Service,</TermsOfService>
@@ -1075,16 +1094,18 @@ const RegisterContainer = () => {
                 </MakeRegistrationSmooth>
                 <CreateAccountLabel
                   startIcon={
-                    <img width="21px" height="21px" src="/wallet-1.png" />
+                    <Box sx={{width: 35, height: 33, background: '#fff', borderRadius: '4px'}}><img width="21px" height="21px" src="/wallet-1.png" /></Box>
                   }
                   disableElevation={true}
                   variant="contained"
                   sx={{
+                    justifyContent: 'flex-start',
+                    gap:5,
                     textTransform: "none",
                     color: "#0b081f",
                     fontSize: "16",
                     background: "#4285f4",
-                    borderRadius: "0px 0px 0px 0px",
+                    borderRadius: "10px",
                     "&:hover": { background: "#4285f4" },
                     height: 50,
                   }}

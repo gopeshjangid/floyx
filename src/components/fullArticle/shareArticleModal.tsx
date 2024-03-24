@@ -5,6 +5,7 @@ import {
   Divider,
   Modal,
   Typography,
+  useTheme,
 } from '@mui/material';
 import AddComment from '../Post/AddComment';
 import Image from 'next/image';
@@ -20,7 +21,7 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
-const style = {
+const getStyle = (theme) =>({
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -30,11 +31,11 @@ const style = {
   maxWidth: '50vw',
   overflowY: 'scroll',
   bgcolor: 'background.paper',
-  border: '2px solid gray',
+  border: `1px solid ${theme.palette.primary.boxBorder}`,
   boxShadow: 24,
   padding: 3,
   borderRadius: '10px',
-};
+});
 
  function ShareArticleModal({
   open,
@@ -64,6 +65,7 @@ const style = {
   revalidate?: any;
 }) {
   const pathname = usePathname();
+  const theme = useTheme();
   const [checkIsShared, { isLoading }] = useCheckArticleIsSharedMutation();
   const [publishArticle, { isLoading: publishLoading }] =
     useShareArticleMutation();
@@ -104,7 +106,7 @@ const style = {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
+      <Box sx={getStyle(theme)}>
         {isArticle && (
           <>
             <Box sx={{ padding: '10px' }}>

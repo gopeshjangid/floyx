@@ -7,7 +7,7 @@ import Post from './Post';
 import CustomImage from '../Image';
 import { PostBox } from './styledPostBox';
 
-function PostImage({ image, link, shared, isShared, isSharedPostAvailable }) {
+function PostImage({ image, link, type, shared, isShared, isSharedPostAvailable }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ function PostImage({ image, link, shared, isShared, isSharedPostAvailable }) {
   const height = dimensions.height > 1300 ? 800 : dimensions.height;
 
   const getImageContainer = useMemo(() => (imageSource) => {
-    if(!imageSource) return null;
+    if (!imageSource) return null;
 
     if (sizeType === 'verticle') return <CustomImage
       onLoad={handleImageLoad}
@@ -127,7 +127,7 @@ function PostImage({ image, link, shared, isShared, isSharedPostAvailable }) {
           </Box>
         </Box>
       )}
-      {(shared && !isShared && shared?.author?.username ) ? (
+      {(shared && !isShared && shared?.author?.username) ? (
         <div style={{ cursor: 'pointer' }} onClick={(event) => {
           if (!(event.target as Element).closest('.specific_item')) {
             window.location.href = (`/post/${shared?.post?.id}`)
@@ -145,11 +145,13 @@ function PostImage({ image, link, shared, isShared, isSharedPostAvailable }) {
             isShared={true}
           />
         </div>
-      ): !shared && !isSharedPostAvailable &&  <PostBox>
+      ) : type === 2 && !isSharedPostAvailable && <PostBox>
         <Box p={1}>
-          <Typography variant='subtitle1'>The content is not available! As you have blocked the author of the post</Typography>
+          <Typography variant='subtitle1'>
+            The content is not available. Either the content is reported or the user blocked.
+          </Typography>
         </Box>
-      </PostBox> }
+      </PostBox>}
     </Box>
   );
 }
