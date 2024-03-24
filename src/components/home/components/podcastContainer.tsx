@@ -88,7 +88,7 @@ const PlayIcon = styled.img`
   object-fit: contain;
   z-index: 0;
    @media screen and (max-width: 425px) {
-    display:none
+    // display:none
   }
 `;
 const Podcasts = styled.b`
@@ -230,13 +230,18 @@ const CenteredRectangle: NextPage = () => {
       <Podcast>
         <PodcastChild alt="" src="/group-338@2x.png" />
         <Scribble />
-        <img id="overBoxLeft" className="image-box-download-left" src="/threeBox.png" />
-        <HomeIcon id="mobBoxLeft" className="qwerty" loading="lazy" alt="" src="/left-mob-img.png" />
+        
+         <div id="Next2" className="leftWrapper"> <img  id="overBoxLeft"className="image-box-download-left" src="/threeBox.png" />
+        <HomeIcon id="mobBoxLeft" className="qwerty" loading="lazy" alt="" src="/left-mob-img.png" /></div>
+        
         <SparkleIcon alt="" src="/sparkle@2x.png" />
         <SparkleIcon1 loading="lazy" alt="" src="/sparkle-1@2x.png" />
         <SparkleIcon2 alt="" src="/sparkle-2@2x.png" />
+        <div className="rightWrapper">
+
         <img id="overBox" className="image-box-download" src="play-1frame.png" />
         <PlayIcon id="mobBox" className="qwerty" loading="lazy" alt="" src="/play-1.png" />
+        </div>
         <SignUpButton>
           <AccessKeyField>
             <Podcasts>Podcasts</Podcasts>
