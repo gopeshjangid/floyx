@@ -1,22 +1,27 @@
 "use client"
-import { AnimateText } from "./components/Animations/Header/animateText"
-import { CommentsCards } from './components/Animations/CommentsCard/cards'
-import type { NextPage } from "next";
+import { AnimateText } from "../../components/home/components/Animations/Header/animateText"
+import { CommentsCards } from '../../components/home/components/Animations/CommentsCard/cards'
+import type { NextPage, ResolvingMetadata } from "next";
 import { Button } from "@mui/material";
-import AboutUs from "./components/AboutUs";
+import AboutUs from "../../components/home/components/AboutUs";
 import styled from '@emotion/styled';
-import NavBar from "./components/navBar";
-import Description from "./components/description";
-import ArticleContainer from "./components/articleContainer";
-import PodCastsContainer from "./components/podcastContainer";
-import ChatContainer from "./components/chatContainer";
-import Group from "./components/formLayout";
-import DownloadApp from "./components/downloadNow";
-import MarketPlaceContainer from "./components/MarketPlace";
-import RegisterContainer from "./components/registerContainer";
-import Footer from "./components/frame-groups";
-import VideoContainer from "./components/videoContainer";
+import NavBar from "../../components/home/components/navBar";
+import Description from "../../components/home/components/description";
+import ArticleContainer from "../../components/home/components/articleContainer";
+import PodCastsContainer from "../../components/home/components/podcastContainer";
+import ChatContainer from "../../components/home/components/chatContainer";
+import Group from "../../components/home/components/formLayout";
+import DownloadApp from "../../components/home/components/downloadNow";
+import MarketPlaceContainer from "../../components/home/components/MarketPlace";
+import RegisterContainer from "../../components/home/components/registerContainer";
+import Footer from "../../components/home/components/frame-groups";
+import VideoContainer from "../../components/home/components/videoContainer";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+type Props = {
+  params: { userName: string; articlePublicUrl: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 const MainContainerBg1 = styled.img`
   width: 1717.6px;
   height: 1606.5px;
@@ -255,5 +260,34 @@ const Home = () => {
     </MainContainer>
   );
 };
+
+// export async function generateMetadata(): Promise<Metadata> {
+  
+//   return {
+//     title: 'Floyx Decentralized',
+//     openGraph: {
+//       images: ['/'],
+//     },
+//     generator: 'Next.js',
+//     applicationName: 'Floyx',
+//     referrer: 'origin-when-cross-origin',
+//     keywords: [],
+//     authors: [
+//       {
+//         name: 'FLoyx',
+//         url: "/",
+//       },
+//     ],
+//     creator: 'Floyx creator',
+//     publisher: 'Floyx publisher',
+//     alternates: {
+//       canonical: '/',
+//       languages: {
+//         'en-US': '/en-US',
+//       },
+//     },
+    
+//   };
+// }
 
 export default Home;

@@ -86,7 +86,7 @@ function Post({
 
   const onDeletedPost = useCallback(() => {
     if (pathname.indexOf('post') > -1) {
-      router.push('/');
+      router.push('/home');
     }
   }, []);
 

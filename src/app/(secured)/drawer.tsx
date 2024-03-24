@@ -184,7 +184,7 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   const navItems = [
     {
       label: t('Drawer.home'),
-      href: '/',
+      href: '/home',
       icon: (fill: string) => <HomeIcon stroke={fill} />,
     },
     {
@@ -218,12 +218,12 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
   };
 
   const homeRedirect = () => {
-    if (pathname === '/') {
+    if (pathname === '/home') {
       const container = document?.querySelector('#mainContainerFeed');
       if (container) container.scrollTop = 0;
     }
-    if (pathname !== '/') {
-      router.push('/');
+    if (pathname !== '/home') {
+      router.push('/home');
     }
     window.scrollTo(0, 0);
   };
@@ -336,14 +336,14 @@ export default function DrawerAppBar({ children }: { children: ReactNode }) {
     if (mobileOpen) {
       setMobileOpen(false);
     }
-    if (href === '/') {
+    if (href === '/home') {
       // dispatch(
       //   postServices.util.invalidateTags([
       //     { type: 'MainFeedList', id: 'ALL' },
       //     'MainFeedList',
       //   ])
       // );
-      window.location.href = '/';
+      window.location.href = '/home';
 
       //homeRedirect();
     }

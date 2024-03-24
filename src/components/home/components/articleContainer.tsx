@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import styled from '@emotion/styled'  ;
-import { AnimateArticles } from "../components/Animations/Posts/animateArticles"
+import { AnimateArticles } from "./Animations/Posts/animateArticles"
 
 const Heading1 = styled.b`
   position: relative;

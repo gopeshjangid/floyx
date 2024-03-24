@@ -1,5 +1,5 @@
 export const allRoutes = {
-  home: '/',
+  home: '/home',
   login: '/login',
   register: '/register',
   messages: '/messages',

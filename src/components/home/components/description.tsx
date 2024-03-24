@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import styled from '@emotion/styled'
 import React, { useState, useEffect, useRef } from "react"
 import { AnimateText } from "./Animations/Header/animateText";
+import Link from "next/link";
 
 
 const Heading = styled.div`
@@ -33,6 +34,7 @@ const DetailsInnerContainer = styled.div`
   justify-content: flex-start;
   gap: 26px 0px;
   max-width: 100%;
+  padding-top: 100px;
 `;
 
 const Bttn = styled(Button)`
@@ -267,7 +269,12 @@ const Description = () => {
               <Bttn
                 disableElevation={true}
                 variant="contained"
+                href="/register"
+                LinkComponent={Link}
                 sx={{
+                  position: 'sticky',
+                  top: 0,
+                  zIndex: 99999,
                   textTransform: "none",
                   color: "#100d26",
                   fontSize: "16",
