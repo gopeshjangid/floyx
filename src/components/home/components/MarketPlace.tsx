@@ -9,6 +9,9 @@ const FrameChild = styled.div`
   border-right: 1px solid rgba(255, 255, 255, 0.04);
   box-sizing: border-box;
   display: none;
+  // @media screen and (max-width: 450px) {
+  //   margin: 25px;
+  // }
 `;
 const SocialFiMarketplace = styled.div`
   height: 1064px;
@@ -18,7 +21,7 @@ const SocialFiMarketplace = styled.div`
   box-sizing: border-box;
   @media screen and (max-width: 800px) {
     width: 100%;
-    height: 1px;
+    height: 1px; 
   }
 `;
 const SocialFiMarketplace1 = styled.div`
@@ -268,9 +271,14 @@ const FloyxMarketplaceWrapper = styled.div`
   align-items: flex-start;
   justify-content: center;
   padding: 0px 20px;
+  
 `;
 const HaveYouHeard = styled.p`
   margin: 0;
+   @media screen and (max-width: 450px) {
+   margin:15px;
+   
+  }
 `;
 const HaveYouHeardContainer = styled.div`
   align-self: stretch;
@@ -307,6 +315,7 @@ height:329px;
 const FrameButton = styled(Button)`
   align-self: stretch;
   height: 48px;
+  margin-top: 5rem;
 `;
 const EllipseDiv = styled.div`
   height: 12px;
@@ -342,9 +351,11 @@ const FrameWrapper1 = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0px 77px;
+  
 `;
 const FrameContainer = styled.div`
   width: 224px;
+  // height: 100rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -353,12 +364,14 @@ const FrameContainer = styled.div`
 `;
 const LandingPage = styled.img`
   align-self: stretch;
- 
   position: relative;
   max-width: 100%;
   overflow: hidden;
   flex-shrink: 0;
   object-fit: cover;
+    @media screen and (max-width: 450px) {
+    margin:20px;
+  }
 `;
 const EcoSystem = styled.div`
   width:866px;
@@ -450,6 +463,7 @@ const HeadingContainer = styled.b`
   @media screen and (max-width: 450px) {
     font-size: 30px;
     line-height: 36px;
+    
   }
 `;
 const SubHeadingContainer = styled.div`
@@ -459,6 +473,11 @@ const SubHeadingContainer = styled.div`
   line-height: 27px;
   color: rgba(255, 255, 255, 0.7);
   z-index: 1;
+  @media screen and (max-width: 450px) {
+    // font-size: 30px;
+    // line-height: 36px;
+    // margin:20px;
+  }
 `;
 const FrameComponent: NextPage = () => {
   const [value, setValue] = useState({

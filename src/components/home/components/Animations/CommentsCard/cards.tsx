@@ -89,6 +89,9 @@ const SubHeading = styled.div`
   display: inline-block;
   flex-shrink: 0;
   z-index: 2;
+  @media screen and (max-width: 450px) {
+    margin:0px 20px;
+  }
 `;
 const CarasoulContainer = styled.div`
   

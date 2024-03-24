@@ -25,6 +25,7 @@ const MainContainer = styled.section`
 //   }
 //   @media screen and (max-width: 450px) {
 //     gap: 0px 16px;
+padding: 0px 20px;
 //   }
 // 
 width:100%;
@@ -157,6 +158,11 @@ const HeadingContainer = styled.div`
   justify-content: flex-start;
   gap: 29px 0px;
   max-width: 100%;
+  @media screen and (max-width: 450px) {
+    display: flex;
+   justify-content:center;
+   align-items:centre;;
+  }
 `;
 const Heading1 = styled.b`
   width: 212px;
@@ -174,6 +180,9 @@ const Heading1 = styled.b`
   @media screen and (max-width: 450px) {
     font-size: 30px;
     line-height: 27px;
+    display: flex;
+    justify-content:center;
+    align-items:centre;;
   }
 `;
 const Button1 = styled(Button)`
@@ -212,6 +221,13 @@ const Heading2 = styled.div`
   color: rgba(255, 255, 255, 0.7);
   display: inline-block;
   flex-shrink: 0;
+  @media screen and (max-width: 450px) {
+    // display: flex;
+    justify-content:center;
+    align-items:centre;;
+    // padding:10px 10px;
+    margin:10px 10px;
+  }
 `;
 const SubContainer = styled.div`
   align-self: stretch;
@@ -235,6 +251,7 @@ const ContainernameInput = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   gap: 0px 16px;
+  // padding: 0px 8px;
   max-width: 100%;
   text-align: left;
   font-family: Poppins;
@@ -281,6 +298,7 @@ const GeneralControls = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 0px 16px;
+  padding: 0px 2px;
 `;
 const Icon1 = styled.img`
   
@@ -581,6 +599,9 @@ const ImageIcon = styled.img`
   max-height: 100%;
   object-fit: cover;
   z-index: 1;
+   @media screen and (max-width: 450px) {
+  // padding: 20px;
+  }
 `;
 const Audio1 = styled.div`
   width: 35px;

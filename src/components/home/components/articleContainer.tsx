@@ -34,6 +34,9 @@ const Heading2 = styled.div`
   text-align: center;
   display: inline-block;
   flex-shrink: 0;
+  @media screen and (max-width: 450px) {
+  margin-bottom:15px
+  }
 `;
 const TextContainer = styled.div`
   width: 442px;
