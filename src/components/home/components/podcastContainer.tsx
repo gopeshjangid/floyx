@@ -120,6 +120,11 @@ const RecordContentConduct = styled.div`
   font-size: 18px;
   line-height: 27px;
   color: rgba(255, 255, 255, 0.7);
+   @media screen and (max-width: 450px) {
+    right: -25px;
+  width: 360px;
+  }
+  
 `;
 const SignUpButton = styled.div`
   align-self: stretch;
@@ -163,6 +168,10 @@ const UnionIcon = styled.img`
   height: 58px;
   width: 171px;
   position: relative;
+   @media screen and (max-width:  450px) {
+     left: 125px;
+  }
+  
 `;
 const PodcastVoiceLines = styled.button`
   cursor: pointer;

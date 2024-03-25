@@ -6,7 +6,7 @@ const Background = styled.div`
  display: flex;
   flex-wrap: wrap;
   position: absolute;
-  top: 204px;
+  top: 98px;
   // left: calc(50% - 651.45px);
   border-radius: 10px;
   width: 1157px;
@@ -48,7 +48,7 @@ const EasyAndQuick = styled.div`
   line-height: 27px;
   text-align: left;
   padding-right: 18px;
-`;
+`;  
 const DownloadTheAppParent = styled.div`
   align-self: stretch;
   display: flex;
@@ -98,7 +98,7 @@ position: relative;
   z-index: 1;
   @media screen and (max-width: 978px) {
     left: 379px;
-    top: 0px;
+    top: -198px;
   }
 `;
 const DownloadAppRoot = styled.div`
