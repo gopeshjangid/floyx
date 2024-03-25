@@ -140,7 +140,7 @@ const FrameComponent1: NextPage = () => {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-300px" }
+      { rootMargin: "-500px" }
     );
 
     if (ref?.current) { observer.observe(ref.current); }

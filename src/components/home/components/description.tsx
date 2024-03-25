@@ -242,13 +242,13 @@ left?.addEventListener("mouseover", leftIn, false);
   useEffect(() => {
 
     if (isIntersecting) {
-      document?.querySelector("#stickyBtn")?.classList.remove("display-show")
+      document?.querySelector("#stickyBtn")?.classList?.add("display-show")
       console.log("in")
       //dconsooleocument?.querySelector("#postPhoto")?.classList.add("zoom-in-out-box");
     }
     else {
-       console.log("gone")
-      document?.querySelector("#postPhoto")?.classList.remove("zoom-in-out-box");
+      document?.querySelector("#stickyBtn")?.classList?.remove("display-show");
+     
 
     };
 
@@ -264,7 +264,7 @@ left?.addEventListener("mouseover", leftIn, false);
             <CompanyAboutInfo/>
           </DetailsInnerContainer>
           <Subheader>
-            <ButtonContainer>
+            <ButtonContainer ref={ref}>
               <Bttn
                 disableElevation={true}
                 variant="contained"
@@ -305,7 +305,7 @@ left?.addEventListener("mouseover", leftIn, false);
             </Image1>
           </AnimatedInnerContainer>
         </AnimatedPostContainer>
-        <div ref={ref}></div>
+        <div ></div>
       </InnerContainer>
     </MainContainer>
   );

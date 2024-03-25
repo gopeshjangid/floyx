@@ -17,12 +17,12 @@
   width: 100%;
   height: 100%;
 }
-.bg-contain {
+/* .bg-contain {
   background-size: contain;
 }
 .bg-cover {
   background-size: cover;
-}
+} */
 .bg-auto {
   background-size: auto;
 }
@@ -61,7 +61,7 @@ body {
   width: 89%;
     height: 100%;
     top: 0%;
-    left: 7%;
+    left: 12%;
     opacity: 1;
     z-index: 1;
 }
@@ -159,7 +159,7 @@ body {
     linear-gradient(127.19deg, #ab59ffff 0%, #858fffff 56%, #4d9affff 100%);
 }
 .nodeBg-I03148_933179 {
-  width: 100%;
+  width: 80%;
   height: calc(2970.3407620059456 * var(--ratio));
   left: calc(-3.645139745600545e-12 * var(--ratio));
   top: calc(47.668985656315165 * var(--ratio));

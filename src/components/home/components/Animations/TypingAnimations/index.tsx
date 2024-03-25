@@ -4,14 +4,14 @@ import { TypeAnimation } from 'react-type-animation';
 import useDevice from "@/lib/hooks/useDevice";
 export const TypingAnimation = () => {
   const { isMobile } = useDevice();
-  const ref =useRef(null)
+  const ref =useRef<HTMLDivElement>(null)
    useEffect(() => {
      const value = ref?.current
      if (isMobile && ref.current){
    
        ref.current.style.fontSize = "30px"
   }
-else{
+else if (ref.current) {
  ref.current.style.fontSize = "50px"
 }
   }, [isMobile,ref]); // Empty dependency array ensures the effect runs only once
