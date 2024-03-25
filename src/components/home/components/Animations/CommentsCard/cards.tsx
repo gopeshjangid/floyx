@@ -106,13 +106,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const CommentsCards = () => {
-  const ref =useRef(null)
-  console.log("Changes appearing to local")
-  useEffect(() => {
-   const value =ref.current
-   
-    debugger
-  }, [ref]);
+
   const settings = {
     className: "center",
     arrows:false,
@@ -135,7 +129,7 @@ export const CommentsCards = () => {
         </SubHeading>
       </HeadingWrap>
       <CarasoulContainer  >
-        <div ref={ref} className="slider-container">
+        <div  className="slider-container">
           <Slider {...settings}>
               <div 
                    
