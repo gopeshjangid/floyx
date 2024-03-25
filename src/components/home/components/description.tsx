@@ -35,8 +35,8 @@ const ButtonContainer = styled.div`
   z-index: 3;
    @media screen and (max-width: 425px) {
     width:100%;
-     
-   
+
+
   }
 `;
 const Subheader = styled.div`
@@ -51,14 +51,14 @@ const DetailsContainer = styled.div`
   width: 1009px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 23px 0px;
   max-width: 100%;
 `;
 
 const Image = styled.img`
- 
+
   width: 100%;
   object-fit: contain;
   position: absolute;
@@ -97,7 +97,7 @@ const ImageCenterContainer = styled.div`
   transform: rotate(180deg);
   max-width: 100%;
   z-index: 1;
-  
+
 `;
 const ImageRightContainer = styled.div`
 height:100%;
@@ -152,14 +152,14 @@ const AnimatedPostContainer = styled.div`
     height:235px;
     margin-top:23px;
   }
-  
+
 `;
 const InnerContainer = styled.div`
- 
+
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 61px 0px;
   max-width: 100%;
   @media screen and (max-width: 800px) {
@@ -204,11 +204,11 @@ const Description = () => {
     return () => observer.disconnect();
   }, [isIntersecting]);
 
- 
+
 
   let left = document.getElementById("left");
 
-  
+
 
   function leftIn() {
     document?.querySelector("#postPhoto")?.classList?.remove("left-hover-out");
@@ -219,7 +219,7 @@ const Description = () => {
   }
 
   function leftOut() { document?.querySelector("#postPhoto")?.classList?.remove("left-hover");
-  
+
   document?.querySelector("#postPhoto")?.classList.add("left-hover-out")
 
 }
@@ -228,7 +228,7 @@ left?.addEventListener("mouseover", leftIn, false);
 
   let right = document.getElementById("right");
 
-  
+
 
   function rightIn() {
     document?.querySelector("#postPhoto")?.classList?.remove("right-hover-out")
@@ -252,12 +252,12 @@ left?.addEventListener("mouseover", leftIn, false);
 
     };
 
-    
+
 
   }, [isIntersecting]);
   return (
     <MainContainer >
-       
+
       <InnerContainer>
         <DetailsContainer>
           <DetailsInnerContainer>
