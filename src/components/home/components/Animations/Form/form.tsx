@@ -23,11 +23,11 @@ export const AnimateForm = () => {
   useEffect(() => {
     if (isIntersecting) {
       document?.querySelector("#id-I03221_1366730")?.classList.add("object");
-      document?.querySelector("#id-I03221_1366701")?.classList.add("object");
+      document?.querySelector("#id-I03221_1366701")?.classList.add("objectup");
     }
     else {
       document?.querySelector("#id-I03221_1366730")?.classList.remove("object");
-      document?.querySelector("#id-I03221_1366701")?.classList.remove("object");
+      document?.querySelector("#id-I03221_1366701")?.classList.remove("objectup");
     };
 
   }, [isIntersecting]);

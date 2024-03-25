@@ -15,7 +15,7 @@
   }
 }
 .object {
-  animation: MoveUpDown 10s linear infinite;
+  animation: MoveUpDown 6s linear infinite;
   position: absolute;
   opacity:1;
  
@@ -27,6 +27,21 @@
   }
   50% {
     transform: translateY(-30px);
+  }
+}
+.objectup {
+  animation: MoveUp 6s linear infinite;
+  position: absolute;
+  opacity:1;
+ 
+}
+
+@keyframes MoveUp {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(30px);
   }
 }
 .animationClass-03221 {

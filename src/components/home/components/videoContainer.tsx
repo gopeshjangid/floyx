@@ -202,7 +202,7 @@ const Div = styled.div`
 `;
 const VideoLive = styled.div`
   align-self: stretch;
-  width: 77px;
+  width: 81px;
   border-radius: 20px;
   background-color: #d24857;
   border: 1px solid #c74e5b;
