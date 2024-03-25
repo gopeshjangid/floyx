@@ -1,19 +1,14 @@
 "use client";
-import React, { useEffect } from "react";
-import ReactDOM from "react-dom/client";
+import React, { useEffect ,useRef} from "react";
 import "./style.css";
 import "./animation.css";
-import runAnimations, { allLinks, allFunctions } from "./scripts";
 import styled from '@emotion/styled';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 
-// import required modules
-import { Autoplay,EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
+
 
 
 const MainContainer = styled.section`
@@ -31,6 +26,7 @@ height:478px;
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
+  overflow:hidden;
   // @media screen and (max-width: 1350px) {
   //   padding-left: 278px;
   //   padding-right: 278px;
@@ -110,10 +106,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const CommentsCards = () => {
+  const ref =useRef(null)
   console.log("Changes appearing to local")
   useEffect(() => {
-   // runAnimations();
-  }, []);
+   const value =ref.current
+   
+    debugger
+  }, [ref]);
   const settings = {
     className: "center",
     arrows:false,
@@ -136,27 +135,23 @@ export const CommentsCards = () => {
         </SubHeading>
       </HeadingWrap>
       <CarasoulContainer  >
-        <div className="slider-container">
+        <div ref={ref} className="slider-container">
           <Slider {...settings}>
-              <div
+              <div 
                    
                  
                 >
-                 <img width='376' src='/image0.png'/>
+                 <img className="sli-img" width="379" src='/image0.png'/>
                 </div>
             
 
- <div
-                   
-                 
-                >
-                 <img width='376' src='/image1.png'/>
+ <div >
+                 <img className="sli-img" width="379" src='/image1.png'/>
                 </div>
                  <div
-                   
-                 
+                
                 >
-                 <img width='376' src='/image2.png'/>
+                 <img className="sli-img" width="379"  src='/image2.png'/>
                 </div>
 
            
