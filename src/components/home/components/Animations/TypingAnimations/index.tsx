@@ -1,37 +1,28 @@
 "use client";
 import React, { useMemo,useEffect,useState,useRef } from "react";
 import { TypeAnimation } from 'react-type-animation';
-
+import useDevice from "@/lib/hooks/useDevice";
 export const TypingAnimation = () => {
-  const [fontSize, setFontSize] = useState(50); // Default font size
-  
+  const { isMobile } = useDevice();
+  const ref =useRef<HTMLDivElement>(null)
    useEffect(() => {
-    // Function to calculate and update font size based on viewport width
-    function updateFontSize() {
-       const viewportWidth = window.innerWidth;
-      let newSize = 50; // Default font size
-             if (viewportWidth < 400) {
-         newSize = 30; // For smaller screens
-      }
-      setFontSize(newSize);
-    }
-     // Call the function initially and add event listener for resize
-    updateFontSize();
-    window.addEventListener('resize', updateFontSize);
-//debugger
-    // Cleanup function to remove event listener
-         return () => {
-       window.removeEventListener('resize', updateFontSize);
-    };
-  }, [window.innerWidth]); // Empty dependency array ensures the effect runs only once
+     const value = ref?.current
+     if (isMobile && ref.current){
+   
+       ref.current.style.fontSize = "30px"
+  }
+else if (ref.current) {
+ ref.current.style.fontSize = "50px"
+}
+  }, [isMobile,ref]); // Empty dependency array ensures the effect runs only once
 
 
     return (
          <div className="type-animation-parent"> 
-         <div className="child-type">
+         <div className="child-type abs">
 
        <TypeAnimation
-         className="abs"
+       ref={ref}       
         sequence={[
           'Time for a Revolution in The\n Social Media Industry!',
         1000,
@@ -39,7 +30,7 @@ export const TypingAnimation = () => {
          
         ]}
         speed={20}
-             style={{ whiteSpace: 'pre-line', fontSize: `${fontSize}px`, fontWeight: "700"}}
+        style={{whiteSpace: 'pre-line', fontSize: '50px', fontWeight: "700"}}
         repeat={Infinity}
       />
          </div>
