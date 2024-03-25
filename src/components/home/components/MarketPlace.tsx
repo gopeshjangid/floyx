@@ -24,6 +24,9 @@ const SocialFiMarketplace = styled.div`
     width: 100%;
     height: 1px; 
   }
+  @media screen and (max-width: 430px) {
+    height: 900px;
+   }
 `;
 const SocialFiMarketplace1 = styled.div`
   height: 1064px;
@@ -216,16 +219,12 @@ const ShineBackground = styled.div`
   gap: 98px 0px;
   max-width: 162%;
   flex-shrink: 0;
-  // @media screen and (max-width: 800px) {
-  //   height: auto;
-  //   gap: 49px 0px;
-  //   padding-left: 37px;
-  //   padding-right: 41px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 450px) {
-  //   gap: 24px 0px;
-  // }
+  @media screen and (max-width: 450px) {
+    max-height: 800px;
+  }
+  @media screen and (max-width: 380px) {
+    max-height: 950px;
+  }
 `;
 const FloyxMarketplace = styled.div`
   width: 100%;
@@ -384,6 +383,10 @@ display:flex;
   font-size: 29px;
   color: rgba(255, 255, 255, 0.7);
   font-family: Poppins;
+  @media screen and (max-width: 430px) {
+    position:relative;
+    top: -90px;
+   }
 `;
 
 
@@ -400,12 +403,14 @@ const TextContainer = styled.div`
 `;
 const TextOuterContainer = styled.div`
   width: 866px;
+  height: 412px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   gap: 23px 0px;
   max-width: 100%;
+  
 `;
 const TextInnerContainer = styled.div`
   align-self: stretch;
@@ -422,6 +427,13 @@ const HeadingContainer = styled.b`
   line-height: 120%;
   display: inline-block;
   z-index: 2;
+  font-family: Poppins;
+font-size: 50px;
+font-weight: 700;
+line-height: 60px;
+letter-spacing: -0.02em;
+text-align: center;
+color:white;
   @media screen and (max-width: 800px) {
     font-size: 40px;
     line-height: 48px;

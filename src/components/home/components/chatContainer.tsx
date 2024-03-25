@@ -228,9 +228,13 @@ const SendBoxOutline = styled(TextField)`
   top: 0px;
   bottom: 0px;
   left: 0px;
+  
 `;
 const InnerText = styled.div`
   position: relative;
+   @media screen and (max-width: 440px) {
+    font-size:12px;
+  }
 `;
 const SendBoxInner = styled.div`
   align-self: stretch;
@@ -240,6 +244,9 @@ const SendBoxInner = styled.div`
   justify-content: flex-start;
   padding: 0px 36px 0px 0px;
   z-index: 1;
+  @media screen and (max-width: 440px) {
+    padding: 0px 3px 0px 0px;
+  }
 `;
 const SendBox = styled.div`
   width: 205px;
@@ -249,6 +256,9 @@ const SendBox = styled.div`
   justify-content: flex-start;
   padding: 15px 0px 0px;
   box-sizing: border-box;
+  @media screen and (max-width: 440px) {
+    //width: 100%;
+  }
 `;
 const SendBtn = styled.img`
   width: 22px;
@@ -262,6 +272,9 @@ const SendButtonInner = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   padding: 16px 0px 0px;
+  @media screen and (max-width: 440px) {
+    width: 40px;
+  }
 `;
 const PasswordInputFrame = styled.div`
   position: absolute;
@@ -303,6 +316,9 @@ const SendButtonContainer = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   gap: 0px 44px;
+  @media screen and (max-width: 440px) {
+    gap: 0px 0px;
+  }
 `;
 const SendBoxContainer = styled.div`
   flex: 1;
@@ -313,11 +329,14 @@ const SendBoxContainer = styled.div`
   padding: 0px 0px 0px 30px;
   box-sizing: border-box;
   position: relative;
-  min-width: 326px;
   max-width: 100%;
   gap: 20px;
   @media screen and (max-width: 800px) {
     flex-wrap: wrap;
+  }
+  @media screen and (max-width: 440px) {
+    flex-wrap: nowrap;
+    width: 80%;
   }
 `;
 const CheckboxParent = styled.div`
@@ -354,6 +373,9 @@ const AutoLayoutHorizontal = styled.div`
   padding: 30px;
   box-sizing: border-box;
   max-width: 100%;
+  @media screen and (max-width: 440px) {
+    padding: 8px;;
+  }
 `;
 const MessageContainer = styled.div`
   flex: 1;
@@ -416,6 +438,9 @@ const MainContainer = styled.div`
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
+  @media screen and (max-width: 440px) {
+    padding: 0px 5px 0px 5px;
+  }
 `;
 
 
@@ -493,13 +518,13 @@ const ChatBox = () => {
                   </Checkbox>
                   <SendBoxContainer>
                     <SendBoxOutline
-                      variant="outlined"
                       sx={{
                         "& fieldset": { border: "none" },
                         "& .MuiInputBase-root": {
                           height: "55px",
                           backgroundColor: "#1b1830",
                           borderRadius: "5px",
+                          border: '0px'
                         },
                         width: "612px",
                       }}

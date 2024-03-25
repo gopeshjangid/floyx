@@ -293,7 +293,6 @@ const AboutUs = () => {
             <SocialMediaIcon loading="lazy" alt="" src="/twitteralt-2.svg" />
             <SocialMediaIcon loading="lazy" alt="" src="/instagram-1.svg" />
             <YoutubeIcon loading="lazy" alt="" src="/youtube.svg" />
-            <SocialMediaIcon loading="lazy" alt="" src="/tiktok.svg" />
             <SocialMediaIcon loading="lazy" alt="" src="/facebook-1.svg" />
             <SocialMediaIcon alt="" src="/envelope-1.svg" />
           </SocialMediaContainer>

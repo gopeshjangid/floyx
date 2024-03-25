@@ -168,6 +168,8 @@ const UnionIcon = styled.img`
   height: 58px;
   width: 171px;
   position: relative;
+  top: 40%;
+  left: 35%;
    @media screen and (max-width:  450px) {
      left: 125px;
   }

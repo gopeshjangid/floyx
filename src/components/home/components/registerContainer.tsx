@@ -3,6 +3,7 @@ import {
   TextField,
   Button,
   Box,
+  Stack,
 } from "@mui/material";
 import styled from '@emotion/styled'
   ;
@@ -1091,26 +1092,16 @@ const RegisterContainer = () => {
                   Make registration smooth and secure with one click with
                   Connect Wallet
                 </MakeRegistrationSmooth>
-                <CreateAccountLabel
-                  startIcon={
-                    <Box sx={{width: 35, height: 33, background: '#fff', borderRadius: '4px'}}><img width="21px" height="21px" src="/wallet-1.png" /></Box>
-                  }
-                  disableElevation={true}
-                  variant="contained"
-                  sx={{
-                    justifyContent: 'flex-start',
-                    gap:5,
-                    textTransform: "none",
-                    color: "#0b081f",
-                    fontSize: "16",
-                    background: "#4285f4",
-                    borderRadius: "10px",
-                    "&:hover": { background: "#4285f4" },
-                    height: 50,
-                  }}
-                >
-                  Connect Wallet
-                </CreateAccountLabel>
+                <ConnectWalletLabel>
+                <FrameSignupWithGoogleLogo>
+                    <PrivacyPolicy>
+                      <SignUpWith>Connect Wallet</SignUpWith>
+                    </PrivacyPolicy>
+                    <MainMenuLinks>
+                      <Image55Icon alt="" src="/wallet-1.png" />
+                    </MainMenuLinks>
+                  </FrameSignupWithGoogleLogo>
+                  </ConnectWalletLabel>
               </ButtonGoogle>
             </GoogleLogo>
           </ExistingUsersText>

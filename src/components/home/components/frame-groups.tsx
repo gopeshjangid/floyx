@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
 import Link from "next/link";
+import { Tooltip } from "@mui/material";
 
 const FrameGroupsChild = styled.div`
   height: 383px;
@@ -164,26 +165,24 @@ const FrameGroups: NextPage = () => {
         <ProductMenu>
           <Products>Products</Products>
           <LaunchpadSocialfiMarketplaceContainer>
-            <Launchpad href={'/'}>{`Launchpad `}</Launchpad>
-            <Launchpad href={'/'}>{`SocialFi `}</Launchpad>
-            <Launchpad href={'/'}>{`Marketplace `}</Launchpad>
-            <Launchpad href={'/'}>NFT Airdrops</Launchpad>
-            <Launchpad href={'/'}>{`DEX Buy `}</Launchpad>
-            <Launchpad href={'/'}>Floyx Tokens</Launchpad>
+           <Launchpad href={'/register'}>{`SocialFi `}</Launchpad>
+            <Tooltip title='coming soon'><Launchpad href={'/#'}>{`Launchpad `}</Launchpad></Tooltip>
+            <Tooltip title='coming soon'><Launchpad href={'/#'}>{`Marketplace `}</Launchpad></Tooltip>
+            <Tooltip title='coming soon'><Launchpad href={'/#'}>NFT Airdrops</Launchpad></Tooltip>
+            <Tooltip title='coming soon'><Launchpad href={'/#'}>{`DEX Buy `}</Launchpad></Tooltip>
+            <Tooltip title='coming soon'><Launchpad href={'/#'}>Floyx Tokens</Launchpad></Tooltip>
           </LaunchpadSocialfiMarketplaceContainer>
         </ProductMenu>
         <CompanyHub>
           <Products>Company</Products>
           <LaunchpadSocialfiMarketplaceContainer>
             <Launchpad href={'/'}>Brand Assets</Launchpad>
-            <Launchpad href={'/'}>Partners</Launchpad>
           </LaunchpadSocialfiMarketplaceContainer>
         </CompanyHub>
         <CompanyHub>
           <Products>Resources</Products>
           <BlogFaqSupportContainer>
             <Launchpad href={'/'}>Blog</Launchpad>
-            <Launchpad href={'/'}>FAQ</Launchpad>
             <Launchpad href={'/'}>Support</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>

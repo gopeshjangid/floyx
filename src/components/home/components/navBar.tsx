@@ -60,7 +60,7 @@ const SubContainer2 = styled.div`
   }
 `;
 const SubContainer = styled.div`
-  width: 1070px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -259,6 +259,7 @@ const FrameComponent1: NextPage = () => {
               top: 0,
               zIndex: 99999,
               textTransform: "none",
+              maxWidth: '20%',
               color: "#100d26",
               fontSize: "16",
               background:

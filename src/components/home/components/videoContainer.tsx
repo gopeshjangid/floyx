@@ -112,6 +112,10 @@ const Heading1 = styled.b`
 const Button1 = styled(Button)`
   height: 55px;
   width: 126px;
+  @media screen and (max-width: 440px) {
+    font-size: 12px;
+    padding: 0px;
+  }
 `;
 const Audio2 = styled.div`
   width: 35px;
@@ -573,17 +577,6 @@ const ImageContainerBg = styled.img`
   }
 `;
 const ImageContainerBg2 = styled.img`
-  // align-self: stretch;
-  //     bottom: 1200px;
-  //   left: 567px;
-  // margin:0px;
-  // height: 588.1px;
-  // position: relative;
-  // max-width: 100%;
-  // overflow: hidden;
-  // flex-shrink: 0;
-  // object-fit: contain;
-
     width: 240px !important;
     -webkit-align-self: stretch;
     -ms-flex-item-align: stretch;
