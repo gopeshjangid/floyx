@@ -101,6 +101,7 @@ const Heading1 = styled.b`
     line-height: 36px;
   }
   @media screen and (max-width: 450px) {
+    margin-top: 10px;
     font-size: 30px;
     line-height: 27px;
     display: flex;
@@ -177,7 +178,7 @@ const ContainernameInput = styled.div`
   text-align: left;
   font-family: Poppins;
   @media screen and (max-width: 800px) {
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
   }
 `;
 const VideoLiveParent = styled.div`
@@ -369,7 +370,7 @@ const InputField = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   min-width: 273px;
   max-width: 100%;
