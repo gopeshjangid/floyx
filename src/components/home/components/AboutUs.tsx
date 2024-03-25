@@ -290,10 +290,16 @@ const AboutUs = () => {
         <SocialMediaOutterContainer>
           <SocialMediaText>Connect with Floyx:</SocialMediaText>
           <SocialMediaContainer>
-            <SocialMediaIcon loading="lazy" alt="" src="/twitteralt-2.svg" />
+            <Link href={"https://twitter.com/floyxcom"}>
+              <SocialMediaIcon loading="lazy" alt="" src="/twitteralt-2.svg" />
+            </Link>
+            <Link href={"https://www.instagram.com/floyxcom"}>
             <SocialMediaIcon loading="lazy" alt="" src="/instagram-1.svg" />
+            </Link>
             <YoutubeIcon loading="lazy" alt="" src="/youtube.svg" />
+            <Link href={"https://www.facebook.com/Floyxcom?mibextid=ZbWKwL"}>
             <SocialMediaIcon loading="lazy" alt="" src="/facebook-1.svg" />
+            </Link>
             <SocialMediaIcon alt="" src="/envelope-1.svg" />
           </SocialMediaContainer>
         </SocialMediaOutterContainer>

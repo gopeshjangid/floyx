@@ -189,12 +189,12 @@ const FrameGroups: NextPage = () => {
         <CompanyHub>
           <Products>Social</Products>
           <BlogFaqSupportContainer>
-            <Launchpad target="__blank" href={'/https://twitter.com/floyxcom'}>Twitter</Launchpad>
+            <Launchpad target="__blank" href={'https://twitter.com/floyxcom'}>Twitter</Launchpad>
+            <Launchpad target="__blank" href={'https://www.linkedin.com/company/floyx'}>Linkedin</Launchpad>
             <Launchpad href={'/'}>Telegram</Launchpad>
             <Launchpad href={'/'}>Discord</Launchpad>
-            <Launchpad href={'/'}>Instagram</Launchpad>
-            <Launchpad href={'/'}>Facebook</Launchpad>
-            <Launchpad href={'/'}>TikTok</Launchpad>
+            <Launchpad href={'https://www.instagram.com/floyxcom'}>Instagram</Launchpad>
+            <Launchpad href={'https://www.facebook.com/Floyxcom?mibextid=ZbWKwL'}>Facebook</Launchpad>
             <Launchpad href={'/'}>YouTube</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>

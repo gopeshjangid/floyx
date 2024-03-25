@@ -16,7 +16,7 @@ width:100%;
   color: #fff;
   font-family: Poppins;
   overflow:hidden;
-
+  
 
 `;
 
@@ -181,8 +181,8 @@ const ContainernameInput = styled.div`
   max-width: 100%;
   text-align: left;
   font-family: Poppins;
-  @media screen and (max-width: 800px) {
-    // flex-wrap: wrap;
+  @media screen and (max-width: 400px) {
+    gap: 0px 0px;
   }
 `;
 const VideoLiveParent = styled.div`
@@ -600,8 +600,6 @@ const ImageContainerBg2 = styled.img`
 const VideoContainer =()=>{
     return(<MainContainer>
           <ImageContainerBg  src="/Group341.png" />
-        {/* <ImageContainer>
-        </ImageContainer> */}
         <InnerContainer>
           <HeadingContainer>
             <Heading1>Videos</Heading1>

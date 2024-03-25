@@ -2,8 +2,6 @@
 import {
   TextField,
   Button,
-  Box,
-  Stack,
 } from "@mui/material";
 import styled from '@emotion/styled'
   ;
@@ -642,6 +640,9 @@ const ForMainstreamUsers = styled.div`
 const SignUpWith = styled.div`
   position: relative;
   font-weight: 500;
+  @media screen and (max-width: 450px) {
+    font-size: 14px !important;
+  }
 `;
 const PrivacyPolicy = styled.div`
   position: absolute;
@@ -677,6 +678,9 @@ const MainMenuLinks = styled.div`
   justify-content: flex-start;
   padding: 8px;
   z-index: 1;
+  @media screen and (max-width: 480px) {
+    top: 5px;;
+  }
 `;
 const FrameSignupWithGoogleLogo = styled.div`
   height: 50px;
@@ -699,11 +703,6 @@ const MakeRegistrationSmooth = styled.div`
   @media screen and (max-width: 480px) {
     font-size: 14px !important;
   }
-`;
-const CreateAccountLabel = styled(Button)`
-  align-self: stretch;
-  height: 50px;
-  position: relative;
 `;
 const ButtonGoogle = styled.div`
   align-self: stretch;
@@ -779,20 +778,6 @@ const RegisterNow = styled.div`
     font-size: 24px;
     height:1400px;
   }
-  // @media screen and (max-width: 1350px) {
-  //   padding-left: 71px;
-  //   padding-right: 71px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 1150px) {
-  //   padding-top: 45px;
-  //   padding-bottom: 45px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 800px) {
-  //   padding: 29px 35px;
-  //   box-sizing: border-box;
-  // }
 `;
 const RegisterContainerRoot = styled.section`
 width:100%;
@@ -801,7 +786,6 @@ width:100%;
   flex-direction: column;
   align-items: center;
   justify-content:center;
-  
   box-sizing: border-box;
   gap: 40px 0px;
   max-width: 100%;
@@ -809,26 +793,6 @@ width:100%;
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
-  // @media screen and (max-width: 1350px) {
-  //   padding-left: 86px;
-  //   padding-right: 86px;
-  //   padding-bottom: 330px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 1150px) {
-  //   padding-bottom: 214px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 800px) {
-  //   gap: 20px 0px;
-  //   padding-left: 43px;
-  //   padding-right: 43px;
-  //   box-sizing: border-box;
-  // }
-  // @media screen and (max-width: 450px) {
-  //   padding-left: 20px;
-  //   padding-right: 20px;
-  // }
 `;
 
 const RegisterContainer = () => {
