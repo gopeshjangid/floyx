@@ -11,7 +11,7 @@ const FrameChild = styled.div`
   box-sizing: border-box;
   display: none;
   // @media screen and (max-width: 450px) {
-  //   margin: 25px;
+  //   margin: 25px;  
   // }
 `;
 const SocialFiMarketplace = styled.div`
@@ -260,12 +260,15 @@ const HaveYouHeard = styled.p`
 `;
 const HaveYouHeardContainer = styled.div`
   align-self: stretch;
-  height: 154px;
   position: relative;
   font-size: 16px;
   line-height: 27px;
   display: inline-block;
   flex-shrink: 0;
+  @media screen and (max-width: 380px) {
+     margin-bottom: 50px;
+    height: 700px;
+  }
 `;
 const FrameGroup = styled.div`
   flex: 1;

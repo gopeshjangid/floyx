@@ -105,11 +105,11 @@ const Heading1 = styled.b`
     line-height: 27px;
     display: flex;
     justify-content:center;
-    align-items:centre;;
+    align-items:centre;
   }
 `;
 const Button1 = styled(Button)`
-  height: 58px;
+  height: 55px;
   width: 126px;
 `;
 const Audio2 = styled.div`
@@ -145,11 +145,9 @@ const Heading2 = styled.div`
   display: inline-block;
   flex-shrink: 0;
   @media screen and (max-width: 450px) {
-    // display: flex;
-    justify-content:center;
-    align-items:centre;;
-    // padding:10px 10px;
-    margin:10px 10px;
+    text-align:centre;
+    padding:0px 10px;
+    margin:0px 20px;
   }
 `;
 const SubContainer = styled.div`
@@ -190,6 +188,8 @@ const VideoLiveParent = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  margin-bottom: 0px;
+  margin-top: 14px
 `;
 const Div = styled.div`
   width: 7px;
@@ -369,9 +369,9 @@ const InputField = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  min-width: 324px;
+  min-width: 273px;
   max-width: 100%;
 `;
 const ChipContainer = styled.div`
@@ -442,6 +442,10 @@ const Containerpreview = styled.div`
   max-width: 100%;
   font-size: 16px;
   color: #eff0fa;
+  // margin: 10px;
+   @media screen and (max-width: 450px) {
+     margin: 15px;
+   }
 `;
 const VideoTile = styled.div`
   align-self: stretch;
