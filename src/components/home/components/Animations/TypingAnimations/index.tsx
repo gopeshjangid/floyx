@@ -12,7 +12,7 @@ export const TypingAnimation = () => {
        ref.current.style.fontSize = "30px"
   }
 else if (ref.current) {
- ref.current.style.fontSize = "50px"
+ ref.current.style.fontSize = "58px"
 }
   }, [isMobile,ref]); // Empty dependency array ensures the effect runs only once
 
@@ -30,7 +30,7 @@ else if (ref.current) {
          
         ]}
         speed={20}
-        style={{whiteSpace: 'pre-line', fontSize: '50px', fontWeight: "700"}}
+        style={{whiteSpace: 'pre-line', fontSize: '58px', fontWeight: "700",width:"1009px"}}
         repeat={Infinity}
       />
          </div>

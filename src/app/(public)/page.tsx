@@ -119,18 +119,16 @@ const GradiantContainerBg2 = styled.div`
   z-index: 9;
 `;
 const NavBarContainer = styled.section`
-  align-self: stretch;
+  align-self: center;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 0px 0px 36.60000000000037px;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
-  gap: 45px 0px;
   max-width: 100%;
-  @media screen and (max-width: 800px) {
-    gap: 22px 0px;
-  }
+  // @media screen and (max-width: 800px) {
+  //   gap: 22px 0px;
+  // }
 `;
 
 const MainContainer = styled.div`
