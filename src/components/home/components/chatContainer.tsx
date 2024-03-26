@@ -157,7 +157,7 @@ const BgLine = styled.div`
   text-align: center;
 `;
 const ChatBoxImage = styled.img`
-  align-self: stretch;
+  // align-self: stretch;
   height: 63px;
   position: relative;
   max-width: 100%;
@@ -328,13 +328,13 @@ const SendBoxContainer = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 0px 0px 0px 30px;
+  // padding: 0px 0px 0px 30px;
   box-sizing: border-box;
   position: relative;
   max-width: 100%;
   gap: 20px;
   @media screen and (max-width: 800px) {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
   @media screen and (max-width: 440px) {
     flex-wrap: nowrap;
@@ -496,10 +496,19 @@ const ChatBox = () => {
                   <Heading>Chat</Heading>
                 </BgLine>
                 <div id="chat2" className="slideDiv">
-                  <ChatBoxImage alt="" src="/label-frame@2x.png" />
+                 <div className="for-web-chats">
+                    <ChatBoxImage alt="" src="/label-frame@2x.png" />
                   <ChatBoxImage className="" alt="" src="/chat2.png" />
                   <ChatBoxImage alt="" src="/chat3.png" />
                   <ChatBoxImage alt="" src="/chat4.png" />
+                  </div>
+
+                  <div className="for-m-chats">
+                    <ChatBoxImage style={{width:"57%",objectFit:"fill"}} alt="" src="/mchat1.png" />
+                  <ChatBoxImage style={{width:"57%",objectFit:"fill"}} className="" alt="" src="/mchat2.png" />
+                  <ChatBoxImage style={{width:"57%",objectFit:"fill"}} alt="" src="/mchat3.png" />
+                  <ChatBoxImage style={{width:"57%",objectFit:"fill"}} alt="" src="/mchat4.png" />
+                  </div>
                 </div>
                 <TypingComponent>
                   <BgTypingFrame />

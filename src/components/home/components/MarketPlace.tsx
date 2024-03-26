@@ -635,7 +635,7 @@ const FrameComponent: NextPage = () => {
                 height: 48,
               }}
             >
-              Check more details
+              Coming Soon
             </FrameButton>
             <FrameWrapper1>
               {<EllipseParent>

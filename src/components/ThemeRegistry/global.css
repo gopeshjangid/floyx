@@ -760,3 +760,15 @@ justify-content:center;
      display:none;
   }
 }
+.for-web-chats{
+@media screen and (max-width: 768px) {
+     display:none;
+  }
+}
+
+.for-m-chats{
+  display:none;
+@media screen and (max-width: 768px) {
+   display:block;
+  }
+}

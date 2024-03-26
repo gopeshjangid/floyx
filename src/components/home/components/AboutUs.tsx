@@ -287,7 +287,7 @@ const AboutUs = () => {
             Join now
           </ButtonStyled>
         </FrameOuterContainer>
-        <SocialMediaOutterContainer>
+        {/* <SocialMediaOutterContainer>
           <SocialMediaText>Connect with Floyx:</SocialMediaText>
           <SocialMediaContainer>
             <Link href={"https://twitter.com/floyxcom"}>
@@ -302,7 +302,7 @@ const AboutUs = () => {
             </Link>
             <SocialMediaIcon alt="" src="/envelope-1.svg" />
           </SocialMediaContainer>
-        </SocialMediaOutterContainer>
+        </SocialMediaOutterContainer> */}
       </InnerContainer>
       <BackgroundWrapper>
         <GradientBg >
