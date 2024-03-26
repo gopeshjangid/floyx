@@ -78,13 +78,13 @@ const HeadingContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 29px 0px;
   max-width: 100%;
   @media screen and (max-width: 450px) {
     display: flex;
    justify-content:center;
-   align-items:centre;;
+   align-items:centre;
   }
 `;
 const Heading1 = styled.b`
@@ -142,15 +142,14 @@ const IBeam = styled.div`
 `;
 const Heading2 = styled.div`
   align-self: stretch;
-  height: 47px;
   position: relative;
   font-size: 18px;
   line-height: 27px;
   color: rgba(255, 255, 255, 0.7);
   display: inline-block;
   flex-shrink: 0;
+  text-align:center;
   @media screen and (max-width: 450px) {
-    text-align:centre;
     padding:0px 10px;
     margin:0px 20px;
   }
