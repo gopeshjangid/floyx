@@ -616,6 +616,9 @@ justify-content:center;
 }
 .slider-container{
  overflow:hidden;
+  /* display: flex;
+  justify-content: center;
+  align-content: center; */
 }
 
 
@@ -665,6 +668,7 @@ justify-content:center;
     float: left;
     height: 100%;
     min-height: 1px;
+    opacity: 0.2;
     /* margin: 0px 30px 0px 17px; */
      @media screen and (max-width: 590px) {
      
@@ -682,6 +686,7 @@ justify-content:center;
     }
 }
 .slick-current{
+  width:"640px";
   opacity:1;
    @media screen and (max-width: 590px) {
      

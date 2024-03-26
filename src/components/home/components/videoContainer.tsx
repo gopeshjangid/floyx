@@ -72,6 +72,7 @@ const IconButton2 = styled.div`
   align-items: center;
   justify-content: center;
   padding: 8px 7px;
+  cursor:default;
 `;
 const HeadingContainer = styled.div`
   width: 442px;
@@ -88,7 +89,7 @@ const HeadingContainer = styled.div`
   }
 `;
 const Heading1 = styled.b`
-  width: 212px;
+  // width: 212px;
   height: 40px;
   position: relative;
   letter-spacing: 1px;
@@ -180,6 +181,7 @@ const ContainernameInput = styled.div`
   max-width: 100%;
   text-align: left;
   font-family: Poppins;
+  cursor: default;
   @media screen and (max-width: 400px) {
     gap: 0px 0px;
   }
@@ -194,6 +196,7 @@ const VideoLiveParent = styled.div`
   gap: 20px;
   margin-bottom: 0px;
   margin-top: 14px
+  cursor: default;
 `;
 const Div = styled.div`
   width: 7px;
@@ -217,6 +220,7 @@ const VideoLive = styled.div`
   justify-content: center;
   padding: 8px 11px 8px 7px;
   gap: 0px 4px;
+   cursor: default;
 `;
 const GeneralControls = styled.div`
   width: 260px;
@@ -289,6 +293,7 @@ const GoLive = styled.div`
   line-height: 24px;
   font-weight: 600;
   display: none;
+  cursor: default;
 `;
 const TextBox1 = styled.div`
   height: 24px;
@@ -391,6 +396,7 @@ const InputText = styled.div`
   position: relative;
   letter-spacing: 0.5px;
   line-height: 24px;
+  cursor: default;
 `;
 const ImageAnimateWrap = styled.div`
    flex: 1;
@@ -419,7 +425,7 @@ const OverflowMoreDotsVertica = styled.img`
   flex-shrink: 0;
 `;
 const Chip = styled.button`
-  cursor: pointer;
+  cursor: default;
   border: 1px solid #1d1f27;
   background-color: #0b081f;
   align-self: stretch;
