@@ -252,7 +252,7 @@ const FrameComponent1: NextPage = () => {
           className="display-show"
             disableElevation={true}
             variant="contained"
-            href="/register"
+            href="/login"
             LinkComponent={Link}
             sx={{
               position: 'sticky',
