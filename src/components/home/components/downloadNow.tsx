@@ -151,7 +151,7 @@ const DownloadApp = () => {
   }, [isIntersecting]);
   return (
     // <><AnimateDownload /></>
-    <DownloadAppRoot ref={ref}>
+    <DownloadAppRoot ref={ref} id="downloads">
       <Background >
         <div className="imageJoiner">
       <img className="mobile-img-left" id="download-ll" loading="lazy" alt="" src="leftLogMobile.png" />

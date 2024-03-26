@@ -93,7 +93,7 @@ export const CompanyAboutInfo = () => {
 
 const CompanyAboutUs = () => {
   return (
-    <FrameInnerContainer>
+    <FrameInnerContainer id="aboutus">
       <HeadingContainer>
         <Heading1>About Us</Heading1>
         <Heading2>

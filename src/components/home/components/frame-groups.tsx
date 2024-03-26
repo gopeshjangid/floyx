@@ -176,14 +176,14 @@ const FrameGroups: NextPage = () => {
         <CompanyHub>
           <Products>Company</Products>
           <LaunchpadSocialfiMarketplaceContainer>
-            <Launchpad href={'/'}>Brand Assets</Launchpad>
+            <Launchpad target="__blank" href={'https://drive.google.com/drive/folders/1wBkaNXn_C6bCxgfSbAn40ukjZljLWAdB?usp=sharing'}>Brand Assets</Launchpad>
           </LaunchpadSocialfiMarketplaceContainer>
         </CompanyHub>
         <CompanyHub>
           <Products>Resources</Products>
           <BlogFaqSupportContainer>
-            <Launchpad href={'/'}>Blog</Launchpad>
-            <Launchpad href={'/'}>Support</Launchpad>
+            <Launchpad href={'https://medium.com/@floyxcom'}>Blog</Launchpad>
+            <Launchpad href={'mailto:support@floyx.com'}>Support</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
         <CompanyHub>
@@ -191,11 +191,12 @@ const FrameGroups: NextPage = () => {
           <BlogFaqSupportContainer>
             <Launchpad target="__blank" href={'https://twitter.com/floyxcom'}>Twitter</Launchpad>
             <Launchpad target="__blank" href={'https://www.linkedin.com/company/floyx'}>Linkedin</Launchpad>
-            <Launchpad href={'/'}>Telegram</Launchpad>
-            <Launchpad href={'/'}>Discord</Launchpad>
-            <Launchpad href={'https://www.instagram.com/floyxcom'}>Instagram</Launchpad>
-            <Launchpad href={'https://www.facebook.com/Floyxcom?mibextid=ZbWKwL'}>Facebook</Launchpad>
-            <Launchpad href={'/'}>YouTube</Launchpad>
+            <Launchpad target="__blank"  href={'https://t.me/floyxofficial'}>Telegram</Launchpad>
+            <Launchpad target="__blank"  href={'https://discord.com/invite/S3MrM8R7VM'}>Discord</Launchpad>
+            <Launchpad target="__blank"  href={'https://www.instagram.com/floyxcom'}>Instagram</Launchpad>
+            <Launchpad target="__blank"  href={'https://www.tiktok.com/@floyxcom'}>Tiktok</Launchpad>
+            <Launchpad target="__blank"  href={'https://www.facebook.com/Floyxcom?mibextid=ZbWKwL'}>Facebook</Launchpad>
+            <Launchpad target="__blank"  href={'https://www.youtube.com/@floyxcom'}>YouTube</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
         <CompanyHub>

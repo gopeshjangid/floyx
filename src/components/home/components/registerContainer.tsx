@@ -722,7 +722,7 @@ const GoogleLogo = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 189.5px 0px 0px;
+  padding: 230.5px 0px 0px;
   box-sizing: border-box;
   max-width: 100%;
   color: #fff;
@@ -870,6 +870,7 @@ const RegisterContainer = () => {
                           />
                         ),
                       }}
+                      value={''}
                       sx={{
                         "& fieldset": { border: "none" },
                         "& .MuiInputBase-root": {
@@ -884,7 +885,7 @@ const RegisterContainer = () => {
                           color: "rgba(255, 255, 255, 0.3)",
                           '&::placeholder': { // Targeting the placeholder
                             fontSize: '1em',
-                            opacity: .5,
+                            opacity: .3,
                           },
                         },
                         width: "100%",
@@ -916,6 +917,7 @@ const RegisterContainer = () => {
                           />
                         ),
                       }}
+                      value={''}
                       sx={{
                         "& fieldset": { border: "none" },
                         "& .MuiInputBase-root": {
@@ -930,7 +932,7 @@ const RegisterContainer = () => {
                           color: "rgba(255, 255, 255, 0.3)",
                           '&::placeholder': { // Targeting the placeholder
                             fontSize: '1em',
-                            opacity: .5,
+                            opacity: .3,
                           },
                         },
                         width: "100%",
@@ -952,6 +954,7 @@ const RegisterContainer = () => {
                     </GoogleLoginButton>
                     <GroupContainer
                       placeholder="************"
+                      value={''}
                       InputProps={{
                         startAdornment: (
                           <img

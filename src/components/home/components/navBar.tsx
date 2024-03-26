@@ -2,7 +2,7 @@
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
 import React, { useEffect, useRef, useState } from "react";
-import { AppBar, Box, Drawer, IconButton, ListItemButton, ListItemText, useTheme,Button } from "@mui/material";
+import { AppBar, Box, Drawer, IconButton, ListItemButton, ListItemText, useTheme,Button, Tooltip } from "@mui/material";
 import useDevice from "@/lib/hooks/useDevice";
 import { List } from "reactstrap";
 import Link from "next/link";
@@ -20,7 +20,7 @@ const GappingContainer = styled.header`
   display: none;
   max-width: 100%;
 `;
-const FloyxProducts = styled.div`
+const FloyxProducts = styled(Link)`
   position: relative;
   white-space: nowrap;
 `;
@@ -244,9 +244,9 @@ const FrameComponent1: NextPage = () => {
         <GappingContainer />
         <SubContainer>
           <SubContainer1>
-            <FloyxProducts>Floyx Products</FloyxProducts>
-            <FloyxProducts>Mobile Application</FloyxProducts>
-            <FloyxProducts>Crypto Area</FloyxProducts>
+            <FloyxProducts href="/">Floyx Products</FloyxProducts>
+            <FloyxProducts href="/#downloads">Mobile Application</FloyxProducts>
+            <Tooltip title='Coming Soon'><FloyxProducts href="#">Crypto Area</FloyxProducts></Tooltip>
           </SubContainer1>
           <Bttn id="stickyBtn"
           className="display-show"
@@ -277,7 +277,7 @@ const FrameComponent1: NextPage = () => {
           <SubContainer2>
             <Registration href='/register'>Registration</Registration>
             <ContactUs>Contact Us</ContactUs>
-            <FloyxProducts>About Us</FloyxProducts>
+            <FloyxProducts href="/#aboutus">About Us</FloyxProducts>
           </SubContainer2>
         </SubContainer>
       </MainContainer>

@@ -171,8 +171,12 @@ const UnionIcon = styled.img`
   top: 40%;
   left: 35%;
    @media screen and (max-width:  450px) {
-     left: 125px;
+     padding-left: 20%s;
   }
+  @media screen and (min-width:  1150px) {
+ }
+ @media screen and (min-width:  1400px) {
+}
   
 `;
 const PodcastVoiceLines = styled.button`
