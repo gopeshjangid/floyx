@@ -10,6 +10,7 @@ import ChatContainer from '../../components/home/components/chatContainer';
 import Group from '../../components/home/components/formLayout';
 import DownloadApp from '../../components/home/components/downloadNow';
 import MarketPlaceContainer from '../../components/home/components/MarketPlace';
+import UniverseComponent from '../../components/home/components/universeConatainer';
 import RegisterContainer from '../../components/home/components/registerContainer';
 import Footer from '../../components/home/components/frame-groups';
 import { TypingAnimation } from '../../components/home/components/Animations/TypingAnimations';
@@ -157,7 +158,7 @@ const MainContainer = styled.div`
 const Home = () => {
   return (
     <MainContainer>
-      <MainContainerBg1 alt="" src="/group-342@2x.png" />
+      {/* <MainContainerBg1 alt="" src="/group-342@2x.png" /> */}
       {/* <MainContainerBg2 alt="" src="/group-340@2x.png" /> */}
       <ImageWrapper>
         <LinkImage alt="" src="/gradientBg.png" />
@@ -190,6 +191,9 @@ const Home = () => {
       </Suspense>
       <Suspense fallback={<Typography>Loading...</Typography>}>
         <DownloadApp />
+      </Suspense>
+      <Suspense fallback={<Typography>Loading...</Typography>}>
+        <UniverseComponent />
       </Suspense>
       <Suspense fallback={<Typography>Loading...</Typography>}>
         <MarketPlaceContainer />

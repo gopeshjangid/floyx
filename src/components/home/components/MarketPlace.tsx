@@ -206,9 +206,9 @@ const LineGroup = styled.div`
   gap: 20px;
 `;
 const ShineBackground = styled.div`
- margin-top:25px;
+//  margin-top:25px;
   width: 100%;
-  height: 1064px;
+  // height: 1064px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -219,12 +219,12 @@ const ShineBackground = styled.div`
   gap: 98px 0px;
   max-width: 162%;
   flex-shrink: 0;
-  @media screen and (max-width: 450px) {
-    max-height: 800px;
-  }
-  @media screen and (max-width: 380px) {
-    max-height: 950px;
-  }
+  // @media screen and (max-width: 450px) {
+  //   max-height: 800px;
+  // }
+  // @media screen and (max-width: 380px) {
+  //   max-height: 950px;
+  // }
 `;
 const FloyxMarketplace = styled.div`
   width: 100%;
@@ -252,7 +252,14 @@ const FloyxMarketplaceWrapper = styled.div`
 `;
 const HaveYouHeard = styled.p`
   margin: 0;
-   @media screen and (max-width: 450px) {
+  //  @media screen and (max-width: 450px) {
+  //  margin:15px;
+   
+  // }
+`;
+const WordSection=styled.p`
+  margin: 0;
+   @media screen and (max-width: 5120px) {
    margin:15px;
    
   }
@@ -264,10 +271,10 @@ const HaveYouHeardContainer = styled.div`
   line-height: 27px;
   display: inline-block;
   flex-shrink: 0;
-  @media screen and (max-width: 380px) {
-     margin-bottom: 50px;
-    height: 700px;
-  }
+  // @media screen and (max-width: 380px) {
+  //    margin-bottom: 50px;
+  //   height: 700px;
+  // }
 `;
 const FrameGroup = styled.div`
   flex: 1;
@@ -277,9 +284,9 @@ const FrameGroup = styled.div`
   justify-content: flex-start;
   gap: 33px 0px;
   max-width: 100%;
-  @media screen and (max-width: 450px) {
-    gap: 16px 0px;
-  }
+  // @media screen and (max-width: 450px) {
+  //   gap: 16px 0px;
+  // }
 `;
 const EcoSystemInner = styled.div`
 height:329px;
@@ -295,7 +302,11 @@ height:329px;
 const FrameButton = styled(Button)`
   align-self: stretch;
   height: 48px;
-  margin-top: 5rem;
+   @media screen and (max-width: 512px) {
+   
+   margin-top: 5rem;
+   
+  }
 `;
 const EllipseDiv = styled.div`
   height: 12px;
@@ -349,9 +360,9 @@ const LandingPage = styled.img`
   overflow: hidden;
   flex-shrink: 0;
   object-fit: cover;
-    @media screen and (max-width: 450px) {
-    margin:20px;
-  }
+  //   @media screen and (max-width: 450px) {
+  //   margin:20px;
+  // }
 `;
 const EcoSystem = styled.div`
   width:866px;
@@ -368,14 +379,14 @@ const EcoSystem = styled.div`
     
   }
 `;
-const ShineBackgroundParentRoot = styled.div`
+const MainContainer = styled.div`
 display:flex;
 
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   
   box-sizing: border-box;
   max-width: 100%;
@@ -383,10 +394,10 @@ display:flex;
   font-size: 29px;
   color: rgba(255, 255, 255, 0.7);
   font-family: Poppins;
-  @media screen and (max-width: 430px) {
-    position:relative;
-    top: -90px;
-   }
+  // @media screen and (max-width: 430px) {
+  //   position:relative;
+  //   top: -90px;
+  //  }
 `;
 
 
@@ -514,15 +525,8 @@ const FrameComponent: NextPage = () => {
   }, [isIntersecting, value]);
 
   return (
-    <ShineBackgroundParentRoot ref={ref}>
-<TextContainer>
-          <TextOuterContainer>
-            <TextInnerContainer>
-              <HeadingContainer>Floyx Universe</HeadingContainer>
-            </TextInnerContainer>
-            <SubHeadingContainer>Floyx also offers additional areas. The easiest way to integrate cryptocurrencies, blockchain technology and the web3 world into the traditional market and global community. </SubHeadingContainer>
-          </TextOuterContainer>
-        </TextContainer>
+    <MainContainer ref={ref}>
+
       <ShineBackground>
         <FrameParent>
           <LineParent>
@@ -647,7 +651,7 @@ const FrameComponent: NextPage = () => {
         <LandingPage loading="lazy" alt="" src={value.img} />
       </EcoSystem>
       </ShineBackground>
-    </ShineBackgroundParentRoot>
+    </MainContainer>
   );
 };
 
