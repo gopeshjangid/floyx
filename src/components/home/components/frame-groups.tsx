@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
 import Link from "next/link";
-import { Tooltip } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 
 const FrameGroupsChild = styled.div`
   height: 383px;
@@ -160,7 +160,11 @@ const FrameGroups: NextPage = () => {
             <SocialFiMarketplace alt="" src="/vector-4.svg" />
           </LinksColumn>
         </VectorInstance>
+        
       </Group>
+      <Box textAlign={'left'} width={'100%'} pt={2}>
+         <Typography sx={{opacity: .6}} variant="subtitle2">© 2024 Powered by Floyx, LLC</Typography>
+      </Box>
       <RegisterWithEmailOnlyMains>
         <ProductMenu>
           <Products>Products</Products>
@@ -170,7 +174,6 @@ const FrameGroups: NextPage = () => {
             <Tooltip title='coming soon'><Launchpad href={'/#'}>{`Marketplace `}</Launchpad></Tooltip>
             <Tooltip title='coming soon'><Launchpad href={'/#'}>NFT Airdrops</Launchpad></Tooltip>
             <Tooltip title='coming soon'><Launchpad href={'/#'}>{`DEX Buy `}</Launchpad></Tooltip>
-            <Tooltip title='coming soon'><Launchpad href={'/#'}>Floyx Tokens</Launchpad></Tooltip>
           </LaunchpadSocialfiMarketplaceContainer>
         </ProductMenu>
         <CompanyHub>
@@ -182,7 +185,7 @@ const FrameGroups: NextPage = () => {
         <CompanyHub>
           <Products>Resources</Products>
           <BlogFaqSupportContainer>
-            <Launchpad href={'https://medium.com/@floyxcom'}>Blog</Launchpad>
+            <Launchpad target="__blank" href={'https://medium.com/@floyxcom'}>Blog</Launchpad>
             <Launchpad href={'mailto:support@floyx.com'}>Support</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
@@ -202,12 +205,13 @@ const FrameGroups: NextPage = () => {
         <CompanyHub>
           <Products>Legal</Products>
           <BlogFaqSupportContainer>
-            <Launchpad href="/termsOfService">Terms</Launchpad>
-            <Launchpad href="/privacyPolicy">Privacy</Launchpad>
-            <Launchpad href="/cookiePolicy">Cookies</Launchpad>
+            <Launchpad target="__blank" href="/termsOfService">Terms</Launchpad>
+            <Launchpad target="__blank" href="/privacyPolicy">Privacy</Launchpad>
+            <Launchpad target="__blank" href="/cookiePolicy">Cookies</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
       </RegisterWithEmailOnlyMains>
+     
     </FrameGroupsRoot>
   );
 };

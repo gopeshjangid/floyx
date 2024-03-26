@@ -246,7 +246,7 @@ const FrameComponent1: NextPage = () => {
           <SubContainer1>
             <FloyxProducts href="/">Floyx Products</FloyxProducts>
             <FloyxProducts href="/#downloads">Mobile Application</FloyxProducts>
-            <Tooltip title='Coming Soon'><FloyxProducts href="#">Crypto Area</FloyxProducts></Tooltip>
+            <Tooltip title='Coming Soon'><ContactUs>Crypto Area</ContactUs></Tooltip>
           </SubContainer1>
           <Bttn id="stickyBtn"
           className="display-show"
@@ -276,8 +276,8 @@ const FrameComponent1: NextPage = () => {
           </Bttn>
           <SubContainer2>
             <Registration href='/register'>Registration</Registration>
-            <ContactUs>Contact Us</ContactUs>
             <FloyxProducts href="/#aboutus">About Us</FloyxProducts>
+            <ContactUs>Contact Us</ContactUs>
           </SubContainer2>
         </SubContainer>
       </MainContainer>
