@@ -57,8 +57,9 @@ const BgImageWrap = styled.img`
     max-width: 100%;
     overflow: hidden;
     object-fit: cover;
+    display:none;
      @media screen and (max-width: 1604px) {
-      
+      display:block;
     position: relative;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
@@ -70,6 +71,7 @@ const BgImageWrap = styled.img`
   }
     @media screen and (max-width: 768px) {
        position: relative;
+         display:block;
     justify-content: center;
    top: 0px;
    right: 0px;

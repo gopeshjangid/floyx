@@ -11,7 +11,6 @@ const Background = styled.div`
   border-radius: 10px;
   width: 1157px;
   height: 477px;
-  overflow: hidden;
   object-fit: cover;
    background-image: url("/downloadBg.png");
      @media screen and (max-width: 978px) {
@@ -85,7 +84,7 @@ const BadgesParent = styled.div`
 `;
 const TermsOfService = styled.div`
 position: relative;
-    top: 117px;
+    // top: 117px;
     left: 92px;
     width: 453px;
 
