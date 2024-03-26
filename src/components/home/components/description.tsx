@@ -12,11 +12,10 @@ const DetailsInnerContainer = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 26px 0px;
   max-width: 100%;
-  padding-top: 100px;
 `;
 
 const Bttn = styled(Button)`
@@ -268,7 +267,7 @@ left?.addEventListener("mouseover", leftIn, false);
               <Bttn
                 disableElevation={true}
                 variant="contained"
-                href="/register"
+                href="/login"
                 LinkComponent={Link}
                 sx={{
                   position: 'sticky',

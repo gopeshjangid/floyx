@@ -210,7 +210,7 @@ html {
 }
 .download-mobile {
   animation: zoomMobile 40s ease  infinite;
-    height: 428px;
+    height: 450px;
     top:96px;
   position: absolute;
   opacity:1;
@@ -538,7 +538,7 @@ html {
 }
 .imageJoiner{
   position: absolute;
-    top: -71px;
+    top: -117px;
     @media screen and (max-width: 978px) {
   
     top: 450px ;
@@ -552,10 +552,22 @@ justify-content:center;
 /* align-item:center; */
     width: 100%;
     height: 169px;
+     @media screen and (max-width: 802px) {
+          margin-bottom: 82px;
+          } 
+    @media screen and (max-width: 678px) {
+      margin-bottom: 163px;
+          }
+    @media screen and (max-width: 599px) {
+      margin-bottom: 0px;
+          }
+           @media screen and (max-width: 422px) {
+      margin-bottom: 117px;
+          }
 }
 .child-type{
 
-    width: 788px;
+    /* width: 788px; */
      /* @media screen and (max-width: 428px) {
         font-size:30px !important;} */
 
@@ -604,6 +616,9 @@ justify-content:center;
 }
 .slider-container{
  overflow:hidden;
+  /* display: flex;
+  justify-content: center;
+  align-content: center; */
 }
 
 
@@ -653,6 +668,7 @@ justify-content:center;
     float: left;
     height: 100%;
     min-height: 1px;
+    opacity: 0.2;
     /* margin: 0px 30px 0px 17px; */
      @media screen and (max-width: 590px) {
      
@@ -670,6 +686,7 @@ justify-content:center;
     }
 }
 .slick-current{
+  width:"640px";
   opacity:1;
    @media screen and (max-width: 590px) {
      
@@ -741,5 +758,17 @@ justify-content:center;
 .mb-view{
    @media screen and (max-width: 425px) {
      display:none;
+  }
+}
+.for-web-chats{
+@media screen and (max-width: 768px) {
+     display:none;
+  }
+}
+
+.for-m-chats{
+  display:none;
+@media screen and (max-width: 768px) {
+   display:block;
   }
 }

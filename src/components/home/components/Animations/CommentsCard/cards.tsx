@@ -108,6 +108,7 @@ import "slick-carousel/slick/slick-theme.css";
 export const CommentsCards = () => {
 
   const settings = {
+    initialSlide:3,
     className: "center",
     arrows:false,
     autoplay:true,
@@ -115,6 +116,7 @@ export const CommentsCards = () => {
     infinite: true,
     centerPadding: "60px",
     slidesToShow: 3,
+    slidesToScroll: 1,
     speed: 500,
     
   };
@@ -135,17 +137,17 @@ export const CommentsCards = () => {
                    
                  
                 >
-                 <img className="sli-img" width="379" src='/image0.png'/>
+                 <img className="sli-img" width="460" src='/image0.png'/>
                 </div>
             
 
  <div >
-                 <img className="sli-img" width="379" src='/image1.png'/>
+                 <img className="sli-img" width="460" src='/image1.png'/>
                 </div>
                  <div
                 
                 >
-                 <img className="sli-img" width="379"  src='/image2.png'/>
+                 <img className="sli-img" width="460"  src='/image2.png'/>
                 </div>
 
            

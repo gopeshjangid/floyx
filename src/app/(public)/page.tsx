@@ -10,6 +10,7 @@ import ChatContainer from '../../components/home/components/chatContainer';
 import Group from '../../components/home/components/formLayout';
 import DownloadApp from '../../components/home/components/downloadNow';
 import MarketPlaceContainer from '../../components/home/components/MarketPlace';
+import UniverseComponent from '../../components/home/components/universeConatainer';
 import RegisterContainer from '../../components/home/components/registerContainer';
 import Footer from '../../components/home/components/frame-groups';
 import { TypingAnimation } from '../../components/home/components/Animations/TypingAnimations';
@@ -119,18 +120,16 @@ const GradiantContainerBg2 = styled.div`
   z-index: 9;
 `;
 const NavBarContainer = styled.section`
-  align-self: stretch;
+  align-self: center;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 0px 0px 36.60000000000037px;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
-  gap: 45px 0px;
   max-width: 100%;
-  @media screen and (max-width: 800px) {
-    gap: 22px 0px;
-  }
+  // @media screen and (max-width: 800px) {
+  //   gap: 22px 0px;
+  // }
 `;
 
 const MainContainer = styled.div`
@@ -159,7 +158,7 @@ const MainContainer = styled.div`
 const Home = () => {
   return (
     <MainContainer>
-      <MainContainerBg1 alt="" src="/group-342@2x.png" />
+      {/* <MainContainerBg1 alt="" src="/group-342@2x.png" /> */}
       {/* <MainContainerBg2 alt="" src="/group-340@2x.png" /> */}
       <ImageWrapper>
         <LinkImage alt="" src="/gradientBg.png" />
@@ -192,6 +191,9 @@ const Home = () => {
       </Suspense>
       <Suspense fallback={<Typography>Loading...</Typography>}>
         <DownloadApp />
+      </Suspense>
+      <Suspense fallback={<Typography>Loading...</Typography>}>
+        <UniverseComponent />
       </Suspense>
       <Suspense fallback={<Typography>Loading...</Typography>}>
         <MarketPlaceContainer />
