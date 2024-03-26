@@ -212,4 +212,33 @@ const Home = () => {
   );
 };
 
+// export async function generateMetadata(): Promise<Metadata> {
+
+//   return {
+//     title: 'Floyx Decentralized',
+//     openGraph: {
+//       images: ['/'],
+//     },
+//     generator: 'Next.js',
+//     applicationName: 'Floyx',
+//     referrer: 'origin-when-cross-origin',
+//     keywords: [],
+//     authors: [
+//       {
+//         name: 'FLoyx',
+//         url: "/",
+//       },
+//     ],
+//     creator: 'Floyx creator',
+//     publisher: 'Floyx publisher',
+//     alternates: {
+//       canonical: '/',
+//       languages: {
+//         'en-US': '/en-US',
+//       },
+//     },
+
+//   };
+// }
+
 export default Home;
