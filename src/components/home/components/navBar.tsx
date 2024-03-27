@@ -2,7 +2,7 @@
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
 import React, { useEffect, useRef, useState } from "react";
-import { AppBar, Box, Drawer, IconButton, ListItemButton, ListItemText, useTheme,Button, Tooltip } from "@mui/material";
+import { AppBar, Box, Drawer, IconButton, ListItemButton, ListItemText, useTheme,Button, Tooltip, ListItem } from "@mui/material";
 import useDevice from "@/lib/hooks/useDevice";
 import { List } from "reactstrap";
 import Link from "next/link";
@@ -114,19 +114,19 @@ const navItems = [{
   href: '/',
 },{
   label: 'Mobile Application',
-  href: '/',
+  href: '/#downloads',
 },{
   label: 'Crypto Area',
-  href: '/',
+  href: '/#cryptoarea',
 },{
   label: 'Registration',
   href: '/register',
 },{
   label: 'Contact Us',
-  href: '/',
+  href: '/#footer',
 },{
   label: 'About Us',
-  href: '/',
+  href: '/#aboutus',
 },]
 
 const FrameComponent1: NextPage = () => {
@@ -232,7 +232,15 @@ const FrameComponent1: NextPage = () => {
           <ListItemText sx={{color: '#fff', opacity: .8}} translate="no" primary={item.label} />
         </ListItemButton>
       ))}
-    </List>
+          <Bttn 
+            disableElevation={true}
+            variant="contained"
+            href="/social-login"
+            LinkComponent={Link}
+          >
+              Get Started
+            </Bttn>
+          </List>
           </Drawer>}
       </AppBar>
     );
@@ -246,13 +254,13 @@ const FrameComponent1: NextPage = () => {
           <SubContainer1>
             <FloyxProducts href="/">Floyx Products</FloyxProducts>
             <FloyxProducts href="/#downloads">Mobile Application</FloyxProducts>
-            <Tooltip title='Coming Soon'><ContactUs>Crypto Area</ContactUs></Tooltip>
+            <FloyxProducts href="/#cryptoarea">Crypto Area</FloyxProducts>
           </SubContainer1>
           <Bttn id="stickyBtn"
           className="display-show"
             disableElevation={true}
             variant="contained"
-            href="/login"
+            href="/social-login"
             LinkComponent={Link}
             sx={{
               position: 'sticky',
@@ -277,7 +285,7 @@ const FrameComponent1: NextPage = () => {
           <SubContainer2>
             <Registration href='/register'>Registration</Registration>
             <FloyxProducts href="/#aboutus">About Us</FloyxProducts>
-            <ContactUs>Contact Us</ContactUs>
+            <FloyxProducts href="/#footer">Contact Us</FloyxProducts>
           </SubContainer2>
         </SubContainer>
       </MainContainer>

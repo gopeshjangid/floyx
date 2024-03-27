@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useRef, useState } from "react";
 import styled from '@emotion/styled';
+import Link from "next/link";
 
 const Background = styled.div`
  display: flex;
@@ -175,8 +176,12 @@ const DownloadApp = () => {
           </EasyAndQuick>
         </DownloadTheAppParent>
         <BadgesParent>
-          <BadgesIcon loading="lazy" alt="" src="/badges.svg" />
-          <BadgesIcon1 loading="lazy" alt="" src="/badges-1.svg" />
+          <Link href={"https://apps.apple.com/pl/app/floyx/id1480826179?l=US"} target="__blank">
+            <BadgesIcon loading="lazy" alt="" src="/badges.svg" />
+            </Link>
+            <Link href="https://play.google.com/store/apps/details?id=com.floyx&hl=en_US&gl=US" target="__blank">
+                <BadgesIcon1 loading="lazy" alt="" src="/badges-1.svg" />
+              </Link>          
         </BadgesParent>
       </TermsOfService>
         <div className="imageJoiner">
