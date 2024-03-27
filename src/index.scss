@@ -204,13 +204,14 @@ $carousel-easing: cubic-bezier(0.37, 0, 0.63, 1);
 	display: grid;
 	place-items: center;
 	height: 100%;
+	width:100%;
 }
 
 .carousel {
 	pointer-events: none;
 	position: absolute;
-	padding-block-start: 67px;
-	padding-block-end: max(24px, calc(29px + var(--font-size-md)));
+	// padding-block-start: 67px;
+	// padding-block-end: max(24px, calc(29px + var(--font-size-md)));
 	perspective: 100px;
 	width: 100%;
 	@media (max-width: 568px) {
@@ -220,19 +221,19 @@ $carousel-easing: cubic-bezier(0.37, 0, 0.63, 1);
 		position: relative;
 		display: flex;
 		justify-content: center;
-		height: 61.2vh;
+		height: 24.2vh;
 	}
 	.item {
 		position: absolute;
-		max-width: 418px;
+		max-width: 100%;
 		height: 100%;
 		margin-inline: var(--container-padding-horizontal);
 		opacity: 0;
 		will-change: transform, opacity;
 		animation: carousel-animate $carousel-duration $carousel-easing infinite;
-		@media (max-width: 568px) {
-			margin-inline: calc(var(--container-padding-horizontal) + 1px);
-		}
+		// @media (max-width: 568px) {
+		// 	margin-inline: calc(var(--container-padding-horizontal) + 1px);
+		// }
 		@for $i from 1 through ($carousel-items - 1) {
 			&:nth-child(#{$i}) {
 				animation-delay: calc(#{$carousel-delay-fraction} * #{$i - 2});
@@ -250,6 +251,7 @@ $carousel-easing: cubic-bezier(0.37, 0, 0.63, 1);
 }
 
 .instagram {
+	display:none;
 	--pading-horizontal: 16px;
 	--border: 1px solid var(--primary);
 	max-width: var(--max-width-post);

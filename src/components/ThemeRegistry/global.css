@@ -539,9 +539,14 @@ html {
 .imageJoiner{
   position: absolute;
     top: -117px;
+    position: absolute;
+     
+      display: flex;
+      justify-content: center;
+      align-items: center;
     @media screen and (max-width: 978px) {
   
-    top: 450px ;
+    top: 275px ;
     left: -242px;
   }
 }
