@@ -91,7 +91,7 @@ const UniverseComponent = () => {
  
   
   return (
-    <MainContainer >
+    <MainContainer id="cryptoarea">
 <TextOuterContainer>
             <TextInnerContainer>
               <HeadingContainer>Floyx Universe</HeadingContainer>

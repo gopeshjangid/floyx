@@ -117,13 +117,13 @@ const navItems = [{
   href: '/#downloads',
 },{
   label: 'Crypto Area',
-  href: '/',
+  href: '/#cryptoarea',
 },{
   label: 'Registration',
   href: '/register',
 },{
   label: 'Contact Us',
-  href: '/',
+  href: '/#footer',
 },{
   label: 'About Us',
   href: '/#aboutus',
@@ -254,7 +254,7 @@ const FrameComponent1: NextPage = () => {
           <SubContainer1>
             <FloyxProducts href="/">Floyx Products</FloyxProducts>
             <FloyxProducts href="/#downloads">Mobile Application</FloyxProducts>
-            <Tooltip title='Coming Soon'><ContactUs>Crypto Area</ContactUs></Tooltip>
+            <FloyxProducts href="/#cryptoarea">Crypto Area</FloyxProducts>
           </SubContainer1>
           <Bttn id="stickyBtn"
           className="display-show"
@@ -285,7 +285,7 @@ const FrameComponent1: NextPage = () => {
           <SubContainer2>
             <Registration href='/register'>Registration</Registration>
             <FloyxProducts href="/#aboutus">About Us</FloyxProducts>
-            <ContactUs>Contact Us</ContactUs>
+            <FloyxProducts href="/#footer">Contact Us</FloyxProducts>
           </SubContainer2>
         </SubContainer>
       </MainContainer>

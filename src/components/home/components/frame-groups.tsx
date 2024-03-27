@@ -146,7 +146,7 @@ const FrameGroupsRoot = styled.footer`
 
 const FrameGroups: NextPage = () => {
   return (
-    <FrameGroupsRoot>
+    <Box width={'100%'}><FrameGroupsRoot id="footer">
       <FrameGroupsChild />
       <Group>
         <GroupIcon loading="lazy" alt="" src="/group.svg" />
@@ -208,10 +208,11 @@ const FrameGroups: NextPage = () => {
           </BlogFaqSupportContainer>
         </CompanyHub>
       </RegisterWithEmailOnlyMains>
-      <Box textAlign={'left'} width={'100%'} pt={2}>
+    </FrameGroupsRoot>
+    <Box textAlign={'center'} width={'100%'} pt={2} pb={2}>
          <Typography sx={{opacity: .6}} variant="subtitle2">© 2024 Powered by Floyx, LLC</Typography>
       </Box>
-    </FrameGroupsRoot>
+    </Box>
   );
 };
 
