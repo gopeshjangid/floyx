@@ -24,7 +24,7 @@ else if (ref.current) {
        <TypeAnimation
        ref={ref}       
         sequence={[
-          'Time for a Revolution in The\n Social Media Industry!',
+          'Time for a Revolution in Then Social Media Industry!',
         1000,
         ""
          

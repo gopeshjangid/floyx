@@ -112,11 +112,10 @@ const RegisterWithEmailOnlyMains = styled.div`
     flex-wrap: wrap;
   }
   @media screen and (max-width: 450px) {
-    gap: 0px 20px;
+    gap: 20px 20px;
   }
 `;
 const FrameGroupsRoot = styled.footer`
-  align-self: stretch;
   background-color: #0b081e;
   display: flex;
   flex-direction: row;
@@ -162,9 +161,7 @@ const FrameGroups: NextPage = () => {
         </VectorInstance>
         
       </Group>
-      <Box textAlign={'left'} width={'100%'} pt={2}>
-         <Typography sx={{opacity: .6}} variant="subtitle2">© 2024 Powered by Floyx, LLC</Typography>
-      </Box>
+      
       <RegisterWithEmailOnlyMains>
         <ProductMenu>
           <Products>Products</Products>
@@ -211,7 +208,9 @@ const FrameGroups: NextPage = () => {
           </BlogFaqSupportContainer>
         </CompanyHub>
       </RegisterWithEmailOnlyMains>
-     
+      <Box textAlign={'left'} width={'100%'} pt={2}>
+         <Typography sx={{opacity: .6}} variant="subtitle2">© 2024 Powered by Floyx, LLC</Typography>
+      </Box>
     </FrameGroupsRoot>
   );
 };
