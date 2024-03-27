@@ -112,7 +112,10 @@ const RegisterWithEmailOnlyMains = styled.div`
     flex-wrap: wrap;
   }
   @media screen and (max-width: 450px) {
-    gap: 0px 20px;
+    gap: 30px 0px;
+  justify-content: space-between;
+
+    // flex-direction:column;
   }
 `;
 const FrameGroupsRoot = styled.footer`
@@ -153,23 +156,23 @@ const FrameGroups: NextPage = () => {
         <GroupIcon loading="lazy" alt="" src="/group.svg" />
         <VectorInstance>
           <LinksColumn>
-          <Launchpad href={"/"}>
-            <GroupIcon1 alt="" src="/group-1.svg" />
-          </Launchpad>
-           
+            <Launchpad href={"/"}>
+              <GroupIcon1 alt="" src="/group-1.svg" />
+            </Launchpad>
+
             <SocialFiMarketplace alt="" src="/vector-4.svg" />
           </LinksColumn>
         </VectorInstance>
-        
+
       </Group>
       <Box textAlign={'left'} width={'100%'} pt={2}>
-         <Typography sx={{opacity: .6}} variant="subtitle2">© 2024 Powered by Floyx, LLC</Typography>
+        <Typography sx={{ opacity: .6 }} variant="subtitle2">© 2024 Powered by Floyx, LLC</Typography>
       </Box>
       <RegisterWithEmailOnlyMains>
         <ProductMenu>
           <Products>Products</Products>
           <LaunchpadSocialfiMarketplaceContainer>
-           <Launchpad href={'/register'}>{`SocialFi `}</Launchpad>
+            <Launchpad href={'/register'}>{`SocialFi `}</Launchpad>
             <Tooltip title='coming soon'><Launchpad href={'/#'}>{`Launchpad `}</Launchpad></Tooltip>
             <Tooltip title='coming soon'><Launchpad href={'/#'}>{`Marketplace `}</Launchpad></Tooltip>
             <Tooltip title='coming soon'><Launchpad href={'/#'}>NFT Airdrops</Launchpad></Tooltip>
@@ -180,12 +183,14 @@ const FrameGroups: NextPage = () => {
           <Products>Company</Products>
           <LaunchpadSocialfiMarketplaceContainer>
             <Launchpad target="__blank" href={'https://drive.google.com/drive/folders/1wBkaNXn_C6bCxgfSbAn40ukjZljLWAdB?usp=sharing'}>Brand Assets</Launchpad>
+            <Launchpad target="__blank" href={'https://drive.google.com/drive/folders/1wBkaNXn_C6bCxgfSbAn40ukjZljLWAdB?usp=sharing'}>Partners</Launchpad>
           </LaunchpadSocialfiMarketplaceContainer>
         </CompanyHub>
         <CompanyHub>
           <Products>Resources</Products>
           <BlogFaqSupportContainer>
             <Launchpad target="__blank" href={'https://medium.com/@floyxcom'}>Blog</Launchpad>
+            <Launchpad href={'mailto:support@floyx.com'}>FAQ</Launchpad>
             <Launchpad href={'mailto:support@floyx.com'}>Support</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
@@ -194,12 +199,12 @@ const FrameGroups: NextPage = () => {
           <BlogFaqSupportContainer>
             <Launchpad target="__blank" href={'https://twitter.com/floyxcom'}>Twitter</Launchpad>
             <Launchpad target="__blank" href={'https://www.linkedin.com/company/floyx'}>Linkedin</Launchpad>
-            <Launchpad target="__blank"  href={'https://t.me/floyxofficial'}>Telegram</Launchpad>
-            <Launchpad target="__blank"  href={'https://discord.com/invite/S3MrM8R7VM'}>Discord</Launchpad>
-            <Launchpad target="__blank"  href={'https://www.instagram.com/floyxcom'}>Instagram</Launchpad>
-            <Launchpad target="__blank"  href={'https://www.tiktok.com/@floyxcom'}>Tiktok</Launchpad>
-            <Launchpad target="__blank"  href={'https://www.facebook.com/Floyxcom?mibextid=ZbWKwL'}>Facebook</Launchpad>
-            <Launchpad target="__blank"  href={'https://www.youtube.com/@floyxcom'}>YouTube</Launchpad>
+            <Launchpad target="__blank" href={'https://t.me/floyxofficial'}>Telegram</Launchpad>
+            <Launchpad target="__blank" href={'https://discord.com/invite/S3MrM8R7VM'}>Discord</Launchpad>
+            <Launchpad target="__blank" href={'https://www.instagram.com/floyxcom'}>Instagram</Launchpad>
+            <Launchpad target="__blank" href={'https://www.tiktok.com/@floyxcom'}>Tiktok</Launchpad>
+            <Launchpad target="__blank" href={'https://www.facebook.com/Floyxcom?mibextid=ZbWKwL'}>Facebook</Launchpad>
+            <Launchpad target="__blank" href={'https://www.youtube.com/@floyxcom'}>YouTube</Launchpad>
           </BlogFaqSupportContainer>
         </CompanyHub>
         <CompanyHub>
@@ -211,7 +216,7 @@ const FrameGroups: NextPage = () => {
           </BlogFaqSupportContainer>
         </CompanyHub>
       </RegisterWithEmailOnlyMains>
-     
+
     </FrameGroupsRoot>
   );
 };
