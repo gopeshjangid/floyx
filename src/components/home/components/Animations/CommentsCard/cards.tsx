@@ -12,7 +12,7 @@ import 'swiper/css/effect-coverflow';
 
 
 const MainContainer = styled.section`
-height:700px;
+height:989px;
   align-self: stretch;
   display: flex;
   flex-direction: column;

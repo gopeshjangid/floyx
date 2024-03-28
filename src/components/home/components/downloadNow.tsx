@@ -16,8 +16,8 @@ const Background = styled.div`
   background-size: cover;
    background-image: url("/downloadBg.png");
      @media screen and (max-width: 978px) {
-      width:100%;
-       height: 977px;
+      // width:100%;
+       height: 890px;
        justify-content: center;
       // background-image: url("/mdownloadBg.png");
 
@@ -47,18 +47,19 @@ const DownloadTheApp = styled.b`
   }
 `;
 const EasyAndQuick = styled.div`
-  align-self: stretch;
+  width:300px;
   position: relative;
   font-size: 18px;
   line-height: 27px;
   padding-right: 18px;
+  max-width:100%;
 `;  
 const DownloadTheAppParent = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 26px 0px;
 `;
 const BadgesIcon = styled.img`
@@ -140,7 +141,7 @@ const DownloadApp = () => {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-300px" }
+      { rootMargin: "-100px" }
     );
 
     if (ref?.current) { observer.observe(ref.current); }

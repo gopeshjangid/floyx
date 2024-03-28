@@ -164,6 +164,16 @@ const ChatBoxImage = styled.img`
   overflow: hidden;
   flex-shrink: 0;
   object-fit: contain;
+  @media screen and (max-width: 768px) {
+    max-width: inherit;
+  
+ 
+  object-fit: fill;
+  width: 100%;
+  }
+
+ 
+ 
 `;
 const BgTypingFrame = styled.div`
   height: 8px;
