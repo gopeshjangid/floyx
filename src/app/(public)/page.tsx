@@ -160,10 +160,10 @@ const Home = () => {
     <MainContainer>
       {/* <MainContainerBg1 alt="" src="/group-342@2x.png" /> */}
       {/* <MainContainerBg2 alt="" src="/group-340@2x.png" /> */}
-      <ImageWrapper>
+      {/* <ImageWrapper>
         <LinkImage alt="" src="/gradientBg.png" />
         <LinkItemImage alt="" src="/group-338@2x.png" />
-      </ImageWrapper>
+      </ImageWrapper> */}
       <ClippedIcon alt="" src="/clipped.svg" />
       <GapingContainer />
       <GradiantContainerBg />
@@ -211,5 +211,34 @@ const Home = () => {
     </MainContainer>
   );
 };
+
+// export async function generateMetadata(): Promise<Metadata> {
+
+//   return {
+//     title: 'Floyx Decentralized',
+//     openGraph: {
+//       images: ['/'],
+//     },
+//     generator: 'Next.js',
+//     applicationName: 'Floyx',
+//     referrer: 'origin-when-cross-origin',
+//     keywords: [],
+//     authors: [
+//       {
+//         name: 'FLoyx',
+//         url: "/",
+//       },
+//     ],
+//     creator: 'Floyx creator',
+//     publisher: 'Floyx publisher',
+//     alternates: {
+//       canonical: '/',
+//       languages: {
+//         'en-US': '/en-US',
+//       },
+//     },
+
+//   };
+// }
 
 export default Home;

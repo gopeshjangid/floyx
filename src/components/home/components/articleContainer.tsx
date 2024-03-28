@@ -123,6 +123,7 @@ width:100%;
   color: #fff;
   font-family: Poppins;
   overflow:hidden;
+  margin-top: -385px;
 `;
 
 const ArticleContainer = () => {

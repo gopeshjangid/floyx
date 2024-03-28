@@ -2,13 +2,10 @@
 import type { NextPage } from "next";
 import styled from '@emotion/styled'
 
-const PodcastChild = styled.img`
-  width: 1690.7px;
-  height: 1734.1px;
-  position: absolute;
+const PodcastChild = styled.div`
+ 
   margin: 0 !important;
-  top: -511px;
-  left: -242px;
+ background-image: url("/group-338@2x.png");
   object-fit: contain;
 `;
 const Scribble = styled.div`
@@ -110,19 +107,17 @@ const AccessKeyField = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 0px 20px;
 `;
 const RecordContentConduct = styled.div`
-  //align-self: stretch;
-  position: relative;
   font-size: 18px;
   line-height: 27px;
   color: rgba(255, 255, 255, 0.7);
-   @media screen and (max-width: 450px) {
-    right: -25px;
-  width: 360px;
+  width:440px;
+   @media screen and (max-width: 460px) {
+    
+  width: 100%;
   }
   
 `;
@@ -130,48 +125,38 @@ const SignUpButton = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 23px 0px;
   z-index: 1;
   @media screen and (max-width: 1230px) {
-    margin-top:-251px;
-  }
+position: relative;
+    top: -344px;  }
 `;
 const Podcast = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0px;
+  
   width: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 280px 500px;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
-  min-height: 816px;
-  max-width: 100%;
   height: 100%;
-  @media screen and (max-width: 800px) {
-    padding-left: 250px;
-    padding-right: 250px;
-    box-sizing: border-box;
-  }
-  @media screen and (max-width: 450px) {
-    padding-left: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
-  }
+  
 `;
 const UnionIcon = styled.img`
   height: 58px;
   width: 171px;
   position: relative;
-  top: 40%;
-  left: 35%;
+  // top: 40%;
+  // left: 35%;
    @media screen and (max-width:  450px) {
-     padding-left: 20%s;
+  //      height: 58px;
+  // width: 50%;
+  // position: relative;
+  // top: 40%;
+  // left: 35%;
   }
   @media screen and (min-width:  1150px) {
  }
@@ -194,14 +179,15 @@ const PodcastVoiceLines = styled.button`
   z-index: 4;
 `;
 const CenteredRectangleRoot = styled.section`
-  align-self: stretch;
-  height: 816px;
+  height:954px;
   position: relative;
   max-width: 100%;
   text-align: center;
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
+  width: 100%;
+  overflow: hidden;
 `;
 import React, { useEffect, useRef, useState } from "react";
 
@@ -243,7 +229,7 @@ const CenteredRectangle: NextPage = () => {
   return (
     <CenteredRectangleRoot ref={ref}>
       <Podcast>
-        <PodcastChild alt="" src="/group-338@2x.png" />
+        <PodcastChild >
         <Scribble />
         
          <div id="Next2" className="leftWrapper"> <img  id="overBoxLeft"className="image-box-download-left" src="/threeBox.png" />
@@ -266,6 +252,7 @@ const CenteredRectangle: NextPage = () => {
       {/* <PodcastVoiceLines>
       </PodcastVoiceLines> */}
         </SignUpButton>
+        </PodcastChild>
       </Podcast>
     </CenteredRectangleRoot>
   );

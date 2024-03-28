@@ -91,8 +91,10 @@ const Text1 = styled.div`
   box-sizing: border-box;
   mix-blend-mode: normal;
   z-index: 1;
+  object-fit: fill;
+  height: 109%;
   @media screen and (max-width: 920px) {
-    display:none;
+    // display:none;
   }
 `;
 const TextIcon = styled.img`
@@ -793,6 +795,10 @@ width:100%;
   font-size: 50px;
   color: #fff;
   font-family: Poppins;
+ @media screen and (max-width: 920px) {
+    
+   height: 2046px;
+  }
 `;
 
 const RegisterContainer = () => {

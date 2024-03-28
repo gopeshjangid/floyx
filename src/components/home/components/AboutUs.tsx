@@ -61,9 +61,15 @@ const BackgroundWrapper = styled.div`
   padding: 20px;
   @media screen and (max-width: 992px) {
   
-    top:840px;
+    top:591px;
   
 }
+@media screen and (max-width: 435px) {
+  
+    top:786px;
+  
+}
+
 `;
 const Heading1 = styled.b`
   width: 224px;
@@ -217,7 +223,6 @@ display: flex;
   height: 777px;
   position: relative;
   margin: 0 !important;
-  right: -51px;
   max-width: 100%;
   text-align: center;
   font-size: 50px;
@@ -240,7 +245,7 @@ const AboutUs = () => {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-300px" }
+      { rootMargin: "-100px" }
     );
 
     if (ref?.current) { observer.observe(ref.current); }

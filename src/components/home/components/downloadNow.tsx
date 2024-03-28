@@ -13,9 +13,14 @@ const Background = styled.div`
   width: 1157px;
   height: 477px;
   object-fit: cover;
+  background-size: cover;
    background-image: url("/downloadBg.png");
      @media screen and (max-width: 978px) {
-       height: 977px;
+      // width:100%;
+       height: 890px;
+       justify-content: center;
+      // background-image: url("/mdownloadBg.png");
+
     }
 `;
 const DownloadAppChild = styled.img`
@@ -42,19 +47,19 @@ const DownloadTheApp = styled.b`
   }
 `;
 const EasyAndQuick = styled.div`
-  align-self: stretch;
+  width:300px;
   position: relative;
   font-size: 18px;
   line-height: 27px;
-  text-align: left;
   padding-right: 18px;
+  max-width:100%;
 `;  
 const DownloadTheAppParent = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 26px 0px;
 `;
 const BadgesIcon = styled.img`
@@ -97,8 +102,14 @@ position: relative;
   max-width: 100%;
   z-index: 1;
   @media screen and (max-width: 978px) {
-    left: 379px;
-    top: -198px;
+  left: 0px;
+    top: 32px;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    -webkit-justify-content: start;
+    justify-content: start;
+    height: fit-content;
+
   }
 `;
 const DownloadAppRoot = styled.div`
@@ -130,7 +141,7 @@ const DownloadApp = () => {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-300px" }
+      { rootMargin: "-100px" }
     );
 
     if (ref?.current) { observer.observe(ref.current); }
@@ -154,11 +165,7 @@ const DownloadApp = () => {
     // <><AnimateDownload /></>
     <DownloadAppRoot ref={ref} id="downloads">
       <Background >
-        <div className="imageJoiner">
-      <img className="mobile-img-left" id="download-ll" loading="lazy" alt="" src="leftLogMobile.png" />
-      <img className="mobile-img" id="download-dd" loading="lazy" alt="" src="/group-3@2x.png" />
-
-        </div>
+      
 
 
       <TermsOfService>
@@ -178,6 +185,11 @@ const DownloadApp = () => {
               </Link>          
         </BadgesParent>
       </TermsOfService>
+        <div className="imageJoiner">
+          <img className="mobile-img-left" id="download-ll" loading="lazy" alt="" src="leftLogMobile.png" />
+          <img className="mobile-img" id="download-dd" loading="lazy" alt="" src="/group-3@2x.png" />
+
+        </div>
       </Background>
     </DownloadAppRoot>
   );
