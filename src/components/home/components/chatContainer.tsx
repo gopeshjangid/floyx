@@ -466,7 +466,7 @@ const ChatBox = () => {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-300px" }
+      { rootMargin: "-100px" }
     );
 
     if (ref?.current) { observer.observe(ref.current); }

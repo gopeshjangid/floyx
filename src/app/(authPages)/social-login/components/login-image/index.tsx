@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Box, Grid, Theme, Typography, styled } from '@mui/material';
-
+import { Box, Button,Grid, Theme, Typography, styled } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import { iconLogo, imgLogin, imgLoginBG } from '@/assets/images';
 
 const ImageLogin = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -26,6 +26,7 @@ const ImageLogin = styled(Box)(({ theme }: { theme: Theme }) => ({
 }));
 
 const LoginImage = () => {
+  const router = useRouter();
   return (
     <Grid item md={6} sm={12} width="100%">
       <Box
@@ -63,7 +64,22 @@ const LoginImage = () => {
           <ImageLogin>
             <Image src={imgLogin} alt="login" loading="lazy" quality={100} />
           </ImageLogin>
+          <Box mb="3px" textAlign='center'>
+              <Button
+          translate="no"
+          variant="outlined"
+          className="outline-btn"
+          style={{
+  width:" 68%"
+}}
+          onClick={() => router.push("/")}
+        >
+         Learn more about floyx
+        </Button>
+      
+      </Box>
         </Box>
+      
       </Box>
     </Grid>
   );

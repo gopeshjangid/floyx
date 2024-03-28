@@ -170,7 +170,7 @@ const FrameGroups: NextPage = () => {
             <Tooltip placement="right-start" title='coming soon'><Launchpad href={'/#'}>{`Launchpad `}</Launchpad></Tooltip>
             <Tooltip placement="right-start" title='coming soon'><Launchpad href={'/#'}>{`Marketplace `}</Launchpad></Tooltip>
             <Tooltip placement="right-start" title='coming soon'><Launchpad href={'/#'}>NFT Airdrops</Launchpad></Tooltip>
-            <Tooltip title='coming soon'><Launchpad href={'/#'}>{`DEX Buy `}</Launchpad></Tooltip>
+            <Tooltip placement="right-start" title='coming soon'><Launchpad href={'/#'}>{`DEX Buy `}</Launchpad></Tooltip>
           </LaunchpadSocialfiMarketplaceContainer>
         </ProductMenu>
         <CompanyHub>

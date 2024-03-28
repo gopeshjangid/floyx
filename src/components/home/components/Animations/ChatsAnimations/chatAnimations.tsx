@@ -1,12 +1,34 @@
 "use client"
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
 import "./animation.css";
 import runAnimations, { allLinks, allFunctions } from "./scripts";
 export const ChatAnimation = () => {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const ref = useRef(null);
+
+
   useEffect(() => {
-    runAnimations();
-  }, []);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
+      { rootMargin: "-100px" }
+    );
+
+    if (ref?.current) { observer.observe(ref.current); }
+
+    return () => observer.disconnect();
+  }, [isIntersecting]);
+
+  useEffect(() => {
+    if (isIntersecting) {
+      runAnimations();
+    }
+   
+
+  }, [isIntersecting]);
+ 
   return (
     <div className="chat-parent-div">
       <div className="chat-1-59945 pos-abs" id="id-03216">
