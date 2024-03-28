@@ -109,7 +109,7 @@ export const CommentsCards = () => {
 let CHECKED = false;
 document.addEventListener("pointerdown", (e) => {
 	CHECKED = !CHECKED;
-	document.documentElement.style.setProperty("--light", CHECKED ? 1 : 0);
+  document.documentElement.style.setProperty("--light", CHECKED ? "1" : "0");
 });
   const settings = {
     initialSlide:3,
