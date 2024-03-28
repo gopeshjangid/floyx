@@ -28,7 +28,7 @@ const SocialLogin: FC = () => {
           color={palette.text.primary}
           marginBottom="26px"
         >
-          {t('auth.sLogin.text.text1')}
+          {t('auth.sLogin.text.text1')} 
         </Typography>
         <Box
           display="flex"
