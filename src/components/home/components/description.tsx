@@ -143,6 +143,7 @@ const AnimatedPostContainer = styled.div`
   box-sizing: border-box;
   max-width: 100%;
   z-index: 2;
+  background:url("/gradientBg.png");
    @media screen and (max-width: 975px) {
     height:400px;
     margin-top:23px;
